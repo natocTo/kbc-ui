@@ -54,7 +54,7 @@ snowflakeEnabled = List([
 
 
 module.exports = React.createClass
-  displayName: 'InstalledComponents'
+  displayName: 'DeletedComponents'
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)]
   propTypes:
     type: React.PropTypes.string.isRequired
@@ -69,7 +69,7 @@ module.exports = React.createClass
       return true
     )
 
-    installedComponents: InstalledComponentsStore.getAllForType(@props.type)
+    installedComponents: InstalledComponentsStore.getAllDeletedForType(@props.type)
     deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations()
     restoringConfigurations: InstalledComponentsStore.getRestoringConfigurations()
     components: components

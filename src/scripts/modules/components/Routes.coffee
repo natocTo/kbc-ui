@@ -2,6 +2,7 @@
 
 injectProps = require('./react/injectProps').default
 ComponentsIndex = require('./react/pages/ComponentsIndex')
+TrashIndex = require('./react/pages/TrashIndex')
 NewComponent = require('./react/pages/NewComponent').default
 NewComponentButton = require './react/components/NewComponentButton'
 
@@ -64,6 +65,10 @@ routes =
       title: 'New Application'
       defaultRouteHandler: application(NewComponent)
     ,
+      name: 'deleted-applications'
+      title: 'Deleted Applications'
+      defaultRouteHandler: application(TrashIndex)
+    ,
       appGeneeaRoutes.sentimentAnalysis
     ,
       appGeneeaRoutes.topicDetection
@@ -97,6 +102,10 @@ routes =
       name: 'new-extractor'
       title: 'New Extractor'
       defaultRouteHandler: extractor(NewComponent)
+    ,
+      name: 'deleted-extractors'
+      title: 'Deleted Extractors'
+      defaultRouteHandler: extractor(TrashIndex)
     ,
       createComponentRoute 'ex-db', [exDbRoutes]
     ,
@@ -146,6 +155,10 @@ routes =
       name: 'new-writer'
       title: 'New Writer'
       defaultRouteHandler: writer(NewComponent)
+    ,
+      name: 'deleted-writers'
+      title: 'Deleted Writers'
+      defaultRouteHandler: writer(TrashIndex)
     ,
       createComponentRoute 'gooddata-writer', [goodDataWriterRoutes]
     ,

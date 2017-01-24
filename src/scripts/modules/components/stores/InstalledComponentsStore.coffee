@@ -29,9 +29,11 @@ _store = Map(
   localState: Map()
 
   components: Map()
+  deletedComponents: Map()
   editingConfigurations: Map()
   savingConfigurations: Map()
   deletingConfigurations: Map()
+  restoringConfigurations: Map()
   isLoaded: false
   isLoading: false
   pendingActions: Map()
@@ -51,8 +53,20 @@ InstalledComponentsStore = StoreUtils.createStore
         configuration.get('name').toLowerCase()
     .sortBy (component) -> component.get 'name'
 
+  getAllDeleted: ->
+    _store
+    .get 'deletedComponents'
+    .map (component) ->
+      component.set 'configurations', component.get('configurations').sortBy (configuration) ->
+        configuration.get('name').toLowerCase()
+    .sortBy (component) -> component.get 'name'
+
   getAllForType: (type) ->
     @getAll().filter (component) ->
+      component.get('type') == type
+
+  getAllDeletedForType: (type) ->
+    @getAllDeleted().filter (component) ->
       component.get('type') == type
 
   getComponent: (componentId) ->
@@ -87,6 +101,9 @@ InstalledComponentsStore = StoreUtils.createStore
 
   getConfig: (componentId, configId) ->
     _store.getIn ['components', componentId, 'configurations', configId]
+
+  getDeletedConfig: (componentId, configId) ->
+    _store.getIn ['deletedComponents', componentId, 'configurations', configId]
 
   getConfigRow: (componentId, configId, rowId) ->
     _store.getIn ['components', componentId, 'configurations', configId, 'rows', rowId]
@@ -143,6 +160,9 @@ InstalledComponentsStore = StoreUtils.createStore
       JSON.parse(value)
       return true
     return false
+
+  getRestoringConfigurations: ->
+    _store.get 'restoringConfigurations'
 
   getDeletingConfigurations: ->
     _store.get 'deletingConfigurations'
@@ -374,7 +394,6 @@ Dispatcher.register (payload) ->
       _store = _store.deleteIn ['editingConfigurations', action.componentId, action.configurationId, action.field]
       InstalledComponentsStore.emitChange()
 
-
     when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_START
       _store = _store.setIn ['deletingConfigurations', action.componentId, action.configurationId], true
       InstalledComponentsStore.emitChange()
@@ -390,10 +409,47 @@ Dispatcher.register (payload) ->
 
       InstalledComponentsStore.emitChange()
 
+    when constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_START
+      _store = _store.setIn ['deletingConfigurations', action.componentId, action.configurationId], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+          .deleteIn ['deletedComponents', action.componentId, 'configurations', action.configurationId]
+          .deleteIn ['deletingConfigurations', action.componentId, action.configurationId]
+
+        if !store.getIn(['deletedComponents', action.componentId, 'configurations']).count()
+          store = store.deleteIn ['components', action.componentId]
+
+      InstalledComponentsStore.emitChange()
+
     when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR
       _store = _store.deleteIn ['deletingConfigurations', action.componentId, action.configurationId]
       InstalledComponentsStore.emitChange()
 
+    when constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_ERROR
+      _store = _store.deleteIn ['deletingConfigurations', action.componentId, action.configurationId]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_START
+      _store = _store.setIn ['restoringConfigurations', action.componentId, action.configurationId], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+        .deleteIn ['deletedComponents', action.componentId, 'configurations', action.configurationId]
+        .deleteIn ['restoringConfigurations', action.componentId, action.configurationId]
+
+        if !store.getIn(['deletedComponents', action.componentId, 'configurations']).count()
+          store = store.deleteIn ['deletedComponents', action.componentId]
+
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_ERROR
+      _store = _store.deleteIn ['restoringConfigurations', action.componentId, action.configurationId]
+      InstalledComponentsStore.emitChange()
 
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_START
@@ -419,6 +475,26 @@ Dispatcher.register (payload) ->
           .set('isLoading', false)
           .set('isLoaded', true)
           .set('components',
+            ## convert to by key structure
+            fromJSOrdered(action.components)
+            .toMap()
+            .map((component) ->
+              component.set 'configurations', component.get('configurations').toMap().mapKeys((key, config) ->
+                config.get 'id'
+              )
+            )
+            .mapKeys((key, component) ->
+              component.get 'id'
+            ))
+      )
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.DELETED_COMPONENTS_LOAD_SUCCESS
+      _store = _store.withMutations((store) ->
+        store
+          .set('isLoading', false)
+          .set('isLoaded', true)
+          .set('deletedComponents',
             ## convert to by key structure
             fromJSOrdered(action.components)
             .toMap()

@@ -67,6 +67,23 @@ module.exports =
       throw error
     )
 
+    installedComponentsApi
+    .getDeletedComponents()
+    .then((components) ->
+      dispatcher.handleViewAction(
+        type: constants.ActionTypes.DELETED_COMPONENTS_LOAD_SUCCESS
+        components: components
+      )
+    )
+    .catch((error) ->
+      dispatcher.handleViewAction(
+        type: constants.ActionTypes.DELETED_COMPONENTS_LOAD_ERROR
+        status: error.status
+        response: error.response
+      )
+      throw error
+    )
+
   loadComponentConfigDataForce: (componentId, configId) ->
     dispatcher.handleViewAction(
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD
@@ -322,6 +339,45 @@ module.exports =
         error: e
       throw e
 
+  restoreConfiguration: (componentId, configurationId, transition) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_START
+      componentId: componentId
+      configurationId: configurationId
+      transition: transition
+
+    component = ComponentsStore.getComponent componentId
+    configuration = InstalledComponentsStore.getDeletedConfig componentId, configurationId
+
+    notification = "Configuration #{configuration.get('name')} was restored." # @FIXME goto detail link
+
+    if (transition)
+      transitionTo = "generic-detail-#{component.get('type')}"
+      transitionParams =
+        component: component.get('id')
+      RoutesStore.getRouter().transitionTo transitionTo, transitionParams
+
+    installedComponentsApi.restoreConfiguration componentId, configurationId
+    .then (response) ->
+
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_SUCCESS
+        componentId: componentId
+        configurationId: configurationId
+        transition: transition
+
+      ApplicationActionCreators.sendNotification
+        message: notification
+
+    .catch (e) ->
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_ERROR
+        componentId: componentId
+        configurationId: configurationId
+        transition: transition
+        error: e
+
+      throw e
 
   deleteConfiguration: (componentId, configurationId, transition) ->
     dispatcher.handleViewAction
@@ -333,7 +389,7 @@ module.exports =
     component = ComponentsStore.getComponent componentId
     configuration = InstalledComponentsStore.getConfig componentId, configurationId
 
-    notification = "Configuration #{configuration.get('name')} was deleted."
+    notification = "Configuration #{configuration.get('name')} was deleted." # @FIXME do undo link
 
     if (transition)
       transitionTo = "generic-detail-#{component.get('type')}"
@@ -356,6 +412,46 @@ module.exports =
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR
+        componentId: componentId
+        configurationId: configurationId
+        transition: transition
+        error: e
+
+      throw e
+
+  deleteConfigurationPermanently: (componentId, configurationId, transition) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_START
+      componentId: componentId
+      configurationId: configurationId
+      transition: transition
+
+    component = ComponentsStore.getComponent componentId
+    configuration = InstalledComponentsStore.getDeletedConfig componentId, configurationId
+
+    notification = "Configuration #{configuration.get('name')} was permanently deleted."
+
+    if (transition)
+      transitionTo = "generic-detail-#{component.get('type')}"
+      transitionParams =
+        component: component.get('id')
+      RoutesStore.getRouter().transitionTo transitionTo, transitionParams
+
+    installedComponentsApi.deleteConfiguration componentId, configurationId
+    .then (response) ->
+
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS
+        componentId: componentId
+        configurationId: configurationId
+        transition: transition
+
+      ApplicationActionCreators.sendNotification
+        message: notification
+
+    .catch (e) ->
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_ERROR
         componentId: componentId
         configurationId: configurationId
         transition: transition
