@@ -57,7 +57,7 @@ routes =
     headerButtonsHandler: injectProps(
       addRoute: 'new-application'
       type: 'application'
-      trashRoute: 'deleted-applications'
+      trashRoute: 'applications-trash'
     )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
@@ -65,8 +65,8 @@ routes =
       title: 'New Application'
       defaultRouteHandler: application(NewComponent)
     ,
-      name: 'deleted-applications'
-      title: 'Deleted Applications'
+      name: 'applications-trash'
+      title: 'Trash'
       defaultRouteHandler: application(TrashIndex)
     ,
       appGeneeaRoutes.sentimentAnalysis
@@ -99,7 +99,7 @@ routes =
     headerButtonsHandler: injectProps(
       addRoute: 'new-extractor'
       type: 'extractor'
-      trashRoute: 'deleted-extractors'
+      trashRoute: 'extractors-trash'
     )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
@@ -107,8 +107,8 @@ routes =
       title: 'New Extractor'
       defaultRouteHandler: extractor(NewComponent)
     ,
-      name: 'deleted-extractors'
-      title: 'Deleted Extractors'
+      name: 'extractors-trash'
+      title: 'Trash'
       defaultRouteHandler: extractor(TrashIndex)
     ,
       createComponentRoute 'ex-db', [exDbRoutes]
@@ -156,7 +156,7 @@ routes =
     headerButtonsHandler: injectProps(
       addRoute: 'new-writer'
       type: 'writer'
-      trashRoute: 'deleted-writers'
+      trashRoute: 'writers-trash'
     )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
@@ -164,8 +164,8 @@ routes =
       title: 'New Writer'
       defaultRouteHandler: writer(NewComponent)
     ,
-      name: 'deleted-writers'
-      title: 'Deleted Writers'
+      name: 'writers-trash'
+      title: 'Trash'
       defaultRouteHandler: writer(TrashIndex)
     ,
       createComponentRoute 'gooddata-writer', [goodDataWriterRoutes]

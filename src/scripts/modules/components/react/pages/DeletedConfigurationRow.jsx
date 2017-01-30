@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react/addons';
-import ConfigurationLink from '../components/ComponentConfigurationLink';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import RestoreConfigurationButton from '../components/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
@@ -17,11 +16,7 @@ export default React.createClass({
 
   render() {
     return (
-      <ConfigurationLink
-        componentId={this.props.componentId}
-        configId={this.props.config.get('id')}
-        className="tr"
-      >
+      <span className="tr">
         <span className="td">
           <strong className="kbc-config-name">
             {this.props.config.get('name', '---')}
@@ -30,20 +25,21 @@ export default React.createClass({
         </span>
         <span className="td text-right kbc-component-buttons">
           <span className="kbc-component-author">
-            Created by <strong>{this.props.config.getIn(['creatorToken', 'description'])}</strong>
+            Removed by <strong>{this.props.config.getIn(['creatorToken', 'description'])}</strong>
           </span>
           <RestoreConfigurationButton
-            tooltip="Restore Configuration"
+            tooltip="Put Back"
             isPending={this.props.isRestoring}
-            confirm={this.restoreConfirmProps()}
-          />
+            onRestore={this.handleRestore}
+        />
           <DeleteButton
-            tooltip="Delete Configuration"
+            tooltip="Delete Immediatelly"
+            icon="fa-times"
             isPending={this.props.isDeleting}
             confirm={this.deleteConfirmProps()}
           />
         </span>
-      </ConfigurationLink>
+      </span>
     );
   },
 
@@ -58,17 +54,9 @@ export default React.createClass({
 
   deleteConfirmProps() {
     return {
-      title: 'Delete Configuration',
-      text: `Do you really want to permanently delete configuration ${this.props.config.get('name')}?`,
+      title: 'Delete Immediatelly',
+      text: `Do you really want to Delete configuration ${this.props.config.get('name')}?`,
       onConfirm: this.handleDelete
-    };
-  },
-
-  restoreConfirmProps() {
-    return {
-      title: 'Restore Configuration',
-      text: `Do you really want to restore configuration ${this.props.config.get('name')}?`,
-      onConfirm: this.handleRestore
     };
   },
 

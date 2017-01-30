@@ -18,7 +18,7 @@ module.exports = React.createClass
   displayName: 'RestoreConfigurationButton'
   propTypes:
     tooltip: React.PropTypes.string
-    confirm: React.PropTypes.object # Confirm props
+    onRestore: React.PropTypes.func.isRequired,
     isPending: React.PropTypes.bool
     isEnabled: React.PropTypes.bool
     label: React.PropTypes.string
@@ -37,18 +37,17 @@ module.exports = React.createClass
         Loader()
     else if !@props.isEnabled
       React.DOM.span className: 'btn btn-link disabled',
-        React.DOM.em className: 'fa-undo'
+        React.DOM.em className: 'fa-reply'
     else
       OverlayTrigger
         overlay: Tooltip null, @props.tooltip
         key: 'delete'
         placement: 'top'
       ,
-        Confirm assign({}, @props.confirm,
-          buttonLabel: 'Restore'
-          buttonType: 'primary'
-        ),
-          button className: 'btn btn-link',
-            i className: classnames('fa fa-undo', 'fa-fw': @props.fixedWidth)
-            if @props.label then ' ' + @props.label
+        button
+          className: 'btn btn-link'
+          onClick: @props.onRestore
+        ,
+          i className: classnames('fa fa-reply', 'fa-fw': @props.fixedWidth)
+          if @props.label then ' ' + @props.label
 
