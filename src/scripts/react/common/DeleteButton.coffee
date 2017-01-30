@@ -23,6 +23,7 @@ module.exports = React.createClass
     isEnabled: React.PropTypes.bool
     label: React.PropTypes.string
     fixedWidth: React.PropTypes.bool
+    icon: React.PropTypes.string
 
   getDefaultProps: ->
     tooltip: 'Delete'
@@ -30,6 +31,7 @@ module.exports = React.createClass
     isEnabled: true
     label: ''
     fixedWidth: false
+    icon: 'kbc-icon-cup'
 
   render: ->
     if @props.isPending
@@ -37,7 +39,7 @@ module.exports = React.createClass
         Loader()
     else if !@props.isEnabled
       React.DOM.span className: 'btn btn-link disabled',
-        React.DOM.em className: 'kbc-icon-cup'
+        React.DOM.em className: @props.icon
     else
       OverlayTrigger
         overlay: Tooltip null, @props.tooltip
@@ -46,6 +48,6 @@ module.exports = React.createClass
       ,
         Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
           button className: 'btn btn-link',
-            i className: classnames('fa kbc-icon-cup', 'fa-fw': @props.fixedWidth)
+            i className: classnames('fa', @props.icon, 'fa-fw': @props.fixedWidth)
             if @props.label then ' ' + @props.label
 
