@@ -44,9 +44,7 @@ module.exports = React.createClass
         key: 'delete'
         placement: 'top'
       ,
-        Confirm assign({}, @props.confirm,
-          buttonLabel: 'Delete'
-        ),
+        Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
           button className: 'btn btn-link',
             i className: classnames('fa kbc-icon-cup', 'fa-fw': @props.fixedWidth)
             if @props.label then ' ' + @props.label

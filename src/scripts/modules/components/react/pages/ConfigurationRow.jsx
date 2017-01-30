@@ -32,7 +32,7 @@ export default React.createClass({
             Created by <strong>{this.props.config.getIn(['creatorToken', 'description'])}</strong>
           </span>
           <DeleteButton
-            tooltip="Delete Configuration"
+            tooltip="Move to Trash"
             isPending={this.props.isDeleting}
             confirm={this.deleteConfirmProps()}
           />
@@ -69,9 +69,10 @@ export default React.createClass({
 
   deleteConfirmProps() {
     return {
-      title: 'Delete Configuration',
-      text: `Do you really want to delete configuration ${this.props.config.get('name')}?`,
-      onConfirm: this.handleDelete
+      title: 'Move Configuration to Trash',
+      text: `Do you really want to Move to Trash configuration ${this.props.config.get('name')}?`,
+      onConfirm: this.handleDelete,
+      buttonLabel: 'Move to Trash'
     };
   },
 
