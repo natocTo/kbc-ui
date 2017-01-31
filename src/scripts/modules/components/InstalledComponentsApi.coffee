@@ -44,6 +44,14 @@ installedComponentsApi =
       response.body
     )
 
+# @FIXME ad filter params
+  getDeletedComponentConfigurations: (componentId) ->
+    createRequest('GET', "components/#{componentId}/configs?isDeleted=1")
+    .promise()
+    .then((response) ->
+      response.body
+    )
+
   updateComponentConfiguration: (componentId, configurationId, data) ->
     createRequest 'PUT', "components/#{componentId}/configs/#{configurationId}"
     .type 'form'

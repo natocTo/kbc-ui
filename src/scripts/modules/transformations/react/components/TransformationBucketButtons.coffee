@@ -14,23 +14,22 @@ module.exports = React.createClass
 
   getStateFromStores: ->
     hasBuckets: BucketsStore.getAll().count()
+    hasInTrash: BucketsStore.getAllDeleted().count()
 
   render: ->
-    if @state.hasBuckets
-      span {},
+    span {},
+      React.createElement Link,
+        to: 'sandbox'
+      ,
+        button className: 'btn btn-link',
+          span className: 'kbc-icon-cog'
+          ' Sandbox'
+      if @state.hasInTrash
         React.createElement Link,
-          to: 'sandbox'
+          to: 'transformations-trash'
         ,
           button className: 'btn btn-link',
-            span className: 'kbc-icon-cog'
-            ' Sandbox'
+            span className: 'kbc-icon-cup'
+            ' Open Trash'
+      if @state.hasBuckets
         React.createElement NewTransformationBucketButton
-    else
-      span {},
-        React.createElement Link,
-          to: 'sandbox'
-        ,
-          button className: 'btn btn-link',
-            span className: 'kbc-icon-cog'
-            ' Sandbox'
-

@@ -10,6 +10,7 @@ StoreUtils = require '../../../utils/StoreUtils'
 
 _store = Map(
   bucketsById: Map()
+  deletedBucketsById: Map()
   isLoading: false
   isLoaded: false
   loadingBuckets: List()
@@ -22,11 +23,19 @@ _store = Map(
 TransformationBucketsStore = StoreUtils.createStore
 
   ###
-    Returns all orchestrations sorted by last execution date desc
+    Returns all transformations sorted by name
   ###
   getAll: ->
     _store
       .get('bucketsById')
+      .sortBy((bucket) -> bucket.get('name'))
+
+  ###
+    Returns all deleted transformations sorted by name
+  ###
+  getAllDeleted: ->
+    _store
+      .get('deletedBucketsById')
       .sortBy((bucket) -> bucket.get('name'))
 
   ###
@@ -70,6 +79,15 @@ Dispatcher.register (payload) ->
           .set('isLoading', false)
           .set('isLoaded', true)
           .set('bucketsById', Immutable.fromJS(action.buckets).toMap().mapKeys((key, bucket) ->
+            bucket.get 'id'
+          ))
+      )
+      TransformationBucketsStore.emitChange()
+
+    when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKETS_LOAD_SUCCESS
+      _store = _store.withMutations((store) ->
+        store
+          .set('deletedBucketsById', Immutable.fromJS(action.buckets).toMap().mapKeys((key, bucket) ->
             bucket.get 'id'
           ))
       )

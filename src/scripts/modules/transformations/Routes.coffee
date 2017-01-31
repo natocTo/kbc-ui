@@ -126,6 +126,10 @@ routes =
             StorageActionCreators.loadTables()
 
         ]
+      ,
+        name: 'transformations-trash'
+        title: 'Trash'
+        defaultRouteHandler: TransformationsIndex
       ]
 
 module.exports = routes

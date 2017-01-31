@@ -24,6 +24,12 @@ var transformationsApi = {
     });
   },
 
+  getDeletedTransformationBuckets: function() {
+    return InstalledComponentsApi.getDeletedComponentConfigurations('transformation').then(function(response) {
+      return parseBuckets(response);
+    });
+  },
+
   createTransformationBucket: function(data, changeDescription) {
     return InstalledComponentsApi.createConfiguration('transformation', data, changeDescription).then(function(response) {
       return parseBucket(response);
