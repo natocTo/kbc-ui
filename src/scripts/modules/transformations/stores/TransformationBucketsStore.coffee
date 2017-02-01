@@ -112,6 +112,21 @@ Dispatcher.register (payload) ->
         .removeIn ['pendingActions', action.bucketId, 'delete']
       TransformationBucketsStore.emitChange()
 
+    when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE
+      _store = _store.setIn ['pendingActions', action.bucketId, 'restore'], true
+      TransformationBucketsStore.emitChange()
+
+    when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_ERROR
+      _store = _store.deleteIn ['pendingActions', action.bucketId, 'restore']
+      TransformationBucketsStore.emitChange()
+
+    when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+        .removeIn ['deletedBucketsById', action.bucketId]
+        .removeIn ['pendingActions', action.bucketId, 'restore']
+      TransformationBucketsStore.emitChange()
+
     when Constants.ActionTypes.TRANSFORMATION_BUCKETS_FILTER_CHANGE
       _store = _store.setIn ['filters', 'buckets'], action.filter
       TransformationBucketsStore.emitChange()

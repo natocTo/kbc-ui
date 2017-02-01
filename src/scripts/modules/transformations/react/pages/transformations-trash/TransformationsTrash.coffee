@@ -17,7 +17,7 @@ SearchRow = require('../../../../../react/common/SearchRow').default
 NewTransformationBucketButton = require '../../components/NewTransformationBucketButton'
 
 {div, span, input, strong, form, button, h4, h2, i, button, small, ul, li, a, p} = React.DOM
-TransformationsIndex = React.createClass
+TransformationsTrash = React.createClass
   displayName: 'TransformationsTrash'
   mixins: [createStoreMixin(TransformationBucketsStore, TransformationsStore, InstalledComponentsStore)]
 

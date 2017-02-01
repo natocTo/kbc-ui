@@ -40,6 +40,10 @@ var transformationsApi = {
     return InstalledComponentsApi.deleteConfiguration('transformation', bucketId);
   },
 
+  restoreTransformationBucket: function(bucketId) {
+    return InstalledComponentsApi.restoreConfiguration('transformation', bucketId);
+  },
+
   deleteTransformation: function(bucketId, transformationId, changeDescription) {
     return InstalledComponentsApi.deleteConfigurationRow('transformation', bucketId, transformationId, changeDescription);
   },

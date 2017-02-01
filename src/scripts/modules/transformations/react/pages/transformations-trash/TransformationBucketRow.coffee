@@ -1,8 +1,8 @@
 React = require 'react'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 InstalledComponentsActionCreators = require '../../../../components/InstalledComponentsActionCreators'
-RunComponentButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 DeleteButton = React.createFactory(require '../../../../../react/common/DeleteButton')
+RestoreConfigurationButton = React.createFactory(require '../../../../../react/common/RestoreConfigurationButton')
 TransformationActionCreators = require '../../../ActionCreators'
 RoutesStore = require '../../../../../stores/RoutesStore'
 NewTransformationModal = require('../../modals/NewTransformation').default
@@ -24,22 +24,16 @@ TransformationBucketRow = React.createClass(
     buttons = []
     props = @props
 
-    buttons.push(RunComponentButton(
-      title: "Run #{@props.bucket.get('name')}"
-      component: 'transformation'
-      mode: 'button'
-      runParams: ->
-        configBucketId: props.bucket.get('id')
-      key: 'run'
-      tooltip: 'Run all transformations in bucket'
-    ,
-      "You are about to run all transformations in bucket #{@props.bucket.get('name')}."
+    buttons.push(RestoreConfigurationButton(
+      tooltip: "Put Back"
+      isPending: @props.pendingActions.get 'restore'
+      onRestore: @._restoreTransformationBucket
     ))
 
     buttons.push(DeleteButton(
       tooltip: "Delete Immediatelly"
       icon: "fa-times"
-      isPending: false
+      isPending: @props.pendingActions.get 'delete'
       confirm:
         title: 'Delete Immediatelly'
         text: "Do you really want to Delete bucket #{@props.bucket.get('name')}?"
@@ -56,6 +50,10 @@ TransformationBucketRow = React.createClass(
         small {}, descriptionExcerpt(@props.description) || em {}, 'No description'
       span {className: 'td col-xs-3 text-right kbc-no-wrap'},
         @buttons()
+
+  _restoreTransformationBucket: ->
+    bucketId = @props.bucket.get('id')
+    TransformationActionCreators.restoreTransformationBucket(bucketId)
 
   _deleteTransformationBucket: ->
     # if transformation is deleted immediately view is rendered with missing bucket because of store changed

@@ -125,6 +125,23 @@ module.exports =
         bucketId: bucketId
       throw e
 
+  restoreTransformationBucket: (bucketId) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE
+      bucketId: bucketId
+
+    transformationsApi
+    .restoreTransformationBucket(bucketId)
+    .then ->
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_SUCCESS
+        bucketId: bucketId
+    .catch (e) ->
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_ERROR
+        bucketId: bucketId
+      throw e
+
   deleteTransformation: (bucketId, transformationId) ->
     dispatcher.handleViewAction(
       type: constants.ActionTypes.TRANSFORMATION_DELETE
