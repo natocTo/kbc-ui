@@ -1,6 +1,7 @@
 React = require 'react'
 
 TransformationsIndex = require('./react/pages/transformations-index/TransformationsIndex')
+TransformationsTrash = require('./react/pages/transformations-trash/TransformationsTrash')
 TransformationBucket = require('./react/pages/transformation-bucket/TransformationBucket')
 TransformationDetail = require('./react/pages/transformation-detail/TransformationDetail')
 TransformationGraph = require('./react/pages/transformation-graph/TransformationGraph')
@@ -129,7 +130,7 @@ routes =
       ,
         name: 'transformations-trash'
         title: 'Trash'
-        defaultRouteHandler: TransformationsIndex
+        defaultRouteHandler: TransformationsTrash
       ]
 
 module.exports = routes
