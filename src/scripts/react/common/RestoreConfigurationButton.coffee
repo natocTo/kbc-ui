@@ -8,14 +8,14 @@ classnames = require 'classnames'
 Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Confirm = React.createFactory(require('./../../../../react/common/Confirm').default)
+Confirm = React.createFactory(require('./Confirm').default)
 
 assign = require 'object-assign'
 
 {button, span, i} = React.DOM
 
 module.exports = React.createClass
-  displayName: 'RestoreBucketButton'
+  displayName: 'RestoreConfigurationButton'
   propTypes:
     tooltip: React.PropTypes.string
     onRestore: React.PropTypes.func.isRequired,

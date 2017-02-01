@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react/addons';
 import DeleteButton from '../../../../react/common/DeleteButton';
-import RestoreConfigurationButton from '../components/RestoreConfigurationButton';
+import RestoreConfigurationButton from '../../../../react/common/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 
