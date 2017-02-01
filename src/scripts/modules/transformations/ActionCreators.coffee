@@ -109,6 +109,8 @@ module.exports =
 
 
   deleteTransformationBucket: (bucketId) ->
+    actions = @
+
     dispatcher.handleViewAction
       type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE
       bucketId: bucketId
@@ -119,6 +121,19 @@ module.exports =
       dispatcher.handleViewAction
         type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_SUCCESS
         bucketId: bucketId
+
+      # reload trash
+      transformationsApi
+      .getDeletedTransformationBuckets()
+      .then((buckets) ->
+        # load success
+        actions.receiveDeletedTransformationBuckets(buckets)
+      )
+      .catch (err) ->
+        dispatcher.handleViewAction
+          type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_ERROR
+          bucketId: bucketId
+        throw e
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_ERROR
