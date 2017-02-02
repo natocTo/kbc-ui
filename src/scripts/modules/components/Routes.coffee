@@ -21,8 +21,10 @@ exGoogleBigqueryRoutes = require('../ex-google-bigquery/routes').default
 exGdriveGoogleRoutes = require '../ex-google-drive-old/exGdriveRoutes'
 exGanalRoutes = require '../ex-google-analytics/exGanalRoutes'
 exGaV4Routes = require('../ex-google-analytics-v4/routes').default
+exFacebookRoutes = require('../ex-facebook/routes.js').default
 exGdriveNewRoutes = require('../ex-google-drive/routes').default
 csvImportRoutes = require('../csv-import/routes').default
+exS3Routes = require('../ex-s3/routes').default
 appGeneeaRoutes = require '../app-geneea/appGeneeaRoutes'
 goodDataWriterRoutes = require '../gooddata-writer/routes'
 dropoxExtractorRoutes = require('../ex-dropbox/routes').default
@@ -119,6 +121,8 @@ routes =
     ,
       createComponentRoute 'ex-google-analytics', [exGanalRoutes]
       createComponentRoute 'keboola.ex-google-analytics-v4', [exGaV4Routes]
+      createComponentRoute 'keboola.ex-facebook', [exFacebookRoutes('keboola.ex-facebook')]
+      createComponentRoute 'keboola.ex-facebook-ads', [exFacebookRoutes('keboola.ex-facebook-ads')]
       createComponentRoute 'keboola.ex-google-drive', [exGdriveNewRoutes]
     ,
       createComponentRoute 'ex-adform', [adformRoutes]
@@ -144,6 +148,7 @@ routes =
       createComponentRoute 'keboola.ex-google-bigquery', [exGoogleBigqueryRoutes]
     ,
       createComponentRoute 'keboola.csv-import', [csvImportRoutes]
+      createComponentRoute 'keboola.ex-s3', [exS3Routes]
     ,
       createGenericDetailRoute 'extractor'
 
