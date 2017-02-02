@@ -11,12 +11,13 @@ TransformationBucketsStore = require('../../../stores/TransformationBucketsStore
 TransformationsStore = require('../../../stores/TransformationsStore')
 InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore')
 SearchRow = require('../../../../../react/common/SearchRow').default
+SplashIcon = require('../../../../../react/common/SplashIcon').default
 
 {Panel, PanelGroup} = require('react-bootstrap')
 
 NewTransformationBucketButton = require '../../components/NewTransformationBucketButton'
 
-{div, span, input, strong, form, button, h4, h2, i, button, small, ul, li, a, p} = React.DOM
+{div, span, input, strong, form, button, h4, h2, h1, i, button, small, ul, li, a, p} = React.DOM
 TransformationsTrash = React.createClass
   displayName: 'TransformationsTrash'
   mixins: [createStoreMixin(TransformationBucketsStore, TransformationsStore, InstalledComponentsStore)]
@@ -33,38 +34,33 @@ TransformationsTrash = React.createClass
     TransformationActionCreators.setTransformationBucketsFilter(query)
 
   render: ->
-    div className: 'container-fluid',
-      div className: 'kbc-main-content',
-        React.createElement SearchRow,
-          className: 'row kbc-search-row'
-          onChange: @_handleFilterChange
-          query: @state.filter
-        span {},
-          if @_getFilteredBuckets().count()
-            div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'
-            ,
-              @_getFilteredBuckets().map (bucket) ->
-                @_renderBucketPanel bucket
-              , @
-              .toArray()
-          else
-            @_renderEmptyState()
+    if @state.buckets.count() < 1
+      React.createElement SplashIcon,
+        icon: 'kbc-icon-cup'
+        label: 'Trash is empty'
+    else
+      div className: 'container-fluid',
+        div className: 'kbc-main-content',
+          React.createElement SearchRow,
+            className: 'row kbc-search-row'
+            onChange: @_handleFilterChange
+            query: @state.filter
+          span {},
+            if @_getFilteredBuckets().count()
+              div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'
+              ,
+                @_getFilteredBuckets().map (bucket) ->
+                  @_renderBucketPanel bucket
+                , @
+                .toArray()
+            else
+              @_renderEmptyState()
 
   _renderEmptyState: ->
     div {className: 'kbc-search-row'},
       if @state.filter && @state.filter != ''
         h2 null,
-          'No buckets or transformations found.'
-      else
-        span {},
-          h2 null,
-            'Transformations allow you to modify your data.'
-          p null,
-            'A Transformation picks data from Storage,
-              manipulates it and then stores it back. A transformation can be written in SQL (MySQL, Redshift), R or Python.'
-          p null,
-            React.createElement NewTransformationBucketButton,
-              buttonLabel: 'Get Started Now'
+          'No buckets found.'
 
   _renderBucketPanel: (bucket) ->
     header = span null,
