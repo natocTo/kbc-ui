@@ -131,6 +131,7 @@ routes =
         name: 'transformations-trash'
         title: 'Trash'
         defaultRouteHandler: TransformationsTrash
+        reloaderHandler: injectProps(allowRefresh: true)(TransformationsIndexReloaderButton)
       ]
 
 module.exports = routes

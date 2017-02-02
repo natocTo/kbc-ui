@@ -68,6 +68,7 @@ routes =
       name: 'applications-trash'
       title: 'Trash'
       defaultRouteHandler: application(TrashIndex)
+      reloaderHandler: ComponentReloaderButton
     ,
       appGeneeaRoutes.sentimentAnalysis
     ,
@@ -110,6 +111,7 @@ routes =
       name: 'extractors-trash'
       title: 'Trash'
       defaultRouteHandler: extractor(TrashIndex)
+      reloaderHandler: ComponentReloaderButton
     ,
       createComponentRoute 'ex-db', [exDbRoutes]
     ,
@@ -167,6 +169,7 @@ routes =
       name: 'writers-trash'
       title: 'Trash'
       defaultRouteHandler: writer(TrashIndex)
+      reloaderHandler: ComponentReloaderButton
     ,
       createComponentRoute 'gooddata-writer', [goodDataWriterRoutes]
     ,
