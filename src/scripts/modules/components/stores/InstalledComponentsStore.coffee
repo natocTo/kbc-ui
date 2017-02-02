@@ -420,7 +420,7 @@ Dispatcher.register (payload) ->
           .deleteIn ['deletingConfigurations', action.componentId, action.configurationId]
 
         if !store.getIn(['deletedComponents', action.componentId, 'configurations']).count()
-          store = store.deleteIn ['components', action.componentId]
+          store = store.deleteIn ['deletedComponents', action.componentId]
 
       InstalledComponentsStore.emitChange()
 
