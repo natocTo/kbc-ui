@@ -67,6 +67,13 @@ module.exports =
       throw error
     )
 
+    @loadDeletedComponentsForce()
+
+  loadDeletedComponentsForce: ->
+    dispatcher.handleViewAction(
+      type: constants.ActionTypes.DELETED_COMPONENTS_LOAD
+    )
+
     installedComponentsApi
     .getDeletedComponents()
     .then((components) ->
@@ -397,6 +404,8 @@ module.exports =
         component: component.get('id')
       RoutesStore.getRouter().transitionTo transitionTo, transitionParams
 
+    actions = @
+
     deleteComponentConfiguration componentId, configurationId
     .then (response) ->
 
@@ -408,6 +417,8 @@ module.exports =
 
       ApplicationActionCreators.sendNotification
         message: notification
+
+      actions.loadDeletedComponentsForce()
 
     .catch (e) ->
       dispatcher.handleViewAction
