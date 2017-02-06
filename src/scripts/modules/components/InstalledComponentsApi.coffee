@@ -29,7 +29,6 @@ installedComponentsApi =
       response.body
     )
 
-  # @FIXME ad filter params to getComponents
   getDeletedComponents: ->
     createRequest('GET', 'components?isDeleted=1')
     .promise()
@@ -44,7 +43,6 @@ installedComponentsApi =
       response.body
     )
 
-# @FIXME ad filter params
   getDeletedComponentConfigurations: (componentId) ->
     createRequest('GET', "components/#{componentId}/configs?isDeleted=1")
     .promise()

@@ -349,7 +349,7 @@ module.exports =
     component = ComponentsStore.getComponent componentId
     configuration = InstalledComponentsStore.getDeletedConfig componentId, configurationId
 
-    notification = "Configuration #{configuration.get('name')} was restored." # @FIXME goto detail link
+    notification = "Configuration #{configuration.get('name')} was restored."
 
     if (transition)
       transitionTo = "generic-detail-#{component.get('type')}"
