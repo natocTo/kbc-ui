@@ -31,12 +31,13 @@ TransformationBucketRow = React.createClass(
     ))
 
     buttons.push(DeleteButton(
-      tooltip: "Delete Immediatelly"
+      tooltip: "Delete Forever"
       icon: "fa-times"
       isPending: @props.pendingActions.get 'delete'
       confirm:
-        title: 'Delete Immediatelly'
-        text: "Do you really want to Delete bucket #{@props.bucket.get('name')}?"
+        title: 'Delete Forever'
+        text: "Are you sure you want to permanently delete the bucket #{@props.bucket.get('name')}?
+         You can't undo this action."
         onConfirm: @._deleteTransformationBucket
     ))
 

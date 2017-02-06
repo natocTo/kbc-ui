@@ -33,7 +33,7 @@ export default React.createClass({
             onRestore={this.handleRestore}
         />
           <DeleteButton
-            tooltip="Delete Immediatelly"
+            tooltip="Delete Forever"
             icon="fa-times"
             isPending={this.props.isDeleting}
             confirm={this.deleteConfirmProps()}
@@ -54,8 +54,9 @@ export default React.createClass({
 
   deleteConfirmProps() {
     return {
-      title: 'Delete Immediatelly',
-      text: `Do you really want to Delete configuration ${this.props.config.get('name')}?`,
+      title: 'Delete Forever',
+      text: `Are you sure you want to permanently delete the configuration ${this.props.config.get('name')}?`
+        + ` You can't undo this action.`,
       onConfirm: this.handleDelete
     };
   },

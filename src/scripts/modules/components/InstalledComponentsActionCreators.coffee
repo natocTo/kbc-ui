@@ -389,7 +389,7 @@ module.exports =
     component = ComponentsStore.getComponent componentId
     configuration = InstalledComponentsStore.getConfig componentId, configurationId
 
-    notification = "Configuration #{configuration.get('name')} was deleted." # @FIXME do undo link
+    notification = "Configuration #{configuration.get('name')} was moved to Trash."
 
     if (transition)
       transitionTo = "generic-detail-#{component.get('type')}"
