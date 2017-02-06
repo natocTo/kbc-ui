@@ -3,6 +3,7 @@ import DeleteButton from '../../../../react/common/DeleteButton';
 import RestoreConfigurationButton from '../../../../react/common/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
@@ -27,11 +28,20 @@ export default React.createClass({
           <span className="kbc-component-author">
             Removed by <strong>{this.props.config.getIn(['creatorToken', 'description'])}</strong>
           </span>
-          <RestoreConfigurationButton
-            tooltip="Put Back"
-            isPending={this.props.isRestoring}
-            onRestore={this.handleRestore}
-        />
+          {this.buttons()}
+        </span>
+      </span>
+    );
+  },
+
+  buttons() {
+    if (this.props.componentId === 'gooddata-writer') {
+      return (
+        <span>
+         <OverlayTrigger overlay={<Tooltip placement="top">
+           Configuration restore is not supported by component</Tooltip>}>
+           <span className="btn btn-link"><i className="fa fa-exclamation-triangle"/></span>
+          </OverlayTrigger>
           <DeleteButton
             tooltip="Delete Forever"
             icon="fa-times"
@@ -39,8 +49,24 @@ export default React.createClass({
             confirm={this.deleteConfirmProps()}
           />
         </span>
-      </span>
-    );
+      );
+    } else {
+      return (
+        <span>
+          <RestoreConfigurationButton
+            tooltip="Put Back"
+            isPending={this.props.isRestoring}
+            onRestore={this.handleRestore}
+          />
+          <DeleteButton
+            tooltip="Delete Forever"
+            icon="fa-times"
+            isPending={this.props.isDeleting}
+            confirm={this.deleteConfirmProps()}
+          />
+        </span>
+      );
+    }
   },
 
   description() {

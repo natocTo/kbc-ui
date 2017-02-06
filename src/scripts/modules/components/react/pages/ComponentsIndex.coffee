@@ -71,7 +71,6 @@ module.exports = React.createClass
 
     installedComponents: InstalledComponentsStore.getAllForType(@props.type)
     deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations()
-    restoringConfigurations: InstalledComponentsStore.getRestoringConfigurations()
     components: components
     filter: ComponentsStore.getFilter(@props.type)
 
@@ -81,7 +80,6 @@ module.exports = React.createClass
         React.createElement ComponentRow,
           component: component
           deletingConfigurations: @state.deletingConfigurations.get(component.get('id'), Map())
-          restoringConfigurations: @state.restoringConfigurations.get(component.get('id'), Map())
           key: component.get('id')
       , @).toArray()
 

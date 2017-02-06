@@ -8,7 +8,7 @@ ComponentsStore = require '../../stores/ComponentsStore'
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
 ApplicationStore = require '../../../../stores/ApplicationStore'
 
-ComponentRow = require('./ComponentRow').default
+DeletedComponentRow = require('./DeletedComponentRow').default
 SplashIcon = require('../../../../react/common/SplashIcon').default
 
 {div, table, tbody, tr, td, ul, li, a, span, small, strong} = React.DOM
@@ -67,7 +67,7 @@ module.exports = React.createClass
   render: ->
     if @state.installedComponents.count()
       rows =  @state.installedComponents.map((component) ->
-        React.createElement ComponentRow,
+        React.createElement DeletedComponentRow,
           component: component
           deletingConfigurations: @state.deletingConfigurations.get(component.get('id'), Map())
           restoringConfigurations: @state.restoringConfigurations.get(component.get('id'), Map())
