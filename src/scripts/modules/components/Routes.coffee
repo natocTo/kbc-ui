@@ -34,7 +34,7 @@ createDbWriterRoutes = require '../wr-db/routes'
 createGenericDetailRoute = require './createGenericDetailRoute'
 createComponentRoute = require('./createComponentRoute').default
 
-googleDriveWriterRoutes = require '../wr-google-drive/wrGdriveRoutes'
+googleDriveWriterRoutes = require '../wr-google-drive-old/wrGdriveRoutes'
 tdeRoutes = require '../tde-exporter/tdeRoutes'
 adformRoutes = require('../ex-adform/routes').default
 twitterRoutes = require('../ex-twitter/routes').default
