@@ -10,12 +10,20 @@ export default function(COMPONENT_ID, configId) {
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
   const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id'], configId);
   const parameters = configData.get('parameters', Map());
+  const items = parameters.get('files', List());
+
+  const tempPath = ['_'];
+  const editPath = tempPath.concat('editing');
+  const editData = localState().getIn(editPath, Map());
+  const pendingPath = tempPath.concat('pending');
 
   return {
     configData: configData,
     parameters: parameters,
     oauthCredentials: OauthStore.getCredentials(COMPONENT_ID, oauthCredentialsId) || Map(),
     oauthCredentialsId: oauthCredentialsId,
+    items: items,
+    hasItems: items.count() > 0,
 
     // local state stuff
     getLocalState(path) {

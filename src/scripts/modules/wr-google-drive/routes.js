@@ -1,27 +1,26 @@
 import Index from './react/Index/Index';
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
-// import HeaderButtons from './react/HeaderButtons';
 import storageActions from '../components/StorageActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import * as oauthUtils from '../oauth-v2/OauthUtils';
 
-export default function(componentId) {
-  return {
-    name: componentId,
-    path: ':config',
-    isComponent: true,
-    defaultRouteHandler: Index(componentId),
-    requireData: [
-      (params) => installedComponentsActions.loadComponentConfigData(componentId, params.config).then(() => {
-        return oauthUtils.loadCredentialsFromConfig(componentId, params.config);
-      }),
-      () => storageActions.loadTables(),
-      (params) => versionsActions.loadVersions(componentId, params.config)
-    ],
-    poll: {
-      interval: 5,
-      action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
-    }
-  };
-}
+const COMPONENT_ID = 'keboola.wr-google-drive';
+
+export default {
+  name: COMPONENT_ID,
+  path: ':config',
+  isComponent: true,
+  defaultRouteHandler: Index(COMPONENT_ID),
+  requireData: [
+    (params) => installedComponentsActions.loadComponentConfigData(COMPONENT_ID, params.config).then(() => {
+      return oauthUtils.loadCredentialsFromConfig(COMPONENT_ID, params.config);
+    }),
+    () => storageActions.loadTables(),
+    (params) => versionsActions.loadVersions(COMPONENT_ID, params.config)
+  ],
+  poll: {
+    interval: 5,
+    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
+  }
+};

@@ -1,6 +1,6 @@
 import storeProvisioning from './storeProvisioning';
 import _ from 'underscore';
-// import {fromJS} from 'immutable';
+import {fromJS} from 'immutable';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 // import callDockerAction from '../components/DockerActionsApi';
 
@@ -13,13 +13,12 @@ export default function(COMPONENT_ID, configId) {
     componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
   }
 
-  function saveConfigData(data, waitingPath, changeDescription) {
-    let dataToSave = data;
-    updateLocalState(waitingPath, true);
-    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave, changeDescription)
-      .then(() => updateLocalState(waitingPath, false));
-  }
-
+  // function saveConfigData(data, waitingPath, changeDescription) {
+  //   let dataToSave = data;
+  //   updateLocalState(waitingPath, true);
+  //   return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave, changeDescription)
+  //     .then(() => updateLocalState(waitingPath, false));
+  // }
 
   // returns localState for @path and function to update local state
   // on @path+@subPath
@@ -40,13 +39,25 @@ export default function(COMPONENT_ID, configId) {
   }
 
   function generateId() {
-    const existingIds = store.queries.map((q) => q.get('id'));
+    const existingIds = store.items.map((q) => q.get('id'));
     const randomNumber = () => Math.floor((Math.random() * 100000) + 1);
     let newId = randomNumber();
     while (existingIds.indexOf(newId) >= 0) {
       newId = randomNumber();
     }
     return newId;
+  }
+
+  function touchSheet() {
+    return fromJS({
+      'id': generateId(),
+      'tableId': '',
+      'type': 'sheet',
+      'title': '',
+      'action': 'update',
+      'spreadsheet': '',
+      'folder': ''
+    });
   }
 
   function startEditing(what, initValue = null) {
@@ -70,6 +81,7 @@ export default function(COMPONENT_ID, configId) {
     cancelEditing: cancelEditing,
     prepareLocalState: prepareLocalState,
     updateLocalState: updateLocalState,
-    generateId: generateId
+    generateId: generateId,
+    touchSheet: touchSheet
   };
 }
