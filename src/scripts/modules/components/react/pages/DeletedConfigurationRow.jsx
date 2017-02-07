@@ -78,11 +78,19 @@ export default React.createClass({
     );
   },
 
+  confirmMessage() {
+    return (
+      <span>Are you sure you want to permanently delete the configuration {this.props.config.get('name')}?
+        <br/>
+        <br/><em>You can't undo this action.</em>
+      </span>
+    );
+  },
+
   deleteConfirmProps() {
     return {
       title: 'Delete Forever',
-      text: `Are you sure you want to permanently delete the configuration ${this.props.config.get('name')}?`
-        + ` You can't undo this action.`,
+      text: this.confirmMessage(),
       onConfirm: this.handleDelete
     };
   },

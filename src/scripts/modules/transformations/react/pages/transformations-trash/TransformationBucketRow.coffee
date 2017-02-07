@@ -9,7 +9,7 @@ NewTransformationModal = require('../../modals/NewTransformation').default
 {ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
 descriptionExcerpt = require('../../../../../utils/descriptionExcerpt').default
 
-{span, div, a, button, i, h4, small, em} = React.DOM
+{span, div, a, button, i, h4, small, em, br} = React.DOM
 
 TransformationBucketRow = React.createClass(
   displayName: 'TransformationBucketRow'
@@ -20,7 +20,7 @@ TransformationBucketRow = React.createClass(
     pendingActions: React.PropTypes.object
     description: React.PropTypes.string
 
-  buttons: ->
+  _buttons: ->
     buttons = []
     props = @props
 
@@ -36,12 +36,18 @@ TransformationBucketRow = React.createClass(
       isPending: @props.pendingActions.get 'delete'
       confirm:
         title: 'Delete Forever'
-        text: "Are you sure you want to permanently delete the bucket #{@props.bucket.get('name')}?
-         You can't undo this action."
+        text: @._confirmMessage()
         onConfirm: @._deleteTransformationBucket
     ))
 
     buttons
+
+  _confirmMessage: ->
+    span {},
+      "Are you sure you want to permanently delete the bucket #{@props.bucket.get('name')}?",
+      br {},
+      br {},
+      em {}, "You can't undo this action."
 
   render: ->
     span {className: 'tr'},
@@ -50,7 +56,7 @@ TransformationBucketRow = React.createClass(
       span {className: 'td col-xs-5'},
         small {}, descriptionExcerpt(@props.description) || em {}, 'No description'
       span {className: 'td col-xs-3 text-right kbc-no-wrap'},
-        @buttons()
+        @._buttons()
 
   _restoreTransformationBucket: ->
     bucketId = @props.bucket.get('id')
