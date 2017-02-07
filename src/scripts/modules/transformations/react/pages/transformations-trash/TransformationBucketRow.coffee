@@ -9,7 +9,7 @@ NewTransformationModal = require('../../modals/NewTransformation').default
 {ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
 descriptionExcerpt = require('../../../../../utils/descriptionExcerpt').default
 
-{span, div, a, button, i, h4, small, em, br} = React.DOM
+{span, div, a, button, i, h4, small, em, br, strong} = React.DOM
 
 TransformationBucketRow = React.createClass(
   displayName: 'TransformationBucketRow'
@@ -50,12 +50,17 @@ TransformationBucketRow = React.createClass(
       em {}, "You can't undo this action."
 
   render: ->
+    console.log(@props.bucket.toJS())
     span {className: 'tr'},
-      span {className: 'td col-xs-4'},
+      span {className: 'td col-xs-3'},
         h4 {}, @props.bucket.get('name')
       span {className: 'td col-xs-5'},
         small {}, descriptionExcerpt(@props.description) || em {}, 'No description'
-      span {className: 'td col-xs-3 text-right kbc-no-wrap'},
+      span {className: 'td col-xs-4'},
+        small {},
+          "Removed by "
+          strong {}, @props.bucket.getIn(['currentVersion', 'creatorToken', 'description'])
+      span {className: 'td col-xs-1 text-right kbc-no-wrap'},
         @._buttons()
 
   _restoreTransformationBucket: ->

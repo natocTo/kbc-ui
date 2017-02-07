@@ -26,7 +26,7 @@ export default React.createClass({
         </span>
         <span className="td text-right kbc-component-buttons">
           <span className="kbc-component-author">
-            Removed by <strong>{this.props.config.getIn(['creatorToken', 'description'])}</strong>
+            Removed by <strong>{this.props.config.getIn(['currentVersion', 'creatorToken', 'description'])}</strong>
           </span>
           {this.buttons()}
         </span>
