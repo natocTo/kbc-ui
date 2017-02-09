@@ -4,6 +4,7 @@ import EventsTab from './EventsTab';
 import GeneralInfoTab from './GeneralInfoTab';
 import DataSampleTab from './DataSampleTab';
 import ColumnsInfoTab from './ColumnsInfoTab';
+import LuckyGuessTab from './LuckyGuessTab';
 
 import SapiTableLink from '../StorageApiTableLink';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
@@ -77,6 +78,23 @@ export default React.createClass({
     );
   },
 
+  hasLGdata() {
+    if (this.props.table.get('columnMetadata').length > 0) {
+      return true;
+    }
+    return false;
+  },
+
+  renderLGTab() {
+    if (this.hasLGdata()) {
+      return (
+        <TabPane key="luckyguess" eventKey="luckyguess" tab="Column Info">
+          {this.renderLuckyGuess()}
+        </TabPane>
+      );
+    }
+  },
+
   renderModalBody() {
     return (
       <TabbedArea key="tabbedarea" animation={false}>
@@ -86,6 +104,7 @@ export default React.createClass({
         <TabPane key="columns" eventKey="columns" tab="Columns">
           {this.renderColumnsInfo()}
         </TabPane>
+        {this.renderLGTab()}
         <TabPane key="datasample" eventKey="datasample" tab="Data Sample">
           {this.renderDataSample()}
         </TabPane>
@@ -142,6 +161,17 @@ export default React.createClass({
         onRunAnalysis={this.props.onRunAnalysis}
         loadingProfilerData={this.props.loadingProfilerData}
         enhancedAnalysis={this.props.enhancedAnalysis}
+      />
+    );
+  },
+
+  renderLuckyGuess() {
+    return (
+      <LuckyGuessTab
+        tableExists={this.props.tableExists}
+        table={this.props.table}
+        dataPreview={this.props.dataPreview}
+        dataPreviewError={this.props.dataPreviewError}
       />
     );
   }

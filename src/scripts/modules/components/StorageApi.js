@@ -41,7 +41,7 @@ var storageApi = {
   },
 
   getTables: function() {
-    return createRequest('GET', 'tables?include=attributes,buckets,columns').promise().then(function(response) {
+    return createRequest('GET', 'tables?include=attributes,buckets,columns,metadata,columnMetadata').promise().then(function(response) {
       return response.body;
     });
   },
@@ -73,6 +73,12 @@ var storageApi = {
 
   getKeenCredentials: function() {
     return createRequest('GET', 'tokens/keen').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+  getColumnMetadata: function(columnId) {
+    return createRequest('GET', 'columns/' + columnId + '/metadata').promise().then(function(response) {
       return response.body;
     });
   },
