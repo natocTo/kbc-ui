@@ -13,6 +13,7 @@ export default function(COMPONENT_ID, configId) {
   const items = parameters.get('files', List());
 
   const tempPath = ['_'];
+  const savingSheetPath = tempPath.concat('savingSheet');
   const editPath = tempPath.concat('editing');
   const editData = localState().getIn(editPath, Map());
   const pendingPath = tempPath.concat('pending');
@@ -33,10 +34,11 @@ export default function(COMPONENT_ID, configId) {
       return localState().getIn([].concat(path), Map());
     },
     getEditPath: (what) => what ? editPath.concat(what) : editPath,
-    isEditing: (what) => editData.hasIn([].concat(what)),
     getPendingPath(what) {
       return pendingPath.concat(what);
     },
+    isEditing: (what) => editData.hasIn([].concat(what)),
+    isSavingSheet: (id) => localState().getIn(savingSheetPath.concat(id), false),
     isPending(what) {
       return localState().getIn(pendingPath.concat(what), null);
     },

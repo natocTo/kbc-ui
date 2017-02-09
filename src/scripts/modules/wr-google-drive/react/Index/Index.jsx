@@ -1,5 +1,5 @@
 import React from 'react';
-// import {Map} from 'immutable';
+import {Map} from 'immutable';
 
 // stores
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
@@ -20,6 +20,7 @@ import ComponentMetadata from '../../../components/react/components/ComponentMet
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import SheetsTable from './SheetsTable';
+import SheetModal from './SheetModal';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
@@ -51,6 +52,7 @@ export default function(COMPONENT_ID) {
     render() {
       return (
         <div className="container-fluid">
+          {this.renderSheetModal()}
           <div className="col-md-9 kbc-main-content">
             <div className="row kbc-header">
               <div className="col-sm-12">
@@ -133,6 +135,22 @@ export default function(COMPONENT_ID) {
             </EmptyState>
           </div>
           : null
+      );
+    },
+
+    renderSheetModal() {
+      const hideFn = () => {
+        this.state.actions.updateLocalState(['SheetModal'], Map());
+        this.state.actions.updateLocalState('showSheetModal', false);
+      };
+      return (
+        <SheetModal
+          show={this.state.localState.get('showSheetModal', false)}
+          onHideFn={hideFn}
+          onSaveFn={this.state.actions.saveQuery}
+          isSavingFn={this.state.store.isSavingSheet}
+          {...this.state.actions.prepareLocalState('SheetModal')}
+        />
       );
     },
 
