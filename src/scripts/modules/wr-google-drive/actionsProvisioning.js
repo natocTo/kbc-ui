@@ -48,11 +48,11 @@ export default function(COMPONENT_ID, configId) {
     return newId;
   }
 
-  function touchSheet() {
+  function touchSheet(sheetType) {
     return fromJS({
       'id': generateId(),
       'tableId': '',
-      'type': 'sheet',
+      'type': sheetType,
       'title': '',
       'action': 'update',
       'spreadsheet': '',

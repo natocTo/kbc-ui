@@ -6,7 +6,9 @@ import {Modal} from 'react-bootstrap';
 // import Select from '../../../../react/common/Select';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 
-// const SHEET_TITLE_HELP = 'Sheet title';
+const HELP_INPUT_TABLE = 'Select source table from Storage';
+const HELP_SHEET_TITLE = 'Name of the sheet';
+const HELP_SHEET_SPREADSHEET = 'Parent spreadsheet';
 
 export default React.createClass({
   propTypes: {
@@ -21,6 +23,7 @@ export default React.createClass({
   },
 
   render() {
+    const type = this.localState(['sheet', 'type']);
     return (
       <Modal
         bsSize="large"
@@ -29,13 +32,13 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {this.localState(['currentSheet', 'title'], false) ? 'Edit' : 'Add'} Document
+            {this.localState(['currentSheet', 'title'], false) ? 'Edit' : 'Add'} {type}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row form-horizontal clearfix">
+          <div className="form-horizontal">
             {this.renderTableSelector()}
-            {/* {this.renderInput('Title', 'title', TITLE_HELP, placeholders.title)} */}
+            {(type === 'sheet') ? this.renderSheetFields() : this.renderFileFileds()}
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -44,7 +47,7 @@ export default React.createClass({
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
             placement="right"
-            saveLabel="Add Table"
+            saveLabel="Save"
             isDisabled={this.isSavingDisabled()}
           />
         </Modal.Footer>
@@ -52,25 +55,66 @@ export default React.createClass({
     );
   },
 
-  renderTableSelector() {
+  renderSheetFields() {
+    const title = this.renderInput('Title', 'title', HELP_SHEET_TITLE, 'My Sheet');
+    const spreadsheet = this.renderInput('Spreadsheet', 'fileId', HELP_SHEET_SPREADSHEET, 'My Sheet');
+
     return (
+      <div>
+        {title}
+        {spreadsheet}
+      </div>
+    );
+  },
+
+  renderFileFileds() {
+
+  },
+
+  renderTableSelector() {
+    const element = (
       <SapiTableSelector
-        onSelectTableFn={this.onSelectTable}
+        onSelectTableFn={(value) => this.updateLocalState(['sheet', 'tableId'], value)}
         placeholder="Select..."
         value={this.sheet(['tableId'], '')}
         allowCreate={false}
       />
     );
+    return this.renderFormElement('Input table', element, HELP_INPUT_TABLE);
   },
 
   renderInput(caption, propertyPath, helpText, placeholder, validationFn = () => null) {
     const validationText = validationFn();
-    const inputControl = this.renderInputControl(propertyPath, placeholder);
-    return this.renderFormControl(caption, inputControl, helpText, validationText);
+    const inputElement = this.renderInputElement(propertyPath, placeholder);
+    return this.renderFormElement(caption, inputElement, helpText, validationText);
   },
 
-  onSelectTable(value) {
-    this.updateLocalState(['sheet', 'tableId'], value);
+  renderInputElement(propertyPath, placeholder) {
+    return (
+      <input
+        placeholder={placeholder}
+        type="text"
+        value={this.sheet(propertyPath)}
+        onChange={(e) => this.updateLocalState(['sheet'].concat(propertyPath), e.target.value)}
+        className="form-control"
+      />
+    );
+  },
+
+  renderFormElement(label, element, helpText, errorMsg) {
+    return (
+      <div className={errorMsg ? 'form-group has-error' : 'form-group'}>
+        <label className="col-sm-2 control-label">
+          {label}
+        </label>
+        <div className="col-sm-10">
+          {element}
+          <span className="help-block">
+            {errorMsg || helpText}
+          </span>
+        </div>
+      </div>
+    );
   },
 
   isSavingDisabled() {
