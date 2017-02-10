@@ -4,12 +4,14 @@ import _ from 'underscore';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 
+import {Table} from 'react-bootstrap';
+/*
 import {Accordion} from 'react-bootstrap';
 import {Panel} from 'react-bootstrap';
 import {Grid} from 'react-bootstrap';
 import {Row} from 'react-bootstrap';
 import {Col} from 'react-bootstrap';
-
+*/
 export default React.createClass({
   propTypes: {
     tableExists: PropTypes.bool.isRequired,
@@ -52,6 +54,7 @@ export default React.createClass({
     return parsedMetadata.map((dat, datkey) => {
       const formatKeys = Object.keys(dat.formats);
       const colData = formatKeys.map((formatKey) => {
+        /*
         return (
           <Col md={Math.ceil(12 / formatKeys.length)}>
             {
@@ -59,7 +62,16 @@ export default React.createClass({
             }
           </Col>
         );
+        */
+        return (
+          <div>
+            {
+              this.renderFormatOutput(formatKey, dat.formats[formatKey])
+            }
+          </div>
+        );
       });
+      /*
       return (
         <Accordion>
           <Panel header={datkey}>
@@ -71,6 +83,15 @@ export default React.createClass({
           </Panel>
         </Accordion>
       );
+      */
+      return (
+        <div>
+          <h3>{datkey}</h3>
+          <div className="clearfix">
+            {colData}
+          </div>
+        </div>
+      );
     });
   },
 
@@ -79,25 +100,25 @@ export default React.createClass({
       return this.renderKeyValue(keyValue);
     });
     return (
-        <div>
+        <div className="pull-left">
           <h4>{formatKey}</h4>
-          {formats}
+          <Table className="table-condensed">{formats}</Table>
         </div>
     );
   },
 
   renderKeyValue(keyValue) {
     return (
-      <div>
-        <label>{keyValue.key}</label>
-        <span>{keyValue.value}</span>
-      </div>
+      <tr>
+        <th>{keyValue.key}</th>
+        <td>{keyValue.value}</td>
+      </tr>
     );
   },
 
   parseColumnMetadata(columnMetadata) {
     return columnMetadata.map((cmd, cmdkey) => {
-      var curFormat = 'general';
+      var curFormat = 'General Info';
       var output = {};
       output.name = cmdkey;
       output.formats = {};
@@ -113,7 +134,7 @@ export default React.createClass({
           }
           remainingKey = _.tail(splitKey, formatsIndex + 2).join('.');
         } else {
-          curFormat = 'general';
+          curFormat = 'General Info';
           remainingKey = _.tail(splitKey, 1).join('.');
         }
         if (!_.has(output.formats, curFormat)) {
