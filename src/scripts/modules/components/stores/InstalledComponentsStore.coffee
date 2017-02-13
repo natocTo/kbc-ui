@@ -38,6 +38,8 @@ _store = Map(
   isLoading: false
   pendingActions: Map()
   openMappings: Map()
+
+  filters: Map()
 )
 
 InstalledComponentsStore = StoreUtils.createStore
@@ -64,6 +66,9 @@ InstalledComponentsStore = StoreUtils.createStore
   getAllForType: (type) ->
     @getAll().filter (component) ->
       component.get('type') == type
+
+  getTrashFilter: ->
+    _store.getIn ['filters', 'trash'], ''
 
   getAllDeletedForType: (type) ->
     @getAllDeleted().filter (component) ->
@@ -411,6 +416,10 @@ Dispatcher.register (payload) ->
 
     when constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_START
       _store = _store.setIn ['deletingConfigurations', action.componentId, action.configurationId], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.DELETED_COMPONENTS_FILTER_CHANGE
+      _store = _store.setIn ['filters', 'trash'], action.filter
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS

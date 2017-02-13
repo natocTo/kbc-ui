@@ -386,6 +386,11 @@ module.exports =
 
       throw e
 
+  deletedConfigurationsFilterChange: (query) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.DELETED_COMPONENTS_FILTER_CHANGE
+      filter: query
+
   deleteConfiguration: (componentId, configurationId, transition) ->
     dispatcher.handleViewAction
       type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_START

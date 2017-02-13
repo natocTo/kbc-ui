@@ -9,6 +9,7 @@ import {extractors, writers, applications} from './modules/components/Routes';
 import orchestrationRoutes  from './modules/orchestrations/Routes';
 import transformationRoutes from './modules/transformations/Routes';
 import jobRoutes from './modules/jobs/Routes';
+import trashRoutes from './modules/trash/Routes';
 
 
 export default {
@@ -27,6 +28,7 @@ export default {
     jobRoutes,
     billingRoutes,
     transformationRoutes,
+    trashRoutes,
     {
       name: 'data-takeout',
       title: 'Data Takeout',
