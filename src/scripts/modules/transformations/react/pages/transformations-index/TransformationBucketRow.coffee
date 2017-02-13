@@ -25,7 +25,7 @@ TransformationBucketRow = React.createClass(
     props = @props
 
     buttons.push(DeleteButton
-      tooltip: 'Mote to Trash'
+      tooltip: 'Move to Trash'
       isPending: @props.pendingActions.get 'delete'
       confirm:
         title: 'Move Bucket to Trash'
