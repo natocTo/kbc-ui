@@ -54,7 +54,7 @@ export default React.createClass({
       return (
         <span>
           <RestoreConfigurationButton
-            tooltip="Put Back"
+            tooltip="Restore"
             isPending={this.props.isRestoring}
             onRestore={this.handleRestore}
           />

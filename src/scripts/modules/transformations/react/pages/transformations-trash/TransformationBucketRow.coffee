@@ -25,7 +25,7 @@ TransformationBucketRow = React.createClass(
     props = @props
 
     buttons.push(RestoreConfigurationButton(
-      tooltip: "Put Back"
+      tooltip: "Restore"
       isPending: @props.pendingActions.get 'restore'
       onRestore: @._restoreTransformationBucket
     ))
