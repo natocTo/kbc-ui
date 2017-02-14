@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react/addons';
 import DeleteButton from '../../../../react/common/DeleteButton';
+import Finished from '../../../../react/common/Finished';
 import RestoreConfigurationButton from '../../../../react/common/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
@@ -16,6 +17,8 @@ export default React.createClass({
   },
 
   render() {
+    console.log(this.props.config.getIn(['currentVersion', 'created']));
+    console.log('deletion time');
     return (
       <span className="tr">
         <span className="td">
@@ -26,7 +29,9 @@ export default React.createClass({
         </span>
         <span className="td text-right kbc-component-buttons">
           <span className="kbc-component-author">
-            Removed by <strong>{this.props.config.getIn(['currentVersion', 'creatorToken', 'description'])}</strong>
+            Removed by <strong>
+              {this.props.config.getIn(['currentVersion', 'creatorToken', 'description'])}
+            </strong> <Finished endTime={this.props.config.getIn(['currentVersion', 'created'])}/>
           </span>
           {this.buttons()}
         </span>
