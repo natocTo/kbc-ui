@@ -51,7 +51,7 @@ export default React.createClass({
     return (
       <Link
         to={GENERIC_DETAIL_PREFIX + components.getIn([componentId, 'type']) + '-config'}
-        params={{config: configId}}
+        params={{component: componentId, config: configId}}
       >
         go to the new configuration.
       </Link>
