@@ -8,6 +8,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 NewTransformationModal = require('../../modals/NewTransformation').default
 {ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
 descriptionExcerpt = require('../../../../../utils/descriptionExcerpt').default
+Finished = require('../../../../../react/common/Finished').default
 
 {span, div, a, button, i, h4, small, em, br, strong} = React.DOM
 
@@ -50,7 +51,6 @@ TransformationBucketRow = React.createClass(
       em {}, "You can't undo this action."
 
   render: ->
-    console.log(@props.bucket.toJS())
     span {className: 'tr'},
       span {className: 'td col-xs-3'},
         h4 {}, @props.bucket.get('name')
@@ -58,8 +58,11 @@ TransformationBucketRow = React.createClass(
         small {}, descriptionExcerpt(@props.description) || em {}, 'No description'
       span {className: 'td col-xs-4'},
         small {},
-          "Removed by "
+          "Removed by dddssd "
           strong {}, @props.bucket.getIn(['currentVersion', 'creatorToken', 'description'])
+          ' '
+          React.createElement Finished,
+            endTime: @props.bucket.getIn(['currentVersion', 'created'])
       span {className: 'td col-xs-1 text-right kbc-no-wrap'},
         @._buttons()
 

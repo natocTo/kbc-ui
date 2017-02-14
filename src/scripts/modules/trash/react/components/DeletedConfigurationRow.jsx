@@ -17,8 +17,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log(this.props.config.getIn(['currentVersion', 'created']));
-    console.log('deletion time');
     return (
       <span className="tr">
         <span className="td">
