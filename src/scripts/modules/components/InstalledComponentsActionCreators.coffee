@@ -16,6 +16,8 @@ RoutesStore = require '../../stores/RoutesStore'
 ComponentsStore = require './stores/ComponentsStore'
 VersionActionCreators = require '../components/VersionsActionCreators'
 
+ConfigurationCopiedNotification = require('./react/components/ConfigurationCopiedNotification').default
+
 deleteComponentConfiguration = require './utils/deleteComponentConfiguration'
 removeEmptyEncryptAttributes = require './utils/removeEmptyEncryptAttributes'
 preferEncryptedAttributes = require './utils/preferEncryptedAttributes'
@@ -356,8 +358,6 @@ module.exports =
     component = ComponentsStore.getComponent componentId
     configuration = InstalledComponentsStore.getDeletedConfig componentId, configurationId
 
-    notification = "Configuration #{configuration.get('name')} was restored."
-
     if (transition)
       transitionTo = "generic-detail-#{component.get('type')}"
       transitionParams =
@@ -374,7 +374,13 @@ module.exports =
         transition: transition
 
       ApplicationActionCreators.sendNotification
-        message: notification
+        message: React.createClass
+          render: ->
+            React.createElement ConfigurationCopiedNotification,
+              message: "Configuration #{configuration.get('name')} was restored"
+              linkLabel: 'go to the configuration'
+              componentId: componentId
+              configId: configurationId
 
     .catch (e) ->
       dispatcher.handleViewAction
