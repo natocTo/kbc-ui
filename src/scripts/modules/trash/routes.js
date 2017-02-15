@@ -1,6 +1,7 @@
 import Index from './react/pages/TrashIndex';
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import TrashHeaderButtons from './react/components/TrashHeaderButtons';
+import ComponentReloaderButton from '../components/react/components/ComponentsReloaderButton';
 
 // import store from './storeProvisioning';
 // import DeletedComponentsStore from '../components/stores/DeletedComponentsStore';
@@ -12,6 +13,7 @@ export default {
   isComponent: true,
   defaultRouteHandler: Index,
   headerButtonsHandler: TrashHeaderButtons,
+  reloaderHandler: ComponentReloaderButton,
   requireData: [
     () => installedComponentsActions.loadComponents()
   ],

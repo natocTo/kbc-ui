@@ -1,10 +1,9 @@
 import React, {PropTypes} from 'react/addons';
 import DeleteButton from '../../../../react/common/DeleteButton';
-import Finished from '../../../../react/common/Finished';
+import {Finished, Tooltip} from '../../../../react/common/common';
 import RestoreConfigurationButton from '../../../../react/common/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
-import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
@@ -41,10 +40,11 @@ export default React.createClass({
     if (this.props.componentId === 'gooddata-writer' || this.props.componentId === 'orchestrator') {
       return (
         <span>
-         <OverlayTrigger overlay={<Tooltip placement="top">
-           Configuration restore is not supported by component</Tooltip>}>
-           <span className="btn btn-link"><i className="fa fa-exclamation-triangle"/></span>
-          </OverlayTrigger>
+          <Tooltip
+            placement="top"
+            tooltip="Configuration restore is not supported by component"
+            children={<span className="btn btn-link"><i className="fa fa-exclamation-triangle"/></span>}
+          />
           <DeleteButton
             tooltip="Delete Forever"
             icon="fa-times"

@@ -17,7 +17,7 @@ export default React.createClass({
           <div className="kbc-title">
             <h2>
               <ComponentIcon component={this.props.component} size="32" />
-              {this.props.component.get('name')}
+              {this.props.component.get('name')}{this.renderType()}
             </h2>
           </div>
         </div>
@@ -28,6 +28,14 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderType() {
+    if (this.props.component.get('type') !== 'application' && this.props.component.get('type') !== 'transformation') {
+      return (
+        <span> {this.props.component.get('type')}</span>
+      );
+    }
   },
 
   configurations() {
