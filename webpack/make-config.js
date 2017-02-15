@@ -79,10 +79,27 @@ module.exports = function (options) {
         coffeelint: {
             configFile: 'coffeelint.json'
         },
+        eslint: {
+            failOnWarning: false,
+            failOnError: true,
+            configFile: path.resolve(__dirname, '../.eslintrc')
+        },
         module: {
             // via http://andrewhfarmer.com/aws-sdk-with-webpack/
             noParse: [
               /aws\-sdk/,
+            ],
+            preLoaders: [
+                {
+                    test: /\.jsx?$/,
+                    loader: 'eslint-loader',
+                    exclude: /node_modules/
+                },
+                {
+                    test: /\.coffee$/,
+                    loader: "coffee-lint-loader",
+                    exclude: /node_modules/
+                }
             ],
             loaders: [
                 {
