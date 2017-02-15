@@ -8,7 +8,6 @@ before_script:
   - git describe --tags
   - export KBC_REVISION=`git describe --tags`
 script:
- - yarn lint
  - yarn test
  - yarn build
 sudo: false
