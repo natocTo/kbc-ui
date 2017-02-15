@@ -34,7 +34,7 @@ var SnowflakeSandbox = React.createClass({
   },
   _renderControlButtons: function() {
     var sandboxConfiguration;
-    const connectLink = 'https://' + this.state.credentials.get('hostname') + '/console';
+    const connectLink = 'https://' + this.state.credentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet';
     if (this.state.credentials.get('id')) {
       sandboxConfiguration = {};
       return (
