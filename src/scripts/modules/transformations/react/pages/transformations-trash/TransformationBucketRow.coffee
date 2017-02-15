@@ -28,7 +28,10 @@ TransformationBucketRow = React.createClass(
     buttons.push(RestoreConfigurationButton(
       tooltip: "Restore"
       isPending: @props.pendingActions.get 'restore'
-      onRestore: @._restoreTransformationBucket
+      confirm:
+        title: 'Restore configuration'
+        text: @._restoreConfirmMessage()
+        onConfirm: @._restoreTransformationBucket
     ))
 
     buttons.push(DeleteButton(
@@ -37,18 +40,22 @@ TransformationBucketRow = React.createClass(
       isPending: @props.pendingActions.get 'delete'
       confirm:
         title: 'Delete Forever'
-        text: @._confirmMessage()
+        text: @._deleteConfirmMessage()
         onConfirm: @._deleteTransformationBucket
     ))
 
     buttons
 
-  _confirmMessage: ->
+  _deleteConfirmMessage: ->
     span {},
       "Are you sure you want to permanently delete the bucket #{@props.bucket.get('name')}?",
       br {},
       br {},
       em {}, "You can't undo this action."
+
+  _restoreConfirmMessage: ->
+    span {},
+      "Are you sure you want to restore the configuration #{@props.bucket.get('name')}?"
 
   render: ->
     span {className: 'tr'},

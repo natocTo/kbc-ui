@@ -59,7 +59,7 @@ export default React.createClass({
           <RestoreConfigurationButton
             tooltip="Restore"
             isPending={this.props.isRestoring}
-            onRestore={this.handleRestore}
+            confirm={this.restoreConfirmProps()}
           />
           <DeleteButton
             tooltip="Delete Forever"
@@ -81,7 +81,7 @@ export default React.createClass({
     );
   },
 
-  confirmMessage() {
+  deleteConfirmMessage() {
     return (
       <span>Are you sure you want to permanently delete the configuration {this.props.config.get('name')}?
         <br/>
@@ -90,11 +90,25 @@ export default React.createClass({
     );
   },
 
+  restoreConfirmMessage() {
+    return (
+      <span>Are you sure you want to restore the configuration {this.props.config.get('name')}?</span>
+    );
+  },
+
   deleteConfirmProps() {
     return {
       title: 'Delete Forever',
-      text: this.confirmMessage(),
+      text: this.deleteConfirmMessage(),
       onConfirm: this.handleDelete
+    };
+  },
+
+  restoreConfirmProps() {
+    return {
+      title: 'Restore configuration',
+      text: this.restoreConfirmMessage(),
+      onConfirm: this.handleRestore
     };
   },
 
