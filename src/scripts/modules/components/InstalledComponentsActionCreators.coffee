@@ -457,6 +457,21 @@ module.exports =
 
       throw e
 
+  deleteAllFilteredConfigurationsPermanently: ->
+    promises = []
+    actions = @
+    InstalledComponentsStore.getAllDeletedFiltered().forEach (component) ->
+      console.log(component)
+      componentId = component.get('id')
+
+      component.get('configurations').forEach (configuration) ->
+        configurationId = configuration.get('id')
+        promises.push actions.deleteConfigurationPermanently componentId, configurationId, false
+        return
+      return
+
+    Promise.all(promises)
+
   deleteConfigurationPermanently: (componentId, configurationId, transition) ->
     dispatcher.handleViewAction
       type: constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_START

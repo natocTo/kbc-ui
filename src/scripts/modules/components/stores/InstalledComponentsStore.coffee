@@ -1,6 +1,7 @@
 Dispatcher = require('../../../Dispatcher')
 constants = require '../Constants'
 Immutable = require('immutable')
+fuzzy = require('fuzzy')
 Map = Immutable.Map
 List = Immutable.List
 StoreUtils = require '../../../utils/StoreUtils'
@@ -69,6 +70,39 @@ InstalledComponentsStore = StoreUtils.createStore
 
   getTrashFilter: ->
     _store.getIn ['filters', 'trash'], ''
+
+  getAllDeletedFiltered: ->
+    filter = @getTrashFilter()
+    components = @getAllDeleted()
+
+    if !filter || filter is ''
+      components
+    else
+      components.filter(
+        (component) ->
+          fuzzy.match(filter, component.get('name').toString()) or
+          fuzzy.match(filter, component.get('id').toString()) or
+          fuzzy.match(filter, component.get('description').toString()) or
+          @getAllDeletedConfigurationsFiltered(component).count()
+        ,
+        @
+      )
+
+  getAllDeletedConfigurationsFiltered: (component) ->
+    filter = @getTrashFilter()
+    configurations = component.get('configurations', Map())
+
+    if !filter || filter is ''
+      configurations
+    else
+      configurations.filter(
+        (configuration) ->
+          fuzzy.match(filter, configuration.get('name').toString()) or
+          fuzzy.match(filter, configuration.get('description').toString()) or
+          fuzzy.match(filter, configuration.get('id', '').toString())
+        ,
+        @
+      )
 
   getAllDeletedForType: (type) ->
     @getAllDeleted().filter (component) ->

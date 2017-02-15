@@ -1,5 +1,4 @@
 import React from 'react';
-import fuzzy from 'fuzzy';
 import {Map} from 'immutable';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -26,6 +25,7 @@ export default React.createClass({
     return {
       filter: InstalledComponentsStore.getTrashFilter(),
       installedComponents: InstalledComponentsStore.getAllDeleted(),
+      installedFilteredComponents: InstalledComponentsStore.getAllDeletedFiltered(),
       deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations(),
       restoringConfigurations: InstalledComponentsStore.getRestoringConfigurations(),
       components: components
@@ -36,39 +36,9 @@ export default React.createClass({
     InstaledComponentsActions.deletedConfigurationsFilterChange(query);
   },
 
-  getFilteredConfigurations(component) {
-    const filter = this.state.filter;
-    let configurations = component.get('configurations', Map());
-
-    if (filter && filter !== '') {
-      return configurations.filter(function(configuration) {
-        return fuzzy.match(filter, configuration.get('name').toString()) ||
-          fuzzy.match(filter, configuration.get('description').toString()) ||
-          fuzzy.match(filter, configuration.get('id', '').toString());
-      });
-    } else {
-      return configurations;
-    }
-  },
-
-  getFilteredComponents() {
-    // return this.state.installedComponents;
-    const filter = this.state.filter;
-    if (filter && filter !== '') {
-      return this.state.installedComponents.filter(function(component) {
-        return fuzzy.match(filter, component.get('name').toString()) ||
-        fuzzy.match(filter, component.get('id').toString()) ||
-        fuzzy.match(filter, component.get('description').toString()) ||
-        this.getFilteredConfigurations(component).count();
-      }, this);
-    } else {
-      return this.state.installedComponents;
-    }
-  },
-
   render() {
     if (this.state.installedComponents.count()) {
-      let components = this.getFilteredComponents();
+      let components = this.state.installedFilteredComponents;
       const rows = components.map(function(component) {
         return (
           <DeletedComponentRow
