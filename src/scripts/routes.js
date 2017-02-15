@@ -9,7 +9,7 @@ import {extractors, writers, applications} from './modules/components/Routes';
 import orchestrationRoutes  from './modules/orchestrations/Routes';
 import transformationRoutes from './modules/transformations/Routes';
 import jobRoutes from './modules/jobs/Routes';
-import trashRoutes from './modules/trash/Routes';
+import trashRoutes from './modules/trash/routes';
 
 
 export default {
