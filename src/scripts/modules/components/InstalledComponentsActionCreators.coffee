@@ -48,6 +48,14 @@ storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
 module.exports =
 
   loadComponentsForce: ->
+    promises = []
+
+    promises.push @loadInstalledComponentsForce()
+    promises.push @loadDeletedComponentsForce()
+
+    Promise.all(promises)
+
+  loadInstalledComponentsForce: ->
     dispatcher.handleViewAction(
       type: constants.ActionTypes.INSTALLED_COMPONENTS_LOAD
     )
@@ -68,8 +76,6 @@ module.exports =
       )
       throw error
     )
-
-    @loadDeletedComponentsForce()
 
   loadDeletedComponentsForce: ->
     dispatcher.handleViewAction(
@@ -364,6 +370,8 @@ module.exports =
         component: component.get('id')
       RoutesStore.getRouter().transitionTo transitionTo, transitionParams
 
+    actions = @
+
     installedComponentsApi.restoreConfiguration componentId, configurationId
     .then (response) ->
 
@@ -373,14 +381,16 @@ module.exports =
         configurationId: configurationId
         transition: transition
 
-      ApplicationActionCreators.sendNotification
-        message: React.createClass
-          render: ->
-            React.createElement ConfigurationCopiedNotification,
-              message: "Configuration #{configuration.get('name')} was restored"
-              linkLabel: 'go to the configuration'
-              componentId: componentId
-              configId: configurationId
+      actions.loadInstalledComponentsForce()
+      .then (response) ->
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            render: ->
+              React.createElement ConfigurationCopiedNotification,
+                message: "Configuration #{configuration.get('name')} was restored"
+                linkLabel: 'go to the configuration'
+                componentId: componentId
+                configId: configurationId
 
     .catch (e) ->
       dispatcher.handleViewAction
@@ -407,6 +417,8 @@ module.exports =
     component = ComponentsStore.getComponent componentId
     configuration = InstalledComponentsStore.getConfig componentId, configurationId
 
+    notification = "Configuration #{configuration.get('name')} was moved to Trash."
+
     if (transition)
       transitionTo = "generic-detail-#{component.get('type')}"
       transitionParams =
@@ -417,24 +429,23 @@ module.exports =
 
     deleteComponentConfiguration componentId, configurationId
     .then (response) ->
-
       dispatcher.handleViewAction
         type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS
         componentId: componentId
         configurationId: configurationId
         transition: transition
 
-      ApplicationActionCreators.sendNotification
-        message: React.createClass
-          render: ->
-            React.DOM.span null,
-              "Configuration #{configuration.get('name')} was moved to "
-              React.createElement Link,
-                to: 'trash'
-              ,
-                'Trash'
-
       actions.loadDeletedComponentsForce()
+      .then (response) ->
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            render: ->
+              React.DOM.span null,
+                "Configuration #{configuration.get('name')} was moved to "
+                React.createElement Link,
+                  to: 'trash'
+                ,
+                  'Trash'
 
     .catch (e) ->
       dispatcher.handleViewAction
