@@ -79,20 +79,24 @@
       }
     ];
 
+    function kbcUrl(path) {
+      return kbcApp.helpers.getUrlParameterByName('host', window.location.search, 'https://connection.keboola.com') + path;
+    }
+
     kbcApp.helpers.Promise.longStackTraces();
     kbcApp
       .helpers
       .Promise
       .props({
         components: kbcApp.helpers
-          .request('GET', 'https://connection.keboola.com/v2/storage')
+          .request('GET', kbcUrl('/v2/storage'))
           .promise()
           .then(function (response) {
             return response.body;
           })
         ,
         token: kbcApp.helpers
-          .request('GET', 'https://connection.keboola.com/v2/storage/tokens/verify')
+          .request('GET', kbcUrl('/v2/storage/tokens/verify'))
           .set('X-StorageApi-Token', kbcApp.helpers.getUrlParameterByName('token', window.location.search))
           .promise()
           .then(function (response) {
@@ -118,7 +122,7 @@
               }
             ],
             "sapi": {
-              "url": "https://connection.keboola.com",
+              "url": kbcUrl(''),
               "token": params.token
             },
             "projectTemplates": [
