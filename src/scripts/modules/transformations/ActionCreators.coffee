@@ -1,5 +1,7 @@
 dispatcher = require '../../Dispatcher'
 constants = require './Constants'
+React = require 'react'
+{Link} = require 'react-router'
 transformationsApi = require './TransformationsApiAdapter'
 TransformationBucketsStore = require './stores/TransformationBucketsStore'
 TransformationsStore = require './stores/TransformationsStore'
@@ -9,8 +11,8 @@ Promise = require 'bluebird'
 _ = require 'underscore'
 parseQueries = require('./utils/parseQueries').default
 VersionActionCreators = require('../components/VersionsActionCreators')
+ApplicationActionCreators = require '../../actions/ApplicationActionCreators'
 {capitalize} = require('../../utils/string').default
-
 module.exports =
 
   ###
@@ -111,6 +113,8 @@ module.exports =
   deleteTransformationBucket: (bucketId) ->
     actions = @
 
+    bucket = TransformationBucketsStore.get bucketId
+
     dispatcher.handleViewAction
       type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE
       bucketId: bucketId
@@ -121,6 +125,18 @@ module.exports =
       dispatcher.handleViewAction
         type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_SUCCESS
         bucketId: bucketId
+
+      InstalledComponentsActionCreators.loadDeletedComponentsForce()
+        .then (response) ->
+          ApplicationActionCreators.sendNotification
+            message: React.createClass
+              render: ->
+                React.DOM.span null,
+                  "Bucket #{bucket.get('name')} was moved to "
+                  React.createElement Link,
+                    to: 'trash'
+                  ,
+                    'Trash'
 
       # reload trash
       transformationsApi

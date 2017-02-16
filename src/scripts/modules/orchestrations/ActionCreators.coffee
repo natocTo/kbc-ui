@@ -8,6 +8,8 @@ OrchestrationStore = require './stores/OrchestrationsStore'
 OrchestrationJobsStore = require './stores/OrchestrationJobsStore'
 Promise = require 'bluebird'
 ApplicationActionCreators = require '../../actions/ApplicationActionCreators'
+InstalledComponnetsActionCreators = require '../components/InstalledComponentsActionCreators'
+
 React = require 'react'
 {Link} = require 'react-router'
 RoutesStore = require '../../stores/RoutesStore'
@@ -127,12 +129,27 @@ module.exports =
       type: constants.ActionTypes.ORCHESTRATION_DELETE_START
       orchestrationId: id
 
+    orchestration = OrchestrationStore.get id
+
     orchestrationsApi
     .deleteOrchestration(id)
     .then ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.ORCHESTRATION_DELETE_SUCCESS
         orchestrationId: id
+
+      InstalledComponnetsActionCreators.loadDeletedComponentsForce()
+      .then (response) ->
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            render: ->
+              React.DOM.span null,
+                "Orchestration #{orchestration.get('name')} was moved to "
+                React.createElement Link,
+                  to: 'trash'
+                ,
+                  'Trash'
+
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.ORCHESTRATION_DELETE_ERROR
