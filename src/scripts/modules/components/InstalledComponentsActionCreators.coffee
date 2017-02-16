@@ -461,7 +461,6 @@ module.exports =
     promises = []
     actions = @
     InstalledComponentsStore.getAllDeletedFiltered().forEach (component) ->
-      console.log(component)
       componentId = component.get('id')
 
       component.get('configurations').forEach (configuration) ->
