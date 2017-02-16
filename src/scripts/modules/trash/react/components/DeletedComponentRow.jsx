@@ -31,7 +31,7 @@ export default React.createClass({
   },
 
   renderType() {
-    if (this.props.component.get('type') !== 'application' && this.props.component.get('type') !== 'transformation') {
+    if (this.props.component.get('type') === 'extractor' || this.props.component.get('type') === 'writer') {
       return (
         <span> {this.props.component.get('type')}</span>
       );
