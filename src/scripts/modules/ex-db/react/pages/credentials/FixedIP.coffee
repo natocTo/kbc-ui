@@ -21,8 +21,4 @@ module.exports = React.createClass
           ' so we can setup connection to your database to be always established
           from '
           strong null, 'syrup-out.keboola.com'
-          ' and allow the address on your side. '
-          'To get more info, read '
-          a href: 'http://wiki.keboola.com/home/keboola-connection/user-space/kbc-generic/fixed-ip',
-            'here'
-          '.'
+          ' and allow the address on your side.'
