@@ -81,7 +81,7 @@ module.exports = React.createClass
                 api = dockerProxyApi(@props.componentId)
                 return api?.getTableRunParams(configId, tableId) or params
             ,
-             "You are about to run upload of #{@props.table.get('id')} to the database."
+             "You are about to run the upload of #{@props.table.get('id')} to the database."
 
   _renderDeleteButton: ->
     if @props.isDeleting
@@ -94,7 +94,7 @@ module.exports = React.createClass
         React.createElement Confirm,
           key: @props.table.get 'id'
           title: "Remove #{@props.table.get('id')}"
-          text: 'You are about to remove table from the configuration.'
+          text: 'You are about to remove the table from the configuration.'
           buttonLabel: 'Remove'
           onConfirm: =>
             @props.deleteTableFn(@props.table.get('id'))

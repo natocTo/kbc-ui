@@ -72,30 +72,30 @@ module.exports = React.createClass
     filteredColumns = @state.columns.filter((c) -> c.get('type') in [ATTRIBUTE, REFERENCE, DATE])
     grainColumns = if !@_isConnectionPoint() then filteredColumns else Map()
     resetExportStatusText = React.DOM.span null,
-      'Are you sure you want to reset export status of '
+      'Are you sure you want to reset the export status of the '
       React.DOM.strong null, @state.table.getIn ['data', 'title']
       ' dataset?'
 
     resetTableText = React.DOM.span null,
-      'You are about to remove dataset in the GoodData project belonging
+      'You are about to remove the dataset in the GoodData project belonging
       to the table and reset its export status.
-      Are you sure you want to reset table '
+      Are you sure you want to reset the table '
       React.DOM.strong null, @state.table.getIn ['data', 'title']
       ' ?'
 
     uploadTableText = React.DOM.span null,
       'Are you sure you want to upload '
       @state.table.getIn ['data', 'title']
-      ' to GoodData project?'
+      ' to the GoodData project?'
 
     synchronizeTableText = React.DOM.span null,
-      'Are you sure you want to execute '
+      'Are you sure you want to execute the '
       React.DOM.a
         href: 'https://developer.gooddata.com/article/maql-ddl#synchronize'
         target: '_blank'
       ,
         'synchronize'
-      ' operation on '
+      ' operation on the '
       React.DOM.strong null, @state.table.getIn ['data', 'title']
       ' dataset?'
 

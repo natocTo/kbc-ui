@@ -57,7 +57,7 @@ export default React.createClass({
         <TabPane eventKey={Steps.STEP_TEMPLATE} tab="2. Template" disabled={!this.isCredentialsValid()}>
           <div className="row">
             <div className="col-sm-10">
-              <p>Please select from predefined templates to initialize the Adform configuration:</p>
+              <p>Please select from the predefined templates to initialize the Adform configuration:</p>
               <p>
                 <Select
                   name="jobTemplates"
@@ -68,7 +68,7 @@ export default React.createClass({
                   />
               </p>
               <p className="help-block">
-                You can change it or extend it to fetch more or other data later.
+                You can change or extend it to fetch more or other data later.
               </p>
             </div>
           </div>

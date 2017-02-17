@@ -78,7 +78,7 @@ var SnowflakeSandbox = React.createClass({
                 fixedWidth={true}
                 confirm={{
                   title: 'Delete Snowflake Sandbox',
-                  text: 'Do you really want to delete Snowflake sandbox?',
+                  text: 'Do you really want to delete the Snowflake sandbox?',
                   onConfirm: this._dropCredentials
                 }}
               />

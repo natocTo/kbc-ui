@@ -53,7 +53,7 @@ export default React.createClass({
         component={this.props.componentId}
         runParams={this.runParams()}
       >
-        You are about to run {this.props.component.get('name')} configuration <strong>{this.props.config.get('name')}</strong>.
+        You are about to run the {this.props.component.get('name')} configuration <strong>{this.props.config.get('name')}</strong>.
       </RunConfigurationButton>
     );
   },
@@ -70,7 +70,7 @@ export default React.createClass({
   deleteConfirmProps() {
     return {
       title: 'Delete Configuration',
-      text: `Do you really want to delete configuration ${this.props.config.get('name')}?`,
+      text: `Do you really want to delete the configuration ${this.props.config.get('name')}?`,
       onConfirm: this.handleDelete
     };
   },

@@ -247,8 +247,8 @@ module.exports = (componentId) ->
               runParams: =>
                 config: @state.configId
             ,
-             "You are about to run upload of #{@_getInputTables().count()} selected table(s) to dropbox account. \
-             The resulting file(s) will be stored into 'Apps/Keboola Writer' dropbox folder."
+             "You are about to upload #{@_getInputTables().count()} selected table(s) to the dropbox account. \
+             The resulting file(s) will be stored into the 'Apps/Keboola Writer' dropbox folder."
 
           li null,
             if @state.hasCredentials

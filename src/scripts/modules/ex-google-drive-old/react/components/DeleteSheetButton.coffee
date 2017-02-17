@@ -24,7 +24,7 @@ module.exports = React.createClass
     ,
       Confirm
         title: 'Delete Sheet'
-        text: "Do you really want to delete sheet?"
+        text: "Do you really want to delete the sheet?"
         buttonLabel: 'Delete'
         onConfirm: @_deleteQuery
       ,

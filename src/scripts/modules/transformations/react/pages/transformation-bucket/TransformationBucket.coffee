@@ -84,13 +84,13 @@ TransformationBucket = React.createClass
               runParams: =>
                 configBucketId: @state.bucketId
             ,
-              "You are about to run all transformations in bucket #{@state.bucket.get('name')}."
+              "You are about to run all transformations in the bucket #{@state.bucket.get('name')}."
             )
           li {},
             a {},
               React.createElement Confirm,
                 title: 'Delete Bucket'
-                text: "Do you really want to delete bucket #{@state.bucket.get('name')} and all transformations?"
+                text: "Do you really want to delete the bucket #{@state.bucket.get('name')} and all transformations?"
                 buttonLabel: 'Delete'
                 buttonType: 'danger'
                 onConfirm: @_deleteTransformationBucket

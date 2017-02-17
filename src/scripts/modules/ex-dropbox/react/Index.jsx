@@ -231,7 +231,7 @@ export default React.createClass({
                         component="ex-dropbox"
                         runParams={handleUploadingSingleElement}
                         >
-                        You are about to run upload of <strong>1 csv file</strong> from your Dropbox.
+                        You are about to upload <strong>1 csv file</strong> from your Dropbox.
                         The result will be stored into selected buckets.
                       </RunButtonModal>
                     </td>
@@ -305,7 +305,7 @@ export default React.createClass({
               mode="link"
               component="ex-dropbox"
               disabled={!this.canRunUpload()}
-              disabledReason="A Dropbox account must be authorized and some table selected."
+              disabledReason="A Dropbox account must be authorized and a table selected."
               runParams={this.runParams()}
               >
               You are about to run upload of <strong>{this.state.configData.getIn(['parameters', 'config', 'dropboxFiles'], List()).count()} csv files</strong> from your Dropbox.
@@ -350,7 +350,7 @@ export default React.createClass({
           onChange={this.deleteCredentials}
         >
         <Confirm
-          text={`Do you really want to reset the authorization of ${description}? Tables configured to upload will not be reset.`}
+          text={`Do you really want to reset the authorization of ${description}? The tables configured for upload will not be reset.`}
           title={`Reset Authorization ${description}`}
           buttonLabel="Reset"
           onConfirm={this.deleteCredentials}

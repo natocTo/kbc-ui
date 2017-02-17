@@ -60,7 +60,7 @@ var JupyterSandbox = React.createClass({
                 fixedWidth={true}
                 confirm={{
                   title: 'Delete Jupyter Sandbox',
-                  text: 'Do you really want to delete Jupyter sandbox?',
+                  text: 'Do you really want to delete the Jupyter sandbox?',
                   onConfirm: this._dropCredentials
                 }}
               />

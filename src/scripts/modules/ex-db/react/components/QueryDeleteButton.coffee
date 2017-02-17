@@ -36,7 +36,7 @@ module.exports = React.createClass
       ,
         Confirm
           title: 'Delete Query'
-          text: "Do you really want to delete query #{@props.query.get('name')}?"
+          text: "Do you really want to delete the query #{@props.query.get('name')}?"
           buttonLabel: 'Delete'
           onConfirm: @_deleteQuery
         ,
@@ -47,7 +47,7 @@ module.exports = React.createClass
     @transitionTo 'ex-db',
       config: @props.configurationId
 
-    # if query is deleted immediatelly view is rendered with missing orchestration because of store changed
+    # if query is deleted immediately view is rendered with missing orchestration because of store changed
     id = @props.query.get('id')
     config = @props.configurationId
     setTimeout ->

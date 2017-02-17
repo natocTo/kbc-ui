@@ -94,7 +94,7 @@ MySqlSandbox = React.createClass
             fixedWidth: true
             confirm:
               title: 'Delete MySQL Sandbox'
-              text: 'Do you really want to delete MySQL sandbox?'
+              text: 'Do you really want to delete the MySQL sandbox?'
               onConfirm: @_dropCredentials
     else
       if !@state.pendingActions.get("create")

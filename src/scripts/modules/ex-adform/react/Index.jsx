@@ -148,9 +148,9 @@ export default React.createClass({
                 component={this.state.componentId}
                 mode="link"
                 runParams={this.runParams()}
-                disabledReason="Component is not configured yet"
+                disabledReason="The component is not configured yet"
                 >
-                You are about to run component.
+                You are about to run the component.
               </RunComponentButton>
             </li>
             <li>
@@ -187,10 +187,10 @@ export default React.createClass({
   renderHelp() {
     return (
       <p className="help-block">
-        The resource configuration bellow expect <strong>jobs</strong> array configured according to
-        <a href="https://github.com/keboola/generic-extractor#jobs" target="_blank"> Generic extractor documentation</a>.
+        The resource configuration below expects a <strong>jobs</strong> array configured according to the
+        <a href="https://github.com/keboola/generic-extractor#jobs" target="_blank"> Generic Extractor documentation</a>.
 
-        Details about Adform API are available in <a href="https://api.adform.com/Services/Documentation/Index.htm" target="_blank">
+        Details about Adform API are available in the <a href="https://api.adform.com/Services/Documentation/Index.htm" target="_blank">
           Adform API documentation
         </a>.
       </p>

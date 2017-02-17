@@ -29,7 +29,7 @@ TransformationBucketRow = React.createClass(
       isPending: @props.pendingActions.get 'delete'
       confirm:
         title: 'Delete Transformation Bucket'
-        text: "Do you really want to delete transformation bucket #{@props.bucket.get('name')}?"
+        text: "Do you really want to delete the transformation bucket #{@props.bucket.get('name')}?"
         onConfirm: @_deleteTransformationBucket
       isEnabled: true
       key: 'delete-new'
@@ -44,7 +44,7 @@ TransformationBucketRow = React.createClass(
       key: 'run'
       tooltip: 'Run all transformations in bucket'
     ,
-      "You are about to run all transformations in bucket #{@props.bucket.get('name')}."
+      "You are about to run all transformations in the bucket #{@props.bucket.get('name')}."
     ))
 
     buttons.push(

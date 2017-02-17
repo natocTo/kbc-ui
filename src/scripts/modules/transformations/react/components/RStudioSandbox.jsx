@@ -60,7 +60,7 @@ var RStudioSandbox = React.createClass({
                 fixedWidth={true}
                 confirm={{
                   title: 'Delete RStudio Sandbox',
-                  text: 'Do you really want to delete RStudio sandbox?',
+                  text: 'Do you really want to delete the RStudio sandbox?',
                   onConfirm: this._dropCredentials
                 }}
               />

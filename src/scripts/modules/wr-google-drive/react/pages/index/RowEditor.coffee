@@ -14,10 +14,10 @@ Loader = React.createFactory(require('kbc-react-components').Loader)
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 
 tooltips =
-  file: 'uploads selected table as csv a file'
-  sheet: 'uploads selected table as google drive spreadsheet'
-  update: 'always update the same file or sheet, if does not exist create one'
-  create: 'always create new file with unique name by appending current date and time to the name.'
+  file: 'uploads the selected table as a csv file'
+  sheet: 'uploads the selected table as a google drive spreadsheet'
+  update: 'always update the same file or sheet; if it does not exist, create one'
+  create: 'always create new files with a unique name by appending the current date and time to the name.'
 
 
 module.exports = React.createClass

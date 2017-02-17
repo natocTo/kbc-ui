@@ -55,7 +55,7 @@ module.exports = React.createClass
         div null,
           React.createElement Confirm,
             title: 'Reset Authorization'
-            text: "Do you really want to reset authorization for #{@props.account.get('email')}"
+            text: "Do you really want to reset the authorization for #{@props.account.get('email')}"
             buttonLabel: 'Reset'
             onConfirm: =>
               @props.resetUploadTask()
