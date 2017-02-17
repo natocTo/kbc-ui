@@ -22,6 +22,7 @@ export default React.createClass({
     queryTemplates: PropTypes.object.isRequired,
     syncAccounts: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
+    helpUrl: PropTypes.string.isRequired,
     isSavingFn: PropTypes.func.isRequired,
     onHideFn: PropTypes.func,
     authorizedDescription: PropTypes.string,
@@ -51,7 +52,7 @@ export default React.createClass({
               <div className="row form-horizontal clearfix">
                 {this.renderTemplateSelect()}
                 {this.renderInput('Name', 'name', NAME_HELP, placeholders.name, this.nameInvalidReason)}
-                {this.renderInput('Endpoint', ['query', 'path'], ENDPOINT_HELP, placeholders.path)}
+                {this.renderInput('Endpoint', ['query', 'path'], this.enhanceHelp('endpoint', ENDPOINT_HELP), placeholders.path)}
                 {this.renderFieldsInput(placeholders.fields)}
                 {this.renderAccountSelector()}
               </div>
@@ -80,6 +81,20 @@ export default React.createClass({
     );
   },
 
+  enhanceHelp(name, text) {
+    const url = `${this.props.helpUrl}#${name}`;
+    return (
+      <span>
+        {text}
+        <a
+          href={url}
+          target="_blank">
+          {' '}more info
+        </a>
+      </span>
+    );
+  },
+
   nameInvalidReason() {
     const name = this.query('name');
     if (name && !(/^[a-zA-Z0-9-_]+$/.test(name))) return 'Can only contain alphanumeric characters, underscore and dot.';
@@ -99,10 +114,10 @@ export default React.createClass({
       <div className="form-group">
         <div className="col-md-12">
           <span className="pull-right">
-          <DateRangeSelector
-            query={this.query()}
-            updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-          />
+            <DateRangeSelector
+              query={this.query()}
+              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+            />
           </span>
         </div>
       </div>
@@ -114,11 +129,11 @@ export default React.createClass({
       <div className="form-group">
         <div className="col-md-12">
           <span className="pull-right">
-          <TemplateSelector
-            templates={this.props.queryTemplates}
-            query={this.query()}
-            updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-          />
+            <TemplateSelector
+              templates={this.props.queryTemplates}
+              query={this.query()}
+              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+            />
           </span>
         </div>
       </div>
@@ -132,7 +147,7 @@ export default React.createClass({
                        value={this.query(['query', 'fields'])}
                        onChange={(e) => this.updateLocalState(['query', 'query', 'fields'], e.target.value)}
                        className="form-control" rows="2" required/>);
-    return this.renderFormControl('Fields', control, FIELDS_HELP);
+    return this.renderFormControl('Fields', control, this.enhanceHelp('fields', FIELDS_HELP));
   },
 
   renderInputControl(propertyPath, placeholder) {

@@ -267,6 +267,7 @@ export default function(COMPONENT_ID) {
       };
       return (
         <QueryModal
+          helpUrl={this.state.component.get('documentationUrl')}
           placeholders={placeholderTemplates[COMPONENT_ID]}
           queryTemplates={QueryTemplates.get(COMPONENT_ID)}
           show={this.state.localState.get('showQueryModal', false)}
