@@ -49,8 +49,7 @@ const GoodDataMigrationDescription = (
       <li><strong>Only GoodData writer reports will be migrated:</strong> Only reports of the GoodData project belonging to a GoodData writer configuration of this project will be migrated. If there are reports from a different(non-writer) GoodData project, then users have to do the migration manually.</li>
       <li><strong>Tables will be stored into different buckets:</strong> A new GoodData extractor will store extracted tables into new buckets.</li>
       <li><strong>Orchestrations tasks update:</strong> All orchestration tasks of the old GoodData extractor configurations will be replaced with configurations of the new GoodData extractor.</li>
-      <li><strong>Column naming conventions:</strong> The column names of the extracted table are based on the column names of the GoodData report. However, they can contain only alphanumeric characters and underscores. All other characters are replaced by underscores. For example, if there is a column in the report with the name "Month Revenue", then its corresponding table column name will be "Month_Revenue".
-	  </li>
+      <li><strong>Column naming conventions:</strong> The column names of the extracted table are based on the column names of the GoodData report. However, they can contain only alphanumeric characters and underscores. All other characters are replaced by underscores. For example, if there is a column in the report with the name "Month Revenue", then its corresponding table column name will be "Month_Revenue".</li>
     </ul>
   </span>
 );
