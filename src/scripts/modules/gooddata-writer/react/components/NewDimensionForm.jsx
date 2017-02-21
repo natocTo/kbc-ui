@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Input, Button} from 'react-bootstrap';
 import {Loader} from 'kbc-react-components';
 import {DateDimensionTemplates} from '../../constants';
@@ -13,7 +14,7 @@ export default React.createClass({
     buttonLabel: PropTypes.string
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   getDefaultProps() {
     return {

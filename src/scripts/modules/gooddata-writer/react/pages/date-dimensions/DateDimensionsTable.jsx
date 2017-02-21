@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Row from './DateDimensionsRow';
 
 export default React.createClass({
@@ -7,7 +8,7 @@ export default React.createClass({
     configurationId: PropTypes.string.isRequired,
     pid: PropTypes.string.isRequired
   },
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   render() {
     return (

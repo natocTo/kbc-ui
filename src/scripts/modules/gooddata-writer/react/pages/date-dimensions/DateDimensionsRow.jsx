@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import {Check, Loader} from 'kbc-react-components';
 import DeleteButton from '../../../../../react/common/DeleteButton';
@@ -13,7 +14,7 @@ export default React.createClass({
     configurationId: PropTypes.string.isRequired,
     pid: PropTypes.string.isRequired
   },
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   render() {
     const dimension = this.props.dimension.get('data');

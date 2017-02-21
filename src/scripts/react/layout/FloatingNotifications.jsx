@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import createStoreMixin from '../mixins/createStoreMixin';
 import NotificationsStore from '../../stores/NotificationsStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';

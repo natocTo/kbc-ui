@@ -1,5 +1,5 @@
 import React from 'react';
-import {addons} from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Loader} from 'kbc-react-components';
 
 import TablesList from './TablesList';
@@ -32,7 +32,7 @@ export default React.createClass({
     mode: React.PropTypes.oneOf([MODE_DEFAULT, MODE_TRANSFORMATION]),
     jobMetrics: React.PropTypes.object.isRequired
   },
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   loader() {
     return this.props.isLoading ? <Loader/> : '';

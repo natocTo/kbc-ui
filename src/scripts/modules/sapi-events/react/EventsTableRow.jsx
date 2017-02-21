@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Link} from 'react-router';
 import _ from 'underscore';
 import classnames from 'classnames';
@@ -10,7 +11,7 @@ export default React.createClass({
     event: PropTypes.object.isRequired,
     link: PropTypes.object.isRequired
   },
-  mixin: [React.addons.PureRenderMixin],
+  mixin: [PureRenderMixin],
   render() {
     const classmap = {
       error: 'bg-danger',
@@ -41,6 +42,5 @@ export default React.createClass({
       className: 'tr'
     };
   }
-
 
 });

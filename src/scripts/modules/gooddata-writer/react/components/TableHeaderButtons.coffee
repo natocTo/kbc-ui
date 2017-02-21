@@ -11,7 +11,7 @@ TableLoadType = React.createFactory(require './TableLoadType')
 {ButtonGroup, Button, DropdownButton, MenuItem, Tooltip} = require 'react-bootstrap'
 
 Confirm = require('../../../../react/common/Confirm').default
-PureRenderMixin = require('react/addons').addons.PureRenderMixin
+PureRenderMixin = require('react-addons-pure-render-mixin')
 
 
 {button, span, div} = React.DOM

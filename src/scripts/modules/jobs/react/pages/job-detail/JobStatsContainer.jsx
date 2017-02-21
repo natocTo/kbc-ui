@@ -1,6 +1,6 @@
 import React from 'react';
 import Immutable from 'immutable';
-import {addons} from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import later from 'later';
 
 import {getRunIdStats} from '../../../../components/StorageApi';
@@ -15,7 +15,7 @@ export default React.createClass({
     jobMetrics: React.PropTypes.object.isRequired
   },
 
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   componentDidMount() {
     this.collectStats(this.props.runId);

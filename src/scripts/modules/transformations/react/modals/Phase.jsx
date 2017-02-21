@@ -1,10 +1,11 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import actionCreators from '../../ActionCreators';
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     transformation: PropTypes.object.isRequired,
     bucketId: PropTypes.string.isRequired

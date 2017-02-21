@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Immutable from 'immutable';
 
 /* global require */
@@ -6,7 +7,7 @@ require('./configuration-json.less');
 require('json-editor');
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     value: PropTypes.object.isRequired,
     schema: PropTypes.object.isRequired,
