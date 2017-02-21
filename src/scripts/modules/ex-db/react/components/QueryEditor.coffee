@@ -1,5 +1,6 @@
 React = require 'react'
 fuzzy = require 'fuzzy'
+ReactDOM = require 'react-dom'
 
 CodeEditor  = React.createFactory(require('../../../../react/common/common').CodeEditor)
 Check = React.createFactory(require('../../../../react/common/common').Check)

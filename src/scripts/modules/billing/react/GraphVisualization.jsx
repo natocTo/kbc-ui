@@ -1,4 +1,5 @@
 import React, {PropTypes}  from 'react';
+import ReactDOM from 'react-dom';
 import {fromJS} from 'immutable';
 
 function format(unit) {
@@ -114,7 +115,7 @@ export default React.createClass({
   },
 
   drawGraph() {
-    const element = React.findDOMNode(this.refs.lastMonthUsage);
+    const element = ReactDOM.findDOMNode(this.refs.lastMonthUsage);
     const chartOptions = createChartOptions({
       vAxisFormat: format('credits')
     });

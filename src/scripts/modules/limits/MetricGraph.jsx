@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import Keen from 'keen-js';
 import {fromJS} from 'immutable';
 
@@ -95,7 +96,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    var el = React.findDOMNode(this.refs.metric);
+    var el = ReactDOM.findDOMNode(this.refs.metric);
     var query = new Keen.Query('average', this.props.query);
 
 

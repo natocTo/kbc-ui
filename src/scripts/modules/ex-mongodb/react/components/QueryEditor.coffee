@@ -1,4 +1,5 @@
 React = require 'react'
+ReactDOM = require 'react-dom'
 fuzzy = require 'fuzzy'
 string = require('../../../../utils/string').default
 Check = React.createFactory(require('../../../../react/common/common').Check)

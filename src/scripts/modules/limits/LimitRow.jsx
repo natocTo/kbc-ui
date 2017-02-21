@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import MetricGraph from './MetricGraph';
 import {Button} from 'react-bootstrap';
 import {bytesToGBFormatted, numericMetricFormatted} from '../../utils/numbers';
@@ -25,7 +26,7 @@ export default React.createClass({
   componentDidMount() {
     /* eslint-disable react/no-did-mount-set-state */
     this.setState({
-      elWidth: React.findDOMNode(this.refs.limit).offsetWidth
+      elWidth: ReactDOM.findDOMNode(this.refs.limit).offsetWidth
     });
     /* eslint-enable react/no-did-mount-set-state */
   },
