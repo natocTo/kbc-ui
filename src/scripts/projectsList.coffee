@@ -5,6 +5,7 @@
 ###
 
 React = require 'react'
+ReactDOM = require 'react-dom'
 Immutable = require 'immutable'
 {div, span, ul, li, input, a} = React.DOM
 
@@ -40,7 +41,7 @@ App = React.createClass
 global.kbcApp =
   start: (appOptions) ->
     document.body.className = 'kbc-outer-page kbc-projects-list'
-    React.render(React.createElement(App,
+    ReactDOM.render(React.createElement(App,
       user: Immutable.fromJS(appOptions.data.kbc.admin)
       urlTemplates: Immutable.fromJS(appOptions.data.kbc.urlTemplates)
       projectTemplates: Immutable.fromJS(appOptions.data.projectTemplates),

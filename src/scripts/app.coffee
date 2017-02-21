@@ -4,6 +4,7 @@ require './utils/react-shim'
 require './utils/ReactErrorHandler'
 
 React = require 'react'
+ReactDOM = require 'react-dom'
 Router = require 'react-router'
 Promise = require 'bluebird'
 _ = require 'underscore'
@@ -75,7 +76,7 @@ startApp = (appOptions) ->
 
   # Show loading page before app is ready
   loading = _.once (Handler) ->
-    React.render(React.createElement(Handler, isLoading: true), appOptions.rootNode)
+    ReactDOM.render(React.createElement(Handler, isLoading: true), appOptions.rootNode)
 
   # registered pollers for previous page
   registeredPollers = Immutable.List()
@@ -119,7 +120,7 @@ startApp = (appOptions) ->
     .cancellable()
     .then(->
       RouterActionCreators.routeChangeSuccess(state)
-      React.render(React.createElement(Handler), appOptions.rootNode)
+      ReactDOM.render(React.createElement(Handler), appOptions.rootNode)
 
       # Start pollers for new page
       registeredPollers = RoutesStore
@@ -137,7 +138,7 @@ startApp = (appOptions) ->
       # render error page
       console.log 'route change error', error
       RouterActionCreators.routeChangeError(error)
-      React.render(React.createElement(Handler, isError: true), appOptions.rootNode)
+      ReactDOM.render(React.createElement(Handler, isError: true), appOptions.rootNode)
     )
 
 global.kbcApp =
