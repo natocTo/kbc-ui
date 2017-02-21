@@ -97,7 +97,7 @@ export default React.createClass({
 
   nameInvalidReason() {
     const name = this.query('name');
-    if (name && !(/^[a-zA-Z0-9-_]+$/.test(name))) return 'Can only contain alphanumeric characters, underscore and dot.';
+    if (name && !(/^[a-zA-Z0-9_.]+$/.test(name))) return 'Can only contain alphanumeric characters, underscore or dot.';
     return null;
   },
 
