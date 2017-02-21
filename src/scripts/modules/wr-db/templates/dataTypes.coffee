@@ -96,13 +96,46 @@ snowflake = [
   'timestamp_ntz'
   'timestamp_tz'
 ]
+pgsql = [
+  'int'
+  'smallint'
+  'integer'
+  'bigint'
+  {'decimal': defaultSize: '12,2'}
+  {'numeric': defaultSize: '12,0'}
+  'real'
+  'double precision'
+  'float4'
+  'float8'
+  'serial'
+  'bigserial'
+  'smallserial'
+  'money'
+  'boolean'
+  {'char': defaultSize: '255'}
+  {'character': defaultSize: '255'}
+  {'varchar': defaultSize: '255'}
+  {'character varying': defaultSize: '255'}
+  'text'
+  'bytea'
+  'date'
+  'time'
+  'time with timezone'
+  'timestamp'
+  'timestamp with timezone'
+  'interval'
+  'enum'
+  'json'
+  'jsonb'
+]
 
 module.exports =
-'keboola.wr-db-snowflake': snowflake
-'keboola.wr-db-oracle': oracle
-'keboola.wr-db-impala': impala
-'keboola.wr-db-mssql-v2': mssql
-'wr-db-mssql': mssql
-'keboola.wr-redshift-v2': redshift
-'wr-db-redshift': redshift
-'wr-db-oracle': oracleold
+  'keboola.wr-db-snowflake': snowflake
+  'keboola.wr-db-oracle': oracle
+  'keboola.wr-db-impala': impala
+  'keboola.wr-db-mssql-v2': mssql
+  'keboola.wr-db-pgsql': pgsql
+  'keboola.wr-redshift-v2': redshift
+  'wr-db-mssql': mssql
+  'wr-db-redshift': redshift
+  'wr-db-oracle': oracleold

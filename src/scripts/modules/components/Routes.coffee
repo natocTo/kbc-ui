@@ -182,6 +182,7 @@ routes =
       createComponentRoute 'keboola.wr-db-impala', [createDbWriterRoutes('keboola.wr-db-impala', 'impala', false)]
       createComponentRoute 'keboola.wr-db-mysql', [createDbWriterRoutes('keboola.wr-db-mysql', 'mysql', true)]
       createComponentRoute 'keboola.wr-db-oracle', [createDbWriterRoutes('keboola.wr-db-oracle', 'oracle', false)]
+      createComponentRoute 'keboola.wr-db-pgsql', [createDbWriterRoutes('keboola.wr-db-pgsql', 'pgsql', false)]
       createComponentRoute(
         'keboola.wr-db-snowflake',
         [createDbWriterRoutes('keboola.wr-db-snowflake', 'snowflake', true)]
