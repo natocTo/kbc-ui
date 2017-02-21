@@ -102,7 +102,7 @@ export default React.createClass({
     this.setState({
       isSaving: true
     });
-    this.refs.limitEditForm.getDOMNode().submit();
+    this.refs.limitEditForm.submit();
   }
 
 });

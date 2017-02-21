@@ -82,7 +82,7 @@ export default React.createClass({
     });
 
     var jsoneditor = new window.JSONEditor(
-      this.refs.jsoneditor.getDOMNode(),
+      this.refs.jsoneditor,
       options
     );
     this.jsoneditor = jsoneditor;

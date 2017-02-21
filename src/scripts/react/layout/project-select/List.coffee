@@ -28,11 +28,11 @@ module.exports = React.createClass
 
   componentDidMount: ->
     if @props.focus &&  @refs.searchInput
-      @refs.searchInput.getDOMNode().focus()
+      @refs.searchInput.focus()
 
   componentDidUpdate: (prevProps) ->
     if @refs.searchInput && @props.focus && @props.focus != prevProps.focus
-      @refs.searchInput.getDOMNode().focus()
+      @refs.searchInput.focus()
 
   render: ->
     if !@props.organizations.count() && !@props.canCreateProject

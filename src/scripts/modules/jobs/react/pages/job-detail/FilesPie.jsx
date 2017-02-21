@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import dimple from 'dimple/dist/dimple.v2.1.1.js';
 import {filesize} from '../../../../../utils/utils';
 
@@ -18,7 +19,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const svg = dimple.newSvg(this.getDOMNode(), WIDTH, WIDTH);
+    const svg = dimple.newSvg(ReactDOM.findDOMNode(this), WIDTH, WIDTH);
     svg.style('overflow', 'visible');
     const chart = new dimple.chart(svg, this.getData());
     chart.addMeasureAxis('p', 'Size');

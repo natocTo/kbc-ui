@@ -189,6 +189,6 @@ export default React.createClass({
     this.setState({
       isSaving: true
     });
-    this.refs.projectCreateForm.getDOMNode().submit();
+    this.refs.projectCreateForm.submit();
   }
 });
