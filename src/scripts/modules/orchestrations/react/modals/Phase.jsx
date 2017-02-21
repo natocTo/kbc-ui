@@ -14,7 +14,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      value: null
+      value: null,
+      isSaving: false
     };
   },
 
@@ -71,6 +72,7 @@ export default React.createClass({
             isDisabled={!this.isValid()}
             onCancel={this.closeModal}
             onSave={this.handleSave}
+            isSaving={this.state.isSaving}
           />
         </Modal.Footer>
       </Modal>
@@ -85,9 +87,13 @@ export default React.createClass({
   },
 
   handleSave() {
+    this.setState({
+      isSaving: true
+    });
     this.props.onPhaseUpdate(this.state.value);
     this.setState({
-      value: null
+      value: null,
+      isSaving: false
     });
   },
 

@@ -141,7 +141,6 @@ TasksEditTable = React.createClass
           key: taskId
           onTaskDelete: @props.onTaskDelete
           onTaskUpdate: @props.onTaskUpdate
-          isDraggingPhase: @props.localState.getIn ['phases', phase.get('id'), 'isDragging']
           isMarked: @props.localState.getIn(['moveTasks', 'marked', taskId], false)
           toggleMarkTask: =>
             @_toggleMarkTask(task)

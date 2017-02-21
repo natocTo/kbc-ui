@@ -23,7 +23,6 @@ TasksEditTableRow = React.createClass
     onTaskDelete: React.PropTypes.func.isRequired
     onTaskUpdate: React.PropTypes.func.isRequired
     toggleMarkTask: React.PropTypes.func.isRequired
-    isDraggingPhase: React.PropTypes.bool.isRequired
     isMarked: React.PropTypes.bool.isRequired
     color: React.PropTypes.string
 
