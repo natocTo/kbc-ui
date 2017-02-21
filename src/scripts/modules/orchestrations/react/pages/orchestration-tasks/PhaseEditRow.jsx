@@ -49,7 +49,7 @@ const PhaseEditRow = React.createClass({
     phase: PropTypes.object.isRequired,
     onPhaseMove: PropTypes.func.isRequired,
     onMarkPhase: PropTypes.func.isRequired,
-    togglePhaseIdChange: PropTypes.bool.isRequired,
+    togglePhaseIdChange: PropTypes.func.isRequired,
     isMarked: PropTypes.bool.isRequired,
     toggleAddNewTask: PropTypes.func.isRequired,
     color: PropTypes.string,

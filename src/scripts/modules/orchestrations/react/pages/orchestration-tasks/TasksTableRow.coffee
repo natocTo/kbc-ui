@@ -19,7 +19,7 @@ module.exports = React.createClass
     color: React.PropTypes.string
 
   render: ->
-    tr {style: {'background-color': @props.color}},
+    tr {style: {'backgroundColor': @props.color}},
       td null,
         span className: 'kbc-component-icon',
           if @props.component

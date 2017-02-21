@@ -159,7 +159,7 @@ TasksEditTable = React.createClass
     return result.toArray()
 
   _renderEmptyTasksRow: (phaseId, color) ->
-    tr {style: {'background-color': color}},
+    tr {style: {'backgroundColor': color}},
       td
         className: 'text-muted'
         colSpan: 7

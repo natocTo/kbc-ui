@@ -10,7 +10,7 @@ export default React.createClass({
 
   render() {
     let style = {
-      'background-color': this.props.color
+      'backgroundColor': this.props.color
     };
     if (this.props.isPhaseHidden) {
       style['border-bottom'] = '2px groove';
