@@ -143,6 +143,18 @@ const exfbtemplates = [
         'fields': 'reactions.type(ANGRY).summary(total_count).limit(0)'
       }
     }
+  },
+
+  {
+    'id': 'allpostslovesummary',
+    'name': 'All posts LOVE reactions summary',
+    'template': {
+      'name': 'feed_love',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(LOVE).summary(total_count).limit(0)'
+      }
+    }
   }
 
 
@@ -193,7 +205,45 @@ const exfbAdsTemplates = [
         'fields': 'id,name,campaign_id'
       }
     }
+  },
+
+  {
+    'id': 'campaigninsights',
+    'name': 'Campaigns Detail - Q1 - Insights',
+    'template': {
+      'name': 'campaigns_insights',
+      'query': {
+        'path': 'campaigns',
+        'fields': 'insights.date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,impressions,clicks,spend,reach}'
+      }
+    }
+  },
+
+  {
+    'id': 'campaigns_insights_type',
+    'name': 'Campaigns Detail - Q1 - Action Types',
+    'template': {
+      'name': 'campaigns_insights_type',
+      'query': {
+        'path': 'campaigns',
+        'fields': 'insights.action_breakdowns(action_type).date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}'
+      }
+    }
+  },
+
+  {
+    'id': 'campaigns_insights_reaction',
+    'name': 'Campaigns Detail - Q1 - Action Reactions',
+    'template': {
+      'name': 'campaigns_insights_reaction',
+      'query': {
+        'path': 'campaigns',
+        'fields': 'insights.action_breakdowns(action_reaction).date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}'
+      }
+    }
   }
+
+
 ];
 
 export default fromJS({
