@@ -7,7 +7,7 @@ const exfbtemplates = [
       'name': 'feed',
       'query': {
         'path': 'feed',
-        'fields': 'caption,message,created_time,type,description'
+        'fields': 'caption,message,created_time,type,description,shares'
       }
     }
 
@@ -83,7 +83,68 @@ const exfbtemplates = [
         'fields': 'insights.since(now).metric(post_negative_feedback, post_engaged_users, post_consumptions, post_impressions_fan, post_impressions_paid, post_impressions, page_posts_impressions_organic, page_posts_impressions_paid, page_posts_impressions)'
       }
     }
+  },
+
+  {
+    'id': 'allpostslikessummary',
+    'name': 'All posts LIKE reactions summary',
+    'template': {
+      'name': 'feed_likes',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(LIKE).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostswowssummary',
+    'name': 'All posts WOW reactions summary',
+    'template': {
+      'name': 'feed_wow',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(WOW).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostshahasummary',
+    'name': 'All posts HAHA reactions summary',
+    'template': {
+      'name': 'feed_haha',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(HAHA).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostssadsummary',
+    'name': 'All posts SAD reactions summary',
+    'template': {
+      'name': 'feed_sad',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(SAD).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostsANGRYsummary',
+    'name': 'All posts ANGRY reactions summary',
+    'template': {
+      'name': 'feed_angry',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(ANGRY).summary(total_count).limit(0)'
+      }
+    }
   }
+
 
 ];
 
