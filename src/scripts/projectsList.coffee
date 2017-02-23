@@ -8,7 +8,7 @@ React = require 'react'
 Immutable = require 'immutable'
 {div, span, ul, li, input} = React.DOM
 
-CurrentUser = require './react/layout/CurrentUser'
+CurrentUser = require('./react/layout/CurrentUser').default
 ProjectsList = require './react/layout/project-select/List'
 
 App = React.createClass
