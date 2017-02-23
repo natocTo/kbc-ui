@@ -8,6 +8,6 @@ global.kbcApp =
   helpers: require './helpers'
   parts:
     ProjectSelect: require './react/layout/project-select/ProjectSelect'
-    CurrentUser: require './react/layout/CurrentUser'
+    CurrentUser: require('./react/layout/CurrentUser').default
     ProjectsList: require './react/layout/project-select/List'
     NewProjectModal: require './react/layout/NewProjectModal'
