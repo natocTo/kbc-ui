@@ -71,7 +71,7 @@ export default React.createClass({
   renderHelp() {
     return (
       <span>
-        <a href="https://developers.keboola.com/integrate/database" target="_blank">
+        <a href="https://help.keboola.com/extractors/database/#connecting-to-database" target="_blank">
           Help
         </a>
       </span>
@@ -112,7 +112,7 @@ export default React.createClass({
         {this.state.isGenerating ? <Loader /> : null}
         {(this.state.isKeygenError ?
             <span className="text-danger">
-              <span className="fa fa-fw fa-meh-o"></span>
+              <span className="fa fa-fw fa-meh-o" />
               Unable to Generate SSH keys. Try it again.
             </span> : null
         )}

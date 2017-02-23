@@ -10,7 +10,7 @@ LoadingPage = React.createFactory(require './../pages/LoadingPage')
 ProjectSelect = React.createFactory(require './project-select/ProjectSelect')
 PageTitle = React.createFactory(require './PageTitle')
 
-CurrentUser = React.createFactory(require './CurrentUser')
+CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')
 PoweredByKeboola = React.createFactory(require './PoweredByKeboola')
 

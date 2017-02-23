@@ -137,7 +137,7 @@ module.exports = React.createClass
           li null,
             React.createElement Confirm,
               text: 'Upload project'
-              title: 'Are you sure you want to upload all tables to GoodData project?'
+              title: 'Are you sure you want to upload all tables to the GoodData project?'
               buttonLabel: 'Upload'
               buttonType: 'success'
               onConfirm: @_handleProjectUpload
@@ -204,9 +204,9 @@ module.exports = React.createClass
                   React.createElement Confirm,
                     title: 'Optimize SLI hash'
                     text: div null,
-                      p null, 'Optimizing SLI hashes is partially disabled sice this is an advanced
+                      p null, 'Optimizing SLI hashes is partially disabled since this is an advanced
                       process which might damage your GD project.
-                      We insist on consluting with us before taking any further steps. '
+                      We insist on consulting with us before taking any further steps. '
                       p null, 'Please contact us on: support@keboola.com'
                     buttonLabel: 'Optimize'
                     buttonType: 'primary'
@@ -219,7 +219,7 @@ module.exports = React.createClass
                     title: 'Reset Project'
                     text: div null,
                       p null,
-                        "You are about to create new GoodData project for the writer #{writer.get('id')}. "
+                        "You are about to create a new GoodData project for the writer #{writer.get('id')}. "
                         "The current GoodData project (#{@state.pid}) will be discarded. "
                         "Are you sure you want to reset the project?"
                     buttonLabel: 'Reset'
@@ -230,7 +230,7 @@ module.exports = React.createClass
             li null,
               React.createElement Confirm,
                 title: 'Delete Writer'
-                text: "Are you sure you want to delete writer with its GoodData project?"
+                text: "Are you sure you want to delete the writer with its GoodData project?"
                 buttonLabel: 'Delete'
                 onConfirm: @_handleProjectDelete
               ,

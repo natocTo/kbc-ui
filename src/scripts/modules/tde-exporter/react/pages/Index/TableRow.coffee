@@ -69,7 +69,7 @@ module.exports = React.createClass
           React.createElement Confirm,
             key: @props.table.get 'id'
             title: "Remove #{@props.table.get('id')}"
-            text: 'You are about to remove table from the configuration.'
+            text: 'You are about to remove the table from the configuration.'
             buttonLabel: 'Remove'
             onConfirm: =>
               @props.deleteRowFn()
@@ -93,4 +93,4 @@ module.exports = React.createClass
         runParams: =>
           @props.prepareRunDataFn()
       ,
-       "You are about to run export of #{@props.table.get('id')} to TDE."
+       "You are about export #{@props.table.get('id')} to TDE."

@@ -53,7 +53,7 @@ TransformationRow = React.createClass(
         configBucketId: props.bucket.get('id')
         transformations: [props.transformation.get('id')]
     ,
-      "You are about to run transformation #{@props.transformation.get('name')}."
+      "You are about to run the transformation #{@props.transformation.get('name')}."
     ))
 
     buttons.push ActivateDeactivateButton

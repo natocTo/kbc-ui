@@ -129,17 +129,17 @@ export default function(COMPONENT_ID) {
                   You are about to run extraction.
                 </RunComponentButton>
               </li>
-              {/* <li>
-                  <a href={this.state.component.get('documentationUrl')} target="_blank">
+              <li>
+                <a href={this.state.component.get('documentationUrl')} target="_blank">
                   <i className="fa fa-question-circle fa-fw" /> Documentation
-                  </a>
-                  </li> */}
-          <li>
-            <DeleteConfigurationButton
-              componentId={COMPONENT_ID}
-              configId={this.state.configId}
-            />
-          </li>
+                </a>
+              </li>
+              <li>
+                <DeleteConfigurationButton
+                  componentId={COMPONENT_ID}
+                  configId={this.state.configId}
+                />
+              </li>
             </ul>
             <LatestJobs jobs={this.state.latestJobs} limit={3} />
             <LatestVersions
@@ -267,6 +267,7 @@ export default function(COMPONENT_ID) {
       };
       return (
         <QueryModal
+          helpUrl={this.state.component.get('documentationUrl')}
           placeholders={placeholderTemplates[COMPONENT_ID]}
           queryTemplates={QueryTemplates.get(COMPONENT_ID)}
           show={this.state.localState.get('showQueryModal', false)}

@@ -34,9 +34,9 @@ module.exports = React.createClass
     form null,
       div className: 'row',
         div className: 'well',
-          'MySQL database extractor supports secure (encrypted) connections
+          'The MySQL database extractor supports secure (encrypted) connections
             between MySQL clients and the server using SSL.
-            Provide set of SSL certificates to configure the secure connection. Read more on '
+            Provide a set of SSL certificates to configure the secure connection. Read more on '
           a href: _helpUrl,
             "How to Configure MySQL server - DB Admin's article."
       div className: 'row',
@@ -48,7 +48,7 @@ module.exports = React.createClass
           @_createInput 'SSL CA Certificate (ca-cert.pem)', 'ca'
           @_createInput 'SSL Cipher',
             'cipher',
-            'You can optionally provide a list of permissible ciphers to use for SSL encryption.'
+            'You can optionally provide a list of permissible ciphers to use for the SSL encryption.'
           React.createElement TestCredentials,
             testCredentialsFn: @testCredentials
             hasOffset: false

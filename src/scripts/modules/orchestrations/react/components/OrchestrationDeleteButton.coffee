@@ -36,7 +36,7 @@ OrchestrationDeleteButton = React.createClass
       ,
         Confirm
           title: 'Delete Orchestration'
-          text: "Do you really want to delete orchestration #{@props.orchestration.get('name')}"
+          text: "Do you really want to delete the orchestration #{@props.orchestration.get('name')}"
           buttonLabel: 'Delete'
           onConfirm: @_deleteOrchestration
         ,
@@ -45,7 +45,7 @@ OrchestrationDeleteButton = React.createClass
 
   _deleteOrchestration: ->
     @transitionTo 'orchestrations'
-    # if orchestration is deleted immediatelly view is rendered with missing orchestration because of store changed
+    # if orchestration is deleted immediately view is rendered with missing orchestration because of store changed
     id = @props.orchestration.get('id')
     setTimeout ->
       OrchestrationActionCreators.deleteOrchestration(id)

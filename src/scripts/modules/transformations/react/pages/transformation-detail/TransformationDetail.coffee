@@ -115,7 +115,7 @@ module.exports = React.createClass
                 configBucketId: @state.bucketId
                 transformations: [@state.transformation.get('id')]
             ,
-              "You are about to run transformation #{@state.transformation.get('name')}."
+              "You are about to run the transformation #{@state.transformation.get('name')}."
             )
           li {},
             ActivateDeactivateButton
@@ -151,7 +151,7 @@ module.exports = React.createClass
             a {},
               React.createElement Confirm,
                 text: 'Delete transformation'
-                title: "Do you really want to delete transformation #{@state.transformation.get('name')}?"
+                title: "Do you really want to delete the transformation #{@state.transformation.get('name')}?"
                 buttonLabel: 'Delete'
                 buttonType: 'danger'
                 onConfirm: @_deleteTransformation

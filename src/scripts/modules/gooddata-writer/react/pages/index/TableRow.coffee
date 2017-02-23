@@ -68,9 +68,9 @@ module.exports = React.createClass
 
   _uploadText: ->
     span null,
-      'Are you sure you want to upload table '
+      'Are you sure you want to upload the table '
       strong null, @props.table.getIn(['data', 'title'])
-      ' to GoodData project?'
+      ' to the GoodData project?'
 
   _renderDeleteButton: ->
     if @props.isDeleting
@@ -83,7 +83,7 @@ module.exports = React.createClass
         React.createElement Confirm,
           key: @props.table.get 'id'
           title: "Remove #{@props.table.get('id')}"
-          text: 'You are about to remove table from the configuration.'
+          text: 'You are about to remove the table from the configuration.'
           buttonLabel: 'Remove'
           onConfirm: =>
             @props.deleteTableFn(@props.table.get('id'))

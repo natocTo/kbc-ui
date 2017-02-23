@@ -15,10 +15,10 @@ SapiTableLinkEx = React.createFactory(require('../../../../components/react/comp
 
 
 tooltips =
-  file: 'uploads selected table as csv a file'
-  sheet: 'uploads selected table as google drive spreadsheet'
-  update: 'always update the same file or sheet, if does not exist create one'
-  create: 'always create new file with unique name by appending current date and time to the name.'
+  file: 'uploads the selected table as a csv file'
+  sheet: 'uploads the selected table as a google drive spreadsheet'
+  update: 'always update the same file or sheet; if it does not exist, create one'
+  create: 'always create a new file with a unique name by appending the current date and time to the name.'
 
 
 module.exports = React.createClass
@@ -91,7 +91,7 @@ module.exports = React.createClass
           React.createElement Confirm,
             key: @props.table.get 'id'
             title: 'Remove table configuration.'
-            text: 'You are about to remove table from the writer configuration.'
+            text: 'You are about to remove the table from the writer configuration.'
             buttonLabel: 'Remove'
             onConfirm: =>
               rowId = @props.file.get('id')
@@ -142,7 +142,7 @@ module.exports = React.createClass
 
   _renderRunButton: ->
     React.createElement Tooltip,
-      tooltip: 'Upload table to Google Drive'
+      tooltip: 'Upload a table to Google Drive'
     ,
       RunButtonModal
         title: "Upload #{@props.table.get('id')}"
@@ -154,7 +154,7 @@ module.exports = React.createClass
           file: @props.file.get 'id'
           config: @props.configId
       ,
-       "You are about to run upload of #{@props.table.get('id')} to Google Drive."
+       "You are about to run an upload of #{@props.table.get('id')} to Google Drive."
 
   _renderPreviewLink: ->
     googleId = @props.file?.get 'googleId'

@@ -7,7 +7,7 @@ const exfbtemplates = [
       'name': 'feed',
       'query': {
         'path': 'feed',
-        'fields': 'caption,message,created_time,type,description'
+        'fields': 'caption,message,created_time,type,description,shares'
       }
     }
 
@@ -83,7 +83,80 @@ const exfbtemplates = [
         'fields': 'insights.since(now).metric(post_negative_feedback, post_engaged_users, post_consumptions, post_impressions_fan, post_impressions_paid, post_impressions, page_posts_impressions_organic, page_posts_impressions_paid, page_posts_impressions)'
       }
     }
+  },
+
+  {
+    'id': 'allpostslikessummary',
+    'name': 'All posts LIKE reactions summary',
+    'template': {
+      'name': 'feed_likes',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(LIKE).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostswowssummary',
+    'name': 'All posts WOW reactions summary',
+    'template': {
+      'name': 'feed_wow',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(WOW).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostshahasummary',
+    'name': 'All posts HAHA reactions summary',
+    'template': {
+      'name': 'feed_haha',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(HAHA).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostssadsummary',
+    'name': 'All posts SAD reactions summary',
+    'template': {
+      'name': 'feed_sad',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(SAD).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostsANGRYsummary',
+    'name': 'All posts ANGRY reactions summary',
+    'template': {
+      'name': 'feed_angry',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(ANGRY).summary(total_count).limit(0)'
+      }
+    }
+  },
+
+  {
+    'id': 'allpostslovesummary',
+    'name': 'All posts LOVE reactions summary',
+    'template': {
+      'name': 'feed_love',
+      'query': {
+        'path': 'feed',
+        'fields': 'reactions.type(LOVE).summary(total_count).limit(0)'
+      }
+    }
   }
+
 
 ];
 
@@ -132,7 +205,45 @@ const exfbAdsTemplates = [
         'fields': 'id,name,campaign_id'
       }
     }
+  },
+
+  {
+    'id': 'campaigninsights',
+    'name': 'Campaigns Detail - Q1 - Insights',
+    'template': {
+      'name': 'campaigns_insights',
+      'query': {
+        'path': 'campaigns',
+        'fields': 'insights.date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,impressions,clicks,spend,reach}'
+      }
+    }
+  },
+
+  {
+    'id': 'campaigns_insights_type',
+    'name': 'Campaigns Detail - Q1 - Action Types',
+    'template': {
+      'name': 'campaigns_insights_type',
+      'query': {
+        'path': 'campaigns',
+        'fields': 'insights.action_breakdowns(action_type).date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}'
+      }
+    }
+  },
+
+  {
+    'id': 'campaigns_insights_reaction',
+    'name': 'Campaigns Detail - Q1 - Action Reactions',
+    'template': {
+      'name': 'campaigns_insights_reaction',
+      'query': {
+        'path': 'campaigns',
+        'fields': 'insights.action_breakdowns(action_reaction).date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}'
+      }
+    }
   }
+
+
 ];
 
 export default fromJS({

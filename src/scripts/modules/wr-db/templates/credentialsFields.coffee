@@ -94,6 +94,15 @@ fields =
     [ 'Schema', 'schema', 'text']
   ]
 
+  'keboola.wr-db-pgsql': [
+    [ 'Host name', 'host']
+    [ 'Port', 'port', 'number', false, '5432']
+    [ 'Username', 'user']
+    [ 'Password', '#password', 'password', true]
+    [ 'Database Name', 'database', 'text']
+    [ 'Schema', 'schema', 'text', false, 'public']
+  ]
+
 
 module.exports = (componentId) ->
   fields[componentId] or defaultFields

@@ -42,9 +42,7 @@ module.exports = function (options) {
     }
 
     var entry = [];
-    var eslintConfigfile = path.resolve(__dirname, '../.eslintrc');
     if (isDevelopment) {
-        eslintConfigfile = path.resolve(__dirname, '../.eslintrcDEVEL');
         entry = {
           bundle: [
             'webpack-dev-server/client?http://0.0.0.0:3000',
@@ -84,7 +82,7 @@ module.exports = function (options) {
         eslint: {
             failOnWarning: false,
             failOnError: true,
-            configFile: eslintConfigfile
+            configFile: path.resolve(__dirname, '../.eslintrc')
         },
         module: {
             // via http://andrewhfarmer.com/aws-sdk-with-webpack/
@@ -92,7 +90,11 @@ module.exports = function (options) {
               /aws\-sdk/,
             ],
             preLoaders: [
-                { test: /\.jsx?$/, loader: 'eslint', exclude: /node_modules/ },
+                {
+                    test: /\.jsx?$/,
+                    loader: 'eslint-loader',
+                    exclude: /node_modules/
+                },
                 {
                     test: /\.coffee$/,
                     loader: "coffee-lint-loader",

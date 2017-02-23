@@ -34,7 +34,7 @@ var SnowflakeSandbox = React.createClass({
   },
   _renderControlButtons: function() {
     var sandboxConfiguration;
-    const connectLink = 'https://' + this.state.credentials.get('hostname') + '/console';
+    const connectLink = 'https://' + this.state.credentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet';
     if (this.state.credentials.get('id')) {
       sandboxConfiguration = {};
       return (
@@ -67,7 +67,7 @@ var SnowflakeSandbox = React.createClass({
               target="_blank"
               disabled={this.state.pendingActions.get('drop')}
             >
-              <span className="fa fa-fw fa-database"></span>
+              <span className="fa fa-fw fa-database"/>
               &nbsp;Connect
             </a>
             <div>
@@ -78,7 +78,7 @@ var SnowflakeSandbox = React.createClass({
                 fixedWidth={true}
                 confirm={{
                   title: 'Delete Snowflake Sandbox',
-                  text: 'Do you really want to delete Snowflake sandbox?',
+                  text: 'Do you really want to delete the Snowflake sandbox?',
                   onConfirm: this._dropCredentials
                 }}
               />
@@ -92,7 +92,7 @@ var SnowflakeSandbox = React.createClass({
           className="btn btn-link"
           onClick={this._createCredentials}
         >
-          <i className="fa fa-fw fa-plus"></i>
+          <i className="fa fa-fw fa-plus"/>
           &nbsp;Create sandbox
         </button>
       );

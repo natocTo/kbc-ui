@@ -21,7 +21,7 @@ export default React.createClass({
             Parse Url and Set Query
             <div>
               <small>
-                Create query via <a href="https://ga-dev-tools.appspot.com/query-explorer/" target="_blank">Google Analytics Query Explorer</a> and paste the result url to reconstruct the query.
+                Create a query via <a href="https://ga-dev-tools.appspot.com/query-explorer/" target="_blank">Google Analytics Query Explorer</a> and paste the result url to reconstruct the query.
               </small>
             </div>
           </Modal.Title>

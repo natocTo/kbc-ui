@@ -175,7 +175,7 @@ module.exports = React.createClass
             runParams: =>
               config: @state.configId
           ,
-           "You are about to run upload of all seleted tables"
+           "You are about to run an upload of all selected tables"
         li null,
           React.createElement DeleteConfigurationButton,
             componentId: componentId

@@ -94,7 +94,7 @@ RedshiftSandbox = React.createClass
             fixedWidth: true
             confirm:
               title: 'Delete Redshift Sandbox'
-              text: 'Do you really want to delete Redshift sandbox?'
+              text: 'Do you really want to delete the Redshift sandbox?'
               onConfirm: @_dropCredentials
     else
       if !@state.pendingActions.get("create")

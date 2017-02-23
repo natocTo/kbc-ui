@@ -24,7 +24,7 @@ module.exports = React.createClass
     ,
       Confirm
         title: 'Delete Query'
-        text: "Do you really want to delete query?"
+        text: "Do you really want to delete the query?"
         buttonLabel: 'Delete'
         onConfirm: @_deleteQuery
       ,
