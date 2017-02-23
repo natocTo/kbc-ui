@@ -35,35 +35,34 @@ export default React.createClass({
           className="kbc-user-avatar"
           width={this._iconSize()}
           height={this._iconSize()}
-        >
-          <div>
-            <strong>{ this.props.user.get('name') }</strong>
-            <DropdownButton
-              className="kbc-user-menu"
-              bsStyle="link"
-              dropup={this.props.dropup}
-              title={<span className="kbc-icon-picker"/>}
-              ref="dropdownButton"
-              noCaret={true}
-            >
-              <MenuItem
-                key="changePassword"
-                href={this.props.urlTemplates.get('changePassword')}
-              >Account Settings</MenuItem>
-              { this._renderAdminItems() }
-              { this._renderMaintainers() }
-              <MenuItem
-                key="logoutDivider"
-                divider={true}
-              />
-              <MenuItem
-                href={this.props.urlTemplates.get('logout')}
-                key="logout"
-              >Logout</MenuItem>
-            </DropdownButton>
-          </div>
-          { this._userEmail() }
-        </img>
+        />
+        <div>
+          <strong>{ this.props.user.get('name') }</strong>
+          <DropdownButton
+            className="kbc-user-menu"
+            bsStyle="link"
+            dropup={this.props.dropup}
+            title={<span className="kbc-icon-picker"/>}
+            ref="dropdownButton"
+            noCaret={true}
+          >
+            <MenuItem
+              key="changePassword"
+              href={this.props.urlTemplates.get('changePassword')}
+            >Account Settings</MenuItem>
+            { this._renderAdminItems() }
+            { this._renderMaintainers() }
+            <MenuItem
+              key="logoutDivider"
+              divider={true}
+            />
+            <MenuItem
+              href={this.props.urlTemplates.get('logout')}
+              key="logout"
+            >Logout</MenuItem>
+          </DropdownButton>
+        </div>
+        { this._userEmail() }
       </div>
     );
   },
