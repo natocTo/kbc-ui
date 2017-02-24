@@ -350,18 +350,19 @@ export default React.createClass({
   },
 
   canSaveConfig() {
-    let hasLocalConfigDataFiles = this.state.localState.has('selectedDropboxFiles');
-    let localConfigDataFiles = this.state.localState.get('selectedDropboxFiles');
     let hasLocalConfigDataBucket = this.state.localState.has('selectedInputBucket');
     let localConfigDataBucket = this.state.localState.get('selectedInputBucket');
 
     // We can save new config whether user changed files selection.
     // On the other hand the bucket may be changed, but we also have to make sure the bucket is set.
-    if (hasLocalConfigDataFiles && hasLocalConfigDataBucket && localConfigDataFiles.length > 0 && localConfigDataBucket !== '') {
-      return false;
-    } else {
-      return true;
+    return !(hasLocalConfigDataBucket && this.getLocalConfigDataFilesCount() > 0 && localConfigDataBucket !== '');
+  },
+
+  getLocalConfigDataFilesCount() {
+    if (!this.state.localState.has('selectedDropboxFiles')) {
+      return 0;
     }
+    return fromJS(this.state.localState.get('selectedDropboxFiles')).size;
   },
 
   updateParameters(newParameters) {
