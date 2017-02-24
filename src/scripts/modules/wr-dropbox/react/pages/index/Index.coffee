@@ -1,6 +1,5 @@
 React = require 'react'
 {fromJS, Map, List} = require('immutable')
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
 {Button} = require 'react-bootstrap'
 classnames = require 'classnames'
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
@@ -256,15 +255,11 @@ module.exports = (componentId) ->
                 renderOpenButtonAsLink: true
 
           li null,
-            ModalTrigger
-              modal: OptionsModal
-                parameters: @state.configData.get('parameters', Map())
-                updateParamsFn: @_updateParmeters
-                isUpadting: @state.savingData.has('parameters')
-            ,
-              a {},
-                i className: 'fa fa-fw fa-gear'
-                ' Options'
+            OptionsModal
+              parameters: @state.configData.get('parameters', Map())
+              updateParamsFn: @_updateParmeters
+              isUpadting: @state.savingData.has('parameters')
+
           li null,
             DeleteConfigurationButton
               componentId: componentId
