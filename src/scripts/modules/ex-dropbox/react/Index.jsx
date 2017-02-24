@@ -280,8 +280,8 @@ export default React.createClass({
         <ul className="nav nav-stacked">
           <li className={classnames({disabled: !this.canRunUpload()})}>
             <RunButtonModal
-              title="Upload selected tables"
-              icon="fa-upload"
+              title="Run"
+              icon="fa-play"
               mode="link"
               component="ex-dropbox"
               disabled={!this.canRunUpload()}
