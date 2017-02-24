@@ -12,9 +12,6 @@ import DeleteConfigurationButton from '../../components/react/components/DeleteC
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
-
-import { ModalTrigger } from 'react-bootstrap';
-
 import actions from '../../components/InstalledComponentsActionCreators';
 
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
@@ -84,21 +81,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showAuthorizationModal: false,
       showFileSelectorModal: false
     };
-  },
-
-  openAuthorizationModal() {
-    this.setState({
-      showAuthorizationModal: true
-    });
-  },
-
-  closeAuthorizationModal() {
-    this.setState({
-      showAuthorizationModal: false
-    });
   },
 
   openFileSelectorModal() {
@@ -250,12 +234,8 @@ export default React.createClass({
     if (!this.state.hasCredentials) {
       return (
         <div className="row component-empty-state text-center">
-          <div>
-            <p>No Dropbox account authorized!</p>
-            <ModalTrigger modal={<AuthorizationModal configId={this.state.configId} />}>
-              <span className="btn btn-success"><i className="fa fa-fw fa-dropbox" />Authorize Dropbox Account</span>
-            </ModalTrigger>
-          </div>
+          <p>No Dropbox account authorized!</p>
+          <AuthorizationModal configId={this.state.configId} />
         </div>
       );
     }
@@ -359,9 +339,12 @@ export default React.createClass({
       );
     } else {
       return (
-        <ModalTrigger modal={<AuthorizationModal configId={this.state.configId} />}>
-          <a className="btn btn-link"><i className="fa fa-fw fa-user" /> Authorize Dropbox Account</a>
-        </ModalTrigger>
+        <div>
+          <AuthorizationModal
+            configId={this.state.configId}
+            renderOpenButtonAsLink={true}
+          />
+        </div>
       );
     }
   },
