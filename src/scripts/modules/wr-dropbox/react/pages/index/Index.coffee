@@ -258,7 +258,7 @@ module.exports = (componentId) ->
             OptionsModal
               parameters: @state.configData.get('parameters', Map())
               updateParamsFn: @_updateParmeters
-              isUpadting: @state.savingData.has('parameters')
+              isUpdating: @state.savingData.has('parameters')
 
           li null,
             DeleteConfigurationButton

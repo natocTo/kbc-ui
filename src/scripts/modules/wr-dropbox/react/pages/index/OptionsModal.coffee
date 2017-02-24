@@ -20,7 +20,7 @@ module.exports = React.createClass
   propTypes:
     parameters: React.PropTypes.object
     updateParamsFn: React.PropTypes.func
-    isUpadting: React.PropTypes.bool
+    isUpdating: React.PropTypes.bool
 
   getInitialState: ->
     parameters: @props.parameters
@@ -56,17 +56,17 @@ module.exports = React.createClass
 
         ModalFooter null,
           ButtonToolbar null,
-            if @props.isUpadting
+            if @props.isUpdating
               Loader()
             Button
               onClick: @close
-              disabled: @props.isUpadting
+              disabled: @props.isUpdating
               bsStyle: 'link'
             ,
               'Cancel'
             Button
               onClick: @_handleConfirm
-              disabled: @props.isUpadting
+              disabled: @props.isUpdating
               bsStyle: 'success'
             ,
               'Save'
