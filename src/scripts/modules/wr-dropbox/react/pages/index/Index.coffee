@@ -156,15 +156,10 @@ module.exports = (componentId) ->
             if not @state.hasCredentials
               div null,
                 p null, 'No Dropbox account authorized.'
-                ModalTrigger
-                  modal: AuthorizeModal
-                    configId: @state.configId
-                    redirectRouterPath: 'wr-dropbox-oauth-redirect' + componentId
-                    componentId: componentId
-                ,
-                  span className: 'btn btn-success',
-                    i className: 'fa fa-fw fa-dropbox'
-                    ' Authorize Dropbox Account'
+                AuthorizeModal
+                  configId: @state.configId
+                  redirectRouterPath: 'wr-dropbox-oauth-redirect' + componentId
+                  componentId: componentId
             else
               @_renderNoTables()
 
@@ -254,16 +249,12 @@ module.exports = (componentId) ->
             if @state.hasCredentials
               @_renderResetAuthorization()
             else
-              ModalTrigger
-                modal: AuthorizeModal
-                  configId: @state.configId
-                  componentId: componentId
-                  redirectRouterPath: 'wr-dropbox-oauth-redirect' + componentId
+              AuthorizeModal
+                configId: @state.configId
+                componentId: componentId
+                redirectRouterPath: 'wr-dropbox-oauth-redirect' + componentId
+                renderOpenButtonAsLink: true
 
-              ,
-                span className: 'btn btn-link',
-                  i className: 'fa fa-fw fa-user'
-                  ' Authorize'
           li null,
             ModalTrigger
               modal: OptionsModal
