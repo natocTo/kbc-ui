@@ -90,7 +90,7 @@ module.exports = React.createClass
             CodeMirror
               placeholder: 'optional, e.g. {"isActive": 1, "isDeleted": 0}'
               value:
-                if @props.query.get('query')
+                if @props.query.has('query')
                   @props.query.get('query').toString()
               onChange: @_handleQueryChange
               mode: 'application/json'
@@ -108,7 +108,7 @@ module.exports = React.createClass
             CodeMirror
               placeholder: 'optional, e.g. {"creationDate": -1}'
               value:
-                if @props.query.get('sort')
+                if @props.query.has('sort')
                   @props.query.get('sort').toString()
               onChange: @_handleSortChange
               mode: 'application/json'
@@ -162,7 +162,7 @@ module.exports = React.createClass
                   else
                     'mapping'
 
-        if (!@props.query.get('mode') or @props.query.get('mode') == 'mapping')
+        if (!@props.query.has('mode') or @props.query.get('mode') == 'mapping')
           div className: 'form-group',
             label className: 'col-md-2 control-label',
               'Mapping'
