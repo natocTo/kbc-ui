@@ -85,40 +85,7 @@ export default fromJS([
             'dataField': 'Campaigns',
             'placeholders': {
               'advertiserId': 'Id'
-            },
-            'children': [
-              {
-                'endpoint': 'CampaignStats/AdStats?campaignId={campaignId}',
-                'params': {
-                  'StartDate': {
-                    'function': 'date',
-                    'args': [
-                      'Y-m-d',
-                      {
-                        'time': 'previousStart'
-                      }
-                    ]
-                  },
-                  'EndDate': {
-                    'function': 'date',
-                    'args': [
-                      'Y-m-d',
-                      {
-                        'function': 'strtotime',
-                        'args': [
-                          '-1 day'
-                        ]
-                      }
-                    ]
-                  }
-                },
-                'dataType': 'adstats',
-                'dataField': 'Campaign.Ads',
-                'placeholders': {
-                  'campaignId': 'Id'
-                }
-              }
-            ]
+            }
           }
         ]
       },
