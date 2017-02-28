@@ -3,14 +3,7 @@ _ = require 'underscore'
 Immutable = require 'immutable'
 List = Immutable.List
 
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
-Button = React.createFactory(require('react-bootstrap').Button)
-
 TasksEditTable = React.createFactory(require './TasksEditTable')
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
-Loader = React.createFactory(require('kbc-react-components').Loader)
-
-{div, button, span} = React.DOM
 
 TasksEditor = React.createClass
   displayName: 'TasksEditor'
