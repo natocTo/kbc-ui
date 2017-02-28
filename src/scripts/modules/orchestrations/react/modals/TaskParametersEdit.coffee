@@ -35,7 +35,7 @@ TaskParametersEdit = React.createClass
       height: 'auto'
       mode: 'application/json'
       lineWrapping: true
-      autofocus: @props.isEditable
+      autoFocus: @props.isEditable
       onChange: @_handleChange
       lint: true
       gutters: ['CodeMirror-lint-markers']
