@@ -5,6 +5,8 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {Modal} from 'react-bootstrap';
 // import Select from '../../../../react/common/Select';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
+import Picker from '../../../google-utils/react/GooglePicker';
+import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
 
 const HELP_INPUT_TABLE = 'Select source table from Storage';
 const HELP_SHEET_TITLE = 'Name of the sheet';
@@ -12,7 +14,7 @@ const HELP_SHEET_SPREADSHEET = 'Parent spreadsheet';
 
 export default React.createClass({
   propTypes: {
-    // placeholders: PropTypes.object.isRequired,
+    email: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
     isSavingFn: PropTypes.func.isRequired,
     onHideFn: PropTypes.func,
@@ -57,7 +59,7 @@ export default React.createClass({
 
   renderSheetFields() {
     const title = this.renderInput('Title', 'title', HELP_SHEET_TITLE, 'My Sheet');
-    const spreadsheet = this.renderInput('Spreadsheet', 'fileId', HELP_SHEET_SPREADSHEET, 'My Sheet');
+    const spreadsheet = this.renderPicker(HELP_SHEET_SPREADSHEET);
 
     return (
       <div>
@@ -87,6 +89,32 @@ export default React.createClass({
     const validationText = validationFn();
     const inputElement = this.renderInputElement(propertyPath, placeholder);
     return this.renderFormElement(caption, inputElement, helpText, validationText);
+  },
+
+  renderPicker(helpText) {
+    const parentName = this.sheet('title', '');
+    const pickerElement = (<Picker
+      email={this.props.email}
+      dialogTitle="Select parent spreadsheet"
+      buttonLabel={parentName}
+      onPickedFn={(data) => {
+        console.log(data);
+        const parentId = data[0].id;
+        const title = data[0].name;
+        this.updateLocalState(['sheet'].concat('fileId'), parentId);
+        this.updateLocalState(['sheet'].concat('title'), title);
+      }}
+      buttonProps={{
+        bsStyle: 'default',
+        bsSize: 'medium'
+      }}
+      views={[
+        ViewTemplates.rootFolder,
+        ViewTemplates.flatFolders,
+        ViewTemplates.recentFolders
+      ]}
+    />);
+    return this.renderFormElement('Spreadsheet', pickerElement, helpText);
   },
 
   renderInputElement(propertyPath, placeholder) {

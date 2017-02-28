@@ -151,6 +151,7 @@ export default function(COMPONENT_ID) {
       };
       return (
         <TableModal
+          email=""
           show={this.state.localState.get('showTableModal', false)}
           onHideFn={hideFn}
           onSaveFn={this.state.actions.saveQuery}
