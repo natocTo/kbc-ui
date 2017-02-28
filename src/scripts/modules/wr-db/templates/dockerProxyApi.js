@@ -34,7 +34,7 @@ function updateTablesMapping(data, table) {
   tables = tables.map( (t) => {
     if (t.get('source') === tableId) {
       found = true;
-      return mappingTable;
+      return t.mergeDeep(mappingTable);
     } else {
       return t;
     }
@@ -84,6 +84,26 @@ export default function(componentId) {
       };
     },
 
+    // ############## SET TABLE FILTER
+    mergeTableMappingV2(configId, mapping) {
+      const tableId = mapping.get('source');
+      return this.loadConfigData(configId).then(
+        (data) => {
+          const tables = data.getIn(tablesPath, List())
+                .map((t) => {
+                  if (t.get('source') === tableId) {
+                    return t.mergeDeep(mapping);
+                  } else {
+                    return t;
+                  }
+                });
+          const dataToSave = data.setIn(tablesPath, tables);
+          const msg = `Update data filter of ${tableId}`;
+          return this.saveConfigData(configId, dataToSave, msg);
+        });
+    },
+
+    // ############## SET V2 TABLE
     setTableV2(configId, tableId, tableData) {
       return this.loadConfigData(configId).then(
         (data) => {

@@ -9,6 +9,7 @@ ColumnsEditor = React.createFactory require './ColumnsEditor'
 ColumnRow = require './ColumnRow'
 DataTypes = require '../../../templates/dataTypes'
 
+
 storageApi = require '../../../../components/StorageApi'
 
 WrDbStore = require '../../../store'
@@ -17,11 +18,15 @@ V2Actions = require('../../../v2-actions').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
 Input = React.createFactory(require('react-bootstrap').Input)
+{FormControls} = require 'react-bootstrap'
+StaticText = FormControls.Static
 
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactivateButton').default
+FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
+FilterTableModal = require('../../../../components/react/components/generic/TableFiltersOnlyModal').default
 InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
 PrimaryKeyModal = React.createFactory(require('./PrimaryKeyModal').default)
 IsDockerBasedFn = require('../../../templates/dockerProxyApi').default
@@ -66,6 +71,7 @@ templateFn = (componentId) ->
     columnsValidation = editingData.getIn(['validation', tableId], Map())
 
     #state
+    allTables: StorageTablesStore.getAll()
     columnsValidation: columnsValidation
     hideIgnored: hideIgnored
     editingColumns: editingColumns
@@ -119,12 +125,16 @@ templateFn = (componentId) ->
     isRenderIncremental = IsDockerBasedFn(componentId) and componentId != 'wr-db-mssql'
     tableEditClassName = 'col-sm-12'
     if isRenderIncremental
-      tableEditClassName = 'col-sm-6'
+      tableEditClassName = 'col-sm-4'
     div className: 'container-fluid kbc-main-content',
+      @_renderFilterModal()
       div className: 'row kbc-table-editor-header',
         div className: tableEditClassName, @_renderTableEdit()
+
         if isRenderIncremental
-          div className: 'col-sm-6', @_renderIncremetnalSetup()
+          div className: 'col-sm-4', @_renderIncremetnalSetup()
+        if isRenderIncremental
+          div className: 'col-sm-4', @_renderTableFiltersRow()
         div className: 'col-sm-offset-7 col-sm-3',
           if !!@state.editingColumns
             @_renderSetColumnsType()
@@ -170,7 +180,7 @@ templateFn = (componentId) ->
     primaryKey = exportInfo.get('primaryKey', List())
     editingPkPath = @state.v2Actions.editingPkPath
     editingPk = v2State.getIn(editingPkPath)
-    div null,
+    span null,
       strong null,
         'Incremental'
       React.createElement ActivateDeactivateButton,
@@ -306,6 +316,44 @@ templateFn = (componentId) ->
           WrDbActions.setEditingData(componentId, @state.configId, path, value)
         componentId: componentId
       ' '
+  _renderTableFiltersRow: ->
+    tableMapping = @state.v2Actions.getTableMapping(@state.tableId)
+    span null,
+      strong null, 'Data Filter'
+      ' '
+    ,
+      button
+        className: 'btn btn-link'
+        style: {'paddingTop': 0, 'paddingBottom': 0}
+        disabled: !!@state.editingColumns
+        onClick: =>
+          @state.v2Actions.updateV2State(@state.v2Actions.editingFilterPath, tableMapping)
+          @state.v2Actions.updateV2State(['filterModal', 'show'], true)
+
+        React.createElement FiltersDescription,
+          value: tableMapping
+          rootClassName: ''
+        span className: 'kbc-icon-pencil'
+
+  _renderFilterModal: ->
+    v2Actions = @state.v2Actions
+    v2State = @state.v2State
+    v2ConfigTable = @state.v2ConfigTable
+    editingFilter = v2State.getIn(v2Actions.editingFilterPath)
+    React.createElement FilterTableModal,
+      value: editingFilter
+      allTables: @state.allTables
+      show: v2State.getIn(['filterModal', 'show'], false)
+      onResetAndHide: =>
+        @state.v2Actions.updateV2State(['filterModal', 'show'], false)
+      onOk: =>
+        v2Actions.setTableMapping(v2State.getIn(v2Actions.editingFilterPath))
+          .then( => @state.v2Actions.updateV2State(['filterModal', 'show'], false))
+      onSetMapping: (newMapping) ->
+        v2Actions.updateV2State(v2Actions.editingFilterPath, newMapping)
+      isSaving: @state.v2State.get('saving')
+      saveStyle: 'success'
+      setLabel: 'Save'
 
   _renderEditButtons: ->
     isValid = @state.columnsValidation?.reduce((memo, value) ->
