@@ -14,6 +14,8 @@ import Promise from 'bluebird';
 import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
 
+import DataTypes from './dataTypes';
+
 function isDockerBasedWriter(componentId) {
   return dockerComponents.indexOf(componentId) >= 0;
 }
@@ -50,6 +52,19 @@ export default function(componentId) {
     return null;
   }
 
+  function prepareColumnsDefaultTypes(tableColumns) {
+    const dataTypes = DataTypes[componentId] || {};
+    if (!dataTypes.default) return List();
+    const defaultType = fromJS(dataTypes.default);
+    return tableColumns.map((c) =>
+                            Map({
+                              'name': c,
+                              'dbName': c,
+                              'nullable': false,
+                              'default': '',
+                              'size': ''
+                            }).mergeDeep(defaultType));
+  }
 
   return {
     loadConfigData(configId) {
@@ -190,13 +205,13 @@ export default function(componentId) {
     },
 
     // ######## POST TABLE
-    postTable(configId, tableId, table) {
+    postTable(configId, tableId, table, tableColumns) {
       const tableToSave = fromJS({
         dbName: table.dbName,
         export: table.export,
         tableId: tableId,
         items: []
-      });
+      }).set('items', prepareColumnsDefaultTypes(tableColumns));
 
       return this.loadConfigData(configId).then(
         (data) => {
