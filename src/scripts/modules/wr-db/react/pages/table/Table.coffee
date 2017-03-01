@@ -145,7 +145,7 @@ templateFn = (componentId) ->
         onToggleHideIgnored: (e) =>
           path = ['hideIgnored', @state.tableId]
           @_updateLocalState(path, e.target.checked)
-        dataTypes: DataTypes[componentId] or defaultDataTypes
+        dataTypes: @_getComponentDataTypes()
         columns: @state.columns
         renderRowFn: @_renderColumnRow
         editingColumns: @state.editingColumns
@@ -276,8 +276,11 @@ templateFn = (componentId) ->
             @_onEditColumn(newColumn)
         options
 
+  _getComponentDataTypes: ->
+    DataTypes[componentId]?.typesList or defaultDataTypes
+
   _getSizeParam: (dataType) ->
-    dtypes = DataTypes[componentId] or defaultDataTypes
+    dtypes = @_getComponentDataTypes()
     dt = _.find dtypes, (d) ->
       _.isObject(d) and _.keys(d)[0] == dataType
     result = dt?[dataType]?.defaultSize
@@ -285,7 +288,7 @@ templateFn = (componentId) ->
 
 
   _getDataTypes: ->
-    dtypes = DataTypes[componentId] or defaultDataTypes
+    dtypes = @_getComponentDataTypes()
     return _.map dtypes, (dataType) ->
       #it could be object eg {VARCHAR: {defaultSize:''}}
       if _.isObject dataType

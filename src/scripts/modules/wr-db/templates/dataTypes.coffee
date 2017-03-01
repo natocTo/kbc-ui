@@ -130,12 +130,21 @@ pgsql = [
 ]
 
 module.exports =
-  'keboola.wr-db-snowflake': snowflake
-  'keboola.wr-db-oracle': oracle
-  'keboola.wr-db-impala': impala
-  'keboola.wr-db-mssql-v2': mssql
-  'keboola.wr-db-pgsql': pgsql
-  'keboola.wr-redshift-v2': redshift
-  'wr-db-mssql': mssql
-  'wr-db-redshift': redshift
-  'wr-db-oracle': oracleold
+  'keboola.wr-db-snowflake':
+    typesList: snowflake
+  'keboola.wr-db-oracle':
+    typesList: oracle
+  'keboola.wr-db-impala':
+    typesList: impala
+  'keboola.wr-db-mssql-v2':
+    typesList: mssql
+  'keboola.wr-db-pgsql':
+    typesList: pgsql
+  'keboola.wr-redshift-v2':
+    typesList: redshift
+  'wr-db-mssql':
+    typesList: mssql
+  'wr-db-redshift':
+    typesList: redshift
+  'wr-db-oracle':
+    typesList: oracleold
