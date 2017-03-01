@@ -34,8 +34,11 @@ module.exports = React.createClass
 
   render: ->
     provDescription = 'This is readonly credentials to the database provided by Keboola.'
-    if @props.driver == 'redshift' or @props.driver == 'snowflake'
+    if @props.driver == 'redshift'
       provDescription = 'This is write credentials to the database provided by Keboola.'
+    if @props.driver == 'snowflake'
+      provDescription = @_snowflakeDescription()
+
     fields = fieldsTemplates(@props.componentId)
 
     form className: 'form-horizontal',
@@ -55,6 +58,11 @@ module.exports = React.createClass
           @_createInput(field[0], field[1], field[2], field[3], field[4], field[5])
       @_renderSshTunnelRow()
       @_renderTestCredentials()
+
+  _snowflakeDescription: ->
+    """
+      This is write credentials to the snowflake database provided by Keboola. All executed queries have 15 seconds timeout and there can be 2 concurrent sessions running at most. Contact your maintainer if you would like to raise these limits.
+    """
 
   _renderTestCredentials: ->
     if not isDockerBasedWriter(@props.componentId) or @props.componentId == 'wr-db-mssql'
