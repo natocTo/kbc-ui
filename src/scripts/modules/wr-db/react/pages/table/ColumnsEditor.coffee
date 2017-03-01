@@ -17,6 +17,9 @@ module.exports = React.createClass
     onToggleHideIgnored: React.PropTypes.func
     dataPreview: React.PropTypes.array
     columnsValidation: React.PropTypes.object
+    editButtons: React.PropTypes.object
+    setAllColumnsType: React.PropTypes.object
+
 
 
 
@@ -62,6 +65,8 @@ module.exports = React.createClass
                       label: 'Hide IGNORED'
                       onChange: this.props.onToggleHideIgnored
                     ' Hide Ignored'
+                if @props.editingColumns
+                  @props.setAllColumnsType
               th null,
                 'Null'
                 ' '
@@ -72,7 +77,7 @@ module.exports = React.createClass
                   code null, 'NULL'
                   '.'
               th null, 'Default Value'
-              th null
+              th null, @props.editButtons
           tbody null,
             rows
     else

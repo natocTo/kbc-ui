@@ -128,19 +128,18 @@ templateFn = (componentId) ->
       tableEditClassName = 'col-sm-4'
     div className: 'container-fluid kbc-main-content',
       @_renderFilterModal()
-      div className: 'row kbc-table-editor-header',
-        div className: tableEditClassName, @_renderTableEdit()
-
+      div className: 'row kbc-header',
+        @_renderTableEdit()
         if isRenderIncremental
-          div className: 'col-sm-4', @_renderIncremetnalSetup()
+          @_renderIncremetnalSetup()
         if isRenderIncremental
-          div className: 'col-sm-4', @_renderTableFiltersRow()
-        div className: 'col-sm-offset-7 col-sm-3',
-          if !!@state.editingColumns
-            @_renderSetColumnsType()
-          else
-            ' '
-        div className: 'col-sm-2 kbc-buttons', @_renderEditButtons()
+          @_renderTableFiltersRow()
+        # div className: 'col-sm-offset-7 col-sm-3',
+        #   if !!@state.editingColumns
+        #     @_renderSetColumnsType()
+        #   else
+        #     ' '
+        # div className: 'col-sm-2 kbc-buttons', ''
 
       ColumnsEditor
         onToggleHideIgnored: (e) =>
@@ -156,6 +155,8 @@ templateFn = (componentId) ->
         filterColumnsFn: @_hideIgnoredFilter
         filterColumnFn: @_filterColumn
         dataPreview: @state.dataPreview
+        editButtons: @_renderEditButtons()
+        setAllColumnsType: @_renderSetColumnsType()
 
   _setValidateColumn: (cname, isValid) ->
     path = ['validation', @state.tableId, cname]
@@ -181,40 +182,42 @@ templateFn = (componentId) ->
     editingPkPath = @state.v2Actions.editingPkPath
     editingPk = v2State.getIn(editingPkPath)
     span null,
-      strong null,
-        'Incremental'
-      React.createElement ActivateDeactivateButton,
-        isActive: isIncremental
-        activateTooltip: 'Set incremental'
-        deactivateTooltip: 'reset incremental'
-        isPending: @state.v2State.get('saving')
-        buttonStyle: {'paddingTop': '0', 'paddingBottom': '0'}
-        buttonDisabled: !!@state.editingColumns
-        onChange: =>
-          @setV2TableInfo(exportInfo.set('incremental', !isIncremental))
-      strong null,
-        'Primary Key'
-      ' '
-      button
-        className: 'btn btn-link'
-        style: {'paddingTop': 0, 'paddingBottom': 0}
-        disabled: !!@state.editingColumns
-        onClick: =>
-          @state.v2Actions.updateV2State(editingPkPath, primaryKey)
-        primaryKey.join(', ') or 'n/a'
+      p null,
+        strong className: 'col-sm-3',
+          'Incremental'
+        React.createElement ActivateDeactivateButton,
+          isActive: isIncremental
+          activateTooltip: 'Set incremental'
+          deactivateTooltip: 'reset incremental'
+          isPending: @state.v2State.get('saving')
+          buttonStyle: {'paddingTop': '0', 'paddingBottom': '0'}
+          buttonDisabled: !!@state.editingColumns
+          onChange: =>
+            @setV2TableInfo(exportInfo.set('incremental', !isIncremental))
+      p null,
+        strong className: 'col-sm-3',
+          'Primary Key'
         ' '
-        span className: 'kbc-icon-pencil'
-      PrimaryKeyModal
-        tableConfig: @state.tableConfig
-        columns: @state.columns.map (c) ->
-          c.get('dbName')
-        show: !!editingPk
-        currentValue: primaryKey.join(',')
-        isSaving: @state.v2State.get('saving')
-        onHide: =>
-          @state.v2Actions.updateV2State(editingPkPath, null)
-        onSave: (newPk) =>
-          @setV2TableInfo(exportInfo.set('primaryKey', newPk))
+        button
+          className: 'btn btn-link'
+          style: {'paddingTop': 0, 'paddingBottom': 0}
+          disabled: !!@state.editingColumns
+          onClick: =>
+            @state.v2Actions.updateV2State(editingPkPath, primaryKey)
+          primaryKey.join(', ') or 'N/A'
+          ' '
+          span className: 'kbc-icon-pencil'
+        PrimaryKeyModal
+          tableConfig: @state.tableConfig
+          columns: @state.columns.map (c) ->
+            c.get('dbName')
+          show: !!editingPk
+          currentValue: primaryKey.join(',')
+          isSaving: @state.v2State.get('saving')
+          onHide: =>
+            @state.v2Actions.updateV2State(editingPkPath, null)
+          onSave: (newPk) =>
+            @setV2TableInfo(exportInfo.set('primaryKey', newPk))
 
   _onEditColumn: (newColumn) ->
     cname = newColumn.get('name')
@@ -251,15 +254,16 @@ templateFn = (componentId) ->
 
   _renderSetColumnsType: ->
     tmpDataTypes = @_getDataTypes()
-    options = _.map tmpDataTypes.concat('IGNORE'), (opKey, opValue) ->
+    options = _.map tmpDataTypes.concat('IGNORE').concat(''), (opKey, opValue) ->
       option
+        disabled: opKey == ''
         value: opKey
         key: opKey
       ,
-        opKey
+        if opKey == '' then 'Set All Columns To' else opKey
     span null,
-      span null, 'Set All Columns To '
       select
+        defaultValue: ''
         onChange: (e) =>
           value = e.target.value
           @state.editingColumns.map (ec) =>
@@ -300,8 +304,8 @@ templateFn = (componentId) ->
 
 
   _renderTableEdit: ->
-    div className: '',
-      strong null, 'Database table name'
+    p className: '',
+      strong className: 'col-sm-3', 'Database table name'
       ' '
       TableNameEdit
         tableId: @state.tableId
@@ -318,8 +322,8 @@ templateFn = (componentId) ->
       ' '
   _renderTableFiltersRow: ->
     tableMapping = @state.v2Actions.getTableMapping(@state.tableId)
-    span null,
-      strong null, 'Data Filter'
+    p null,
+      strong className: 'col-sm-3', 'Data Filter'
       ' '
     ,
       button
@@ -333,6 +337,7 @@ templateFn = (componentId) ->
         React.createElement FiltersDescription,
           value: tableMapping
           rootClassName: ''
+        ' '
         span className: 'kbc-icon-pencil'
 
   _renderFilterModal: ->
