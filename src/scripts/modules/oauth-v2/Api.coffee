@@ -18,6 +18,16 @@ module.exports =
     .promise().then (response) ->
       return response.body
 
+  postCredentials: (componentId, id, authorizedFor, data) ->
+    body =
+      id: id
+      authorizedFor: authorizedFor
+      data: data
+    createRequest('POST', "credentials/#{componentId}")
+    .send(body)
+    .promise().then (response) ->
+      return response.body
+
   deleteCredentials: (componentId, id) ->
     createRequest('DELETE', "credentials/#{componentId}/#{id}")
     .promise().then (response) ->

@@ -21,6 +21,9 @@ OAuthStore = StoreUtils.createStore
   isDeletingCredetials: (componentId, id) ->
     _store.hasIn ['deletingCredentials', componentId, id]
 
+  isSavingCredetials: (componentId, id) ->
+    _store.hasIn ['postingCredentials', componentId, id]
+
 
 dispatcher.register (payload) ->
   action = payload.action
@@ -38,6 +41,16 @@ dispatcher.register (payload) ->
     when Constants.ActionTypes.OAUTHV2_DELETE_CREDENTIALS_SUCCESS
       _store = _store.deleteIn ['deletingCredentials', action.componentId, action.id]
       _store = _store.deleteIn ['credentials', action.componentId, action.id]
+      OAuthStore.emitChange()
+
+    when Constants.ActionTypes.OAUTHV2_POST_CREDENTIALS_START
+      _store = _store.setIn(['postingCredentials', action.componentId, action.id], true)
+      OAuthStore.emitChange()
+
+    when Constants.ActionTypes.OAUTHV2_POST_CREDENTIALS_SUCCESS
+      credentials = action.credentials
+      _store = _store.deleteIn ['postingCredentials', action.componentId, action.id]
+      _store = _store.setIn ['credentials', action.componentId, action.id], credentials
       OAuthStore.emitChange()
 
     when Constants.ActionTypes.OAUTHV2_API_ERROR
