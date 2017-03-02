@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Input} from 'react-bootstrap';
+import { Modal, Input } from 'react-bootstrap';
 import {Map} from 'immutable';
 import {createTransformation} from '../../ActionCreators';
 
@@ -54,31 +54,56 @@ export default React.createClass({
         name: '',
         description: '',
         backend: backend
-      })
+      }),
+      showModal: false
     };
   },
 
-  componentDidMount() {
-    this.refs.name.getInputDOMNode().focus();
+  open() {
+    this.setState({
+      showModal: true
+    });
+  },
+
+  close() {
+    this.setState({
+      showModal: false
+    });
   },
 
   render() {
     return (
-      <Modal {...this.props} title="New Transformation">
-        <div className="modal-body">
-          {this.form()}
-        </div>
-        <div className="modal-footer">
-          <ConfirmButtons
-            isSaving={this.state.data.get('isSaving')}
-            isDisabled={!this.isValid()}
-            saveLabel="Create"
-            onCancel={this.props.onRequestHide}
-            onSave={this.handleCreate}
-            />
-        </div>
-      </Modal>
+      <a onClick={this.handleOpenButtonClick}>
+        <i className="fa fa-fw fa-plus" />
+        {' Add transformation'}
+        <Modal onHide={this.close} show={this.state.showModal}>
+          <Modal.Header closeButton={true}>
+            <Modal.Title>
+              New Transformation
+            </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            {this.form()}
+          </Modal.Body>
+
+          <Modal.Footer>
+            <ConfirmButtons
+              isSaving={this.state.data.get('isSaving')}
+              isDisabled={!this.isValid()}
+              saveLabel="Create"
+              onCancel={this.close}
+              onSave={this.handleCreate}
+              />
+          </Modal.Footer>
+        </Modal>
+      </a>
     );
+  },
+
+  handleOpenButtonClick(e) {
+    e.preventDefault();
+    this.open();
   },
 
   form() {
@@ -90,6 +115,7 @@ export default React.createClass({
         <Input
           type="text"
           value={this.state.data.get('name')}
+          autoFocus={true}
           onChange={this.handleChange.bind(this, 'name')}
           placeholder="Name"
           label="Name"
