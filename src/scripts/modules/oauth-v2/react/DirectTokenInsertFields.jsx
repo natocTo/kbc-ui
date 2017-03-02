@@ -26,7 +26,7 @@ export default React.createClass({
             <input
               className="form-control"
               type="text"
-              name="token"
+              name="directtoken"
               value={this.props.token}
               onChange={this.makeSetStatePropertyFn('token')}
               autoFocus={true}
@@ -44,7 +44,7 @@ export default React.createClass({
             <input
               className="form-control"
               type="text"
-              name="authorizedFor"
+              name="directauthorizedFor"
               value={this.props.authorizedFor}
               onChange={this.makeSetStatePropertyFn('authorizedFor')}
               autoFocus={false}
