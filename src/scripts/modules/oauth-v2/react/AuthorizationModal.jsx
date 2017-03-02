@@ -9,6 +9,8 @@ import {Loader} from 'kbc-react-components';
 
 import './AuthorizationModal.less';
 
+const DIRECT_TOKEN_COMPONENTS = ['keboola.ex-facebook', 'keboola.ex-facebook-ads'];
+
 export default React.createClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
@@ -44,8 +46,7 @@ export default React.createClass({
           </Modal.Header>
           <AuthorizationForm
             componentId={this.props.componentId}
-            id={this.props.id}
-          >
+            id={this.props.id}>
             <Modal.Body>
               <TabbedArea key="tabbedarea" activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}>
                 <TabPane key="general" eventKey="general" tab="Instant authorization">
@@ -54,10 +55,12 @@ export default React.createClass({
                 <TabPane key="external" eventKey="external" tab="External authorization">
                   {this.renderExternal()}
                 </TabPane>
-                <TabPane key="direct" eventKey="direct" tab="Direct token insert">
-                  {this.renderDirectTokenInsert()}
-                </TabPane>
-
+                {DIRECT_TOKEN_COMPONENTS.includes(this.props.componentId) ?
+                  <TabPane key="direct" eventKey="direct" tab="Direct token insert">
+                    {this.renderDirectTokenInsert()}
+                  </TabPane>
+                 : null
+                }
               </TabbedArea>
             </Modal.Body>
             <Modal.Footer>
@@ -111,8 +114,11 @@ export default React.createClass({
 
   onSaveDirectToken() {
     const {direct} = this.state;
+    const data = {
+      token: direct.token
+    };
     this.setDirectState('saving', true);
-    oauthUtils.saveDirectToken(this.props.componentId, this.props.configId, direct.token, direct.authorizedFor).then(() => {
+    oauthUtils.saveDirectData(this.props.componentId, this.props.configId, direct.authorizedFor, data).then(() => {
       this.setState(this.getInitialState());
       this.props.onHideFn();
     });

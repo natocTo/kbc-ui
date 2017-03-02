@@ -134,10 +134,7 @@ export function generateLink(componentId, configId) {
     });
 }
 
-export function saveDirectToken(componentId, configId, token, authorizedFor) {
-  const data = {
-    'token': token
-  };
+export function saveDirectData(componentId, configId, authorizedFor, data) {
   return OauthActions.postCredentials(componentId, configId, authorizedFor, data)
     .then(() => {
       const configuration = installedComponentsStore.getConfigData(componentId, configId) || Map();
