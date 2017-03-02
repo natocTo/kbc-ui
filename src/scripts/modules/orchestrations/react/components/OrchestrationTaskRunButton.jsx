@@ -1,7 +1,5 @@
 import React from 'react';
-import {Tooltip, OverlayTrigger, ModalTrigger} from 'react-bootstrap';
 import RunOrchestrationModal from '../modals/RunOrchestration';
-import {Loader} from 'kbc-react-components';
 
 export default React.createClass({
   propTypes: {
@@ -28,36 +26,13 @@ export default React.createClass({
 
   render() {
     return (
-      <OverlayTrigger overlay={<Tooltip>Run</Tooltip>} key="run" placement={this.props.tooltipPlacement}>
-        <ModalTrigger modal={this.modal()}>
-          <button style={this.props.buttonStyle}
-            className="btn btn-link" onClick={this.handleButtonClick}>
-            {this.icon()}
-          </button>
-        </ModalTrigger>
-      </OverlayTrigger>
-    );
-  },
-
-  icon() {
-    if (this.state.isLoading) {
-      return (
-        <Loader className="fa-fw"/>
-      );
-    } else {
-      return (
-        <i className="fa fa-fw fa-play"/>
-      );
-    }
-  },
-
-  modal() {
-    return (
       <RunOrchestrationModal
         orchestration={this.props.orchestration}
         notify={this.props.notify}
         onRequestRun={this.handleRunStart}
-        />
+        isLoading={this.state.isLoading}
+        tooltipPlacement={this.props.tooltipPlacement}
+      />
     );
   },
 
@@ -74,11 +49,6 @@ export default React.createClass({
           });
         }
       });
-  },
-
-  handleButtonClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
   }
 
 });
