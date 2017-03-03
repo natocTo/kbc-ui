@@ -7,7 +7,6 @@ keyMirror = require('react/lib/keyMirror')
 {tr, td, option, span, div, strong} = React.DOM
 StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
 Input = React.createFactory(require('react-bootstrap').Input)
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
 DateDimensionModal = React.createFactory(require './DateDimensionSelectModal')
 ColumnDataPreview = React.createFactory(require './ColumnDataPreview')
 DateFormatHint = React.createFactory(require './DateFormatHint')
@@ -206,19 +205,10 @@ module.exports = React.createClass
           @props.column.get 'dateDimension'
         ' '
         if @props.isEditing
-          ModalTrigger
-            modal: DateDimensionModal
-              column: @props.column
-              configurationId: @props.configurationId
-              onSelect: @_handleDateDimensionSelect
-          ,
-            span className: 'btn btn-link',
-              span className: 'fa fa-calendar'
-              ' '
-              if @props.column.get('dateDimension')
-                'Change'
-              else
-                'Add'
+          DateDimensionModal
+            column: @props.column
+            configurationId: @props.configurationId
+            onSelect: @_handleDateDimensionSelect
 
   _handleDateDimensionSelect: (data) ->
     @props.onChange @props.column.set('dateDimension', data.selectedDimension)
