@@ -64,7 +64,7 @@ module.exports = React.createClass
         show: @state.showModal
         onHide: @close
       ,
-        ModalHeader null,
+        ModalHeader closeButton: true,
           ModalTitle null,
             @_title()
 
