@@ -86,7 +86,7 @@ InstalledComponentsStore = StoreUtils.createStore
     _store.getIn(['configData', componentId, configId, 'parameters'], Map())
 
   getConfig: (componentId, configId) ->
-    _store.getIn ['components', componentId, 'configurations', configId]
+    _store.getIn(['components', componentId, 'configurations', configId], Map())
 
   getConfigRow: (componentId, configId, rowId) ->
     _store.getIn ['components', componentId, 'configurations', configId, 'rows', rowId]
