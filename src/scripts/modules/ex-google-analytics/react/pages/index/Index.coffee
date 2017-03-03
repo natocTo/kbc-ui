@@ -8,7 +8,6 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 ApplicationStore = require '../../../../../stores/ApplicationStore.coffee'
 QueriesTable = React.createFactory(require('./QueriesTable'))
 OptionsModal = React.createFactory(require('./OptionsModal'))
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentDescription = React.createFactory(ComponentDescription)
@@ -109,9 +108,9 @@ module.exports = React.createClass
             ,
               i className: 'fa fa-fw fa-user'
               if @_showAuthorize()
-                'Authorize'
+                ' Authorize'
               else
-                'Reauthorize'
+                ' Reauthorize'
         if @_isExtLinkOnly()
           li null,
             Link
@@ -132,7 +131,7 @@ module.exports = React.createClass
               'Profiles '
               span className: 'badge',
                 @state.selectedProfilesCount
-          
+
         li null,
           OptionsModal
             configId: @state.configId

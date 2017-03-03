@@ -70,13 +70,13 @@ module.exports = React.createClass
     helpBlock = span className: 'help-block',
       p className: 'text-danger',
         @state.error
-    a null,
+    div null,
       @renderOpenButton()
       Modal
         show: @state.showModal
         onHide: @close
       ,
-        ModalHeader null,
+        ModalHeader closeButton: true,
           ModalTitle null,
             'Options'
 
@@ -136,7 +136,9 @@ module.exports = React.createClass
       @close()
 
   renderOpenButton: ->
-    span
+    Button
+      bsStyle: 'link'
       onClick: @open
+    ,
       i className: 'fa fa-fw fa-gear'
       ' Options'
