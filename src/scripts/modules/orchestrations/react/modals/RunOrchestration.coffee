@@ -26,7 +26,7 @@ module.exports = React.createClass
     onRequestCancel: React.PropTypes.func
     isLoading: React.PropTypes.bool.isRequired
     tooltipPlacement: React.PropTypes.string
-    onOpen: React.PropTypes.func.isRequired
+    onOpen: React.PropTypes.func
 
   getInitialState: ->
     showModal: false
@@ -36,7 +36,8 @@ module.exports = React.createClass
       showModal: false
 
   open: ->
-    @props.onOpen()
+    if @props.onOpen
+      @props.onOpen()
     @setState
       showModal: true
 
