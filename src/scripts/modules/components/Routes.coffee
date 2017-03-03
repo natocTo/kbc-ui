@@ -125,6 +125,7 @@ routes =
       createComponentRoute 'keboola.ex-db-mysql', [exDbGenericRoutes('keboola.ex-db-mysql')]
       createComponentRoute 'keboola.ex-db-mysql-custom', [exDbGenericRoutes('keboola.ex-db-mysql-custom')]
       createComponentRoute 'keboola.ex-db-oracle', [exDbGenericRoutes('keboola.ex-db-oracle')]
+      createComponentRoute 'keboola.ex-db-snowflake', [exDbGenericRoutes('keboola.ex-db-snowflake')]
     ,
       createComponentRoute 'keboola.ex-db-impala', [exDbGenericRoutes('keboola.ex-db-impala')]
     ,
