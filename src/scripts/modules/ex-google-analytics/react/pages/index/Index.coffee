@@ -132,16 +132,12 @@ module.exports = React.createClass
               'Profiles '
               span className: 'badge',
                 @state.selectedProfilesCount
-
+          
         li null,
-          ModalTrigger
-            modal: OptionsModal
-              configId: @state.configId
-              outputBucket: ExGanalStore.getOutputBucket @state.configId
-          ,
-            span className: 'btn btn-link',
-              i className: 'fa fa-fw fa-gear'
-              ' Options'
+          OptionsModal
+            configId: @state.configId
+            outputBucket: ExGanalStore.getOutputBucket @state.configId
+
         li {className: classnames(disabled: !@state.config.get('configuration')?.count())},
           RunButtonModal
             title: 'Run Extraction'

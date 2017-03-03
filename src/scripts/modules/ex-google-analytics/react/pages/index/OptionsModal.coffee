@@ -1,5 +1,9 @@
 React = require 'react'
 Modal = React.createFactory(require('react-bootstrap').Modal)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 Input = React.createFactory(require('react-bootstrap').Input)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
@@ -13,9 +17,7 @@ storageActionCreators = require '../../../../components/StorageActionCreators'
 analStore = require '../../../exGanalStore'
 actionCreators = require '../../../exGanalActionCreators'
 
-
-
-{span, div, p, strong, form, input, label, div} = React.DOM
+{span, div, p, i, form, input, label, div, a} = React.DOM
 
 createGetSuggestions = (getOptions) ->
   (input, callback) ->
@@ -27,13 +29,16 @@ createGetSuggestions = (getOptions) ->
 
 module.exports = React.createClass
   displayName: 'ExGanalOptionsModal'
+  
   mixins: [createStoreMixin(analStore, bucketsStore)]
+  
   propTypes:
     configId: React.PropTypes.string.isRequired
     outputBucket: React.PropTypes.string.isRequired
 
   getInitialState: ->
     outputBucket: @props.outputBucket
+    showModal: false
     error: null
 
   componentDidMount: ->
@@ -53,46 +58,61 @@ module.exports = React.createClass
       )
     isSavingBucket: analStore.isSavingBucket(@props.configId)
 
+  close: ->
+    @setState
+      showModal: false
+
+  open: ->
+    @setState
+      showModal: true
+
   render: ->
     helpBlock = span className: 'help-block',
       p className: 'text-danger',
         @state.error
-    Modal
-      title: 'Options'
-      onRequestHide: @props.onRequestHide
-    ,
-      div className: 'modal-body',
-        div className: 'form-horizontal',
-          div className: 'form-group',
-            label className: 'control-label col-xs-2', 'Outbucket'
-            div className: "col-xs-10 form-group",
-              Autosuggest
-                suggestions: createGetSuggestions(@_getBuckets)
-                inputAttributes:
-                  className: 'form-control'
-                  placeholder: 'to get hint start typing'
-                  value: @state.outputBucket
-                  onChange: (newValue) =>
-                    @_validate newValue
-                    @setState
-                      outputBucket: newValue
-              helpBlock if @state.error
+    a null,
+      @renderOpenButton()
+      Modal
+        show: @state.showModal
+        onHide: @close
+      ,
+        ModalHeader null,
+          ModalTitle null,
+            'Options'
 
-      div className: 'modal-footer',
-        ButtonToolbar null,
-          Loader() if @state.isSavingBucket
-          Button
-            onClick: @props.onRequestHide
-            disabled: @state.isSavingBucket
-            bsStyle: 'link'
-          ,
-            'Cancel'
-          Button
-            onClick: @_handleConfirm
-            disabled: @state.isSavingBucket or @state.error
-            bsStyle: 'success'
-          ,
-            'Save'
+        ModalBody null,
+          div className: 'form-horizontal',
+            div className: 'form-group',
+              label className: 'control-label col-xs-2', 'Outbucket'
+              div className: "col-xs-10 form-group",
+                Autosuggest
+                  suggestions: createGetSuggestions(@_getBuckets)
+                  inputAttributes:
+                    className: 'form-control'
+                    placeholder: 'to get hint start typing'
+                    value: @state.outputBucket
+                    onChange: (newValue) =>
+                      @_validate newValue
+                      @setState
+                        outputBucket: newValue
+                helpBlock if @state.error
+
+        ModalFooter null,
+          ButtonToolbar null,
+            Loader() if @state.isSavingBucket
+            Button
+              onClick: @close
+              disabled: @state.isSavingBucket
+              bsStyle: 'link'
+            ,
+              'Cancel'
+            Button
+              onClick: @_handleConfirm
+              disabled: @state.isSavingBucket or @state.error
+              bsStyle: 'success'
+            ,
+              'Save'
+
 
   _validate: (newValue) ->
     error = null
@@ -113,4 +133,10 @@ module.exports = React.createClass
 
   _handleConfirm: ->
     actionCreators.saveOutputBucket(@props.configId, @state.outputBucket).then  =>
-      @props.onRequestHide()
+      @close()
+
+  renderOpenButton: ->
+    span
+      onClick: @open
+      i className: 'fa fa-fw fa-gear'
+      ' Options'
