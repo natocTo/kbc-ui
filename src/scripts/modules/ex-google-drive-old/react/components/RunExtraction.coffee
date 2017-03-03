@@ -1,47 +1,59 @@
 React = require 'react'
 InstalledComponentsActionCreators = require '../../../components/InstalledComponentsActionCreators'
 
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
 Modal = React.createFactory(require('react-bootstrap').Modal)
-Button = React.createFactory(require('react-bootstrap').Button)
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
+ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
 
-
-{a, i, div} = React.DOM
-
-RunModal = React.createClass
-
-  _handleRun: ->
-    @props.onRequestHide()
-    @props.onRequestRun()
-
-  render: ->
-    Modal
-      title: 'Run extraction'
-      onRequestHide: @props.onRequestHide
-    ,
-      div className: 'modal-body',
-        'You are about to run extraction.'
-      div className: 'modal-footer',
-        ButtonToolbar null,
-          Button
-            bsStyle: 'link'
-            onClick: @props.onRequestHide
-          ,
-            'Close'
-          Button
-            bsStyle: 'primary'
-            onClick: @_handleRun
-          ,
-            'Run'
+{span} = React.DOM
 
 module.exports = React.createClass
-  displayName: 'RunExtraction'
+
   propTypes:
     configId: React.PropTypes.string.isRequired
 
+  _handleRun: ->
+    @close()
+    @props.onRequestRun()
+
+
   getInitialState: ->
+    showModal: false
     isLoading: false
+
+  close: ->
+    @setState
+      showModal: false
+
+  open: ->
+    @props.onOpen()
+    @setState
+      showModal: true
+
+  render: ->
+    span null,
+      @renderOpenButton()
+      Modal
+        show: @state.showModal
+        onHide: @close
+      ,
+        ModalHeader closeButton: true,
+          ModalTitle null,
+            'Run extraction ' + @props.runParams.account
+
+        ModalBody null,
+          p null
+            'You are about to run the extraction ' + @props.runParams.account
+
+        ModalFooter null,
+          React.createElement ConfirmButtons,
+            isDisabled: false
+            saveLabel: 'Run'
+            onCancel: @_handleCancel()
+            onSave: @_handleRun()
 
   _handleRunStart: ->
     @setState
@@ -58,17 +70,3 @@ module.exports = React.createClass
     @setState
       isLoading: false
 
-  render: ->
-    ModalTrigger
-      modal: RunModal
-        onRequestRun: @_handleRunStart
-    ,
-      a null,
-        @_renderIcon()
-        ' Run Extraction!'
-
-  _renderIcon: ->
-    if @state.isLoading
-      i className: 'fa fa-refresh fa-fw fa-spin'
-    else
-      i className: 'fa fa-fw fa-play'
