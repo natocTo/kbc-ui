@@ -17,7 +17,7 @@ ActivateDeactivateButton = React.createFactory(require('../../../../../react/com
 {Tooltip, Confirm, Loader} = require '../../../../../react/common/common'
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
 
-SqlDepModalTrigger = React.createFactory(require '../../modals/SqlDepModalTrigger.coffee')
+SqlDepModal = React.createFactory(require './../../modals/SqlDepModal')
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
 
 {div, span, ul, li, a, em} = React.DOM
@@ -139,7 +139,7 @@ module.exports = React.createClass
           if @state.transformation.get('backend') == 'redshift' or
               @state.transformation.get('backend') == 'mysql' && @state.transformation.get('type') == 'simple'
             li {},
-              SqlDepModalTrigger
+              SqlDepModal
                 backend: @state.transformation.get('backend')
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
