@@ -38,6 +38,7 @@ snowflakeFields = [
   ['Password', '#password', 'password', true]
   ['Database', 'database', 'text', false]
   ['Schema', 'schema', 'text', false]
+  ['Warehouse', 'warehouse', 'text', false]
 ]
 
 COMPONENTS_FIELDS = {
