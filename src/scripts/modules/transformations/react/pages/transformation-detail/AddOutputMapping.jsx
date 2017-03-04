@@ -1,5 +1,4 @@
 import React from 'react';
-import {ModalTrigger} from 'react-bootstrap';
 import OutputMappingModal from '../../modals/OutputMapping';
 import actionCreators from '../../../ActionCreators';
 
@@ -13,16 +12,6 @@ export default React.createClass({
   },
 
   render() {
-    return (
-      <ModalTrigger modal={this.modal()}>
-        <button className="btn btn-primary" onClick={this.handleClick}>
-          <span className="kbc-icon-plus" /> Add Output
-        </button>
-      </ModalTrigger>
-    );
-  },
-
-  modal() {
     return React.createElement(OutputMappingModal, {
       mode: 'create',
       mapping: this.props.mapping,
@@ -34,11 +23,6 @@ export default React.createClass({
       onCancel: this.handleCancel,
       onSave: this.handleSave
     });
-  },
-
-  handleClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
   },
 
   handleChange(newMapping) {
