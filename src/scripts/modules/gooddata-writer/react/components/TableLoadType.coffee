@@ -101,7 +101,7 @@ module.exports = React.createClass
         display: 'inline-block'
 
     incrementalHelp = React.DOM.span null,
-      'Data will be apended to dataset. '
+      'Data will be appended to the dataset. '
       'Only rows created or updated in last '
       numberInput
       ' '
@@ -114,7 +114,7 @@ module.exports = React.createClass
         show: @state.showModal
         onHide: @close
       ,
-        ModalHeader null,
+        ModalHeader closeButton: true,
           ModalTitle null,
             @_getTitle()
 
