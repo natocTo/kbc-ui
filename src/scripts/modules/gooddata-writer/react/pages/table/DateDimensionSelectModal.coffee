@@ -1,5 +1,9 @@
 React = require 'react'
 Modal = React.createFactory(require('react-bootstrap').Modal)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Input = React.createFactory(require('react-bootstrap').Input)
@@ -11,10 +15,7 @@ actionCreators = require '../../../actionCreators'
 dateDimensionStore = require '../../../dateDimensionsStore'
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 
-
-
-
-{div, p, strong, form, input, label, table, tbody, thead, tr, th, td, div, a} = React.DOM
+{div, p, span, table, tbody, thead, tr, th, td, div, a} = React.DOM
 
 module.exports = React.createClass
   displayName: 'DateDimensionSelectModal'
@@ -27,7 +28,6 @@ module.exports = React.createClass
   componentDidMount: ->
     actionCreators.loadDateDimensions(@props.configurationId)
 
-
   getStateFromStores: ->
     isLoading: dateDimensionStore.isLoading(@props.configurationId)
     dimensions: dateDimensionStore.getAll(@props.configurationId)
@@ -38,52 +38,71 @@ module.exports = React.createClass
     actionCreators
     .saveNewDateDimension(@props.configurationId)
     .then (dateDimension) =>
-      @props.onRequestHide()
       @props.onSelect
         selectedDimension: dateDimension.get('name')
+      @close()
 
   _handleNewDimensionUpdate: (newDimension) ->
     actionCreators.updateNewDateDimension(@props.configurationId, newDimension)
 
+  close: ->
+    @setState
+      showModal: false
+
+  open: ->
+    @setState
+      showModal: true
+
+  getInitialState: ->
+    showModal: false
+
   render: ->
-    Modal
-      title: @_title()
-      onRequestHide: @props.onRequestHide
-      bsSize: 'large'
-    ,
-      div className: 'modal-body',
-        React.createElement TabbedArea, null,
-          React.createElement TabPane,
-            eventKey: 'select'
-            tab: 'Select from existing'
-          ,
-            if @state.isLoading
-              p className: 'panel-body',
-                'Loading ...'
-            else
-              @_renderTable()
-          React.createElement TabPane,
-            eventKey: 'new'
-            tab: 'Create new'
-          ,
-            NewDimensionForm
-              isPending: @state.isCreatingNewDimension
-              dimension: @state.newDimension
-              onChange: @_handleNewDimensionUpdate
-              onSubmit: @_handleNewDimensionSave
-              buttonLabel: 'Create and select'
-      div className: 'modal-footer',
-        ButtonToolbar null,
-          Button
-            onClick: @props.onRequestHide
-            bsStyle: 'link'
-          ,
-            'Close'
+    span null,
+      @renderOpenButton()
+      Modal
+        bsSize: 'large'
+        show: @state.showModal
+        onHide: @close
+      ,
+        ModalHeader closeButton: true,
+          ModalTitle null,
+            @_title()
+
+        ModalBody null,
+          React.createElement TabbedArea, null,
+            React.createElement TabPane,
+              eventKey: 'select'
+              tab: 'Select from existing'
+            ,
+              if @state.isLoading
+                p className: 'panel-body',
+                  'Loading ...'
+              else
+                @_renderTable()
+            React.createElement TabPane,
+              eventKey: 'new'
+              tab: 'Create new'
+            ,
+              NewDimensionForm
+                isPending: @state.isCreatingNewDimension
+                dimension: @state.newDimension
+                onChange: @_handleNewDimensionUpdate
+                onSubmit: @_handleNewDimensionSave
+                buttonLabel: 'Create and select'
+
+        ModalFooter null,
+          ButtonToolbar null,
+            Button
+              onClick: @close
+              bsStyle: 'link'
+            ,
+              'Close'
+
 
   _selectDimension: (id) ->
-    @props.onRequestHide()
     @props.onSelect
       selectedDimension: id
+    @close()
 
   _renderTable: ->
     if @state.dimensions.count()
@@ -117,3 +136,14 @@ module.exports = React.createClass
 
   _title: ->
     "Date dimension for column #{@props.column.get('name')}"
+
+  renderOpenButton: ->
+    span
+      onClick: @open
+      className: 'btn btn-link',
+        span className: 'fa fa-calendar'
+        ' '
+        if @props.column.get('dateDimension')
+          'Change'
+        else
+          'Add'

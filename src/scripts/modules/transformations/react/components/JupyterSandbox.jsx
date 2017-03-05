@@ -49,7 +49,7 @@ var JupyterSandbox = React.createClass({
               target="_blank"
               disabled={this.state.pendingActions.get('drop')}
             >
-              <span className="fa fa-fw fa-database"></span>
+              <span className="fa fa-fw fa-database"/>
               &nbsp;Connect
             </a>
             <div>
@@ -60,7 +60,7 @@ var JupyterSandbox = React.createClass({
                 fixedWidth={true}
                 confirm={{
                   title: 'Delete Jupyter Sandbox',
-                  text: 'Do you really want to delete Jupyter sandbox?',
+                  text: 'Do you really want to delete the Jupyter sandbox?',
                   onConfirm: this._dropCredentials
                 }}
               />
@@ -83,7 +83,7 @@ var JupyterSandbox = React.createClass({
             className="btn btn-link"
             onClick={this.openModal}
           >
-            <i className="fa fa-fw fa-plus"></i>
+            <i className="fa fa-fw fa-plus"/>
             &nbsp;Create sandbox
           </button>
         </span>

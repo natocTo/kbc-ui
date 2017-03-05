@@ -1,23 +1,28 @@
 import React from 'react';
 import Remarkable from 'react-remarkable';
+import ReadMore from './ReadMore';
 
 require('./Markdown.less');
 
 export default React.createClass({
   propTypes: {
-    source: React.PropTypes.string
+    source: React.PropTypes.string,
+    height: React.PropTypes.string
   },
 
   getDefaultProps() {
     return {
-      source: ''
+      source: '',
+      height: 'normal'
     };
   },
 
   render() {
     return (
       <span className="kbc-markdown">
-        <Remarkable source={this.props.source} />
+        <ReadMore height={this.props.height}>
+          <Remarkable source={this.props.source} />
+        </ReadMore>
       </span>
     );
   }

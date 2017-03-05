@@ -4,6 +4,7 @@ common = require('../../../../react/common/common')
 
 createStoreMixin = require('../../../../react/mixins/createStoreMixin')
 ComponentsStore = require '../../../components/stores/ComponentsStore'
+InstalledComponentsStore = require '../../../components/stores/InstalledComponentsStore'
 
 ComponentIcon = common.ComponentIcon
 ComponentName = common.ComponentName
@@ -35,13 +36,21 @@ module.exports = React.createClass
         span className: 'label label-info',
           @props.task.get('action')
       td null,
-        React.createElement Tree, data: @props.task.get('actionParameters')
+        @_renderConfiguration()
       td null,
         input
           type: 'checkbox'
           disabled: false
           checked: @props.task.get('active')
           onChange: @_handleActiveChange
+
+  _renderConfiguration: ->
+    parameters = @props.task.get('actionParameters')
+    if parameters.size == 1 && parameters.has('config')
+      config = InstalledComponentsStore.getConfig(@props.component.get('id'), parameters.get('config'))
+      config.get('name', parameters.get('config'))
+    else
+      React.createElement Tree, data: @props.task.get('actionParameters')
 
 
   _handleActiveChange: ->

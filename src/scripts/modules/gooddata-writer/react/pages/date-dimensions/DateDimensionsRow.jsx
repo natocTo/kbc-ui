@@ -80,7 +80,7 @@ export default React.createClass({
   deleteText() {
     return (
       <span>
-        Do you really want to delete date dimension <strong>{this.props.dimension.getIn(['data', 'name'])}</strong> ?
+        Do you really want to delete the date dimension <strong>{this.props.dimension.getIn(['data', 'name'])}</strong> ?
       </span>
     );
   },
@@ -88,7 +88,7 @@ export default React.createClass({
   uploadText() {
     return (
       <span>
-        Do you really want to upload date dimension <strong>{this.props.dimension.getIn(['data', 'name'])}</strong> to
+        Do you really want to upload the date dimension <strong>{this.props.dimension.getIn(['data', 'name'])}</strong> to the
         GoodData project?
       </span>
     );

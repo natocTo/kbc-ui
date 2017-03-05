@@ -47,7 +47,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <p className="help-block">This information should be provided by application developer.</p>
+        <p className="help-block">This information should be provided by the application developer.</p>
         <div className="edit kbc-configuration-editor">
           <Sticky stickyClass="kbc-sticky-buttons-active" className="kbc-sticky-buttons" topOffset={-60} stickyStyle={{}}>
             <ConfirmButtons
@@ -81,7 +81,7 @@ export default React.createClass({
                 wrapperClassName="col-xs-9"
                 value={this.props.data.get('version', '')}
                 onChange={this.onChangeVersion}
-                help={(<span>Branch or tag in the repository. Using <code>master</code> as version is inefficient and should not be used in production setup. We recommend using <a href="http://semver.org/">Semantic versioning</a>.</span>)}
+                help={(<span>Branch or tag in the repository. Using <code>master</code> as a version is inefficient and should not be used in a production setup. We recommend using <a href="http://semver.org/">Semantic versioning</a>.</span>)}
                 placeholder="1.0.0"
                 />
             </div>
@@ -94,7 +94,7 @@ export default React.createClass({
                   labelClassName="col-xs-12"
                   checked={this.props.data.get('network', 'bridge') === 'bridge'}
                   onChange={this.onChangeNetwork}
-                  help="Preventing access to the Internet may cause the application to fail. Please consult with application author(s)."
+                  help="Preventing access to the Internet may cause the application to fail. Please consult with the application author(s)."
                   />
               </div>
             </div>

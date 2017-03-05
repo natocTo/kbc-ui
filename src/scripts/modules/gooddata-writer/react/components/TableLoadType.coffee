@@ -2,7 +2,13 @@ React = require 'react'
 {fromJS} = require 'immutable'
 actionCreators = require '../../actionCreators'
 
-{Modal, ModalTrigger, Input, Button, ButtonToolbar} = require 'react-bootstrap'
+Modal = React.createFactory(require('react-bootstrap').Modal)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
+
+{Input} = require 'react-bootstrap'
 
 {strong, a, small, option, select, label, input, div, span} = React.DOM
 Loader = React.createFactory(require('kbc-react-components').Loader)
@@ -12,32 +18,68 @@ ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
 FIELD = 'incrementalLoad'
 GRAIN = 'grain'
 
-LoadTypeModal = React.createClass
-  displayName: 'LoadTypeModal'
+
+module.exports = React.createClass
+  displayName: 'TableLoadType'
   propTypes:
     columns: React.PropTypes.object.isRequired
     table: React.PropTypes.object.isRequired
-    onChange: React.PropTypes.func.isRequired
-    onChangeGrain: React.PropTypes.func.isRequired
-    onSave: React.PropTypes.func.isRequired
+    configurationId: React.PropTypes.string.isRequired
+
+  getInitialState: ->
+    showModal: false
+
+  open: ->
+    @setState
+      showModal: true
+
+  close: ->
+    @setState
+      showModal: false
+
+  _handleEditStart: ->
+    actionCreators.startTableFieldEdit(@props.configurationId, @props.table.get('id'), FIELD)
+    actionCreators.startTableFieldEdit(@props.configurationId, @props.table.get('id'), GRAIN)
+    @open()
+
+  _handleEditSave: ->
+    fields = {}
+    fields[FIELD] = @props.table.getIn(['editingFields', FIELD])
+    fields[GRAIN] = @props.table.getIn(['editingFields', GRAIN])
+    actionCreators.saveMultipleTableFields(
+      @props.configurationId,
+      @props.table.get('id'),
+      fields
+    )
+    @close()
+
 
   _handleModeRadioChange: (mode, e) ->
     if mode == 'full'
-      @props.onChange
+      @_handleEditChange
         incrementalLoad: false
     else
-      @props.onChange
+      @_handleEditChange
         incrementalLoad: 1
 
   _handleIncrementalDaysNumber: (e) ->
-    @props.onChange
+    @_handleEditChange
       incrementalLoad: parseInt e.target.value
 
   componentWillReceiveProps: (nextProps) ->
     isSavingCurrent = @props.table.get('savingFields').contains FIELD
     isSavingNew = nextProps.table.get('savingFields').contains FIELD
     if isSavingCurrent && !isSavingNew
-      @props.onRequestHide()
+      @close()
+
+  _handleGrainChange: (newGrain) ->
+    actionCreators.updateTableFieldEdit(@props.configurationId, @props.table.get('id'), GRAIN, newGrain)
+
+  _handleEditChange: (data) ->
+    actionCreators.updateTableFieldEdit(@props.configurationId, @props.table.get('id'), FIELD, data[FIELD])
+
+  _getTitle: ->
+    return "Table #{@props.table.getIn ['data', 'title']} Load Type"
 
   render: ->
     isSaving = @props.table.get('savingFields').contains FIELD
@@ -59,49 +101,57 @@ LoadTypeModal = React.createClass
         display: 'inline-block'
 
     incrementalHelp = React.DOM.span null,
-      'Data will be apended to dataset. '
+      'Data will be appended to the dataset. '
       'Only rows created or updated in last '
       numberInput
       ' '
       if incrementalLoad == 1 then 'day' else 'days'
       ' will be uploaded to the dataset.'
 
-    React.createElement Modal,
-      title: "Table #{@props.table.getIn ['data', 'title']} Load Type"
-      onRequestHide: @props.onRequestHide
-    ,
-      div className: 'modal-body',
-        div className: 'form-horizontal',
-          React.createElement Input,
-            bsSize: 'small'
-            type: 'radio'
-            wrapperClassName: 'col-sm-offset-2 col-sm-8'
-            help: 'All data in GoodData dataset will be replaced by current data in source Storage table.'
-            label: 'Full Load'
-            checked: !incrementalLoad
-            onChange: @_handleModeRadioChange.bind @, 'full'
-            disabled: isSaving
-          div className: 'form-group form-group-sm',
-            div className: 'col-sm-offset-2 col-sm-8',
-              div className: 'radio',
-                label null,
-                  input
-                    type: 'radio'
-                    label: 'Incremental'
-                    checked: incrementalLoad > 0
-                    onChange: @_handleModeRadioChange.bind @, 'incremental'
-                    disabled: isSaving
-                  span null, 'Incremental'
-              span className: 'help-block',
-                incrementalHelp
-              @_renderFactGrainSelector(grain or '', incrementalLoad > 0)
-      div className: 'modal-footer',
-        React.createElement ConfirmButtons,
-          isSaving: isSaving
-          isDisabled: isSaving
-          saveLabel: 'Save'
-          onCancel: @props.onRequestHide
-          onSave: @props.onSave
+    span null,
+      @renderOpenButton()
+      Modal
+        show: @state.showModal
+        onHide: @close
+      ,
+        ModalHeader closeButton: true,
+          ModalTitle null,
+            @_getTitle()
+
+        ModalBody null,
+          div className: 'form-horizontal',
+            React.createElement Input,
+              bsSize: 'small'
+              type: 'radio'
+              wrapperClassName: 'col-sm-offset-2 col-sm-8'
+              help: 'All data in GoodData dataset will be replaced by current data in source Storage table.'
+              label: 'Full Load'
+              checked: !incrementalLoad
+              onChange: @_handleModeRadioChange.bind @, 'full'
+              disabled: isSaving
+            div className: 'form-group form-group-sm',
+              div className: 'col-sm-offset-2 col-sm-8',
+                div className: 'radio',
+                  label null,
+                    input
+                      type: 'radio'
+                      label: 'Incremental'
+                      checked: incrementalLoad > 0
+                      onChange: @_handleModeRadioChange.bind @, 'incremental'
+                      disabled: isSaving
+                    span null, 'Incremental'
+                span className: 'help-block',
+                  incrementalHelp
+                @_renderFactGrainSelector(grain or '', incrementalLoad > 0)
+
+        ModalFooter null,
+          React.createElement ConfirmButtons,
+            isSaving: isSaving
+            isDisabled: isSaving
+            saveLabel: 'Save'
+            onCancel: @close
+            onSave: @_handleEditSave
+
 
   _renderFactGrainSelector: (grain, enabled) ->
     if grain == ''
@@ -150,7 +200,7 @@ LoadTypeModal = React.createClass
         option {key: key, value: key},
           key
 
-        ).toArray()
+      ).toArray()
       columnsOptions = columnsOptions.concat(
         option key: '', value: '', disabled: 'true',
           small null, '- add -'
@@ -170,71 +220,25 @@ LoadTypeModal = React.createClass
 
   _onRemoveGrainColumn: (col, grainArray) ->
     grainArray = grainArray.filter((g) -> g != col)
-    @props.onChangeGrain(grainArray.join(','))
+    @_handleGrainChange(grainArray.join(','))
 
   _onChangeGrainColumn: (newGrain, oldGrain, grainArray) ->
     if oldGrain != ''
       grainArray = grainArray.filter((g) -> g != oldGrain)
     grainArray.push(newGrain)
-    @props.onChangeGrain(grainArray.join(','))
-
-module.exports = React.createClass
-  displayName: 'TableGdName'
-  propTypes:
-    columns: React.PropTypes.object.isRequired
-    table: React.PropTypes.object.isRequired
-    configurationId: React.PropTypes.string.isRequired
-
-  _handleEditStart: ->
-    actionCreators.startTableFieldEdit(@props.configurationId, @props.table.get('id'), FIELD)
-    actionCreators.startTableFieldEdit(@props.configurationId, @props.table.get('id'), GRAIN)
-
-  _handleEditSave: ->
-    fields = {}
-    fields[FIELD] = @props.table.getIn(['editingFields', FIELD])
-    fields[GRAIN] = @props.table.getIn(['editingFields', GRAIN])
-
-    actionCreators.saveMultipleTableFields(
-      @props.configurationId,
-      @props.table.get('id'),
-      fields
-    )
-
-    # actionCreators.saveTableField(
-    #   @props.configurationId,
-    #   @props.table.get('id'),
-    #   FIELD,
-    #   @props.table.getIn(['editingFields', FIELD])
-    # )
-
-  _handleGrainChange: (newGrain) ->
-    actionCreators.updateTableFieldEdit(@props.configurationId, @props.table.get('id'), GRAIN, newGrain)
-
-  _handleEditChange: (data) ->
-    actionCreators.updateTableFieldEdit(@props.configurationId, @props.table.get('id'), FIELD, data[FIELD])
-
-  render: ->
-    modal = React.createElement LoadTypeModal,
-      columns: @props.columns
-      table: @props.table
-      onChangeGrain: @_handleGrainChange
-      onChange: @_handleEditChange
-      onSave: @_handleEditSave
-
-    React.createElement ModalTrigger,
-      modal: modal
-    ,
-      React.DOM.button
-        className: 'btn label label-default'
-        onClick: @_handleEditStart
-      ,
-        'Load: '
-        @_loadTypeLabel()
-        ' '
-        span className: 'kbc-icon-pencil'
+    @_handleGrainChange(grainArray.join(','))
 
   _loadTypeLabel: ->
     switch @props.table.getIn ['data', 'incrementalLoad']
       when false, 0 then 'Full'
       when 1 then 'Incremental  1 day'
       else "Incremental  #{@props.table.getIn ['data', 'incrementalLoad']} days"
+
+  renderOpenButton: ->
+    span
+      onClick: @_handleEditStart
+      className: 'btn label label-default'
+      'Load: '
+      @_loadTypeLabel()
+      ' '
+      span className: 'kbc-icon-pencil'

@@ -140,6 +140,7 @@ routes =
       createComponentRoute 'keboola.ex-db-mysql', [exDbGenericRoutes('keboola.ex-db-mysql')]
       createComponentRoute 'keboola.ex-db-mysql-custom', [exDbGenericRoutes('keboola.ex-db-mysql-custom')]
       createComponentRoute 'keboola.ex-db-oracle', [exDbGenericRoutes('keboola.ex-db-oracle')]
+      createComponentRoute 'keboola.ex-db-snowflake', [exDbGenericRoutes('keboola.ex-db-snowflake')]
     ,
       createComponentRoute 'keboola.ex-db-impala', [exDbGenericRoutes('keboola.ex-db-impala')]
     ,
@@ -206,6 +207,7 @@ routes =
       createComponentRoute 'keboola.wr-db-impala', [createDbWriterRoutes('keboola.wr-db-impala', 'impala', false)]
       createComponentRoute 'keboola.wr-db-mysql', [createDbWriterRoutes('keboola.wr-db-mysql', 'mysql', true)]
       createComponentRoute 'keboola.wr-db-oracle', [createDbWriterRoutes('keboola.wr-db-oracle', 'oracle', false)]
+      createComponentRoute 'keboola.wr-db-pgsql', [createDbWriterRoutes('keboola.wr-db-pgsql', 'pgsql', false)]
       createComponentRoute(
         'keboola.wr-db-snowflake',
         [createDbWriterRoutes('keboola.wr-db-snowflake', 'snowflake', true)]

@@ -48,9 +48,7 @@ Index = React.createClass
       h2 null,
         'Orchestrations allow you to group together related tasks and schedule their execution.'
       p null,
-        React.createElement NewOrchestrationButton,
-          buttonLabel: 'Get Started Now'
-
+        React.createElement NewOrchestrationButton
 
   _renderNotFound: ->
     div {className: 'table table-striped'},

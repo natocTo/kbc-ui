@@ -79,7 +79,7 @@ module.exports = React.createClass(
                 confirm:
                   title: 'Delete Input'
                   text: span null,
-                    "Do you really want to delete input mapping for "
+                    "Do you really want to delete the input mapping for "
                     code null,
                       @props.inputMapping.get('source')
                     "?"

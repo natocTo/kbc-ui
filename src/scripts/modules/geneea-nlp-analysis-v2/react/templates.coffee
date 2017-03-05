@@ -5,6 +5,9 @@ module.exports =
   ,
       label: 'Czech',
       value: 'cs'
+  ,
+      label: 'autodetect',
+      value: ''
   ]
 
   analysisTypes:

@@ -2,7 +2,6 @@ React = require 'react'
 _ = require 'underscore'
 oauthActions = require '../../../../components/OAuthActionCreators'
 
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
 DropboxModal = React.createFactory require '../../../../components/react/components/DropboxAuthorizeModal'
 {i, button, strong, div, h2, span, form, h4, section, p} = React.DOM
 {FormControls, OverlayTrigger, Tooltip, Button} = require 'react-bootstrap'
@@ -50,7 +49,7 @@ module.exports = React.createClass
         div null,
           React.createElement Confirm,
             title: 'Reset Authorization'
-            text: "Do you really want to reset authorization for #{@props.account.get('description')}"
+            text: "Do you really want to reset the authorization for #{@props.account.get('description')}"
             buttonLabel: 'Reset'
             onConfirm: =>
               @props.resetUploadTask()
@@ -79,18 +78,10 @@ module.exports = React.createClass
         'Not Authorized.'
 
   _renderAuthorizeButton: ->
-    ModalTrigger
-      modal: DropboxModal
-        configId: @props.configId
-        redirectRouterPath: 'tde-exporter-dropbox-redirect'
-        credentialsId: "tde-exporter-#{@props.configId}"
-    ,
-      Button
-        style: {'padding-left': 0}
-        bsStyle: 'link'
-      ,
-        span className: 'fa fa-fw fa-dropbox'
-        ' Authorize'
+    DropboxModal
+      configId: @props.configId
+      redirectRouterPath: 'tde-exporter-dropbox-redirect'
+      credentialsId: "tde-exporter-#{@props.configId}"
 
   _isAuthorized: ->
     @props.account and

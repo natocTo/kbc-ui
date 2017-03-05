@@ -2,7 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 filesize = require 'filesize'
 Link = React.createFactory(require('react-router').Link)
-{ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
+{OverlayTrigger, Tooltip} = require 'react-bootstrap'
 {option, select, button, i,a, strong, span, div, p, ul, li} = React.DOM
 {Confirm} = require '../../../../../react/common/common'
 date = require '../../../../../utils/date'
@@ -69,7 +69,7 @@ module.exports = React.createClass
           React.createElement Confirm,
             key: @props.table.get 'id'
             title: "Remove #{@props.table.get('id')}"
-            text: 'You are about to remove table from the configuration.'
+            text: 'You are about to remove the table from the configuration.'
             buttonLabel: 'Remove'
             onConfirm: =>
               @props.deleteRowFn()
@@ -93,4 +93,4 @@ module.exports = React.createClass
         runParams: =>
           @props.prepareRunDataFn()
       ,
-       "You are about to run export of #{@props.table.get('id')} to TDE."
+       "You are about export #{@props.table.get('id')} to TDE."

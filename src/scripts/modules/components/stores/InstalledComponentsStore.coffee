@@ -139,7 +139,7 @@ InstalledComponentsStore = StoreUtils.createStore
     _store.getIn(['configData', componentId, configId, 'parameters'], Map())
 
   getConfig: (componentId, configId) ->
-    _store.getIn ['components', componentId, 'configurations', configId]
+    _store.getIn(['components', componentId, 'configurations', configId], Map())
 
   getDeletedConfig: (componentId, configId) ->
     _store.getIn ['deletedComponents', componentId, 'configurations', configId]

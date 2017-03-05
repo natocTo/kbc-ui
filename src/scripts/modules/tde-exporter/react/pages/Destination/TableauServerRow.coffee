@@ -52,7 +52,7 @@ module.exports = React.createClass
       if @_isAuthorized()
         React.createElement Confirm,
           title: 'Delete Credentials'
-          text: "Do you really want to delete credentials for #{@props.account.get('server_url')}"
+          text: "Do you really want to delete the credentials for #{@props.account.get('server_url')}"
           buttonLabel: 'Delete'
           onConfirm: =>
             @props.resetUploadTask()

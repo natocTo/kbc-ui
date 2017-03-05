@@ -52,7 +52,7 @@ module.exports = React.createClass(
               confirm:
                 title: 'Delete Output'
                 text: span null,
-                  "Do you really want to delete output mapping for out/files/"
+                  "Do you really want to delete the output mapping for out/files/"
                   @props.value.get('source')
                   "?"
                 onConfirm: @props.onDelete

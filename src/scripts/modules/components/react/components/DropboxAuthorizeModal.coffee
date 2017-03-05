@@ -4,6 +4,9 @@ _ = require('underscore')
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Modal = React.createFactory(require('react-bootstrap').Modal)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 Input = React.createFactory(require('react-bootstrap').Input)
 RouterStore = require('../../../../stores/RoutesStore')
 
@@ -17,6 +20,7 @@ module.exports = React.createClass
     redirectRouterPath: React.PropTypes.string
     credentialsId: React.PropTypes.string
     componentId: React.PropTypes.string
+    renderOpenButtonAsLink: React.PropTypes.bool
 
   getInitialState: ->
     oauthUrl = 'https://syrup.keboola.com/oauth/auth20'
@@ -24,19 +28,32 @@ module.exports = React.createClass
     token: ApplicationStore.getSapiTokenString()
     oauthUrl: oauthUrl
     router: RouterStore.getRouter()
+    showModal: false
 
   getDefaultProps: ->
     redirectRouterPath: 'wr-dropbox-oauth-redirect'
     componentId: 'wr-dropbox'
+    renderOpenButtonAsLink: false
 
-  componentDidMount: ->
-    @refs.description.getInputDOMNode().focus()
+  close: ->
+    @setState
+      showModal: false
+
+  open: ->
+    @setState
+      showModal: true
 
   render: ->
-    Modal
-      title: 'Authorize Dropbox Account'
-      onRequestHide: @props.onRequestHide
-    ,
+    div null,
+      @renderOpenButton()
+      Modal
+        show: @state.showModal
+        onHide: @close
+      ,
+        ModalHeader closeButton: true,
+          ModalTitle null,
+            'Authorize Dropbox Account'
+
         form
           className: 'form-horizontal'
           action: @state.oauthUrl
@@ -46,7 +63,7 @@ module.exports = React.createClass
           @_createHiddenInput('token', @state.token)
           @_createHiddenInput('returnUrl', @_getRedirectUrl())
         ,
-          div className: 'modal-body',
+          ModalBody null,
             Input
               label: "Dropbox Email"
               type: 'text'
@@ -55,7 +72,8 @@ module.exports = React.createClass
               help: 'Used afterwards as a description of the authorized account'
               labelClassName: 'col-xs-3'
               wrapperClassName: 'col-xs-9'
-              defaultValue: @state.desription
+              defaultValue: @state.description
+              autoFocus: true
               onChange: (event) =>
                 @setState
                   description: event.target.value
@@ -63,7 +81,7 @@ module.exports = React.createClass
           div className: 'modal-footer',
             ButtonToolbar null,
               Button
-                onClick: @props.onRequestHide
+                onClick: @close
                 bsStyle: 'link'
               ,
                 'Cancel'
@@ -76,6 +94,21 @@ module.exports = React.createClass
                   i className: 'fa fa-fw fa-dropbox'
                   ' Authorize'
 
+  renderOpenButton: ->
+    if @props.renderOpenButtonAsLink
+      span
+        onClick: @open
+        className: 'btn btn-link',
+        i className: 'fa fa-fw fa-user'
+        ' Authorize'
+    else
+      Button
+        onClick: @open
+        bsStyle: 'success'
+      ,
+        i className: 'fa fa-fw fa-dropbox'
+        ' Authorize'
+
   _createHiddenInput: (name, value) ->
     input
       name: name
@@ -85,6 +118,5 @@ module.exports = React.createClass
   _getRedirectUrl: ->
     origin = ApplicationStore.getSapiUrl()
     url = @state.router.makeHref(@props.redirectRouterPath, config: @props.configId)
-    projectUrl = ApplicationStore.getProjectBaseUrl()
     result = "#{origin}#{url}"
     result

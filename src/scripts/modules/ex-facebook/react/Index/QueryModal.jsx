@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TemplateSelector from './TemplateSelector';
+import DateRangeSelector from './DateRangeSelector';
 import {Modal, OverlayTrigger, Tooltip, TabbedArea, TabPane} from 'react-bootstrap';
 // import Select from 'react-select';
 import Select from '../../../../react/common/Select';
@@ -21,6 +22,7 @@ export default React.createClass({
     queryTemplates: PropTypes.object.isRequired,
     syncAccounts: PropTypes.object.isRequired,
     show: PropTypes.bool.isRequired,
+    helpUrl: PropTypes.string.isRequired,
     isSavingFn: PropTypes.func.isRequired,
     onHideFn: PropTypes.func,
     authorizedDescription: PropTypes.string,
@@ -45,18 +47,19 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {this.renderTemplateSelect()}
           <TabbedArea defaultActiveEventKey={1} animation={false}>
             <TabPane tab="General" eventKey={1}>
               <div className="row form-horizontal clearfix">
-                  {this.renderInput('Name', 'name', NAME_HELP, placeholders.name, this.nameInvalidReason)}
-                  {this.renderInput('Endpoint', ['query', 'path'], ENDPOINT_HELP, placeholders.path)}
-                  {this.renderFieldsInput(placeholders.fields)}
-                  {this.renderAccountSelector()}
+                {this.renderTemplateSelect()}
+                {this.renderInput('Name', 'name', NAME_HELP, placeholders.name, this.nameInvalidReason)}
+                {this.renderInput('Endpoint', ['query', 'path'], this.enhanceHelp('endpoint', ENDPOINT_HELP), placeholders.path)}
+                {this.renderFieldsInput(placeholders.fields)}
+                {this.renderAccountSelector()}
               </div>
             </TabPane>
             <TabPane tab="Advanced" eventKey={2}>
               <div className="row form-horizontal clearfix">
+                {this.renderDateRangeSelector()}
                 {this.renderInput('Since', ['query', 'since'], SINCE_HELP, 'yyyy-mm-dd or 15 days ago')}
                 {this.renderInput('Until', ['query', 'until'], UNTIL_HELP, 'yyyy-mm-dd or 15 days ago')}
                 {this.renderInput('Limit', ['query', 'limit'], LIMIT_HELP, '25')}
@@ -78,9 +81,23 @@ export default React.createClass({
     );
   },
 
+  enhanceHelp(name, text) {
+    const url = `${this.props.helpUrl}#${name}`;
+    return (
+      <span>
+        {text}
+        <a
+          href={url}
+          target="_blank">
+          {' '}more info
+        </a>
+      </span>
+    );
+  },
+
   nameInvalidReason() {
     const name = this.query('name');
-    if (name && !(/^[a-zA-Z0-9-_]+$/.test(name))) return 'Can only contain alphanumeric characters, underscore and dot.';
+    if (name && !(/^[a-zA-Z0-9_.]+$/.test(name))) return 'Can only contain alphanumeric characters, underscore or dot.';
     return null;
   },
 
@@ -92,14 +109,33 @@ export default React.createClass({
     return !queryHasChanged || !fieldsValid || !nameEmpty || !limitEmpty || this.nameInvalidReason();
   },
 
+  renderDateRangeSelector() {
+    return (
+      <div className="form-group">
+        <div className="col-md-12">
+          <span className="pull-right">
+            <DateRangeSelector
+              query={this.query()}
+              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+            />
+          </span>
+        </div>
+      </div>
+    );
+  },
+
   renderTemplateSelect() {
     const templateSelector = (
-      <div className="pull-right">
-        <TemplateSelector
-          templates={this.props.queryTemplates}
-          query={this.query()}
-          updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-        />
+      <div className="form-group">
+        <div className="col-md-12">
+          <span className="pull-right">
+            <TemplateSelector
+              templates={this.props.queryTemplates}
+              query={this.query()}
+              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+            />
+          </span>
+        </div>
       </div>
     );
     return templateSelector;
@@ -111,7 +147,7 @@ export default React.createClass({
                        value={this.query(['query', 'fields'])}
                        onChange={(e) => this.updateLocalState(['query', 'query', 'fields'], e.target.value)}
                        className="form-control" rows="2" required/>);
-    return this.renderFormControl('Fields', control, FIELDS_HELP);
+    return this.renderFormControl('Fields', control, this.enhanceHelp('fields', FIELDS_HELP));
   },
 
   renderInputControl(propertyPath, placeholder) {
@@ -153,7 +189,7 @@ export default React.createClass({
     return (
       <small>
         <OverlayTrigger placement="right" overlay={<Tooltip>{message}</Tooltip>}>
-          <i className="fa fa-fw fa-question-circle"></i>
+          <i className="fa fa-fw fa-question-circle"/>
         </OverlayTrigger>
       </small>
     );

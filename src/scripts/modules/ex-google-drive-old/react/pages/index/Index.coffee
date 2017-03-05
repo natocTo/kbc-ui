@@ -7,7 +7,6 @@ ApplicationStore = require '../../../../../stores/ApplicationStore.coffee'
 RoutesStore = require '../../../../../stores/RoutesStore'
 LatestJobsStore = require '../../../../jobs/stores/LatestJobsStore'
 
-RunExtraction = React.createFactory(require '../../components/RunExtraction')
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 
 DeleteConfigurationButton = require '../../../../components/react/components/DeleteConfigurationButton'

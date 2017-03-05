@@ -28,6 +28,25 @@ module.exports =
         componentId: componentId
         id: id
 
+  postCredentials: (componentId, id, authorizedFor, data) ->
+    dispatcher.handleViewAction
+      type: Constants.ActionTypes.OAUTHV2_POST_CREDENTIALS_START
+      componentId: componentId
+      id: id
+    oauthApi.postCredentials(componentId, id, authorizedFor, data).then (result) ->
+      dispatcher.handleViewAction
+        type: Constants.ActionTypes.OAUTHV2_POST_CREDENTIALS_SUCCESS
+        componentId: componentId
+        id: id
+        credentials: Immutable.fromJS(result)
+    .catch (err) ->
+      console.log "POST CREDENTIALS API ERROR", err
+      dispatcher.handleViewAction
+        type: Constants.ActionTypes.OAUTHV2_API_ERROR
+        componentId: componentId
+        id: id
+
+
 
   deleteCredentials: (componentId, id) ->
     dispatcher.handleViewAction

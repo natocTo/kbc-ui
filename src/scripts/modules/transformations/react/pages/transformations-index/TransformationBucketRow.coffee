@@ -45,7 +45,7 @@ TransformationBucketRow = React.createClass(
       key: 'run'
       tooltip: 'Run all transformations in bucket'
     ,
-      "You are about to run all transformations in bucket #{@props.bucket.get('name')}."
+      "You are about to run all transformations in the bucket #{@props.bucket.get('name')}."
     ))
 
     buttons.push(

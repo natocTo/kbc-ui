@@ -76,7 +76,7 @@ module.exports = React.createClass(
                 confirm:
                   title: 'Delete Output'
                   text: span null,
-                    "Do you really want to delete output mapping for "
+                    "Do you really want to delete the output mapping for "
                     code null,
                       @props.value.get('destination')
                     "?"
