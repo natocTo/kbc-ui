@@ -7,7 +7,6 @@ ApplicationStore = require '../../stores/ApplicationStore'
 _ = require 'underscore'
 
 {ul, li, a, span} = React.DOM
-# @FIXME trash only if is not empty???
 _pages = [
     id: 'home'
     title: 'Overview'
@@ -40,10 +39,6 @@ _pages = [
     id: 'applications'
     title: 'Applications'
     icon: 'kbc-icon-applications'
-  ,
-    id: 'trash'
-    title: 'Trash'
-    icon: 'kbc-icon-cup'
 
 ]
 

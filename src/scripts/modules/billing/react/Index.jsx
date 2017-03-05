@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import ApplicationStore from '../../../stores/ApplicationStore';
 import Graph from './Graph';
 import UsageByMonth from './UsageByMonth';
@@ -26,10 +27,13 @@ export default React.createClass({
             <a href={this.projectPageUrl('settings')}>Settings</a>
           </li>
           <li role="presentation">
-            <a href={this.projectPageUrl('settings-limits')}>Limits</a>
+            <Link to="settings-limits">Limits</Link>
           </li>
           <li role="presentation" className="active">
-            <a href={this.projectPageUrl('settings-project-power')}>Project Power</a>
+            <Link to="settings-project-power">Project Power</Link>
+          </li>
+          <li role="presentation">
+            <Link to="settings-trash">Trash</Link>
           </li>
         </ul>
         <div className="kbc-header">

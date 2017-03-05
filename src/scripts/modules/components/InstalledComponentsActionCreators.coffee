@@ -443,7 +443,7 @@ module.exports =
               React.DOM.span null,
                 "Configuration #{configuration.get('name')} was moved to "
                 React.createElement Link,
-                  to: 'trash'
+                  to: 'settings-trash'
                 ,
                   'Trash'
 

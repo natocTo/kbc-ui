@@ -134,7 +134,7 @@ module.exports =
                 React.DOM.span null,
                   "Bucket #{bucket.get('name')} was moved to "
                   React.createElement Link,
-                    to: 'trash'
+                    to: 'settings-trash'
                   ,
                     'Trash'
 

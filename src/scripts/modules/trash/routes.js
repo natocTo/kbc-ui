@@ -7,9 +7,9 @@ import ComponentReloaderButton from '../components/react/components/ComponentsRe
 // import DeletedComponentsStore from '../components/stores/DeletedComponentsStore';
 
 export default {
-  name: 'trash',
+  name: 'settings-trash',
   title: 'Trash',
-  path: 'trash',
+  path: 'settings-trash',
   isComponent: true,
   defaultRouteHandler: Index,
   headerButtonsHandler: TrashHeaderButtons,
