@@ -18,9 +18,7 @@ export default React.createClass({
 
   render() {
     if (!this.state.installedFilteredComponents.count()) {
-      return (
-        <span></span>
-      );
+      return <span />;
     } else {
       return (
         <Confirm
@@ -29,7 +27,7 @@ export default React.createClass({
           buttonLabel="Empty Trash"
           onConfirm={this.handleDelete}>
           <button className="btn btn-link">
-            <i className="fa fa-times fa-fw"></i> Empty Trash
+            <i className="fa fa-times fa-fw" /> Empty Trash
           </button>
         </Confirm>
       );
