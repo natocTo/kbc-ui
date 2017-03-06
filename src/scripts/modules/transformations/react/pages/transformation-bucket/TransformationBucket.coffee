@@ -14,7 +14,6 @@ RunComponentButton = React.createFactory(require '../../../../components/react/c
 TransformationActionCreators = require '../../../ActionCreators'
 {Confirm} = require '../../../../../react/common/common'
 NewTransformationModal = require('../../modals/NewTransformation').default
-{ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
 LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore')
 SidebarJobs = require('../../../../components/react/components/SidebarJobs')
 SidebarVersions = require('../../../../components/react/components/SidebarVersionsWrapper').default
@@ -62,18 +61,9 @@ TransformationBucket = React.createClass
             configId: @state.bucketId
         ul className: 'nav nav-stacked',
           li {},
-            React.createElement ModalTrigger,
-              modal: React.createElement(NewTransformationModal,
-                bucket: @state.bucket
-              )
-              ,
-                a
-                  onClick: (e) ->
-                    e.stopPropagation()
-                    e.preventDefault()
-                ,
-                  span className: 'fa fa-plus fa-fw'
-                  ' Add transformation'
+            React.createElement(NewTransformationModal,
+              bucket: @state.bucket
+            )
 
           li {},
             RunComponentButton(
