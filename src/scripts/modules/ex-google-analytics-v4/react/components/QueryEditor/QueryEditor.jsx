@@ -9,6 +9,10 @@ import QuerySample from './QuerySample';
 import UrlParserModal from './UrlParserModal';
 import AntiSamplingModal from './AntiSamplingModal';
 
+const PREFERED_METRICS = ['ga:sessions', 'ga:users', 'ga:transactions', 'ga:pageviews', 'ga:uniquePageviews', 'ga:sessionDuration', 'ga:newUsers', 'ga:impressions', 'ga:transactionRevenue', 'ga:adClicks', 'ga:adCost', 'ga:bounces', 'ga:bounceRate'];
+
+const PREFERED_DIMENSTIONS = ['ga:segment', 'ga:date', 'ga:medium', 'ga:sourceMedium', 'ga:source', 'ga:campaign', 'ga:yearMonth', 'ga:isoYearIsoWeek', 'ga:transactionId', 'ga:adwordsCampaignID', 'ga:deviceCategory', 'ga:keyword'];
+
 export default React.createClass({
   propTypes: {
     allProfiles: PropTypes.object.isRequired,
@@ -102,6 +106,7 @@ export default React.createClass({
             metadata={this.props.metadata.get('metrics', List()).toJS()}
             isEditing={isEditing}
             name="Metrics"
+            preferedOrderIds={PREFERED_METRICS}
             onSelectValue={this.onSelectMetric}
             selectedValues={this.getSelectedMetrics()}
           />
@@ -109,6 +114,7 @@ export default React.createClass({
             isLoadingMetadata={this.props.isLoadingMetadata}
             metadata={this.props.metadata.get('dimensions', List()).toJS()}
             name="Dimensions"
+            preferedOrderIds={PREFERED_DIMENSTIONS}
             onSelectValue={this.onSelectDimension}
             selectedValues={this.getSelectedDimensions()}
             isEditing={isEditing}
