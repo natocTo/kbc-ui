@@ -1,15 +1,16 @@
 React = require 'react'
 
 Modal = React.createFactory(require('react-bootstrap').Modal)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 api = require '../../TransformationsApiAdapter'
 Loader = React.createFactory(require('kbc-react-components').Loader)
-_ = require('underscore')
-Immutable = require 'immutable'
-List = Immutable.List
 
-{div, p, a, strong, code, span, h4} = React.DOM
+{div, p, a, strong, code, span, i} = React.DOM
 
 
 SqlDepModal = React.createClass
@@ -18,9 +19,20 @@ SqlDepModal = React.createClass
   getInitialState: ->
     isLoading: true
     sqlDepUrl: null
+    showModal: false
 
-  componentDidMount: ->
+  close: ->
+    @setState
+      showModal: false
+      isLoading: false
+
+  open: ->
+    @setState
+      showModal: true
+
     if (@props.backend == 'redshift')
+      @setState
+        isLoading: true
       component = @
       api
       .getSqlDep(
@@ -34,54 +46,59 @@ SqlDepModal = React.createClass
       )
 
   render: ->
+    a onClick: @handleOpenButtonClick,
+      i className: 'fa fa-sitemap fa-fw'
+      ' SQLDep'
+      Modal
+        show: @state.showModal
+        title: 'SQLDep'
+        onHide: @close
+      ,
+        ModalHeader closeButton: true,
+          ModalTitle null,
+            'SQLDep'
+
+        ModalBody null,
+          @_renderBody()
+
+        ModalFooter null,
+          ButtonToolbar null,
+            Button
+              onClick: @close
+              bsStyle: 'link'
+            ,
+              'Close'
+
+  handleOpenButtonClick: (e) ->
+    e.preventDefault()
+    @open()
+
+  _renderBody: ->
     if @props.backend == 'redshift'
-      @_renderAvailable()
+      if @state.isLoading
+        p null,
+          Loader {}
+          ' '
+          'Loading SQLdep data. This may take a minute or two...'
+      else if !@state.isLoading
+        span {},
+          p {},
+            'SQLdep is ready. '
+            a {href: @state.sqlDepUrl, target: '_blank'},
+              'Open SQLDep '
+              i className: 'fa fa-external-link'
     else
-      @_renderNotAvailable()
-
-  _renderAvailable: ->
-    Modal title: 'SQLDep', onRequestHide: @props.onRequestHide,
-      div className: 'modal-body',
-        if @state.isLoading
-          p null,
-            Loader {}
-            ' '
-            'Loading SQLdep data. This may take a minute or two...'
-        else if !@state.isLoading
-          span {},
-            p {},
-              'SQLdep is ready.'
-            p {},
-              a {href: @state.sqlDepUrl},
-                'Open SQLDep'
-
-      div className: 'modal-footer',
-        ButtonToolbar null,
-          Button
-            onClick: @props.onRequestHide
-            bsStyle: 'link'
-          ,
-            'Close'
-
-  _renderNotAvailable: ->
-    Modal title: 'SQLDep', onRequestHide: @props.onRequestHide,
-      div className: 'modal-body',
+      [
         p {},
-          'Visual SQL analysis is available for Redshift transformations only.'
+          'Visual SQL analysis is available for Redshift transformations only. ',
         p {},
           'Contact '
           a {href: 'mailto:support@keboola.com'}, 'support@keboola.com'
-          'for more information.'
-      div className: 'modal-footer',
-        ButtonToolbar null,
-          Button
-            onClick: @props.onRequestHide
-            bsStyle: 'link'
-          ,
-            'Close'
+          ' for more information.'
+      ]
 
   _handleConfirm: ->
-    @props.onRequestHide()
+    @close()
     @props.onConfirm()
 
 module.exports = SqlDepModal

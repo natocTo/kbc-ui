@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from 'react-bootstrap';
+import { Modal, Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import OutputMappingRowEditor from '../components/mapping/OutputMappingRowEditor';
 import resolveOutputShowDetails from './resolveOutputShowDetails';
@@ -19,8 +19,6 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    onHide: PropTypes.func.isRequired,
-    show: PropTypes.bool.isRequired,
     definition: PropTypes.object
   },
 
@@ -38,55 +36,94 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      isSaving: false
+      isSaving: false,
+      showModal: false
     };
   },
 
+  open() {
+    this.setState({
+      showModal: true
+    });
+  },
+
+  close() {
+    this.setState({
+      showModal: false
+    });
+  },
+
   render() {
-    var title = 'Output Mapping';
+    let title = 'Output Mapping';
     if (this.props.definition.get('label')) {
       title = this.props.definition.get('label');
     }
     return (
-      <Modal
-        onHide={this.props.onHide}
-        show={this.props.show}
-        bsSize="large"
-        animation={false}
-        >
-        <Modal.Header closeButton={true}>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <OutputMappingRowEditor
-            fill={true}
-            value={this.props.mapping}
-            tables={this.props.tables}
-            buckets={this.props.buckets}
-            onChange={this.props.onChange}
-            disabled={this.state.isSaving}
-            backend={this.props.backend}
-            type={this.props.type}
-            initialShowDetails={resolveOutputShowDetails(this.props.mapping)}
-            definition={this.props.definition}
-            />
-        </Modal.Body>
-        <Modal.Footer>
-          <ConfirmButtons
-            saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
-            isSaving={this.state.isSaving}
-            onCancel={this.handleCancel}
-            onSave={this.handleSave}
-            isDisabled={!this.isValid()}
-            />
-        </Modal.Footer>
-      </Modal>
+      <span>
+        { this.renderOpenButton() }
+        <Modal
+          onHide={this.close}
+          show={this.state.showModal}
+          bsSize="large"
+          >
+          <Modal.Header closeButton={true}>
+            <Modal.Title>{title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <OutputMappingRowEditor
+              fill={true}
+              value={this.props.mapping}
+              tables={this.props.tables}
+              buckets={this.props.buckets}
+              onChange={this.props.onChange}
+              disabled={this.state.isSaving}
+              backend={this.props.backend}
+              type={this.props.type}
+              initialShowDetails={resolveOutputShowDetails(this.props.mapping)}
+              definition={this.props.definition}
+              />
+          </Modal.Body>
+          <Modal.Footer>
+            <ConfirmButtons
+              saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
+              isSaving={this.state.isSaving}
+              onCancel={this.handleCancel}
+              onSave={this.handleSave}
+              isDisabled={!this.isValid()}
+              />
+          </Modal.Footer>
+        </Modal>
+      </span>
     );
   },
 
+  renderOpenButton() {
+    if (this.props.mode === MODE_EDIT) {
+      return (
+        <OverlayTrigger overlay={<Tooltip>Edit Output</Tooltip>} placement="top">
+          <Button bsStyle="link" onClick={this.handleOpenButtonLink}>
+            <span className="fa fa-pencil" />
+          </Button>
+        </OverlayTrigger>
+      );
+    } else {
+      return (
+        <Button bsStyle="primary" onClick={this.open}>
+          <i className="fa fa-plus" /> Add Output
+        </Button>
+      );
+    }
+  },
+
+  handleOpenButtonLink(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.open();
+  },
+
   handleCancel() {
-    this.props.onHide();
     this.props.onCancel();
+    this.close();
   },
 
   handleSave() {
@@ -99,7 +136,7 @@ export default React.createClass({
         this.setState({
           isSaving: false
         });
-        this.props.onHide();
+        this.close();
       })
       .catch((e) => {
         this.setState({
