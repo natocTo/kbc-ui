@@ -2,7 +2,6 @@
 
 injectProps = require('./react/injectProps').default
 ComponentsIndex = require('./react/pages/ComponentsIndex')
-TrashIndex = require('./react/pages/TrashIndex')
 NewComponent = require('./react/pages/NewComponent').default
 
 ComponentDetail = require './react/pages/component-detail/ComponentDetail'
@@ -59,18 +58,12 @@ routes =
     headerButtonsHandler: injectProps(
       addRoute: 'new-application'
       type: 'application'
-      trashRoute: 'applications-trash'
     )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-application'
       title: 'New Application'
       defaultRouteHandler: application(NewComponent)
-    ,
-      name: 'applications-trash'
-      title: 'Trash'
-      defaultRouteHandler: application(TrashIndex)
-      reloaderHandler: ComponentReloaderButton
     ,
       appGeneeaRoutes.sentimentAnalysis
     ,
@@ -102,18 +95,12 @@ routes =
     headerButtonsHandler: injectProps(
       addRoute: 'new-extractor'
       type: 'extractor'
-      trashRoute: 'extractors-trash'
     )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-extractor'
       title: 'New Extractor'
       defaultRouteHandler: extractor(NewComponent)
-    ,
-      name: 'extractors-trash'
-      title: 'Trash'
-      defaultRouteHandler: extractor(TrashIndex)
-      reloaderHandler: ComponentReloaderButton
     ,
       createComponentRoute 'ex-db', [exDbRoutes]
     ,
@@ -164,18 +151,12 @@ routes =
     headerButtonsHandler: injectProps(
       addRoute: 'new-writer'
       type: 'writer'
-      trashRoute: 'writers-trash'
     )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-writer'
       title: 'New Writer'
       defaultRouteHandler: writer(NewComponent)
-    ,
-      name: 'writers-trash'
-      title: 'Trash'
-      defaultRouteHandler: writer(TrashIndex)
-      reloaderHandler: ComponentReloaderButton
     ,
       createComponentRoute 'gooddata-writer', [goodDataWriterRoutes]
     ,

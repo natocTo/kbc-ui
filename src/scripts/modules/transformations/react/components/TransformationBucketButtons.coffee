@@ -14,7 +14,6 @@ module.exports = React.createClass
 
   getStateFromStores: ->
     hasBuckets: BucketsStore.getAll().count()
-    hasInTrash: BucketsStore.getAllDeleted().count()
 
   render: ->
     span {},
@@ -24,12 +23,5 @@ module.exports = React.createClass
         button className: 'btn btn-link',
           span className: 'kbc-icon-cog'
           ' Sandbox'
-      if @state.hasInTrash
-        React.createElement Link,
-          to: 'transformations-trash'
-        ,
-          button className: 'btn btn-link',
-            span className: 'kbc-icon-cup'
-            ' Open Trash'
       if @state.hasBuckets
         React.createElement NewTransformationBucketButton
