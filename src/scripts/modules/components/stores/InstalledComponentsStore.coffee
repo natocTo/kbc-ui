@@ -68,28 +68,32 @@ InstalledComponentsStore = StoreUtils.createStore
     @getAll().filter (component) ->
       component.get('type') == type
 
-  getTrashFilter: ->
-    _store.getIn ['filters', 'trash'], ''
+  getTrashFilter: (filterType) ->
+    _store.getIn ['filters', 'trash', filterType], ''
 
   getAllDeletedFiltered: ->
-    filter = @getTrashFilter()
+    nameFilter = @getTrashFilter('name')
+    typeFilter = @getTrashFilter('type')
     components = @getAllDeleted()
 
-    if !filter || filter is ''
+    if (!nameFilter || nameFilter is '') && (!typeFilter || typeFilter is '')
       components
     else
       components.filter(
         (component) ->
-          fuzzy.match(filter, component.get('name').toString()) or
-          fuzzy.match(filter, component.get('id').toString()) or
-          fuzzy.match(filter, component.get('description').toString()) or
-          @getAllDeletedConfigurationsFiltered(component).count()
+          (fuzzy.match(typeFilter, component.get('type').toString())) and
+          (
+            fuzzy.match(nameFilter, component.get('name').toString()) or
+            fuzzy.match(nameFilter, component.get('id').toString()) or
+            fuzzy.match(nameFilter, component.get('description').toString()) or
+            @getAllDeletedConfigurationsFiltered(component).count()
+          )
         ,
         @
       )
 
   getAllDeletedConfigurationsFiltered: (component) ->
-    filter = @getTrashFilter()
+    filter = @getTrashFilter('name')
     configurations = component.get('configurations', Map())
 
     if !filter || filter is ''
@@ -453,7 +457,7 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.DELETED_COMPONENTS_FILTER_CHANGE
-      _store = _store.setIn ['filters', 'trash'], action.filter
+      _store = _store.setIn ['filters', 'trash', action.filterType], action.filter
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS

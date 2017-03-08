@@ -8,9 +8,11 @@ import InstalledComponentsStore from '../../../components/stores/InstalledCompon
 import InstaledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
+import Select from '../../../../react/common/Select';
 import SplashIcon from '../../../../react/common/SplashIcon';
 import SearchRow from '../../../../react/common/SearchRow';
 import DeletedComponentRow from '../components/DeletedComponentRow';
+import TrashHeaderButtons from '../components/TrashHeaderButtons';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
@@ -25,7 +27,8 @@ export default React.createClass({
     });
 
     return {
-      filter: InstalledComponentsStore.getTrashFilter(),
+      filterName: InstalledComponentsStore.getTrashFilter('name'),
+      filterType: InstalledComponentsStore.getTrashFilter('type'),
       installedComponents: InstalledComponentsStore.getAllDeleted(),
       installedFilteredComponents: InstalledComponentsStore.getAllDeletedFiltered(),
       deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations(),
@@ -34,8 +37,8 @@ export default React.createClass({
     };
   },
 
-  handleFilterChange(query) {
-    InstaledComponentsActions.deletedConfigurationsFilterChange(query);
+  handleFilterChange(query, filterType) {
+    InstaledComponentsActions.deletedConfigurationsFilterChange(query, filterType);
   },
 
   renderTabs() {
@@ -61,6 +64,28 @@ export default React.createClass({
   },
 
   render() {
+    const typeFilterOptions = [
+      {
+        'label': 'Extractors',
+        'value': 'extractor'
+      },
+      {
+        'label': 'Transformations',
+        'value': 'transformation'
+      },
+      {
+        'label': 'Writers',
+        'value': 'writer'
+      },
+      {
+        'label': 'Applications',
+        'value': 'application'
+      },
+      {
+        'label': 'Extractors',
+        'value': 'extractor'
+      }
+    ];
     if (this.state.installedComponents.count()) {
       let components = this.state.installedFilteredComponents;
       const rows = components.map(function(component) {
@@ -82,11 +107,27 @@ export default React.createClass({
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
           </div>
-          <SearchRow
-            className="row kbc-search-row"
-            query={this.state.filter}
-            onChange={this.handleFilterChange}
-          />
+          <div className="kbc-header">
+            <div className="col-xs-5">
+              <SearchRow
+                className="row kbc-search-row"
+                query={this.state.filterName}
+                onChange={(query) => this.handleFilterChange(query, 'name')}
+              />
+            </div>
+            <div className="col-xs-1" />
+            <div className="col-xs-4">
+              <Select
+                value={this.state.filterType}
+                onChange={(query) => this.handleFilterChange(query, 'type')}
+                options={typeFilterOptions}
+                placeholder="All components"
+              />
+            </div>
+            <div className="col-xs-2">
+              <TrashHeaderButtons />
+            </div>
+          </div>
           {rows}
         </div>
       );

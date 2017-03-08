@@ -402,10 +402,11 @@ module.exports =
 
       throw e
 
-  deletedConfigurationsFilterChange: (query) ->
+  deletedConfigurationsFilterChange: (query, filterType) ->
     dispatcher.handleViewAction
       type: constants.ActionTypes.DELETED_COMPONENTS_FILTER_CHANGE
       filter: query
+      filterType: filterType
 
   deleteConfiguration: (componentId, configurationId, transition) ->
     dispatcher.handleViewAction
@@ -416,8 +417,6 @@ module.exports =
 
     component = ComponentsStore.getComponent componentId
     configuration = InstalledComponentsStore.getConfig componentId, configurationId
-
-    notification = "Configuration #{configuration.get('name')} was moved to Trash."
 
     if (transition)
       transitionTo = "generic-detail-#{component.get('type')}"
@@ -446,7 +445,6 @@ module.exports =
                   to: 'settings-trash'
                 ,
                   'Trash'
-
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR
