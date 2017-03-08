@@ -11,6 +11,8 @@ export function isObsoleteComponent(componentId) {
 
   if (componentId === 'gooddata-writer') {
     return true;
+  } else if (componentId === 'transformation') {
+    return false;
   } else if (
     component.get('uri') &&
     componentHasApi(componentId) &&
