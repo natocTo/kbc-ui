@@ -21,6 +21,7 @@ ConfigurationCopiedNotification = require('./react/components/ConfigurationCopie
 deleteComponentConfiguration = require './utils/deleteComponentConfiguration'
 removeEmptyEncryptAttributes = require './utils/removeEmptyEncryptAttributes'
 preferEncryptedAttributes = require './utils/preferEncryptedAttributes'
+trashUtils = require '../trash/utils'
 
 storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
   component = InstalledComponentsStore.getComponent(componentId)
@@ -436,15 +437,33 @@ module.exports =
 
       actions.loadDeletedComponentsForce()
       .then (response) ->
-        ApplicationActionCreators.sendNotification
-          message: React.createClass
-            render: ->
-              React.DOM.span null,
-                "Configuration #{configuration.get('name')} was moved to "
-                React.createElement Link,
-                  to: 'settings-trash'
-                ,
-                  'Trash'
+        if (trashUtils.isObsoleteComponent(componentId))
+          ApplicationActionCreators.sendNotification
+            message: React.createClass
+              render: ->
+                React.DOM.span null,
+                  "Configuration #{configuration.get('name')} was moved to "
+                  React.createElement Link,
+                    to: 'settings-trash'
+                  ,
+                    'Trash'
+                  '.'
+         else
+          ApplicationActionCreators.sendNotification
+            message: React.createClass
+              render: ->
+                React.DOM.span null,
+                  "Configuration #{configuration.get('name')} was moved to "
+                  React.createElement Link,
+                    to: 'settings-trash'
+                  ,
+                    'Trash'
+                  '. '
+                  React.DOM.a
+                    onClick: (e) ->
+                      actions.restoreConfiguration(componentId, configurationId)
+                  ,
+                    'Revert'
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR

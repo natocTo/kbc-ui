@@ -9,6 +9,7 @@ propagateApiAttributes = require('../react/components/jsoneditor/propagateApiAtt
 TemplatesStore = require './TemplatesStore'
 ComponentsStore = require './ComponentsStore'
 fromJSOrdered = require('../../../utils/fromJSOrdered').default
+trashUtils = require('../../trash/utils')
 
 _store = Map(
   configData: Map() #componentId #configId
@@ -77,10 +78,14 @@ InstalledComponentsStore = StoreUtils.createStore
     components = @getAllDeleted()
 
     if (!nameFilter || nameFilter is '') && (!typeFilter || typeFilter is '')
-      components
+      components.filter(
+        (component) ->
+          !trashUtils.isObsoleteComponent(component.get('id'))
+      )
     else
       components.filter(
         (component) ->
+          !trashUtils.isObsoleteComponent(component.get('id')) and
           (fuzzy.match(typeFilter, component.get('type').toString())) and
           (
             fuzzy.match(nameFilter, component.get('name').toString()) or
