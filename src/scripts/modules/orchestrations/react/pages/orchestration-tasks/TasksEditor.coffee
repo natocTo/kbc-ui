@@ -80,7 +80,7 @@ TasksEditor = React.createClass
       timeoutMinutes: null
 
     if component.get('id') == 'gooddata-writer'
-      task.action = 'upload-project'
+      task.action = 'load-data'
 
     if _.contains ['ex-netsuite'], component.get('id')
       task.actionParameters =
