@@ -13,24 +13,21 @@ export function loadConfiguration(componentId, configId) {
 
 export function createActions(componentId) {
   function resetProtectedProperties(credentials) {
-    let result = credentials;
-    const props = getProtectedProperties(componentId);
-    for (let prop of props) {
-      result = result.set(prop, '');
-    }
-    return result;
+    const props = List(getProtectedProperties(componentId));
+    return props.reduce((memo, prop) => memo.set(prop, ''), credentials);
   }
 
   function updateProtectedProperties(newCredentials, oldCredentials) {
     const props = getProtectedProperties(componentId);
-    let result = newCredentials;
-    for (let prop of props) {
+    const propsList = List(props);
+    const result = propsList.reduce((memo, prop) => {
       const newValue = newCredentials.get(prop);
       const oldValue = oldCredentials.get(prop);
       if (!newValue) {
-        result = result.set(prop, oldValue);
+        return memo.set(prop, oldValue);
       }
-    }
+      return memo;
+    }, newCredentials);
     return result;
   }
 
