@@ -29,19 +29,6 @@ OutputMappingRow = React.createClass(
   getDefaultProps: ->
     definition: Immutable.Map()
 
-  getInitialState: ->
-    showModal: false
-
-  openModal: (e) ->
-    e.stopPropagation()
-    e.preventDefault()
-    @setState
-      showModal: true
-
-  closeModal: ->
-    @setState
-      showModal: false
-
   render: ->
     span {className: 'table'},
       span {className: 'tbody'},
@@ -100,16 +87,7 @@ OutputMappingRow = React.createClass(
                       @props.outputMapping.get('destination')
                     "?"
                   onConfirm: @_handleDelete
-            React.createElement OverlayTrigger,
-              overlay: React.createElement Tooltip, null, 'Edit Output'
-              placement: 'top'
-            ,
-              React.DOM.button
-                className: "btn btn-link"
-                onClick: @openModal
-              ,
-                React.DOM.span null,
-                  React.DOM.span {className: 'fa fa-fa kbc-icon-pencil'}
+
             React.createElement OutputMappingModal,
               mode: 'edit'
               tables: @props.tables
@@ -120,8 +98,6 @@ OutputMappingRow = React.createClass(
               onChange: @_handleChange
               onCancel: @_handleCancel
               onSave: @_handleSave
-              show: @state.showModal
-              onHide: @closeModal
               definition: @props.definition
 
   _handleChange: (newMapping) ->

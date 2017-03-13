@@ -1,9 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router';
 import ApplicationStore from '../../../stores/ApplicationStore';
 import Graph from './Graph';
 import UsageByMonth from './UsageByMonth';
 import ProjectPowerLimit from './ProjectPowerLimit';
+import { Link } from 'react-router';
 
 export function componentIoSummary(data, metric) {
   return data

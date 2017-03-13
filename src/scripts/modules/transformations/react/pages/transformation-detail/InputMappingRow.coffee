@@ -1,5 +1,4 @@
 React = require 'react'
-{ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
 DeleteButton = require '../../../../../react/common/DeleteButton'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
@@ -84,31 +83,18 @@ module.exports = React.createClass(
                       @props.inputMapping.get('source')
                     "?"
                   onConfirm: @_handleDelete
-            React.createElement OverlayTrigger,
-              overlay: React.createElement Tooltip, null, 'Edit Input'
-              placement: 'top'
-            ,
-              React.createElement ModalTrigger,
-                modal: React.createElement InputMappingModal,
-                  mode: 'edit'
-                  tables: @props.tables
-                  backend: @props.transformation.get("backend")
-                  type: @props.transformation.get("type")
-                  mapping: @props.editingInputMapping
-                  otherDestinations: @props.otherDestinations
-                  onChange: @_handleChange
-                  onCancel: @_handleCancel
-                  onSave: @_handleSave
-                  definition: @props.definition
-              ,
-                React.DOM.button
-                  className: "btn btn-link"
-                  onClick: (e) ->
-                    e.preventDefault()
-                    e.stopPropagation()
-                ,
-                  React.DOM.span null,
-                    React.DOM.span {className: 'fa fa-fw kbc-icon-pencil'}
+
+            React.createElement InputMappingModal,
+              mode: 'edit'
+              tables: @props.tables
+              backend: @props.transformation.get("backend")
+              type: @props.transformation.get("type")
+              mapping: @props.editingInputMapping
+              otherDestinations: @props.otherDestinations
+              onChange: @_handleChange
+              onCancel: @_handleCancel
+              onSave: @_handleSave
+              definition: @props.definition
 
   _handleChange: (newMapping) ->
     actionCreators.updateTransformationEditingField(@props.bucket.get('id'),

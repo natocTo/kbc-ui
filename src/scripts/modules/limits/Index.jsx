@@ -1,10 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router';
 import ApplicationStore from '../../stores/ApplicationStore';
 import createStoreMixin from '../../react/mixins/createStoreMixin';
 import LimitsSection from './LimitsSection';
 import StorageApi from '../components/StorageApi';
 import Keen from 'keen-js';
+import { Link } from 'react-router';
 
 export default React.createClass({
   mixins: [createStoreMixin(ApplicationStore)],

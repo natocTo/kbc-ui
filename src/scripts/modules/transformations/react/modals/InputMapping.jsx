@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from 'react-bootstrap';
+import { Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import InputMappingRowMySqlEditor from '../components/mapping/InputMappingRowMySqlEditor';
 import InputMappingRowDockerEditor from '../components/mapping/InputMappingRowDockerEditor';
@@ -12,7 +12,7 @@ const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
 export default React.createClass({
   propTypes: {
-    mode: PropTypes.oneOf([MODE_CREATE, MODE_EDIT]),
+    mode: PropTypes.oneOf([MODE_CREATE, MODE_EDIT]).isRequired,
     mapping: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     backend: PropTypes.string.isRequired,
@@ -21,7 +21,6 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    onRequestHide: PropTypes.func.isRequired,
     definition: PropTypes.object
   },
 
@@ -38,8 +37,21 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      isSaving: false
+      isSaving: false,
+      showModal: false
     };
+  },
+
+  open() {
+    this.setState({
+      showModal: true
+    });
+  },
+
+  close() {
+    this.setState({
+      showModal: false
+    });
   },
 
   isDestinationDuplicate() {
@@ -47,26 +59,60 @@ export default React.createClass({
   },
 
   render() {
-    var title = 'Input Mapping';
+    let title = 'Input Mapping';
     if (this.props.definition.get('label')) {
       title = this.props.definition.get('label');
     }
     return (
-      <Modal {...this.props} title={title} bsSize="large" onChange={() => null}>
-        <div className="modal-body">
-          {this.editor()}
-        </div>
-        <div className="modal-footer">
-          <ConfirmButtons
-            saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
-            isSaving={this.state.isSaving}
-            onCancel={this.handleCancel}
-            onSave={this.handleSave}
-            isDisabled={!this.isValid()}
-            />
-        </div>
-      </Modal>
+      <span>
+        { this.renderOpenButton() }
+        <Modal onHide={this.close} show={this.state.showModal} bsSize="large" onChange={() => null}>
+          <Modal.Header closeButton={true}>
+            <Modal.Title>
+              {title}
+            </Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            {this.editor()}
+          </Modal.Body>
+
+          <Modal.Footer>
+            <ConfirmButtons
+              saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
+              isSaving={this.state.isSaving}
+              onCancel={this.handleCancel}
+              onSave={this.handleSave}
+              isDisabled={!this.isValid()}
+              />
+          </Modal.Footer>
+        </Modal>
+      </span>
     );
+  },
+
+  renderOpenButton() {
+    if (this.props.mode === MODE_EDIT) {
+      return (
+        <OverlayTrigger overlay={<Tooltip>Edit Input</Tooltip>} placement="top">
+          <Button bsStyle="link" onClick={this.handleOpenButtonLink}>
+            <span className="fa fa-pencil" />
+          </Button>
+        </OverlayTrigger>
+      );
+    } else {
+      return (
+        <Button bsStyle="primary" onClick={this.open}>
+          <i className="fa fa-plus" /> Add Input
+        </Button>
+      );
+    }
+  },
+
+  handleOpenButtonLink(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.open();
   },
 
   editor() {
@@ -92,8 +138,8 @@ export default React.createClass({
   },
 
   handleCancel() {
-    this.props.onRequestHide();
     this.props.onCancel();
+    this.close();
   },
 
   handleSave() {
@@ -106,7 +152,7 @@ export default React.createClass({
         this.setState({
           isSaving: false
         });
-        this.props.onRequestHide();
+        this.close();
       })
       .catch((e) => {
         this.setState({
