@@ -16,10 +16,13 @@ export default React.createClass({
     const sizeBytes = limits.find(function(limit) {
       return limit.get('id') === 'storage.dataSizeBytes';
     }).get('metricValue');
+    const rowsCount = limits.find(function(limit) {
+      return limit.get('id') === 'storage.rowsCount';
+    }).get('metricValue');
     return {
       data: {
         sizeBytes: sizeBytes,
-        rowsCount: currentProject.get('rowsCount')
+        rowsCount: rowsCount
       },
       tokens: tokenStats,
       projectId: currentProject.get('id'),
