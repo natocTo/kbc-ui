@@ -58,8 +58,9 @@ export function createStore(componentId, configId) {
           value = value.toString();
         }
         const isProtected = templateFields.getProtectedProperties(componentId).indexOf(propName) > -1;
+        const isRequired = templateFields.getProtectedProperties(componentId).indexOf(propName) > -1;
         const alreadySaved = !_.isEmpty(configCredentials.get(propName));
-        const isValueValid = !_.isEmpty(value) || (isProtected && alreadySaved);
+        const isValueValid = !isRequired || !_.isEmpty(value) || (isProtected && alreadySaved);
         return memo && isValueValid;
       }, true);
       const ssh = credentials.get('ssh', Map());
