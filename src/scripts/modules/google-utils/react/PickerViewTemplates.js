@@ -12,11 +12,11 @@ const sheets = () => {
 
 const sharedSheets = () => {
   const {google} = window;
-  const allFoldersView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS);
-  allFoldersView.setIncludeFolders(true);
-  allFoldersView.setMode(google.picker.DocsViewMode.GRID);
+  const view = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS);
+  view.setIncludeFolders(true);
+  view.setMode(google.picker.DocsViewMode.GRID);
   // allFoldersView.setSelectFolderEnabled(true)
-  return allFoldersView;
+  return view;
 };
 
 export default {
@@ -80,7 +80,7 @@ export default {
 
   flatFolders() {
     const {google} = window;
-    const allFoldersView = new google.picker.DocsView();
+    const allFoldersView = new google.picker.DocsView(google.picker.ViewId.FOLDERS);
     allFoldersView.setIncludeFolders(true);
     allFoldersView.setSelectFolderEnabled(true);
     allFoldersView.setMimeTypes('application/vnd.google-apps.folder');
@@ -89,7 +89,7 @@ export default {
 
   rootFolder() {
     const {google} = window;
-    const view = new google.picker.DocsView();
+    const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS);
     view.setIncludeFolders(true);
     view.setSelectFolderEnabled(true);
     view.setMimeTypes('application/vnd.google-apps.folder');

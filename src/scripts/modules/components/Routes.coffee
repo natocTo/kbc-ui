@@ -35,7 +35,8 @@ createGenericDetailRoute = require './createGenericDetailRoute'
 createComponentRoute = require('./createComponentRoute').default
 
 googleDriveWriterRoutes = require '../wr-google-drive-old/wrGdriveRoutes'
-googleDriveWriterNewRoutes = require('../wr-google-drive/routes').default
+#googleDriveWriterNewRoutes = require('../wr-google-drive/routes').default
+googleSheetsWriterRoutes = require('../wr-google-sheets/routes').default
 tdeRoutes = require '../tde-exporter/tdeRoutes'
 adformRoutes = require('../ex-adform/routes').default
 twitterRoutes = require('../ex-twitter/routes').default
@@ -163,7 +164,7 @@ routes =
     ,
       createComponentRoute 'wr-google-drive', [googleDriveWriterRoutes]
     ,
-      createComponentRoute 'keboola.wr-google-drive', [googleDriveWriterNewRoutes]
+      createComponentRoute 'keboola.wr-google-sheets', [googleSheetsWriterRoutes]
     ,
       createComponentRoute 'wr-db', [createDbWriterRoutes('wr-db', 'mysql', true)]
     ,

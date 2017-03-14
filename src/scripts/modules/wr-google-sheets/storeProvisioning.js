@@ -10,21 +10,22 @@ export default function(COMPONENT_ID, configId) {
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
   const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id'], configId);
   const parameters = configData.get('parameters', Map());
-  const items = parameters.get('files', List());
+  const tables = parameters.get('tables', List());
 
   const tempPath = ['_'];
-  const savingSheetPath = tempPath.concat('savingSheet');
+  // const savingSheetPath = tempPath.concat('savingSheet');
   const editPath = tempPath.concat('editing');
   const editData = localState().getIn(editPath, Map());
   const pendingPath = tempPath.concat('pending');
+  const savingPath = tempPath.concat('saving');
 
   return {
     configData: configData,
     parameters: parameters,
     oauthCredentials: OauthStore.getCredentials(COMPONENT_ID, oauthCredentialsId) || Map(),
     oauthCredentialsId: oauthCredentialsId,
-    items: items,
-    hasItems: items.count() > 0,
+    tables: tables,
+    hasTables: tables.count() > 0,
 
     // local state stuff
     getLocalState(path) {
@@ -34,14 +35,11 @@ export default function(COMPONENT_ID, configId) {
       return localState().getIn([].concat(path), Map());
     },
     getEditPath: (what) => what ? editPath.concat(what) : editPath,
-    getPendingPath(what) {
-      return pendingPath.concat(what);
-    },
+    getPendingPath: (what) => pendingPath.concat(what),
+    getSavingPath: (what) => savingPath.concat(what),
     isEditing: (what) => editData.hasIn([].concat(what)),
-    isSavingSheet: (id) => localState().getIn(savingSheetPath.concat(id), false),
-    isPending(what) {
-      return localState().getIn(pendingPath.concat(what), null);
-    },
+    isSaving: (what) => localState().getIn(savingPath.concat(what), false),
+    isPending: (what) => localState().getIn(pendingPath.concat(what), null),
     isAuthorized() {
       const creds = this.oauthCredentials;
       return creds && creds.has('id');

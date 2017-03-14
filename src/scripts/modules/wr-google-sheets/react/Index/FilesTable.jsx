@@ -139,13 +139,12 @@ export default React.createClass({
 
   renderEditButton(query) {
     return (
-      <button className="btn btn-link"
-    onClick={() => this.props.onStartEdit(query)}>
-  <Tooltip tooltip="Edit" placement="top">
-      <i className="kbc-icon-pencil" />
-      </Tooltip>
+      <button className="btn btn-link" onClick={() => this.props.onStartEdit(query)}>
+        <Tooltip tooltip="Edit" placement="top">
+          <i className="kbc-icon-pencil" />
+        </Tooltip>
       </button>
-  );
+    );
   },
 
   renderDeleteButton(query) {

@@ -5,7 +5,7 @@ import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import * as oauthUtils from '../oauth-v2/OauthUtils';
 
-const COMPONENT_ID = 'keboola.wr-google-drive';
+const COMPONENT_ID = 'keboola.wr-google-sheets';
 
 export default {
   name: COMPONENT_ID,

@@ -130,12 +130,17 @@ export default function(COMPONENT_ID) {
               <p>No tables configured</p>
               <DropdownButton
                 buttonClassName="btn-success"
-                title="+ Add Table "
+                title="Add Table "
                 onSelect={(eventKey) => this.showTableModal(eventKey, null)}
               >
                 <MenuItem header={true}>Upload table as:</MenuItem>
-                <MenuItem eventKey="file"><i className="fa fa-file" /><span>&nbsp; File</span></MenuItem>
-                <MenuItem eventKey="sheet"><i className="fa fa-th-list" /><span>&nbsp; Sheet</span>
+                <MenuItem eventKey="sheetInNew">
+                  <i className="fa fa-th-list" />
+                  <span>&nbsp; New Spreadsheet</span>
+                </MenuItem>
+                <MenuItem eventKey="sheetInExisting">
+                  <i className="fa fa-th-list" />
+                  <span>&nbsp; Sheet in existing Spreadsheet</span>
                 </MenuItem>
               </DropdownButton>
             </EmptyState>
@@ -154,18 +159,21 @@ export default function(COMPONENT_ID) {
           email=""
           show={this.state.localState.get('showTableModal', false)}
           onHideFn={hideFn}
-          onSaveFn={this.state.actions.saveQuery}
-          isSavingFn={this.state.store.isSavingSheet}
+          onSaveFn={this.state.actions.saveTable}
+          onCreateNewFn={this.state.actions.createSpreadsheet}
+          isSavingFn={this.state.store.isSaving}
           {...this.state.actions.prepareLocalState('TableModal')}
         />
       );
     },
 
-    showTableModal(sheetType, sheet) {
+    showTableModal(modalType, sheet) {
+      const sheetType = (modalType === 'file') ? modalType : 'sheet';
       const dirtySheet = sheet ? sheet : this.state.actions.touchSheet(sheetType);
       const modalData = Map()
         .set('sheet', dirtySheet)
-        .set('currentSheet', sheet);
+        .set('currentSheet', sheet)
+        .set('modalType', modalType);
       this.state.actions.updateLocalState(['TableModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);
     },
