@@ -18,11 +18,13 @@ export default React.createClass({
     isLoadingMetadata: PropTypes.bool.isRequired,
     metadata: PropTypes.array.isRequired,
     labelClassName: PropTypes.string,
-    wrapperClassName: PropTypes.string
+    wrapperClassName: PropTypes.string,
+    preferedOrderIds: PropTypes.array
   },
 
   getDefaultProps() {
     return {
+      preferedOrderIds: [],
       labelClassName: 'col-md-2 control-label',
       wrapperClassName: 'col-md-10'
     };
@@ -86,11 +88,19 @@ export default React.createClass({
   },
 
   prepareOptionsData(data) {
-    return data.map((op) => {
+    const order = this.props.preferedOrderIds;
+    const alldata = data.map((op) => {
       op.value = op.id;
       return op;
-    }).sort((a, b) => a.attributes.group.localeCompare(b.attributes.group));
-    // .filter((op) => this.props.selectedValues.indexOf(op.value) < 0);
+    });
+    // const preferedOrderData = alldata.filter((d) => order.includes(d.id));
+    const orderedData = order
+      .filter((i) => alldata.find((pi) => pi.id === i))
+      .map((i) => alldata.find((pi) => pi.id === i));
+
+    const restData = alldata.filter((d) => !order.includes(d.id))
+                            .sort((a, b) => a.attributes.group.localeCompare(b.attributes.group));
+    return orderedData.concat(restData);
   },
 
 

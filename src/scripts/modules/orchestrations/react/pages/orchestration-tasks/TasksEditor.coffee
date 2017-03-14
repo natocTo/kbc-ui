@@ -80,14 +80,8 @@ TasksEditor = React.createClass
       timeoutMinutes: null
 
     if component.get('id') == 'gooddata-writer'
-      task.action = 'upload-project'
+      task.action = 'load-data'
 
-    if _.contains ['ex-netsuite'], component.get('id')
-      task.actionParameters =
-        configurationId: configuration.get('id')
-
-    if _.contains ['ex-recurly', 'ex-youtube'], component.get('id')
-      task.actionParameters = {}
     @props.onChange(
       @props.tasks.map (phase) ->
         if phase.get('id') == phaseId

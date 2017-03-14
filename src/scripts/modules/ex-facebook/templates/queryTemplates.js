@@ -191,7 +191,7 @@ const exfbAdsTemplates = [
       'name': 'ads_insights',
       'query': {
         'path': 'ads',
-        'fields': 'insights.action_breakdowns(action_type).date_preset(last_month).time_increment(1){ad_id,impressions,reach,actions,clicks,spend}'
+        'fields': 'insights.action_breakdowns(action_type).date_preset(last_month).time_increment(1){ad_id,impressions,reach,clicks,spend}'
       }
     }
   },

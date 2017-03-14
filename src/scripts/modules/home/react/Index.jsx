@@ -10,10 +10,19 @@ export default React.createClass({
   getInitialState() {
     const currentProject = ApplicationStore.getCurrentProject(),
       tokenStats = ApplicationStore.getTokenStats();
+    const limits = ApplicationStore.getLimits().find(function(group) {
+      return group.get('id') === 'connection';
+    }).get('limits');
+    const sizeBytes = limits.find(function(limit) {
+      return limit.get('id') === 'storage.dataSizeBytes';
+    }).get('metricValue');
+    const rowsCount = limits.find(function(limit) {
+      return limit.get('id') === 'storage.rowsCount';
+    }).get('metricValue');
     return {
       data: {
-        sizeBytes: currentProject.get('dataSizeBytes'),
-        rowsCount: currentProject.get('rowsCount')
+        sizeBytes: sizeBytes,
+        rowsCount: rowsCount
       },
       tokens: tokenStats,
       projectId: currentProject.get('id'),

@@ -10,7 +10,7 @@ const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
 export default React.createClass({
   propTypes: {
-    mode: PropTypes.oneOf([MODE_CREATE, MODE_EDIT]),
+    mode: PropTypes.oneOf([MODE_CREATE, MODE_EDIT]).isRequired,
     mapping: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     buckets: PropTypes.object.isRequired,
