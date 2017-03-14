@@ -102,12 +102,35 @@ export default React.createClass({
       return (
         <div className="container-fluid kbc-main-content kbc-components-list">
           {this.renderTabs()}
+          <SearchRow
+            className="row kbc-search-row"
+            query={this.state.filterName}
+            onChange={(query) => this.handleFilterChange(query, 'name')}
+          />
           <div className="row">
             <h2>Configuration trash</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
           </div>
-          <div className="kbc-header">
+          <div>
+            <blockquote>
+            <div className="table kbc-table-border-vertical" style={{ 'borderBottom': 0}}>
+              <div className="tr">
+                <div className="td">
+                  <SearchRow
+                    className="row kbc-search-row"
+                    query={this.state.filterName}
+                    onChange={(query) => this.handleFilterChange(query, 'name')}
+                  />
+                </div>
+                <div className="td col-xs-2" style={{ 'padding': 0}}>
+                  <TrashHeaderButtons />
+                </div>
+              </div>
+            </div>
+            </blockquote>
+          </div>
+          <div>
             <div className="col-xs-5">
               <SearchRow
                 className="row kbc-search-row"
@@ -117,15 +140,19 @@ export default React.createClass({
             </div>
             <div className="col-xs-1" />
             <div className="col-xs-4">
-              <Select
-                value={this.state.filterType}
-                onChange={(query) => this.handleFilterChange(query, 'type')}
-                options={typeFilterOptions}
-                placeholder="All components"
-              />
+              <div className="kbc-search-row">
+                <Select
+                  value={this.state.filterType}
+                  onChange={(query) => this.handleFilterChange(query, 'type')}
+                  options={typeFilterOptions}
+                  placeholder="All components"
+                />
+              </div>
             </div>
             <div className="col-xs-2">
-              <TrashHeaderButtons />
+              <div className="kbc-search-row">
+                <TrashHeaderButtons />
+              </div>
             </div>
           </div>
           {rows}
