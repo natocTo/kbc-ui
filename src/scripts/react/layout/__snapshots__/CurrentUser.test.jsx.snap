@@ -6,37 +6,36 @@ exports[`<CurrentUser /> should render 20x20 icon, no email, no admin links, no 
     className="kbc-user-avatar"
     height={20}
     src="/user.png"
-    width={20}>
-    <div>
-      <strong>
-        dev user
-      </strong>
-      <DropdownButton
-        bsStyle="link"
-        className="kbc-user-menu"
-        dropup={true}
-        noCaret={true}
-        title={
-          <span
-            className="kbc-icon-picker" />
-        }>
-        <MenuItem
-          active={false}
-          href="/admin/change-password">
-          Account Settings
-        </MenuItem>
-        <MenuItem
-          active={false}
-          divider={true}
-          href="#" />
-        <MenuItem
-          active={false}
-          href="/admin/logout">
-          Logout
-        </MenuItem>
-      </DropdownButton>
-    </div>
-  </img>
+    width={20} />
+  <div>
+    <strong>
+      dev user
+    </strong>
+    <DropdownButton
+      bsStyle="link"
+      className="kbc-user-menu"
+      dropup={true}
+      noCaret={true}
+      title={
+        <span
+          className="kbc-icon-picker" />
+      }>
+      <MenuItem
+        active={false}
+        href="/admin/change-password">
+        Account Settings
+      </MenuItem>
+      <MenuItem
+        active={false}
+        divider={true}
+        href="#" />
+      <MenuItem
+        active={false}
+        href="/admin/logout">
+        Logout
+      </MenuItem>
+    </DropdownButton>
+  </div>
 </div>
 `;
 
@@ -48,48 +47,47 @@ exports[`<CurrentUser /> should render 20x20 icon, no email, with admin links, w
     className="kbc-user-avatar"
     height={20}
     src="/user.png"
-    width={20}>
-    <div>
-      <strong>
-        dev user
-      </strong>
-      <DropdownButton
-        bsStyle="link"
-        className="kbc-user-menu"
-        dropup={false}
-        noCaret={true}
-        title={
-          <span
-            className="kbc-icon-picker" />
-        }>
-        <MenuItem
-          active={false}
-          href="/admin/change-password">
-          Account Settings
-        </MenuItem>
-        <MenuItem
-          active={false}
-          header={true}
-          href="#">
-          Maintainers
-        </MenuItem>
-        <MenuItem
-          active={false}
-          href="/admin/maintainers/1">
-          First Maintainer
-        </MenuItem>
-        <MenuItem
-          active={false}
-          divider={true}
-          href="#" />
-        <MenuItem
-          active={false}
-          href="/admin/logout">
-          Logout
-        </MenuItem>
-      </DropdownButton>
-    </div>
-  </img>
+    width={20} />
+  <div>
+    <strong>
+      dev user
+    </strong>
+    <DropdownButton
+      bsStyle="link"
+      className="kbc-user-menu"
+      dropup={false}
+      noCaret={true}
+      title={
+        <span
+          className="kbc-icon-picker" />
+      }>
+      <MenuItem
+        active={false}
+        href="/admin/change-password">
+        Account Settings
+      </MenuItem>
+      <MenuItem
+        active={false}
+        header={true}
+        href="#">
+        Maintainers
+      </MenuItem>
+      <MenuItem
+        active={false}
+        href="/admin/maintainers/1">
+        First Maintainer
+      </MenuItem>
+      <MenuItem
+        active={false}
+        divider={true}
+        href="#" />
+      <MenuItem
+        active={false}
+        href="/admin/logout">
+        Logout
+      </MenuItem>
+    </DropdownButton>
+  </div>
 </div>
 `;
 
@@ -101,42 +99,41 @@ exports[`<CurrentUser /> should render 40x40 icon, with email, no admin links, n
     className="kbc-user-avatar"
     height={40}
     src="/user.png"
-    width={40}>
-    <div>
-      <strong>
-        dev user
-      </strong>
-      <DropdownButton
-        bsStyle="link"
-        className="kbc-user-menu"
-        dropup={true}
-        noCaret={true}
-        title={
-          <span
-            className="kbc-icon-picker" />
-        }>
-        <MenuItem
-          active={false}
-          href="/admin/change-password">
-          Account Settings
-        </MenuItem>
-        <MenuItem
-          active={false}
-          divider={true}
-          href="#" />
-        <MenuItem
-          active={false}
-          href="/admin/logout">
-          Logout
-        </MenuItem>
-      </DropdownButton>
-    </div>
-    <div>
-      <span>
-        dev@keboola.com
-      </span>
-    </div>
-  </img>
+    width={40} />
+  <div>
+    <strong>
+      dev user
+    </strong>
+    <DropdownButton
+      bsStyle="link"
+      className="kbc-user-menu"
+      dropup={true}
+      noCaret={true}
+      title={
+        <span
+          className="kbc-icon-picker" />
+      }>
+      <MenuItem
+        active={false}
+        href="/admin/change-password">
+        Account Settings
+      </MenuItem>
+      <MenuItem
+        active={false}
+        divider={true}
+        href="#" />
+      <MenuItem
+        active={false}
+        href="/admin/logout">
+        Logout
+      </MenuItem>
+    </DropdownButton>
+  </div>
+  <div>
+    <span>
+      dev@keboola.com
+    </span>
+  </div>
 </div>
 `;
 
@@ -148,42 +145,41 @@ exports[`<CurrentUser /> should render 40x40 icon, with email, no admin links, n
     className="kbc-user-avatar"
     height={40}
     src="/user.png"
-    width={40}>
-    <div>
-      <strong>
-        dev user
-      </strong>
-      <DropdownButton
-        bsStyle="link"
-        className="kbc-user-menu"
-        dropup={true}
-        noCaret={true}
-        title={
-          <span
-            className="kbc-icon-picker" />
-        }>
-        <MenuItem
-          active={false}
-          href="/admin/change-password">
-          Account Settings
-        </MenuItem>
-        <MenuItem
-          active={false}
-          divider={true}
-          href="#" />
-        <MenuItem
-          active={false}
-          href="/admin/logout">
-          Logout
-        </MenuItem>
-      </DropdownButton>
-    </div>
-    <div>
-      <span>
-        dev@keboola.com
-      </span>
-    </div>
-  </img>
+    width={40} />
+  <div>
+    <strong>
+      dev user
+    </strong>
+    <DropdownButton
+      bsStyle="link"
+      className="kbc-user-menu"
+      dropup={true}
+      noCaret={true}
+      title={
+        <span
+          className="kbc-icon-picker" />
+      }>
+      <MenuItem
+        active={false}
+        href="/admin/change-password">
+        Account Settings
+      </MenuItem>
+      <MenuItem
+        active={false}
+        divider={true}
+        href="#" />
+      <MenuItem
+        active={false}
+        href="/admin/logout">
+        Logout
+      </MenuItem>
+    </DropdownButton>
+  </div>
+  <div>
+    <span>
+      dev@keboola.com
+    </span>
+  </div>
 </div>
 `;
 
@@ -195,62 +191,61 @@ exports[`<CurrentUser /> should render 40x40 icon, with email, with admin links,
     className="kbc-user-avatar"
     height={40}
     src="/user.png"
-    width={40}>
-    <div>
-      <strong>
-        dev user
-      </strong>
-      <DropdownButton
-        bsStyle="link"
-        className="kbc-user-menu"
-        dropup={false}
-        noCaret={true}
-        title={
-          <span
-            className="kbc-icon-picker" />
-        }>
-        <MenuItem
-          active={false}
-          href="/admin/change-password">
-          Account Settings
-        </MenuItem>
-        <MenuItem
-          active={false}
-          href="/admin/manage-apps">
-          Manage Applications
-        </MenuItem>
-        <MenuItem
-          active={false}
-          href="/admin/syrup-jobs-monitoring">
-          Syrup Jobs Monitoring
-        </MenuItem>
-        <MenuItem
-          active={false}
-          header={true}
-          href="#">
-          Maintainers
-        </MenuItem>
-        <MenuItem
-          active={false}
-          href="/admin/maintainers/1">
-          First Maintainer
-        </MenuItem>
-        <MenuItem
-          active={false}
-          divider={true}
-          href="#" />
-        <MenuItem
-          active={false}
-          href="/admin/logout">
-          Logout
-        </MenuItem>
-      </DropdownButton>
-    </div>
-    <div>
-      <span>
-        dev@keboola.com
-      </span>
-    </div>
-  </img>
+    width={40} />
+  <div>
+    <strong>
+      dev user
+    </strong>
+    <DropdownButton
+      bsStyle="link"
+      className="kbc-user-menu"
+      dropup={false}
+      noCaret={true}
+      title={
+        <span
+          className="kbc-icon-picker" />
+      }>
+      <MenuItem
+        active={false}
+        href="/admin/change-password">
+        Account Settings
+      </MenuItem>
+      <MenuItem
+        active={false}
+        href="/admin/manage-apps">
+        Manage Applications
+      </MenuItem>
+      <MenuItem
+        active={false}
+        href="/admin/syrup-jobs-monitoring">
+        Syrup Jobs Monitoring
+      </MenuItem>
+      <MenuItem
+        active={false}
+        header={true}
+        href="#">
+        Maintainers
+      </MenuItem>
+      <MenuItem
+        active={false}
+        href="/admin/maintainers/1">
+        First Maintainer
+      </MenuItem>
+      <MenuItem
+        active={false}
+        divider={true}
+        href="#" />
+      <MenuItem
+        active={false}
+        href="/admin/logout">
+        Logout
+      </MenuItem>
+    </DropdownButton>
+  </div>
+  <div>
+    <span>
+      dev@keboola.com
+    </span>
+  </div>
 </div>
 `;

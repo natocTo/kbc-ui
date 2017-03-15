@@ -3,7 +3,6 @@ Immutable = require 'immutable'
 common = require '../../../../../react/common/common'
 _ = require 'underscore'
 
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
 
 TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
@@ -86,25 +85,13 @@ TasksEditTableRow = React.createClass
 
 
   _renderActionButtons: ->
-    moreStyle =
-      padding: '2px'
-      position: 'relative'
-      top: '+2px'
     td className: 'text-right kbc-no-wrap',
       div className: '',
-        ModalTrigger
-          modal: TaskParametersEditModal(
-            onSet: @_handleParametersChange, parameters: @props.task.get('actionParameters').toJS())
-        ,
 
-          button
-            style: moreStyle
-            className: 'btn btn-link'
-          ,
-            Tooltip
-              placement: 'top'
-              tooltip: 'Task parameters'
-              span className: 'fa fa-fw fa-ellipsis-h fa-lg'
+        TaskParametersEditModal
+          onSet: @_handleParametersChange
+          parameters: @props.task.get('actionParameters').toJS()
+
         button
           style: {padding: '2px'}
           onClick: @_handleDelete

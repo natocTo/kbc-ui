@@ -8,7 +8,6 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 ApplicationStore = require '../../../../../stores/ApplicationStore.coffee'
 QueriesTable = React.createFactory(require('./QueriesTable'))
 OptionsModal = React.createFactory(require('./OptionsModal'))
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentDescription = React.createFactory(ComponentDescription)
@@ -109,9 +108,9 @@ module.exports = React.createClass
             ,
               i className: 'fa fa-fw fa-user'
               if @_showAuthorize()
-                'Authorize'
+                ' Authorize'
               else
-                'Reauthorize'
+                ' Reauthorize'
         if @_isExtLinkOnly()
           li null,
             Link
@@ -134,14 +133,10 @@ module.exports = React.createClass
                 @state.selectedProfilesCount
 
         li null,
-          ModalTrigger
-            modal: OptionsModal
-              configId: @state.configId
-              outputBucket: ExGanalStore.getOutputBucket @state.configId
-          ,
-            span className: 'btn btn-link',
-              i className: 'fa fa-fw fa-gear'
-              ' Options'
+          OptionsModal
+            configId: @state.configId
+            outputBucket: ExGanalStore.getOutputBucket @state.configId
+
         li {className: classnames(disabled: !@state.config.get('configuration')?.count())},
           RunButtonModal
             title: 'Run Extraction'

@@ -31,6 +31,16 @@ oracleFields = [
   ['Service Name/SID', 'database', 'text', false]
 ]
 
+snowflakeFields = [
+  ['Host Name', 'host', 'text', false]
+  ['Port', 'port', 'number', false]
+  ['Username', 'user', 'text', false]
+  ['Password', '#password', 'password', true]
+  ['Database', 'database', 'text', false]
+  ['Schema', 'schema', 'text', false]
+  ['Warehouse', 'warehouse', 'text', false]
+]
+
 COMPONENTS_FIELDS = {
   'keboola.ex-db-pgsql': defaultFields
   'keboola.ex-db-redshift': defaultFields
@@ -39,6 +49,7 @@ COMPONENTS_FIELDS = {
   'keboola.ex-db-impala': defaultFields
   'keboola.ex-db-oracle': oracleFields
   'keboola.ex-mongodb': defaultFields
+  'keboola.ex-db-snowflake': snowflakeFields
 }
 
 

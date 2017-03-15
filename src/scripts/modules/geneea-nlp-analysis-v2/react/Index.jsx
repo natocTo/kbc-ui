@@ -199,8 +199,13 @@ export default React.createClass({
           <Select
             key="language"
             name="language"
+            placeholder="autodetect"
             clearable={false}
+            allowCreate={false}
             value={this.getEditingValue(params.LANGUAGE)}
+            valueRenderer={(op) => {
+              return op.label;
+            }}
             onChange= {(newValue) => this.updateEditingValue(params.LANGUAGE, newValue)}
             options= {languageOptions}/>, 'Language of the text of the data column.')
         }
@@ -405,7 +410,7 @@ export default React.createClass({
         {this.RenderStaticInput('Lead Column (optional)', this.parameterList(params.LEAD) )}
 
         {this.RenderStaticInput('Domain', this.findDomainNameByValue(this.parameter(params.DOMAIN)) )}
-        {this.RenderStaticInput('Language', this.parameter(params.LANGUAGE))}
+        {this.RenderStaticInput('Language', languageOptions.find((o) => o.value === this.parameter(params.LANGUAGE)).label)}
 
         {this.RenderStaticInput('Correction', this.parameter(params.CORRECTION))}
         {this.RenderStaticInput('Diacritization', this.parameter(params.DIACRITIC))}

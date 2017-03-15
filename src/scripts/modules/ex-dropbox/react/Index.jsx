@@ -12,9 +12,6 @@ import DeleteConfigurationButton from '../../components/react/components/DeleteC
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
-
-import { ModalTrigger } from 'react-bootstrap';
-
 import actions from '../../components/InstalledComponentsActionCreators';
 
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
@@ -84,21 +81,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showAuthorizationModal: false,
       showFileSelectorModal: false
     };
-  },
-
-  openAuthorizationModal() {
-    this.setState({
-      showAuthorizationModal: true
-    });
-  },
-
-  closeAuthorizationModal() {
-    this.setState({
-      showAuthorizationModal: false
-    });
   },
 
   openFileSelectorModal() {
@@ -250,12 +234,8 @@ export default React.createClass({
     if (!this.state.hasCredentials) {
       return (
         <div className="row component-empty-state text-center">
-          <div>
-            <p>No Dropbox account authorized!</p>
-            <ModalTrigger modal={<AuthorizationModal configId={this.state.configId} />}>
-              <span className="btn btn-success"><i className="fa fa-fw fa-dropbox" />Authorize Dropbox Account</span>
-            </ModalTrigger>
-          </div>
+          <p>No Dropbox account authorized!</p>
+          <AuthorizationModal configId={this.state.configId} />
         </div>
       );
     }
@@ -300,8 +280,8 @@ export default React.createClass({
         <ul className="nav nav-stacked">
           <li className={classnames({disabled: !this.canRunUpload()})}>
             <RunButtonModal
-              title="Upload selected tables"
-              icon="fa-upload"
+              title="Run"
+              icon="fa-play"
               mode="link"
               component="ex-dropbox"
               disabled={!this.canRunUpload()}
@@ -359,26 +339,30 @@ export default React.createClass({
       );
     } else {
       return (
-        <ModalTrigger modal={<AuthorizationModal configId={this.state.configId} />}>
-          <a className="btn btn-link"><i className="fa fa-fw fa-user" /> Authorize Dropbox Account</a>
-        </ModalTrigger>
+        <div>
+          <AuthorizationModal
+            configId={this.state.configId}
+            renderOpenButtonAsLink={true}
+          />
+        </div>
       );
     }
   },
 
   canSaveConfig() {
-    let hasLocalConfigDataFiles = this.state.localState.has('selectedDropboxFiles');
-    let localConfigDataFiles = this.state.localState.get('selectedDropboxFiles');
     let hasLocalConfigDataBucket = this.state.localState.has('selectedInputBucket');
     let localConfigDataBucket = this.state.localState.get('selectedInputBucket');
 
     // We can save new config whether user changed files selection.
     // On the other hand the bucket may be changed, but we also have to make sure the bucket is set.
-    if (hasLocalConfigDataFiles && hasLocalConfigDataBucket && localConfigDataFiles.length > 0 && localConfigDataBucket !== '') {
-      return false;
-    } else {
-      return true;
+    return !(hasLocalConfigDataBucket && this.getLocalConfigDataFilesCount() > 0 && localConfigDataBucket !== '');
+  },
+
+  getLocalConfigDataFilesCount() {
+    if (!this.state.localState.has('selectedDropboxFiles')) {
+      return 0;
     }
+    return fromJS(this.state.localState.get('selectedDropboxFiles')).size;
   },
 
   updateParameters(newParameters) {

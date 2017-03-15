@@ -7,7 +7,8 @@ const ports = {
   'keboola.ex-db-mysql-custom': 3306,
   'keboola.ex-db-oracle': 1521,
   'keboola.ex-db-mssql': 1433,
-  'keboola.ex-mongodb': 27017
+  'keboola.ex-mongodb': 27017,
+  'keboola.ex-db-snowflake': 443
 };
 
 export default function(componentId) {

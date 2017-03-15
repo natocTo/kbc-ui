@@ -1,14 +1,21 @@
 React = require 'react'
 Modal = React.createFactory(require('react-bootstrap').Modal)
+OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Panel = React.createFactory(require('react-bootstrap').Panel)
 ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
 TaskSelectTable = require '../components/TaskSelectTable'
+Loader = React.createFactory(require('kbc-react-components').Loader)
 
 OrchestrationActionCreators = require '../../ActionCreators'
 
-{div, p, strong} = React.DOM
+{div, p, strong, i, span} = React.DOM
 
 module.exports = React.createClass
   displayName: 'RunOrchestration'
@@ -17,44 +24,90 @@ module.exports = React.createClass
     tasks: React.PropTypes.object
     onRequestRun: React.PropTypes.func.isRequired
     onRequestCancel: React.PropTypes.func
+    isLoading: React.PropTypes.bool.isRequired
+    tooltipPlacement: React.PropTypes.string
+    onOpen: React.PropTypes.func
+
+  getInitialState: ->
+    showModal: false
+
+  close: ->
+    @setState
+      showModal: false
+
+  open: ->
+    if @props.onOpen
+      @props.onOpen()
+    @setState
+      showModal: true
 
   render: ->
-    Modal
-      title: "Run orchestration #{@props.orchestration.get('name')}"
-      bsSize: 'large'
-      onRequestHide: @props.onRequestHide
+    span null,
+      @renderOpenButton()
+      Modal
+        show: @state.showModal
+        bsSize: 'large'
+        onHide: @close
+      ,
+        ModalHeader closeButton: true,
+          ModalTitle null,
+            'Run orchestration ' + @props.orchestration.get('name')
+
+        ModalBody null,
+          p null,
+            'You are about to run the orchestration ',
+             strong null, @props.orchestration.get('name'),
+             ' manually and the notifications will be sent only to you.'
+          if @props.tasks
+            Panel
+              header: 'Choose orchestration tasks to run'
+              collapsible: true
+            ,
+              div className: 'row',
+                React.createElement TaskSelectTable,
+                  tasks: @props.tasks
+                  onTaskUpdate: @_handleTaskUpdate
+
+        ModalFooter null,
+          React.createElement ConfirmButtons,
+            isDisabled: false
+            saveLabel: 'Run'
+            onCancel: @_handleCancel
+            onSave: @_handleRun
+
+  renderOpenButton: ->
+    OverlayTrigger
+      overlay:
+        Tooltip null,
+          'Run'
+      key: 'run'
+      placement: @props.tooltipPlacement
     ,
-      div className: 'modal-body',
-        p null,
-          'You are about to run the orchestration ',
-           strong null, @props.orchestration.get('name'),
-           ' manually and the notifications will be sent only to you.'
-        if @props.tasks
-          Panel
-            header: 'Choose orchestration tasks to run'
-            collapsible: true
-          ,
-            div className: 'row',
-              React.createElement TaskSelectTable,
-                tasks: @props.tasks
-                onTaskUpdate: @_handleTaskUpdate
-      div className: 'modal-footer',
-        React.createElement ConfirmButtons,
-          isDisabled: false
-          saveLabel: 'Run'
-          onCancel: @_handleCancel
-          onSave: @_handleRun
+
+      Button
+        onClick: @_handleOpenButtonClick
+        bsStyle: 'link'
+      ,
+        if @props.isLoading
+          Loader className: 'fa-fw'
+        else
+          i className: 'fa fa-fw fa-play'
+
+  _handleOpenButtonClick: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    @open()
 
   _handleRun: ->
-    @props.onRequestHide()
+    @close()
     @props.onRequestRun()
 
   _handleCancel: ->
     if @props.onRequestCancel
-      @props.onRequestHide()
+      @close()
       @props.onRequestCancel()
     else
-      @props.onRequestHide()
+      @close()
 
   _handleTaskUpdate: (updatedTask) ->
     tasks = @props.tasks

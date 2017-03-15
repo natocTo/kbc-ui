@@ -124,7 +124,7 @@ pgsql = [
   'timestamp'
   'timestamp with timezone'
   'interval'
-  'enum'
+  {'enum': defaultSize: 'my_enum_type'}
   'json'
   'jsonb'
 ]

@@ -3,10 +3,13 @@ import InstantAuthorizationFields from './InstantAuthoriationFields';
 import {TabbedArea, TabPane, ButtonToolbar, Button, Modal} from 'react-bootstrap';
 import Clipboard from '../../../react/common/Clipboard';
 import AuthorizationForm from './AuthorizationForm';
+import DirectTokenInsertFields from './DirectTokenInsertFields';
 import * as oauthUtils from '../OauthUtils';
 import {Loader} from 'kbc-react-components';
 
 import './AuthorizationModal.less';
+
+const DIRECT_TOKEN_COMPONENTS = ['keboola.ex-facebook', 'keboola.ex-facebook-ads'];
 
 export default React.createClass({
   propTypes: {
@@ -19,6 +22,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      direct: {},
       isFormValid: false,
       externalLink: '',
       generatingLink: false,
@@ -42,8 +46,7 @@ export default React.createClass({
           </Modal.Header>
           <AuthorizationForm
             componentId={this.props.componentId}
-            id={this.props.id}
-          >
+            id={this.props.id}>
             <Modal.Body>
               <TabbedArea key="tabbedarea" activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}>
                 <TabPane key="general" eventKey="general" tab="Instant authorization">
@@ -52,15 +55,27 @@ export default React.createClass({
                 <TabPane key="external" eventKey="external" tab="External authorization">
                   {this.renderExternal()}
                 </TabPane>
+                {DIRECT_TOKEN_COMPONENTS.includes(this.props.componentId) ?
+                  <TabPane key="direct" eventKey="direct" tab="Direct token insert">
+                    {this.renderDirectTokenInsert()}
+                  </TabPane>
+                 : null
+                }
               </TabbedArea>
             </Modal.Body>
             <Modal.Footer>
-              {this.state.activeTab === 'general' ? this.renderInstantButtons() : this.renderExternalButtons()}
+              {this.renderFooterButtons()}
             </Modal.Footer>
           </AuthorizationForm>
         </Modal>
       </div>
     );
+  },
+
+  renderFooterButtons() {
+    if (this.state.activeTab === 'general') return this.renderInstantButtons();
+    if (this.state.activeTab === 'external') return this.renderExternalButtons();
+    if (this.state.activeTab === 'direct') return this.renderDirectButtons();
   },
 
   renderExternal() {
@@ -95,6 +110,62 @@ export default React.createClass({
       .then((link) => {
         this.setState({generatingLink: false, externalLink: link});
       });
+  },
+
+  onSaveDirectToken() {
+    const {direct} = this.state;
+    const data = {
+      token: direct.token
+    };
+    this.setDirectState('saving', true);
+    oauthUtils.saveDirectData(this.props.componentId, this.props.configId, direct.authorizedFor, data).then(() => {
+      this.setState(this.getInitialState());
+      this.props.onHideFn();
+    });
+  },
+
+  isDirectTokenFormValid() {
+    const {direct} = this.state;
+    return !!direct.token && !!direct.authorizedFor;
+  },
+
+  renderDirectButtons() {
+    const {direct} = this.state;
+    return (
+      <ButtonToolbar>
+        {(direct.saving ? <Loader /> : null)}
+        <Button
+          disabled={direct.saving}
+          bsStyle="link"
+          onClick={this.props.onHideFn}>Cancel
+        </Button>
+        <Button
+          bsStyle="success"
+          onClick={this.onSaveDirectToken}
+          type="button"
+          disabled={!this.isDirectTokenFormValid() || direct.saving}
+        >Save
+        </Button>
+      </ButtonToolbar>
+    );
+  },
+
+  setDirectState(prop, value) {
+    const {direct} = this.state;
+    direct[prop] = value;
+    this.setState({'direct': direct});
+  },
+
+  renderDirectTokenInsert() {
+    const {direct} = this.state;
+    return (
+      <DirectTokenInsertFields
+        token={direct.token}
+        authorizedFor={direct.authorizedFor}
+        onChangeProperty={this.setDirectState}
+        componentId={this.props.componentId}
+      />
+    );
   },
 
   renderInstant() {

@@ -15,13 +15,6 @@ JobActionCreators = require '../../ActionCreators'
 OrchestrationJobStore = require ('../../stores/OrchestrationJobsStore')
 
 TaskSelectModal = React.createFactory(require('../modals/TaskSelect'))
-ModalTrigger = React.createFactory(require('react-bootstrap').ModalTrigger)
-
-{ComponentIcon, ComponentName} = require '../../../../react/common/common'
-{Tree, Check} = require 'kbc-react-components'
-Loader = React.createFactory(require('kbc-react-components').Loader)
-
-{table, thead, tbody, th, td, tr, input, button, span} = React.DOM
 
 module.exports = React.createClass
   displayName: 'JobRetryButton'
@@ -67,23 +60,14 @@ module.exports = React.createClass
     if @_canBeRetried() && tasks
       editingTasks = OrchestrationJobStore.getEditingValue(@props.job.get('id'), 'tasks') or List()
 
-      ModalTrigger
-        modal: TaskSelectModal
-          job: @props.job
-          tasks: fromJS(rephaseTasks(editingTasks.toJS()))
-          onChange: @_handleTaskChange
-          onRun: @_handleRun
-      ,
-        button
-          onClick: @_handleRetrySelectStart
-          className: 'btn btn-link'
-        ,
-          if @props.isSaving
-            Loader()
-          else
-            span
-              className: 'fa fa-fw fa-play'
-          ' Job retry'
+      TaskSelectModal
+        job: @props.job
+        tasks: fromJS(rephaseTasks(editingTasks.toJS()))
+        onChange: @_handleTaskChange
+        onRun: @_handleRun
+        onOpen: @_handleRetrySelectStart
+        isSaving: @props.isSaving
+
     else
       null
 

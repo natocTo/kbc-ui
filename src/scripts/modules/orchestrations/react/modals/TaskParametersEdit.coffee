@@ -1,15 +1,19 @@
 React = require 'react'
 Modal = React.createFactory(require('react-bootstrap').Modal)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Input = React.createFactory(require('react-bootstrap').Input)
 CodeMirror = React.createFactory(require('react-code-mirror'))
+Tooltip = React.createFactory(require('../../../../react/common/Tooltip').default)
 
 require('codemirror/addon/lint/lint')
 require('../../../../utils/codemirror/json-lint')
 
-
-{div, textarea} = React.DOM
+{span, i} = React.DOM
 
 TaskParametersEdit = React.createClass
   displayName: 'TaskParametersEdit'
@@ -21,6 +25,15 @@ TaskParametersEdit = React.createClass
     parameters: @props.parameters
     parametersString: JSON.stringify @props.parameters, null, '\t'
     isValid: true
+    showModal: false
+
+  close: ->
+    @setState
+      showModal: false
+
+  open: ->
+    @setState
+      showModal: true
 
   getDefaultProps: ->
     isEditable: true
@@ -35,29 +48,49 @@ TaskParametersEdit = React.createClass
       height: 'auto'
       mode: 'application/json'
       lineWrapping: true
-      autofocus: @props.isEditable
+      autoFocus: @props.isEditable
       onChange: @_handleChange
       lint: true
       gutters: ['CodeMirror-lint-markers']
 
   render: ->
-    Modal title: 'Task parameters', onRequestHide: @props.onRequestHide,
-      div className: 'modal-body', style: {padding: 0},
-        @renderJsonArea()
-      div className: 'modal-footer',
-        if @props.isEditable
-          ButtonToolbar null,
-            Button
-              bsStyle: 'link'
-              onClick: @props.onRequestHide
-            ,
-              'Cancel'
-            Button
-              bsStyle: 'primary'
-              disabled: !@state.isValid
-              onClick: @_handleSet
-            ,
-              'Set'
+    span null,
+      @renderOpenButton()
+      Modal
+        show: @state.showModal
+        onHide: @close
+      ,
+        ModalHeader closeButton: true,
+          ModalTitle null,
+            'Task parameters'
+
+        ModalBody style: {padding: 0},
+          @renderJsonArea()
+
+        ModalFooter null,
+          if @props.isEditable
+            ButtonToolbar null,
+              Button
+                bsStyle: 'link'
+                onClick: @close
+              ,
+                'Cancel'
+              Button
+                bsStyle: 'primary'
+                disabled: !@state.isValid
+                onClick: @_handleSet
+              ,
+                'Set'
+
+  renderOpenButton: ->
+    Button
+      onClick: @open
+      bsStyle: 'link'
+    ,
+      Tooltip
+        placement: 'top'
+        tooltip: 'Task parameters'
+        i className: 'fa fa-fw fa-ellipsis-h fa-lg'
 
   _handleChange: (e) ->
     @setState
@@ -71,7 +104,7 @@ TaskParametersEdit = React.createClass
         isValid: false
 
   _handleSet: ->
-    @props.onRequestHide()
+    @close()
     @props.onSet @state.parameters
 
 module.exports = TaskParametersEdit

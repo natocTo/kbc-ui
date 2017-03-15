@@ -133,3 +133,16 @@ export function generateLink(componentId, configId) {
       return `${externalAppUrl}?token=${token.token}&sapiUrl=${ApplicationStore.getSapiUrl()}#/${componentId}/${configId}`;
     });
 }
+
+export function saveDirectData(componentId, configId, authorizedFor, data) {
+  return OauthActions.postCredentials(componentId, configId, authorizedFor, data)
+    .then(() => {
+      const configuration = installedComponentsStore.getConfigData(componentId, configId) || Map();
+      const id = configId;
+      const newConfiguration = configuration.setIn(configOauthPath, id);
+
+      // save configuration with authorization id
+      const saveFn = installedComponentsActions.saveComponentConfigData;
+      return saveFn(componentId, configId, fromJS(newConfiguration), `Save direct token authorization for ${authorizedFor}`).then(() => authorizedFor);
+    });
+}
