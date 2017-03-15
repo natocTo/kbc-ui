@@ -124,7 +124,8 @@ templateFn = (componentId, driver, isProvisioning) ->
     result = _.reduce(fields, (memo, field) ->
       propName = field[1]
       isHashed = propName[0] == '#'
-      memo and (!!credentials.get(propName) or isHashed)
+      isRequired = field[6]
+      memo and (!isRequired || !!credentials.get(propName) or isHashed)
     !!credentials)
     return result
 
