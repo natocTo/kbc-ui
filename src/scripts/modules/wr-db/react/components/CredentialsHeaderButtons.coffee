@@ -24,8 +24,9 @@ templateFn = (componentId, driver, isProvisioning) ->
     currentCredentials = WrDbStore.getCredentials componentId, configId
     localState = InstalledComponentsStore.getLocalState(componentId, configId)
     credsState = localState.get 'credentialsState'
-
+    isProvisionedCreds = credsState == States.SHOW_PROV_READ_CREDS
     editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds')
+
     #state
     editingCredsValid: @_hasDbConnection(editingCredentials)
     currentCredentials: currentCredentials
@@ -33,9 +34,10 @@ templateFn = (componentId, driver, isProvisioning) ->
     isEditing: !! WrDbStore.getEditingByPath(componentId, configId, 'creds')
     isSaving: credsState == States.SAVING_NEW_CREDS
     localState: localState
+    isProvisionedCreds: isProvisionedCreds
 
   _handleResetStart: ->
-    if isProvisioning
+    if @state.isProvisionedCreds
       @_updateLocalState('credentialsState', States.INIT)
     else
       creds = @state.currentCredentials
@@ -53,7 +55,7 @@ templateFn = (componentId, driver, isProvisioning) ->
       @_updateLocalState('credentialsState', States.CREATE_NEW_CREDS)
 
   _handleCancel: ->
-    if isProvisioning
+    if @state.isProvisionedCreds
       @_updateLocalState('credentialsState', States.INIT)
     else
       ActionCreators.setEditingData componentId, @state.currentConfigId, 'creds', null
@@ -78,7 +80,7 @@ templateFn = (componentId, driver, isProvisioning) ->
   render: ->
     state = @state.localState.get 'credentialsState'
     buttonText = ' Edit'
-    if isProvisioning
+    if @state.isProvisionedCreds
       buttonText = ' Reset Credentials'
 
     if state in [States.SHOW_PROV_READ_CREDS, States.SHOW_STORED_CREDS]
