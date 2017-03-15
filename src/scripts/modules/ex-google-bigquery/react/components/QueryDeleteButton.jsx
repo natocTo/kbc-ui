@@ -24,7 +24,7 @@ export default React.createClass({
 
 
     return (
-      <Tooltip placement="top" tooltip="Delete query" placement={this.props.tooltipPlacement}
+      <Tooltip tooltip="Delete query" placement={this.props.tooltipPlacement}
         >
         <Confirm
           title="Delete Query"

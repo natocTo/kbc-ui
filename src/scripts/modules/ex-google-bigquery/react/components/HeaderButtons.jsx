@@ -16,7 +16,6 @@ import RunExtractionButton from '../../../components/react/components/RunCompone
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 
 // CONSTS
-const ROUTE_PREFIX = 'ex-db-generic-';
 const COMPONENT_ID = 'keboola.ex-google-bigquery';
 
 export default React.createClass({
@@ -33,6 +32,7 @@ export default React.createClass({
     const store = storeProvisioning(configId);
     const actions = actionsProvisioning(configId);
     return {
+      configId: configId,
       queryId: queryId,
       query: store.getConfigQuery(queryId),
       store: store,
@@ -77,7 +77,7 @@ export default React.createClass({
   },
 
   handleDelete(qid) {
-    this.transitionTo(ROUTE_PREFIX + COMPONENT_ID, {config: this.state.configId});
+    this.transitionTo(COMPONENT_ID, {config: this.state.configId});
     this.state.actions.deleteQuery(qid);
   },
 
