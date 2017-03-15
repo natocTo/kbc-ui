@@ -201,7 +201,7 @@ export default function(configId) {
                 dataFileId: fileId
               };
               if (store.primaryKey) {
-                createTableParams.primaryKey = store.primaryKey.toJS();
+                createTableParams.primaryKey = store.primaryKey.toJS().join(',');
               }
               if (store.delimiter) {
                 createTableParams.delimiter = store.delimiter;
