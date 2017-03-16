@@ -7,7 +7,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import {Loader} from 'kbc-react-components';
 import Confirm from '../../../../react/common/Confirm';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
-import {DropdownButton, MenuItem} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -41,21 +41,9 @@ export default React.createClass({
               <strong>Sheet</strong>
             </div>
             <div className="th pull-right">
-              <DropdownButton
-                buttonClassName="btn-success"
-                title="Add Table "
-                onSelect={(eventKey) => this.props.onAddFn(eventKey, null)}
-              >
-                <MenuItem header={true}>Upload table as:</MenuItem>
-                <MenuItem eventKey="sheetInNew">
-                  <i className="fa fa-th-list" />
-                  <span>&nbsp; New Spreadsheet</span>
-                </MenuItem>
-                <MenuItem eventKey="sheetInExisting">
-                  <i className="fa fa-th-list" />
-                  <span>&nbsp; Sheet in existing Spreadsheet</span>
-                </MenuItem>
-              </DropdownButton>
+              <Button bsStyle="success" onClick={() => this.props.onAddFn('sheetInNew', null)}>
+                Add Table
+              </Button>
               {/* action buttons */}
             </div>
           </div>
