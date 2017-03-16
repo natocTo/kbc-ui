@@ -163,9 +163,9 @@ routes =
     ,
       createComponentRoute 'wr-google-drive', [googleDriveWriterRoutes]
     ,
-      createComponentRoute 'wr-db', [createDbWriterRoutes('wr-db', 'mysql', true)]
+      createComponentRoute 'wr-db', [createDbWriterRoutes('wr-db', 'mysql', false)]
     ,
-      createComponentRoute 'wr-db-mysql', [createDbWriterRoutes('wr-db-mysql', 'mysql', true)]
+      createComponentRoute 'wr-db-mysql', [createDbWriterRoutes('wr-db-mysql', 'mysql', false)]
     ,
       createComponentRoute 'wr-db-oracle', [createDbWriterRoutes('wr-db-oracle', 'oracle', false)]
     ,
@@ -175,13 +175,13 @@ routes =
     ,
       createComponentRoute 'keboola.wr-qlik', [createDbWriterRoutes('keboola.wr-qlik', 'redshift', true)]
     ,
-      createComponentRoute 'wr-tableau', [createDbWriterRoutes('wr-tableau', 'mysql', true)]
+      createComponentRoute 'wr-tableau', [createDbWriterRoutes('wr-tableau', 'mysql', false)]
     ,
       createComponentRoute 'wr-db-mssql', [createDbWriterRoutes('wr-db-mssql', 'mssql', false)]
       createComponentRoute 'keboola.wr-db-mssql-v2', [createDbWriterRoutes('keboola.wr-db-mssql-v2', 'mssql', false)]
       createComponentRoute 'keboola.wr-redshift-v2', [createDbWriterRoutes('keboola.wr-redshift-v2', 'redshift', true)]
       createComponentRoute 'keboola.wr-db-impala', [createDbWriterRoutes('keboola.wr-db-impala', 'impala', false)]
-      createComponentRoute 'keboola.wr-db-mysql', [createDbWriterRoutes('keboola.wr-db-mysql', 'mysql', true)]
+      createComponentRoute 'keboola.wr-db-mysql', [createDbWriterRoutes('keboola.wr-db-mysql', 'mysql', false)]
       createComponentRoute 'keboola.wr-db-oracle', [createDbWriterRoutes('keboola.wr-db-oracle', 'oracle', false)]
       createComponentRoute 'keboola.wr-db-pgsql', [createDbWriterRoutes('keboola.wr-db-pgsql', 'pgsql', false)]
       createComponentRoute(
