@@ -11,8 +11,6 @@ const HELP_INPUT_TABLE = 'Select source table from Storage';
 const HELP_SHEET_TITLE = 'Name of the sheet in spreadsheet';
 const HELP_PICKER_SPREADSHEET = 'Parent spreadsheet';
 const HELP_PICKER_FOLDER = 'Spreadsheet folder and title';
-// const HELP_TITLE = 'Name of the spreadsheet';
-// const HELP_SHEET_ACTION = 'Action to perform';
 
 export default React.createClass({
   propTypes: {
@@ -21,7 +19,6 @@ export default React.createClass({
     isSavingFn: PropTypes.func.isRequired,
     onHideFn: PropTypes.func,
     onSaveFn: PropTypes.func.isRequired,
-    getFileFn: PropTypes.func.isRequired,
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     prepareLocalState: PropTypes.func.isRequired
@@ -60,29 +57,10 @@ export default React.createClass({
   },
 
   renderFields() {
-    const modalType = this.localState(['modalType']);
-    if (modalType === 'sheetInNew') {
-      return this.renderSheetFieldsNew();
-    }
-    return this.renderSheetFieldsExisting();
-  },
-
-  renderSheetFieldsNew() {
-    const folder = this.renderFolderPicker();
+    const spreadsheet = (this.localState(['modalType']) === 'sheetInNew')
+      ? this.renderFolderPicker()
+      : this.renderSpreadsheetPicker();
     const sheetTitle = this.renderInput('Sheet Title', 'sheetTitle', HELP_SHEET_TITLE, 'My Sheet');
-    const action = this.renderActionRadio();
-    return (
-      <div>
-        {folder}
-        {sheetTitle}
-        {action}
-      </div>
-    );
-  },
-
-  renderSheetFieldsExisting() {
-    const sheetTitle = this.renderInput('Sheet Title', 'sheetTitle', HELP_SHEET_TITLE, 'My Sheet');
-    const spreadsheet = this.renderSpreadsheetPicker();
     const action = this.renderActionRadio();
     return (
       <div>
@@ -115,23 +93,14 @@ export default React.createClass({
         <div className="form-horizontal">
           <Input
             type="radio"
-            label="Update data in a Sheet"
+            label="Update data"
             help="Overwrites data in existing Sheet. Creates new one if it doesn't exist"
             wrapperClassName="col-sm-8"
             value="update"
           />
-          { /*
-           <Input
-           type="radio"
-           label="Create new Sheet every run"
-           help="Create another Sheet in a Spreadsheet"
-           wrapperClassName="col-sm-8"
-           value="create"
-           />
-          */ }
           <Input
             type="radio"
-            label="Append data to a Sheet"
+            label="Append data"
             help="Add new data to the end of existing Sheet"
             wrapperClassName="col-sm-8"
             value="append"
@@ -161,10 +130,8 @@ export default React.createClass({
             dialogTitle="Select Spreadsheet"
             buttonLabel={parentName ? parentName : 'Select Spreadsheet'}
             onPickedFn={(data) => {
-              const parentId = data[0].id;
-              const title = data[0].name;
-              this.updateLocalState(['sheet'].concat('fileId'), parentId);
-              this.updateLocalState(['sheet'].concat('title'), title);
+              this.updateLocalState(['sheet'].concat('fileId'), data[0].id);
+              this.updateLocalState(['sheet'].concat('title'), data[0].name);
             }}
             buttonProps={{
               bsStyle: 'default',
@@ -187,7 +154,7 @@ export default React.createClass({
   },
 
   renderFolderPicker() {
-    const folderName = this.sheet(['folder', 'name'], '');
+    const folderName = this.sheet(['folder', 'title'], '');
     return (
       <div className={'form-group'}>
         <label className="col-sm-2 control-label">
@@ -201,10 +168,8 @@ export default React.createClass({
                 dialogTitle="Select Folder"
                 buttonLabel={folderName ? folderName : '/'}
                 onPickedFn={(data) => {
-                  const folderId = data[0].id;
-                  const folderTitle = data[0].name;
-                  this.updateLocalState(['sheet'].concat(['folder', 'id']), folderId);
-                  this.updateLocalState(['sheet'].concat(['folder', 'title']), folderTitle);
+                  this.updateLocalState(['sheet'].concat(['folder', 'id']), data[0].id);
+                  this.updateLocalState(['sheet'].concat(['folder', 'title']), data[0].name);
                 }}
                 buttonProps={{
                   bsStyle: 'default',
@@ -261,8 +226,9 @@ export default React.createClass({
 
   isSavingDisabled() {
     const hasChanged = !this.sheet(null, Map()).equals(this.localState('currentSheet'));
-    const nameEmpty = !!this.sheet(['title']);
-    return !hasChanged || !nameEmpty;
+    const titleEmpty = !!this.sheet(['title']);
+    const sheetTitleEmpty = !!this.sheet(['sheetTitle']);
+    return !hasChanged || !titleEmpty || !sheetTitleEmpty;
   },
 
   localState(path, defaultVal) {

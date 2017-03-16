@@ -13,7 +13,6 @@ export default function(COMPONENT_ID, configId) {
   const tables = parameters.get('tables', List());
 
   const tempPath = ['_'];
-  // const savingSheetPath = tempPath.concat('savingSheet');
   const editPath = tempPath.concat('editing');
   const editData = localState().getIn(editPath, Map());
   const pendingPath = tempPath.concat('pending');
