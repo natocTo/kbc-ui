@@ -34,6 +34,9 @@ export default function(configId, componentId) {
   // if protected property is missing its value the use store valu
   // from @oldCredentials
   function updateProtectedProperties(newCredentials, oldCredentials) {
+    if (!oldCredentials) {
+      return newCredentials;
+    }
     const props = getProtectedProperties(componentId);
     let result = newCredentials;
     for (let prop of props) {
