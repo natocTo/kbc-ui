@@ -1,9 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-// import {Modal, OverlayTrigger, Tooltip, TabbedArea, TabPane} from 'react-bootstrap';
 import {Modal, Input, Button} from 'react-bootstrap';
-// import Select from '../../../../react/common/Select';
 import RadioGroup from 'react-radio-group';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import Picker from '../../../google-utils/react/GooglePicker';
@@ -12,8 +10,8 @@ import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
 const HELP_INPUT_TABLE = 'Select source table from Storage';
 const HELP_SHEET_TITLE = 'Name of the sheet in spreadsheet';
 const HELP_PICKER_SPREADSHEET = 'Parent spreadsheet';
-const HELP_PICKER_FOLDER = 'Select folder';
-const HELP_TITLE = 'Name of the spreadsheet';
+const HELP_PICKER_FOLDER = 'Spreadsheet folder and title';
+// const HELP_TITLE = 'Name of the spreadsheet';
 // const HELP_SHEET_ACTION = 'Action to perform';
 
 export default React.createClass({
@@ -30,9 +28,6 @@ export default React.createClass({
   },
 
   render() {
-    const modalType = this.localState(['modalType']);
-    const modalTypePretty = (modalType === 'sheetInNew') ? 'new Spreadsheet' : 'existing Spreadshet';
-
     return (
       <Modal
         bsSize="large"
@@ -41,8 +36,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {this.localState(['currentSheet', 'title'], false) ? 'Edit Sheet in ' : 'Add Sheet to '}
-            {modalTypePretty}
+            {this.localState(['currentSheet', 'title'], false) ? 'Edit Sheet' : 'Add Sheet'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -74,13 +68,11 @@ export default React.createClass({
   },
 
   renderSheetFieldsNew() {
-    const spreadsheetTitle = this.renderInput('Spreadsheet Title', 'title', HELP_TITLE);
     const folder = this.renderFolderPicker();
     const sheetTitle = this.renderInput('Sheet Title', 'sheetTitle', HELP_SHEET_TITLE, 'My Sheet');
     const action = this.renderActionRadio();
     return (
       <div>
-        {spreadsheetTitle}
         {folder}
         {sheetTitle}
         {action}
@@ -158,66 +150,85 @@ export default React.createClass({
 
   renderSpreadsheetPicker() {
     const parentName = this.sheet('title', '');
-    const element = (
-      <div>
-        <Picker
-          email={this.props.email}
-          dialogTitle="Select Spreadsheet"
-          buttonLabel={parentName ? parentName : 'Select Spreadsheet'}
-          onPickedFn={(data) => {
-            const parentId = data[0].id;
-            const title = data[0].name;
-            this.updateLocalState(['sheet'].concat('fileId'), parentId);
-            this.updateLocalState(['sheet'].concat('title'), title);
-          }}
-          buttonProps={{
-            bsStyle: 'default',
-            bsSize: 'medium'
-          }}
-          views={[
-            ViewTemplates.sheets,
-            ViewTemplates.sharedSheets
-          ]}
-        />
-
-        <Button bsStyle="link" bsSize="small" onClick={() => this.switchType()}>
-          Create New Spreadsheet
-        </Button>
-
+    return (
+      <div className={'form-group'}>
+        <label className="col-sm-2 control-label">
+          Spreadsheet
+        </label>
+        <div className="col-sm-10">
+          <Picker
+            email={this.props.email}
+            dialogTitle="Select Spreadsheet"
+            buttonLabel={parentName ? parentName : 'Select Spreadsheet'}
+            onPickedFn={(data) => {
+              const parentId = data[0].id;
+              const title = data[0].name;
+              this.updateLocalState(['sheet'].concat('fileId'), parentId);
+              this.updateLocalState(['sheet'].concat('title'), title);
+            }}
+            buttonProps={{
+              bsStyle: 'default',
+              bsSize: 'large'
+            }}
+            views={[
+              ViewTemplates.sheets,
+              ViewTemplates.sharedSheets
+            ]}
+          />
+          <Button bsStyle="link" bsSize="large" onClick={() => this.switchType()}>
+            Create new
+          </Button>
+          <span className="help-block">
+            {HELP_PICKER_SPREADSHEET}
+          </span>
+        </div>
       </div>
     );
-    return this.renderFormElement('Spreadsheet', element, HELP_PICKER_SPREADSHEET);
   },
 
   renderFolderPicker() {
     const folderName = this.sheet(['folder', 'name'], '');
-    const element = (
-      <div>
-        <Picker
-          email={this.props.email}
-          dialogTitle="Select Folder"
-          buttonLabel={folderName ? folderName : '/'}
-          onPickedFn={(data) => {
-            const folderId = data[0].id;
-            const folderTitle = data[0].name;
-            this.updateLocalState(['sheet'].concat(['folder', 'id']), folderId);
-            this.updateLocalState(['sheet'].concat(['folder', 'title']), folderTitle);
-          }}
-          buttonProps={{
-            bsStyle: 'default',
-            bsSize: 'medium'
-          }}
-          views={[
-            ViewTemplates.rootFolder,
-            ViewTemplates.recentFolders
-          ]}
-        />
-        <Button bsStyle="link" bsSize="small" onClick={() => this.switchType()}>
-          Select existing Spreadsheet
-        </Button>
+    return (
+      <div className={'form-group'}>
+        <label className="col-sm-2 control-label">
+          Spreadsheet
+        </label>
+        <div className="col-sm-7">
+          <div className="input-group">
+            <div className="input-group-btn">
+              <Picker
+                email={this.props.email}
+                dialogTitle="Select Folder"
+                buttonLabel={folderName ? folderName : '/'}
+                onPickedFn={(data) => {
+                  const folderId = data[0].id;
+                  const folderTitle = data[0].name;
+                  this.updateLocalState(['sheet'].concat(['folder', 'id']), folderId);
+                  this.updateLocalState(['sheet'].concat(['folder', 'title']), folderTitle);
+                }}
+                buttonProps={{
+                  bsStyle: 'default',
+                  bsSize: 'large'
+                }}
+                views={[
+                  ViewTemplates.rootFolder,
+                  ViewTemplates.recentFolders
+                ]}
+              />
+            </div>
+            {this.renderInputElement('title', 'New Spredsheet')}
+          </div>
+          <span className="help-block">
+            {HELP_PICKER_FOLDER}
+          </span>
+        </div>
+        <div className="col-sm-3">
+          <Button bsStyle="link" bsSize="large" onClick={() => this.switchType()}>
+            Select existing
+          </Button>
+        </div>
       </div>
     );
-    return this.renderFormElement('Folder', element, HELP_PICKER_FOLDER);
   },
 
   renderInputElement(propertyPath, placeholder) {
