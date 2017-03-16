@@ -19,6 +19,10 @@ export default function(COMPONENT_ID, configId) {
   const pendingPath = tempPath.concat('pending');
   const savingPath = tempPath.concat('saving');
 
+  function findTable(tid) {
+    return tables.findLast((t) => t.get('id') === tid);
+  }
+
   return {
     configData: configData,
     parameters: parameters,
@@ -34,6 +38,12 @@ export default function(COMPONENT_ID, configId) {
       }
       return localState().getIn([].concat(path), Map());
     },
+
+    getRunSingleData(tid) {
+      const table = findTable(tid).set('enabled', true);
+      return configData.setIn(['parameters', 'tables'], List().push(table)).toJS();
+    },
+
     getEditPath: (what) => what ? editPath.concat(what) : editPath,
     getPendingPath: (what) => pendingPath.concat(what),
     getSavingPath: (what) => savingPath.concat(what),

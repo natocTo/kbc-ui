@@ -7,6 +7,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import {Loader} from 'kbc-react-components';
 import Confirm from '../../../../react/common/Confirm';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
+import {DropdownButton, MenuItem} from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -14,7 +15,7 @@ export default React.createClass({
     configId: PropTypes.string.isRequired,
     inputTables: PropTypes.object.isRequired,
     items: PropTypes.object.isRequired,
-    onAddFn: PropTypes.object.isRequired,
+    onAddFn: PropTypes.func.isRequired,
     onDeleteFn: PropTypes.func.isRequired,
     onEditFn: PropTypes.func.isRequired,
     toggleEnabledFn: PropTypes.func.isRequired,
@@ -37,14 +38,24 @@ export default React.createClass({
               <strong>Spreadsheet</strong>
             </div>
             <div className="th">
-              <strong>Title</strong>
+              <strong>Sheet</strong>
             </div>
             <div className="th pull-right">
-              <button
-                className="btn btn-success"
-                onClick={this.props.onAddFn}>
-                Add Table
-              </button>
+              <DropdownButton
+                buttonClassName="btn-success"
+                title="Add Table "
+                onSelect={(eventKey) => this.props.onAddFn(eventKey, null)}
+              >
+                <MenuItem header={true}>Upload table as:</MenuItem>
+                <MenuItem eventKey="sheetInNew">
+                  <i className="fa fa-th-list" />
+                  <span>&nbsp; New Spreadsheet</span>
+                </MenuItem>
+                <MenuItem eventKey="sheetInExisting">
+                  <i className="fa fa-th-list" />
+                  <span>&nbsp; Sheet in existing Spreadsheet</span>
+                </MenuItem>
+              </DropdownButton>
               {/* action buttons */}
             </div>
           </div>
@@ -67,9 +78,10 @@ export default React.createClass({
         </div>
         <div className="td">
           {item.get('title')}
+          {/* @todo link to google drive */}
         </div>
         <div className="td">
-          {this.renderFieldSpreadsheet(item.get('fileId'))}
+          {item.get('sheetTitle')}
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderEditButton(item)}
@@ -83,8 +95,9 @@ export default React.createClass({
 
   renderFieldTable(tableId) {
     const configTables = this.props.inputTables.filter((t) => {
-      return (t.get('name') === tableId);
+      return (t.get('id') === tableId);
     });
+
     if (configTables.count() === 0) return 'n/a';
 
     return (
@@ -103,7 +116,7 @@ export default React.createClass({
     return (
       <button
         className="btn btn-link"
-        onClick={() => this.props.onEditFn(item)}
+        onClick={() => this.props.onEditFn('sheetInExisting', item)}
       >
         <Tooltip tooltip="Edit" placement="top">
           <i className="kbc-icon-pencil" />
@@ -161,13 +174,4 @@ export default React.createClass({
       </RunButton>
     );
   }
-
-  // matchTableToLongestQuery(tableName) {
-  //   const qs = this.props.queries.filter((q) => this.tableIsFromQuery(tableName, q.get('name')));
-  //   return qs.max((qa, qb) => qa.get('name').length > qb.get('name').length);
-  // },
-  //
-  // tableIsFromQuery(tableName, queryName) {
-  //   return tableName.startsWith(`${queryName}_`) || tableName === queryName;
-  // }
 });

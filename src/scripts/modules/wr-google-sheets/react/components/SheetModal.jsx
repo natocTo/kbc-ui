@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 // import {Modal, OverlayTrigger, Tooltip, TabbedArea, TabPane} from 'react-bootstrap';
-import {Modal, Input} from 'react-bootstrap';
+import {Modal, Input, Button} from 'react-bootstrap';
 // import Select from '../../../../react/common/Select';
 import RadioGroup from 'react-radio-group';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
@@ -10,9 +10,9 @@ import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
 
 const HELP_INPUT_TABLE = 'Select source table from Storage';
-const HELP_SHEET_TITLE = 'Name of the sheet';
+const HELP_SHEET_TITLE = 'Name of the sheet in spreadsheet';
 const HELP_PICKER_SPREADSHEET = 'Parent spreadsheet';
-const HELP_PICKER_FOLDER = 'Parent folder';
+const HELP_PICKER_FOLDER = 'Select folder';
 const HELP_TITLE = 'Name of the spreadsheet';
 // const HELP_SHEET_ACTION = 'Action to perform';
 
@@ -23,7 +23,6 @@ export default React.createClass({
     isSavingFn: PropTypes.func.isRequired,
     onHideFn: PropTypes.func,
     onSaveFn: PropTypes.func.isRequired,
-    onCreateNewFn: PropTypes.func.isRequired,
     getFileFn: PropTypes.func.isRequired,
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
@@ -31,7 +30,9 @@ export default React.createClass({
   },
 
   render() {
-    const sheetType = this.localState(['sheet', 'type']);
+    const modalType = this.localState(['modalType']);
+    const modalTypePretty = (modalType === 'sheetInNew') ? 'new Spreadsheet' : 'existing Spreadshet';
+
     return (
       <Modal
         bsSize="large"
@@ -40,7 +41,8 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {this.localState(['currentSheet', 'title'], false) ? 'Edit' : 'Add'} {sheetType}
+            {this.localState(['currentSheet', 'title'], false) ? 'Edit Sheet in ' : 'Add Sheet to '}
+            {modalTypePretty}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -65,7 +67,6 @@ export default React.createClass({
 
   renderFields() {
     const modalType = this.localState(['modalType']);
-
     if (modalType === 'sheetInNew') {
       return this.renderSheetFieldsNew();
     }
@@ -127,13 +128,15 @@ export default React.createClass({
             wrapperClassName="col-sm-8"
             value="update"
           />
-          <Input
-            type="radio"
-            label="Create new Sheet every run"
-            help="Create another Sheet in a Spreadsheet"
-            wrapperClassName="col-sm-8"
-            value="create"
-          />
+          { /*
+           <Input
+           type="radio"
+           label="Create new Sheet every run"
+           help="Create another Sheet in a Spreadsheet"
+           wrapperClassName="col-sm-8"
+           value="create"
+           />
+          */ }
           <Input
             type="radio"
             label="Append data to a Sheet"
@@ -176,6 +179,11 @@ export default React.createClass({
             ViewTemplates.sharedSheets
           ]}
         />
+
+        <Button bsStyle="link" bsSize="small" onClick={() => this.switchType()}>
+          Create New Spreadsheet
+        </Button>
+
       </div>
     );
     return this.renderFormElement('Spreadsheet', element, HELP_PICKER_SPREADSHEET);
@@ -188,12 +196,12 @@ export default React.createClass({
         <Picker
           email={this.props.email}
           dialogTitle="Select Folder"
-          buttonLabel={folderName ? folderName : 'Select Folder'}
+          buttonLabel={folderName ? folderName : '/'}
           onPickedFn={(data) => {
-            const parentId = data[0].id;
-            const title = data[0].name;
-            this.updateLocalState(['sheet'].concat(['folder', 'id']), parentId);
-            this.updateLocalState(['sheet'].concat('title'), title);
+            const folderId = data[0].id;
+            const folderTitle = data[0].name;
+            this.updateLocalState(['sheet'].concat(['folder', 'id']), folderId);
+            this.updateLocalState(['sheet'].concat(['folder', 'title']), folderTitle);
           }}
           buttonProps={{
             bsStyle: 'default',
@@ -204,6 +212,9 @@ export default React.createClass({
             ViewTemplates.recentFolders
           ]}
         />
+        <Button bsStyle="link" bsSize="small" onClick={() => this.switchType()}>
+          Select existing Spreadsheet
+        </Button>
       </div>
     );
     return this.renderFormElement('Folder', element, HELP_PICKER_FOLDER);
@@ -265,14 +276,12 @@ export default React.createClass({
     );
   },
 
-  createNewSpreadsheet() {
-    this.props.onCreateNewFn().then(
-      (data) => {
-        const parentId = data[0].id;
-        const title = data[0].name;
-        this.updateLocalState(['sheet'].concat('fileId'), parentId);
-        this.updateLocalState(['sheet'].concat('title'), title);
-      }
-    );
+  switchType() {
+    const currentType = this.localState(['modalType']);
+    let nextModalType = 'sheetInNew';
+    if (currentType === 'sheetInNew') {
+      nextModalType = 'sheetInExisting';
+    }
+    this.updateLocalState(['modalType'], nextModalType);
   }
 });

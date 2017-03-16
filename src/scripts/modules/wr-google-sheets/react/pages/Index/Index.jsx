@@ -2,28 +2,28 @@ import React from 'react';
 import {Map} from 'immutable';
 
 // stores
-import storeProvisioning, {storeMixins} from '../../storeProvisioning';
-import ComponentStore from '../../../components/stores/ComponentsStore';
-import RoutesStore from '../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
-import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import storageTablesStore from '../../../components/stores/StorageTablesStore';
+import storeProvisioning, {storeMixins} from '../../../storeProvisioning';
+import ComponentStore from '../../../../components/stores/ComponentsStore';
+import RoutesStore from '../../../../../stores/RoutesStore';
+import LatestJobsStore from '../../../../jobs/stores/LatestJobsStore';
+import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+import storageTablesStore from '../../../../components/stores/StorageTablesStore';
 
 // actions
-import {deleteCredentialsAndConfigAuth} from '../../../oauth-v2/OauthUtils';
-import actionsProvisioning from '../../actionsProvisioning';
+import {deleteCredentialsAndConfigAuth} from '../../../../oauth-v2/OauthUtils';
+import actionsProvisioning from '../../../actionsProvisioning';
 
 // ui components
-import AuthorizationRow from '../../../oauth-v2/react/AuthorizationRow';
-import ComponentDescription from '../../../components/react/components/ComponentDescription';
-import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
-import RunComponentButton from '../../../components/react/components/RunComponentButton';
-import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
-import SheetsTable from './SheetsTable';
-import TableModal from './TableModal';
-import EmptyState from '../../../components/react/components/ComponentEmptyState';
-import LatestJobs from '../../../components/react/components/SidebarJobs';
-import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
+import AuthorizationRow from '../../../../oauth-v2/react/AuthorizationRow';
+import ComponentDescription from '../../../../components/react/components/ComponentDescription';
+import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
+import RunComponentButton from '../../../../components/react/components/RunComponentButton';
+import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
+import SheetsList from '../../components/SheetsList';
+import SheetModal from '../../components/SheetModal';
+import EmptyState from '../../../../components/react/components/ComponentEmptyState';
+import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import {DropdownButton, MenuItem} from 'react-bootstrap';
 
 export default function(COMPONENT_ID) {
@@ -68,18 +68,18 @@ export default function(COMPONENT_ID) {
             </div>
             <div className="row" style={{'padding-left': 0, 'padding-right': 0}}>
               {
-                this.state.store.hasItems ?
-                  <SheetsTable
+                this.state.store.hasTables ?
+                  <SheetsList
                     componentId={COMPONENT_ID}
                     configId={this.state.configId}
                     inputTables={this.state.allTables}
-                    items={this.state.store.sheets}
-                    onAddFn={this.showTableModal.bind(this, null)}
-                    onDeleteFn={this.state.actions.deleteQuery}
+                    items={this.state.store.tables}
+                    onAddFn={this.showTableModal}
+                    onDeleteFn={this.state.actions.deleteTable}
                     onEditFn={this.showTableModal}
                     toggleEnabledFn={this.state.actions.toggleQueryEnabledFn}
                     isPendingFn={this.state.store.isPending}
-                    getRunSingleQueryDataFn={this.state.store.getRunSingleData}
+                    getRunSingleDataFn={this.state.store.getRunSingleData}
                   />
                   :
                   this.renderEmptyItems()
@@ -150,31 +150,28 @@ export default function(COMPONENT_ID) {
     },
 
     renderTableModal() {
-      const hideFn = () => {
-        this.state.actions.updateLocalState(['TableModal'], Map());
-        this.state.actions.updateLocalState('showTableModal', false);
-      };
       return (
-        <TableModal
+        <SheetModal
           email=""
           show={this.state.localState.get('showTableModal', false)}
-          onHideFn={hideFn}
+          onHideFn={() => {
+            this.state.actions.updateLocalState(['SheetModal'], Map());
+            this.state.actions.updateLocalState('showTableModal', false);
+          }}
           onSaveFn={this.state.actions.saveTable}
-          onCreateNewFn={this.state.actions.createSpreadsheet}
           isSavingFn={this.state.store.isSaving}
-          {...this.state.actions.prepareLocalState('TableModal')}
+          {...this.state.actions.prepareLocalState('SheetModal')}
         />
       );
     },
 
     showTableModal(modalType, sheet) {
-      const sheetType = (modalType === 'file') ? modalType : 'sheet';
-      const dirtySheet = sheet ? sheet : this.state.actions.touchSheet(sheetType);
+      const dirtySheet = sheet ? sheet : this.state.actions.touchSheet();
       const modalData = Map()
         .set('sheet', dirtySheet)
         .set('currentSheet', sheet)
         .set('modalType', modalType);
-      this.state.actions.updateLocalState(['TableModal'], modalData);
+      this.state.actions.updateLocalState(['SheetModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);
     },
 

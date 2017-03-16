@@ -33,9 +33,8 @@ export default function(COMPONENT_ID, configId) {
   }
 
   function saveConfigData(data, waitingPath, changeDescription) {
-    let dataToSave = data;
     updateLocalState(waitingPath, true);
-    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave, changeDescription)
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription)
       .then(() => updateLocalState(waitingPath, false));
   }
 
@@ -56,21 +55,44 @@ export default function(COMPONENT_ID, configId) {
   function touchSheet() {
     return fromJS({
       'id': generateId(),
-      'tableId': '',
-      'title': '',
       'action': 'update',
-      'spreadsheet': '',
-      'folder': ''
+      'sheetTitle': 'Sheet1'
     });
   }
 
-  function saveTables(newTables, savingPath, description) {
+  function saveTables(tables, savingPath, description) {
+    const inputTables = tables.map((t) => {
+      return Map()
+        .set('source', t.get('tableId'))
+        .set('destination', t.get('tableId') + '.csv');
+    });
+
     const desc = description || 'Update tables';
-    const data = store.configData.setIn(['parameters', 'tables'], newTables);
+    const data = store.configData
+      .setIn(['parameters', 'tables'], tables)
+      .setIn(['storage', 'input', 'tables'], inputTables)
+    ;
     return saveConfigData(data, savingPath, desc);
   }
 
   function saveTable(table) {
+    // create spreadsheet if not exist
+    if (!table.get('fileId')) {
+      updateLocalState(store.getSavingPath(table.get('id')), true);
+      return createSpreadsheet(table).then(
+        (data) => {
+          const newTable = table
+            .set('fileId', data.spreadsheet.spreadsheetId)
+            .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId);
+          return updateTable(newTable);
+        }
+      );
+    } else {
+      return updateTable(table);
+    }
+  }
+
+  function updateTable(table) {
     const tid = table.get('id');
     let found = false;
     let newTables = store.tables.map((t) => {
@@ -84,7 +106,13 @@ export default function(COMPONENT_ID, configId) {
     if (!found) {
       newTables = newTables.push(table);
     }
-    return saveTables(newTables, store.getSavingPath(tid), `Update table ${table.get('tableId')}`);
+
+    return saveTables(newTables, store.getSavingPath(tid), `Update table ${tid}`);
+  }
+
+  function deleteTable(table) {
+    const newTables = store.tables.filter((t) => t.get('id') !== table.get('id'));
+    return saveTables(newTables, store.getSavingPath(table.get('id')), `Update table ${table.get('tableId')}`);
   }
 
   function createSpreadsheet(table) {
@@ -100,31 +128,13 @@ export default function(COMPONENT_ID, configId) {
     return callDockerAction(COMPONENT_ID, 'createSpreadsheet', params);
   }
 
-  function startEditing(what, initValue = null) {
-    const path = store.getEditPath(what);
-    updateLocalState(path, initValue);
-  }
-
-  function updateEditing(what, value) {
-    const path = store.getEditPath(what);
-    updateLocalState(path, value);
-  }
-
-  function cancelEditing(what) {
-    const data = store.editData.delete(what);
-    updateLocalState(store.getEditPath(null), data);
-  }
-
   return {
-    updateEditing: updateEditing,
-    startEditing: startEditing,
-    cancelEditing: cancelEditing,
     prepareLocalState: prepareLocalState,
     updateLocalState: updateLocalState,
     generateId: generateId,
     touchSheet: touchSheet,
     saveTables: saveTables,
     saveTable: saveTable,
-    createSpreadsheet: createSpreadsheet
+    deleteTable: deleteTable
   };
 }

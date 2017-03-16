@@ -1,4 +1,4 @@
-import Index from './react/Index/Index';
+import Index from './react/pages/Index/Index';
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import storageActions from '../components/StorageActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
