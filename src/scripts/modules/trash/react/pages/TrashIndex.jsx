@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from 'react-router';
 import {Map} from 'immutable';
 
+import './TrashIndex.less';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
@@ -102,58 +104,37 @@ export default React.createClass({
       return (
         <div className="container-fluid kbc-main-content kbc-components-list">
           {this.renderTabs()}
-          <SearchRow
-            className="row kbc-search-row"
-            query={this.state.filterName}
-            onChange={(query) => this.handleFilterChange(query, 'name')}
-          />
-          <div className="row">
-            <h2>Configuration trash</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-          </div>
-          <div>
-            <blockquote>
-            <div className="table kbc-table-border-vertical" style={{ 'borderBottom': 0}}>
-              <div className="tr">
-                <div className="td">
-                  <SearchRow
-                    className="row kbc-search-row"
-                    query={this.state.filterName}
-                    onChange={(query) => this.handleFilterChange(query, 'name')}
-                  />
-                </div>
-                <div className="td col-xs-2" style={{ 'padding': 0}}>
-                  <TrashHeaderButtons />
-                </div>
-              </div>
-            </div>
-            </blockquote>
-          </div>
-          <div>
-            <div className="col-xs-5">
+          <div className="kbc-trash-search clearfix">
+            <div className="col-md-7">
               <SearchRow
                 className="row kbc-search-row"
                 query={this.state.filterName}
                 onChange={(query) => this.handleFilterChange(query, 'name')}
               />
             </div>
-            <div className="col-xs-1" />
-            <div className="col-xs-4">
-              <div className="kbc-search-row">
-                <Select
-                  value={this.state.filterType}
-                  onChange={(query) => this.handleFilterChange(query, 'type')}
-                  options={typeFilterOptions}
-                  placeholder="All components"
-                />
+            <div className="col-md-5">
+              <div className="col-md-12">
+                <div className="kbc-trash-controls">
+                  <div className="kbc-trash-buttons">
+                    <TrashHeaderButtons />
+                  </div>
+                  <div className="kbc-trash-filter">
+                    <Select
+                      value={this.state.filterType}
+                      onChange={(query) => this.handleFilterChange(query, 'type')}
+                      options={typeFilterOptions}
+                      placeholder="All components"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="col-xs-2">
-              <div className="kbc-search-row">
-                <TrashHeaderButtons />
-              </div>
-            </div>
+          </div>
+
+          <div className="row">
+            <h2>Configuration trash</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
           </div>
           {rows}
         </div>

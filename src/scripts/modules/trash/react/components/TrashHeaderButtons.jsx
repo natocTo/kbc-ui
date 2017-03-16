@@ -17,21 +17,17 @@ export default React.createClass({
 
 
   render() {
-    if (!this.state.installedFilteredComponents.count()) {
-      return <span />;
-    } else {
-      return (
-        <Confirm
-          title="Empty Trash"
-          text={this.deleteConfirmMessage()}
-          buttonLabel="Empty Trash"
-          onConfirm={this.handleDelete}>
-          <button className="btn btn-link">
-            <i className="fa fa-times fa-fw" /> Empty Trash
-          </button>
-        </Confirm>
-      );
-    }
+    return (
+      <Confirm
+        title="Empty Trash"
+        text={this.deleteConfirmMessage()}
+        buttonLabel="Empty Trash"
+        onConfirm={this.handleDelete}>
+        <button className={'btn btn-link ' + (this.state.installedFilteredComponents.count() ? '' : 'btn-hide')}>
+          <i className="fa fa-times fa-fw" /> Empty Trash
+        </button>
+      </Confirm>
+    );
   },
 
   deleteConfirmMessage() {
