@@ -141,7 +141,7 @@ export default React.createClass({
         deactivateTooltip="Disable"
         isActive={item.get('enabled')}
         isPending={this.props.isPendingFn(['toggle', item.get('id')])}
-        onChange={() => this.props.toggleEnabledFn(item.get('id'))}
+        onChange={() => this.props.toggleEnabledFn(item)}
       />
     );
   },

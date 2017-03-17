@@ -77,7 +77,7 @@ export default function(COMPONENT_ID) {
                     onAddFn={this.showTableModal}
                     onDeleteFn={this.state.actions.deleteTable}
                     onEditFn={this.showTableModal}
-                    toggleEnabledFn={this.state.actions.toggleQueryEnabledFn}
+                    toggleEnabledFn={this.state.actions.toggleEnabled}
                     isPendingFn={this.state.store.isPending}
                     getRunSingleDataFn={this.state.store.getRunSingleData}
                   />

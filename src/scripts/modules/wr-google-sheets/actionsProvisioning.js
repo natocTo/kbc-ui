@@ -56,7 +56,8 @@ export default function(COMPONENT_ID, configId) {
     return fromJS({
       'id': generateId(),
       'action': 'update',
-      'sheetTitle': 'Sheet1'
+      'sheetTitle': 'Sheet1',
+      'enabled': true
     });
   }
 
@@ -115,6 +116,10 @@ export default function(COMPONENT_ID, configId) {
     return saveTables(newTables, store.getSavingPath(table.get('id')), `Update table ${table.get('tableId')}`);
   }
 
+  function toggleEnabled(table) {
+    return updateTable(table.set('enabled', !table.get('enabled')));
+  }
+
   function createSpreadsheet(table) {
     const configData = getConfigData();
     let runData = configData
@@ -135,6 +140,7 @@ export default function(COMPONENT_ID, configId) {
     touchSheet: touchSheet,
     saveTables: saveTables,
     saveTable: saveTable,
-    deleteTable: deleteTable
+    deleteTable: deleteTable,
+    toggleEnabled: toggleEnabled
   };
 }
