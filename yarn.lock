@@ -1013,7 +1013,7 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames@^2.0.0, classnames@^2.1.1, classnames@^2.1.3, classnames@^2.2.1, classnames@^2.2.5:
+classnames@^2.0.0, classnames@^2.1.3, classnames@^2.2.1, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -1505,19 +1505,9 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-now@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/date-now/-/date-now-1.0.1.tgz#bb7d086438debe4182a485fb3df3fbfb99d6153c"
-
 date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
-
-debounce@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.0.0.tgz#0948af513d2e4ce407916f8506a423d3f9cf72d8"
-  dependencies:
-    date-now "1.0.1"
 
 debug@2, debug@^2.1.1, debug@^2.2.0:
   version "2.4.3"
@@ -3968,6 +3958,10 @@ object-assign@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-2.1.1.tgz#43c36e5d569ff8e4816c4efa8be02d26967c18aa"
 
+object-assign@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
+
 object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.0.tgz#7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0"
@@ -4574,12 +4568,19 @@ react-addons-test-utils@~0.14.8:
   version "0.14.8"
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-0.14.8.tgz#dcddc039e71fc3c81d80338e53a3714f14d41e1f"
 
-"react-autosuggest@git+https://github.com/keboola/react-autosuggest":
-  version "1.14.0"
-  resolved "git+https://github.com/keboola/react-autosuggest#a43a898c0bf7fbc3bf2216498435befe5e82433a"
+react-autosuggest@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/react-autosuggest/-/react-autosuggest-9.0.0.tgz#976b02e20d05615d05c328c8f1384daf98587821"
   dependencies:
-    classnames "^2.1.1"
-    debounce "^1.0.0"
+    react-autowhatever "^9.1.0"
+    shallow-equal "^1.0.0"
+
+react-autowhatever@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/react-autowhatever/-/react-autowhatever-9.1.0.tgz#cc19ea05e0541ec04bb07fd53792215dc802bf75"
+  dependencies:
+    react-themeable "^1.1.0"
+    section-iterator "^2.0.0"
 
 react-bootstrap@~0.23.0:
   version "0.23.7"
@@ -4704,6 +4705,12 @@ react-sticky@~2.5.2:
 react-textarea-autosize@^2.3.1:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-2.5.4.tgz#8c7466a23100dc6e71db224e666f971b389cd26a"
+
+react-themeable@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-themeable/-/react-themeable-1.1.0.tgz#7d4466dd9b2b5fa75058727825e9f152ba379a0e"
+  dependencies:
+    object-assign "^3.0.0"
 
 react@~0.14.8:
   version "0.14.8"
@@ -5031,6 +5038,10 @@ sax@^1.1.4, sax@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
 
+section-iterator@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/section-iterator/-/section-iterator-2.0.0.tgz#bf444d7afeeb94ad43c39ad2fb26151627ccba2a"
+
 select@^1.0.6:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/select/-/select-1.1.0.tgz#a6c520cd9ab919ad81c7d1a273e0452f504dd7a2"
@@ -5097,6 +5108,10 @@ setprototypeof@1.0.2:
 sha.js@2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/sha.js/-/sha.js-2.2.6.tgz#17ddeddc5f722fb66501658895461977867315ba"
+
+shallow-equal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/shallow-equal/-/shallow-equal-1.0.0.tgz#508d1838b3de590ab8757b011b25e430900945f7"
 
 shelljs@^0.7.5:
   version "0.7.5"
