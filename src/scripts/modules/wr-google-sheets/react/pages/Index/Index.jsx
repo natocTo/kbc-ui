@@ -24,7 +24,7 @@ import SheetModal from '../../components/SheetModal';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
-import {DropdownButton, MenuItem} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 export default function(COMPONENT_ID) {
   return React.createClass({
@@ -128,21 +128,9 @@ export default function(COMPONENT_ID) {
           <div className="row">
             <EmptyState>
               <p>No tables configured</p>
-              <DropdownButton
-                buttonClassName="btn-success"
-                title="Add Table "
-                onSelect={(eventKey) => this.showTableModal(eventKey, null)}
-              >
-                <MenuItem header={true}>Upload table as:</MenuItem>
-                <MenuItem eventKey="sheetInNew">
-                  <i className="fa fa-th-list" />
-                  <span>&nbsp; New Spreadsheet</span>
-                </MenuItem>
-                <MenuItem eventKey="sheetInExisting">
-                  <i className="fa fa-th-list" />
-                  <span>&nbsp; Sheet in existing Spreadsheet</span>
-                </MenuItem>
-              </DropdownButton>
+              <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
+                Add Table
+              </Button>
             </EmptyState>
           </div>
           : null
@@ -165,12 +153,13 @@ export default function(COMPONENT_ID) {
       );
     },
 
-    showTableModal(modalType, sheet) {
+    showTableModal(step, sheet) {
       const dirtySheet = sheet ? sheet : this.state.actions.touchSheet();
       const modalData = Map()
         .set('sheet', dirtySheet)
         .set('currentSheet', sheet)
-        .set('modalType', modalType);
+        .set('step', step)
+        .set('uploadType', 'new');
       this.state.actions.updateLocalState(['SheetModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);
     },

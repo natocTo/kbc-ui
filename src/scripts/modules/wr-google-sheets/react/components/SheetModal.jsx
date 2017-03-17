@@ -1,16 +1,10 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import {Modal, Input, Button} from 'react-bootstrap';
-import RadioGroup from 'react-radio-group';
-import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
-import Picker from '../../../google-utils/react/GooglePicker';
-import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
-
-const HELP_INPUT_TABLE = 'Select source table from Storage';
-const HELP_SHEET_TITLE = 'Name of the sheet in spreadsheet';
-const HELP_PICKER_SPREADSHEET = 'Parent spreadsheet';
-const HELP_PICKER_FOLDER = 'Spreadsheet folder and title';
+import {Modal, TabbedArea, TabPane} from 'react-bootstrap';
+import WizardButtons from './WizardButtons';
+import InputTab from './InputTab';
+import SpreadsheetTab from './SpreadsheetTab';
+import SheetTab from './SheetTab';
 
 export default React.createClass({
   propTypes: {
@@ -25,6 +19,7 @@ export default React.createClass({
   },
 
   render() {
+    const step = this.localState(['step'], 1);
     return (
       <Modal
         bsSize="large"
@@ -36,192 +31,76 @@ export default React.createClass({
             {this.localState(['currentSheet', 'title'], false) ? 'Edit Sheet' : 'Add Sheet'}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div className="form-horizontal">
-            {this.renderTableSelector()}
-            {this.renderFields()}
-          </div>
+        <Modal.Body
+          style={{
+            minHeight: '250px'
+          }}
+        >
+          <TabbedArea activeKey={step} defaultActiveEventKey={1} animation={false}>
+            <TabPane tab="Source" eventKey={1} disabled={step !== 1}>
+              <InputTab
+                onSelect={(value) => this.updateLocalState(['sheet', 'tableId'], value)}
+                value={this.sheet('tableId')}
+              />
+            </TabPane>
+            <TabPane tab="Destination" eventKey={2} disabled={step !== 3}>
+              <SpreadsheetTab
+                onSelectExisting={(data) => {
+                  this.updateLocalState(['sheet'].concat('fileId'), data[0].id);
+                  this.updateLocalState(['sheet'].concat('title'), data[0].name);
+                }}
+                onSelectFolder={(data) => {
+                  this.updateLocalState(['sheet'].concat(['folder', 'id']), data[0].id);
+                  this.updateLocalState(['sheet'].concat(['folder', 'title']), data[0].name);
+                }}
+                onChangeTitle={(e) => this.updateLocalState(['sheet'].concat('title'), e.target.value)}
+                onSwitchType={(e) => this.updateLocalState(['uploadType'], e.target.value)}
+                valueTitle={this.sheet('title', '')}
+                valueFolder={this.sheet(['folder', 'title'], '/')}
+                type={this.localState('uploadType', 'new')}
+              />
+            </TabPane>
+            <TabPane tab="Options" eventKey={3} disabled={step !== 3}>
+              <SheetTab
+                onChangeSheetTitle={(e) => this.updateLocalState(['sheet'].concat('sheetTitle'), e.target.value)}
+                onChangeAction={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}
+                valueSheetTitle={this.sheet('sheetTitle')}
+                valueAction={this.sheet('action')}
+              />
+            </TabPane>
+          </TabbedArea>
         </Modal.Body>
         <Modal.Footer>
-          <ConfirmButtons
-            isSaving={this.props.isSavingFn(this.sheet('id'))}
+          <WizardButtons
+            onNext={this.handleNext}
+            onPrevious={this.handlePrevious}
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
-            placement="right"
-            saveLabel="Save"
-            isDisabled={this.isSavingDisabled()}
+            isSaving={this.props.isSavingFn(this.sheet('id'))}
+            isNextDisabled={this.isStepValid(step)}
+            isSaveDisabled={this.isSavingDisabled()}
+            isPreviousDisabled={step === 1}
+            showNext={step < 3}
+            showSave={step === 3}
           />
         </Modal.Footer>
       </Modal>
     );
   },
 
-  renderFields() {
-    const spreadsheet = (this.localState(['modalType']) === 'sheetInNew')
-      ? this.renderFolderPicker()
-      : this.renderSpreadsheetPicker();
-    const sheetTitle = this.renderInput('Sheet Title', 'sheetTitle', HELP_SHEET_TITLE, 'My Sheet');
-    const action = this.renderActionRadio();
-    return (
-      <div>
-        {spreadsheet}
-        {sheetTitle}
-        {action}
-      </div>
-    );
-  },
+  isStepValid(step) {
+    const tableIdEmpty = !!this.sheet(['tableId']);
+    const titleEmpty = !!this.sheet(['title']);
+    const sheetTitleEmpty = !!this.sheet(['sheetTitle']);
+    const action = !!this.sheet(['action']);
 
-  renderTableSelector() {
-    const element = (
-      <SapiTableSelector
-        onSelectTableFn={(value) => this.updateLocalState(['sheet', 'tableId'], value)}
-        placeholder="Select..."
-        value={this.sheet(['tableId'], '')}
-        allowCreate={false}
-      />
-    );
-    return this.renderFormElement('Input table', element, HELP_INPUT_TABLE);
-  },
-
-  renderActionRadio() {
-    const element = (
-      <RadioGroup
-        name="Action"
-        value={this.sheet(['action'])}
-        onChange={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}
-      >
-        <div className="form-horizontal">
-          <Input
-            type="radio"
-            label="Update data"
-            help="Overwrites data in existing Sheet. Creates new one if it doesn't exist"
-            wrapperClassName="col-sm-8"
-            value="update"
-          />
-          <Input
-            type="radio"
-            label="Append data"
-            help="Add new data to the end of existing Sheet"
-            wrapperClassName="col-sm-8"
-            value="append"
-          />
-        </div>
-      </RadioGroup>
-    );
-    return this.renderFormElement('Action', element, '');
-  },
-
-  renderInput(caption, propertyPath, helpText, placeholder, validationFn = () => null) {
-    const validationText = validationFn();
-    const inputElement = this.renderInputElement(propertyPath, placeholder);
-    return this.renderFormElement(caption, inputElement, helpText, validationText);
-  },
-
-  renderSpreadsheetPicker() {
-    const parentName = this.sheet('title', '');
-    return (
-      <div className={'form-group'}>
-        <label className="col-sm-2 control-label">
-          Spreadsheet
-        </label>
-        <div className="col-sm-10">
-          <Picker
-            email={this.props.email}
-            dialogTitle="Select Spreadsheet"
-            buttonLabel={parentName ? parentName : 'Select Spreadsheet'}
-            onPickedFn={(data) => {
-              this.updateLocalState(['sheet'].concat('fileId'), data[0].id);
-              this.updateLocalState(['sheet'].concat('title'), data[0].name);
-            }}
-            buttonProps={{
-              bsStyle: 'default',
-              bsSize: 'large'
-            }}
-            views={[
-              ViewTemplates.sheets,
-              ViewTemplates.sharedSheets
-            ]}
-          />
-          <Button bsStyle="link" bsSize="large" onClick={() => this.switchType()}>
-            Create new
-          </Button>
-          <span className="help-block">
-            {HELP_PICKER_SPREADSHEET}
-          </span>
-        </div>
-      </div>
-    );
-  },
-
-  renderFolderPicker() {
-    const folderName = this.sheet(['folder', 'title'], '');
-    return (
-      <div className={'form-group'}>
-        <label className="col-sm-2 control-label">
-          Spreadsheet
-        </label>
-        <div className="col-sm-7">
-          <div className="input-group">
-            <div className="input-group-btn">
-              <Picker
-                email={this.props.email}
-                dialogTitle="Select Folder"
-                buttonLabel={folderName ? folderName : '/'}
-                onPickedFn={(data) => {
-                  this.updateLocalState(['sheet'].concat(['folder', 'id']), data[0].id);
-                  this.updateLocalState(['sheet'].concat(['folder', 'title']), data[0].name);
-                }}
-                buttonProps={{
-                  bsStyle: 'default',
-                  bsSize: 'large'
-                }}
-                views={[
-                  ViewTemplates.rootFolder,
-                  ViewTemplates.recentFolders
-                ]}
-              />
-            </div>
-            {this.renderInputElement('title', 'New Spredsheet')}
-          </div>
-          <span className="help-block">
-            {HELP_PICKER_FOLDER}
-          </span>
-        </div>
-        <div className="col-sm-3">
-          <Button bsStyle="link" bsSize="large" onClick={() => this.switchType()}>
-            Select existing
-          </Button>
-        </div>
-      </div>
-    );
-  },
-
-  renderInputElement(propertyPath, placeholder) {
-    return (
-      <input
-        placeholder={placeholder}
-        type="text"
-        value={this.sheet(propertyPath)}
-        onChange={(e) => this.updateLocalState(['sheet'].concat(propertyPath), e.target.value)}
-        className="form-control"
-      />
-    );
-  },
-
-  renderFormElement(label, element, helpText, errorMsg) {
-    return (
-      <div className={errorMsg ? 'form-group has-error' : 'form-group'}>
-        <label className="col-sm-2 control-label">
-          {label}
-        </label>
-        <div className="col-sm-10">
-          {element}
-          <span className="help-block">
-            {errorMsg || helpText}
-          </span>
-        </div>
-      </div>
-    );
+    if (step === 1) {
+      return !tableIdEmpty;
+    } else if (step === 2) {
+      return !tableIdEmpty || !titleEmpty;
+    } else if (step === 3) {
+      return !tableIdEmpty || !titleEmpty || !sheetTitleEmpty || !action;
+    }
   },
 
   isSavingDisabled() {
@@ -251,6 +130,18 @@ export default React.createClass({
     this.props.onSaveFn(this.sheet()).then(
       () => this.props.onHideFn()
     );
+  },
+
+  handleNext() {
+    const step = this.localState(['step']);
+    const nextStep = (step >= 3) ? 3 : step + 1;
+    this.updateLocalState(['step'], nextStep);
+  },
+
+  handlePrevious() {
+    const step = this.localState(['step']);
+    const nextStep = (step <= 1) ? 1 : step - 1;
+    this.updateLocalState(['step'], nextStep);
   },
 
   switchType() {

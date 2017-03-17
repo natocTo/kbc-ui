@@ -41,7 +41,7 @@ export default React.createClass({
               <strong>Sheet</strong>
             </div>
             <div className="th pull-right">
-              <Button bsStyle="success" onClick={() => this.props.onAddFn('sheetInNew', null)}>
+              <Button bsStyle="success" onClick={() => this.props.onAddFn(1, null)}>
                 Add Table
               </Button>
               {/* action buttons */}
