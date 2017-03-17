@@ -77,20 +77,25 @@ export default function(COMPONENT_ID, configId) {
   }
 
   function saveTable(table) {
+    // @todo add new sheet, when importing to existing spreadsheet
     // create spreadsheet if not exist
     if (!table.get('fileId')) {
       updateLocalState(store.getSavingPath(table.get('id')), true);
-      return createSpreadsheet(table).then(
-        (data) => {
-          const newTable = table
-            .set('fileId', data.spreadsheet.spreadsheetId)
-            .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId);
-          return updateTable(newTable);
-        }
-      );
-    } else {
-      return updateTable(table);
+      return createSpreadsheet(table).then((data) => {
+        return updateTable(table
+          .set('fileId', data.spreadsheet.spreadsheetId)
+          .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId)
+        );
+      });
+    } else if (!table.get('sheetId')) {
+      return addSheet(table).then((data) => {
+        return updateTable(table
+          .set('fileId', data.spreadsheet.spreadsheetId)
+          .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId)
+        );
+      });
     }
+    return updateTable(table);
   }
 
   function updateTable(table) {
@@ -124,13 +129,24 @@ export default function(COMPONENT_ID, configId) {
     const configData = getConfigData();
     let runData = configData
       .setIn(['parameters', 'tables'], List().push(table))
-      .delete('storage')
-    ;
+      .delete('storage');
 
     const params = {
       configData: runData.toJS()
     };
     return callDockerAction(COMPONENT_ID, 'createSpreadsheet', params);
+  }
+
+  function addSheet(table) {
+    const configData = getConfigData();
+    let runData = configData
+      .setIn(['parameters', 'tables'], List().push(table))
+      .delete('storage');
+
+    const params = {
+      configData: runData.toJS()
+    };
+    return callDockerAction(COMPONENT_ID, 'addSheet', params);
   }
 
   return {
