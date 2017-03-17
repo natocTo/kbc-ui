@@ -1,5 +1,4 @@
 import React from 'react';
-import {ModalTrigger} from 'react-bootstrap';
 import Modal from './TableInputMappingModal';
 import actionCreators from '../../../InstalledComponentsActionCreators';
 
@@ -13,16 +12,6 @@ export default React.createClass({
   },
 
   render() {
-    return (
-      <ModalTrigger modal={this.modal()}>
-        <button className="btn btn-primary" onClick={this.handleClick}>
-          <span className="kbc-icon-plus" /> Add Table Input
-        </button>
-      </ModalTrigger>
-    );
-  },
-
-  modal() {
     return React.createElement(Modal, {
       mode: 'create',
       mapping: this.props.mapping,
@@ -32,11 +21,6 @@ export default React.createClass({
       onSave: this.handleSave,
       otherDestinations: this.props.otherDestinations
     });
-  },
-
-  handleClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
   },
 
   /* eslint camelcase: 0 */
