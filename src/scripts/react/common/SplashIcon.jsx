@@ -35,7 +35,7 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="kbc-main-loader text-muted" style={{marginTop: '25vh'}}>
+        <div className="kbc-main-loader text-muted" style={{marginTop: '10vh'}}>
           {this._splashTitle()}
           {this._splashIcon()}
         </div>

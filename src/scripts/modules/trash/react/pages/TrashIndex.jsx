@@ -31,7 +31,6 @@ export default React.createClass({
     return {
       filterName: InstalledComponentsStore.getTrashFilter('name'),
       filterType: InstalledComponentsStore.getTrashFilter('type'),
-      installedComponents: InstalledComponentsStore.getAllDeleted(),
       installedFilteredComponents: InstalledComponentsStore.getAllDeletedFiltered(),
       deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations(),
       restoringConfigurations: InstalledComponentsStore.getRestoringConfigurations(),
@@ -65,6 +64,46 @@ export default React.createClass({
     );
   },
 
+  renderHelp() {
+    if (this.state.installedFilteredComponents.count()) {
+      return (
+        <div className="row">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+        </div>
+      );
+    }
+  },
+
+  renderRows() {
+    let components = this.state.installedFilteredComponents;
+
+    if (components.count()) {
+      return components.map(function(component) {
+        return (
+          <DeletedComponentRow
+            component={component}
+            deletingConfigurations={this.state.deletingConfigurations.get(component.get('id'), Map())}
+            restoringConfigurations={this.state.restoringConfigurations.get(component.get('id'), Map())}
+            key={component.get('id')}
+          />
+        );
+      }, this).toArray();
+    } else {
+      return (
+        <SplashIcon icon="kbc-icon-cup" label={this.splashLabel()}/>
+      );
+    }
+  },
+
+  splashLabel() {
+    if (this.state.filterName || this.state.filterType) {
+      return 'Any configurations found';
+    } else {
+      return 'Trash is empty';
+    }
+  },
+
   render() {
     const typeFilterOptions = [
       {
@@ -88,62 +127,40 @@ export default React.createClass({
         'value': 'extractor'
       }
     ];
-    if (this.state.installedComponents.count()) {
-      let components = this.state.installedFilteredComponents;
-      const rows = components.map(function(component) {
-        return (
-          <DeletedComponentRow
-            component={component}
-            deletingConfigurations={this.state.deletingConfigurations.get(component.get('id'), Map())}
-            restoringConfigurations={this.state.restoringConfigurations.get(component.get('id'), Map())}
-            key={component.get('id')}
-          />
-        );
-      }, this).toArray();
 
-      return (
-        <div className="container-fluid kbc-main-content kbc-components-list">
-          {this.renderTabs()}
-          <div className="kbc-trash-search clearfix">
-            <div className="col-md-7">
-              <SearchRow
-                className="row kbc-search-row"
-                query={this.state.filterName}
-                onChange={(query) => this.handleFilterChange(query, 'name')}
-              />
-            </div>
-            <div className="col-md-5">
-              <div className="col-md-12">
-                <div className="kbc-trash-controls">
-                  <div className="kbc-trash-buttons">
-                    <TrashHeaderButtons />
-                  </div>
-                  <div className="kbc-trash-filter">
-                    <Select
-                      value={this.state.filterType}
-                      onChange={(query) => this.handleFilterChange(query, 'type')}
-                      options={typeFilterOptions}
-                      placeholder="All components"
-                    />
-                  </div>
+    return (
+      <div className="container-fluid kbc-main-content kbc-components-list">
+        {this.renderTabs()}
+        <div className="kbc-trash-search clearfix">
+          <div className="col-md-7">
+            <SearchRow
+              className="row kbc-search-row"
+              query={this.state.filterName}
+              onChange={(query) => this.handleFilterChange(query, 'name')}
+            />
+          </div>
+          <div className="col-md-5">
+            <div className="col-md-12">
+              <div className="kbc-trash-controls">
+                <div className="kbc-trash-buttons">
+                  <TrashHeaderButtons />
+                </div>
+                <div className="kbc-trash-filter">
+                  <Select
+                    value={this.state.filterType}
+                    onChange={(query) => this.handleFilterChange(query, 'type')}
+                    options={typeFilterOptions}
+                    placeholder="All components"
+                  />
                 </div>
               </div>
             </div>
           </div>
-
-          <div className="row">
-            <h2>Configuration trash</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-          </div>
-          {rows}
         </div>
-      );
-    } else {
-      return (
-        <SplashIcon icon="kbc-icon-cup" label="Trash is empty"/>
-      );
-    }
+        {this.renderHelp()}
+        {this.renderRows()}
+      </div>
+    );
   },
 
   projectPageUrl(path) {
