@@ -6,7 +6,7 @@ ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMix
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 
-InputMappigModal = require('../../../../components/react/components/generic/TableInputMappingModal').default
+InputMappingModal = require('../../../../components/react/components/generic/TableInputMappingModal').default
 
 module.exports = React.createClass
   displayName: 'DropboxTableRow'
@@ -57,7 +57,7 @@ module.exports = React.createClass
             The resulting file will be stored into 'Apps/Keboola Writer' dropbox folder."
 
   _renderEditButton: ->
-    React.createElement(InputMappigModal,
+    React.createElement(InputMappingModal,
       mode: 'edit'
       mapping: @props.mappingFromState
       tables: @props.tables

@@ -25,7 +25,7 @@ OptionsModal = React.createFactory require('./OptionsModal')
 ComponentMetadata = require '../../../../components/react/components/ComponentMetadata'
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 DeleteConfigurationButton = require '../../../../components/react/components/DeleteConfigurationButton'
-InputMappigModal = require('../../../../components/react/components/generic/TableInputMappingModal').default
+InputMappingModal = require('../../../../components/react/components/generic/TableInputMappingModal').default
 DeleteConfigurationButton = React.createFactory DeleteConfigurationButton
 ActivateDeactivateButton = React.createFactory(ActivateDeactivateButton)
 LatestVersions = React.createFactory(require('../../../../components/react/components/SidebarVersionsWrapper').default)
@@ -73,7 +73,7 @@ module.exports = (componentId) ->
         (t.getIn(['bucket', 'stage']) in ['in', 'out'] and not inputTables.has(t.get('id'))) or isCurrentTable
       )
 
-      return React.createElement(InputMappigModal,
+      return React.createElement(InputMappingModal,
         mode: 'create'
         buttonBsStyle: 'success'
         buttonLabel: 'Add New Table'
