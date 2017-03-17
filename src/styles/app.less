@@ -40,7 +40,19 @@ pre.CodeMirror-placeholder {
 }
 
 .react-autosuggest {
-  &__suggestions {
+  &__container {
+    position: relative;
+  }
+
+  &__input--focused {
+    outline: none;
+  }
+
+  &____suggestions-container {
+    display: none;
+  }
+
+  &__suggestions-container--open {
     font-size: inherit;
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
@@ -58,15 +70,21 @@ pre.CodeMirror-placeholder {
     z-index: 1000;
     margin: 0;
     padding: 4px 0px 4px 0px;
+  }
 
+  &__suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  &__suggestion--highlighted {
+  background-color: #ddd;
   }
 
   &__suggestion {
-    box-sizing: border-box;
-    color: #666666;
     cursor: pointer;
-    display: block;
-    padding: 8px 10px;
+    padding: 10px 20px;
   }
 
   &__suggestion--focused {
