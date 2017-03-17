@@ -22,7 +22,8 @@ export default React.createClass({
     definition: PropTypes.object,
 
     buttonBsStyle: PropTypes.string,
-    buttonLabel: PropTypes.string
+    buttonLabel: PropTypes.string,
+    tooltipText: PropTypes.string
   },
 
   getDefaultProps() {
@@ -98,8 +99,9 @@ export default React.createClass({
 
   renderOpenButton() {
     if (this.props.mode === MODE_EDIT) {
+      const tooltipText = this.props.tooltipText ? this.props.tooltipText : 'Edit Input';
       return (
-        <OverlayTrigger overlay={<Tooltip>Edit Input</Tooltip>} placement="top">
+        <OverlayTrigger overlay={<Tooltip>{tooltipText}</Tooltip>} placement="top">
           <Button bsStyle="link" onClick={this.handleEditButtonClick}>
             <span className="fa fa-pencil" />
           </Button>
