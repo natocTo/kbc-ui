@@ -1,17 +1,10 @@
-/**
- * Fixes strange behaviour of react-autosuggest inside Modal
- * Issue: https://github.com/keboola/kbc-ui/issues/305
- * There must be some `setTimeout` call while rendering modal
- * http://stackoverflow.com/questions/28922275/in-reactjs-why-does-setstate-behave-differently-when-called-synchronously/28922465#28922465
- *
- */
-
 import React, {PropTypes} from 'react';
 import AutoSuggest from 'react-autosuggest';
+import {List} from 'immutable';
 
 export default React.createClass({
   propTypes: {
-    suggestions: PropTypes.func.isRequired,
+    suggestions: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
@@ -28,37 +21,55 @@ export default React.createClass({
 
 
   getInitialState() {
-    return ({
-      value: this.props.value
-    });
+    return this.getStateFromProps(this.props);
+  },
+
+  getStateFromProps(props) {
+    return {
+      value: props.value,
+      suggestions: props.suggestions
+    };
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.state.value) {
-      this.setState({
-        value: nextProps.value
-      });
-    }
+    this.setState(this.getStateFromProps(nextProps));
+    this.filterSuggestions({value: this.state.value});
+  },
+
+  filterSuggestions({value}) {
+    const suggestions = this.props.suggestions.filter(function(val) {
+      return val.toLowerCase().indexOf(value.toLowerCase()) >= 0;
+    }).sortBy(function(item) {
+      return item;
+    }).slice(0, 10).toList();
+    this.setState({suggestions: suggestions});
+  },
+
+  renderSuggestion(suggestion) {
+    return suggestion;
   },
 
   render() {
-    return React.createElement(AutoSuggest, {
-      suggestions: this.props.suggestions,
-      inputAttributes: {
-        onChange: this.handleChange,
-        value: this.state.value,
-        className: 'form-control',
-        id: this.props.id,
-        name: this.props.name,
-        placeholder: this.props.placeholder,
-        disabled: this.props.disabled
-      }
-    });
+    return (
+      <AutoSuggest
+        suggestions={this.state.suggestions.toJS()}
+        onSuggestionsClearRequested={() => this.setState({suggestions: List()})}
+        onSuggestionsFetchRequested={this.filterSuggestions}
+        renderSuggestion={this.renderSuggestion}
+        getSuggestionValue={(val) => val}
+        inputProps={{
+          onChange: this.handleChange,
+          value: this.state.value,
+          className: 'form-control',
+          placeholder: this.props.placeholder,
+          disabled: this.props.disabled
+        }}
+      />);
   },
 
-  handleChange(newValue) {
+  handleChange(e, {newValue}) {
     this.setState({
-      value: newValue
+      value: newValue ? newValue : ''
     });
     this.props.onChange(newValue);
   }
