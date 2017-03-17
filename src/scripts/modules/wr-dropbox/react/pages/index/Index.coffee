@@ -65,61 +65,26 @@ module.exports = (componentId) ->
         @_renderSideBar()
 
     _renderAddNewTable: ->
-      data = @state.localState.get('newTable', Map())
-      selectedTableId = data.get('tableId')
-      inputTables = @_getInputTables().toMap().mapKeys((key, c) -> c.get('source'))
-      tables = @state.allTables.filter( (t) ->
-        t.getIn(['bucket', 'stage']) in ['in', 'out'] and not inputTables.has(t.get('id'))
-      )
-      isAllConfigured = tables.count() == 0
-      isSaving = @_isPendingTable(selectedTableId)
-
-      span null,
-        React.createElement Button,
-          disabled: isAllConfigured or isSaving
-          onClick: =>
-            @_updateLocalState(['newTable', 'show'], true)
-          bsStyle: 'success'
-        ,
-          '+ Add New Table'
-          if isSaving
-            React.createElement Loader
-        @_renderInputMappingModal()
-
-    _renderInputMappingModal: ->
-      data = @state.localState.get('newTable', Map())
-      if data.get('show', false) == false
-        return ''
-      mode = data.get('mode', 'create')
       inputTables = @_getInputTables().toMap().mapKeys((key, c) -> c.get('source'))
       destinations = @_getInputTables().map((c) -> c.get('destination'))
       mapping = @state.localState.getIn(['newTable', 'mapping'], Map())
-      if mode == 'edit'
-        editTable = @_getInputTables().find((t) -> t.get('source') == data.get('oldTableId'))
-        destinations = destinations.filter((d) -> d != editTable?.get('destination'))
       tables = @state.allTables.filter( (t) ->
         isCurrentTable = t.get('id') == mapping.get('source')
         (t.getIn(['bucket', 'stage']) in ['in', 'out'] and not inputTables.has(t.get('id'))) or isCurrentTable
       )
 
       return React.createElement(InputMappigModal,
-        mode: mode
+        mode: 'create'
+        buttonBsStyle: 'success'
+        buttonLabel: 'Add New Table'
         mapping: mapping
         tables: tables
-        onChange: (newMapping) =>
-          @_updateLocalState(['newTable', 'mapping'], newMapping)
-        onCancel: =>
-          @_updateLocalState(['newTable'], Map())
-        onSave: =>
-          table = mapping
-          oldTableId = data.get('oldTableId')
-          @_addTableExport(table, oldTableId).then =>
-            @_updateLocalState(['newTable'], Map())
+        onChange: @_mappingEditingOnChangeFn
+        onCancel: @_mappingEditingOnCancelFn
+        onSave: @_mappingEditingOnSaveFn
         otherDestinations: destinations
-        title: if mode != 'create' then 'Edit table' else 'New Table'
+        title: 'New Table'
         showFileHint: false
-        onRequestHide: =>
-          @_updateLocalState(['newTable'], Map())
       )
 
 
@@ -165,6 +130,17 @@ module.exports = (componentId) ->
     _renderTableRow: (table) ->
       mapping = @_getInputTables().find (t) ->
         t.get('source') == table.get('id')
+
+      data = @state.localState.get('newTable', Map())
+      inputTables = @_getInputTables().toMap().mapKeys((key, c) -> c.get('source'))
+      destinations = @_getInputTables().map((c) -> c.get('destination'))
+      editTable = @_getInputTables().find((t) -> t.get('source') == data.get('oldTableId'))
+      destinations = destinations.filter((d) -> d != editTable?.get('destination'))
+      tables = @state.allTables.filter( (t) ->
+        isCurrentTable = t.get('id') == mapping.get('source')
+        (t.getIn(['bucket', 'stage']) in ['in', 'out'] and not inputTables.has(t.get('id'))) or isCurrentTable
+      )
+
       TableRow
         componentId: componentId
         isTableExported: @_isTableExported(table.get('id'))
@@ -173,10 +149,29 @@ module.exports = (componentId) ->
         prepareSingleUploadDataFn: @_prepareTableUploadData
         deleteTableFn: @_removeTableExport
         mapping: mapping
+        mappingFromState: @state.localState.getIn(['newTable', 'mapping'], Map())
         onEditTable: =>
-          editTable = Map({show: true, mode: 'edit', oldTableId: mapping.get('source')})
+          editTable = Map({oldTableId: mapping.get('source')})
           editTable = editTable.set('mapping', mapping)
           @_updateLocalState(['newTable'], editTable)
+        editOnChangeFn: @_mappingEditingOnChangeFn
+        editOnSaveFn: @_mappingEditingOnSaveFn
+        editOnCancelFn: @_mappingEditingOnCancelFn
+        tables: tables
+        destinations: destinations
+
+    _mappingEditingOnSaveFn: ->
+      data = @state.localState.get('newTable')
+      mapping = @state.localState.getIn(['newTable', 'mapping'])
+      oldTableId = data.get('oldTableId')
+      @_addTableExport(mapping, oldTableId).then =>
+        @_updateLocalState(['newTable'], Map())
+
+    _mappingEditingOnCancelFn: ->
+      @_updateLocalState(['newTable'], Map())
+
+    _mappingEditingOnChangeFn: (newMapping) ->
+      @_updateLocalState(['newTable', 'mapping'], newMapping)
 
     _prepareTableUploadData: (table) ->
       tableId = table.get('id')

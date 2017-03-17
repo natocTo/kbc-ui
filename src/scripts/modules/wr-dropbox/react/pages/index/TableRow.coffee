@@ -6,6 +6,8 @@ ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMix
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 
+InputMappigModal = require('../../../../components/react/components/generic/TableInputMappingModal').default
+
 module.exports = React.createClass
   displayName: 'DropboxTableRow'
   mixins: [ImmutableRenderMixin]
@@ -16,8 +18,15 @@ module.exports = React.createClass
     prepareSingleUploadDataFn: React.PropTypes.func.isRequired
     table: React.PropTypes.object.isRequired
     mapping: React.PropTypes.object.isRequired
+    mappingFromState: React.PropTypes.object.isRequired
     onEditTable: React.PropTypes.func
     componentId: React.PropTypes.string
+
+    editOnChangeFn: React.PropTypes.func.isRequired
+    editOnSaveFn: React.PropTypes.func.isRequired
+    editOnCancelFn: React.PropTypes.func.isRequired
+    destinations: React.PropTypes.object.isRequired
+    tables: React.PropTypes.object.isRequired
 
   render: ->
     outputName = @props.mapping.get('destination') or "#{@props.mapping.get('source')}.csv"
@@ -46,16 +55,21 @@ module.exports = React.createClass
           ,
            "You are about to run upload of #{@props.table.get('id')} to dropbox account. \
             The resulting file will be stored into 'Apps/Keboola Writer' dropbox folder."
+
   _renderEditButton: ->
-    React.createElement Tooltip,
-      tooltip: 'Edit table mapping'
-      placement: 'top'
-    ,
-      button
-        className: 'btn btn-link'
-        onClick: @props.onEditTable
-      ,
-        i className: 'fa fa-fw kbc-icon-pencil'
+    React.createElement(InputMappigModal,
+      mode: 'edit'
+      mapping: @props.mappingFromState
+      tables: @props.tables
+      onChange: @props.editOnChangeFn
+      onCancel: @props.editOnCancelFn
+      onSave: @props.editOnSaveFn
+      otherDestinations: @props.destinations
+      title: 'Edit table'
+      showFileHint: false
+      onEditStart: @props.onEditTable
+      tooltipText: 'Edit table mapping'
+    )
 
   _renderDeleteButton: ->
     if @props.isPending
