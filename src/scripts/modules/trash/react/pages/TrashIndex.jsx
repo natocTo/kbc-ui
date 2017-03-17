@@ -98,7 +98,7 @@ export default React.createClass({
 
   splashLabel() {
     if (this.state.filterName || this.state.filterType) {
-      return 'Any configurations found';
+      return 'No removed configurations found';
     } else {
       return 'Trash is empty';
     }
