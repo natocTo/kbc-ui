@@ -474,10 +474,10 @@ module.exports =
 
       throw e
 
-  deleteAllFilteredConfigurationsPermanently: ->
+  deleteAllConfigurationsPermanently: ->
     promises = []
     actions = @
-    InstalledComponentsStore.getAllDeletedFiltered().forEach (component) ->
+    InstalledComponentsStore.getAllDeleted().forEach (component) ->
       componentId = component.get('id')
 
       component.get('configurations').forEach (configuration) ->

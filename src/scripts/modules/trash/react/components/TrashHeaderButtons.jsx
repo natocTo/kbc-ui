@@ -36,7 +36,7 @@ export default React.createClass({
   },
 
   handleDelete() {
-    InstaledComponentsActions.deleteAllFilteredConfigurationsPermanently();
+    InstaledComponentsActions.deleteAllConfigurationsPermanently();
   }
 
 });
