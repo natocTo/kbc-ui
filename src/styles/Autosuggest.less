@@ -1,5 +1,4 @@
 .react-autosuggest {
-  @font-size: 18px;
   @border-color: #aaa;
   @border-radius: 4px;
 
@@ -17,41 +16,31 @@
     }
   }
 
-  &__suggestions {
+  &__container {
+    position: relative;
+  }
+
+  &____suggestions-container {
+    display: none;
+  }
+
+  &__suggestions-container--open {
     position: absolute;
-    top: 51px;
     width: 100%;
     margin: 0;
     padding: 0;
     list-style-type: none;
     border: 1px solid @border-color;
     background-color: #fff;
-    font-size: @font-size;
     border-bottom-left-radius: @border-radius;
     border-bottom-right-radius: @border-radius;
     z-index: 2;
+  }
 
-    &-section {
-      &:first-child {
-        .react-autosuggest__suggestions-section-name {
-          border-top: 0;
-        }
-      }
-
-      &-name {
-        padding: 10px 0 0 10px;
-        font-size: 12px;
-        text-transform: uppercase;
-        color: #777;
-        border-top: 1px dashed #ccc;
-      }
-
-      &-suggestions {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-      }
-    }
+  &__suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
   }
 
   &__suggestion {
@@ -60,6 +49,10 @@
 
     &--focused {
       background-color: #ddd;
+    }
+
+    &--highlighted {
+      background-color: #f2f9fc;
     }
   }
 }
