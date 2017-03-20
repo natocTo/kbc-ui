@@ -9,7 +9,6 @@ export default React.createClass({
 
   getStateFromStores() {
     return {
-      filter: InstalledComponentsStore.getTrashFilter(),
       installedFilteredComponents: InstalledComponentsStore.getAllDeletedFiltered(),
       deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations()
     };
@@ -31,21 +30,9 @@ export default React.createClass({
   },
 
   deleteConfirmMessage() {
-    if (this.state.filter && this.state.filter !== '') {
-      return (
-        <span>Are you sure you want to permanently delete all filtered configurations in Trash?
-          <br/>
-          <br/><em>You can't undo this action.</em>
-        </span>
-      );
-    } else {
-      return (
-        <span>Are you sure you want to permanently delete all configurations in Trash?
-          <br/>
-          <br/><em>You can't undo this action.</em>
-        </span>
-      );
-    }
+    return (
+      <span>Are you sure you want to permanently delete all configurations in Trash?</span>
+    );
   },
 
   handleDelete() {
