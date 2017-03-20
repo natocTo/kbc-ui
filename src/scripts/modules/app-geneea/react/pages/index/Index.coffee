@@ -27,15 +27,8 @@ getTemplates = require './../../components/templates'
 validation = require './../../components/validation'
 RoutesStore = require '../../../../../stores/RoutesStore'
 StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
-Autosuggest = React.createFactory(require 'react-autosuggest')
-
-createGetSuggestions = (getOptions) ->
-  (input, callback) ->
-    suggestions = getOptions()
-      .filter (value) -> fuzzy.match(input, value)
-      .slice 0, 10
-      .toList()
-    callback(null, suggestions.toJS())
+AutoSuggestWrapperComponent = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
+AutosuggestWrapper = React.createFactory(AutoSuggestWrapperComponent)
 
 module.exports = (componentId) ->
   React.createClass
@@ -228,18 +221,16 @@ module.exports = (componentId) ->
         div className: 'form-group',
           label className: 'control-label col-xs-2', 'Output Table'
           div className: "col-xs-10",
-            Autosuggest
-              suggestions: createGetSuggestions(@_getOutTables)
-              inputAttributes:
-                className: 'form-control'
-                placeholder: 'to get hint start typing'
-                value: @state.editingData.outtable
-                onChange: (newValue) =>
-                  newEditingData = @state.editingData
-                  newEditingData.outtable = newValue
-                  @setState
-                    editingData: newEditingData
-                  @_updateEditingConfig()
+            AutosuggestWrapper
+              suggestions: @_getOutTables()
+              placeholder: 'to get hint start typing'
+              value: @state.editingData.outtable
+              onChange: (newValue) =>
+                newEditingData = @state.editingData
+                newEditingData.outtable = newValue
+                @setState
+                  editingData: newEditingData
+                @_updateEditingConfig()
           ,
             p className: 'help-block', @tooltips.outtable
         if @_isLangParam()
