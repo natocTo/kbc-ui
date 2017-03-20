@@ -64,17 +64,6 @@ export default React.createClass({
     );
   },
 
-  renderHelp() {
-    if (this.state.installedFilteredComponents.count()) {
-      return (
-        <div className="row">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-        </div>
-      );
-    }
-  },
-
   renderRows() {
     let components = this.state.installedFilteredComponents;
 
@@ -157,7 +146,6 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        {this.renderHelp()}
         {this.renderRows()}
       </div>
     );
