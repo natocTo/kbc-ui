@@ -10,7 +10,10 @@ ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 fuzzy = require 'fuzzy'
 
-Autosuggest = React.createFactory(require 'react-autosuggest')
+
+AutoSuggestWrapperComponent = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
+AutosuggestWrapper = React.createFactory(AutoSuggestWrapperComponent)
+
 Loader = React.createFactory(require('kbc-react-components').Loader)
 bucketsStore = require '../../../../components/stores/StorageBucketsStore'
 storageActionCreators = require '../../../../components/StorageActionCreators'
@@ -19,19 +22,11 @@ actionCreators = require '../../../exGanalActionCreators'
 
 {span, div, p, i, form, input, label, div, a} = React.DOM
 
-createGetSuggestions = (getOptions) ->
-  (input, callback) ->
-    suggestions = getOptions()
-      .filter (value) -> fuzzy.match(input, value)
-      .slice 0, 10
-      .toList()
-    callback(null, suggestions.toJS())
-
 module.exports = React.createClass
   displayName: 'ExGanalOptionsModal'
-  
+
   mixins: [createStoreMixin(analStore, bucketsStore)]
-  
+
   propTypes:
     configId: React.PropTypes.string.isRequired
     outputBucket: React.PropTypes.string.isRequired
@@ -85,16 +80,14 @@ module.exports = React.createClass
             div className: 'form-group',
               label className: 'control-label col-xs-2', 'Outbucket'
               div className: "col-xs-10 form-group",
-                Autosuggest
-                  suggestions: createGetSuggestions(@_getBuckets)
-                  inputAttributes:
-                    className: 'form-control'
-                    placeholder: 'to get hint start typing'
-                    value: @state.outputBucket
-                    onChange: (newValue) =>
-                      @_validate newValue
-                      @setState
-                        outputBucket: newValue
+                AutosuggestWrapper
+                  suggestions: @_getBuckets()
+                  placeholder: 'to get hint start typing'
+                  value: @state.outputBucket
+                  onChange: (newValue) =>
+                    @_validate newValue
+                    @setState
+                      outputBucket: newValue
                 helpBlock if @state.error
 
         ModalFooter null,
