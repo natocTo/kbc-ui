@@ -42,7 +42,7 @@ module.exports = React.createClass
     return 'default: ' + @props.defaultOutputTable
 
   render: ->
-n    div className: 'row',
+    div className: 'row',
       div className: 'form-horizontal',
         div className: 'form-group',
           label className: 'col-md-2 control-label', 'Name'
