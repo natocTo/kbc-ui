@@ -20,21 +20,13 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
 
   getStateFromStores() {
-    const components = ComponentsStore.getAll().filter(function(component) {
-      if (component.get('flags').includes('excludeFromNewList')) {
-        return false;
-      }
-
-      return true;
-    });
-
     return {
       filterName: InstalledComponentsStore.getTrashFilter('name'),
       filterType: InstalledComponentsStore.getTrashFilter('type'),
       installedFilteredComponents: InstalledComponentsStore.getAllDeletedFiltered(),
       deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations(),
       restoringConfigurations: InstalledComponentsStore.getRestoringConfigurations(),
-      components: components
+      components: ComponentsStore.getAll()
     };
   },
 
@@ -106,6 +98,10 @@ export default React.createClass({
       {
         'label': 'Writers',
         'value': 'writer'
+      },
+      {
+        'label': 'Orchestrations',
+        'value': 'orchestrator'
       },
       {
         'label': 'Applications',

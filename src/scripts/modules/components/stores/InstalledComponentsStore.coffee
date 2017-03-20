@@ -77,21 +77,25 @@ InstalledComponentsStore = StoreUtils.createStore
     typeFilter = @getTrashFilter('type')
     components = @getAllDeleted()
 
-    if (!nameFilter || nameFilter is '') && (!typeFilter || typeFilter is '')
-      components.filter(
+    if (typeFilter && typeFilter isnt '')
+      components = components.filter(
         (component) ->
-          !trashUtils.isObsoleteComponent(component.get('id'))
+          if (typeFilter is 'orchestrator')
+            component.get('id').toString() is typeFilter
+          else
+            component.get('type').toString() is typeFilter
       )
+
+    if (!nameFilter || nameFilter is '')
+      components
     else
       components.filter(
         (component) ->
-          !trashUtils.isObsoleteComponent(component.get('id')) and
-          (fuzzy.match(typeFilter, component.get('type').toString())) and
           (
             fuzzy.match(nameFilter, component.get('name').toString()) or
-            fuzzy.match(nameFilter, component.get('id').toString()) or
-            fuzzy.match(nameFilter, component.get('description').toString()) or
-            @getAllDeletedConfigurationsFiltered(component).count()
+              fuzzy.match(nameFilter, component.get('id').toString()) or
+              fuzzy.match(nameFilter, component.get('description').toString()) or
+              @getAllDeletedConfigurationsFiltered(component).count()
           )
         ,
         @
