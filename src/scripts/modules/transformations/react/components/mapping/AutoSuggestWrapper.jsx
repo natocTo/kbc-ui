@@ -7,36 +7,28 @@ export default React.createClass({
     suggestions: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    name: PropTypes.string,
     placeholder: PropTypes.string.isRequired,
+    inputClassName: PropTypes.string,
     disabled: PropTypes.bool
   },
 
   getDefaultProps() {
     return {
+      inputClassName: 'form-control',
       disabled: false
     };
   },
 
-
   getInitialState() {
-    return this.getStateFromProps(this.props);
-  },
-
-  getStateFromProps(props) {
     return {
-      value: props.value,
-      suggestions: props.suggestions
+      suggestions: List()
     };
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.getStateFromProps(nextProps));
-    this.filterSuggestions({value: this.state.value});
-  },
-
-  filterSuggestions({value}) {
+  filterSuggestions(options) {
+    const value = options.value;
     const suggestions = this.props.suggestions.filter(function(val) {
       return val.toLowerCase().indexOf(value.toLowerCase()) >= 0;
     }).sortBy(function(item) {
@@ -46,7 +38,7 @@ export default React.createClass({
   },
 
   renderSuggestion(suggestion) {
-    return suggestion;
+    return (<span>{suggestion}</span>);
   },
 
   render() {
@@ -59,19 +51,16 @@ export default React.createClass({
         getSuggestionValue={(val) => val}
         inputProps={{
           onChange: this.handleChange,
-          value: this.state.value,
-          className: 'form-control',
+          value: this.props.value,
+          className: this.props.inputClassName,
           placeholder: this.props.placeholder,
           disabled: this.props.disabled
         }}
       />);
   },
 
-  handleChange(e, {newValue}) {
-    this.setState({
-      value: newValue ? newValue : ''
-    });
-    this.props.onChange(newValue);
+  handleChange(e, options) {
+    this.props.onChange(options.newValue);
   }
 
 });
