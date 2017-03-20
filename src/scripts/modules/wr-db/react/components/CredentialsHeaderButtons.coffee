@@ -82,13 +82,14 @@ templateFn = (componentId, driver, isProvisioning) ->
 
     if state in [States.SHOW_PROV_READ_CREDS, States.SHOW_STORED_CREDS]
       return React.DOM.div null,
-        button
-          className: 'btn btn-link'
-          disabled: @state.isSaving
-          onClick: @_handleResetStart
-        ,
-          span className: 'fa fa-fw fa-times'
-          ' Reset Credentials'
+        if isProvisioning
+          button
+            className: 'btn btn-link'
+            disabled: @state.isSaving
+            onClick: @_handleResetStart
+          ,
+            span className: 'fa fa-fw fa-times'
+            ' Reset Credentials'
         if !@state.isProvisionedCreds
           button
             className: 'btn btn-success'
