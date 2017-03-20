@@ -36,23 +36,23 @@ templateFn = (componentId, driver, isProvisioning) ->
     localState: localState
     isProvisionedCreds: isProvisionedCreds
 
+  _handleEditStart: ->
+    creds = @state.currentCredentials
+    creds = creds?.set 'driver', driver
+    creds = @_getDefaultValues(creds)
+    creds = creds.map((value, key) ->
+      isHashed = key[0] == '#'
+      if isHashed
+        return ''
+      else
+        return value
+    )
+    #ActionCreators.resetCredentials componentId, @state.currentConfigId
+    ActionCreators.setEditingData componentId, @state.currentConfigId, 'creds', creds
+    @_updateLocalState('credentialsState', States.CREATE_NEW_CREDS)
+
   _handleResetStart: ->
-    if @state.isProvisionedCreds
-      @_updateLocalState('credentialsState', States.INIT)
-    else
-      creds = @state.currentCredentials
-      creds = creds?.set 'driver', driver
-      creds = @_getDefaultValues(creds)
-      creds = creds.map((value, key) ->
-        isHashed = key[0] == '#'
-        if isHashed
-          return ''
-        else
-          return value
-        )
-      #ActionCreators.resetCredentials componentId, @state.currentConfigId
-      ActionCreators.setEditingData componentId, @state.currentConfigId, 'creds', creds
-      @_updateLocalState('credentialsState', States.CREATE_NEW_CREDS)
+    @_updateLocalState('credentialsState', States.INIT)
 
   _handleCancel: ->
     if @state.isProvisionedCreds
@@ -79,22 +79,27 @@ templateFn = (componentId, driver, isProvisioning) ->
 
   render: ->
     state = @state.localState.get 'credentialsState'
-    buttonText = ' Edit'
-    if @state.isProvisionedCreds
-      buttonText = ' Reset Credentials'
 
     if state in [States.SHOW_PROV_READ_CREDS, States.SHOW_STORED_CREDS]
       return React.DOM.div null,
         button
-          className: 'btn btn-success'
+          className: 'btn btn-link'
           disabled: @state.isSaving
           onClick: @_handleResetStart
         ,
-          span className: 'fa fa-edit'
-          buttonText
+          span className: 'fa fa-fw fa-times'
+          ' Reset Credentials'
+        if !@state.isProvisionedCreds
+          button
+            className: 'btn btn-success'
+            disabled: @state.isSaving
+            onClick: @_handleEditStart
+          ,
+            span className: 'fa fa-edit'
+            ' Edit'
 
     if state in [States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS]
-      return React.DOM.div className: 'kbc-buttons',
+      return React.DOM.div null,
         if @state.isSaving
           Loader()
         button
