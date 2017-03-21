@@ -139,6 +139,7 @@ export default React.createClass({
         </label>
         <div className="col-sm-6">
           <DatePicker
+            className="form-control"
             name={name}
             dateFormat={DATE_FORMAT}
             {...extraProps}

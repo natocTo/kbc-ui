@@ -71,7 +71,7 @@ export default React.createClass({
          </div>
         }
          {isEditing ?
-          {editor} :
+          editor :
           <div className="col-md-9 kbc-main-content-with-nav">
             {editor}
           </div>
