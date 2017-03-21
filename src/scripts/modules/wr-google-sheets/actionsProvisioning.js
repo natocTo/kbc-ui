@@ -61,59 +61,68 @@ export default function(COMPONENT_ID, configId) {
     });
   }
 
-  function saveTables(tables, savingPath, description) {
-    const inputTables = tables.map((t) => {
-      return Map()
-        .set('source', t.get('tableId'))
-        .set('destination', t.get('tableId') + '.csv');
-    });
-
+  function saveTables(tables, mappings, savingPath, description) {
     const desc = description || 'Update tables';
     const data = store.configData
       .setIn(['parameters', 'tables'], tables)
-      .setIn(['storage', 'input', 'tables'], inputTables)
+      .setIn(['storage', 'input', 'tables'], mappings)
     ;
     return saveConfigData(data, savingPath, desc);
   }
 
-  function saveTable(table) {
-    // @todo add new sheet, when importing to existing spreadsheet
-    // create spreadsheet if not exist
+  function saveTable(table, mapping) {
     if (!table.get('fileId')) {
+      // create spreadsheet if not exist
       updateLocalState(store.getSavingPath(table.get('id')), true);
       return createSpreadsheet(table).then((data) => {
-        return updateTable(table
-          .set('fileId', data.spreadsheet.spreadsheetId)
-          .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId)
+        return updateTable(
+          table
+            .set('fileId', data.spreadsheet.spreadsheetId)
+            .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId),
+          mapping
         );
       });
     } else if (!table.get('sheetId')) {
+      // add new sheet, when importing to existing spreadsheet
       return addSheet(table).then((data) => {
-        return updateTable(table
-          .set('fileId', data.spreadsheet.spreadsheetId)
-          .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId)
+        return updateTable(
+          table
+            .set('fileId', data.spreadsheet.spreadsheetId)
+            .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId),
+          mapping
         );
       });
     }
-    return updateTable(table);
+    return updateTable(table, mapping);
   }
 
-  function updateTable(table) {
+  function updateTable(table, mapping) {
     const tid = table.get('id');
     let found = false;
     let newTables = store.tables.map((t) => {
       if (t.get('id') === tid) {
         found = true;
         return table;
-      } else {
-        return t;
       }
+      return t;
     });
     if (!found) {
       newTables = newTables.push(table);
     }
 
-    return saveTables(newTables, store.getSavingPath(tid), `Update table ${tid}`);
+    let foundMapping = false;
+    let newMappings = store.mappings.map((t) => {
+      if (t.get('source') === mapping.get('source')) {
+        foundMapping = true;
+        return mapping;
+      }
+      return t;
+    });
+    if (!foundMapping) {
+      newMappings.push(mapping);
+    }
+
+    return saveTables(newTables, newMappings, store.getSavingPath(tid), `Update table ${tid}`);
   }
 
   function deleteTable(table) {

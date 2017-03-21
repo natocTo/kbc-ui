@@ -155,11 +155,13 @@ export default function(COMPONENT_ID) {
 
     showTableModal(step, sheet) {
       const dirtySheet = sheet ? sheet : this.state.actions.touchSheet();
+      const mapping = sheet ? this.state.actions.getMapping(sheet) : Map();
       const modalData = Map()
         .set('sheet', dirtySheet)
         .set('currentSheet', sheet)
         .set('step', step)
-        .set('uploadType', 'new');
+        .set('uploadType', 'new')
+        .set('mapping', mapping);
       this.state.actions.updateLocalState(['SheetModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);
     },

@@ -5,6 +5,7 @@ import WizardButtons from './WizardButtons';
 import InputTab from './InputTab';
 import SpreadsheetTab from './SpreadsheetTab';
 import SheetTab from './SheetTab';
+import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 
 export default React.createClass({
   propTypes: {
@@ -20,6 +21,8 @@ export default React.createClass({
 
   render() {
     const step = this.localState(['step'], 1);
+    const storageTables = StorageTablesStore.getAll();
+
     return (
       <Modal
         bsSize="large"
@@ -39,8 +42,9 @@ export default React.createClass({
           <TabbedArea activeKey={step} defaultActiveEventKey={1} animation={false}>
             <TabPane tab="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
-                onSelect={(value) => this.updateLocalState(['sheet', 'tableId'], value)}
-                value={this.sheet('tableId')}
+                onSelect={this.updateInputMapping}
+                tables={storageTables}
+                mapping={this.localState(['mapping'], Map())}
               />
             </TabPane>
             <TabPane tab="Destination" eventKey={2} disabled={step !== 3}>
@@ -120,6 +124,11 @@ export default React.createClass({
     } else {
       return this.localState(['sheet'], defaultValue);
     }
+  },
+
+  updateInputMapping(value) {
+    this.updateLocalState(['mapping'], value);
+    this.updateLocalState(['sheet', 'tableId'], value.get('source'));
   },
 
   updateLocalState(path, newValue) {

@@ -27,7 +27,7 @@ export default React.createClass({
             Sheet title
           </label>
           <div className="col-md-10">
-            <input
+            <Input
               placeholder="Sheet1"
               type="text"
               value={this.props.valueSheetTitle}

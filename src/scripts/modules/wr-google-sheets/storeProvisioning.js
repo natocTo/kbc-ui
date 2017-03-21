@@ -11,6 +11,7 @@ export default function(COMPONENT_ID, configId) {
   const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id'], configId);
   const parameters = configData.get('parameters', Map());
   const tables = parameters.get('tables', List());
+  const mappings = configData.get(['storage', 'input', 'tables'], Map());
 
   const tempPath = ['_'];
   const editPath = tempPath.concat('editing');
@@ -29,6 +30,7 @@ export default function(COMPONENT_ID, configId) {
     oauthCredentialsId: oauthCredentialsId,
     tables: tables,
     hasTables: tables.count() > 0,
+    mappings: mappings,
 
     // local state stuff
     getLocalState(path) {
@@ -42,7 +44,9 @@ export default function(COMPONENT_ID, configId) {
       const table = findTable(tid).set('enabled', true);
       return configData.setIn(['parameters', 'tables'], List().push(table)).toJS();
     },
-
+    getInputMapping(tableId) {
+      return mappings.find((t) => t.get('source') === tableId);
+    },
     getEditPath: (what) => what ? editPath.concat(what) : editPath,
     getPendingPath: (what) => pendingPath.concat(what),
     getSavingPath: (what) => savingPath.concat(what),
