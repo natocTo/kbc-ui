@@ -1,6 +1,5 @@
 import React from 'react';
-import {ModalTrigger} from 'react-bootstrap';
-import Modal from './TableOutputMappingModal';
+import TableOutputMappingModal from './TableOutputMappingModal';
 import actionCreators from '../../../InstalledComponentsActionCreators';
 
 export default React.createClass({
@@ -13,17 +12,7 @@ export default React.createClass({
   },
 
   render() {
-    return (
-      <ModalTrigger modal={this.modal()}>
-        <button className="btn btn-primary" onClick={this.handleClick}>
-          <span className="kbc-icon-plus" /> Add Table Output
-        </button>
-      </ModalTrigger>
-    );
-  },
-
-  modal() {
-    return React.createElement(Modal, {
+    return React.createElement(TableOutputMappingModal, {
       mode: 'create',
       mapping: this.props.mapping,
       tables: this.props.tables,
