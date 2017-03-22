@@ -147,6 +147,7 @@ module.exports =
                 "Orchestration #{orchestration.get('name')} was moved to "
                 React.createElement Link,
                   to: 'settings-trash'
+                  onClick: @props.onClick
                 ,
                   'Trash'
 

@@ -445,23 +445,27 @@ module.exports =
                   "Configuration #{configuration.get('name')} was moved to "
                   React.createElement Link,
                     to: 'settings-trash'
+                    onClick: @props.onClick
                   ,
                     'Trash'
                   '.'
          else
           ApplicationActionCreators.sendNotification
             message: React.createClass
+              revertConfigRemove: ->
+                actions.restoreConfiguration(componentId, configurationId)
+                @props.onClick()
               render: ->
                 React.DOM.span null,
                   "Configuration #{configuration.get('name')} was moved to "
                   React.createElement Link,
                     to: 'settings-trash'
+                    onClick: @props.onClick
                   ,
                     'Trash'
                   '. '
                   React.DOM.a
-                    onClick: (e) ->
-                      actions.restoreConfiguration(componentId, configurationId)
+                    onClick: @revertConfigRemove
                   ,
                     'Revert'
     .catch (e) ->
