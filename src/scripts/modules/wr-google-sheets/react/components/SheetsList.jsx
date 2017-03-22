@@ -104,7 +104,7 @@ export default React.createClass({
     return (
       <button
         className="btn btn-link"
-        onClick={() => this.props.onEditFn('sheetInExisting', item)}
+        onClick={() => this.props.onEditFn(1, item)}
       >
         <Tooltip tooltip="Edit" placement="top">
           <i className="kbc-icon-pencil" />
