@@ -104,6 +104,7 @@ export default React.createClass({
   restoreConfirmProps() {
     return {
       title: 'Restore configuration',
+      buttonType: 'success',
       text: this.restoreConfirmMessage(),
       onConfirm: this.handleRestore
     };
