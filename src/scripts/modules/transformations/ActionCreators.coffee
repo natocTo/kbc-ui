@@ -2,10 +2,14 @@ dispatcher = require '../../Dispatcher'
 constants = require './Constants'
 React = require 'react'
 {Link} = require 'react-router'
+
+ConfigurationCopiedNotification = require('../components/react/components/ConfigurationCopiedNotification').default
+
 transformationsApi = require './TransformationsApiAdapter'
 TransformationBucketsStore = require './stores/TransformationBucketsStore'
 TransformationsStore = require './stores/TransformationsStore'
 InstalledComponentsActionCreators = require '../components/InstalledComponentsActionCreators'
+InstalledComponentsStore = require '../components/stores/InstalledComponentsStore'
 RoutesStore = require '../../stores/RoutesStore'
 Promise = require 'bluebird'
 _ = require 'underscore'
@@ -112,7 +116,6 @@ module.exports =
 
   deleteTransformationBucket: (bucketId) ->
     actions = @
-
     bucket = TransformationBucketsStore.get bucketId
 
     dispatcher.handleViewAction
@@ -129,7 +132,7 @@ module.exports =
       ApplicationActionCreators.sendNotification
         message: React.createClass
           revertConfigRemove: ->
-            InstalledComponentsActionCreators.restoreConfiguration('transformation', bucketId)
+            actions.restoreTransformationBucket(bucket)
             @props.onClick()
           render: ->
             React.DOM.span null,
@@ -163,7 +166,10 @@ module.exports =
         bucketId: bucketId
       throw e
 
-  restoreTransformationBucket: (bucketId) ->
+  restoreTransformationBucket: (bucket) ->
+    actions = @
+    bucketId = bucket.get 'id'
+
     dispatcher.handleViewAction
       type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE
       bucketId: bucketId
@@ -174,6 +180,17 @@ module.exports =
       dispatcher.handleViewAction
         type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_SUCCESS
         bucketId: bucketId
+
+      actions.loadTransformationBucketsForce()
+      .then (response) ->
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            render: ->
+              React.createElement ConfigurationCopiedNotification,
+                message: "Bucket #{bucket.get('name')} was restored"
+                linkLabel: 'go to the configuration'
+                componentId: 'transformation'
+                configId: bucketId
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_ERROR
