@@ -23,11 +23,6 @@ export default React.createClass({
     });
   },
 
-  handleClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  },
-
   /* eslint camelcase: 0 */
   handleChange(newMapping) {
     actionCreators.changeEditingMapping(this.props.componentId,

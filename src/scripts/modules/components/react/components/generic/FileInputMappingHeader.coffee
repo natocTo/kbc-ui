@@ -1,10 +1,9 @@
 React = require 'react'
 Immutable = require 'immutable'
 Link = React.createFactory(require('react-router').Link)
-{ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
 DeleteButton = require '../../../../../react/common/DeleteButton'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
-Modal = require('./FileInputMappingModal').default
+FileInputMappingModal = require('./FileInputMappingModal').default
 
 {span, div, a, button, i, h4, small, em, code} = React.DOM
 
@@ -64,25 +63,11 @@ module.exports = React.createClass(
                     @props.value.get('query')
                   "?"
                 onConfirm: @props.onDelete
-            React.createElement OverlayTrigger,
-              overlay: React.createElement Tooltip, null, 'Edit Input'
-              placement: 'top'
-            ,
-              React.createElement ModalTrigger,
-                modal: React.createElement Modal,
-                  mode: 'edit'
-                  mapping: @props.editingValue
-                  onChange: @props.onChange
-                  onCancel: @props.onCancel
-                  onSave: @props.onSave
-              ,
-                React.DOM.button
-                  className: "btn btn-link"
-                  onClick: (e) ->
-                    component.props.onEditStart()
-                    e.preventDefault()
-                    e.stopPropagation()
-                ,
-                  React.DOM.span null,
-                    React.DOM.span {className: 'fa fa-fw kbc-icon-pencil'}
+            React.createElement FileInputMappingModal,
+              mode: 'edit'
+              mapping: @props.editingValue
+              onChange: @props.onChange
+              onCancel: @props.onCancel
+              onSave: @props.onSave
+              onEditStart: @props.onEditStart
 )
