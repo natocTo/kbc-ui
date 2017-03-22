@@ -10,7 +10,6 @@ StoreUtils = require '../../../utils/StoreUtils'
 
 _store = Map(
   bucketsById: Map()
-  deletedBucketsById: Map()
   isLoading: false
   isLoaded: false
   loadingBuckets: List()
@@ -28,14 +27,6 @@ TransformationBucketsStore = StoreUtils.createStore
   getAll: ->
     _store
       .get('bucketsById')
-      .sortBy((bucket) -> bucket.get('name'))
-
-  ###
-    Returns all deleted transformations sorted by name
-  ###
-  getAllDeleted: ->
-    _store
-      .get('deletedBucketsById')
       .sortBy((bucket) -> bucket.get('name'))
 
   ###
@@ -84,15 +75,6 @@ Dispatcher.register (payload) ->
       )
       TransformationBucketsStore.emitChange()
 
-    when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKETS_LOAD_SUCCESS
-      _store = _store.withMutations((store) ->
-        store
-          .set('deletedBucketsById', Immutable.fromJS(action.buckets).toMap().mapKeys((key, bucket) ->
-            bucket.get 'id'
-          ))
-      )
-      TransformationBucketsStore.emitChange()
-
     when Constants.ActionTypes.TRANSFORMATION_BUCKET_CREATE_SUCCESS
       _store = _store.setIn ['bucketsById', action.bucket.id], Immutable.fromJS(action.bucket)
       TransformationBucketsStore.emitChange()
@@ -123,7 +105,6 @@ Dispatcher.register (payload) ->
     when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_SUCCESS
       _store = _store.withMutations (store) ->
         store
-        .removeIn ['deletedBucketsById', action.bucketId]
         .removeIn ['pendingActions', action.bucketId, 'restore']
       TransformationBucketsStore.emitChange()
 

@@ -40,30 +40,9 @@ module.exports =
     .catch (err) ->
       throw err
 
-    # trigger load initialized
-    dispatcher.handleViewAction(
-      type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKETS_LOAD
-    )
-
-    # init load
-    transformationsApi
-    .getDeletedTransformationBuckets()
-    .then((buckets) ->
-      # load success
-      actions.receiveDeletedTransformationBuckets(buckets)
-    )
-    .catch (err) ->
-      throw err
-
   receiveTransformationBuckets: (buckets) ->
     dispatcher.handleViewAction(
       type: constants.ActionTypes.TRANSFORMATION_BUCKETS_LOAD_SUCCESS
-      buckets: buckets
-    )
-
-  receiveDeletedTransformationBuckets: (buckets) ->
-    dispatcher.handleViewAction(
-      type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKETS_LOAD_SUCCESS
       buckets: buckets
     )
 
@@ -147,19 +126,6 @@ module.exports =
                 onClick: @revertConfigRemove
               ,
                 'Revert'
-
-      # reload trash
-      transformationsApi
-      .getDeletedTransformationBuckets()
-      .then((buckets) ->
-        # load success
-        actions.receiveDeletedTransformationBuckets(buckets)
-      )
-      .catch (err) ->
-        dispatcher.handleViewAction
-          type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_ERROR
-          bucketId: bucketId
-        throw e
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_ERROR
