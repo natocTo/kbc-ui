@@ -545,6 +545,14 @@ Dispatcher.register (payload) ->
       )
       InstalledComponentsStore.emitChange()
 
+    when constants.ActionTypes.DELETED_COMPONENTS_LOAD
+      _store = _store.set 'isLoading', true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.DELETED_COMPONENTS_LOAD_ERROR
+      _store = _store.set 'isLoading', false
+      InstalledComponentsStore.emitChange()
+
     when constants.ActionTypes.DELETED_COMPONENTS_LOAD_SUCCESS
       _store = _store.withMutations((store) ->
         store

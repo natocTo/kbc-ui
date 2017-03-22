@@ -3,8 +3,6 @@ import installedComponentsActions from '../components/InstalledComponentsActionC
 import ComponentReloaderButton from '../components/react/components/ComponentsReloaderButton';
 
 // import store from './storeProvisioning';
-// import DeletedComponentsStore from '../components/stores/DeletedComponentsStore';
-
 export default {
   name: 'settings-trash',
   title: 'Trash',
@@ -15,11 +13,10 @@ export default {
   requireData: [
     () => installedComponentsActions.loadComponents()
   ],
-  // @FIXME poll deleted components
-  // poll: {
-  //   interval: 7,
-  //   action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
-  // },
+  poll: {
+    interval: 10,
+    action: () => installedComponentsActions.loadDeletedComponentsForce()
+  },
   childRoutes: [
   ]
 };

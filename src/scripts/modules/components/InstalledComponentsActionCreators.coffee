@@ -435,39 +435,38 @@ module.exports =
         configurationId: configurationId
         transition: transition
 
-      actions.loadDeletedComponentsForce()
-      .then (response) ->
-        if (trashUtils.isObsoleteComponent(componentId))
-          ApplicationActionCreators.sendNotification
-            message: React.createClass
-              render: ->
-                React.DOM.span null,
-                  "Configuration #{configuration.get('name')} was moved to "
-                  React.createElement Link,
-                    to: 'settings-trash'
-                    onClick: @props.onClick
-                  ,
-                    'Trash'
-                  '.'
-         else
-          ApplicationActionCreators.sendNotification
-            message: React.createClass
-              revertConfigRemove: ->
-                actions.restoreConfiguration(componentId, configurationId)
-                @props.onClick()
-              render: ->
-                React.DOM.span null,
-                  "Configuration #{configuration.get('name')} was moved to "
-                  React.createElement Link,
-                    to: 'settings-trash'
-                    onClick: @props.onClick
-                  ,
-                    'Trash'
-                  '. '
-                  React.DOM.a
-                    onClick: @revertConfigRemove
-                  ,
-                    'Revert'
+      if (trashUtils.isObsoleteComponent(componentId))
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            render: ->
+              React.DOM.span null,
+                "Configuration #{configuration.get('name')} was moved to "
+                React.createElement Link,
+                  to: 'settings-trash'
+                  onClick: @props.onClick
+                ,
+                  'Trash'
+                '.'
+       else
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            revertConfigRemove: ->
+              actions.restoreConfiguration(componentId, configurationId)
+              @props.onClick()
+            render: ->
+              React.DOM.span null,
+                "Configuration #{configuration.get('name')} was moved to "
+                React.createElement Link,
+                  to: 'settings-trash'
+                  onClick: @props.onClick
+                ,
+                  'Trash'
+                '. '
+                React.DOM.a
+                  onClick: @revertConfigRemove
+                ,
+                  'Revert'
+
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR

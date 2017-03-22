@@ -126,26 +126,24 @@ module.exports =
         type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_SUCCESS
         bucketId: bucketId
 
-      InstalledComponentsActionCreators.loadDeletedComponentsForce()
-        .then (response) ->
-          ApplicationActionCreators.sendNotification
-            message: React.createClass
-              revertConfigRemove: ->
-                InstalledComponentsActionCreators.restoreConfiguration('transformation', bucketId)
-                @props.onClick()
-              render: ->
-                React.DOM.span null,
-                  "Bucket #{bucket.get('name')} was moved to "
-                  React.createElement Link,
-                    to: 'settings-trash'
-                    onClick: @props.onClick
-                  ,
-                    'Trash'
-                  '. '
-                  React.DOM.a
-                    onClick: @revertConfigRemove
-                  ,
-                    'Revert'
+      ApplicationActionCreators.sendNotification
+        message: React.createClass
+          revertConfigRemove: ->
+            InstalledComponentsActionCreators.restoreConfiguration('transformation', bucketId)
+            @props.onClick()
+          render: ->
+            React.DOM.span null,
+              "Bucket #{bucket.get('name')} was moved to "
+              React.createElement Link,
+                to: 'settings-trash'
+                onClick: @props.onClick
+              ,
+                'Trash'
+              '. '
+              React.DOM.a
+                onClick: @revertConfigRemove
+              ,
+                'Revert'
 
       # reload trash
       transformationsApi
