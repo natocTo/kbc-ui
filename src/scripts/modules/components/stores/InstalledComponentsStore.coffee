@@ -498,7 +498,7 @@ Dispatcher.register (payload) ->
         .deleteIn ['deletedComponents', action.componentId, 'configurations', action.configurationId]
         .deleteIn ['restoringConfigurations', action.componentId, action.configurationId]
 
-        if !store.getIn(['deletedComponents', action.componentId, 'configurations']).count()
+        if !store.getIn(['deletedComponents', action.componentId, 'configurations'], Immutable.Map()).count()
           store = store.deleteIn ['deletedComponents', action.componentId]
 
       InstalledComponentsStore.emitChange()

@@ -355,15 +355,15 @@ module.exports =
         error: e
       throw e
 
-  restoreConfiguration: (componentId, configurationId, transition) ->
+  restoreConfiguration: (component, configuration, transition) ->
+    configurationId = configuration.get 'id'
+    componentId = component.get 'id'
+
     dispatcher.handleViewAction
       type: constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_START
       componentId: componentId
       configurationId: configurationId
       transition: transition
-
-    component = ComponentsStore.getComponent componentId
-    configuration = InstalledComponentsStore.getDeletedConfig componentId, configurationId
 
     if (transition)
       transitionTo = "generic-detail-#{component.get('type')}"
@@ -451,7 +451,7 @@ module.exports =
         ApplicationActionCreators.sendNotification
           message: React.createClass
             revertConfigRemove: ->
-              actions.restoreConfiguration(componentId, configurationId)
+              actions.restoreConfiguration(component, configuration)
               @props.onClick()
             render: ->
               React.DOM.span null,

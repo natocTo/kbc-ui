@@ -119,6 +119,6 @@ export default React.createClass({
   },
 
   handleRestore() {
-    InstalledComponentsActionCreators.restoreConfiguration(this.props.componentId, this.props.config.get('id'), false);
+    InstalledComponentsActionCreators.restoreConfiguration(this.props.component, this.props.config, false);
   }
 });
