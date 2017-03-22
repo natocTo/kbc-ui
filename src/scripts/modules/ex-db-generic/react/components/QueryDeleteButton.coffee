@@ -34,16 +34,16 @@ module.exports = React.createClass
       span className: 'btn btn-link',
         Loader()
     else
-      OverlayTrigger
-        overlay: Tooltip null, deleteLabel
-        key: 'delete'
-        placement: @props.tooltipPlacement
+      Confirm
+        title: deleteLabel
+        text: "Do you really want to delete " + this.props.entityName.toLowerCase() + " #{@props.query.get('name')}?"
+        buttonLabel: 'Delete'
+        onConfirm: @_deleteQuery
       ,
-        Confirm
-          title: deleteLabel
-          text: "Do you really want to delete " + this.props.entityName.toLowerCase() + " #{@props.query.get('name')}?"
-          buttonLabel: 'Delete'
-          onConfirm: @_deleteQuery
+        OverlayTrigger
+          overlay: Tooltip null, deleteLabel
+          key: 'delete'
+          placement: @props.tooltipPlacement
         ,
           button className: 'btn btn-link',
             i className: 'kbc-icon-cup'

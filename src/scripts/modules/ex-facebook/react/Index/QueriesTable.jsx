@@ -73,7 +73,7 @@ export default React.createClass({
           <i className="kbc-icon-arrow-right" />
         </div>
         <div className="td">
-            {this.renderTables(qname)}
+          {this.renderTables(qname)}
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderEditButton(query)}
@@ -156,18 +156,18 @@ export default React.createClass({
       return <span className="btn btn-link"><Loader/></span>;
     }
     return (
-      <Tooltip placement="top" tooltip="Delete">
-        <Confirm
-          title="Delete query"
-          text={`Do you really want to delete extraction of query ${query.get('name')}?`}
-          buttonLabel="Delete"
-          onConfirm={() => this.props.deleteQueryFn(query)}
-        >
+      <Confirm
+        title="Delete query"
+        text={`Do you really want to delete extraction of query ${query.get('name')}?`}
+        buttonLabel="Delete"
+        onConfirm={() => this.props.deleteQueryFn(query)}
+      >
+        <Tooltip placement="top" tooltip="Delete">
           <button className="btn btn-link">
             <i className="kbc-icon-cup" />
           </button>
-        </Confirm>
-      </Tooltip>
+        </Tooltip>
+      </Confirm>
     );
   }
 

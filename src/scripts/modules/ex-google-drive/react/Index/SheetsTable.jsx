@@ -134,18 +134,18 @@ export default React.createClass({
       return <span className="btn btn-link"><Loader/></span>;
     }
     return (
-      <Tooltip placement="top" tooltip="Delete sheet">
-        <Confirm
-          title="Delete sheet"
-          text={`Do you really want to delete extraction of sheet ${getDocumentTitle(sheet)}?`}
-          buttonLabel="Delete"
-          onConfirm={() => this.props.deleteSheetFn(sheet.get('id'))}
-        >
+      <Confirm
+        title="Delete sheet"
+        text={`Do you really want to delete extraction of sheet ${getDocumentTitle(sheet)}?`}
+        buttonLabel="Delete"
+        onConfirm={() => this.props.deleteSheetFn(sheet.get('id'))}
+      >
+        <Tooltip placement="top" tooltip="Delete sheet">
           <button className="btn btn-link">
             <i className="kbc-icon-cup" />
           </button>
-        </Confirm>
-      </Tooltip>
+        </Tooltip>
+      </Confirm>
     );
   }
 

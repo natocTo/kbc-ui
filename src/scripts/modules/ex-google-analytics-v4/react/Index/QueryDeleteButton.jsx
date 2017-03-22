@@ -14,21 +14,19 @@ export default React.createClass({
     if (this.props.isPending) {
       return <span className="btn btn-link"><Loader/></span>;
     }
-
-
     return (
-      <Tooltip placement="top" tooltip="Delete query">
-        <Confirm
-          title="Delete Query"
-          text={`Do you really want to delete query ${this.props.query.get('name')}?`}
-          buttonLabel="Delete"
-          onConfirm={() => this.props.onDeleteFn(this.props.query)}
-        >
+      <Confirm
+        title="Delete Query"
+        text={`Do you really want to delete query ${this.props.query.get('name')}?`}
+        buttonLabel="Delete"
+        onConfirm={() => this.props.onDeleteFn(this.props.query)}
+      >
+        <Tooltip placement="top" tooltip="Delete query">
           <button className="btn btn-link">
             <i className="kbc-icon-cup" />
           </button>
-        </Confirm>
-      </Tooltip>
+        </Tooltip>
+      </Confirm>
     );
   }
 

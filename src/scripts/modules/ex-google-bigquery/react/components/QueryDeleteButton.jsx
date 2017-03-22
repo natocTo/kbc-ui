@@ -24,19 +24,18 @@ export default React.createClass({
 
 
     return (
-      <Tooltip tooltip="Delete query" placement={this.props.tooltipPlacement}
-        >
-        <Confirm
-          title="Delete Query"
-          text={`Do you really want to delete query ${this.props.query.get('name')}?`}
-          buttonLabel="Delete"
-          onConfirm={() => this.props.onDeleteFn(this.props.query)}
-        >
+      <Confirm
+        title="Delete Query"
+        text={`Do you really want to delete query ${this.props.query.get('name')}?`}
+        buttonLabel="Delete"
+        onConfirm={() => this.props.onDeleteFn(this.props.query)}
+      >
+        <Tooltip tooltip="Delete query" placement={this.props.tooltipPlacement}>
           <button className="btn btn-link">
             <i className="kbc-icon-cup" />
           </button>
-        </Confirm>
-      </Tooltip>
+        </Tooltip>
+      </Confirm>
     );
   }
 
