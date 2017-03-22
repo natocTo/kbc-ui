@@ -104,7 +104,7 @@ export default React.createClass({
     } else {
       return (
         <button className="btn btn-primary" onClick={this.openModal}>
-          <span className="kbc-icon-plus" /> Add File Input
+          <span className="fa fa-fw fa-plus" /> Add File Input
         </button>
       );
     }

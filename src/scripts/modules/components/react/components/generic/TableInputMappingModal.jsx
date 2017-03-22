@@ -112,7 +112,7 @@ export default React.createClass({
       let buttonLabel = this.props.buttonLabel ? this.props.buttonLabel : 'Add Table Input';
       return (
         <Button bsStyle={buttonBsStyle} onClick={this.open}>
-          <i className="fa fa-plus" /> {buttonLabel}
+          <i className="fa fa-fw fa-plus" /> {buttonLabel}
         </Button>
       );
     }
