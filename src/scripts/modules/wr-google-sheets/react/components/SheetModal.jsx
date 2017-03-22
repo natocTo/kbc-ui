@@ -44,7 +44,7 @@ export default React.createClass({
               <InputTab
                 onSelect={this.updateInputMapping}
                 tables={storageTables}
-                mapping={this.localState(['mapping'], Map())}
+                mapping={this.localState(['currentMapping'], Map())}
               />
             </TabPane>
             <TabPane tab="Destination" eventKey={2} disabled={step !== 3}>
@@ -127,7 +127,7 @@ export default React.createClass({
   },
 
   updateInputMapping(value) {
-    this.updateLocalState(['mapping'], value);
+    this.updateLocalState(['currentMapping'], value);
     this.updateLocalState(['sheet', 'tableId'], value.get('source'));
   },
 
@@ -136,7 +136,9 @@ export default React.createClass({
   },
 
   handleSave() {
-    this.props.onSaveFn(this.sheet()).then(
+    const sheet = this.sheet();
+    const mapping = this.localState('currentMapping');
+    this.props.onSaveFn(sheet, mapping).then(
       () => this.props.onHideFn()
     );
   },

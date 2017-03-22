@@ -8,7 +8,7 @@ import ColumnsSelectRow from '../../../components/react/components/generic/Colum
 
 export default React.createClass({
   propTypes: {
-    value: PropTypes.object.isRequired,
+    mapping: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -42,7 +42,7 @@ export default React.createClass({
             <div className="col-md-10">
               <Select
                 name="Input table"
-                value={this.props.value.get('source', '')}
+                value={this.props.mapping.get('source', '')}
                 disabled={this.props.disabled}
                 placeholder="Source table"
                 onChange={this.handleChangeSource}
@@ -65,7 +65,7 @@ export default React.createClass({
     if (this.state.showDetails) {
       return (
           <ColumnsSelectRow
-            value={this.props.value}
+            value={this.props.mapping}
             disabled={this.props.disabled}
             onChange={this.props.onChange}
             allTables={this.props.tables}
@@ -80,7 +80,7 @@ export default React.createClass({
       return (
         <div className="row">
           <DaysFilterInput
-            mapping={this.props.value}
+            mapping={this.props.mapping}
             disabled={this.props.disabled}
             onChange={this.props.onChange}
           />
@@ -94,7 +94,7 @@ export default React.createClass({
     if (this.state.showDetails) {
       return (
         <DataFilterRow
-          value={this.props.value}
+          value={this.props.mapping}
           disabled={this.props.disabled}
           onChange={this.props.onChange}
           allTables={this.props.tables}
@@ -111,16 +111,15 @@ export default React.createClass({
   },
 
   handleChangeSource(value) {
-    const newMapping = this.props.value.withMutations((mapping) => {
-      const destination = value.substr(value.lastIndexOf('.') + 1) + '.csv';
-      return mapping
-        .set('source', value)
-        .set('destination', destination)
-        .set('where_column', '')
-        .set('where_values', List())
-        .set('where_operator', 'eq')
-        .set('columns', List());
-    });
+    const destination = value + '.csv';
+    const newMapping = this.props.mapping
+      .set('source', value)
+      .set('destination', destination)
+      .set('where_column', '')
+      .set('where_values', List())
+      .set('where_operator', 'eq')
+      .set('columns', List());
+
     return this.props.onChange(newMapping);
   },
 

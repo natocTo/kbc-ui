@@ -111,15 +111,16 @@ export default function(COMPONENT_ID, configId) {
     }
 
     let foundMapping = false;
-    let newMappings = store.mappings.map((t) => {
-      if (t.get('source') === mapping.get('source')) {
+    const filterMappings = store.mappings.filter((t) => typeof t === 'object');
+    let newMappings = filterMappings.map((t) => {
+      if (typeof t === 'object' && t.get('source') === mapping.get('source')) {
         foundMapping = true;
         return mapping;
       }
       return t;
     });
-    if (!foundMapping) {
-      newMappings.push(mapping);
+    if (!foundMapping && mapping) {
+      newMappings = newMappings.push(mapping);
     }
 
     return saveTables(newTables, newMappings, store.getSavingPath(tid), `Update table ${tid}`);
@@ -127,7 +128,8 @@ export default function(COMPONENT_ID, configId) {
 
   function deleteTable(table) {
     const newTables = store.tables.filter((t) => t.get('id') !== table.get('id'));
-    return saveTables(newTables, store.getSavingPath(table.get('id')), `Update table ${table.get('tableId')}`);
+    const newMappings = store.mappings.filter((t) => t.get('source') !== table.get('tableId'));
+    return saveTables(newTables, newMappings, store.getSavingPath(table.get('id')), `Update table ${table.get('tableId')}`);
   }
 
   function toggleEnabled(table) {

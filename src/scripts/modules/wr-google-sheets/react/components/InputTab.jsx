@@ -17,7 +17,7 @@ export default React.createClass({
   render() {
     return (
       <InputMapping
-        value={this.props.mapping}
+        mapping={this.props.mapping}
         tables={this.props.tables}
         onChange={this.props.onSelect}
         disabled={this.state.isSaving}
