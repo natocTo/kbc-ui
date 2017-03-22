@@ -47,38 +47,42 @@ module.exports = React.createClass
         dataPreview: @props.dataPreview
       )
 
-    if rows.count() > 0
-      div style: {overflow: 'scroll'},
-        table className: 'table table-striped kbc-table-editor',
-          thead null,
-            tr null,
-              th null, 'Column'
-              th null, 'Database Column Name'
-              th null,
-                'Data Type'
-                div
-                  style: {'margin': 0}
-                  className: 'checkbox',
-                  label className: '',
-                    input
-                      type: 'checkbox'
-                      label: 'Hide IGNORED'
-                      onChange: this.props.onToggleHideIgnored
-                    ' Hide Ignored'
-                if @props.editingColumns
-                  @props.setAllColumnsType
-              th null,
-                'Null'
-                ' '
-                React.createElement Hint,
-                  title: 'Nullable Column'
-                ,
-                  'Empty strings in the source data will be replaced with SQL '
-                  code null, 'NULL'
-                  '.'
-              th null, 'Default Value'
-              th null, @props.editButtons
-          tbody null,
+
+    div style: {overflow: 'scroll'},
+      table className: 'table table-striped kbc-table-editor',
+        thead null,
+          tr null,
+            th null, 'Column'
+            th null, 'Database Column Name'
+            th null,
+              'Data Type'
+              div
+                style: {'margin': 0}
+                className: 'checkbox',
+                label className: '',
+                  input
+                    type: 'checkbox'
+                    label: 'Hide IGNORED'
+                    onChange: this.props.onToggleHideIgnored
+                  ' Hide Ignored'
+              if @props.editingColumns
+                @props.setAllColumnsType
+            th null,
+              'Null'
+              ' '
+              React.createElement Hint,
+                title: 'Nullable Column'
+              ,
+                'Empty strings in the source data will be replaced with SQL '
+                code null, 'NULL'
+                '.'
+            th null, 'Default Value'
+            th null, @props.editButtons
+        tbody null,
+          if rows.count() > 0
             rows
-    else
-      div className: 'row', 'No Columns.'
+          else
+            tr null,
+              td colSpan: "6",
+                div className: 'text-center',
+                  'No Columns.'
