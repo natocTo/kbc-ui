@@ -62,18 +62,19 @@ module.exports = React.createClass
                 tableId: @props.table.get('id')
             ,
               i className: 'fa fa-fw kbc-icon-pencil'
-        React.createElement OverlayTrigger,
-          overlay: React.createElement Tooltip, null, 'Delete table from configuration'
-          placement: 'top'
         ,
-          React.createElement Confirm,
-            key: @props.table.get 'id'
-            title: "Remove #{@props.table.get('id')}"
-            text: 'You are about to remove the table from the configuration.'
-            buttonLabel: 'Remove'
-            onConfirm: =>
-              @props.deleteRowFn()
-          ,
+        React.createElement Confirm,
+          key: @props.table.get 'id'
+          title: "Remove #{@props.table.get('id')}"
+          text: 'You are about to remove the table from the configuration.'
+          buttonLabel: 'Remove'
+          onConfirm: =>
+            @props.deleteRowFn()
+        ,
+          React.createElement OverlayTrigger,
+            overlay: React.createElement Tooltip, null, 'Delete table from configuration'
+            placement: 'top'
+
             button className: 'btn btn-link',
               i className: 'kbc-icon-cup'
         if not @props.isDeleted
