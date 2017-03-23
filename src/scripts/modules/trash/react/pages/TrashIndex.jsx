@@ -61,9 +61,15 @@ export default React.createClass({
 
     if (components.count()) {
       return components.map(function(component) {
+        let configurations = InstalledComponentsStore.getAllDeletedConfigurationsFiltered(component);
+        if (configurations.count() < 1) {
+          configurations = component.get('configurations');
+        }
+
         return (
           <DeletedComponentRow
             component={component}
+            configurations={configurations}
             deletingConfigurations={this.state.deletingConfigurations.get(component.get('id'), Map())}
             restoringConfigurations={this.state.restoringConfigurations.get(component.get('id'), Map())}
             key={component.get('id')}

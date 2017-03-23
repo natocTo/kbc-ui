@@ -6,6 +6,7 @@ export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
   propTypes: {
     component: PropTypes.object.isRequired,
+    configurations: PropTypes.object.isRequired,
     deletingConfigurations: PropTypes.object.isRequired,
     restoringConfigurations: PropTypes.object.isRequired
   },
@@ -39,7 +40,7 @@ export default React.createClass({
   },
 
   configurations() {
-    return this.props.component.get('configurations').map((configuration) => {
+    return this.props.configurations.map((configuration) => {
       return React.createElement(DeletedConfigurationRow, {
         component: this.props.component,
         config: configuration,
