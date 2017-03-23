@@ -88,16 +88,16 @@ module.exports = React.createClass
       span className: 'btn btn-link',
         React.createElement Loader
     else
-      React.createElement Tooltip,
-        tooltip: 'Remove table from configuration'
-        placement: 'top'
-        React.createElement Confirm,
-          key: @props.table.get 'id'
-          title: "Remove #{@props.table.get('id')}"
-          text: 'You are about to remove the table from the configuration.'
-          buttonLabel: 'Remove'
-          onConfirm: =>
-            @props.deleteTableFn(@props.table.get('id'))
-        ,
+      React.createElement Confirm,
+        key: @props.table.get 'id'
+        title: "Remove #{@props.table.get('id')}"
+        text: 'You are about to remove the table from the configuration.'
+        buttonLabel: 'Remove'
+        onConfirm: =>
+          @props.deleteTableFn(@props.table.get('id'))
+      ,
+        React.createElement Tooltip,
+          tooltip: 'Remove table from configuration'
+          placement: 'top'
           button className: 'btn btn-link',
             i className: 'kbc-icon-cup'
