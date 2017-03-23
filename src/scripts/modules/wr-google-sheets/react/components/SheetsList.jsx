@@ -1,13 +1,12 @@
 import React, {PropTypes} from 'react';
-
+import {Loader} from 'kbc-react-components';
+import {Map} from 'immutable';
+import Tooltip from '../../../../react/common/Tooltip';
+import Confirm from '../../../../react/common/Confirm';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import RunButton from '../../../components/react/components/RunComponentButton';
-
-import Tooltip from '../../../../react/common/Tooltip';
-import {Loader} from 'kbc-react-components';
-import Confirm from '../../../../react/common/Confirm';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
-import {Button} from 'react-bootstrap';
+import TablesByBucketsPanel from '../../../components/react/components/TablesByBucketsPanel';
 
 export default React.createClass({
   propTypes: {
@@ -15,47 +14,69 @@ export default React.createClass({
     configId: PropTypes.string.isRequired,
     inputTables: PropTypes.object.isRequired,
     items: PropTypes.object.isRequired,
-    onAddFn: PropTypes.func.isRequired,
     onDeleteFn: PropTypes.func.isRequired,
     onEditFn: PropTypes.func.isRequired,
     toggleEnabledFn: PropTypes.func.isRequired,
     isPendingFn: PropTypes.func.isRequired,
-    getRunSingleDataFn: PropTypes.func.isRequired
+    getRunSingleDataFn: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    localState: PropTypes.object.isRequired,
+    updateLocalState: PropTypes.func.isRequired,
+    prepareLocalState: PropTypes.func.isRequired
   },
 
   render() {
     return (
-      <div className="table table-striped table-hover">
-        <div className="thead">
-          <div className="tr">
-            <div className="th">
-              <strong>Table Name</strong>
-            </div>
-            <div className="th">
-              {/* right arrow */}
-            </div>
-            <div className="th">
-              <strong>Spreadsheet</strong>
-            </div>
-            <div className="th">
-              <strong>Sheet</strong>
-            </div>
-            <div className="th pull-right">
-              <Button bsStyle="success" onClick={() => this.props.onAddFn(1, null)}>
-                Add Table
-              </Button>
-              {/* action buttons */}
-            </div>
-          </div>
+      <TablesByBucketsPanel
+        renderTableRowFn={this.renderRow}
+        renderHeaderRowFn={this.renderHeaderRow}
+        filterFn={this.filterBuckets}
+        searchQuery={this.props.searchQuery}
+        isTableExportedFn={(tableId) => this.props.items.filter((i) => i.get('tableId') === tableId).first()}
+        onToggleBucketFn={this.handleToggleBucket}
+        isBucketToggledFn={this.isBucketToggled}
+        showAllTables={false}
+        configuredTables={this.props.inputTables.map((table) => table.get('id')).toJS()}
+        renderDeletedTableRowFn={(table) => this.renderRowDeleted(table)}
+      />
+    );
+  },
+
+  handleSearchQueryChange(query) {
+    return this.props.updateLocalState(['searchQuery'], query);
+  },
+
+  handleToggleBucket(bucketId) {
+    const bucketToggles = this.props.localState.get('bucketToggles', Map());
+    return this.props.updateLocalState(['bucketToggles'], bucketToggles.set(bucketId, !bucketToggles.get(bucketId)));
+  },
+
+  isBucketToggled(bucketId) {
+    const bucketToggles = this.props.localState.get('bucketToggles', Map());
+    return !!bucketToggles.get(bucketId);
+  },
+
+  renderHeaderRow() {
+    return (
+      <div className="tr">
+        <div className="th">
+          <strong>Table Name</strong>
         </div>
-        <div className="tbody">
-          {this.props.items.map((item) => this.renderRow(item))}
+        <div className="th">
+          {/* right arrow */}
+        </div>
+        <div className="th">
+          <strong>Spreadsheet / Sheet</strong>
+        </div>
+        <div className="th pull-right">
+          {/* action buttons */}
         </div>
       </div>
     );
   },
 
-  renderRow(item) {
+  renderRow(table) {
+    const item = this.props.items.filter((i) => i.get('tableId') === table.get('id')).first();
     return (
       <div className="tr">
         <div className="td">
@@ -65,17 +86,33 @@ export default React.createClass({
           <i className="kbc-icon-arrow-right" />
         </div>
         <div className="td">
-          {item.get('title')}
-          {/* @todo link to google drive */}
-        </div>
-        <div className="td">
-          {item.get('sheetTitle')}
+          {this.renderGoogleLink(item)}
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderEditButton(item)}
           {this.renderDeleteButton(item)}
           {this.renderEnabledButton(item)}
           {this.renderRunButton(item)}
+        </div>
+      </div>
+    );
+  },
+
+  renderRowDeleted(table) {
+    const item = this.props.items.filter((i) => i.get('tableId') === table.get('id')).first();
+    return (
+      <div className="tr">
+        <div className="td">
+          {this.renderFieldTable(item.get('tableId'))}
+        </div>
+        <div className="td">
+          <i className="kbc-icon-arrow-right" />
+        </div>
+        <div className="td">
+          {this.renderGoogleLink(item)}
+        </div>
+        <div className="td text-right kbc-no-wrap">
+          {this.renderDeleteButton(item)}
         </div>
       </div>
     );
@@ -160,6 +197,15 @@ export default React.createClass({
       >
         You are about to upload {item.get('title')}
       </RunButton>
+    );
+  },
+
+  renderGoogleLink(sheet) {
+    const url = `https://docs.google.com/spreadsheets/d/${sheet.get('fileId')}/edit#gid=${sheet.get('sheetId')}`;
+    return (
+      <a href={url} target="_blank">
+        {sheet.get('title')} / {sheet.get('sheetTitle')}
+      </a>
     );
   }
 });

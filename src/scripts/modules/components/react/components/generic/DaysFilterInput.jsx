@@ -29,7 +29,6 @@ export default React.createClass({
         onChange={this._handleChangeDays}
         labelClassName={this.props.labelClassName}
         wrapperClassName={this.props.wrapperClassName}
-
       />
     );
   },
@@ -38,6 +37,4 @@ export default React.createClass({
     const value = this.props.mapping.set('days', parseInt(e.target.value, 10));
     this.props.onChange(value);
   }
-
-
 });

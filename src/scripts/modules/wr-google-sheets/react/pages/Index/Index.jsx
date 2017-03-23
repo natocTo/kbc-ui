@@ -25,6 +25,7 @@ import EmptyState from '../../../../components/react/components/ComponentEmptySt
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import {Button} from 'react-bootstrap';
+import SearchRow from '../../../../../react/common/SearchRow';
 
 export default function(COMPONENT_ID) {
   return React.createClass({
@@ -56,35 +57,32 @@ export default function(COMPONENT_ID) {
           {this.renderTableModal()}
           <div className="col-md-9 kbc-main-content">
             <div className="row kbc-header">
-              <div className="col-sm-12">
+              {this.renderAuthorizedInfo('col-sm-12')}
+            </div>
+            <div className="row kbc-header">
+              <div className={this.isAuthorized() ? 'col-sm-8' : 'col-sm-12'}>
                 <ComponentDescription
                   componentId={COMPONENT_ID}
                   configId={this.state.configId}
                 />
               </div>
-            </div>
-            <div className="row">
-              {this.renderAuthorizedInfo('col-xs-6')}
-            </div>
-            <div className="row" style={{'padding-left': 0, 'padding-right': 0}}>
               {
-                this.state.store.hasTables ?
-                  <SheetsList
-                    componentId={COMPONENT_ID}
-                    configId={this.state.configId}
-                    inputTables={this.state.allTables}
-                    items={this.state.store.tables}
-                    onAddFn={this.showTableModal}
-                    onDeleteFn={this.state.actions.deleteTable}
-                    onEditFn={this.showTableModal}
-                    toggleEnabledFn={this.state.actions.toggleEnabled}
-                    isPendingFn={this.state.store.isPending}
-                    getRunSingleDataFn={this.state.store.getRunSingleData}
-                  />
-                  :
-                  this.renderEmptyItems()
+                this.isAuthorized() ?
+                  <div className="col-sm-4 kbc-buttons">
+                    <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
+                      Add Table
+                    </Button>
+                  </div>
+                  : null
               }
             </div>
+            {this.renderSearchRow()}
+            {
+              this.state.store.hasTables ?
+                this.renderSheetsList()
+                :
+                this.renderEmptyItems()
+            }
           </div>
 
           <div className="col-md-3 kbc-main-sidebar">
@@ -119,6 +117,37 @@ export default function(COMPONENT_ID) {
             />
           </div>
         </div>
+      );
+    },
+
+    renderSearchRow() {
+      if (this.state.store.hasTables) {
+        return (
+          <SearchRow
+            className="row kbc-search-row"
+            onChange={this.handleSearchQueryChange}
+            query={this.state.localState.get('searchQuery', '')}
+          />
+        );
+      }
+      return null;
+    },
+
+    renderSheetsList() {
+      return (
+        <SheetsList
+          componentId={COMPONENT_ID}
+          configId={this.state.configId}
+          inputTables={this.state.allTables}
+          items={this.state.store.tables}
+          onDeleteFn={this.state.actions.deleteTable}
+          onEditFn={this.showTableModal}
+          toggleEnabledFn={this.state.actions.toggleEnabled}
+          isPendingFn={this.state.store.isPending}
+          searchQuery={this.state.localState.get('searchQuery', '')}
+          getRunSingleDataFn={this.state.store.getRunSingleData}
+          {...this.state.actions.prepareLocalState('SheetsList')}
+        />
       );
     },
 

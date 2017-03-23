@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import _ from 'underscore';
 import {List} from 'immutable';
 import Select from '../../../../../react/common/Select';
+
 export default React.createClass({
   propTypes: {
     value: PropTypes.object.isRequired,
@@ -12,7 +13,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row col-md-12">
+      <div className="row">
         <div className="form-group form-group-sm">
           <label className="col-xs-2 control-label"> Columns</label>
           <div className="col-xs-10">

@@ -13,7 +13,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row col-md-12">
+      <div className="row">
         <div className="form-group form-group-sm">
           <label className="col-xs-2 control-label">Data filter</label>
           <div className="col-xs-4">
