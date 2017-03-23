@@ -7,7 +7,6 @@ TransformationBucketsStore  = require('../../../stores/TransformationBucketsStor
 StorageTablesStore  = require('../../../../components/stores/StorageTablesStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
 TransformationsActionCreators = require '../../../ActionCreators'
-{Tooltip, Confirm, Loader} = require '../../../../../react/common/common'
 GraphContainer = React.createFactory(require './GraphContainer')
 
 {div, span, ul, li, a, em, h2} = React.DOM
