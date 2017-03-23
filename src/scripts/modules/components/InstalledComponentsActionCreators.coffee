@@ -388,10 +388,11 @@ module.exports =
           message: React.createClass
             render: ->
               React.createElement ConfigurationCopiedNotification,
-                message: "Configuration #{configuration.get('name')} was restored"
-                linkLabel: 'go to the configuration'
+                message: "Configuration #{configuration.get('name')} was "
+                linkLabel: 'restored'
                 componentId: componentId
                 configId: configurationId
+                onClick: @props.onClick
 
     .catch (e) ->
       dispatcher.handleViewAction

@@ -11,12 +11,14 @@ export default React.createClass({
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
     message: React.PropTypes.string,
-    linkLabel: React.PropTypes.string
+    linkLabel: React.PropTypes.string,
+    onClick: React.PropTypes.func
   },
 
   getDefaultProps() {
     return {
-      message: 'Configuration copied',
+      onClick: function() {},
+      message: 'Configuration copied,',
       linkLabel: 'go to the new configuration'
     };
   },
@@ -24,7 +26,7 @@ export default React.createClass({
   render() {
     return (
       <span>
-        {this.props.message},
+        {this.props.message}
         {' '}{this.renderLink()}.
       </span>
     );
@@ -38,6 +40,7 @@ export default React.createClass({
         <Link
           to="transformationBucket"
           params={{config: configId}}
+          onClick={this.props.onClick}
         >
           {linkLabel.replace(/ /g, '\u00a0')}
         </Link>
@@ -49,6 +52,7 @@ export default React.createClass({
         <Link
           to={componentId}
           params={{config: configId}}
+          onClick={this.props.onClick}
         >
           {linkLabel.replace(/ /g, '\u00a0')}
         </Link>
@@ -61,6 +65,7 @@ export default React.createClass({
       <Link
         to={GENERIC_DETAIL_PREFIX + components.getIn([componentId, 'type']) + '-config'}
         params={{component: componentId, config: configId}}
+        onClick={this.props.onClick}
       >
         {linkLabel.replace(/ /g, '\u00a0')}
       </Link>

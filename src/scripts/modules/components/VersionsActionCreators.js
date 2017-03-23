@@ -175,10 +175,15 @@ module.exports = {
         // send notification
         ApplicationActionCreators.sendNotification({
           message: React.createClass({
+            propTypes: {
+              onClick: React.PropTypes.func
+            },
+
             render() {
               return React.createElement(ConfigurationCopiedNotification, {
                 componentId: componentId,
-                configId: result.id
+                configId: result.id,
+                onClick: this.props.onClick
               });
             }
           })

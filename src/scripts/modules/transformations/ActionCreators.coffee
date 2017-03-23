@@ -153,10 +153,11 @@ module.exports =
           message: React.createClass
             render: ->
               React.createElement ConfigurationCopiedNotification,
-                message: "Bucket #{bucket.get('name')} was restored"
-                linkLabel: 'go to the configuration'
+                message: "Bucket #{bucket.get('name')} was "
+                linkLabel: 'restored'
                 componentId: 'transformation'
                 configId: bucketId
+                onClick: @props.onClick
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_ERROR
