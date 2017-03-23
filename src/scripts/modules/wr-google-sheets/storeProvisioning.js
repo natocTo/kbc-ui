@@ -52,7 +52,7 @@ export default function(COMPONENT_ID, configId) {
     getSavingPath: (what) => savingPath.concat(what),
     isEditing: (what) => editData.hasIn([].concat(what)),
     isSaving: (what) => localState().getIn(savingPath.concat(what), false),
-    isPending: (what) => localState().getIn(pendingPath.concat(what), null),
+    isPending: (what) => localState().getIn(pendingPath.concat(what), false),
     isAuthorized() {
       const creds = this.oauthCredentials;
       return creds && creds.has('id');

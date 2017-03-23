@@ -160,7 +160,7 @@ export default function(COMPONENT_ID) {
         .set('sheet', dirtySheet)
         .set('currentSheet', sheet)
         .set('step', step)
-        .set('uploadType', 'new')
+        .set('uploadType', sheet ? 'existing' : 'new')
         .set('currentMapping', mapping);
       this.state.actions.updateLocalState(['SheetModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);

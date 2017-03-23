@@ -104,7 +104,7 @@ export default React.createClass({
     return (
       <button
         className="btn btn-link"
-        onClick={() => this.props.onEditFn(1, item)}
+        onClick={() => this.props.onEditFn(1, item, false)}
       >
         <Tooltip tooltip="Edit" placement="top">
           <i className="kbc-icon-pencil" />
@@ -140,7 +140,7 @@ export default React.createClass({
         activateTooltip="Enable"
         deactivateTooltip="Disable"
         isActive={item.get('enabled')}
-        isPending={this.props.isPendingFn(['toggle', item.get('id')])}
+        isPending={this.props.isPendingFn(item.get('id'))}
         onChange={() => this.props.toggleEnabledFn(item)}
       />
     );

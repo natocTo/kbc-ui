@@ -71,9 +71,9 @@ export default function(COMPONENT_ID, configId) {
   }
 
   function saveTable(table, mapping) {
+    updateLocalState(store.getSavingPath(table.get('id')), true);
     if (!table.get('fileId')) {
       // create spreadsheet if not exist
-      updateLocalState(store.getSavingPath(table.get('id')), true);
       return createSpreadsheet(table).then((data) => {
         return updateTable(
           table
@@ -86,9 +86,7 @@ export default function(COMPONENT_ID, configId) {
       // add new sheet, when importing to existing spreadsheet
       return addSheet(table).then((data) => {
         return updateTable(
-          table
-            .set('fileId', data.spreadsheet.spreadsheetId)
-            .set('sheetId', data.spreadsheet.sheets[0].properties.sheetId),
+          table.set('sheetId', data.sheet.sheetId),
           mapping
         );
       });
@@ -113,7 +111,7 @@ export default function(COMPONENT_ID, configId) {
     let foundMapping = false;
     const filterMappings = store.mappings.filter((t) => typeof t === 'object');
     let newMappings = filterMappings.map((t) => {
-      if (typeof t === 'object' && t.get('source') === mapping.get('source')) {
+      if (mapping && typeof t === 'object' && t.get('source') === mapping.get('source')) {
         foundMapping = true;
         return mapping;
       }
@@ -133,7 +131,10 @@ export default function(COMPONENT_ID, configId) {
   }
 
   function toggleEnabled(table) {
-    return updateTable(table.set('enabled', !table.get('enabled')));
+    const pendingPath = store.getPendingPath(table.get('id'));
+    updateLocalState(pendingPath, true);
+    return updateTable(table.set('enabled', !table.get('enabled')))
+      .then(() => updateLocalState(pendingPath, false));
   }
 
   function createSpreadsheet(table) {

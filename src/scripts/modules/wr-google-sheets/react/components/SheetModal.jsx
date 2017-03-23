@@ -42,7 +42,7 @@ export default React.createClass({
           <TabbedArea activeKey={step} defaultActiveEventKey={1} animation={false}>
             <TabPane tab="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
-                onSelect={this.updateInputMapping}
+                onSelect={this.onChangeInputMapping}
                 tables={storageTables}
                 mapping={this.localState(['currentMapping'], Map())}
               />
@@ -58,7 +58,7 @@ export default React.createClass({
                   this.updateLocalState(['sheet'].concat(['folder', 'title']), data[0].name);
                 }}
                 onChangeTitle={(e) => this.updateLocalState(['sheet'].concat('title'), e.target.value)}
-                onSwitchType={(e) => this.updateLocalState(['uploadType'], e.target.value)}
+                onSwitchType={this.onSwitchType}
                 valueTitle={this.sheet('title', '')}
                 valueFolder={this.sheet(['folder', 'title'], '/')}
                 type={this.localState('uploadType', 'new')}
@@ -66,7 +66,7 @@ export default React.createClass({
             </TabPane>
             <TabPane tab="Options" eventKey={3} disabled={step !== 3}>
               <SheetTab
-                onChangeSheetTitle={(e) => this.updateLocalState(['sheet'].concat('sheetTitle'), e.target.value)}
+                onChangeSheetTitle={this.onChangeSheetTitle}
                 onChangeAction={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}
                 valueSheetTitle={this.sheet('sheetTitle')}
                 valueAction={this.sheet('action')}
@@ -126,9 +126,29 @@ export default React.createClass({
     }
   },
 
-  updateInputMapping(value) {
+  onChangeInputMapping(value) {
+    const tableId = value.get('source');
+    const title = tableId.substr(tableId.lastIndexOf('.') + 1);
     this.updateLocalState(['currentMapping'], value);
-    this.updateLocalState(['sheet', 'tableId'], value.get('source'));
+    this.updateLocalState(['sheet', 'tableId'], tableId);
+    this.updateLocalState(['sheet', 'title'], title);
+  },
+
+  onChangeSheetTitle(event) {
+    this.updateLocalState(['sheet', 'sheetTitle'], event.target.value);
+    this.updateLocalState(['sheet', 'sheetId'], '');
+  },
+
+  onSwitchType(event) {
+    const sheet = this.sheet();
+    this.updateLocalState(
+      'sheet',
+      sheet
+        .set('title', '')
+        .set('fileId', '')
+        .set('sheetTitle', '')
+        .set('sheetId', ''));
+    this.updateLocalState(['uploadType'], event.target.value);
   },
 
   updateLocalState(path, newValue) {
