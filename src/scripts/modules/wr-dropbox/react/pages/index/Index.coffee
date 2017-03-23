@@ -284,13 +284,13 @@ module.exports = (componentId) ->
         title: "Reset Authorization #{description}"
         buttonLabel: 'Reset'
         onConfirm: @_deleteCredentials
+        childrenRootElement: React.DOM.a
       ,
-        React.DOM.a null,
-          if @state.isDeletingCredentials
-            React.createElement Loader
-          else
-            React.DOM.span className: 'fa fa-fw fa-times'
-          ' Reset Authorization'
+        if @state.isDeletingCredentials
+          React.createElement Loader
+        else
+          React.DOM.span className: 'fa fa-fw fa-times'
+        ' Reset Authorization'
 
     _renderNoTables: ->
       div null,
