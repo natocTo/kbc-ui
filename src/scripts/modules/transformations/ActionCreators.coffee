@@ -72,9 +72,9 @@ module.exports =
     )
 
   createTransformation: (bucketId, data) ->
-    changeDescription = "Create transformation " + data.get("name")
+    changeDescription = "Create transformation " + data.name
     transformationsApi
-    .createTransformation bucketId, data.toJS(), changeDescription
+    .createTransformation bucketId, data, changeDescription
     .then (transformation) ->
       dispatcher.handleViewAction(
         type: constants.ActionTypes.TRANSFORMATION_CREATE_SUCCESS

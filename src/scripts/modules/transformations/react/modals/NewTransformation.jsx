@@ -1,44 +1,12 @@
 import React from 'react';
-import { Modal, Input } from 'react-bootstrap';
+import {Modal, Input} from 'react-bootstrap';
 import {Map} from 'immutable';
 import {createTransformation} from '../../ActionCreators';
+import {backendOptions, addBackendMap} from '../../utils/transformationBackends';
 
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 import ApplicationStore from '../../../../stores/ApplicationStore';
-
-function prepareDataForCreate(data) {
-  let newData = Map({
-    name: data.get('name'),
-    description: data.get('description')
-  });
-
-  switch (data.get('backend')) {
-    case 'mysql':
-      newData = newData.set('backend', 'mysql').set('type', 'simple');
-      break;
-    case 'redshift':
-      newData = newData.set('backend', 'redshift').set('type', 'simple');
-      break;
-    case 'snowflake':
-      newData = newData.set('backend', 'snowflake').set('type', 'simple');
-      break;
-    case 'r':
-      newData = newData.set('backend', 'docker').set('type', 'r');
-      break;
-    case 'python':
-      newData = newData.set('backend', 'docker').set('type', 'python');
-      break;
-    case 'openrefine':
-      newData = newData.set('backend', 'docker').set('type', 'openrefine');
-      break;
-
-    default:
-      throw new Error('Unknown backend ' + data.get('backend'));
-  }
-
-  return newData;
-}
 
 export default React.createClass({
   propTypes: {
@@ -47,15 +15,15 @@ export default React.createClass({
   },
 
   getInitialState() {
-    const backend = ApplicationStore.getCurrentProject().get('defaultBackend') === 'snowflake' ? 'mysql' : ApplicationStore.getCurrentProject().get('defaultBackend');
     return {
       data: Map({
         isSaving: false,
         name: '',
         description: '',
-        backend: backend
+        backend: ApplicationStore.getCurrentProject().get('defaultBackend')
       }),
-      showModal: false
+      showModal: false,
+      legacyUI: ApplicationStore.hasCurrentProjectFeature('legacy-transformations-ui')
     };
   },
 
@@ -82,11 +50,9 @@ export default React.createClass({
               New Transformation
             </Modal.Title>
           </Modal.Header>
-
           <Modal.Body>
             {this.form()}
           </Modal.Body>
-
           <Modal.Footer>
             <ConfirmButtons
               isSaving={this.state.data.get('isSaving')}
@@ -106,6 +72,25 @@ export default React.createClass({
     this.open();
   },
 
+  renderBackendSelector() {
+    if (this.state.legacyUI) {
+      return (
+        <Input
+          type="select"
+          label="Backend"
+          value={this.state.data.get('backend')}
+          onChange={this.handleChange.bind(this, 'backend')}
+          labelClassName="col-sm-4"
+          wrapperClassName="col-sm-6"
+        >
+          {this.backendOptions()}
+        </Input>
+      );
+    } else {
+      return null;
+    }
+  },
+
   form() {
     return (
       <form className="form-horizontal" onSubmit={this.handleSubmit}>
@@ -117,7 +102,7 @@ export default React.createClass({
           value={this.state.data.get('name')}
           autoFocus={true}
           onChange={this.handleChange.bind(this, 'name')}
-          placeholder="Name"
+          placeholder="My Transformation"
           label="Name"
           ref="name"
           labelClassName="col-sm-4"
@@ -126,36 +111,17 @@ export default React.createClass({
           type="textarea"
           value={this.state.data.get('description')}
           onChange={this.handleChange.bind(this, 'description')}
-          placeholder="Description"
+          placeholder="It does this and that"
           label="Description"
           labelClassName="col-sm-4"
           wrapperClassName="col-sm-6"/>
-        <Input
-          type="select"
-          label="Backend"
-          value={this.state.data.get('backend')}
-          onChange={this.handleChange.bind(this, 'backend')}
-          labelClassName="col-sm-4"
-          wrapperClassName="col-sm-6"
-          >
-          {this.backendOptions()}
-        </Input>
+        {this.renderBackendSelector()}
       </form>
     );
   },
 
   backendOptions() {
-    var options = [];
-    options.push({value: 'mysql', label: 'MySQL'});
-    if (ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false)) {
-      options.push({value: 'redshift', label: 'Redshift'});
-    }
-    if (ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false)) {
-      options.push({value: 'snowflake', label: 'Snowflake'});
-    }
-    options.push({value: 'r', label: 'R'});
-    options.push({value: 'python', label: 'Python'});
-    options.push({value: 'openrefine', label: 'OpenRefine (beta)'});
+    const options = backendOptions(ApplicationStore.getSapiToken());
     return options.map(function(option) {
       return (
         <option value={option.value} key={option.value}>{option.label}</option>
@@ -182,10 +148,21 @@ export default React.createClass({
   },
 
   handleCreate() {
+    var data;
     this.setState({
       data: this.state.data.set('isSaving', true)
     });
-    createTransformation(this.props.bucket.get('id'), prepareDataForCreate(this.state.data))
+    data = {
+      name: this.state.data.get('name'),
+      description: this.state.data.get('description')
+    };
+    if (this.state.legacyUI) {
+      data = addBackendMap(data, this.state.data.get('backend'));
+    } else {
+      data.backend = this.props.bucket.getIn(['configuration', 'backend']);
+      data.type = this.props.bucket.getIn(['configuration', 'type']);
+    }
+    createTransformation(this.props.bucket.get('id'), data)
       .then(this.props.onRequestHide)
       .catch(() => {
         this.setState({

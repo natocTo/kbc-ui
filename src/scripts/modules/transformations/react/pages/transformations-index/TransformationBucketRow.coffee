@@ -7,6 +7,7 @@ TransformationActionCreators = require '../../../ActionCreators'
 RoutesStore = require '../../../../../stores/RoutesStore'
 {OverlayTrigger, Tooltip} = require 'react-bootstrap'
 descriptionExcerpt = require('../../../../../utils/descriptionExcerpt').default
+TransformationTypeLabel = React.createFactory(require '../../components/TransformationTypeLabel')
 
 {span, div, a, button, i, h4, small, em} = React.DOM
 
@@ -18,6 +19,7 @@ TransformationBucketRow = React.createClass(
     transformations: React.PropTypes.object
     pendingActions: React.PropTypes.object
     description: React.PropTypes.string
+    legacyUI: React.PropTypes.bool
 
   buttons: ->
     buttons = []
@@ -66,13 +68,35 @@ TransformationBucketRow = React.createClass(
     buttons
 
   render: ->
-    span {className: 'tr'},
-      span {className: 'td col-xs-4'},
+    items = []
+    items.push(
+      span {className: 'td col-xs-3'},
         h4 {}, @props.bucket.get('name')
-      span {className: 'td col-xs-5'},
-        small {}, descriptionExcerpt(@props.description) || em {}, 'No description'
+    )
+    if (@props.legacyUI)
+      items.push(
+        span {className: 'td col-xs-6'},
+          small {}, descriptionExcerpt(@props.description) || em {}, 'No description'
+      )
+    else
+      items.push(
+        span {className: 'td col-xs-2'},
+          TransformationTypeLabel
+            backend: @props.bucket.getIn(['configuration', 'backend'])
+            type: @props.bucket.getIn(['configuration', 'type'])
+
+      )
+      items.push(
+        span {className: 'td col-xs-4'},
+          small {}, descriptionExcerpt(@props.description) || em {}, 'No description'
+      )
+
+    items.push(
       span {className: 'td col-xs-3 text-right kbc-no-wrap'},
         @buttons()
+    )
+    span {className: 'tr'},
+      items
 
   _deleteTransformationBucket: ->
     # if transformation is deleted immediately view is rendered with missing bucket because of store changed

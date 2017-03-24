@@ -37,10 +37,13 @@ TransformationsIndex = React.createClass
   render: ->
     div className: 'container-fluid',
       div className: 'kbc-main-content',
-        React.createElement SearchRow,
-          className: 'row kbc-search-row'
-          onChange: @_handleFilterChange
-          query: @state.filter
+        if @state.buckets.count()
+          React.createElement SearchRow,
+            className: 'row kbc-search-row'
+            onChange: @_handleFilterChange
+            query: @state.filter
+        else
+          null
         span {},
           if @_getFilteredBuckets().count()
             div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'
@@ -76,6 +79,7 @@ TransformationsIndex = React.createClass
           description: TransformationBucketsStore.get(bucket.get('id')).get 'description'
           pendingActions: @state.pendingActions.get(bucket.get('id'), Immutable.Map())
           key: bucket.get 'id'
+          legacyUI: @state.legayUI
 
     React.createElement Panel,
       header: header

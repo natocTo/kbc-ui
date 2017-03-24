@@ -19,8 +19,9 @@ SidebarJobs = require('../../../../components/react/components/SidebarJobs')
 SidebarVersions = require('../../../../components/react/components/SidebarVersionsWrapper').default
 VersionsStore = require('../../../../components/stores/VersionsStore')
 ApplicationStore = require('../../../../../stores/ApplicationStore')
+TransformationTypeLabel = React.createFactory(require '../../components/TransformationTypeLabel')
 
-{div, span, input, strong, form, button, h4, i, button, small, ul, li, a} = React.DOM
+{div, span, input, strong, form, button, h4, i, button, small, ul, li, a, p} = React.DOM
 
 TransformationBucket = React.createClass
   displayName: 'TransformationBucket'
@@ -42,15 +43,24 @@ TransformationBucket = React.createClass
   componentWillReceiveProps: ->
     @setState(@getStateFromStores())
 
+  _renderTransformationTypeLabel: ->
+    if (@state.legacyUI)
+      return null
+    p className: 'text-right',
+      TransformationTypeLabel
+        backend: @state.bucket.getIn(['configuration', 'backend'])
+        type: @state.bucket.getIn(['configuration', 'type'])
+
   render: ->
     state = @state
     div className: 'container-fluid',
       div className: 'col-md-9 kbc-main-content',
         div className: 'row',
+            @_renderTransformationTypeLabel()
             ComponentDescription
               componentId: 'transformation'
               configId: @state.bucket.get 'id'
-              placeholder: 'Describe transformation bucket'
+              placeholder: 'Describe bucket'
         if @state.transformations.count()
           @_renderTable()
         else

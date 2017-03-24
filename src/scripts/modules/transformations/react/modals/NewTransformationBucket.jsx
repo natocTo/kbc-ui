@@ -2,6 +2,9 @@ import React from 'react';
 import {Button, Modal, Input} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TransformationActionCreators from '../../ActionCreators';
+import {backendOptions, addBackendMap} from '../../utils/transformationBackends';
+import ApplicationStore from '../../../../stores/ApplicationStore';
+
 
 module.exports = React.createClass({
   displayName: 'NewTransformationBucket',
@@ -11,7 +14,9 @@ module.exports = React.createClass({
       isLoading: false,
       name: '',
       description: '',
-      showModal: false
+      backend: ApplicationStore.getCurrentProject().get('defaultBackend'),
+      showModal: false,
+      legacyUI: ApplicationStore.hasCurrentProjectFeature('legacy-transformations-ui')
     };
   },
 
@@ -24,6 +29,30 @@ module.exports = React.createClass({
   open: function() {
     this.setState({
       showModal: true
+    });
+  },
+
+  renderBackendSelector() {
+    return (
+      <Input
+        type="select"
+        label="Backend"
+        value={this.state.backend}
+        onChange={this._setBackend}
+        labelClassName="col-sm-4"
+        wrapperClassName="col-sm-6"
+        >
+        {this.backendOptions()}
+      </Input>
+    );
+  },
+
+  backendOptions() {
+    const options = backendOptions(ApplicationStore.getSapiToken());
+    return options.map(function(option) {
+      return (
+        <option value={option.value} key={option.value}>{option.label}</option>
+      );
     });
   },
 
@@ -59,12 +88,13 @@ module.exports = React.createClass({
                 label="Description"
                 labelClassName="col-sm-4"
                 wrapperClassName="col-sm-6"/>
+              {this.renderBackendSelector()}
             </form>
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
               isSaving={this.state.isLoading}
-              isDisabled={this._isValid()}
+              isDisabled={!this._isValid()}
               saveLabel="Create"
               onCancel={this.close}
               onSave={this._handleCreate}
@@ -93,13 +123,18 @@ module.exports = React.createClass({
   },
 
   _handleCreate: function() {
+    var data;
     this.setState({
       isLoading: true
     });
-    TransformationActionCreators.createTransformationBucket({
+    data = {
       name: this.state.name,
       description: this.state.description
-    }).then(this.close);
+    };
+    if (!this.state.legacyUI) {
+      data.configuration = JSON.stringify(addBackendMap({}, this.state.backend));
+    }
+    TransformationActionCreators.createTransformationBucket(data).then(this.close);
   },
 
   _setName: function(e) {
@@ -111,6 +146,12 @@ module.exports = React.createClass({
   _setDescription: function(e) {
     this.setState({
       description: e.target.value
+    });
+  },
+
+  _setBackend: function(e) {
+    this.setState({
+      backend: e.target.value
     });
   },
 

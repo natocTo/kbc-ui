@@ -12,7 +12,7 @@ module.exports = React.createClass
     bucket: React.PropTypes.object.isRequired
     transformations: React.PropTypes.object
     pendingActions: React.PropTypes.object
-    legacyUI: React.PropTypes.object
+    legacyUI: React.PropTypes.bool
 
   render: ->
     if @props.transformations.count()
@@ -32,4 +32,4 @@ module.exports = React.createClass
             childs
     else
       div {},
-        "No transformations found"
+        "This bucket is empty"
