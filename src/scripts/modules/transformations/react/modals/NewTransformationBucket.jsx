@@ -33,6 +33,9 @@ module.exports = React.createClass({
   },
 
   renderBackendSelector() {
+    if (this.state.legacyUI) {
+      return null;
+    }
     return (
       <Input
         type="select"
