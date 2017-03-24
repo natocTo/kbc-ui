@@ -55,6 +55,7 @@ module.exports = React.createClass
     openInputMappings: React.PropTypes.object.isRequired
     openOutputMappings: React.PropTypes.object.isRequired
     showDetails: React.PropTypes.bool.isRequired
+    legacyUI: React.PropTypes.bool.isRequired
 
   # TODO move this to component definition UI Options
   openRefine:
@@ -107,6 +108,8 @@ module.exports = React.createClass
     )
 
   _renderRequires: ->
+    if (!@props.legacyUI)
+      return null
     span {},
       h2 {}, 'Requires'
       React.createElement Requires,
@@ -149,16 +152,23 @@ module.exports = React.createClass
             div {className: "help-block"}, small {},
               "No transformations are dependent on the current transformation."
 
+  _renderPhase: ->
+    if !@props.legacyUI
+      return null
+    span null,
+      React.createElement Phase,
+        bucketId: @props.bucketId
+        transformation: @props.transformation
+      ' '
+
+
   _renderDetail: ->
     props = @props
     component = @
     span null,
       div {className: 'kbc-row'},
         p className: 'text-right',
-          React.createElement Phase,
-            bucketId: @props.bucketId
-            transformation: @props.transformation
-          ' '
+          @_renderPhase()
           TransformationTypeLabel
             backend: @props.transformation.get 'backend'
             type: @props.transformation.get 'type'
