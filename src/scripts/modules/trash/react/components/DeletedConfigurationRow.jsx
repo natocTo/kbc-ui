@@ -4,6 +4,7 @@ import {Finished, Tooltip} from '../../../../react/common/common';
 import RestoreConfigurationButton from '../../../../react/common/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
+import {isObsoleteComponent} from '../../utils';
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
@@ -37,7 +38,7 @@ export default React.createClass({
   },
 
   buttons() {
-    if (this.props.componentId === 'gooddata-writer' || this.props.componentId === 'orchestrator') {
+    if (isObsoleteComponent(this.props.componentId)) {
       return (
         <span>
           <Tooltip
