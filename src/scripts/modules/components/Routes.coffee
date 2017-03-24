@@ -3,11 +3,11 @@
 injectProps = require('./react/injectProps').default
 ComponentsIndex = require('./react/pages/ComponentsIndex')
 NewComponent = require('./react/pages/NewComponent').default
-NewComponentButton = require './react/components/NewComponentButton'
 
 ComponentDetail = require './react/pages/component-detail/ComponentDetail'
 
 ComponentReloaderButton = require './react/components/ComponentsReloaderButton'
+ComponentsHeaderButtons = require './react/components/ComponentsHeaderButtons'
 ComponentsStore = require './stores/ComponentsStore'
 InstalledComponentsActionsCreators = require './InstalledComponentsActionCreators'
 ComponentsActionCreators = require './ComponentsActionCreators'
@@ -56,10 +56,9 @@ routes =
       InstalledComponentsActionsCreators.loadComponents()
     defaultRouteHandler: application(ComponentsIndex)
     headerButtonsHandler: injectProps(
-      text: 'New Application'
-      to: 'new-application'
+      addRoute: 'new-application'
       type: 'application'
-    )(NewComponentButton)
+    )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-application'
@@ -93,7 +92,10 @@ routes =
     requireData: ->
       InstalledComponentsActionsCreators.loadComponents()
     defaultRouteHandler: extractor(ComponentsIndex)
-    headerButtonsHandler: injectProps(text: 'New Extractor', to: 'new-extractor', type: 'extractor')(NewComponentButton)
+    headerButtonsHandler: injectProps(
+      addRoute: 'new-extractor'
+      type: 'extractor'
+    )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-extractor'
@@ -146,7 +148,10 @@ routes =
     requireData: ->
       InstalledComponentsActionsCreators.loadComponents()
     defaultRouteHandler: writer(ComponentsIndex)
-    headerButtonsHandler: injectProps(text: 'New Writer', to: 'new-writer', type: 'writer')(NewComponentButton)
+    headerButtonsHandler: injectProps(
+      addRoute: 'new-writer'
+      type: 'writer'
+    )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-writer'

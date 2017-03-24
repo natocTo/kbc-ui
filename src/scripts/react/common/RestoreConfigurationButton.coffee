@@ -15,23 +15,22 @@ assign = require 'object-assign'
 {button, span, i} = React.DOM
 
 module.exports = React.createClass
-  displayName: 'DeleteButton'
+  displayName: 'RestoreConfigurationButton'
   propTypes:
     tooltip: React.PropTypes.string
     confirm: React.PropTypes.object # Confirm props
+    onRestore: React.PropTypes.func.isRequired,
     isPending: React.PropTypes.bool
     isEnabled: React.PropTypes.bool
     label: React.PropTypes.string
     fixedWidth: React.PropTypes.bool
-    icon: React.PropTypes.string
 
   getDefaultProps: ->
-    tooltip: 'Delete'
+    tooltip: 'Restore'
     isPending: false
     isEnabled: true
     label: ''
     fixedWidth: false
-    icon: 'kbc-icon-cup'
 
   render: ->
     if @props.isPending
@@ -39,15 +38,14 @@ module.exports = React.createClass
         Loader()
     else if !@props.isEnabled
       React.DOM.span className: 'btn btn-link disabled',
-        React.DOM.em className: @props.icon
+        React.DOM.em className: 'fa-reply'
     else
-      OverlayTrigger
-        overlay: Tooltip null, @props.tooltip
-        key: 'delete'
-        placement: 'top'
-      ,
-        Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
+      Confirm assign({}, buttonLabel: 'Restore', @props.confirm),
+        OverlayTrigger
+          overlay: Tooltip null, @props.tooltip
+          key: 'delete'
+          placement: 'top'
+        ,
           button className: 'btn btn-link',
-            i className: classnames('fa', @props.icon, 'fa-fw': @props.fixedWidth)
+            i className: classnames('fa', 'fa-reply', 'fa-fw': @props.fixedWidth)
             if @props.label then ' ' + @props.label
-

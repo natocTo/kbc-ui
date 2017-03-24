@@ -32,6 +32,9 @@ export default React.createClass({
           <li role="presentation" className="active">
             <Link to="settings-project-power">Project Power</Link>
           </li>
+          <li role="presentation">
+            <Link to="settings-trash">Trash</Link>
+          </li>
         </ul>
         <div className="kbc-header">
           <div className="row">

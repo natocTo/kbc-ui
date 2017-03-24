@@ -24,12 +24,13 @@ TransformationBucketRow = React.createClass(
     props = @props
 
     buttons.push(DeleteButton
-      tooltip: 'Delete Transformation Bucket'
+      tooltip: 'Move to Trash'
       isPending: @props.pendingActions.get 'delete'
       confirm:
-        title: 'Delete Transformation Bucket'
-        text: "Do you really want to delete the transformation bucket #{@props.bucket.get('name')}?"
+        title: 'Move Bucket to Trash'
+        text: "Are you sure you want to move the bucket #{@props.bucket.get('name')} to Trash?"
         onConfirm: @_deleteTransformationBucket
+        buttonLabel: 'Move to Trash'
       isEnabled: true
       key: 'delete-new'
     )

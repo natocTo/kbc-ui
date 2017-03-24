@@ -7,7 +7,6 @@ ApplicationStore = require '../../stores/ApplicationStore'
 _ = require 'underscore'
 
 {ul, li, a, span} = React.DOM
-
 _pages = [
     id: 'home'
     title: 'Overview'

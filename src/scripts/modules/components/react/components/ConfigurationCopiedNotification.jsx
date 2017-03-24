@@ -9,28 +9,40 @@ export default React.createClass({
 
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired
+    configId: React.PropTypes.string.isRequired,
+    message: React.PropTypes.string,
+    linkLabel: React.PropTypes.string,
+    onClick: React.PropTypes.func
+  },
+
+  getDefaultProps() {
+    return {
+      onClick: function() {},
+      message: 'Configuration copied,',
+      linkLabel: 'go to the new configuration'
+    };
   },
 
   render() {
     return (
       <span>
-        Configuration copied,&nbsp;
-        {this.renderLink()}
+        {this.props.message}
+        {' '}{this.renderLink()}.
       </span>
     );
   },
 
   renderLink() {
-    const {componentId, configId} = this.props;
+    const {componentId, configId, linkLabel} = this.props;
     // transformation component
     if (componentId === 'transformation') {
       return (
         <Link
           to="transformationBucket"
           params={{config: configId}}
+          onClick={this.props.onClick}
         >
-          go to the new configuration.
+          {linkLabel.replace(/ /g, '\u00a0')}
         </Link>
       );
     }
@@ -40,8 +52,9 @@ export default React.createClass({
         <Link
           to={componentId}
           params={{config: configId}}
+          onClick={this.props.onClick}
         >
-          go to the new configuration.
+          {linkLabel.replace(/ /g, '\u00a0')}
         </Link>
 
       );
@@ -51,9 +64,10 @@ export default React.createClass({
     return (
       <Link
         to={GENERIC_DETAIL_PREFIX + components.getIn([componentId, 'type']) + '-config'}
-        params={{config: configId}}
+        params={{component: componentId, config: configId}}
+        onClick={this.props.onClick}
       >
-        go to the new configuration.
+        {linkLabel.replace(/ /g, '\u00a0')}
       </Link>
     );
   }

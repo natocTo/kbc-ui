@@ -8,30 +8,28 @@ classnames = require 'classnames'
 Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Confirm = React.createFactory(require('./Confirm').default)
+Confirm = React.createFactory(require('./../../../../react/common/Confirm').default)
 
 assign = require 'object-assign'
 
 {button, span, i} = React.DOM
 
 module.exports = React.createClass
-  displayName: 'DeleteButton'
+  displayName: 'RestoreConfigurationButton'
   propTypes:
     tooltip: React.PropTypes.string
-    confirm: React.PropTypes.object # Confirm props
+    onRestore: React.PropTypes.func.isRequired,
     isPending: React.PropTypes.bool
     isEnabled: React.PropTypes.bool
     label: React.PropTypes.string
     fixedWidth: React.PropTypes.bool
-    icon: React.PropTypes.string
 
   getDefaultProps: ->
-    tooltip: 'Delete'
+    tooltip: 'Restore'
     isPending: false
     isEnabled: true
     label: ''
     fixedWidth: false
-    icon: 'kbc-icon-cup'
 
   render: ->
     if @props.isPending
@@ -39,15 +37,17 @@ module.exports = React.createClass
         Loader()
     else if !@props.isEnabled
       React.DOM.span className: 'btn btn-link disabled',
-        React.DOM.em className: @props.icon
+        React.DOM.em className: 'fa-reply'
     else
       OverlayTrigger
         overlay: Tooltip null, @props.tooltip
         key: 'delete'
         placement: 'top'
       ,
-        Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
-          button className: 'btn btn-link',
-            i className: classnames('fa', @props.icon, 'fa-fw': @props.fixedWidth)
-            if @props.label then ' ' + @props.label
+        button
+          className: 'btn btn-link'
+          onClick: @props.onRestore
+        ,
+          i className: classnames('fa fa-reply', 'fa-fw': @props.fixedWidth)
+          if @props.label then ' ' + @props.label
 

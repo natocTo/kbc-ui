@@ -16,21 +16,12 @@ module.exports = React.createClass
     hasBuckets: BucketsStore.getAll().count()
 
   render: ->
-    if @state.hasBuckets
-      span {},
-        React.createElement Link,
-          to: 'sandbox'
-        ,
-          button className: 'btn btn-link',
-            span className: 'kbc-icon-cog'
-            ' Sandbox'
+    span {},
+      React.createElement Link,
+        to: 'sandbox'
+      ,
+        button className: 'btn btn-link',
+          span className: 'kbc-icon-cog'
+          ' Sandbox'
+      if @state.hasBuckets
         React.createElement NewTransformationBucketButton
-    else
-      span {},
-        React.createElement Link,
-          to: 'sandbox'
-        ,
-          button className: 'btn btn-link',
-            span className: 'kbc-icon-cog'
-            ' Sandbox'
-
