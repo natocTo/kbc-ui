@@ -36,7 +36,7 @@ function updateTablesMapping(data, table) {
   tables = tables.map( (t) => {
     if (t.get('source') === tableId) {
       found = true;
-      return t.mergeDeep(mappingTable);
+      return t.merge(mappingTable);
     } else {
       return t;
     }
@@ -63,7 +63,7 @@ export default function(componentId) {
                               'nullable': false,
                               'default': '',
                               'size': ''
-                            }).mergeDeep(defaultType));
+                            }).merge(defaultType));
   }
 
   return {
@@ -107,7 +107,7 @@ export default function(componentId) {
           const tables = data.getIn(tablesPath, List())
                 .map((t) => {
                   if (t.get('source') === tableId) {
-                    return t.mergeDeep(mapping);
+                    return t.merge(mapping);
                   } else {
                     return t;
                   }
