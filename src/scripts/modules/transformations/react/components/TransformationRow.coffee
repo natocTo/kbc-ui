@@ -21,6 +21,7 @@ TransformationRow = React.createClass(
     bucket: React.PropTypes.object
     pendingActions: React.PropTypes.object
     hideButtons: React.PropTypes.bool
+    legacyUI: React.PropTypes.bool
 
   buttons: ->
     buttons = []
@@ -67,44 +68,60 @@ TransformationRow = React.createClass(
     buttons
 
   render: ->
-    # TODO - no detail for unsupported transformations! (remote, db/snapshot, ...)
+    items = []
+
+    # transformation name
+    if (@props.legacyUI)
+      items.push(
+        span {className: 'td col-xs-3'},
+          h4 {},
+            span {className: 'label kbc-label-rounded-small label-default pull-left'},
+              @props.transformation.get('phase') || 1
+            ' '
+            @props.transformation.get('name')
+      )
+    else
+      items.push(
+        span {className: 'td col-xs-3'},
+          h4 {},
+            @props.transformation.get('name')
+      )
+
+    # backend label
+    if (@props.legacyUI)
+      items.push(
+        span {className: 'td col-xs-1'},
+          TransformationTypeLabel
+            backend: @props.transformation.get 'backend'
+            type: @props.transformation.get 'type'
+      )
+
+    # description
+    if (@props.hideButtons)
+      items.push(
+        span {className: 'td col-xs-8'},
+          small {}, descriptionExcerpt(@props.transformation.get('description')) || em {}, 'No description'
+      )
+    else
+      items.push(
+        span {className: 'td col-xs-4'},
+          small {}, descriptionExcerpt(@props.transformation.get('description')) || em {}, 'No description'
+      )
+
+    # buttons
+    if (!@props.hideButtons)
+      items.push(
+        span {className: 'td text-right col-xs-4'},
+          @buttons()
+      )
+
+
     Link
       className: 'tr'
       to: 'transformationDetail'
       params: {row: @props.transformation.get('id'), config: @props.bucket.get('id')}
     ,
-      if @props.hideButtons
-        [
-          span {className: 'td col-xs-3'},
-            h4 {},
-              span {className: 'label kbc-label-rounded-small label-default pull-left'},
-                @props.transformation.get('phase') || 1
-              ' '
-              @props.transformation.get('name')
-          span {className: 'td col-xs-1'},
-            TransformationTypeLabel
-              backend: @props.transformation.get 'backend'
-              type: @props.transformation.get 'type'
-          span {className: 'td col-xs-8'},
-            small {}, descriptionExcerpt(@props.transformation.get('description')) || em {}, 'No description'
-        ]
-      else
-        [
-          span {className: 'td col-xs-3'},
-            h4 {},
-              span {className: 'label kbc-label-rounded-small label-default pull-left'},
-                @props.transformation.get('phase') || 1
-              ' '
-              @props.transformation.get('name')
-          span {className: 'td col-xs-1'},
-            TransformationTypeLabel
-              backend: @props.transformation.get 'backend'
-              type: @props.transformation.get 'type'
-          span {className: 'td col-xs-4'},
-            small {}, descriptionExcerpt(@props.transformation.get('description')) || em {}, 'No description'
-          span {className: 'td text-right col-xs-4'},
-            @buttons()
-        ]
+      items
 
   _deleteTransformation: ->
     # if transformation is deleted immediately view is rendered with missing bucket because of store changed
