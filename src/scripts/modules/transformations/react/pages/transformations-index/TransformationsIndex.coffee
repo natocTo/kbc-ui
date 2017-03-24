@@ -79,7 +79,7 @@ TransformationsIndex = React.createClass
           description: TransformationBucketsStore.get(bucket.get('id')).get 'description'
           pendingActions: @state.pendingActions.get(bucket.get('id'), Immutable.Map())
           key: bucket.get 'id'
-          legacyUI: @state.legayUI
+          legacyUI: @state.legacyUI
 
     React.createElement Panel,
       header: header
