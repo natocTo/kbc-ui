@@ -12,6 +12,7 @@ module.exports = React.createClass
     bucket: React.PropTypes.object.isRequired
     transformations: React.PropTypes.object
     pendingActions: React.PropTypes.object
+    legacyUI: React.PropTypes.object
 
   render: ->
     if @props.transformations.count()
@@ -22,6 +23,7 @@ module.exports = React.createClass
           pendingActions: @props.pendingActions.getIn([transformation.get("id")], Immutable.Map())
           key: transformation.get 'id'
           hideButtons: true
+          legacyUI: @props.legacyUI
       , @).toArray()
 
       div className: 'row',

@@ -11,6 +11,7 @@ TransformationBucketsStore = require('../../../stores/TransformationBucketsStore
 TransformationsStore = require('../../../stores/TransformationsStore')
 InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore')
 SearchRow = require('../../../../../react/common/SearchRow').default
+ApplicationStore = require('../../../../../stores/ApplicationStore')
 
 {Panel, PanelGroup} = require('react-bootstrap')
 
@@ -28,6 +29,7 @@ TransformationsIndex = React.createClass
     filter: TransformationBucketsStore.getTransformationBucketsFilter()
     transformationsInBuckets: TransformationsStore.getAllTransformations()
     transformationPendingActions: TransformationsStore.getAllPendingActions()
+    legacyUI: ApplicationStore.hasCurrentProjectFeature('legacy-transformations-ui')
 
   _handleFilterChange: (query) ->
     TransformationActionCreators.setTransformationBucketsFilter(query)
@@ -87,6 +89,7 @@ TransformationsIndex = React.createClass
         bucket: bucket
         transformations: @_getFilteredTransformations(bucket.get('id'))
         pendingActions: @state.transformationPendingActions.getIn([bucket.get('id')], Immutable.Map())
+        legacyUI: @state.legacyUI
 
   _handleBucketSelect: (bucketId, e) ->
     e.preventDefault()

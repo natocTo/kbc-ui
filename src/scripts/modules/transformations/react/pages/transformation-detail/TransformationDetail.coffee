@@ -16,6 +16,7 @@ RunComponentButton = React.createFactory(require '../../../../components/react/c
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
 {Tooltip, Confirm, Loader} = require '../../../../../react/common/common'
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
+ApplicationStore = require('../../../../../stores/ApplicationStore')
 
 SqlDepModal = React.createFactory(require './../../modals/SqlDepModal')
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
@@ -50,6 +51,7 @@ module.exports = React.createClass
     isTransformationEditingValid: TransformationsStore.getTransformationEditingIsValid(
       bucketId, transformationId
     )
+    legacyUI: ApplicationStore.hasCurrentProjectFeature('legacy-transformations-ui')
 
   getInitialState: ->
     sandboxModalOpen: false
@@ -97,6 +99,7 @@ module.exports = React.createClass
             openOutputMappings: @state.openOutputMappings
             showDetails: @_showDetails()
             isEditingValid: @state.isTransformationEditingValid
+            legacyUI: @state.legacyUI
       div className: 'col-md-3 kbc-main-sidebar',
         ul className: 'nav nav-stacked',
           li {},

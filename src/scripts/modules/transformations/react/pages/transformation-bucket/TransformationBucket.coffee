@@ -18,6 +18,7 @@ LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore')
 SidebarJobs = require('../../../../components/react/components/SidebarJobs')
 SidebarVersions = require('../../../../components/react/components/SidebarVersionsWrapper').default
 VersionsStore = require('../../../../components/stores/VersionsStore')
+ApplicationStore = require('../../../../../stores/ApplicationStore')
 
 {div, span, input, strong, form, button, h4, i, button, small, ul, li, a} = React.DOM
 
@@ -36,6 +37,7 @@ TransformationBucket = React.createClass
     pendingActions: TransformationsStore.getPendingActions(bucketId)
     latestJobs: LatestJobsStore.getJobs('transformation', bucketId),
     latestVersions: VersionsStore.getVersions('transformation', bucketId),
+    legacyUI: ApplicationStore.hasCurrentProjectFeature('legacy-transformations-ui')
 
   componentWillReceiveProps: ->
     @setState(@getStateFromStores())
@@ -105,6 +107,7 @@ TransformationBucket = React.createClass
             bucket: @state.bucket
             pendingActions: @state.pendingActions.get transformation.get('id'), Immutable.Map()
             key: transformation.get 'id'
+            legacyUI: @state.legacyUI
         , @).toArray()
 
   _getSortedTransformations: ->
