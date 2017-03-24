@@ -32,4 +32,4 @@ module.exports = React.createClass
             childs
     else
       div {},
-        "This bucket is empty"
+        "Bucket is empty"

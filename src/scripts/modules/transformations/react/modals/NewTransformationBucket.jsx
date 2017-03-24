@@ -71,7 +71,7 @@ module.exports = React.createClass({
             <form className="form-horizontal" onSubmit={this._handleSubmit}>
               <p className="help-block">Transformation bucket is a container for related transformations.</p>
               <Input
-                placeholder="My bucket"
+                placeholder="My Bucket"
                 className="form-control"
                 value={this.state.text}
                 onChange={this._setName}
