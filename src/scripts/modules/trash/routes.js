@@ -11,7 +11,7 @@ export default {
   defaultRouteHandler: Index,
   reloaderHandler: ComponentReloaderButton,
   requireData: [
-    () => installedComponentsActions.loadComponents()
+    () => installedComponentsActions.loadDeletedComponents()
   ],
   poll: {
     interval: 10,

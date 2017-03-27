@@ -10,7 +10,7 @@ module.exports = React.createClass
   mixins: [createStoreMixin(InstalledComponetsStore)]
 
   getStateFromStores: ->
-    isLoading: InstalledComponetsStore.getIsLoading()
+    isLoading: InstalledComponetsStore.getIsLoading() || InstalledComponetsStore.getIsDeletedLoading()
 
   _handleRefreshClick: ->
     InstalledComponentsActionCreators.loadComponentsForce()
