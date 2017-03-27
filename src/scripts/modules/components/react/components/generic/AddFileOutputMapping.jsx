@@ -1,6 +1,5 @@
 import React from 'react';
-import {ModalTrigger} from 'react-bootstrap';
-import Modal from './FileOutputMappingModal';
+import FileOutputMappingModal from './FileOutputMappingModal';
 import actionCreators from '../../../InstalledComponentsActionCreators';
 
 export default React.createClass({
@@ -11,28 +10,13 @@ export default React.createClass({
   },
 
   render() {
-    return (
-      <ModalTrigger modal={this.modal()}>
-        <button className="btn btn-primary" onClick={this.handleClick}>
-          <span className="kbc-icon-plus" /> Add File Output
-        </button>
-      </ModalTrigger>
-    );
-  },
-
-  modal() {
-    return React.createElement(Modal, {
+    return React.createElement(FileOutputMappingModal, {
       mode: 'create',
       mapping: this.props.mapping,
       onChange: this.handleChange,
       onCancel: this.handleCancel,
       onSave: this.handleSave
     });
-  },
-
-  handleClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
   },
 
   /* eslint camelcase: 0 */

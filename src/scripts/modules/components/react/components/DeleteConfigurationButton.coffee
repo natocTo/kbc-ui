@@ -36,10 +36,10 @@ module.exports = React.createClass
       text: "Are you sure you want to move the configuration #{this.state.config.get('name')} to Trash?"
       buttonLabel: 'Move to Trash'
       onConfirm: @_handleDelete
+      childrenRootElement: React.DOM.a
     ,
-      React.DOM.a null,
-        @_renderIcon()
-        ' Move to Trash'
+      @_renderIcon()
+      ' Move to Trash'
 
   _renderIcon: ->
     if @state.isDeleting

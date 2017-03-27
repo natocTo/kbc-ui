@@ -10,15 +10,25 @@ Button = React.createFactory(require('react-bootstrap').Button)
 ConfirmModal = React.createClass
   displayName: 'ConfirmModal'
 
+  propTypes: {
+    buttonType: React.PropTypes.string,
+    buttonLabel: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
+    onConfirm: React.PropTypes.func.isRequired,
+    onHide: React.PropTypes.func.isRequired
+    show: React.PropTypes.bool.isRequired
+  }
+
   render: ->
-    Modal title: @props.title, onRequestHide: @props.onRequestHide,
+    Modal title: @props.title, onHide: @props.onHide, show: @props.show,
       div className: 'modal-body',
         p null,
           @props.text
       div className: 'modal-footer',
         ButtonToolbar null,
           Button
-            onClick: @props.onRequestHide
+            onClick: @props.onHide
             bsStyle: 'link'
           ,
             'Cancel'
@@ -29,7 +39,7 @@ ConfirmModal = React.createClass
             @props.buttonLabel
 
   _handleConfirm: ->
-    @props.onRequestHide()
+    @props.onHide()
     @props.onConfirm()
 
 module.exports = ConfirmModal

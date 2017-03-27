@@ -70,7 +70,7 @@ module.exports = React.createClass
         Input
           type: 'text'
           label: 'Source'
-          value: @props.value.get("query")
+          value: @props.value.get("source")
           disabled: @props.disabled
           placeholder: ""
           onChange: @_handleChangeSource
@@ -123,5 +123,3 @@ module.exports = React.createClass
               disabled: @props.disabled
               help: React.DOM.small {},
                 "File will be stored permanently (otherwise will be deleted after 180 days)"
-
-

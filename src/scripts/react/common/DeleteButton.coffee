@@ -41,13 +41,12 @@ module.exports = React.createClass
       React.DOM.span className: 'btn btn-link disabled',
         React.DOM.em className: @props.icon
     else
-      OverlayTrigger
-        overlay: Tooltip null, @props.tooltip
-        key: 'delete'
-        placement: 'top'
-      ,
-        Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
+      Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
+        OverlayTrigger
+          overlay: Tooltip null, @props.tooltip
+          key: 'delete'
+          placement: 'top'
+        ,
           button className: 'btn btn-link',
             i className: classnames('fa', @props.icon, 'fa-fw': @props.fixedWidth)
             if @props.label then ' ' + @props.label
-

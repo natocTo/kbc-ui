@@ -66,7 +66,7 @@ AddTaskModal = React.createClass
   render: ->
     Modal
       title: @_modalTitle()
-      onRequestHide: @props.onHide
+      onHide: @props.onHide
       show: @props.show
 
       div className: 'modal-body',
@@ -128,7 +128,6 @@ AddTaskModal = React.createClass
     close modal with selected configuration
   ###
   _handleConfigurationSelect: (configuration) ->
-    #@props.onRequestHide() # hide modal
     @props.onConfigurationSelect(@state.selectedComponent, configuration, @props.phaseId)
     @props.onHide()
 

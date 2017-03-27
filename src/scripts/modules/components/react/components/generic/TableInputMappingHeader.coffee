@@ -1,6 +1,5 @@
 React = require 'react'
-Link = React.createFactory(require('react-router').Link)
-{ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
+{OverlayTrigger, Tooltip} = require 'react-bootstrap'
 DeleteButton = require '../../../../../react/common/DeleteButton'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 TableSizeLabel = React.createFactory(require '../../../../transformations/react/components/TableSizeLabel')
@@ -78,28 +77,15 @@ module.exports = React.createClass(
                       @props.value.get('source')
                     "?"
                   onConfirm: @props.onDelete
-            React.createElement OverlayTrigger,
-              overlay: React.createElement Tooltip, null, 'Edit Input'
-              placement: 'top'
-            ,
-              React.createElement ModalTrigger,
-                modal: React.createElement TableInputMappingModal,
-                  mode: 'edit'
-                  tables: @props.tables
-                  mapping: @props.editingValue
-                  onChange: @props.onChange
-                  onCancel: @props.onCancel
-                  onSave: @props.onSave
-                  otherDestinations: @props.otherDestinations
-                  definition: @props.definition
-              ,
-                React.DOM.button
-                  className: "btn btn-link"
-                  onClick: (e) ->
-                    component.props.onEditStart()
-                    e.preventDefault()
-                    e.stopPropagation()
-                ,
-                  React.DOM.span null,
-                    React.DOM.span {className: 'fa fa-fw kbc-icon-pencil'}
+
+            React.createElement TableInputMappingModal,
+              mode: 'edit'
+              tables: @props.tables
+              mapping: @props.editingValue
+              onChange: @props.onChange
+              onCancel: @props.onCancel
+              onSave: @props.onSave
+              onEditStart: component.props.onEditStart
+              otherDestinations: @props.otherDestinations
+              definition: @props.definition
 )

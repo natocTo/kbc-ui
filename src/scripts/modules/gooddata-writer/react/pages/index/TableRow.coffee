@@ -53,15 +53,15 @@ module.exports = React.createClass
             React.DOM.span className: 'btn btn-link',
               React.createElement Loader, className: 'fa-fw'
           else
-            React.createElement Tooltip,
-              tooltip: 'Upload table to GoodData'
+            React.createElement Confirm,
+              text: @_uploadText()
+              title: 'Upload Table'
+              buttonLabel: 'Upload'
+              buttonType: 'success'
+              onConfirm: @_handleUpload
             ,
-              React.createElement Confirm,
-                text: @_uploadText()
-                title: 'Upload Table'
-                buttonLabel: 'Upload'
-                buttonType: 'success'
-                onConfirm: @_handleUpload
+              React.createElement Tooltip,
+                tooltip: 'Upload table to GoodData'
               ,
                 button className: 'btn btn-link',
                   span className: 'fa fa-upload fa-fw'
@@ -77,16 +77,17 @@ module.exports = React.createClass
       span className: 'btn btn-link',
         React.createElement Loader
     else
-      React.createElement Tooltip,
-        tooltip: 'Remove table from configuration'
-        placement: 'top'
-        React.createElement Confirm,
-          key: @props.table.get 'id'
-          title: "Remove #{@props.table.get('id')}"
-          text: 'You are about to remove the table from the configuration.'
-          buttonLabel: 'Remove'
-          onConfirm: =>
-            @props.deleteTableFn(@props.table.get('id'))
+      React.createElement Confirm,
+        key: @props.table.get 'id'
+        title: "Remove #{@props.table.get('id')}"
+        text: 'You are about to remove the table from the configuration.'
+        buttonLabel: 'Remove'
+        onConfirm: =>
+          @props.deleteTableFn(@props.table.get('id'))
+      ,
+        React.createElement Tooltip,
+          tooltip: 'Remove table from configuration'
+          placement: 'top'
         ,
           button className: 'btn btn-link',
             i className: 'kbc-icon-cup'
