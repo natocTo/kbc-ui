@@ -28,7 +28,10 @@ module.exports = React.createClass({
 
   open: function() {
     this.setState({
-      showModal: true
+      showModal: true,
+      name: '',
+      description: '',
+      backend: ApplicationStore.getCurrentProject().get('defaultBackend')
     });
   },
 
@@ -73,7 +76,7 @@ module.exports = React.createClass({
               <Input
                 placeholder="My Bucket"
                 className="form-control"
-                value={this.state.text}
+                value={this.state.name}
                 onChange={this._setName}
                 ref="name"
                 autoFocus={true}

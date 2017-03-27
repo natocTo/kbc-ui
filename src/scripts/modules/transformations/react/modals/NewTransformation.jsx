@@ -28,8 +28,13 @@ export default React.createClass({
   },
 
   open() {
+    var data = this.state.data;
+    data = data.set('name', '');
+    data = data.set('description', '');
+    data = data.set('backend', ApplicationStore.getCurrentProject().get('defaultBackend'));
     this.setState({
-      showModal: true
+      showModal: true,
+      data: data
     });
   },
 
