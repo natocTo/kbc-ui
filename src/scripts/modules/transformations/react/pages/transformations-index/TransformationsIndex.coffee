@@ -66,7 +66,7 @@ TransformationsIndex = React.createClass
             'Transformations allow you to modify your data.'
           p null,
             'A Transformation picks data from Storage, manipulates it and then stores it back.
-              A transformation can be written in SQL (MySQL, Redshift), R or Python.'
+              A transformation can be written in SQL (Snowflake, Redshift or MySQL), R, Python or OpenRefine.'
           p null,
             React.createElement NewTransformationBucketButton
 
