@@ -30,7 +30,7 @@ StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
 fieldsTemplate = require '../../../templates/credentialsFields'
 AddNewTableModal = require('../../../../../react/common/AddNewTableModal').default
 MigrationRow = require('../../../../components/react/components/MigrationRow').default
-{Button} = require 'react-bootstrap'
+{Button} = require './../../../../../react/common/KbcBootstrap'
 {p, ul, li, span, button, strong, div, i} = React.DOM
 
 allowedBuckets = ['out', 'in']

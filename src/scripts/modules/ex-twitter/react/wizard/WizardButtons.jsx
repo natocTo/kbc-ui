@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Loader} from 'kbc-react-components';
-import {Button} from 'react-bootstrap';
+import {Button} from './../../../../react/common/KbcBootstrap';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 
 export default React.createClass({

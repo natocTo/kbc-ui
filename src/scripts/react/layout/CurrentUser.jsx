@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'underscore';
 import ImmutableRendererMixin from '../mixins/ImmutableRendererMixin';
-import { DropdownButton, MenuItem, DropdownStateMixin } from 'react-bootstrap';
+import { DropdownButton, MenuItem, DropdownStateMixin } from './../common/KbcBootstrap';
 
 const modes = {
   NORMAL: 'normal',

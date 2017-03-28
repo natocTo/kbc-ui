@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import InstantAuthorizationFields from './InstantAuthoriationFields';
-import {TabbedArea, TabPane, ButtonToolbar, Button, Modal} from 'react-bootstrap';
+import {TabbedArea, TabPane, ButtonToolbar, Button, Modal} from './../../../react/common/KbcBootstrap';
 import Clipboard from '../../../react/common/Clipboard';
 import AuthorizationForm from './AuthorizationForm';
 import DirectTokenInsertFields from './DirectTokenInsertFields';

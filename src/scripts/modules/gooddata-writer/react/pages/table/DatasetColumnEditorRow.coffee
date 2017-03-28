@@ -5,8 +5,8 @@ keyMirror = require('fbjs/lib/keyMirror')
 {Map} = Immutable
 
 {tr, td, option, span, div, strong} = React.DOM
-StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
-Input = React.createFactory(require('react-bootstrap').Input)
+StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 DateDimensionModal = React.createFactory(require './DateDimensionSelectModal')
 ColumnDataPreview = React.createFactory(require './ColumnDataPreview')
 DateFormatHint = React.createFactory(require './DateFormatHint')

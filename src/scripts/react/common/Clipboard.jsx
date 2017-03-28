@@ -1,6 +1,6 @@
 import React from 'react';
 import ClipboardButton from 'react-clipboard.js';
-import {Tooltip, OverlayTrigger} from 'react-bootstrap';
+import {Tooltip, OverlayTrigger} from './KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal} from 'react-bootstrap';
+import {Modal} from './KbcBootstrap';
 import SapiTableSelector from '../../modules/components/react/components/SapiTableSelector';
 
 import ConfirmButtons from './ConfirmButtons';

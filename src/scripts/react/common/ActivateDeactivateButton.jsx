@@ -1,6 +1,6 @@
 import React from 'react';
 import {Check, Loader} from 'kbc-react-components';
-import {Tooltip, OverlayTrigger} from 'react-bootstrap';
+import {Tooltip, OverlayTrigger} from './KbcBootstrap';
 
 const MODE_BUTTON = 'button', MODE_LINK = 'link';
 

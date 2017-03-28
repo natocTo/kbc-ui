@@ -2,7 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 {input, option, tr, td, div, span} = React.DOM
 Check = React.createFactory(require('kbc-react-components').Check)
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 ColumnDataPreview = React.createFactory(require './ColumnDataPreview')
 
 

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import CredentialsForm from './CredentialsForm';
 import SSLForm from './SSLForm';
-import {TabbedArea, TabPane} from 'react-bootstrap';
+import {TabbedArea, TabPane} from './../../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

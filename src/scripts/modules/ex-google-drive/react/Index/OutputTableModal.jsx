@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {fromJS, List, Map} from 'immutable';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import {Modal} from 'react-bootstrap';
+import {Modal} from './../../../../react/common/KbcBootstrap';
 import {sanitizeTableName, sheetFullName} from '../../common';
 import ProcessorControls from '../components/ProcessorControls';
 import Tooltip from '../../../../react/common/Tooltip';

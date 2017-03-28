@@ -3,7 +3,7 @@ _ = require 'underscore'
 {select, input, table, tr, th, tbody, thead, div, span, td, option} = React.DOM
 ColumnDataPreview = React.createFactory(require './ColumnDataPreview')
 
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 DateFormatHint = React.createFactory(require './DateFormatHint')
 columnTdeTypes = ['string','boolean', 'number', 'decimal','date', 'datetime']
 defaults =

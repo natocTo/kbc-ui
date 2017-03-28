@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from 'react-bootstrap';
+import {Input} from './../../../../../react/common/KbcBootstrap';
 import ProfileInfo from '../../ProfileInfo';
 
 export default React.createClass({

@@ -1,5 +1,5 @@
 React = require 'react'
-{OverlayTrigger, Tooltip} = require 'react-bootstrap'
+{OverlayTrigger, Tooltip} = require './../../../../../react/common/KbcBootstrap'
 DeleteButton = require '../../../../../react/common/DeleteButton'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 TableSizeLabel = React.createFactory(require '../../../../transformations/react/components/TableSizeLabel')

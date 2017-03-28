@@ -4,7 +4,7 @@ import VersionsStore from '../../stores/VersionsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import VersionRow from '../components/VersionRow';
 import {getPreviousVersion} from '../../../../utils/VersionsDiffUtils';
-import {Table} from 'react-bootstrap';
+import {Table} from './../../../../react/common/KbcBootstrap';
 import SearchRow from '../../../../react/common/SearchRow';
 import VersionsActionCreators from '../../VersionsActionCreators';
 import fuzzy from 'fuzzy';

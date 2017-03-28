@@ -8,7 +8,7 @@ RoutesStore = require '../../../../stores/RoutesStore'
 Loader = require('kbc-react-components').Loader
 TableLoadType = React.createFactory(require './TableLoadType')
 
-{ButtonGroup, Button, DropdownButton, MenuItem, Tooltip} = require 'react-bootstrap'
+{ButtonGroup, Button, DropdownButton, MenuItem, Tooltip} = require './../../../../react/common/KbcBootstrap'
 
 Confirm = require('../../../../react/common/Confirm').default
 PureRenderMixin = require('react-addons-pure-render-mixin')

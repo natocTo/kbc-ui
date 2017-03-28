@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import {Input} from 'react-bootstrap';
+import {Input} from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

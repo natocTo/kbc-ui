@@ -4,7 +4,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TemplateSelector from './TemplateSelector';
 import GraphAPIExplorerLink from './GraphAPIExplorerLink';
 import DateRangeSelector from './DateRangeSelector';
-import {Modal, OverlayTrigger, Tooltip, TabbedArea, TabPane} from 'react-bootstrap';
+import {Modal, OverlayTrigger, Tooltip, TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
 // import Select from 'react-select';
 import Select from '../../../../react/common/Select';
 

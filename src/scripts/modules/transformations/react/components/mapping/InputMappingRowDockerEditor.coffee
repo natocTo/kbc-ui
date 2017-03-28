@@ -1,7 +1,7 @@
 React = require 'react'
 _ = require('underscore')
 Immutable = require('immutable')
-{Input} = require('react-bootstrap')
+{Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 

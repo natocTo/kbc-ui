@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal} from 'react-bootstrap';
+import {Modal} from './KbcBootstrap';
 import moment from 'moment';
 import ConfirmButtons from './ConfirmButtons';
 

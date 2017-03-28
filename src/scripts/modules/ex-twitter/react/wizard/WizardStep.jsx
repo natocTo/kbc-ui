@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {TabPane} from 'react-bootstrap';
+import {TabPane} from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
 

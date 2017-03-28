@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {DropdownButton, MenuItem} from 'react-bootstrap';
+import {DropdownButton, MenuItem} from './../../../../react/common/KbcBootstrap';
 // import {Map} from 'immutable';
 
 export default React.createClass({

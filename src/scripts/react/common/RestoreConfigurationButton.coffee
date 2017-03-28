@@ -5,9 +5,9 @@
 React = require 'react'
 classnames = require 'classnames'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
+Tooltip = React.createFactory(require('./KbcBootstrap').Tooltip)
 Loader = React.createFactory(require('kbc-react-components').Loader)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
+OverlayTrigger = React.createFactory(require('./KbcBootstrap').OverlayTrigger)
 Confirm = React.createFactory(require('./Confirm').default)
 
 assign = require 'object-assign'

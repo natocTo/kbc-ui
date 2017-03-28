@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Input} from 'react-bootstrap';
+import {Modal, Input} from './KbcBootstrap';
 import moment from 'moment';
 import ImmutableRenderMixin from '../mixins/ImmutableRendererMixin';
 import ConfirmButtons from './ConfirmButtons';

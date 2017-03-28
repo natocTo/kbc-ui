@@ -1,16 +1,16 @@
 React = require 'react'
-{Modal} = require('react-bootstrap')
+{Modal} = require('./../../../../../react/common/KbcBootstrap')
 {button, strong, div, h2, span, h4, section, p} = React.DOM
 AuthorizeAccount = React.createFactory(require('../../../../google-utils/react/AuthorizeAccount'))
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 {Map} = require 'immutable'
-ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
-ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
-ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
-ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
+ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Title)
+ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Footer)
 
-Button = React.createFactory(require('react-bootstrap').Button)
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
+Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
+ButtonToolbar = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ButtonToolbar)
 RouterStore = require('../../../../../stores/RoutesStore')
 
 module.exports = React.createClass

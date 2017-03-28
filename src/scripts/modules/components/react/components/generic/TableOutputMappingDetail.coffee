@@ -8,8 +8,8 @@ TransformationTableTypeLabel = React.createFactory(
 )
 FileSize = React.createFactory(require( '../../../../../react/common/FileSize').default)
 Check = React.createFactory(require('kbc-react-components').Check)
-ListGroup = React.createFactory(require('react-bootstrap').ListGroup)
-ListGroupItem = React.createFactory(require('react-bootstrap').ListGroupItem)
+ListGroup = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ListGroup)
+ListGroupItem = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ListGroupItem)
 _ = require('underscore')
 TableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 

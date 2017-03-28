@@ -1,7 +1,7 @@
 React = require 'react'
 
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Popover = React.createFactory(require('react-bootstrap').Popover)
+OverlayTrigger = React.createFactory(require('./../../../../../react/common/KbcBootstrap').OverlayTrigger)
+Popover = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Popover)
 PureRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 
 {span, ul, li, i} = React.DOM

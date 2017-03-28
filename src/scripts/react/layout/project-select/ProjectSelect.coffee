@@ -4,7 +4,7 @@ React = require 'react'
 
 
 ProjectsList = require './List'
-DropdownStateMixin = require('react-bootstrap').DropdownStateMixin
+DropdownStateMixin = require('./../../common/KbcBootstrap').DropdownStateMixin
 
 module.exports = React.createClass
   displayName: 'ProjectSelect'

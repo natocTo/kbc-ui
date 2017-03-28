@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from 'react-bootstrap';
+import {Modal} from './../../../../react/common/KbcBootstrap';
 import ProfileInfo from '../ProfileInfo';
 
 export default React.createClass({

@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import { Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Modal, Button, OverlayTrigger, Tooltip } from './../../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './TableInputMappingEditor';
 import resolveInputShowDetails from './resolveInputShowDetails';

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import EditLimitModal from './EditLimitModal';
-import {Button} from 'react-bootstrap';
+import {Button} from './../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

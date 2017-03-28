@@ -1,20 +1,20 @@
 React = require 'react'
 _ = require 'underscore'
-{Modal} = require('react-bootstrap')
+{Modal} = require('./../../../../../react/common/KbcBootstrap')
 {button, strong, div, h2, span, h4, section, p} = React.DOM
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 {Map} = require 'immutable'
 {Loader} = require 'kbc-react-components'
-ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
-ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
-ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
-ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
+ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Title)
+ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Footer)
 
-Button = React.createFactory(require('react-bootstrap').Button)
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
+Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
+ButtonToolbar = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ButtonToolbar)
 RouterStore = require('../../../../../stores/RoutesStore')
 {i, span, div, p, strong, form, input, label, div} = React.DOM
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 
 module.exports = React.createClass
   displayName: 'TableauServerCredentialsModal'

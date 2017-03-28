@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input} from 'react-bootstrap';
+import {Input} from './../../../../react/common/KbcBootstrap';
 import Immutable from 'immutable';
 import Select from 'react-select';
 

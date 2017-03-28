@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from 'react-bootstrap';
+import {Modal} from './../../../react/common/KbcBootstrap';
 import Markdown from '../../../react/common/Markdown';
 
 const content = `

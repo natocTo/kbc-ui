@@ -7,12 +7,12 @@ RoutesStore = require('../../../../stores/RoutesStore.coffee')
 ComponentsStore = require('../../stores/ComponentsStore.coffee')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin.coffee')
 
-Modal = React.createFactory(require('react-bootstrap').Modal)
-ModalHeader = React.createFactory(require('react-bootstrap/lib/ModalHeader'))
-ModalBody = React.createFactory(require('react-bootstrap/lib/ModalBody'))
-ModalFooter = React.createFactory(require('react-bootstrap/lib/ModalFooter'))
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
-Button = React.createFactory(require('react-bootstrap').Button)
+Modal = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal)
+ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalHeader)
+ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalBody)
+ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalFooter)
+ButtonToolbar = React.createFactory(require('./../../../../react/common/KbcBootstrap').ButtonToolbar)
+Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
 NewComponentModal = React.createFactory(require('../pages/new-component-form/NewComponentModal'))
 
 module.exports = React.createClass

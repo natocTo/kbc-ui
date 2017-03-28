@@ -1,6 +1,6 @@
 import React from 'react';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
-import {OverlayTrigger, Tooltip, Button} from 'react-bootstrap';
+import {OverlayTrigger, Tooltip, Button} from './../../../../react/common/KbcBootstrap';
 import {Loader} from 'kbc-react-components';
 import RoutesStore from '../../../../stores/RoutesStore';
 import classnames from 'classnames';

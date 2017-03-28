@@ -3,8 +3,8 @@ ExGdriveStore = require '../../../exGdriveStore'
 ActionCreators = require '../../../exGdriveActionCreators'
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 RoutesStore = require '../../../../../stores/RoutesStore'
-Input = React.createFactory(require('react-bootstrap').Input)
-StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
+StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
 SapiTableLinkEx = require('../../../../components/react/components/StorageApiTableLinkEx').default
 
 {div, span, form } = React.DOM

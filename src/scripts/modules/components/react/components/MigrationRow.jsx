@@ -1,7 +1,7 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Table} from 'react-bootstrap';
+import {Table} from './../../../../react/common/KbcBootstrap';
 import {RefreshIcon} from 'kbc-react-components';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
@@ -9,7 +9,7 @@ import SapiTableLink from './StorageApiTableLink';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import {Modal, TabbedArea, TabPane, Alert} from 'react-bootstrap';
+import {Modal, TabbedArea, TabPane, Alert} from './../../../../react/common/KbcBootstrap';
 import {Loader} from 'kbc-react-components';
 import jobsApi from '../../../jobs/JobsApi';
 import DockerActionFn from '../../DockerActionsApi';

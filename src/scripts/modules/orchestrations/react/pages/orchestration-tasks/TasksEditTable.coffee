@@ -9,7 +9,7 @@ Tooltip = React.createFactory(require('../../../../../react/common/Tooltip').def
 {p, small, a, ul, li, i, div, span, strong, table, button, thead, tbody, th, td, tr} = React.DOM
 AddTaskModal = require('../../modals/add-task/AddTaskModal')
 EmptyState = require('../../../../components/react/components/ComponentEmptyState').default
-DropdownButton = React.createFactory(require('react-bootstrap').DropdownButton)
+DropdownButton = React.createFactory(require('./../../../../../react/common/KbcBootstrap').DropdownButton)
 AboutPhases = require('../../components/AboutPhases').default
 ComponentsStore = require '../../../../components/stores/ComponentsStore'
 

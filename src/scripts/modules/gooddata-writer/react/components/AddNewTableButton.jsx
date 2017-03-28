@@ -4,7 +4,7 @@ import _ from 'underscore';
 
 import {Loader} from 'kbc-react-components';
 import SapiTableSelector from  '../../../components/react/components/SapiTableSelector';
-import {Button, Modal} from 'react-bootstrap';
+import {Button, Modal} from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

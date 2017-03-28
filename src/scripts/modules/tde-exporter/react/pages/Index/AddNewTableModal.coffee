@@ -1,5 +1,5 @@
 React = require 'react'
-{ModalFooter, Modal, ModalHeader, ModalTitle, ModalBody} = require('react-bootstrap')
+{ModalFooter, Modal, ModalHeader, ModalTitle, ModalBody} = require('./../../../../../react/common/KbcBootstrap')
 SapiTableSelector = require '../../../../components/react/components/SapiTableSelector'
 ConfirmButtons = require('../../../../../react/common/ConfirmButtons').default
 

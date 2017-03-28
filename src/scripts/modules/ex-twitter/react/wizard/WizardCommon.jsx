@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {TabbedArea} from 'react-bootstrap';
+import {TabbedArea} from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

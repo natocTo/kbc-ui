@@ -8,7 +8,7 @@ import ColumnsInfoTab from './ColumnsInfoTab';
 import SapiTableLink from '../StorageApiTableLink';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 
-import {TabbedArea, TabPane, Modal} from 'react-bootstrap';
+import {TabbedArea, TabPane, Modal} from './../../../../../react/common/KbcBootstrap';
 import {RefreshIcon} from 'kbc-react-components';
 
 

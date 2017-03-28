@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import CreateSandboxModal from '../modals/ConfigureSandbox';
-import {OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {OverlayTrigger, Tooltip} from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

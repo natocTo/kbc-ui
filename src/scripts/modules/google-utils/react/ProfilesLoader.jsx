@@ -1,7 +1,7 @@
 // Google analytics komponenta ktora vynuti od uzivatela docasny oauth token a
 // vylistuje mu jeho google analytics profily z ktorych si vyberie
 import React, {PropTypes} from 'react';
-import {Button} from 'react-bootstrap';
+import {Button} from './../../../react/common/KbcBootstrap';
 import _ from 'underscore';
 
 import {GapiStore} from './GapiFlux';

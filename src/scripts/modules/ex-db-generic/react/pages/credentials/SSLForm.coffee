@@ -2,7 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 
 Textarea = require 'react-textarea-autosize'
-{Input} = require 'react-bootstrap'
+{Input} = require './../../../../../react/common/KbcBootstrap'
 {form, div, label, p, a, label} = React.DOM
 TestCredentials = require '../../../../../react/common/TestCredentialsButtonGroup'
 {NewLineToBr, Check} = require('kbc-react-components')

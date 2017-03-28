@@ -2,7 +2,7 @@ React = require 'react'
 ImmutableRenderMixin = require '../mixins/ImmutableRendererMixin'
 _ = require('underscore')
 Immutable = require('immutable')
-{Button} = require('react-bootstrap')
+{Button} = require('./KbcBootstrap')
 Button = React.createFactory Button
 {span} = React.DOM
 

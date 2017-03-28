@@ -1,14 +1,14 @@
 React = require('react')
 OptionsForm = require '../../components/optionsForm'
 Immutable = require 'immutable'
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
-Button = React.createFactory(require('react-bootstrap').Button)
-Modal = React.createFactory(require('react-bootstrap').Modal)
-ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
-ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
-ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
-ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
-Input = React.createFactory(require('react-bootstrap').Input)
+ButtonToolbar = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ButtonToolbar)
+Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
+Modal = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal)
+ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Title)
+ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Footer)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 OptionsForm = React.createFactory OptionsForm
 Loader = React.createFactory(require('kbc-react-components').Loader)
 

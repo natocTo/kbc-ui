@@ -1,6 +1,6 @@
 React = require 'react'
 ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
-Button = React.createFactory(require('react-bootstrap').Button)
+Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
 
 Loader = React.createFactory(require('kbc-react-components').Loader)
 

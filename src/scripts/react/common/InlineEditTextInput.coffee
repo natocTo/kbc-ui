@@ -1,11 +1,11 @@
 React = require 'react'
 _ = require 'underscore'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Button = React.createFactory(require('react-bootstrap').Button)
+Tooltip = React.createFactory(require('./KbcBootstrap').Tooltip)
+OverlayTrigger = React.createFactory(require('./KbcBootstrap').OverlayTrigger)
+Button = React.createFactory(require('./KbcBootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./KbcBootstrap').Input)
 
 {div, span, i, textarea} = React.DOM
 

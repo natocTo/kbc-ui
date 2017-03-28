@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
 import {List, Map} from 'immutable';
-import {Modal} from 'react-bootstrap';
+import {Modal} from './../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {Loader} from 'kbc-react-components';
 import SearchRow from '../../../../react/common/SearchRow';
-// import {ListGroup, ListGroupItem} from 'react-bootstrap';
+// import {ListGroup, ListGroupItem} from './../../../../react/common/KbcBootstrap';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 

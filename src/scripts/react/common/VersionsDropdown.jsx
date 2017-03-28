@@ -1,5 +1,5 @@
 import React from 'react';
-import {DropdownButton, MenuItem} from 'react-bootstrap';
+import {DropdownButton, MenuItem} from './KbcBootstrap';
 import RollbackVersionMenuItem from './RollbackVersionMenuItem';
 import CopyVersionMenuItem from './CopyVersionMenuItem';
 import DiffMenuItem from './DiffMenuItem';

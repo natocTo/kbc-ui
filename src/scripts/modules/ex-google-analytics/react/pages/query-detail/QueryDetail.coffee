@@ -5,9 +5,9 @@ createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 ExGanalActionCreators  = require '../../../exGanalActionCreators'
 RoutesStore = require '../../../../../stores/RoutesStore'
 QueryEditor = React.createFactory(require '../../components/QueryEditor')
-Input = React.createFactory(require('react-bootstrap').Input)
-Label = React.createFactory(require('react-bootstrap').Label)
-StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
+Label = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Label)
+StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
 
 {div, form, caption, input, label} = React.DOM
 module.exports = React.createClass

@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from 'react-bootstrap';
+import {Input} from './../../../react/common/KbcBootstrap';
 import AutoFocus from './wizard/AutoFocus';
 import {Steps, COMPONENT_ID} from '../constants';
 import AuthorizationRow from '../../oauth-v2/react/AuthorizationRow';

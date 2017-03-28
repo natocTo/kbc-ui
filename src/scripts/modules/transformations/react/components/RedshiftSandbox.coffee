@@ -14,8 +14,8 @@ Loader = React.createFactory(require('kbc-react-components').Loader)
 StorageBucketsStore = require '../../../components/stores/StorageBucketsStore'
 StorageTablesStore = require '../../../components/stores/StorageTablesStore'
 contactSupport = require('../../../../utils/contactSupport').default
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
+OverlayTrigger = React.createFactory(require('./../../../../react/common/KbcBootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('./../../../../react/common/KbcBootstrap').Tooltip)
 RedshiftSSLInfoModal = React.createFactory(require './RedshiftSSLInfoModal')
 ApplicationStore = require '../../../../stores/ApplicationStore'
 

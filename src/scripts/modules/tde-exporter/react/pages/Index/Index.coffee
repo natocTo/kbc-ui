@@ -15,7 +15,8 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TableRow = require './TableRow'
 
-{OverlayTrigger, ModalFooter, Modal, ModalHeader, ModalTitle, ModalBody} = require('react-bootstrap')
+{OverlayTrigger, ModalFooter, Modal,
+ModalHeader, ModalTitle, ModalBody} = require('./../../../../../react/common/KbcBootstrap')
 
 {Tooltip} = require '../../../../../react/common/common'
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))

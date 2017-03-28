@@ -1,11 +1,11 @@
 React = require 'react'
-Modal = React.createFactory(require('react-bootstrap').Modal)
-ModalHeader = React.createFactory(require('react-bootstrap/lib/ModalHeader'))
-ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
-ModalBody = React.createFactory(require('react-bootstrap/lib/ModalBody'))
-ModalFooter = React.createFactory(require('react-bootstrap/lib/ModalFooter'))
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
-Button = React.createFactory(require('react-bootstrap').Button)
+Modal = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal)
+ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalHeader)
+ModalTitle = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Title)
+ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalBody)
+ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalFooter)
+ButtonToolbar = React.createFactory(require('./../../../../react/common/KbcBootstrap').ButtonToolbar)
+Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
 
 {p, a, h4} = React.DOM
 

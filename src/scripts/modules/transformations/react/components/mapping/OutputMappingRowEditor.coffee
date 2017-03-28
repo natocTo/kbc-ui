@@ -2,7 +2,7 @@ React = require 'react'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 _ = require('underscore')
 Immutable = require('immutable')
-Input = React.createFactory require('react-bootstrap').Input
+Input = React.createFactory require('./../../../../../react/common/KbcBootstrap').Input
 AutosuggestWrapper = require('./AutoSuggestWrapper').default
 Select = React.createFactory require('../../../../../react/common/Select').default
 

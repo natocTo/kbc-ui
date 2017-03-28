@@ -4,7 +4,7 @@ import moment from 'moment';
 import MetricsApi from '../MetricsApi';
 import CreditSize from '../../../react/common/CreditSize';
 import ComponentsStore from '../../components/stores/ComponentsStore';
-import {Panel, Table} from 'react-bootstrap';
+import {Panel, Table} from './../../../react/common/KbcBootstrap';
 import ComponentName from './../../../react/common/ComponentName';
 import ComponentIcon from './../../../react/common/ComponentIcon';
 import {componentIoSummary} from './Index';

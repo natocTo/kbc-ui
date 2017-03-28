@@ -3,7 +3,7 @@ React = require 'react'
 Protected = React.createFactory(require('kbc-react-components').Protected)
 Clipboard = React.createFactory(require('../../../../react/common/Clipboard').default)
 Loader = React.createFactory(require('kbc-react-components').Loader)
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
 
 {a, span, div, strong, small} = React.DOM
 

@@ -1,16 +1,16 @@
 React = require 'react'
 
 FormHeader = React.createFactory(require './FormHeader')
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 
 {GoodDataWriterModes, GoodDataWriterTokenTypes} = require '../../../Constants'
 
-ModalHeader = React.createFactory(require('react-bootstrap/lib/ModalHeader'))
-ModalBody = React.createFactory(require('react-bootstrap/lib/ModalBody'))
-ModalFooter = React.createFactory(require('react-bootstrap/lib/ModalFooter'))
-ModalTitle = React.createFactory(require('react-bootstrap/lib/ModalTitle'))
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
-Button = React.createFactory(require('react-bootstrap').Button)
+ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalHeader)
+ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalBody)
+ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalFooter)
+ModalTitle = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalTitle)
+ButtonToolbar = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ButtonToolbar)
+Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 
 require './AddConfigurationForm.less'

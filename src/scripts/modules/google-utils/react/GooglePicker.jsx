@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
-import {Button} from 'react-bootstrap';
+import {Button} from './../../../react/common/KbcBootstrap';
 import * as InitGoogleApis from './InitGoogleApis';
 const {apiKey, authorize, injectGapiScript} = InitGoogleApis;
 import templates from './PickerViewTemplates';

@@ -8,8 +8,8 @@ Picker = React.createFactory(require('../../../../google-utils/react/GooglePicke
 ViewTemplates = require('../../../../google-utils/react/PickerViewTemplates').default
 
 {label, a, small, button, option, span, i, button, strong, div, input} = React.DOM
-Input = React.createFactory(require('react-bootstrap').Input)
-Modal = require('react-bootstrap').Modal
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
+Modal = require('./../../../../../react/common/KbcBootstrap').Modal
 Loader = React.createFactory(require('kbc-react-components').Loader)
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)

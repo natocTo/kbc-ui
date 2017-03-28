@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
+import {Modal, ButtonToolbar, Button} from './../../../../react/common/KbcBootstrap';
 
 module.exports = React.createClass({
 

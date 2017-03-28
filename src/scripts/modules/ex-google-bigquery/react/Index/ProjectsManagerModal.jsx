@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal, Input} from 'react-bootstrap';
+import {Modal, Input} from './../../../../react/common/KbcBootstrap';
 import Select from 'react-select';
 
 import {Loader} from 'kbc-react-components';

@@ -4,8 +4,8 @@ createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 ExGanalActionCreators  = require '../../../exGanalActionCreators'
 RoutesStore = require '../../../../../stores/RoutesStore'
 
-{Panel, PanelGroup, ListGroup, ListGroupItem} = require('react-bootstrap')
-Accordion = React.createFactory(require('react-bootstrap').Accordion)
+{Panel, PanelGroup, ListGroup, ListGroupItem} = require('./../../../../../react/common/KbcBootstrap')
+Accordion = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Accordion)
 Panel  = React.createFactory Panel
 PanelGroup = React.createFactory PanelGroup
 ListGroup = React.createFactory ListGroup

@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from 'react-bootstrap';
+import {Modal} from './../../../../../react/common/KbcBootstrap';
 import DaysFilterInput from './DaysFilterInput';
 import DataFilterRow from './DataFilterRow';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';

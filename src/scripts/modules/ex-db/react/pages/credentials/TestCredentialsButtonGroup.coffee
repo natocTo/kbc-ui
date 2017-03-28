@@ -1,6 +1,6 @@
 React = require 'react'
 classnames = require 'classnames'
-Button = React.createFactory(require('react-bootstrap').Button)
+Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
 
 Loader = React.createFactory(require('kbc-react-components').Loader)
 ExDbActionCreators = require '../../../exDbActionCreators'

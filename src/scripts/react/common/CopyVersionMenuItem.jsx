@@ -1,5 +1,5 @@
 import React from 'react';
-import {MenuItem} from 'react-bootstrap';
+import {MenuItem} from './KbcBootstrap';
 import CopyVersionModal from './CopyVersionModal';
 import {Loader} from 'kbc-react-components';
 import {Tooltip} from '../../react/common/common';

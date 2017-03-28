@@ -26,7 +26,7 @@ import RunComponentButton from '../../../../components/react/components/RunCompo
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import SaveButtons from '../../../../../react/common/SaveButtons';
-import {TabbedArea, TabPane} from 'react-bootstrap';
+import {TabbedArea, TabPane} from './../../../../../react/common/KbcBootstrap';
 
 // utils
 import {getDefaultTable, getDefaultBucket} from '../../../utils';

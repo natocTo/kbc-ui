@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {OverlayTrigger, Tooltip} from 'react-bootstrap';
+import {OverlayTrigger, Tooltip} from './KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

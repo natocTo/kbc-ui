@@ -13,8 +13,8 @@ DeleteButton = React.createFactory(require '../../../../react/common/DeleteButto
 Loader = React.createFactory(require('kbc-react-components').Loader)
 StorageBucketsStore = require '../../../components/stores/StorageBucketsStore'
 StorageTablesStore = require '../../../components/stores/StorageTablesStore'
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
+OverlayTrigger = React.createFactory(require('./../../../../react/common/KbcBootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('./../../../../react/common/KbcBootstrap').Tooltip)
 MySqlSSLInfoModal = React.createFactory(require './MySqlSSLInfoModal')
 
 

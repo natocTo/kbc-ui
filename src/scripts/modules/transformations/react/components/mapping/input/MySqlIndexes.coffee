@@ -1,6 +1,6 @@
 React = require 'react'
 ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
-{Button} = require('react-bootstrap')
+{Button} = require('./../../../../../../react/common/KbcBootstrap')
 Button = React.createFactory Button
 Select = React.createFactory(require('react-select'))
 _ = require('underscore')

@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import React from 'react';
 import ApplicationStore from '../../../stores/ApplicationStore';
-import { Button, ButtonToolbar, Modal, Input } from 'react-bootstrap';
+import { Button, ButtonToolbar, Modal, Input } from './../../../react/common/KbcBootstrap';
 import RouterStore from '../../../stores/RoutesStore';
 
 export default React.createClass({

@@ -6,7 +6,7 @@
 import React from 'react';
 
 import {Loader} from 'kbc-react-components';
-import {Button} from 'react-bootstrap';
+import {Button} from './KbcBootstrap';
 
 export default React.createClass({
 

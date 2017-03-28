@@ -3,7 +3,7 @@ import React, {PropTypes} from 'react';
 import date from '../../../../../utils/date';
 import moment from 'moment';
 import _ from 'underscore';
-import {Table} from 'react-bootstrap';
+import {Table} from './../../../../../react/common/KbcBootstrap';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import filesize from 'filesize';
