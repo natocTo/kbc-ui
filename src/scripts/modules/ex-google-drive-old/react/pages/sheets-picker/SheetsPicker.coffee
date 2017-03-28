@@ -13,7 +13,6 @@ Picker = React.createFactory(require('../../../../google-utils/react/GooglePicke
 ViewTemplates = require('../../../../google-utils/react/PickerViewTemplates').default
 
 {Panel, PanelGroup} = require('./../../../../../react/common/KbcBootstrap')
-Accordion = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Accordion)
 PanelGroup = React.createFactory PanelGroup
 GdriveFilePanel = React.createFactory(require('./GdriveFilePanel'))
 ConfigSheetsPanels = React.createFactory(require('./ConfigSheetsPanels'))
