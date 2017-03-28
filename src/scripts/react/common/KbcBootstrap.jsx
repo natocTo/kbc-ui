@@ -1,10 +1,8 @@
-
 import Alert from './bootstrap/Alert';
 import Button from './bootstrap/Button';
 import ButtonGroup from './bootstrap/ButtonGroup';
 import ButtonToolbar from './bootstrap/ButtonToolbar';
 import DropdownButton from './bootstrap/DropdownButton';
-import DropdownStateMixin from './bootstrap/DropdownStateMixin';
 import FormControls from './bootstrap/FormControls';
 import Input from './bootstrap/Input';
 import Label from './bootstrap/Label';
@@ -32,7 +30,6 @@ export {
   ButtonGroup,
   ButtonToolbar,
   DropdownButton,
-  DropdownStateMixin,
   FormControls,
   Input,
   Label,
