@@ -1,9 +1,10 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
 import DeletedConfigurationRow from './DeletedConfigurationRow';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     component: PropTypes.object.isRequired,
     configurations: PropTypes.object.isRequired,

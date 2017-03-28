@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import Confirm from '../../../../react/common/Confirm';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
