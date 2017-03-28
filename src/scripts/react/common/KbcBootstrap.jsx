@@ -1,9 +1,7 @@
 
 import Accordion from './bootstrap/Accordion';
 import Affix from './bootstrap/Affix';
-import AffixMixin from './bootstrap/AffixMixin';
 import Alert from './bootstrap/Alert';
-import BootstrapMixin from './bootstrap/BootstrapMixin';
 import Badge from './bootstrap/Badge';
 import Button from './bootstrap/Button';
 import ButtonGroup from './bootstrap/ButtonGroup';
@@ -13,11 +11,9 @@ import CollapsibleNav from './bootstrap/CollapsibleNav';
 import Carousel from './bootstrap/Carousel';
 import CarouselItem from './bootstrap/CarouselItem';
 import Col from './bootstrap/Col';
-import CollapsibleMixin from './bootstrap/CollapsibleMixin';
 import DropdownButton from './bootstrap/DropdownButton';
 import DropdownMenu from './bootstrap/DropdownMenu';
 import DropdownStateMixin from './bootstrap/DropdownStateMixin';
-import FadeMixin from './bootstrap/FadeMixin';
 import FormControls from './bootstrap/FormControls';
 import Glyphicon from './bootstrap/Glyphicon';
 import Grid from './bootstrap/Grid';
@@ -39,7 +35,6 @@ import NavItem from './bootstrap/NavItem';
 import ModalTrigger from './bootstrap/ModalTrigger';
 import Overlay from './bootstrap/Overlay';
 import OverlayTrigger from './bootstrap/OverlayTrigger';
-import OverlayMixin from './bootstrap/OverlayMixin';
 import PageHeader from './bootstrap/PageHeader';
 import Panel from './bootstrap/Panel';
 import PanelGroup from './bootstrap/PanelGroup';
@@ -63,9 +58,7 @@ import Well from './bootstrap/Well';
 export {
   Accordion,
   Affix,
-  AffixMixin,
   Alert,
-  BootstrapMixin,
   Badge,
   Button,
   ButtonGroup,
@@ -75,11 +68,9 @@ export {
   Carousel,
   CarouselItem,
   Col,
-  CollapsibleMixin,
   DropdownButton,
   DropdownMenu,
   DropdownStateMixin,
-  FadeMixin,
   FormControls,
   Glyphicon,
   Grid,
@@ -101,7 +92,6 @@ export {
   ModalTrigger,
   Overlay,
   OverlayTrigger,
-  OverlayMixin,
   PageHeader,
   Panel,
   PanelGroup,
