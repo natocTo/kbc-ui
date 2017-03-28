@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import _ from 'underscore';
-import ImmutableRendererMixin from '../mixins/ImmutableRendererMixin';
-import { DropdownButton, MenuItem, DropdownStateMixin } from './../common/KbcBootstrap';
+import { DropdownButton, MenuItem} from './../common/KbcBootstrap';
 
 const modes = {
   NORMAL: 'normal',
@@ -10,7 +9,6 @@ const modes = {
 
 export default React.createClass({
   displayName: 'User',
-  mixins: [ImmutableRendererMixin, DropdownStateMixin],
 
   propTypes: {
     user: PropTypes.object.isRequired,
@@ -125,12 +123,12 @@ export default React.createClass({
 
   _maintainerUrl(id) {
     return _.template(this.props.urlTemplates.get('maintainer'))({maintainerId: id});
-  },
-
-  _handleUserClick(e) {
-    if (e.target.tagName !== 'A') {
-      this.refs.dropdownButton.handleDropdownClick(e);
-    }
   }
+
+  /* _handleUserClick(e) {
+   *   if (e.target.tagName !== 'A') {
+   *     this.refs.dropdownButton.handleDropdownClick(e);
+   *   }
+   * }*/
 
 });

@@ -4,11 +4,11 @@ React = require 'react'
 
 
 ProjectsList = require './List'
-DropdownStateMixin = require('./../../common/KbcBootstrap').DropdownStateMixin
+
 
 module.exports = React.createClass
   displayName: 'ProjectSelect'
-  mixins: [DropdownStateMixin]
+
   propTypes:
     organizations: React.PropTypes.object.isRequired
     currentProject: React.PropTypes.object.isRequired
@@ -16,6 +16,9 @@ module.exports = React.createClass
     projectTemplates: React.PropTypes.object.isRequired
     xsrf: React.PropTypes.string.isRequired
     canCreateProject: React.PropTypes.bool.isRequired
+
+  getInitialState: ->
+    open: false
 
   render: ->
     if @state.open then className = 'open' else ''
@@ -34,6 +37,9 @@ module.exports = React.createClass
         xsrf: @props.xsrf
         canCreateProject: @props.canCreateProject
         focus: @state.open
+
+  setDropdownState: (newState) ->
+    @setState({open: newState})
 
   _handleDropdownClick: (e) ->
     e.preventDefault()
