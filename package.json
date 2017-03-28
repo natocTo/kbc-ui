@@ -51,7 +51,7 @@
     "react-addons-pure-render-mixin": "~0.14.8",
     "react-addons-test-utils": "~0.14.8",
     "react-autosuggest": "^9.0.0",
-    "react-bootstrap": "~0.23.0",
+    "react-bootstrap": "~0.30.8",
     "react-clipboard.js": "^0.1.5",
     "react-code-mirror": "~3.0.4",
     "react-datepicker": "^0.43.0",
