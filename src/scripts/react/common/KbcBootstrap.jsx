@@ -4,7 +4,6 @@ import Input from './bootstrap/Input';
 import Label from './bootstrap/Label';
 import ListGroup from './bootstrap/ListGroup';
 import ListGroupItem from './bootstrap/ListGroupItem';
-import MenuItem from './bootstrap/MenuItem';
 import Modal from './bootstrap/Modal';
 import ModalHeader from './bootstrap/ModalHeader';
 import ModalTitle from './bootstrap/ModalTitle';
@@ -27,7 +26,6 @@ export {
   Label,
   ListGroup,
   ListGroupItem,
-  MenuItem,
   Modal,
   ModalHeader,
   ModalTitle,

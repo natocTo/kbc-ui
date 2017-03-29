@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import _ from 'underscore';
-import {MenuItem} from './../common/KbcBootstrap';
-import { DropdownButton } from 'react-bootstrap';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 const modes = {
   NORMAL: 'normal',

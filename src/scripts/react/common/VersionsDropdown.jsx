@@ -1,5 +1,4 @@
 import React from 'react';
-import {MenuItem} from './KbcBootstrap';
 import RollbackVersionMenuItem from './RollbackVersionMenuItem';
 import CopyVersionMenuItem from './CopyVersionMenuItem';
 import DiffMenuItem from './DiffMenuItem';
@@ -13,7 +12,7 @@ import {getPreviousVersion} from '../../utils/VersionsDiffUtils';
 import VersionsActionCreators from '../../../scripts/modules/components/VersionsActionCreators';
 // import {Loader} from 'kbc-react-components';
 import RoutesStore from '../../stores/RoutesStore';
-import { DropdownButton } from 'react-bootstrap';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [createStoreMixin(VersionsStore, InstalledComponentStore)],

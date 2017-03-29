@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
-import {MenuItem} from './../../../../react/common/KbcBootstrap';
 // import {Map} from 'immutable';
-import { DropdownButton } from 'react-bootstrap';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 const TEMPLATES = [
   {
