@@ -1,7 +1,6 @@
 React = require 'react'
 Modal = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal)
-OverlayTrigger = React.createFactory(require('./../../../../react/common/KbcBootstrap').OverlayTrigger)
-Tooltip = React.createFactory(require('./../../../../react/common/KbcBootstrap').Tooltip)
+Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Header)
 ModalTitle = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Title)
 ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Body)
@@ -75,14 +74,11 @@ module.exports = React.createClass
             onSave: @_handleRun
 
   renderOpenButton: ->
-    OverlayTrigger
-      overlay:
-        Tooltip null,
-          'Run'
-      key: 'run'
+    Tooltip
+      tooltip: 'Run'
+      id: 'run'
       placement: @props.tooltipPlacement
     ,
-
       Button
         onClick: @_handleOpenButtonClick
         bsStyle: 'link'

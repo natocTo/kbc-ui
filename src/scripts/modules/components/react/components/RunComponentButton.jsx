@@ -1,6 +1,7 @@
 import React from 'react';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
-import {OverlayTrigger, Tooltip, Button} from './../../../../react/common/KbcBootstrap';
+import {Button} from './../../../../react/common/KbcBootstrap';
+import Tooltip from './../../../../react/common/Tooltip';
 import {Loader} from 'kbc-react-components';
 import RoutesStore from '../../../../stores/RoutesStore';
 import classnames from 'classnames';
@@ -83,16 +84,8 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    const tooltipDisabled = (
-      <Tooltip>
-        {this.state.isLoading ? 'Component is running' : this.props.disabledReason}
-      </Tooltip>
-    );
-    const tooltip = (
-      <Tooltip>
-        {this.props.tooltip}
-      </Tooltip>
-    );
+    const tooltipDisabled = this.state.isLoading ? 'Component is running' : this.props.disabledReason;
+    const tooltip = this.props.tooltip;
 
     const modal = (
       <RunModal
@@ -106,21 +99,21 @@ module.exports = React.createClass({
 
     if (this.props.disabled || this.state.isLoading) {
       return (
-        <OverlayTrigger
-          overlay={tooltipDisabled}
+        <Tooltip
+          tooltip={tooltipDisabled}
           placement={this.props.tooltipPlacement}
         >
           {this.props.mode === 'button' ? this._renderButton() : this._renderLink()}
-        </OverlayTrigger>
+        </Tooltip>
       );
     } else if (this.props.mode === 'button') {
       return (
-        <OverlayTrigger
-          overlay={tooltip}
+        <Tooltip
+          tooltip={tooltip}
           placement={this.props.tooltipPlacement}
         >
             {this._renderButton(modal)}
-        </OverlayTrigger>
+        </Tooltip>
       );
     } else {
       return this._renderLink(modal);

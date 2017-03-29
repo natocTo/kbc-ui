@@ -5,9 +5,8 @@
 React = require 'react'
 classnames = require 'classnames'
 
-Tooltip = React.createFactory(require('./../../../../react/common/KbcBootstrap').Tooltip)
+Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 Loader = React.createFactory(require('kbc-react-components').Loader)
-OverlayTrigger = React.createFactory(require('./../../../../react/common/KbcBootstrap').OverlayTrigger)
 Confirm = React.createFactory(require('./../../../../react/common/Confirm').default)
 
 assign = require 'object-assign'
@@ -39,9 +38,8 @@ module.exports = React.createClass
       React.DOM.span className: 'btn btn-link disabled',
         React.DOM.em className: 'fa-reply'
     else
-      OverlayTrigger
-        overlay: Tooltip null, @props.tooltip
-        key: 'delete'
+      Tooltip
+        tooltip: @props.tooltip
         placement: 'top'
       ,
         button
@@ -50,4 +48,3 @@ module.exports = React.createClass
         ,
           i className: classnames('fa fa-reply', 'fa-fw': @props.fixedWidth)
           if @props.label then ' ' + @props.label
-

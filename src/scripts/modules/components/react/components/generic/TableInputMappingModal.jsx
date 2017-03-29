@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import { Modal, Button, OverlayTrigger, Tooltip } from './../../../../../react/common/KbcBootstrap';
+import { Modal, Button } from './../../../../../react/common/KbcBootstrap';
+import Tooltip from './../../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './TableInputMappingEditor';
 import resolveInputShowDetails from './resolveInputShowDetails';
@@ -101,11 +102,11 @@ export default React.createClass({
     if (this.props.mode === MODE_EDIT) {
       const tooltipText = this.props.tooltipText ? this.props.tooltipText : 'Edit Input';
       return (
-        <OverlayTrigger overlay={<Tooltip>{tooltipText}</Tooltip>} placement="top">
+        <Tooltip tooltip={tooltipText} placement="top">
           <Button bsStyle="link" onClick={this.handleEditButtonClick}>
             <span className="fa fa-pencil" />
           </Button>
-        </OverlayTrigger>
+        </Tooltip>
       );
     } else {
       let buttonBsStyle = this.props.buttonBsStyle ? this.props.buttonBsStyle : 'primary';

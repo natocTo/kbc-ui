@@ -1,8 +1,7 @@
 React = require 'react'
 ExDbActionCreators = require '../../exDbActionCreators'
 
-Tooltip = React.createFactory(require('./../../../../react/common/KbcBootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('./../../../../react/common/KbcBootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 Confirm = React.createFactory(require('../../../../react/common/Confirm').default)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 {Navigation} = require 'react-router'
@@ -29,16 +28,16 @@ module.exports = React.createClass
       span className: 'btn btn-link',
         Loader()
     else
-      OverlayTrigger
-        overlay: Tooltip null, 'Delete Query'
-        key: 'delete'
-        placement: @props.tooltipPlacement
+      Confirm
+        title: 'Delete Query'
+        text: "Do you really want to delete the query #{@props.query.get('name')}?"
+        buttonLabel: 'Delete'
+        onConfirm: @_deleteQuery
       ,
-        Confirm
-          title: 'Delete Query'
-          text: "Do you really want to delete the query #{@props.query.get('name')}?"
-          buttonLabel: 'Delete'
-          onConfirm: @_deleteQuery
+        Tooltip
+          tooltip: 'Delete Query'
+          id: 'delete'
+          placement: @props.tooltipPlacement
         ,
           button className: 'btn btn-link',
             i className: 'kbc-icon-cup'
