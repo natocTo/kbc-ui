@@ -5,7 +5,6 @@ PhaseEditRow = React.createFactory(require('./PhaseEditRow').default)
 PhaseModal = require('../../modals/Phase').default
 MergePhasesModal = require('../../modals/MergePhasesModal').default
 MoveTasksModal = require('../.././modals/MoveTasksModal').default
-Tooltip = React.createFactory(require('../../../../../react/common/Tooltip').default)
 {p, small, a, ul, li, i, div, span, strong, table, button, thead, tbody, th, td, tr} = React.DOM
 AddTaskModal = require('../../modals/add-task/AddTaskModal')
 EmptyState = require('../../../../components/react/components/ComponentEmptyState').default

@@ -20,7 +20,7 @@ TablesByBucketsPanel = require '../../../../components/react/components/TablesBy
 
 ActiveCountBadge = require './ActiveCountBadge'
 {Link} = require('react-router')
-{Tooltip, Confirm} = require '../../../../../react/common/common'
+{Confirm} = require '../../../../../react/common/common'
 {Loader} = require 'kbc-react-components'
 
 LatestJobs = require '../../../../components/react/components/SidebarJobs'

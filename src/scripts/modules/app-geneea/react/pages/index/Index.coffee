@@ -3,7 +3,6 @@ Immutable = require('immutable')
 {ul, li, span, div, a, p, h2, label, input, form} = React.DOM
 Check = React.createFactory(require('kbc-react-components').Check)
 _ = require 'underscore'
-Tooltip = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Tooltip)
 OverlayTrigger = React.createFactory(require('./../../../../../react/common/KbcBootstrap').OverlayTrigger)
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 TableLink = React.createFactory(require('../../../../components/react/components/StorageApiTableLink').default)
@@ -297,11 +296,6 @@ module.exports = (componentId) ->
     _createInput: (caption, value, tooltip, isTable) ->
       if isTable and not _.isEmpty value
         value = TableLink tableId: value, value
-      # OverlayTrigger
-      #   overlay: Tooltip null, tooltip
-      #   key: caption
-      #   placement: 'top'
-      # ,
       StaticText
         label: caption
         labelClassName: 'col-xs-4'
