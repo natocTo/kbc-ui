@@ -79,17 +79,17 @@ export default React.createClass({
 
   renderModalBody() {
     return (
-      <TabbedArea key="tabbedarea" animation={false}>
-        <TabPane key="general" eventKey="general" tab="General Info">
+      <TabbedArea defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
+        <TabPane eventKey="general" title="General Info">
           {this.renderGeneralInfo()}
         </TabPane>
-        <TabPane key="columns" eventKey="columns" tab="Columns">
+        <TabPane eventKey="columns" title="Columns">
           {this.renderColumnsInfo()}
         </TabPane>
-        <TabPane key="datasample" eventKey="datasample" tab="Data Sample">
+        <TabPane eventKey="datasample" title="Data Sample">
           {this.renderDataSample()}
         </TabPane>
-        <TabPane key="events" eventKey="events" tab="Events">
+        <TabPane eventKey="events" title="Events">
           {this.renderEvents()}
         </TabPane>
       </TabbedArea>

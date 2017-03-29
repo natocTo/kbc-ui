@@ -137,12 +137,12 @@ export default React.createClass({
       this.state.status ?
       <span>
         <div>
-          <TabbedArea key="tabbedarea" animation={false}>
+          <TabbedArea defaultActiveKey="general" animation={false} id="daterangetab">
 
-            <TabPane key="general" eventKey="general" tab={this.renderTabTitle('Affected Configurations', configHelpText)}>
+            <TabPane eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
               {this.renderConfigStatus()}
             </TabPane>
-            <TabPane key="datasample" eventKey="datasample" tab={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
+            <TabPane eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
               {this.renderOrhcestrationsStatus()}
             </TabPane>
           </TabbedArea>

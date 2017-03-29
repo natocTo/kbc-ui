@@ -49,15 +49,15 @@ export default React.createClass({
             componentId={this.props.componentId}
             id={this.props.id}>
             <Modal.Body>
-              <TabbedArea key="tabbedarea" activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}>
-                <TabPane key="general" eventKey="general" tab="Instant authorization">
+              <TabbedArea id="authorizationrowtabs" activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}>
+                <TabPane eventKey="general" title="Instant authorization">
                   {this.renderInstant()}
                 </TabPane>
-                <TabPane key="external" eventKey="external" tab="External authorization">
+                <TabPane eventKey="external" title="External authorization">
                   {this.renderExternal()}
                 </TabPane>
                 {DIRECT_TOKEN_COMPONENTS.includes(this.props.componentId) ?
-                  <TabPane key="direct" eventKey="direct" tab="Direct token insert">
+                  <TabPane key="direct" eventKey="direct" title="Direct token insert">
                     {this.renderDirectTokenInsert()}
                   </TabPane>
                  : null

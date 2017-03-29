@@ -54,8 +54,8 @@ export default React.createClass({
             query={this.query('query', Map())}
             apiVersion={this.props.apiVersion}
           />
-          <TabbedArea defaultActiveEventKey={1} animation={false}>
-            <TabPane tab="General" eventKey={1}>
+          <TabbedArea defaultActiveKey={1} animation={false}>
+            <TabPane title="General" eventKey={1}>
               <div className="row form-horizontal clearfix">
                 {this.renderTemplateSelect()}
                 {this.renderInput('Name', 'name', NAME_HELP, placeholders.name, this.nameInvalidReason)}
@@ -64,7 +64,7 @@ export default React.createClass({
                 {this.renderAccountSelector()}
               </div>
             </TabPane>
-            <TabPane tab="Advanced" eventKey={2}>
+            <TabPane title="Advanced" eventKey={2}>
               <div className="row form-horizontal clearfix">
                 {this.renderDateRangeSelector()}
                 {this.renderInput('Since', ['query', 'since'], SINCE_HELP, 'yyyy-mm-dd or 15 days ago')}

@@ -23,8 +23,8 @@ export default React.createClass({
 
   render() {
     return (
-      <TabbedArea activeKey={this.props.step} onSelect={this.goToStep} animation={false}>
-        <TabPane eventKey={Steps.STEP_CREDENTIALS} tab="1. Credentials">
+      <TabbedArea activeKey={this.props.step} onSelect={this.goToStep} animation={false} id="wizardtab">
+        <TabPane eventKey={Steps.STEP_CREDENTIALS} title="1. Credentials">
           <div className="row">
             <div className="col-md-8">
               <CredentialsForm
@@ -54,7 +54,7 @@ export default React.createClass({
             </div>
           </div>
         </TabPane>
-        <TabPane eventKey={Steps.STEP_TEMPLATE} tab="2. Template" disabled={!this.isCredentialsValid()}>
+        <TabPane eventKey={Steps.STEP_TEMPLATE} title="2. Template" disabled={!this.isCredentialsValid()}>
           <div className="row">
             <div className="col-sm-10">
               <p>Please select from the predefined templates to initialize the Adform configuration:</p>

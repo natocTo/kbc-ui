@@ -82,11 +82,11 @@ export default React.createClass({
           <Modal.Title>Change Date Range</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <TabbedArea activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false}>
-            <TabPane eventKey="relative" tab="Relative">
+          <TabbedArea activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false} id="daterangemodaltab">
+            <TabPane eventKey="relative" title="Relative">
               {this.renderRelative()}
             </TabPane>
-            <TabPane eventKey="absolute" tab="Absolute">
+            <TabPane eventKey="absolute" title="Absolute">
               {this.renderAbsolute()}
             </TabPane>
           </TabbedArea>

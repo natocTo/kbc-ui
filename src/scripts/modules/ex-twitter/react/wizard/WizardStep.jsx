@@ -12,7 +12,7 @@ export default React.createClass({
 
   render() {
     return (
-      <TabPane {...this.props} eventKey={this.props.step} tab={this.props.title}>
+      <TabPane {...this.props} eventKey={this.props.step} title={this.props.title}>
         <div className="row" style={this.style()}>
           {this.props.children}
         </div>
