@@ -4,7 +4,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TemplateSelector from './TemplateSelector';
 import GraphAPIExplorerLink from './GraphAPIExplorerLink';
 import DateRangeSelector from './DateRangeSelector';
-import {Modal, OverlayTrigger, Tooltip, TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
+import {Modal, TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
 // import Select from 'react-select';
 import Select from '../../../../react/common/Select';
 
@@ -188,17 +188,6 @@ export default React.createClass({
           </span>
         </div>
       </div>
-    );
-  },
-
-  renderTooltipHelp(message) {
-    if (!message) return null;
-    return (
-      <small>
-        <OverlayTrigger placement="right" overlay={<Tooltip>{message}</Tooltip>}>
-          <i className="fa fa-fw fa-question-circle"/>
-        </OverlayTrigger>
-      </small>
     );
   },
 
