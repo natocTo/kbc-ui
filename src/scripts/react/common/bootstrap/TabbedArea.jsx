@@ -1,10 +1,10 @@
 import React from 'react';
-import { TabbedArea } from 'react-bootstrap';
+import { Tabs } from 'react-bootstrap';
 
 export default React.createClass({
   render() {
     return (
-      <TabbedArea {...this.props} />
+      <Tabs {...this.props} />
     );
   }
 });
