@@ -9,7 +9,7 @@ Tooltip = React.createFactory(require('../../../../../react/common/Tooltip').def
 {p, small, a, ul, li, i, div, span, strong, table, button, thead, tbody, th, td, tr} = React.DOM
 AddTaskModal = require('../../modals/add-task/AddTaskModal')
 EmptyState = require('../../../../components/react/components/ComponentEmptyState').default
-DropdownButton = React.createFactory(require('./../../../../../react/common/KbcBootstrap').DropdownButton)
+DropdownButton = React.createFactory(require('react-bootstrap').DropdownButton)
 AboutPhases = require('../../components/AboutPhases').default
 ComponentsStore = require '../../../../components/stores/ComponentsStore'
 
@@ -59,11 +59,10 @@ TasksEditTable = React.createClass
   renderHeaderActionButtons: ->
     ul className: 'nav nav-stacked',
       DropdownButton
-        bsSize: 'small'
-        bsStyle: 'small'
-        style: {padding: '0'}
+        bsStyle: 'link'
+        style: {paddingLeft: 0}
         title: span null, 'Actions'
-        navItem: true
+        id: 'modules-orchestrations-react-pages-orchestration-tasks-tasks-edit-table-dropdown'
       ,
         li className: (if @canMergePhases() then '' else 'disabled'),
           a

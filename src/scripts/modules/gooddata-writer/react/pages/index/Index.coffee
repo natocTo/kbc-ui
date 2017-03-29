@@ -10,7 +10,7 @@ ComponentEmptyState = require('../../../../components/react/components/Component
 AddNewTableButton = require('../../components/AddNewTableButton').default
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
-{Panel, PanelGroup, DropdownButton} = require('./../../../../../react/common/KbcBootstrap')
+{Panel, PanelGroup} = require('./../../../../../react/common/KbcBootstrap')
 
 SearchRow = require('../../../../../react/common/SearchRow').default
 TablesList = require './BucketTablesList'
@@ -31,7 +31,7 @@ goodDataWriterStore = require '../../../store'
 actionCreators = require '../../../actionCreators'
 installedComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 {label, small, strong, br, ul, li, div, span, i, a, button, p} = React.DOM
-{ Alert } = require('react-bootstrap')
+{ Alert, DropdownButton } = require('react-bootstrap')
 
 module.exports = React.createClass
   displayName: 'GooddDataWriterIndex'
@@ -197,9 +197,10 @@ module.exports = React.createClass
                   React.createElement Loader
               React.createElement DropdownButton,
                 title: span null,
-                  span className: 'fa fa-cog fa-fw'
+                  i className: 'fa fa-cog fa-fw'
                   ' Advanced'
-                navItem: true
+                bsStyle: 'link'
+                id: 'modules-gooddata-writer-react-pages-index-index-dropdown'
               ,
                 li null,
                   React.createElement Confirm,

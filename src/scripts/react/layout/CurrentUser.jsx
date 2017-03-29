@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'underscore';
-import { DropdownButton, MenuItem} from './../common/KbcBootstrap';
+import {MenuItem} from './../common/KbcBootstrap';
+import { DropdownButton } from 'react-bootstrap';
 
 const modes = {
   NORMAL: 'normal',
@@ -43,6 +44,7 @@ export default React.createClass({
             title={<span className="kbc-icon-picker"/>}
             ref="dropdownButton"
             noCaret={true}
+            id="react-layout-current-user-dropdown"
           >
             <MenuItem
               key="changePassword"
