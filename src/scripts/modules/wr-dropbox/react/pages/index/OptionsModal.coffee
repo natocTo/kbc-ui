@@ -1,7 +1,7 @@
 React = require('react')
 OptionsForm = require '../../components/optionsForm'
 Immutable = require 'immutable'
-ButtonToolbar = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ButtonToolbar)
+ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
 Modal = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal)
 ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Header)

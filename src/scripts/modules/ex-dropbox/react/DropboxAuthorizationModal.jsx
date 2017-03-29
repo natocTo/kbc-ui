@@ -1,8 +1,9 @@
 import _ from 'underscore';
 import React from 'react';
 import ApplicationStore from '../../../stores/ApplicationStore';
-import { Button, ButtonToolbar, Modal, Input } from './../../../react/common/KbcBootstrap';
+import { Button, Modal, Input } from './../../../react/common/KbcBootstrap';
 import RouterStore from '../../../stores/RoutesStore';
+import { ButtonToolbar } from 'react-bootstrap';
 
 export default React.createClass({
 

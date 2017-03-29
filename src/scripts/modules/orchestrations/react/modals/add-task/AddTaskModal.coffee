@@ -1,6 +1,6 @@
 React = require 'react'
 Modal = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal)
-ButtonToolbar = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ButtonToolbar)
+ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
 ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Header)
 ModalTitle = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Title)

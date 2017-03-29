@@ -4,7 +4,7 @@ ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstr
 ModalTitle = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Title)
 ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalBody)
 ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalFooter)
-ButtonToolbar = React.createFactory(require('./../../../../react/common/KbcBootstrap').ButtonToolbar)
+ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
 
 {p, a, h4} = React.DOM

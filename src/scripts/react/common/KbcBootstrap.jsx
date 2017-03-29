@@ -1,5 +1,4 @@
 import Button from './bootstrap/Button';
-import ButtonToolbar from './bootstrap/ButtonToolbar';
 import DropdownButton from './bootstrap/DropdownButton';
 import FormControls from './bootstrap/FormControls';
 import Input from './bootstrap/Input';
@@ -24,7 +23,6 @@ import Tooltip from './bootstrap/Tooltip';
 
 export {
   Button,
-  ButtonToolbar,
   DropdownButton,
   FormControls,
   Input,

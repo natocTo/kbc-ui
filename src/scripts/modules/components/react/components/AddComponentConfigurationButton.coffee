@@ -11,7 +11,6 @@ Modal = React.createFactory(require('./../../../../react/common/KbcBootstrap').M
 ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalHeader)
 ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalBody)
 ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalFooter)
-ButtonToolbar = React.createFactory(require('./../../../../react/common/KbcBootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
 NewComponentModal = React.createFactory(require('../pages/new-component-form/NewComponentModal'))
 

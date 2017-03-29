@@ -6,7 +6,6 @@ ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstr
 ModalTitle = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Title)
 ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Footer)
-ButtonToolbar = React.createFactory(require('./../../../../react/common/KbcBootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
 Panel = React.createFactory(require('./../../../../react/common/KbcBootstrap').Panel)
 ConfirmButtons = require('../../../../react/common/ConfirmButtons').default

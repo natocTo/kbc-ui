@@ -1,7 +1,7 @@
 React = require('react')
 ApplicationStore = require '../../../../stores/ApplicationStore'
 _ = require('underscore')
-ButtonToolbar = React.createFactory(require('./../../../../react/common/KbcBootstrap').ButtonToolbar)
+ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
 Modal = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal)
 ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Header)

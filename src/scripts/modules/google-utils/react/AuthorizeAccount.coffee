@@ -2,7 +2,6 @@ React = require('react')
 ComponentsStore = require '../../components/stores/ComponentsStore'
 RoutesStore = require '../../../stores/RoutesStore'
 ApplicationStore = require '../../../stores/ApplicationStore'
-ButtonToolbar = React.createFactory(require('./../../../react/common/KbcBootstrap').ButtonToolbar)
 TabbedArea = React.createFactory(require('./../../../react/common/KbcBootstrap').TabbedArea)
 TabPane = React.createFactory(require('./../../../react/common/KbcBootstrap').TabPane)
 Button = React.createFactory(require('./../../../react/common/KbcBootstrap').Button)
