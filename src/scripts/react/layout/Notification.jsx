@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert} from './../common/KbcBootstrap';
+import { Alert } from 'react-bootstrap';
 
 const classMap = {
   success: 'info',

@@ -10,7 +10,7 @@ ComponentEmptyState = require('../../../../components/react/components/Component
 AddNewTableButton = require('../../components/AddNewTableButton').default
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
-{Panel, PanelGroup, Alert, DropdownButton} = require('./../../../../../react/common/KbcBootstrap')
+{Panel, PanelGroup, DropdownButton} = require('./../../../../../react/common/KbcBootstrap')
 
 SearchRow = require('../../../../../react/common/SearchRow').default
 TablesList = require './BucketTablesList'
@@ -31,6 +31,7 @@ goodDataWriterStore = require '../../../store'
 actionCreators = require '../../../actionCreators'
 installedComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 {label, small, strong, br, ul, li, div, span, i, a, button, p} = React.DOM
+{ Alert } = require('react-bootstrap')
 
 module.exports = React.createClass
   displayName: 'GooddDataWriterIndex'

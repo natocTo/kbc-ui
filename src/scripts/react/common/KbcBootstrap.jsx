@@ -1,4 +1,3 @@
-import Alert from './bootstrap/Alert';
 import Button from './bootstrap/Button';
 import ButtonGroup from './bootstrap/ButtonGroup';
 import ButtonToolbar from './bootstrap/ButtonToolbar';
@@ -25,7 +24,6 @@ import TabPane from './bootstrap/TabPane';
 import Tooltip from './bootstrap/Tooltip';
 
 export {
-  Alert,
   Button,
   ButtonGroup,
   ButtonToolbar,
