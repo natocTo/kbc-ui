@@ -17,7 +17,7 @@ import ProgressBar from './bootstrap/ProgressBar';
 import TabbedArea from './bootstrap/TabbedArea';
 import Table from './bootstrap/Table';
 import TabPane from './bootstrap/TabPane';
-import Tooltip from './bootstrap/Tooltip';
+
 
 export {
   Button,
@@ -38,6 +38,5 @@ export {
   ProgressBar,
   TabbedArea,
   Table,
-  TabPane,
-  Tooltip
+  TabPane
 };
