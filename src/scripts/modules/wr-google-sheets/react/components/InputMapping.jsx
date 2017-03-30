@@ -65,12 +65,14 @@ export default React.createClass({
   renderColumnFilter() {
     if (this.state.showDetails) {
       return (
+        <div className="row">
           <ColumnsSelectRow
             value={this.props.mapping}
             disabled={this.props.disabled}
             onChange={this.props.onChange}
             allTables={this.props.tables}
           />
+        </div>
       );
     }
     return null;
