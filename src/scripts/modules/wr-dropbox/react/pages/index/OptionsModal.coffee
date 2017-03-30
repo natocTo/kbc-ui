@@ -8,7 +8,6 @@ ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBoot
 ModalTitle = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Title)
 ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Footer)
-Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 OptionsForm = React.createFactory OptionsForm
 Loader = React.createFactory(require('kbc-react-components').Loader)
 

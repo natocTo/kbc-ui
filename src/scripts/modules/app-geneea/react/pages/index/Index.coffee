@@ -4,7 +4,6 @@ Immutable = require('immutable')
 Check = React.createFactory(require('kbc-react-components').Check)
 _ = require 'underscore'
 OverlayTrigger = React.createFactory(require('./../../../../../react/common/KbcBootstrap').OverlayTrigger)
-Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 TableLink = React.createFactory(require('../../../../components/react/components/StorageApiTableLink').default)
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentDescription = React.createFactory(ComponentDescription)

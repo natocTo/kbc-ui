@@ -6,7 +6,6 @@ ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootst
 ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
-Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 Check = React.createFactory(require('kbc-react-components').Check)
 NewDimensionForm = React.createFactory(require('./../../components/NewDimensionForm').default)
 

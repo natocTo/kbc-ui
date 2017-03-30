@@ -5,7 +5,6 @@ ModalTitle = React.createFactory(require('./../../../../../react/common/KbcBoots
 ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Modal.Footer)
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
-Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
 fuzzy = require 'fuzzy'

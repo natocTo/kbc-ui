@@ -6,7 +6,6 @@ ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap
 ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
-Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
 CodeMirror = React.createFactory(require('react-code-mirror'))
 Tooltip = React.createFactory(require('../../../../react/common/Tooltip').default)
 

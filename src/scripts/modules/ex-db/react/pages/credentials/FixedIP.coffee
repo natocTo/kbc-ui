@@ -1,6 +1,5 @@
 React = require 'react'
 _ = require 'underscore'
-Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 
 {form, div, label, p, a, strong} = React.DOM
 
