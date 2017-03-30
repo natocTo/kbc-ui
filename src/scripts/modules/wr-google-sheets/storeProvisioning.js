@@ -23,6 +23,10 @@ export default function(COMPONENT_ID, configId) {
     return tables.findLast((t) => t.get('id') === tid);
   }
 
+  function findMapping(tableId) {
+    return mappings.find((t) => t.get('source') === tableId);
+  }
+
   return {
     configData: configData,
     parameters: parameters,
@@ -42,10 +46,14 @@ export default function(COMPONENT_ID, configId) {
 
     getRunSingleData(tid) {
       const table = findTable(tid).set('enabled', true);
-      return configData.setIn(['parameters', 'tables'], List().push(table)).toJS();
+      const mapping = findMapping(table.get('tableId'));
+      return configData
+        .setIn(['parameters', 'tables'], List().push(table))
+        .setIn(['storage', 'input', 'tables'], List().push(mapping))
+        .toJS();
     },
     getInputMapping(tableId) {
-      return mappings.find((t) => t.get('source') === tableId);
+      return findMapping(tableId);
     },
     getSavingMessage() {
       return localState().getIn(['SheetModal', 'savingMessage']);
