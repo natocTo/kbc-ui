@@ -1,7 +1,7 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Table} from './../../../../react/common/KbcBootstrap';
+import {Table} from 'react-bootstrap';
 import {RefreshIcon} from 'kbc-react-components';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 // import EmptyState from '../../../../components/react/components/ComponentEmptyState';
-import {Table} from './../../../../../react/common/KbcBootstrap';
+import {Table} from 'react-bootstrap';
 import {Loader} from 'kbc-react-components';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 

@@ -4,7 +4,8 @@ import moment from 'moment';
 import MetricsApi from '../MetricsApi';
 import CreditSize from '../../../react/common/CreditSize';
 import ComponentsStore from '../../components/stores/ComponentsStore';
-import {Panel, Table} from './../../../react/common/KbcBootstrap';
+import {Panel} from './../../../react/common/KbcBootstrap';
+import {Table} from 'react-bootstrap';
 import ComponentName from './../../../react/common/ComponentName';
 import ComponentIcon from './../../../react/common/ComponentIcon';
 import {componentIoSummary} from './Index';
@@ -75,7 +76,9 @@ export default React.createClass({
                        header={this.daySummary(item)}
                        key={item.get('dateFrom') + '-' + item.get('dateTo')}>
                   <Table fill className="table">
-                    {List([item.get('components').sort(sortComponentsByStorageIoDesc).map(this.dayComponents)])}
+                    <tbody>
+                      {List([item.get('components').sort(sortComponentsByStorageIoDesc).map(this.dayComponents)])}
+                    </tbody>
                   </Table>
                 </Panel>
               );

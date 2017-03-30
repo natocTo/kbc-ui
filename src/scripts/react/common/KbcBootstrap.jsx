@@ -15,7 +15,6 @@ import PanelGroup from './bootstrap/PanelGroup';
 import Popover from './bootstrap/Popover';
 import ProgressBar from './bootstrap/ProgressBar';
 import TabbedArea from './bootstrap/TabbedArea';
-import Table from './bootstrap/Table';
 import TabPane from './bootstrap/TabPane';
 
 
@@ -37,6 +36,5 @@ export {
   Popover,
   ProgressBar,
   TabbedArea,
-  Table,
   TabPane
 };

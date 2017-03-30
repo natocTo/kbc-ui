@@ -7,7 +7,7 @@ import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 import Tooltip from '../../../../../react/common/Tooltip';
 import enhancedColumnsTemplate from './EnhancedComlumnsTemplate';
 import EnhancedAnalysisRunControl from './EnhancedAnalysisRunControl';
-import {Table} from './../../../../../react/common/KbcBootstrap';
+import {Table} from 'react-bootstrap';
 
 
 export default React.createClass({
