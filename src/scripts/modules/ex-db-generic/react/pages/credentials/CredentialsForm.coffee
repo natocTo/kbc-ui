@@ -5,7 +5,7 @@ Clipboard = React.createFactory(require('../../../../../react/common/Clipboard')
 
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 TestCredentialsButtonGroup = React.createFactory(require '../../../../../react/common/TestCredentialsButtonGroup')
-StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
+StaticText = React.createFactory(require('react-bootstrap').FormControl.Static)
 Tooltip = require('../../../../../react/common/Tooltip').default
 SshTunnelRow = React.createFactory(require('../../../../../react/common/SshTunnelRow').default)
 

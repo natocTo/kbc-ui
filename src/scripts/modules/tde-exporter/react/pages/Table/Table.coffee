@@ -13,8 +13,9 @@ FiltersDescription = require '../../../../components/react/components/generic/Fi
 InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
 ColumnsTable = require './ColumnsTable'
 storageApi = require '../../../../components/StorageApi'
-{Input, FormControls} = require './../../../../../react/common/KbcBootstrap'
-StaticText = FormControls.Static
+{Input} = require './../../../../../react/common/KbcBootstrap'
+{ FormControl } = require 'react-bootstrap'
+StaticText = FormControl.Static
 {form, small, label, input, select, option, button, i, strong, span, div, p, ul, li} = React.DOM
 
 columnTdeTypes = ['string','boolean', 'number', 'decimal','date', 'datetime']

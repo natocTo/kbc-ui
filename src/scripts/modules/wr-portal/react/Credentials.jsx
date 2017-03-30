@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
-import {FormControls} from './../../../react/common/KbcBootstrap';
+import { FormControl } from 'react-bootstrap';
 import {Protected} from 'kbc-react-components';
 import Clipboard from '../../../react/common/Clipboard';
-const StaticText = FormControls.Static;
+const StaticText = FormControl.Static;
 
 export default React.createClass({
 

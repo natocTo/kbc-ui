@@ -25,7 +25,7 @@ fuzzy = require 'fuzzy'
 getTemplates = require './../../components/templates'
 validation = require './../../components/validation'
 RoutesStore = require '../../../../../stores/RoutesStore'
-StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
+StaticText = React.createFactory(require('react-bootstrap').FormControl.Static)
 AutoSuggestWrapperComponent = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
 AutosuggestWrapper = React.createFactory(AutoSuggestWrapperComponent)
 
