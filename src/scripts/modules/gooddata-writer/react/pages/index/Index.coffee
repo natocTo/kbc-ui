@@ -141,13 +141,13 @@ module.exports = React.createClass
               buttonLabel: 'Upload'
               buttonType: 'success'
               onConfirm: @_handleProjectUpload
+              childrenRootElement: React.DOM.a
             ,
-              a null,
-                if @state.writer.get('pendingActions', List()).contains 'uploadProject'
-                  React.createElement Loader, className: 'fa-fw'
-                else
-                  span className: 'fa fa-upload fa-fw'
-                ' Upload project'
+              if @state.writer.get('pendingActions', List()).contains 'uploadProject'
+                React.createElement Loader, className: 'fa-fw'
+              else
+                span className: 'fa fa-upload fa-fw'
+              ' Upload project'
 
           li null,
             React.createElement Link,
@@ -211,8 +211,9 @@ module.exports = React.createClass
                     buttonLabel: 'Optimize'
                     buttonType: 'primary'
                     onConfirm: @_handleOptimizeSLI
+                    childrenRootElement: React.DOM.a
                   ,
-                    a null,
+                    span null,
                       'Optimize SLI hash'
                 li null,
                   React.createElement Confirm,
@@ -224,8 +225,9 @@ module.exports = React.createClass
                         "Are you sure you want to reset the project?"
                     buttonLabel: 'Reset'
                     onConfirm: @_handleProjectReset
+                    childrenRootElement: React.DOM.a
                   ,
-                    a null,
+                    span null,
                       'Reset Project'
             li null,
               React.createElement Confirm,
@@ -233,13 +235,13 @@ module.exports = React.createClass
                 text: "Are you sure you want to delete the writer with its GoodData project?"
                 buttonLabel: 'Delete'
                 onConfirm: @_handleProjectDelete
+                childrenRootElement: React.DOM.a
               ,
-                a null,
-                  if @state.writer.get 'isDeleting'
-                    React.createElement Loader, className: 'fa-fw'
-                  else
-                    span className: 'kbc-icon-cup fa-fw'
-                  ' Delete Writer'
+                if @state.writer.get 'isDeleting'
+                  React.createElement Loader, className: 'fa-fw'
+                else
+                  span className: 'kbc-icon-cup fa-fw'
+                ' Delete Writer'
         React.createElement LatestJobs,
           jobs: @state.latestJobs
           limit: 3

@@ -1,6 +1,6 @@
 import React from 'react';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
-import {ModalTrigger, OverlayTrigger, Tooltip, Button} from 'react-bootstrap';
+import {OverlayTrigger, Tooltip, Button} from 'react-bootstrap';
 import {Loader} from 'kbc-react-components';
 import RoutesStore from '../../../../stores/RoutesStore';
 import classnames from 'classnames';
@@ -40,7 +40,8 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      isLoading: false
+      isLoading: false,
+      showModal: false
     };
   },
 
@@ -95,12 +96,12 @@ module.exports = React.createClass({
 
     const modal = (
       <RunModal
+        onHide={() => this.setState({showModal: false})}
+        show={this.state.showModal}
         title={this.props.title}
         body={this.props.children}
         onRequestRun={this._handleRunStart}
-      >
-        {this._renderButton()}
-      </RunModal>
+      />
     );
 
     if (this.props.disabled || this.state.isLoading) {
@@ -118,46 +119,42 @@ module.exports = React.createClass({
           overlay={tooltip}
           placement={this.props.tooltipPlacement}
         >
-          <ModalTrigger modal={modal}>
-            {this._renderButton()}
-          </ModalTrigger>
+            {this._renderButton(modal)}
         </OverlayTrigger>
       );
     } else {
-      return (
-        <ModalTrigger modal={modal}>
-          {this._renderLink()}
-        </ModalTrigger>
-      );
+      return this._renderLink(modal);
     }
   },
 
-  _renderButton: function() {
+  onOpenButtonClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.setState({showModal: true});
+  },
+
+  _renderButton: function(modalComponent) {
     return (
       <Button
         className="btn btn-link"
         disabled={this.props.disabled || this.state.isLoading}
-        onClick={function(e) {
-          e.stopPropagation();
-          return e.preventDefault();
-        }}
+        onClick={this.onOpenButtonClick}
       >
+        {modalComponent}
         {this._renderIcon()} {this.props.label ? ' ' + this.props.label : void 0}
       </Button>
     );
   },
 
-  _renderLink: function() {
+  _renderLink: function(modalComponent) {
     return (
       <a className={
         classnames({
           'text-muted': this.props.disabled || this.state.isLoading
         })}
-        onClick={function(e) {
-          e.stopPropagation();
-          return e.preventDefault();
-        }}
+        onClick={this.onOpenButtonClick}
       >
+        {modalComponent}
         {this._renderIcon()} {this.props.title}
       </a>
     );

@@ -29,16 +29,16 @@ OrchestrationDeleteButton = React.createClass
       span className: 'btn btn-link',
         Loader()
     else
-      OverlayTrigger
-        overlay: Tooltip null, 'Delete orchestration'
-        key: 'delete'
-        placement: @props.tooltipPlacement
+      Confirm
+        title: 'Move Configuration to Trash'
+        text: "Are you sure you want to move the configuration #{@props.orchestration.get('name')} to Trash?"
+        buttonLabel: 'Move to Trash'
+        onConfirm: @_deleteOrchestration
       ,
-        Confirm
-          title: 'Delete Orchestration'
-          text: "Do you really want to delete the orchestration #{@props.orchestration.get('name')}"
-          buttonLabel: 'Delete'
-          onConfirm: @_deleteOrchestration
+        OverlayTrigger
+          overlay: Tooltip null, 'Move to Trash'
+          key: 'delete'
+          placement: @props.tooltipPlacement
         ,
           button className: 'btn btn-link',
             i className: 'kbc-icon-cup'

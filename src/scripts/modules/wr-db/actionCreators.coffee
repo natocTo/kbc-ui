@@ -100,7 +100,7 @@ module.exports =
       configId: configId
       tableId: tableId
       table: table
-    api(componentId).postTable(configId, tableId, table)
+    api(componentId).postTable(configId, tableId, table, sapiTable.get('columns'))
     .then (result) =>
       @loadTableConfig(componentId, configId, tableId).then ->
         dispatcher.handleViewAction

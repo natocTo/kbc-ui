@@ -32,14 +32,14 @@ module.exports = React.createClass
 
   render: ->
     React.createElement Confirm,
-      text: 'Do you really want to delete the configuration?'
-      title: 'Delete Configuration'
-      buttonLabel: 'Delete'
+      title: 'Move Configuration to Trash'
+      text: "Are you sure you want to move the configuration #{this.state.config.get('name')} to Trash?"
+      buttonLabel: 'Move to Trash'
       onConfirm: @_handleDelete
+      childrenRootElement: React.DOM.a
     ,
-      React.DOM.a null,
-        @_renderIcon()
-        ' Delete'
+      @_renderIcon()
+      ' Move to Trash'
 
   _renderIcon: ->
     if @state.isDeleting

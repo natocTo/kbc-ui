@@ -17,6 +17,8 @@ function getProtectedProperties(componentId) {
   return result;
 }
 
+const tablesPath = ['storage', 'input', 'tables'];
+
 export default function(configId, componentId) {
   function localState() {
     return InstalledComponentStore.getLocalState(componentId, configId) || Map();
@@ -49,15 +51,21 @@ export default function(configId, componentId) {
     return result;
   }
 
-
+  const tablesMappings = getconfigData().getIn(tablesPath, List());
   return {
-
+    getTableMapping: (tableId) => tablesMappings.find((t) => t.get('source') === tableId),
+    editingFilterPath: ['editingFilter'],
     editingPkPath: ['editingPk'],
     updateV2State: (path, data) => updateLocalState(['v2'].concat(path), data),
     configTables: getconfigData().getIn(['parameters', 'tables'], List()),
     setTableInfo(tableId, newTableInfo) {
       updateLocalState(['v2', 'saving'], true);
       return dockerProxyApi(componentId).setTableV2(configId, tableId, newTableInfo)
+        .then(() => updateLocalState(['v2', 'saving'], false));
+    },
+    setTableMapping(newMapping) {
+      updateLocalState(['v2', 'saving'], true);
+      return dockerProxyApi(componentId).mergeTableMappingV2(configId, newMapping)
         .then(() => updateLocalState(['v2', 'saving'], false));
     },
     testCredentials(credentials) {

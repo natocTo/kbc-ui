@@ -11,7 +11,18 @@ export default React.createClass({
     onSetMapping: PropTypes.func,
     onResetAndHide: PropTypes.func,
     value: PropTypes.object.isRequired,
-    allTables: PropTypes.object
+    allTables: PropTypes.object,
+    saveStyle: PropTypes.string,
+    setLabel: PropTypes.string,
+    isSaving: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      saveStyle: 'primary',
+      isSaving: false,
+      setLabel: 'Set'
+    };
   },
 
   getInitialState() {
@@ -55,10 +66,11 @@ export default React.createClass({
 
         <Modal.Footer>
           <ConfirmButtons
-            saveStyle="primary"
-            saveLabel="Set"
+            saveStyle={this.props.saveStyle}
+            saveLabel={this.props.setLabel}
             onSave={this.handleSave}
             onCancel={this.props.onResetAndHide}
+            isSaving={this.props.isSaving}
             />
         </Modal.Footer>
       </Modal>

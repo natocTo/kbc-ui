@@ -169,7 +169,6 @@ export default function(COMPONENT_ID) {
     renderTableModal() {
       return (
         <SheetModal
-          email=""
           show={this.state.localState.get('showTableModal', false)}
           onHideFn={() => {
             this.state.actions.updateLocalState(['SheetModal'], Map());
@@ -190,7 +189,8 @@ export default function(COMPONENT_ID) {
         .set('currentSheet', sheet)
         .set('step', step)
         .set('uploadType', sheet ? 'existing' : 'new')
-        .set('currentMapping', mapping);
+        .set('currentMapping', mapping)
+        .set('exclude', this.state.store.mappings.filter((t) => t.get('source') !== dirtySheet.get('tableId')));
       this.state.actions.updateLocalState(['SheetModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);
     },

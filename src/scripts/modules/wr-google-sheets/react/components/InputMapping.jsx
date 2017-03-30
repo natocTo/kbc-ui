@@ -11,7 +11,8 @@ export default React.createClass({
     mapping: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    exclude: PropTypes.object
   },
 
   getInitialState() {
@@ -125,7 +126,8 @@ export default React.createClass({
 
   getTables() {
     const inOutTables = this.props.tables.filter((table) => {
-      return table.get('id').substr(0, 3) === 'in.' || table.get('id').substr(0, 4) === 'out.';
+      return (table.get('id').substr(0, 3) === 'in.' || table.get('id').substr(0, 4) === 'out.')
+        && !this.props.exclude.some((t) => (t.get('source') === table.get('id')));
     });
 
     const options = inOutTables.map((table) => {

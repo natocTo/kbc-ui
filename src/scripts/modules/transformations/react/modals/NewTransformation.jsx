@@ -42,8 +42,7 @@ function prepareDataForCreate(data) {
 
 export default React.createClass({
   propTypes: {
-    bucket: React.PropTypes.object.isRequired,
-    onRequestHide: React.PropTypes.func.isRequired
+    bucket: React.PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -186,7 +185,7 @@ export default React.createClass({
       data: this.state.data.set('isSaving', true)
     });
     createTransformation(this.props.bucket.get('id'), prepareDataForCreate(this.state.data))
-      .then(this.props.onRequestHide)
+      .then(this.close)
       .catch(() => {
         this.setState({
           data: this.state.data.set('isSaving', false)

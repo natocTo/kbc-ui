@@ -9,7 +9,6 @@ import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 
 export default React.createClass({
   propTypes: {
-    email: PropTypes.string.isRequired,
     show: PropTypes.bool.isRequired,
     isSavingFn: PropTypes.func.isRequired,
     onHideFn: PropTypes.func,
@@ -45,6 +44,7 @@ export default React.createClass({
                 onSelect={this.onChangeInputMapping}
                 tables={storageTables}
                 mapping={this.localState(['currentMapping'], Map())}
+                exclude={this.localState(['exclude'], Map())}
               />
             </TabPane>
             <TabPane tab="Destination" eventKey={2} disabled={step !== 3}>

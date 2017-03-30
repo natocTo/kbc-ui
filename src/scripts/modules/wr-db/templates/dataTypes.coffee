@@ -8,6 +8,13 @@ defaultDataTypes =
 ]
 ###
 
+mysql = ['INT','BIGINT',
+'VARCHAR': {defaultSize: '255'},
+'TEXT',
+'DECIMAL': {defaultSize: '12,2'},
+'DATE', 'DATETIME'
+]
+
 redshift = [
   'SMALLINT',
   'INTEGER',
@@ -130,12 +137,51 @@ pgsql = [
 ]
 
 module.exports =
-  'keboola.wr-db-snowflake': snowflake
-  'keboola.wr-db-oracle': oracle
-  'keboola.wr-db-impala': impala
-  'keboola.wr-db-mssql-v2': mssql
-  'keboola.wr-db-pgsql': pgsql
-  'keboola.wr-redshift-v2': redshift
-  'wr-db-mssql': mssql
-  'wr-db-redshift': redshift
-  'wr-db-oracle': oracleold
+  'keboola.wr-db-snowflake':
+    typesList: snowflake
+    default:
+      type: 'string'
+      size: '255'
+  'keboola.wr-db-oracle':
+    typesList: oracle
+    default:
+      type: 'varchar2'
+      size: '255'
+  'keboola.wr-db-impala':
+    typesList: impala
+    default:
+      type: 'varchar'
+      size: '255'
+  'keboola.wr-db-mssql-v2':
+    typesList: mssql
+    default:
+      type: 'varchar'
+      size: '255'
+  'keboola.wr-db-pgsql':
+    typesList: pgsql
+    default:
+      type: 'varchar'
+      size: '255'
+  'keboola.wr-redshift-v2':
+    typesList: redshift
+    default:
+      type: 'VARCHAR'
+      size: '255'
+  'wr-db-mssql':
+    typesList: mssql
+    default:
+      type: 'varchar'
+      size: '255'
+  'wr-db-redshift':
+    typesList: redshift
+    default:
+      type: 'VARCHAR'
+      size: '255'
+  'wr-db-oracle':
+    typesList: oracleold
+    default:
+      type: 'varchar2'
+  'keboola.wr-db-mysql':
+    typesList: mysql
+    default:
+      type: 'TEXT'
