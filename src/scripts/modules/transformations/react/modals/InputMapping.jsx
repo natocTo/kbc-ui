@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import { Modal, Button, OverlayTrigger, Tooltip } from './../../../../react/common/KbcBootstrap';
+import { Modal, Button} from './../../../../react/common/KbcBootstrap';
+import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import InputMappingRowMySqlEditor from '../components/mapping/InputMappingRowMySqlEditor';
 import InputMappingRowDockerEditor from '../components/mapping/InputMappingRowDockerEditor';
@@ -94,11 +95,11 @@ export default React.createClass({
   renderOpenButton() {
     if (this.props.mode === MODE_EDIT) {
       return (
-        <OverlayTrigger overlay={<Tooltip>Edit Input</Tooltip>} placement="top">
+        <Tooltip tooltip="Edit Input" placement="top">
           <Button bsStyle="link" onClick={this.handleOpenButtonLink}>
             <span className="fa fa-pencil" />
           </Button>
-        </OverlayTrigger>
+        </Tooltip>
       );
     } else {
       return (

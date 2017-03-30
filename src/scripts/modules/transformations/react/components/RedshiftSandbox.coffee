@@ -14,8 +14,7 @@ Loader = React.createFactory(require('kbc-react-components').Loader)
 StorageBucketsStore = require '../../../components/stores/StorageBucketsStore'
 StorageTablesStore = require '../../../components/stores/StorageTablesStore'
 contactSupport = require('../../../../utils/contactSupport').default
-OverlayTrigger = React.createFactory(require('./../../../../react/common/KbcBootstrap').OverlayTrigger)
-Tooltip = React.createFactory(require('./../../../../react/common/KbcBootstrap').Tooltip)
+Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 RedshiftSSLInfoModal = React.createFactory(require './RedshiftSSLInfoModal')
 ApplicationStore = require '../../../../stores/ApplicationStore'
 
@@ -73,9 +72,9 @@ RedshiftSandbox = React.createClass
                 sandboxConfiguration = params
           )
         div {},
-          OverlayTrigger
-            overlay: Tooltip null, "Information about secure connection"
-            key: 'ssl'
+          Tooltip
+            tooltip: 'Information about secure connection'
+            id: 'ssl'
             placement: 'top'
           ,
             button

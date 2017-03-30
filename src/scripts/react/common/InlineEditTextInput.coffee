@@ -1,8 +1,7 @@
 React = require 'react'
 _ = require 'underscore'
 
-Tooltip = React.createFactory(require('./KbcBootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('./KbcBootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('./Tooltip').default)
 Button = React.createFactory(require('./KbcBootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 Input = React.createFactory(require('./KbcBootstrap').Input)
@@ -22,8 +21,8 @@ StaticInput = React.createFactory React.createClass
   render: ->
     props = _.omit @props, 'text'
     props.className = 'kbc-inline-edit-link'
-    OverlayTrigger
-      overlay: Tooltip null, @props.editTooltip
+    Tooltip
+      tooltip: @props.editTooltip
       placement: @props.tooltipPlacement
     ,
       span props,
@@ -125,4 +124,3 @@ module.exports = React.createClass
         tooltipPlacement: @props.tooltipPlacement
         placeholder: @props.placeholder
         onClick: @props.onEditStart
-
