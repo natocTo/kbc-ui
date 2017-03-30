@@ -2,7 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 filesize = require 'filesize'
 Link = React.createFactory(require('react-router').Link)
-{OverlayTrigger, Tooltip} = require './../../../../../react/common/KbcBootstrap'
+{OverlayTrigger, Tooltip} = require 'react-bootstrap'
 {option, select, button, i,a, strong, span, div, p, ul, li} = React.DOM
 {Confirm} = require '../../../../../react/common/common'
 date = require '../../../../../utils/date'
@@ -34,7 +34,7 @@ module.exports = React.createClass
         span className: 'td',
           React.createElement OverlayTrigger,
             overlay: React.createElement Tooltip,
-              null
+              id: @props.tdeFile.get('id')
             ,
               div null, @props.tdeFile.getIn(['creatorToken','description'])
               div null, date.format @props.tdeFile.get('created')

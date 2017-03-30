@@ -1,6 +1,6 @@
 import React from 'react';
 import ClipboardButton from 'react-clipboard.js';
-import {Tooltip, OverlayTrigger} from './KbcBootstrap';
+import {Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -40,7 +40,7 @@ export default React.createClass({
 
   tooltip() {
     return (
-      <Tooltip>{this.state.isError ? this.errorTooltip() : this.okTooltip()}</Tooltip>
+      <Tooltip id="clipboardtooltip">{this.state.isError ? this.errorTooltip() : this.okTooltip()}</Tooltip>
     );
   },
 
