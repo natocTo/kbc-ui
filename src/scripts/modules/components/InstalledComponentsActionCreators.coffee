@@ -291,6 +291,10 @@ module.exports =
     return Promise.resolve() if InstalledComponentsStore.getIsLoaded()
     @loadComponentsForce()
 
+  loadDeletedComponents: ->
+    return Promise.resolve() if InstalledComponentsStore.getIsLoaded()
+    @loadDeletedComponentsForce()
+
   receiveAllComponents: (componentsRaw) ->
     dispatcher.handleViewAction(
       type: constants.ActionTypes.INSTALLED_COMPONENTS_LOAD_SUCCESS

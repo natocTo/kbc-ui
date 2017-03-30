@@ -38,6 +38,8 @@ _store = Map(
   restoringConfigurations: Map()
   isLoaded: false
   isLoading: false
+  isDeletedLoaded: false
+  isDeletedLoading: false
   pendingActions: Map()
   openMappings: Map()
 
@@ -236,6 +238,12 @@ InstalledComponentsStore = StoreUtils.createStore
 
   getIsLoaded: ->
     _store.get 'isLoaded'
+
+  getIsDeletedLoading: ->
+    _store.get 'isDeletedLoading'
+
+  getIsDeletedLoaded: ->
+    _store.get 'isDeletedLoaded'
 
   getPendingActions: (componentId, configId) ->
     _store.getIn ['pendingActions', componentId, configId], Map()
@@ -546,18 +554,18 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.DELETED_COMPONENTS_LOAD
-      _store = _store.set 'isLoading', true
+      _store = _store.set 'isDeletedLoading', true
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.DELETED_COMPONENTS_LOAD_ERROR
-      _store = _store.set 'isLoading', false
+      _store = _store.set 'isDeletedLoading', false
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.DELETED_COMPONENTS_LOAD_SUCCESS
       _store = _store.withMutations((store) ->
         store
-          .set('isLoading', false)
-          .set('isLoaded', true)
+          .set('isDeletedLoading', false)
+          .set('isDeletedLoaded', true)
           .set('deletedComponents',
             ## convert to by key structure
             fromJSOrdered(action.components)
