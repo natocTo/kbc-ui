@@ -1,7 +1,6 @@
 import Button from './bootstrap/Button';
 import FormControls from './bootstrap/FormControls';
 import Input from './bootstrap/Input';
-import Label from './bootstrap/Label';
 import ListGroup from './bootstrap/ListGroup';
 import ListGroupItem from './bootstrap/ListGroupItem';
 import Modal from './bootstrap/Modal';
@@ -20,7 +19,6 @@ export {
   Button,
   FormControls,
   Input,
-  Label,
   ListGroup,
   ListGroupItem,
   Modal,

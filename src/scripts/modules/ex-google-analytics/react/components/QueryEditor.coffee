@@ -3,7 +3,6 @@ Immutable = require('immutable')
 _ = require 'underscore'
 _.str = require 'underscore.string'
 Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
-Label = React.createFactory(require('./../../../../react/common/KbcBootstrap').Label)
 Select = React.createFactory(require('react-select'))
 
 {p, div, form, span, option, optgroup, a, label, fieldset} = React.DOM
