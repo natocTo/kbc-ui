@@ -94,12 +94,14 @@ export default React.createClass({
   renderDataFilter() {
     if (this.state.showDetails) {
       return (
-        <DataFilterRow
-          value={this.props.mapping}
-          disabled={this.props.disabled}
-          onChange={this.props.onChange}
-          allTables={this.props.tables}
-        />
+        <div className="row">
+          <DataFilterRow
+            value={this.props.mapping}
+            disabled={this.props.disabled}
+            onChange={this.props.onChange}
+            allTables={this.props.tables}
+          />
+        </div>
       );
     }
     return null;

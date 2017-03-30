@@ -13,41 +13,39 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row">
-        <div className="form-group form-group-sm">
-          <label className="col-xs-2 control-label">Data filter</label>
-          <div className="col-xs-4">
-            <Select
-              name="where_column"
-              value={this.props.value.get('where_column')}
-              disabled={this.props.disabled || !this.props.value.get('source')}
-              placeholder="Select column"
-              onChange={this._handleChangeWhereColumn}
-              options={this._getColumnsOptions()} />
-          </div>
-          <div className="col-xs-2">
-            <Input
-              type="select"
-              name="where_operator"
-              value={this.props.value.get('where_operator')}
-              disabled={this.props.disabled}
-              onChange={this._handleChangeWhereOperator}>
-              <option value="eq">= (IN)</option>
-              <option value="ne">!= (NOT IN)</option>
-            </Input>
-          </div>
-          <div className="col-xs-4">
-            <Select
-              name="whereValues"
-              value={this.props.value.get('where_values')}
-              multi={true}
-              disabled={this.props.disabled}
-              allowCreate={true}
-              delimiter=","
-              placeholder="Add a value..."
-              emptyStrings={true}
-              onChange={this._handleChangeWhereValues} />
-          </div>
+      <div className="form-group form-group-sm">
+        <label className="col-xs-2 control-label">Data filter</label>
+        <div className="col-xs-4">
+          <Select
+            name="where_column"
+            value={this.props.value.get('where_column')}
+            disabled={this.props.disabled || !this.props.value.get('source')}
+            placeholder="Select column"
+            onChange={this._handleChangeWhereColumn}
+            options={this._getColumnsOptions()} />
+        </div>
+        <div className="col-xs-2">
+          <Input
+            type="select"
+            name="where_operator"
+            value={this.props.value.get('where_operator')}
+            disabled={this.props.disabled}
+            onChange={this._handleChangeWhereOperator}>
+            <option value="eq">= (IN)</option>
+            <option value="ne">!= (NOT IN)</option>
+          </Input>
+        </div>
+        <div className="col-xs-4">
+          <Select
+            name="whereValues"
+            value={this.props.value.get('where_values')}
+            multi={true}
+            disabled={this.props.disabled}
+            allowCreate={true}
+            delimiter=","
+            placeholder="Add a value..."
+            emptyStrings={true}
+            onChange={this._handleChangeWhereValues} />
         </div>
       </div>
     );

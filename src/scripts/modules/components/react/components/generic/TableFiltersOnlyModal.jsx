@@ -49,7 +49,7 @@ export default React.createClass({
         </Modal.Header>
 
         <Modal.Body>
-          <div className="className: 'form-horizontal clearfix">
+          <div className="form-horizontal clearfix">
             <DaysFilterInput
               mapping={this.props.value}
               disabled={false}
