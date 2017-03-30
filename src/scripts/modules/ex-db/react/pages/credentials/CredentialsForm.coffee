@@ -5,7 +5,7 @@ ExDbActionCreators = require '../../../exDbActionCreators'
 
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 TestCredentialsButtonGroup = React.createFactory(require './TestCredentialsButtonGroup')
-StaticText = React.createFactory(require('react-bootstrap').FormControl.Static)
+StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
 {Protected} = require 'kbc-react-components'
 
 {form, div, label, p, option} = React.DOM

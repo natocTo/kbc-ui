@@ -4,7 +4,7 @@ oauthActions = require '../../../../components/OAuthActionCreators'
 
 DropboxModal = React.createFactory require '../../../../components/react/components/DropboxAuthorizeModal'
 {i, button, strong, div, h2, span, form, h4, section, p} = React.DOM
-{ FormControl, Button } = require 'react-bootstrap'
+{FormControls, Button} = require './../../../../../react/common/KbcBootstrap'
 Button = React.createFactory(Button)
 {Map} = require 'immutable'
 Confirm = require('../../../../../react/common/Confirm').default
@@ -32,7 +32,7 @@ module.exports = React.createClass
     cl = 'col-xs-10'
     if not label
       cl = 'col-xs-offset-2 col-xs-10'
-    React.createElement FormControl.Static,
+    React.createElement FormControls.Static,
       labelClassName: if label then 'col-xs-2'
       wrapperClassName: cl
       label: label

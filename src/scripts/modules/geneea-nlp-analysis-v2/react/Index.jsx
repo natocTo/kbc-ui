@@ -1,7 +1,7 @@
 import React from 'react';
 import {List, Map} from 'immutable';
 import _ from 'underscore';
-import { FormControl } from 'react-bootstrap';
+import {FormControls} from './../../../react/common/KbcBootstrap';
 import {Check} from 'kbc-react-components';
 import Select from 'react-select';
 import classnames from 'classnames';
@@ -19,7 +19,7 @@ import TablesFilterModal from '../../components/react/components/generic/TableFi
 import ResultsHelpModal from './ResultsHelpModal';
 import AdvancedSettings from './AdvancedSettings';
 
-const StaticText = FormControl.Static;
+const StaticText = FormControls.Static;
 import {params,
         getInTable,
         updateLocalState,

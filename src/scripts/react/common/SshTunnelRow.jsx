@@ -2,12 +2,11 @@ import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import callDockerAction from '../../modules/components/DockerActionsApi';
 import {Check} from 'kbc-react-components';
-import {Input} from './KbcBootstrap';
-import { FormControl } from 'react-bootstrap';
+import {Input, FormControls} from './KbcBootstrap';
 import {Protected} from 'kbc-react-components';
 import Clipboard from './Clipboard';
 import {Loader} from 'kbc-react-components';
-const StaticText = FormControl.Static;
+const StaticText = FormControls.Static;
 
 
 export default React.createClass({
