@@ -13,7 +13,6 @@ import OverlayTrigger from './bootstrap/OverlayTrigger';
 import Panel from './bootstrap/Panel';
 import PanelGroup from './bootstrap/PanelGroup';
 import Popover from './bootstrap/Popover';
-import ProgressBar from './bootstrap/ProgressBar';
 import TabbedArea from './bootstrap/TabbedArea';
 import TabPane from './bootstrap/TabPane';
 
@@ -34,7 +33,6 @@ export {
   Panel,
   PanelGroup,
   Popover,
-  ProgressBar,
   TabbedArea,
   TabPane
 };
