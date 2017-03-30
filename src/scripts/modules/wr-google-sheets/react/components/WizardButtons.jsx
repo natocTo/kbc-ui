@@ -19,7 +19,8 @@ export default React.createClass({
     onNext: PropTypes.func.isRequired,
     onPrevious: PropTypes.func.isRequired,
     showSave: PropTypes.bool,
-    showNext: PropTypes.bool
+    showNext: PropTypes.bool,
+    savingMessage: PropTypes.string
   },
 
   getDefaultProps() {
@@ -34,7 +35,8 @@ export default React.createClass({
       isNextDisabled: false,
       isPreviousDisabled: true,
       showSave: false,
-      showNext: true
+      showNext: true,
+      savingMessage: ''
     };
   },
 
@@ -51,7 +53,15 @@ export default React.createClass({
   },
 
   renderLoader() {
-    if (this.props.isSaving) return (<Loader />);
+    if (this.props.isSaving) {
+      return (
+        <span className="text-muted">
+          {this.props.savingMessage}
+          &nbsp;&nbsp;
+          <Loader />
+        </span>
+      );
+    }
     return null;
   },
 

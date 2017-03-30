@@ -86,6 +86,7 @@ export default React.createClass({
             isPreviousDisabled={step === 1}
             showNext={step < 3}
             showSave={step === 3}
+            savingMessage={this.localState('savingMessage')}
           />
         </Modal.Footer>
       </Modal>

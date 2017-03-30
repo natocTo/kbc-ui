@@ -74,6 +74,7 @@ export default function(COMPONENT_ID, configId) {
     updateLocalState(store.getSavingPath(table.get('id')), true);
     if (!table.get('fileId')) {
       // create spreadsheet if not exist
+      updateLocalState(['SheetModal', 'savingMessage'], 'Creating new Spreadsheet');
       return createSpreadsheet(table).then((data) => {
         return updateTable(
           table
@@ -84,6 +85,7 @@ export default function(COMPONENT_ID, configId) {
       });
     } else if (!table.get('sheetId')) {
       // add new sheet, when importing to existing spreadsheet
+      updateLocalState(['SheetModal', 'savingMessage'], 'Updating Spreadsheet');
       return addSheet(table).then((data) => {
         return updateTable(
           table.set('sheetId', data.sheet.sheetId),

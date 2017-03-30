@@ -42,14 +42,14 @@ export default React.createClass({
               <Input
                 type="radio"
                 label="New spreadsheet"
-                help="Create new Google Spreadsheet"
+                help="Create new Spreadsheet"
                 wrapperClassName="col-sm-8"
                 value="new"
               />
               <Input
                 type="radio"
                 label="Existing spreadsheet"
-                help="Add new sheet to existing Google Spreadsheet"
+                help="Use existing Spreadsheet"
                 wrapperClassName="col-sm-8"
                 value="existing"
               />
@@ -70,7 +70,7 @@ export default React.createClass({
           <div className="col-md-10">
             <Picker
               dialogTitle="Select Spreadsheet"
-              buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select spreadsheet'}
+              buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select Spreadsheet'}
               onPickedFn={this.props.onSelectExisting}
               buttonProps={{
                 bsStyle: 'default',
@@ -82,7 +82,7 @@ export default React.createClass({
               ]}
             />
             <span className="help-block">
-              Choose spreadsheet, in which you want to upload the data
+              Choose Spreadsheet, in which you want to upload the data
             </span>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default React.createClass({
               />
             </div>
             <span className="help-block">
-              Select spreadsheets parent <strong>folder</strong> and enter spreadsheets <strong>title</strong>.<br/>The spreadsheet will be created upon save.
+              Select Spreadsheets parent <strong>folder</strong> and enter Spreadsheets <strong>title</strong>.<br/>The Spreadsheet will be created upon save.
             </span>
           </div>
         </div>

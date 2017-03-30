@@ -191,6 +191,7 @@ export default function(COMPONENT_ID) {
         .set('uploadType', sheet ? 'existing' : 'new')
         .set('currentMapping', mapping)
         .set('exclude', this.state.store.mappings.filter((t) => t.get('source') !== dirtySheet.get('tableId')));
+        // .set('savingMessage', this.state.store.getSavingMessage());
       this.state.actions.updateLocalState(['SheetModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);
     },

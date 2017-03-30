@@ -35,7 +35,9 @@ export default React.createClass({
               className="form-control"
             />
             <span className="help-block">
-              Name of the sheet
+              Name of the Sheet. <br />
+              Type a name of existing Sheet to import into it. <br />
+              Otherwise new Sheet will be added to the Spreadsheet.
             </span>
           </div>
         </div>
@@ -60,14 +62,14 @@ export default React.createClass({
                 <Input
                   type="radio"
                   label="Update rows"
-                  help="Overwrites data in existing Sheet. Creates new one if it doesn't exist"
+                  help="Overwrites data in the Sheet"
                   wrapperClassName="col-sm-8"
                   value="update"
                 />
                 <Input
                   type="radio"
                   label="Append rows"
-                  help="Add new data to the end of existing Sheet"
+                  help="Add new data to the end of the Sheet"
                   wrapperClassName="col-sm-8"
                   value="append"
                 />

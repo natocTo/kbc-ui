@@ -47,6 +47,9 @@ export default function(COMPONENT_ID, configId) {
     getInputMapping(tableId) {
       return mappings.find((t) => t.get('source') === tableId);
     },
+    getSavingMessage() {
+      return localState().getIn(['SheetModal', 'savingMessage']);
+    },
     getEditPath: (what) => what ? editPath.concat(what) : editPath,
     getPendingPath: (what) => pendingPath.concat(what),
     getSavingPath: (what) => savingPath.concat(what),
