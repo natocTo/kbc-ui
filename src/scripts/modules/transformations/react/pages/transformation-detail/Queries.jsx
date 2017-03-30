@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
-import {OverlayTrigger, Popover} from 'react-bootstrap';
+import {OverlayTrigger} from './../../../../../react/common/KbcBootstrap';
+import {Popover} from 'react-bootstrap';
 import SaveButtons from '../../../../../react/common/SaveButtons';
 
 /* global require */

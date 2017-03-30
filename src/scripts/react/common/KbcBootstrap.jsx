@@ -12,7 +12,6 @@ import ModalFooter from './bootstrap/ModalFooter';
 import OverlayTrigger from './bootstrap/OverlayTrigger';
 import Panel from './bootstrap/Panel';
 import PanelGroup from './bootstrap/PanelGroup';
-import Popover from './bootstrap/Popover';
 import TabbedArea from './bootstrap/TabbedArea';
 import TabPane from './bootstrap/TabPane';
 
@@ -32,7 +31,6 @@ export {
   OverlayTrigger,
   Panel,
   PanelGroup,
-  Popover,
   TabbedArea,
   TabPane
 };

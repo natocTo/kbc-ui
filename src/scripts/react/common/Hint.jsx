@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {OverlayTrigger, Popover} from './KbcBootstrap';
+import {OverlayTrigger} from './KbcBootstrap';
+import {Popover} from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {

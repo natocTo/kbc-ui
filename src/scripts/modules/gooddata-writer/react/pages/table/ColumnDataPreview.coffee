@@ -1,7 +1,7 @@
 React = require 'react'
 Immutable = require 'immutable'
 OverlayTrigger = React.createFactory(require('./../../../../../react/common/KbcBootstrap').OverlayTrigger)
-Popover = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Popover)
+Popover = React.createFactory(require('react-bootstrap').Popover)
 PureRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 
 module.exports = React.createClass
