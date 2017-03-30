@@ -292,7 +292,7 @@ module.exports =
     @loadComponentsForce()
 
   loadDeletedComponents: ->
-    return Promise.resolve() if InstalledComponentsStore.getIsLoaded()
+    return Promise.resolve() if InstalledComponentsStore.getIsDeletedLoaded()
     @loadDeletedComponentsForce()
 
   receiveAllComponents: (componentsRaw) ->
