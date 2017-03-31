@@ -43,8 +43,13 @@ export default React.createClass({
       <Modal
         show={this.props.show}
         onHide={this.props.onHide}
-        title={`Specify primary key of target table ${this.props.tableConfig.get('dbName')}`}>
-        <div className="modal-body">
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {`Specify primary key of target table ${this.props.tableConfig.get('dbName')}`}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <div className="form form-horizontal">
             <div className={formDivClass}>
               <label htmlFor="title" className="col-sm-3 control-label">
@@ -68,8 +73,8 @@ export default React.createClass({
               </div>
             </div>
           </div>
-        </div>
-        <div className="modal-footer">
+        </Modal.Body>
+        <Modal.Footer>
           <ConfirmButtons
             saveLabel="Save"
             isSaving={this.props.isSaving}
@@ -77,7 +82,7 @@ export default React.createClass({
             onCancel={this.closeModal}
             onSave={this.handleSave}
           />
-        </div>
+        </Modal.Footer>
       </Modal>
     );
   },

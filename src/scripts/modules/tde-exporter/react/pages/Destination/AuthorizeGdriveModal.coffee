@@ -1,9 +1,13 @@
 React = require 'react'
-{ModalFooter, Modal, ModalHeader, ModalTitle, ModalBody} = require('react-bootstrap')
+{Modal} = require('react-bootstrap')
 {button, strong, div, h2, span, h4, section, p} = React.DOM
 AuthorizeAccount = React.createFactory(require('../../../../google-utils/react/AuthorizeAccount'))
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 {Map} = require 'immutable'
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 
 Button = React.createFactory(require('react-bootstrap').Button)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
@@ -18,31 +22,33 @@ module.exports = React.createClass
       show: show
       onHide: =>
         @props.updateLocalState(Map())
-      title: 'Authorize Google Drive Account'
     ,
-        AuthorizeAccount
-          renderToForm: true
-          caption: 'Authorize'
-          className: 'pull-right'
-          componentName: 'wr-google-drive'
-          isInstantOnly: true
-          refererUrl: @_getReferrer()
-          noConfig: true
-        ,
-          div className: 'modal-body',
-            div null, 'You are about to authorize a Google Drive account for offline access.'
-          div className: 'modal-footer',
-            ButtonToolbar null,
-              Button
-                className: 'btn btn-link'
-                onClick: =>
-                  @props.updateLocalState(Map())
-              ,
-                'Cancel'
-              Button
-                type: 'submit'
-                className: 'btn btn-success'
-                'Authorize'
+      ModalHeader closeButton: true,
+        ModalTitle null,
+          'Authorize Google Drive Account'
+      ModalBody null,
+        div null, 'You are about to authorize a Google Drive account for offline access.'
+      AuthorizeAccount
+        renderToForm: true
+        caption: 'Authorize'
+        className: 'pull-right'
+        componentName: 'wr-google-drive'
+        isInstantOnly: true
+        refererUrl: @_getReferrer()
+        noConfig: true
+      ,
+        ModalFooter null,
+          ButtonToolbar null,
+            Button
+              className: 'btn btn-link'
+              onClick: =>
+                @props.updateLocalState(Map())
+            ,
+              'Cancel'
+            Button
+              type: 'submit'
+              className: 'btn btn-success'
+              'Authorize'
 
   _getReferrer: ->
     origin = ApplicationStore.getSapiUrl()
