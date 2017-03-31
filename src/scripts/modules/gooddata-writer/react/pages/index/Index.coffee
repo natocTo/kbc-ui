@@ -253,7 +253,7 @@ module.exports = React.createClass
           limit: 3
 
 
-  _handleBucketSelect: (bucketId, e) ->
+  _handleBucketSelect: (bucketId, eventKey, e) ->
     actionCreators.toggleBucket(@state.writer.getIn(['config', 'id']), bucketId)
 
   _handleProjectUpload: ->

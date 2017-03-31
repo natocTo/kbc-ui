@@ -114,7 +114,7 @@ module.exports = React.createClass
     return expanded
 
 
-  _onClick: (file, e) ->
+  _onClick: (file, eventKey, e) ->
     e.preventDefault()
     e.stopPropagation()
     if @_isLoaded(file)

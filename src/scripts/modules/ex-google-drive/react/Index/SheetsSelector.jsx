@@ -87,7 +87,7 @@ export default React.createClass({
     return this.props.file.getIn(['sheetsApi', 'sheets'], List());
   },
 
-  onPanelClick(e) {
+  onPanelClick(eventKey, e) {
     e.preventDefault();
     e.stopPropagation();
     this.props.onSelectFile(this.props.file.get('id'));

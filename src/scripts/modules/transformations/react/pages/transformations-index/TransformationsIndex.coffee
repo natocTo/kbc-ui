@@ -89,7 +89,7 @@ TransformationsIndex = React.createClass
         transformations: @_getFilteredTransformations(bucket.get('id'))
         pendingActions: @state.transformationPendingActions.getIn([bucket.get('id')], Immutable.Map())
 
-  _handleBucketSelect: (bucketId, e) ->
+  _handleBucketSelect: (bucketId, eventKey, e) ->
     e.preventDefault()
     e.stopPropagation()
     TransformationActionCreators.toggleBucket bucketId

@@ -141,7 +141,7 @@ module.exports = React.createClass
     togled = @props.isBucketToggledFn(bucketId)
     return togled
 
-  _handleBucketSelect: (bucketId, e) ->
+  _handleBucketSelect: (bucketId, eventKey, e) ->
     e.preventDefault()
     e.stopPropagation()
     @props.onToggleBucketFn bucketId
