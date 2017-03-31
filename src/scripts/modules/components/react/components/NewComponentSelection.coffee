@@ -4,7 +4,7 @@ ComponentIcon = React.createFactory(require('../../../../react/common/ComponentI
 ComponentDetailLink = React.createFactory(require('../../../../react/common/ComponentDetailLink'))
 SearchRow = React.createFactory(require('../../../../react/common/SearchRow').default)
 Link = React.createFactory(require('react-router').Link)
-Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 
 
 {div, table, tbody, tr, td, ul, li, a, span, h2, p, button} = React.DOM

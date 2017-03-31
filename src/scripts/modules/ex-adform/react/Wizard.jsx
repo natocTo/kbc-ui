@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import {TabbedArea, TabPane, Button} from './../../../react/common/KbcBootstrap';
+import {TabbedArea, TabPane} from './../../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import {Steps} from '../constants';
 import Select from 'react-select';
 import CredentialsForm from './CredentialsForm';

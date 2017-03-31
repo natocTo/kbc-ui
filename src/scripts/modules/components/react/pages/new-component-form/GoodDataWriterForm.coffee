@@ -10,7 +10,7 @@ ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
 ModalFooter = React.createFactory(require('react-bootstrap').ModalFooter)
 ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
-Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 
 require './AddConfigurationForm.less'

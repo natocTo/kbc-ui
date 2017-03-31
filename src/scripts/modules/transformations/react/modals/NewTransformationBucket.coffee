@@ -5,7 +5,7 @@ ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
 ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ConfirmButtons = React.createFactory(require('../../../../react/common/ConfirmButtons').default)
-Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 
 TransformationActionCreators = require '../../ActionCreators'
 

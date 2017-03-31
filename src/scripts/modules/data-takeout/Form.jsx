@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Input, Button} from './../../react/common/KbcBootstrap';
+import {Input} from './../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import {Loader} from 'kbc-react-components';
 import {OrderedMap} from 'immutable';
 

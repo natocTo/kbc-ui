@@ -5,7 +5,7 @@ ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMix
 
 ListGroup = React.createFactory ListGroup
 ListGroupItem = React.createFactory ListGroupItem
-Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 
 {div, span, h3, a} = React.DOM
 

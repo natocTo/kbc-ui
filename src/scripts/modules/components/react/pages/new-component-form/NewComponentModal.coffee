@@ -15,7 +15,7 @@ hiddenComponents = require '../../../../components/utils/hiddenComponents'
 
 {div} = React.DOM
 
-Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 
 module.exports = React.createClass
   displayName: 'NewComponentModal'

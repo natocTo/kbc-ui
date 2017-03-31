@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import MetricGraph from './MetricGraph';
-import {Button} from './../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import {bytesToGBFormatted, numericMetricFormatted} from '../../utils/numbers';
 import EditLimitButton from './EditLimitButton';
 import LimitProgress from './LimitProgress';

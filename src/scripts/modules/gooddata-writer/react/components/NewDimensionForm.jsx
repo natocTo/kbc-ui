@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {Input, Button} from './../../../../react/common/KbcBootstrap';
+import {Input} from './../../../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import {Loader} from 'kbc-react-components';
 import {DateDimensionTemplates} from '../../constants';
 

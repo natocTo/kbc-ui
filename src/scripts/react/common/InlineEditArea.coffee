@@ -3,7 +3,7 @@ _ = require 'underscore'
 {List} = require 'immutable'
 
 Tooltip = React.createFactory(require('./Tooltip').default)
-Button = React.createFactory(require('./KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 {Loader} = require('kbc-react-components')
 Markdown = React.createFactory(require('./Markdown').default)
 Textarea = require 'react-textarea-autosize'

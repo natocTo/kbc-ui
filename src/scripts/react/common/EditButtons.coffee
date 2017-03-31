@@ -8,7 +8,7 @@
 React = require 'react'
 
 ConfirmButtons = require('./ConfirmButtons').default
-Button = require('./KbcBootstrap').Button
+Button = require('react-bootstrap').Button
 
 module.exports = React.createClass
   displayName: 'EditButtons'

@@ -4,8 +4,8 @@ oauthActions = require '../../../../components/OAuthActionCreators'
 
 DropboxModal = React.createFactory require '../../../../components/react/components/DropboxAuthorizeModal'
 {i, button, strong, div, h2, span, form, h4, section, p} = React.DOM
-{FormControls, Button} = require './../../../../../react/common/KbcBootstrap'
-Button = React.createFactory(Button)
+{FormControls} = require './../../../../../react/common/KbcBootstrap'
+Button = React.createFactory(require('react-bootstrap').Button)
 {Map} = require 'immutable'
 Confirm = require('../../../../../react/common/Confirm').default
 

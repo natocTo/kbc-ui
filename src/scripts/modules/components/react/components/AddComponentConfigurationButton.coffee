@@ -8,7 +8,7 @@ ComponentsStore = require('../../stores/ComponentsStore.coffee')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin.coffee')
 
 Modal = React.createFactory(require('react-bootstrap').Modal)
-Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 NewComponentModal = React.createFactory(require('../pages/new-component-form/NewComponentModal'))
 
 module.exports = React.createClass

@@ -3,7 +3,7 @@ import ApplicationStore from '../../../stores/ApplicationStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import EditLimitButton from './../../limits/EditLimitButton';
 import LimitProgress from './../../limits/LimitProgress';
-import {Button} from './../../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import contactSupport from '../../../utils/contactSupport';
 import classnames from 'classnames';
 import {numericMetricFormatted} from '../../../utils/numbers';

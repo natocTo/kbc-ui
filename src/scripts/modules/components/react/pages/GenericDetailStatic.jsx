@@ -14,7 +14,7 @@ import DeleteConfigurationButton from '../components/DeleteConfigurationButton';
 import LatestJobs from '../components/SidebarJobs';
 import contactSupport from '../../../../utils/contactSupport';
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
-import {Button} from './../../../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import LatestVersions from '../components/SidebarVersionsWrapper';
 
 

@@ -30,7 +30,7 @@ import {saveCredentials,
   } from '../actions';
 
 import templates from '../jobsTemplates';
-import {Button} from './../../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import Wizard from './Wizard';
 import {Steps} from '../constants';
 

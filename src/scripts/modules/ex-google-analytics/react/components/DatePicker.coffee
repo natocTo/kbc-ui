@@ -3,7 +3,7 @@ DatePicker = React.createFactory require('react-datepicker')
 moment = require 'moment'
 Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
 {div, p, strong, form, input, label, h3} = React.DOM
-Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 
 module.exports = React.createClass
   displayName: 'exGanalDatePicker'

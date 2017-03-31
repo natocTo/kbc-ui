@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Button, Input} from './../../../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import {Input} from './../../../../../react/common/KbcBootstrap';
+import {Button, Modal} from 'react-bootstrap';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import {Loader} from 'kbc-react-components';
 

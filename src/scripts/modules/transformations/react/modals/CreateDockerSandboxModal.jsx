@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button} from './../../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import {Button, Modal} from 'react-bootstrap';
 import CreateDockerSandboxForm from '../components/CreateDockerSandboxForm';
 
 module.exports = React.createClass({

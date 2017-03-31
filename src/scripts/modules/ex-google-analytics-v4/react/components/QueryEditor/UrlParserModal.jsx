@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
-import {Button} from './../../../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import {Button, Modal} from 'react-bootstrap';
 // import {Tree} from 'kbc-react-components';
 
 export default React.createClass({

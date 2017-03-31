@@ -1,7 +1,7 @@
 React = require 'react'
 
 GraphCanvas = require '../../../../../react/common/GraphCanvas'
-Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 PureRenderMixin = require('react-addons-pure-render-mixin')
 Navigation = require('react-router').Navigation
 

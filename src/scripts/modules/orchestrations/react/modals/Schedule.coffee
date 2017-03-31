@@ -5,7 +5,7 @@ ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
 ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
 ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
-Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
 CronScheduler = require '../../../../react/common/CronScheduler'
 

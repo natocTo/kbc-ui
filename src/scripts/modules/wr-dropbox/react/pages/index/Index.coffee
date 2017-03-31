@@ -1,6 +1,5 @@
 React = require 'react'
 {fromJS, Map, List} = require('immutable')
-{Button} = require './../../../../../react/common/KbcBootstrap'
 classnames = require 'classnames'
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
 {Loader, Check} = require 'kbc-react-components'

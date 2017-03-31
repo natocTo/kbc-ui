@@ -2,7 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 
 Tooltip = React.createFactory(require('./Tooltip').default)
-Button = React.createFactory(require('./KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 Input = React.createFactory(require('./KbcBootstrap').Input)
 

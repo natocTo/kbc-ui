@@ -1,5 +1,5 @@
 React = require 'react'
-Button = React.createFactory(require('./../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 Immutable = require 'immutable'
 PureRendererMixin = require '../../../react/mixins/ImmutableRendererMixin'
 _ = require 'underscore'

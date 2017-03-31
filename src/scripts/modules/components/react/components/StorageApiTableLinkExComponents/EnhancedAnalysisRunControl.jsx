@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 import {Loader} from 'kbc-react-components';
-import {Button} from './../../../../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 export default React.createClass({

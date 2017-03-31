@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Button} from './../../../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import {ButtonToolbar, Button, Modal} from 'react-bootstrap';
 import contactSupport from '../../../../../utils/contactSupport';
-import { ButtonToolbar } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {

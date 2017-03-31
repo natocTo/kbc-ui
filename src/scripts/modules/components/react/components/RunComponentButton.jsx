@@ -1,6 +1,6 @@
 import React from 'react';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
-import {Button} from './../../../../react/common/KbcBootstrap';
+import {Button} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
 import {Loader} from 'kbc-react-components';
 import RoutesStore from '../../../../stores/RoutesStore';

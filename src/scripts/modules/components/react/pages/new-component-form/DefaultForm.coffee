@@ -12,7 +12,7 @@ ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
 ModalFooter = React.createFactory(require('react-bootstrap').ModalFooter)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
-Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 EmptyState = require('../../../react/components/ComponentEmptyState').default
 

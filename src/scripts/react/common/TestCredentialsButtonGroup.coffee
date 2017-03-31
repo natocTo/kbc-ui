@@ -1,6 +1,6 @@
 React = require 'react'
 classnames = require 'classnames'
-Button = React.createFactory(require('./KbcBootstrap').Button)
+Button = React.createFactory(require('react-bootstrap').Button)
 
 Loader = React.createFactory(require('kbc-react-components').Loader)
 Link = React.createFactory(require('react-router').Link)
