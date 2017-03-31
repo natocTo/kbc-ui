@@ -1,10 +1,10 @@
-import {List, Map} from 'immutable';
+import {Map} from 'immutable';
 import _ from 'underscore';
 
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 
 // utils
-import {getDefaultTable} from './utils';
+import {createConfiguration} from './utils';
 
 const COMPONENT_ID = 'keboola.csv-import';
 
@@ -42,18 +42,20 @@ function isUploaderFileInvalidFormat(localState) {
 }
 
 export default function(configId) {
-  const localState = InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
-  const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
-
+  var settings;
+  const defaultSettings = createConfiguration(Map(), configId);
+  const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || defaultSettings;
+  const localState = InstalledComponentStore.getLocalState(COMPONENT_ID, configId);
+  if (!configData.isEmpty()) {
+    settings = localState.get('settings', configData);
+  } else {
+    settings = localState.get('settings', defaultSettings);
+  }
   return {
-    destination: configData.get('destination', getDefaultTable(configId)),
-    incremental: configData.get('incremental', false),
-    primaryKey: configData.get('primaryKey', List()),
-    delimiter: configData.get('delimiter', ','),
-    enclosure: configData.get('enclosure', '"'),
     isUploaderValid: isUploaderValid(localState) && !isUploaderFileInvalidFormat(localState),
     isUploaderFileTooBig: isUploaderFileTooBig(localState),
     isUploaderFileInvalidFormat: isUploaderFileInvalidFormat(localState),
+    settings: settings,
     // local state stuff
     getLocalState(path) {
       if (_.isEmpty(path)) {

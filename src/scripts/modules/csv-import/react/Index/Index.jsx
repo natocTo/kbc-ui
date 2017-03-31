@@ -14,8 +14,9 @@ import actionsProvisioning from '../../actionsProvisioning';
 
 // specific components
 import Upload from '../components/Upload';
-import SettingsStatic from '../components/SettingsStatic';
-import SettingsEdit from '../components/SettingsEdit';
+// import SettingsStatic from '../components/SettingsStatic';
+import Settings from '../components/Settings';
+import SaveButtons from '../../../../react/common/SaveButtons';
 
 // global components
 import ComponentDescription from '../../../components/react/components/ComponentDescription';
@@ -25,7 +26,10 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 
 // utils
 import {getDefaultTable} from '../../utils';
-import {Map} from 'immutable';
+// import {Map} from 'immutable';
+
+// css
+require('./Index.less');
 
 // CONSTS
 const COMPONENT_ID = 'keboola.csv-import';
@@ -56,78 +60,95 @@ export default React.createClass({
       isUploaderFileTooBig: store.isUploaderFileTooBig,
       isUploaderFileInvalidFormat: store.isUploaderFileInvalidFormat,
       localState: store.getLocalState(),
-      destination: store.destination,
-      incremental: store.incremental,
-      primaryKey: store.primaryKey,
-      delimiter: store.delimiter,
-      enclosure: store.enclosure
+      settings: store.settings
     };
   },
 
-  renderUploader() {
-    if (!this.state.localState.get('isEditing')) {
+  renderUploadResult() {
+    const resultMessage = this.state.localState.get('resultMessage', '');
+    const resultState = this.state.localState.get('resultState', '');
+    if (resultMessage) {
+      var alertClassName = 'alert ';
+      if (resultState === 'error') {
+        alertClassName += 'alert-danger';
+      } else if (resultState === 'success') {
+        alertClassName += 'alert-success';
+      }
       return (
-        <Upload
-          onStartUpload={this.state.actions.startUpload}
-          onChange={this.state.actions.setFile}
-          isValid={this.state.isUploaderValid}
-          isFileTooBig={this.state.isUploaderFileTooBig}
-          isFileInvalidFormat={this.state.isUploaderFileInvalidFormat}
-          isUploading={this.state.localState.get('isUploading', false)}
-          uploadingMessage={this.state.localState.get('uploadingMessage', '')}
-          uploadingProgress={this.state.localState.get('uploadingProgress', 0)}
-          key={this.state.localState.get('fileInputKey', 0)}
-          resultMessage={this.state.localState.get('resultMessage', '')}
-          resultState={this.state.localState.get('resultState', '')}
-          onDismissResult={this.state.actions.dismissResult}
-        />
+        <div className={alertClassName} role="alert">
+          <button type="button" className="close" onClick={this.state.actions.dismissResult}><span aria-hidden="true">×</span><span
+            className="sr-only">Close</span></button>
+          {resultMessage}
+        </div>
       );
     }
     return null;
   },
 
+  renderUploader() {
+    return (
+      <div>
+        {this.renderUploadResult()}
+        <div className="subform">
+          <Upload
+            onStartUpload={this.state.actions.startUpload}
+            onChange={this.state.actions.setFile}
+            isValid={this.state.isUploaderValid}
+            isFileTooBig={this.state.isUploaderFileTooBig}
+            isFileInvalidFormat={this.state.isUploaderFileInvalidFormat}
+            isUploading={this.state.localState.get('isUploading', false)}
+            uploadingMessage={this.state.localState.get('uploadingMessage', '')}
+            uploadingProgress={this.state.localState.get('uploadingProgress', 0)}
+            key={this.state.localState.get('fileInputKey', 0)}
+            disabled={this.state.localState.get('isChanged', false)}
+          />
+        </div>
+      </div>
+    );
+  },
+
   renderSettings() {
-    if (this.state.localState.get('isEditing')) {
-      return (
-        <SettingsEdit
-          settings={this.state.localState.get('settings', Map())}
+    return (
+      <div className="subform">
+        <Settings
+          settings={this.state.settings}
           onChange={this.state.actions.editChange}
           tables={this.state.tables}
           defaultTable={getDefaultTable(this.state.configId)}
-          onCancel={this.state.actions.editCancel}
-          onSave={this.state.actions.editSave}
-          isSaving={this.state.localState.get('isSaving', false)}
+          disabled={this.state.localState.get('isSaving', false)}
+          destinationEditing={this.state.localState.get('isDestinationEditing', false)}
+          onDestinationEdit={this.state.actions.destinationEdit}
         />
-      );
-    } else {
-      return (
-        <SettingsStatic
-          destination={this.state.destination}
-          incremental={this.state.incremental}
-          primaryKey={this.state.primaryKey}
-          delimiter={this.state.delimiter}
-          enclosure={this.state.enclosure}
-          onStartChangeSettings={this.state.actions.editStart}
-          isEditDisabled={this.state.localState.get('isUploading', false)}
-        />
-      );
-    }
+      </div>
+    );
   },
 
   render() {
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="row kbc-header">
-            <div className="col-sm-12">
-              <ComponentDescription
-                componentId={COMPONENT_ID}
-                configId={this.state.configId}
-              />
-            </div>
+          <div className="kbc-header kbc-header-without-row-fix">
+            <ComponentDescription
+              componentId={COMPONENT_ID}
+              configId={this.state.configId}
+            />
           </div>
-          <div className="row">
+          <div className="kbc-header kbc-header-without-row-fix">
+            <h3>Upload CSV File</h3>
             {this.renderUploader()}
+          </div>
+          <div className="kbc-header kbc-header-without-row-fix">
+            <h3 style={{lineHeight: '32px'}}>
+              CSV Upload Settings
+              <span className="pull-right">
+              <SaveButtons
+                isSaving={this.state.localState.get('isSaving', false)}
+                isChanged={this.state.localState.get('isChanged', false)}
+                onReset={this.state.actions.editReset}
+                onSave={this.state.actions.editSave}
+              />
+            </span>
+            </h3>
             {this.renderSettings()}
           </div>
         </div>
