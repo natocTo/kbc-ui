@@ -51,7 +51,6 @@ SqlDepModal = React.createClass
       ' SQLDep'
       Modal
         show: @state.showModal
-        title: 'SQLDep'
         onHide: @close
       ,
         ModalHeader closeButton: true,
