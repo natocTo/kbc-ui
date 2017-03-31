@@ -6,7 +6,7 @@ ActiveCountBadge = require './ActiveCountBadge'
 storageTablesStore = require '../../stores/StorageTablesStore'
 storageActionCreators = require '../../StorageActionCreators'
 {strong, br, ul, li, div, span, i, a, button, p} = React.DOM
-{Panel} = require('./../../../../react/common/KbcBootstrap')
+{Panel} = require('react-bootstrap')
 
 module.exports = React.createClass
 

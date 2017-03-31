@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import Detail from './TableInputMappingDetail';
 import Header from './TableInputMappingHeader';
-import {Panel} from './../../../../../react/common/KbcBootstrap';
+import {Panel} from 'react-bootstrap';
 import Immutable from 'immutable';
 import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Add from './AddTableInputMapping';

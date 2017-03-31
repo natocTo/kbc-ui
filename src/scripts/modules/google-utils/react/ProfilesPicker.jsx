@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import ProfilesLoader from './ProfilesLoader';
-import {Panel} from './../../../react/common/KbcBootstrap';
 import EmptyState from '../../components/react/components/ComponentEmptyState';
-import { Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Panel, Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 export default React.createClass({
 

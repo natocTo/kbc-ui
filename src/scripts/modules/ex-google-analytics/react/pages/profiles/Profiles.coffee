@@ -4,8 +4,7 @@ createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 ExGanalActionCreators  = require '../../../exGanalActionCreators'
 RoutesStore = require '../../../../../stores/RoutesStore'
 
-{Panel, PanelGroup} = require('./../../../../../react/common/KbcBootstrap')
-{ ListGroup, ListGroupItem } = require('react-bootstrap')
+{Panel, PanelGroup, ListGroup, ListGroupItem } = require('react-bootstrap')
 Panel  = React.createFactory Panel
 PanelGroup = React.createFactory PanelGroup
 ListGroup = React.createFactory ListGroup

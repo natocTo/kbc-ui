@@ -13,7 +13,7 @@ InstalledComponentsStore = require('../../../../components/stores/InstalledCompo
 SearchRow = require('../../../../../react/common/SearchRow').default
 EmptyStateIndex = require('../../components/EmptyStateIndex').default
 
-{Panel} = require('./../../../../../react/common/KbcBootstrap')
+{Panel} = require('react-bootstrap')
 
 NewTransformationBucketButton = require '../../components/NewTransformationBucketButton'
 

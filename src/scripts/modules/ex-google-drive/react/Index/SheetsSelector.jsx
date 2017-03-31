@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {List} from 'immutable';
-import {Panel} from './../../../../react/common/KbcBootstrap';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 import {Loader} from 'kbc-react-components';
 import Tooltip from '../../../../react/common/Tooltip';
 export default React.createClass({

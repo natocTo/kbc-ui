@@ -8,7 +8,7 @@ ModalTitle = React.createFactory(require('./../../../../react/common/KbcBootstra
 ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Footer)
 Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
-{Panel} = require('./../../../../react/common/KbcBootstrap')
+{Panel} = require('react-bootstrap')
 {div, p, span, i, input, label} = React.DOM
 
 Loader = React.createFactory(require('kbc-react-components').Loader)

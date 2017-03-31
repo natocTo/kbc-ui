@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import Detail from './FileOutputMappingDetail';
 import Header from './FileOutputMappingHeader';
-import {Panel} from './../../../../../react/common/KbcBootstrap';
+import {Panel} from 'react-bootstrap';
 import Immutable from 'immutable';
 import InstalledComponentsActions from '../../../InstalledComponentsActionCreators';
 import Add from './AddFileOutputMapping';

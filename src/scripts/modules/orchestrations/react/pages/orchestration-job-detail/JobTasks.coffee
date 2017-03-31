@@ -2,7 +2,7 @@ React = require 'react'
 
 ComponentsStore = require '../../../../components/stores/ComponentsStore'
 {span, div, strong, h5} = React.DOM
-{Panel, PanelGroup} = require('./../../../../../react/common/KbcBootstrap')
+{Panel, PanelGroup} = require('react-bootstrap')
 Panel  = React.createFactory Panel
 PanelGroup = React.createFactory PanelGroup
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'

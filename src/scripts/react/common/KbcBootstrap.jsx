@@ -7,8 +7,6 @@ import ModalTitle from './bootstrap/ModalTitle';
 import ModalBody from './bootstrap/ModalBody';
 import ModalFooter from './bootstrap/ModalFooter';
 import OverlayTrigger from './bootstrap/OverlayTrigger';
-import Panel from './bootstrap/Panel';
-import PanelGroup from './bootstrap/PanelGroup';
 import TabbedArea from './bootstrap/TabbedArea';
 import TabPane from './bootstrap/TabPane';
 
@@ -23,8 +21,6 @@ export {
   ModalBody,
   ModalFooter,
   OverlayTrigger,
-  Panel,
-  PanelGroup,
   TabbedArea,
   TabPane
 };
