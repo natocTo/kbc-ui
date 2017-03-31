@@ -1,6 +1,7 @@
 React = require 'react'
 ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
-{Input, Button, ListGroup, ListGroupItem} = require('./../../../../../../react/common/KbcBootstrap')
+{Input, Button} = require('./../../../../../../react/common/KbcBootstrap')
+{ ListGroup, ListGroupItem } = require('react-bootstrap')
 Input = React.createFactory Input
 Button = React.createFactory Button
 ListGroup = React.createFactory ListGroup

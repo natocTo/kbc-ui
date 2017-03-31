@@ -1,7 +1,8 @@
 React = require('react')
 ActionCreators = require '../../../exGdriveActionCreators'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
-{Panel, PanelGroup, ListGroup, ListGroupItem} = require('./../../../../../react/common/KbcBootstrap')
+{Panel, PanelGroup} = require('./../../../../../react/common/KbcBootstrap')
+{ ListGroup, ListGroupItem } = require('react-bootstrap')
 
 #Panel  = React.createFactory Panel
 PanelGroup = React.createFactory PanelGroup
