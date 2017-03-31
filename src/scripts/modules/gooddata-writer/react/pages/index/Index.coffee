@@ -10,7 +10,7 @@ ComponentEmptyState = require('../../../../components/react/components/Component
 AddNewTableButton = require('../../components/AddNewTableButton').default
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
-{Panel, PanelGroup} = require('./../../../../../react/common/KbcBootstrap')
+{Panel} = require('./../../../../../react/common/KbcBootstrap')
 
 SearchRow = require('../../../../../react/common/SearchRow').default
 TablesList = require './BucketTablesList'
