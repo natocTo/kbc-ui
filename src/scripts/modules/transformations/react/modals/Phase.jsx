@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { Modal } from './../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import actionCreators from '../../ActionCreators';

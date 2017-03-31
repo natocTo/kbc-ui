@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {fromJS} from 'immutable';
-import {Modal} from './../../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 

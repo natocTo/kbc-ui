@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from './../../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import Immutable from 'immutable';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './FileInputMappingEditor';

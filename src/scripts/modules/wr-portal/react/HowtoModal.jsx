@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Modal} from './../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import HowtoTemplates from './howtoTemplates/HowtoTemplates';
 
 export default React.createClass({

@@ -2,11 +2,11 @@ React = require 'react'
 {fromJS} = require 'immutable'
 actionCreators = require '../../actionCreators'
 
-Modal = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal)
-ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Header)
-ModalTitle = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Title)
-ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Body)
-ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal.Footer)
+Modal = React.createFactory(require('react-bootstrap').Modal)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 
 {Input} = require './../../../../react/common/KbcBootstrap'
 

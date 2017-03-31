@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Modal, Input} from './../../../../react/common/KbcBootstrap';
+import {Input} from './../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import {Link} from 'react-router';
 import RadioGroup from 'react-radio-group';
 import MySqlCredentialsContainer from '../components/MySqlCredentialsContainer';

@@ -15,9 +15,6 @@ hiddenComponents = require '../../../../components/utils/hiddenComponents'
 
 {div} = React.DOM
 
-ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalHeader)
-ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalBody)
-ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalFooter)
 Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
 
 module.exports = React.createClass

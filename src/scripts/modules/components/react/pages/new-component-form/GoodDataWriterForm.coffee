@@ -5,10 +5,10 @@ Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap'
 
 {GoodDataWriterModes, GoodDataWriterTokenTypes} = require '../../../Constants'
 
-ModalHeader = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalHeader)
-ModalBody = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalBody)
-ModalFooter = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalFooter)
-ModalTitle = React.createFactory(require('./../../../../../react/common/KbcBootstrap').ModalTitle)
+ModalHeader = React.createFactory(require('react-bootstrap').ModalHeader)
+ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
+ModalFooter = React.createFactory(require('react-bootstrap').ModalFooter)
+ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)

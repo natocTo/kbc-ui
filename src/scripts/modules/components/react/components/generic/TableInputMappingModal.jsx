@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import { Modal, Button } from './../../../../../react/common/KbcBootstrap';
+import { Button } from './../../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import Tooltip from './../../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './TableInputMappingEditor';

@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import moment from 'moment';
-import {TabbedArea, TabPane, Button, Modal} from './../../../../../react/common/KbcBootstrap';
+import {TabbedArea, TabPane, Button} from './../../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 
 const DATE_FORMAT = 'YYYY-MM-DD';

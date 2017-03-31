@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
 import InstantAuthorizationFields from './InstantAuthoriationFields';
-import {TabbedArea, TabPane, Button, Modal} from './../../../react/common/KbcBootstrap';
+import {TabbedArea, TabPane, Button} from './../../../react/common/KbcBootstrap';
 import Clipboard from '../../../react/common/Clipboard';
 import AuthorizationForm from './AuthorizationForm';
 import DirectTokenInsertFields from './DirectTokenInsertFields';
 import * as oauthUtils from '../OauthUtils';
 import {Loader} from 'kbc-react-components';
-import { ButtonToolbar } from 'react-bootstrap';
+import { ButtonToolbar, Modal } from 'react-bootstrap';
 
 import './AuthorizationModal.less';
 

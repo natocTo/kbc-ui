@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {List, Map} from 'immutable';
-import {Modal} from './../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import ProfileInfo from '../ProfileInfo';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 

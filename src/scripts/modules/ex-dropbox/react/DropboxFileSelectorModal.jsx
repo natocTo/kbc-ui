@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
-import { Modal} from './../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 
 export default React.createClass({
 

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 // import {Map} from 'immutable';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
-import {Modal} from './../../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 // import {sanitizeTableName, sheetFullName} from '../../common';
 
 export default React.createClass({

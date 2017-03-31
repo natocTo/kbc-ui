@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Modal, Input} from './../common/KbcBootstrap';
+import {Input} from './../common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../common/ConfirmButtons';
 import numeral from 'numeral';
 

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Map, List, fromJS} from 'immutable';
-import {Modal} from './../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 import GdrivePicker from '../../../google-utils/react/GooglePicker';

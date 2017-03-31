@@ -7,10 +7,7 @@ RoutesStore = require('../../../../stores/RoutesStore.coffee')
 ComponentsStore = require('../../stores/ComponentsStore.coffee')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin.coffee')
 
-Modal = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal)
-ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalHeader)
-ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalBody)
-ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalFooter)
+Modal = React.createFactory(require('react-bootstrap').Modal)
 Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
 NewComponentModal = React.createFactory(require('../pages/new-component-form/NewComponentModal'))
 

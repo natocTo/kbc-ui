@@ -9,7 +9,7 @@ import SapiTableLink from './StorageApiTableLink';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import {Modal, TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
+import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
 import {Loader} from 'kbc-react-components';
 import jobsApi from '../../../jobs/JobsApi';
 import DockerActionFn from '../../DockerActionsApi';
@@ -19,7 +19,7 @@ import {Check} from 'kbc-react-components';
 import Tooltip from '../../../../react/common/Tooltip';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 import ComponentConfigurationLink from './ComponentConfigurationLink';
-import { Alert } from 'react-bootstrap';
+import { Alert, Modal } from 'react-bootstrap';
 
 const PERNAMENT_MIGRATION_COMPONENTS = [
   'ex-db',

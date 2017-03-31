@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import {Map, List} from 'immutable';
-import {Button, Modal} from './KbcBootstrap';
+import {Button} from './KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import {diffJson} from 'diff';
 import DetailedDiff from './VersionsDiffModalComponents/DetailedDiff';
 import date from '../../utils/date';
