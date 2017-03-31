@@ -2,7 +2,6 @@ React = require 'react'
 ExGdriveActionCreators = require '../../exGdriveActionCreators'
 
 Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
-OverlayTrigger = React.createFactory(require('./../../../../react/common/KbcBootstrap').OverlayTrigger)
 Confirm = React.createFactory(require('../../../../react/common/Confirm').default)
 
 {button, span, i} = React.DOM
