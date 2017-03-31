@@ -4,10 +4,6 @@ ComponentIcon = React.createFactory(require('../../../../react/common/ComponentI
 ComponentDetailLink = React.createFactory(require('../../../../react/common/ComponentDetailLink'))
 SearchRow = React.createFactory(require('../../../../react/common/SearchRow').default)
 Link = React.createFactory(require('react-router').Link)
-Modal = React.createFactory(require('./../../../../react/common/KbcBootstrap').Modal)
-ModalHeader = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalHeader)
-ModalBody = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalBody)
-ModalFooter = React.createFactory(require('./../../../../react/common/KbcBootstrap').ModalFooter)
 Button = React.createFactory(require('./../../../../react/common/KbcBootstrap').Button)
 
 
