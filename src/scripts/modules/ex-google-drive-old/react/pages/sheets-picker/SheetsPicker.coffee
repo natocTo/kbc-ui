@@ -12,8 +12,6 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 Picker = React.createFactory(require('../../../../google-utils/react/GooglePicker').default)
 ViewTemplates = require('../../../../google-utils/react/PickerViewTemplates').default
 
-{Panel, PanelGroup} = require('./../../../../../react/common/KbcBootstrap')
-PanelGroup = React.createFactory PanelGroup
 GdriveFilePanel = React.createFactory(require('./GdriveFilePanel'))
 ConfigSheetsPanels = React.createFactory(require('./ConfigSheetsPanels'))
 TabbedArea = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabbedArea)
