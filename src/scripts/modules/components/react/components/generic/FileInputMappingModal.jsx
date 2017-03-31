@@ -41,11 +41,17 @@ export default React.createClass({
         <Modal {...this.props}
           show={this.state.show}
           onHide={this.handleCancel}
-          title="Input Mapping" bsSize="large" onChange={() => null}>
-          <div className="modal-body">
+          bsSize="large" onChange={() => null}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Input Mapping
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             {this.editor()}
-          </div>
-          <div className="modal-footer">
+          </Modal.Body>
+          <Modal.Footer>
             <ConfirmButtons
               saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
               isSaving={this.state.isSaving}
@@ -53,7 +59,7 @@ export default React.createClass({
               onSave={this.handleSave}
               isDisabled={!this.isValid()}
             />
-          </div>
+          </Modal.Footer>
         </Modal>
       </span>
     );
