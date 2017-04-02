@@ -8,13 +8,13 @@ Tooltip = require('../../../../../react/common/Tooltip').default
 SshTunnelRow = require('../../../../../react/common/SshTunnelRow').default
 TestCredentialsButton = require '../../../../../react/common/TestCredentialsButtonGroup'
 _ = require 'underscore'
-
+contactSupport = require('../../../../../utils/contactSupport').default
 {div} = React.DOM
 Input = React.createFactory(require('react-bootstrap').Input)
 StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
 {Protected} = require 'kbc-react-components'
 
-{span, form, div, h2, small, label, p, option} = React.DOM
+{a, span, form, div, h2, small, label, p, option} = React.DOM
 
 
 module.exports = React.createClass
@@ -33,9 +33,12 @@ module.exports = React.createClass
     testCredentialsFn: React.PropTypes.func
 
   render: ->
-    provDescription = 'This is readonly credentials to the database provided by Keboola.'
-    if @props.driver == 'redshift' or @props.driver == 'snowflake'
-      provDescription = 'This is write credentials to the database provided by Keboola.'
+    provDescription = 'These are readonly credentials to the database provided by Keboola.'
+    if @props.driver == 'redshift'
+      provDescription = 'These are write credentials to the database provided by Keboola.'
+    if @props.driver == 'snowflake'
+      provDescription = @_snowflakeDescription()
+
     fields = fieldsTemplates(@props.componentId)
 
     form className: 'form-horizontal',
@@ -55,6 +58,23 @@ module.exports = React.createClass
           @_createInput(field[0], field[1], field[2], field[3], field[4], field[5])
       @_renderSshTunnelRow()
       @_renderTestCredentials()
+
+  _openSupportModal: (e) ->
+    contactSupport(type: 'project')
+    e.preventDefault()
+    e.stopPropagation()
+
+  _renderContactUs: ->
+    a {onClick: @_openSupportModal}, " Contact support"
+
+  _snowflakeDescription: ->
+    span null,
+      """
+      These are write credentials to the snowflake database provided by Keboola. All executed queries have 15 seconds timeout and there can be 2 concurrent sessions running at most.
+      """
+      @_renderContactUs()
+      ' if you would like to raise these limits.'
+
 
   _renderTestCredentials: ->
     if not isDockerBasedWriter(@props.componentId) or @props.componentId == 'wr-db-mssql'

@@ -24,8 +24,9 @@ templateFn = (componentId, driver, isProvisioning) ->
     currentCredentials = WrDbStore.getCredentials componentId, configId
     localState = InstalledComponentsStore.getLocalState(componentId, configId)
     credsState = localState.get 'credentialsState'
-
+    isProvisionedCreds = credsState == States.SHOW_PROV_READ_CREDS
     editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds')
+
     #state
     editingCredsValid: @_hasDbConnection(editingCredentials)
     currentCredentials: currentCredentials
@@ -33,27 +34,28 @@ templateFn = (componentId, driver, isProvisioning) ->
     isEditing: !! WrDbStore.getEditingByPath(componentId, configId, 'creds')
     isSaving: credsState == States.SAVING_NEW_CREDS
     localState: localState
+    isProvisionedCreds: isProvisionedCreds
+
+  _handleEditStart: ->
+    creds = @state.currentCredentials
+    creds = creds?.set 'driver', driver
+    creds = @_getDefaultValues(creds)
+    creds = creds.map((value, key) ->
+      isHashed = key[0] == '#'
+      if isHashed
+        return ''
+      else
+        return value
+    )
+    #ActionCreators.resetCredentials componentId, @state.currentConfigId
+    ActionCreators.setEditingData componentId, @state.currentConfigId, 'creds', creds
+    @_updateLocalState('credentialsState', States.CREATE_NEW_CREDS)
 
   _handleResetStart: ->
-    if isProvisioning
-      @_updateLocalState('credentialsState', States.INIT)
-    else
-      creds = @state.currentCredentials
-      creds = creds?.set 'driver', driver
-      creds = @_getDefaultValues(creds)
-      creds = creds.map((value, key) ->
-        isHashed = key[0] == '#'
-        if isHashed
-          return ''
-        else
-          return value
-        )
-      #ActionCreators.resetCredentials componentId, @state.currentConfigId
-      ActionCreators.setEditingData componentId, @state.currentConfigId, 'creds', creds
-      @_updateLocalState('credentialsState', States.CREATE_NEW_CREDS)
+    @_updateLocalState('credentialsState', States.INIT)
 
   _handleCancel: ->
-    if isProvisioning
+    if @state.isProvisionedCreds
       @_updateLocalState('credentialsState', States.INIT)
     else
       ActionCreators.setEditingData componentId, @state.currentConfigId, 'creds', null
@@ -77,22 +79,28 @@ templateFn = (componentId, driver, isProvisioning) ->
 
   render: ->
     state = @state.localState.get 'credentialsState'
-    buttonText = ' Edit'
-    if isProvisioning
-      buttonText = ' Reset Credentials'
 
     if state in [States.SHOW_PROV_READ_CREDS, States.SHOW_STORED_CREDS]
       return React.DOM.div null,
-        button
-          className: 'btn btn-success'
-          disabled: @state.isSaving
-          onClick: @_handleResetStart
-        ,
-          span className: 'fa fa-edit'
-          buttonText
+        if isProvisioning
+          button
+            className: 'btn btn-link'
+            disabled: @state.isSaving
+            onClick: @_handleResetStart
+          ,
+            span className: 'fa fa-fw fa-times'
+            ' Reset Credentials'
+        if !@state.isProvisionedCreds
+          button
+            className: 'btn btn-success'
+            disabled: @state.isSaving
+            onClick: @_handleEditStart
+          ,
+            span className: 'fa fa-edit'
+            ' Edit'
 
     if state in [States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS]
-      return React.DOM.div className: 'kbc-buttons',
+      return React.DOM.div null,
         if @state.isSaving
           Loader()
         button
@@ -122,7 +130,8 @@ templateFn = (componentId, driver, isProvisioning) ->
     result = _.reduce(fields, (memo, field) ->
       propName = field[1]
       isHashed = propName[0] == '#'
-      memo and (!!credentials.get(propName) or isHashed)
+      isRequired = field[6]
+      memo and (!isRequired || !!credentials.get(propName) or isHashed)
     !!credentials)
     return result
 

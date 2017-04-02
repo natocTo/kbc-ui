@@ -60,19 +60,19 @@ export default React.createClass({
           'Upload date dimension to GoodData';
 
       return (
-        <Tooltip tooltip={tooltip}>
-          <Confirm
-            text={this.uploadText()}
-            title="Upload Date Dimension"
-            buttonLabel="Upload"
-            buttonType="success"
-            onConfirm={this.handleUpload}
-            >
+        <Confirm
+          text={this.uploadText()}
+          title="Upload Date Dimension"
+          buttonLabel="Upload"
+          buttonType="success"
+          onConfirm={this.handleUpload}
+        >
+          <Tooltip tooltip={tooltip}>
             <button className="btn btn-link" disabled={isExported}>
               <span className="fa fa-upload fa-fw"/>
             </button>
-          </Confirm>
-        </Tooltip>
+          </Tooltip>
+        </Confirm>
       );
     }
   },

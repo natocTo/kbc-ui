@@ -12,6 +12,10 @@ Input = React.createFactory(require('react-bootstrap').Input)
 Modal = require('react-bootstrap').Modal
 Loader = React.createFactory(require('kbc-react-components').Loader)
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 
 tooltips =
   file: 'uploads the selected table as a csv file'
@@ -75,8 +79,11 @@ module.exports = React.createClass
     React.createElement Modal,
       onHide: =>
         @_cancel()
-      title: 'Add New Table'
-      div className: 'modal-body',
+
+      ModalHeader closeButton: true,
+        ModalTitle null,
+          'Add New Table'
+      ModalBody null,
         div className: 'form-horizontal clearfix',
           div className: 'row col-md-12',
             @_renderFormControl('Storage Table', @_renderTableSelector())
@@ -84,7 +91,7 @@ module.exports = React.createClass
             @_renderFormControl('Operation', operationSelect)
             @_renderFormControl('Type', typeSelect)
             @_renderFormControl('Folder', @_renderPicker())
-      div className: 'modal-footer',
+      ModalFooter null,
         React.createElement ConfirmButtons,
           isSaving: @_isSaving()
           isDisabled: @_isSaving() or (not @_isValid())

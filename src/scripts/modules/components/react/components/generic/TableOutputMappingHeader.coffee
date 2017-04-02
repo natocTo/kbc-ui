@@ -1,6 +1,5 @@
 React = require 'react'
 Link = React.createFactory(require('react-router').Link)
-{ModalTrigger, OverlayTrigger, Tooltip} = require 'react-bootstrap'
 DeleteButton = require '../../../../../react/common/DeleteButton'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 TableSizeLabel = React.createFactory(require '../../../../transformations/react/components/TableSizeLabel')
@@ -81,28 +80,14 @@ module.exports = React.createClass(
                       @props.value.get('destination')
                     "?"
                   onConfirm: @props.onDelete
-            React.createElement OverlayTrigger,
-              overlay: React.createElement Tooltip, null, 'Edit Output'
-              placement: 'top'
-            ,
-              React.createElement ModalTrigger,
-                modal: React.createElement TableOutputMappingModal,
-                  mode: 'edit'
-                  tables: @props.tables
-                  buckets: @props.buckets
-                  mapping: @props.editingValue
-                  onChange: @props.onChange
-                  onCancel: @props.onCancel
-                  onSave: @props.onSave
-                  definition: @props.definition
-              ,
-                React.DOM.button
-                  className: "btn btn-link"
-                  onClick: (e) ->
-                    component.props.onEditStart()
-                    e.preventDefault()
-                    e.stopPropagation()
-                ,
-                  React.DOM.span null,
-                    React.DOM.span {className: 'fa fa-fw kbc-icon-pencil'}
+            React.createElement TableOutputMappingModal,
+              mode: 'edit'
+              tables: @props.tables
+              buckets: @props.buckets
+              mapping: @props.editingValue
+              onChange: @props.onChange
+              onCancel: @props.onCancel
+              onSave: @props.onSave
+              definition: @props.definition
+              onEditStart: @props.onEditStart
 )

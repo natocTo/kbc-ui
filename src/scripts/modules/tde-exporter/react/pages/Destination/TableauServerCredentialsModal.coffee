@@ -1,10 +1,14 @@
 React = require 'react'
 _ = require 'underscore'
-{ModalFooter, Modal, ModalHeader, ModalTitle, ModalBody} = require('react-bootstrap')
+{Modal} = require('react-bootstrap')
 {button, strong, div, h2, span, h4, section, p} = React.DOM
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 {Map} = require 'immutable'
 {Loader} = require 'kbc-react-components'
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 
 Button = React.createFactory(require('react-bootstrap').Button)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
@@ -29,11 +33,12 @@ module.exports = React.createClass
       show: show
       onHide: =>
         @props.updateLocalState(Map())
-      title: 'Setup Credentials to Tableau Server'
     ,
-
+      ModalHeader closeButton: true,
+        ModalTitle null,
+          'Setup Credentials to Tableau Server'
       div className: 'form form-horizontal',
-        div className: 'modal-body',
+        ModalBody null,
           @_createInput('Server URL', 'server_url', 'text', 'use url of your concrete instance, \
           e.g. https://10az.online.tableau.com')
           @_createInput('Username', 'username')
@@ -41,7 +46,7 @@ module.exports = React.createClass
           @_createInput('Project Name', 'project_name')
           @_createInput('Site', 'site')
 
-        div className: 'modal-footer',
+        ModalFooter null,
           ButtonToolbar null,
             if @state.isSaving
               React.createElement Loader

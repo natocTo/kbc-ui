@@ -43,8 +43,13 @@ export default React.createClass({
       <Modal
         show={this.props.show}
         onHide={this.props.onHide}
-        title={'Rename Phase'}>
-        <div className="modal-body">
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Rename Phase
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <div className="form form-horizontal">
             <div className={formDivClass}>
               <div className="col-sm-12">
@@ -59,15 +64,15 @@ export default React.createClass({
               </div>
             </div>
           </div>
-        </div>
-        <div className="modal-footer">
+        </Modal.Body>
+        <Modal.Footer>
           <ConfirmButtons
             saveLabel="Rename"
             isDisabled={!this.isValid()}
             onCancel={this.closeModal}
             onSave={this.handleSave}
           />
-        </div>
+        </Modal.Footer>
       </Modal>
     );
   },

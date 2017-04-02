@@ -14,6 +14,8 @@ import Promise from 'bluebird';
 import InstalledComponentsActions from '../../components/InstalledComponentsActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
 
+import DataTypes from './dataTypes';
+
 function isDockerBasedWriter(componentId) {
   return dockerComponents.indexOf(componentId) >= 0;
 }
@@ -34,7 +36,7 @@ function updateTablesMapping(data, table) {
   tables = tables.map( (t) => {
     if (t.get('source') === tableId) {
       found = true;
-      return mappingTable;
+      return t.merge(mappingTable);
     } else {
       return t;
     }
@@ -50,6 +52,19 @@ export default function(componentId) {
     return null;
   }
 
+  function prepareColumnsDefaultTypes(tableColumns) {
+    const dataTypes = DataTypes[componentId] || {};
+    if (!dataTypes.default) return List();
+    const defaultType = fromJS(dataTypes.default);
+    return tableColumns.map((c) =>
+                            Map({
+                              'name': c,
+                              'dbName': c,
+                              'nullable': false,
+                              'default': '',
+                              'size': ''
+                            }).merge(defaultType));
+  }
 
   return {
     loadConfigData(configId) {
@@ -84,6 +99,26 @@ export default function(componentId) {
       };
     },
 
+    // ############## SET TABLE FILTER
+    mergeTableMappingV2(configId, mapping) {
+      const tableId = mapping.get('source');
+      return this.loadConfigData(configId).then(
+        (data) => {
+          const tables = data.getIn(tablesPath, List())
+                .map((t) => {
+                  if (t.get('source') === tableId) {
+                    return t.merge(mapping);
+                  } else {
+                    return t;
+                  }
+                });
+          const dataToSave = data.setIn(tablesPath, tables);
+          const msg = `Update data filter of ${tableId}`;
+          return this.saveConfigData(configId, dataToSave, msg);
+        });
+    },
+
+    // ############## SET V2 TABLE
     setTableV2(configId, tableId, tableData) {
       return this.loadConfigData(configId).then(
         (data) => {
@@ -170,13 +205,13 @@ export default function(componentId) {
     },
 
     // ######## POST TABLE
-    postTable(configId, tableId, table) {
+    postTable(configId, tableId, table, tableColumns) {
       const tableToSave = fromJS({
         dbName: table.dbName,
         export: table.export,
         tableId: tableId,
         items: []
-      });
+      }).set('items', prepareColumnsDefaultTypes(tableColumns));
 
       return this.loadConfigData(configId).then(
         (data) => {

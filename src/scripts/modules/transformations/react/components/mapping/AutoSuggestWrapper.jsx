@@ -16,8 +16,16 @@ export default React.createClass({
     value: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired
+    placeholder: PropTypes.string.isRequired,
+    disabled: PropTypes.bool
   },
+
+  getDefaultProps() {
+    return {
+      disabled: false
+    };
+  },
+
 
   getInitialState() {
     return ({
@@ -42,7 +50,8 @@ export default React.createClass({
         className: 'form-control',
         id: this.props.id,
         name: this.props.name,
-        placeholder: this.props.placeholder
+        placeholder: this.props.placeholder,
+        disabled: this.props.disabled
       }
     });
   },

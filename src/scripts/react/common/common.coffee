@@ -6,6 +6,7 @@ module.exports =
   Confirm: require('./Confirm').default
   Duration: require './Duration'
   DurationWithIcon: require './DurationWithIcon'
+  Finished: require('./Finished').default
   FinishedWithIcon: require './FinishedWithIcon'
   JobStatusCircle: require './JobStatusCircle'
   JobStatusLabel: require('./JobStatusLabel').default

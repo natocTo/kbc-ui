@@ -1,11 +1,11 @@
-# define as [labelValue, propName, type = 'text', isProtected = false]
+# define as [labelValue, propName, type = 'text', isProtected = false, isRequired = false]
 
 defaultFields = [
-  ['Host Name', 'host', 'text', false]
-  ['Port', 'port', 'number', false]
-  ['Username', 'user', 'text', false]
-  ['Password', '#password', 'password', true]
-  ['Database', 'database', 'text', false]
+  ['Host Name', 'host', 'text', false, true]
+  ['Port', 'port', 'number', false, true]
+  ['Username', 'user', 'text', false, true]
+  ['Password', '#password', 'password', true, true]
+  ['Database', 'database', 'text', false, true]
 ]
 
 
@@ -18,27 +18,27 @@ defaultFields = [
 # auth_mech: 0
 
 firebirdFields = [
-  ['Database', 'dbname', 'text', false]
-  ['Username', 'user', 'text', false]
-  ['Password', '#password', 'password', true]
+  ['Database', 'dbname', 'text', false, true]
+  ['Username', 'user', 'text', false, true]
+  ['Password', '#password', 'password', true, true]
 ]
 
 oracleFields = [
-  ['Host Name', 'host', 'text', false]
-  ['Port', 'port', 'number', false]
-  ['Username', 'user', 'text', false]
-  ['Password', '#password', 'password', true]
-  ['Service Name/SID', 'database', 'text', false]
+  ['Host Name', 'host', 'text', false, true]
+  ['Port', 'port', 'number', false, true]
+  ['Username', 'user', 'text', false, true]
+  ['Password', '#password', 'password', true, true]
+  ['Service Name/SID', 'database', 'text', false, true]
 ]
 
 snowflakeFields = [
-  ['Host Name', 'host', 'text', false]
-  ['Port', 'port', 'number', false]
-  ['Username', 'user', 'text', false]
-  ['Password', '#password', 'password', true]
-  ['Database', 'database', 'text', false]
-  ['Schema', 'schema', 'text', false]
-  ['Warehouse', 'warehouse', 'text', false]
+  ['Host Name', 'host', 'text', false, true]
+  ['Port', 'port', 'number', false, true]
+  ['Username', 'user', 'text', false, true]
+  ['Password', '#password', 'password', true, true]
+  ['Database', 'database', 'text', false, true]
+  ['Schema', 'schema', 'text', false, true]
+  ['Warehouse', 'warehouse', 'text', false, false]
 ]
 
 COMPONENTS_FIELDS = {
@@ -68,5 +68,16 @@ module.exports =
       isProtected = f[3]
       propName = f[1]
       if isProtected
+        result.push(propName)
+    return result
+
+# returns @array of properties that cannot be empty
+  getRequiredProperties: (componentId) ->
+    result = []
+    fields = getFields(componentId)
+    for f in fields
+      isRequired = f[4]
+      propName = f[1]
+      if isRequired
         result.push(propName)
     return result

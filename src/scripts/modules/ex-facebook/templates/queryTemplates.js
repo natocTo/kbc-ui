@@ -196,6 +196,18 @@ const exfbAdsTemplates = [
     }
   },
   {
+    'id': 'adsinsightsactions',
+    'name': 'Ads Insights Actions Stats For Last Month',
+    'template': {
+      'name': 'ads_insights',
+      'query': {
+        'path': 'ads',
+        'fields': 'insights.action_breakdowns(action_type).date_preset(last_month).time_increment(1){ad_id,actions}'
+      }
+    }
+  },
+
+  {
     'id': 'adsets',
     'name': 'All Adsets',
     'template': {

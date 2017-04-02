@@ -1,6 +1,7 @@
 React = require 'react'
 moment = require 'moment'
 Tooltip = React.createFactory(require('./common').Tooltip)
+Finished = React.createFactory(require('./common').Finished)
 
 {span, i} = React.DOM
 
@@ -19,7 +20,8 @@ FinishedWithIcon = React.createClass
       ,
         i {className: 'fa fa-calendar'}
       ' '
-      moment(@props.endTime).fromNow()
+      Finished
+        endTime: @props.endTime
 
 
 module.exports = FinishedWithIcon

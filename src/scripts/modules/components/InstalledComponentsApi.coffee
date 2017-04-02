@@ -29,8 +29,22 @@ installedComponentsApi =
       response.body
     )
 
+  getDeletedComponents: ->
+    createRequest('GET', 'components?isDeleted=1')
+    .promise()
+    .then((response) ->
+      response.body
+    )
+
   getComponentConfigurations: (componentId) ->
     createRequest('GET', "components/#{componentId}/configs")
+    .promise()
+    .then((response) ->
+      response.body
+    )
+
+  getDeletedComponentConfigurations: (componentId) ->
+    createRequest('GET', "components/#{componentId}/configs?isDeleted=1")
     .promise()
     .then((response) ->
       response.body
@@ -65,6 +79,12 @@ installedComponentsApi =
 
   deleteConfiguration: (componentId, configurationId) ->
     createRequest 'DELETE', "components/#{componentId}/configs/#{configurationId}"
+    .promise()
+    .then (response) ->
+      response.body
+
+  restoreConfiguration: (componentId, configurationId) ->
+    createRequest 'POST', "components/#{componentId}/configs/#{configurationId}/restore"
     .promise()
     .then (response) ->
       response.body

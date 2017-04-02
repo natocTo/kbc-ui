@@ -2,6 +2,10 @@ React = require 'react'
 Modal = React.createFactory(require('react-bootstrap').Modal)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
+ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
+ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
+ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 
 ComponentSelect = React.createFactory(require './ComponentSelect')
 ConfigurationSelect = React.createFactory(require './ConfigurationSelect')
@@ -65,11 +69,15 @@ AddTaskModal = React.createClass
 
   render: ->
     Modal
-      title: @_modalTitle()
-      onRequestHide: @props.onHide
-      show: @props.show
+      onHide: @props.onHide
+      show: @props.show,
 
-      div className: 'modal-body',
+      ModalHeader closeButton: true,
+        ModalTitle null,
+          "Add new task to #{@props.phaseId} "
+          React.createElement ComponentsReloaderButton
+
+      ModalBody null,
         switch @state.currentStep
           when STEP_COMPONENT_SELECT
             div null,
@@ -96,18 +104,13 @@ AddTaskModal = React.createClass
                 onReset: @_handleComponentReset
                 onConfigurationSelect: @_handleConfigurationSelect
 
-      div className: 'modal-footer',
+      ModalFooter null,
         ButtonToolbar null,
           Button
             bsStyle: 'link'
             onClick: @props.onHide
           ,
             'Cancel'
-
-  _modalTitle: ->
-    React.DOM.h4 className: 'modal-title',
-      "Add new task to #{@props.phaseId} "
-      React.createElement ComponentsReloaderButton
 
   _handleComponentSelect: (component) ->
     @setState
@@ -128,7 +131,6 @@ AddTaskModal = React.createClass
     close modal with selected configuration
   ###
   _handleConfigurationSelect: (configuration) ->
-    #@props.onRequestHide() # hide modal
     @props.onConfigurationSelect(@state.selectedComponent, configuration, @props.phaseId)
     @props.onHide()
 

@@ -3,11 +3,11 @@
 injectProps = require('./react/injectProps').default
 ComponentsIndex = require('./react/pages/ComponentsIndex')
 NewComponent = require('./react/pages/NewComponent').default
-NewComponentButton = require './react/components/NewComponentButton'
 
 ComponentDetail = require './react/pages/component-detail/ComponentDetail'
 
 ComponentReloaderButton = require './react/components/ComponentsReloaderButton'
+ComponentsHeaderButtons = require './react/components/ComponentsHeaderButtons'
 ComponentsStore = require './stores/ComponentsStore'
 InstalledComponentsActionsCreators = require './InstalledComponentsActionCreators'
 ComponentsActionCreators = require './ComponentsActionCreators'
@@ -56,10 +56,9 @@ routes =
       InstalledComponentsActionsCreators.loadComponents()
     defaultRouteHandler: application(ComponentsIndex)
     headerButtonsHandler: injectProps(
-      text: 'New Application'
-      to: 'new-application'
+      addRoute: 'new-application'
       type: 'application'
-    )(NewComponentButton)
+    )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-application'
@@ -93,7 +92,10 @@ routes =
     requireData: ->
       InstalledComponentsActionsCreators.loadComponents()
     defaultRouteHandler: extractor(ComponentsIndex)
-    headerButtonsHandler: injectProps(text: 'New Extractor', to: 'new-extractor', type: 'extractor')(NewComponentButton)
+    headerButtonsHandler: injectProps(
+      addRoute: 'new-extractor'
+      type: 'extractor'
+    )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-extractor'
@@ -146,7 +148,10 @@ routes =
     requireData: ->
       InstalledComponentsActionsCreators.loadComponents()
     defaultRouteHandler: writer(ComponentsIndex)
-    headerButtonsHandler: injectProps(text: 'New Writer', to: 'new-writer', type: 'writer')(NewComponentButton)
+    headerButtonsHandler: injectProps(
+      addRoute: 'new-writer'
+      type: 'writer'
+    )(ComponentsHeaderButtons)
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-writer'
@@ -163,9 +168,9 @@ routes =
     ,
       createComponentRoute 'wr-google-drive', [googleDriveWriterRoutes]
     ,
-      createComponentRoute 'wr-db', [createDbWriterRoutes('wr-db', 'mysql', true)]
+      createComponentRoute 'wr-db', [createDbWriterRoutes('wr-db', 'mysql', false)]
     ,
-      createComponentRoute 'wr-db-mysql', [createDbWriterRoutes('wr-db-mysql', 'mysql', true)]
+      createComponentRoute 'wr-db-mysql', [createDbWriterRoutes('wr-db-mysql', 'mysql', false)]
     ,
       createComponentRoute 'wr-db-oracle', [createDbWriterRoutes('wr-db-oracle', 'oracle', false)]
     ,
@@ -175,13 +180,13 @@ routes =
     ,
       createComponentRoute 'keboola.wr-qlik', [createDbWriterRoutes('keboola.wr-qlik', 'redshift', true)]
     ,
-      createComponentRoute 'wr-tableau', [createDbWriterRoutes('wr-tableau', 'mysql', true)]
+      createComponentRoute 'wr-tableau', [createDbWriterRoutes('wr-tableau', 'mysql', false)]
     ,
       createComponentRoute 'wr-db-mssql', [createDbWriterRoutes('wr-db-mssql', 'mssql', false)]
       createComponentRoute 'keboola.wr-db-mssql-v2', [createDbWriterRoutes('keboola.wr-db-mssql-v2', 'mssql', false)]
       createComponentRoute 'keboola.wr-redshift-v2', [createDbWriterRoutes('keboola.wr-redshift-v2', 'redshift', true)]
       createComponentRoute 'keboola.wr-db-impala', [createDbWriterRoutes('keboola.wr-db-impala', 'impala', false)]
-      createComponentRoute 'keboola.wr-db-mysql', [createDbWriterRoutes('keboola.wr-db-mysql', 'mysql', true)]
+      createComponentRoute 'keboola.wr-db-mysql', [createDbWriterRoutes('keboola.wr-db-mysql', 'mysql', false)]
       createComponentRoute 'keboola.wr-db-oracle', [createDbWriterRoutes('keboola.wr-db-oracle', 'oracle', false)]
       createComponentRoute 'keboola.wr-db-pgsql', [createDbWriterRoutes('keboola.wr-db-pgsql', 'pgsql', false)]
       createComponentRoute(

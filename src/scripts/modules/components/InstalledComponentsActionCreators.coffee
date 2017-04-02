@@ -16,9 +16,12 @@ RoutesStore = require '../../stores/RoutesStore'
 ComponentsStore = require './stores/ComponentsStore'
 VersionActionCreators = require '../components/VersionsActionCreators'
 
+ConfigurationCopiedNotification = require('./react/components/ConfigurationCopiedNotification').default
+
 deleteComponentConfiguration = require './utils/deleteComponentConfiguration'
 removeEmptyEncryptAttributes = require './utils/removeEmptyEncryptAttributes'
 preferEncryptedAttributes = require './utils/preferEncryptedAttributes'
+trashUtils = require '../trash/utils'
 
 storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
   component = InstalledComponentsStore.getComponent(componentId)
@@ -46,6 +49,14 @@ storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
 module.exports =
 
   loadComponentsForce: ->
+    promises = []
+
+    promises.push @loadInstalledComponentsForce()
+    promises.push @loadDeletedComponentsForce()
+
+    Promise.all(promises)
+
+  loadInstalledComponentsForce: ->
     dispatcher.handleViewAction(
       type: constants.ActionTypes.INSTALLED_COMPONENTS_LOAD
     )
@@ -61,6 +72,28 @@ module.exports =
     .catch((error) ->
       dispatcher.handleViewAction(
         type: constants.ActionTypes.INSTALLED_COMPONENTS_LOAD_ERROR
+        status: error.status
+        response: error.response
+      )
+      throw error
+    )
+
+  loadDeletedComponentsForce: ->
+    dispatcher.handleViewAction(
+      type: constants.ActionTypes.DELETED_COMPONENTS_LOAD
+    )
+
+    installedComponentsApi
+    .getDeletedComponents()
+    .then((components) ->
+      dispatcher.handleViewAction(
+        type: constants.ActionTypes.DELETED_COMPONENTS_LOAD_SUCCESS
+        components: components
+      )
+    )
+    .catch((error) ->
+      dispatcher.handleViewAction(
+        type: constants.ActionTypes.DELETED_COMPONENTS_LOAD_ERROR
         status: error.status
         response: error.response
       )
@@ -258,6 +291,10 @@ module.exports =
     return Promise.resolve() if InstalledComponentsStore.getIsLoaded()
     @loadComponentsForce()
 
+  loadDeletedComponents: ->
+    return Promise.resolve() if InstalledComponentsStore.getIsDeletedLoaded()
+    @loadDeletedComponentsForce()
+
   receiveAllComponents: (componentsRaw) ->
     dispatcher.handleViewAction(
       type: constants.ActionTypes.INSTALLED_COMPONENTS_LOAD_SUCCESS
@@ -322,6 +359,60 @@ module.exports =
         error: e
       throw e
 
+  restoreConfiguration: (component, configuration, transition) ->
+    configurationId = configuration.get 'id'
+    componentId = component.get 'id'
+
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_START
+      componentId: componentId
+      configurationId: configurationId
+      transition: transition
+
+    if (transition)
+      transitionTo = "generic-detail-#{component.get('type')}"
+      transitionParams =
+        component: component.get('id')
+      RoutesStore.getRouter().transitionTo transitionTo, transitionParams
+
+    actions = @
+
+    installedComponentsApi.restoreConfiguration componentId, configurationId
+    .then (response) ->
+
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_SUCCESS
+        componentId: componentId
+        configurationId: configurationId
+        transition: transition
+
+      actions.loadInstalledComponentsForce()
+      .then (response) ->
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            render: ->
+              React.createElement ConfigurationCopiedNotification,
+                message: "Configuration #{configuration.get('name')} was "
+                linkLabel: 'restored'
+                componentId: componentId
+                configId: configurationId
+                onClick: @props.onClick
+
+    .catch (e) ->
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.DELETED_COMPONENTS_RESTORE_CONFIGURATION_ERROR
+        componentId: componentId
+        configurationId: configurationId
+        transition: transition
+        error: e
+
+      throw e
+
+  deletedConfigurationsFilterChange: (query, filterType) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.DELETED_COMPONENTS_FILTER_CHANGE
+      filter: query
+      filterType: filterType
 
   deleteConfiguration: (componentId, configurationId, transition) ->
     dispatcher.handleViewAction
@@ -333,7 +424,89 @@ module.exports =
     component = ComponentsStore.getComponent componentId
     configuration = InstalledComponentsStore.getConfig componentId, configurationId
 
-    notification = "Configuration #{configuration.get('name')} was deleted."
+    if (transition)
+      transitionTo = "generic-detail-#{component.get('type')}"
+      transitionParams =
+        component: component.get('id')
+      RoutesStore.getRouter().transitionTo transitionTo, transitionParams
+
+    actions = @
+
+    deleteComponentConfiguration componentId, configurationId
+    .then (response) ->
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS
+        componentId: componentId
+        configurationId: configurationId
+        transition: transition
+
+      if (trashUtils.isObsoleteComponent(componentId))
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            render: ->
+              React.DOM.span null,
+                "Configuration #{configuration.get('name')} was moved to "
+                React.createElement Link,
+                  to: 'settings-trash'
+                  onClick: @props.onClick
+                ,
+                  'Trash'
+                '.'
+       else
+        ApplicationActionCreators.sendNotification
+          message: React.createClass
+            revertConfigRemove: ->
+              actions.restoreConfiguration(component, configuration)
+              @props.onClick()
+            render: ->
+              React.DOM.span null,
+                "Configuration #{configuration.get('name')} was moved to "
+                React.createElement Link,
+                  to: 'settings-trash'
+                  onClick: @props.onClick
+                ,
+                  'Trash'
+                '. '
+                React.DOM.a
+                  onClick: @revertConfigRemove
+                ,
+                  'Revert'
+
+    .catch (e) ->
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR
+        componentId: componentId
+        configurationId: configurationId
+        transition: transition
+        error: e
+
+      throw e
+
+  deleteAllConfigurationsPermanently: ->
+    promises = []
+    actions = @
+    InstalledComponentsStore.getAllDeleted().forEach (component) ->
+      componentId = component.get('id')
+
+      component.get('configurations').forEach (configuration) ->
+        configurationId = configuration.get('id')
+        promises.push actions.deleteConfigurationPermanently componentId, configurationId, false
+        return
+      return
+
+    Promise.all(promises)
+
+  deleteConfigurationPermanently: (componentId, configurationId, transition) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_START
+      componentId: componentId
+      configurationId: configurationId
+      transition: transition
+
+    component = ComponentsStore.getComponent componentId
+    configuration = InstalledComponentsStore.getDeletedConfig componentId, configurationId
+
+    notification = "Configuration #{configuration.get('name')} was permanently deleted."
 
     if (transition)
       transitionTo = "generic-detail-#{component.get('type')}"
@@ -341,11 +514,11 @@ module.exports =
         component: component.get('id')
       RoutesStore.getRouter().transitionTo transitionTo, transitionParams
 
-    deleteComponentConfiguration componentId, configurationId
+    installedComponentsApi.deleteConfiguration componentId, configurationId
     .then (response) ->
 
       dispatcher.handleViewAction
-        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS
+        type: constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS
         componentId: componentId
         configurationId: configurationId
         transition: transition
@@ -355,7 +528,7 @@ module.exports =
 
     .catch (e) ->
       dispatcher.handleViewAction
-        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR
+        type: constants.ActionTypes.DELETED_COMPONENTS_DELETE_CONFIGURATION_ERROR
         componentId: componentId
         configurationId: configurationId
         transition: transition

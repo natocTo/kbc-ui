@@ -54,6 +54,9 @@ export default React.createClass({
           <li role="presentation">
             <Link to="settings-project-power">Project Power</Link>
           </li>
+          <li role="presentation">
+            <Link to="settings-trash">Trash</Link>
+          </li>
         </ul>
         {this.state.sections.map((section) => {
           return React.createElement(LimitsSection, {

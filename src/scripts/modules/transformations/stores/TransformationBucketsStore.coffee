@@ -22,7 +22,7 @@ _store = Map(
 TransformationBucketsStore = StoreUtils.createStore
 
   ###
-    Returns all orchestrations sorted by last execution date desc
+    Returns all transformations sorted by name
   ###
   getAll: ->
     _store
@@ -92,6 +92,20 @@ Dispatcher.register (payload) ->
         store
         .removeIn ['bucketsById', action.bucketId]
         .removeIn ['pendingActions', action.bucketId, 'delete']
+      TransformationBucketsStore.emitChange()
+
+    when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE
+      _store = _store.setIn ['pendingActions', action.bucketId, 'restore'], true
+      TransformationBucketsStore.emitChange()
+
+    when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_ERROR
+      _store = _store.deleteIn ['pendingActions', action.bucketId, 'restore']
+      TransformationBucketsStore.emitChange()
+
+    when Constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+        .removeIn ['pendingActions', action.bucketId, 'restore']
       TransformationBucketsStore.emitChange()
 
     when Constants.ActionTypes.TRANSFORMATION_BUCKETS_FILTER_CHANGE

@@ -28,8 +28,13 @@ export default React.createClass({
       <Modal
         show={this.props.show}
         onHide={this.props.onHide}
-        title="Set Facebook API Version">
-        <div className="modal-body">
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Set Facebook API Version
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <div className="form form-horizontal">
             <div className="form-group">
               <div className="col-sm-offset-1 col-sm-9">
@@ -51,8 +56,8 @@ export default React.createClass({
               </div>
             </div>
           </div>
-        </div>
-        <div className="modal-footer">
+        </Modal.Body>
+        <Modal.Footer>
           <ConfirmButtons
             saveLabel="Change"
             isDisabled={!this.isValid() || this.props.currentVersion === this.getVersion()}
@@ -60,7 +65,7 @@ export default React.createClass({
             onSave={this.handleSave}
             isSaving={this.props.isSaving}
           />
-        </div>
+        </Modal.Footer>
       </Modal>
     );
   },
