@@ -27,7 +27,6 @@ export default React.createClass({
     const getDesc = this.props.accountDescFn;
     return (
       <Modal
-        bsSize="medium"
         show={this.props.show}
         onHide={this.props.onHideFn}
       >

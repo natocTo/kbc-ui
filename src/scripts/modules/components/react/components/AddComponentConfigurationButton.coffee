@@ -42,7 +42,6 @@ module.exports = React.createClass
         span className: 'kbc-icon-plus'
         @props.label
       Modal
-        bsSize: 'medium'
         show: @state.showModal
         onHide: @close
       ,
