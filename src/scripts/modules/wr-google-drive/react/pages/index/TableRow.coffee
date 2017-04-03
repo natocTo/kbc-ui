@@ -145,10 +145,10 @@ module.exports = React.createClass
       tooltip: 'Upload a table to Google Drive'
     ,
       RunButtonModal
-        title: "Upload #{@props.table.get('id')}"
+        title: "Run"
         tooltip: "Upload #{@props.table.get('id')}"
         mode: 'button'
-        icon: 'fa fa-upload fa-fw'
+        icon: 'fa fa-play fa-fw'
         component: 'wr-google-drive'
         runParams: =>
           file: @props.file.get 'id'
