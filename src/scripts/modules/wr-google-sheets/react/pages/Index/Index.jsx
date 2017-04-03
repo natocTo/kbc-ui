@@ -57,9 +57,6 @@ export default function(COMPONENT_ID) {
           {this.renderTableModal()}
           <div className="col-md-9 kbc-main-content">
             <div className="row kbc-header">
-              {this.renderAuthorizedInfo('col-sm-12')}
-            </div>
-            <div className="row kbc-header">
               <div className={this.isAuthorized() ? 'col-sm-8' : 'col-sm-12'}>
                 <ComponentDescription
                   componentId={COMPONENT_ID}
@@ -67,7 +64,7 @@ export default function(COMPONENT_ID) {
                 />
               </div>
               {
-                this.isAuthorized() ?
+                (this.isAuthorized() &&  this.state.store.hasTables) ?
                   <div className="col-sm-4 kbc-buttons">
                     <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
                       Add Table
@@ -75,6 +72,9 @@ export default function(COMPONENT_ID) {
                   </div>
                   : null
               }
+            </div>
+            <div className="row kbc-header">
+              {this.renderAuthorizedInfo('col-sm-12')}
             </div>
             {this.renderSearchRow()}
             {

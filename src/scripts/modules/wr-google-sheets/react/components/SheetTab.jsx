@@ -35,9 +35,7 @@ export default React.createClass({
               className="form-control"
             />
             <span className="help-block">
-              Name of the Sheet. <br />
-              Type a name of existing Sheet to import into it. <br />
-              Otherwise new Sheet will be added to the Spreadsheet.
+              Type a name of existing Sheet to import into it or type a unique name to add new Sheet into the Spreadsheet.
             </span>
           </div>
         </div>

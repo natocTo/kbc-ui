@@ -11,7 +11,7 @@ export default function(COMPONENT_ID, configId) {
   const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id'], configId);
   const parameters = configData.get('parameters', Map());
   const tables = parameters.get('tables', List());
-  const mappings = configData.getIn(['storage', 'input', 'tables'], Map());
+  const mappings = configData.getIn(['storage', 'input', 'tables'], List());
 
   const tempPath = ['_'];
   const editPath = tempPath.concat('editing');
