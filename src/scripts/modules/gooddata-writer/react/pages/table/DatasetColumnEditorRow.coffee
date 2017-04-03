@@ -7,6 +7,12 @@ keyMirror = require('fbjs/lib/keyMirror')
 {tr, td, option, span, div, strong} = React.DOM
 StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
+{FormControl, InputGroup, FormGroup} = require('react-bootstrap')
+FormControl = React.createFactory FormControl
+InputGroupAddon = React.createFactory InputGroup.Addon
+InputGroup = React.createFactory InputGroup
+FormGroup = React.createFactory FormGroup
+
 DateDimensionModal = React.createFactory(require './DateDimensionSelectModal')
 ColumnDataPreview = React.createFactory(require './ColumnDataPreview')
 DateFormatHint = React.createFactory(require './DateFormatHint')
@@ -216,9 +222,18 @@ module.exports = React.createClass
   _handleInputChange: (propName, e) ->
     @props.onChange @props.column.set(propName, e.target.value)
 
+  _createInputWithAddon: (props, body) ->
+    FormGroup null,
+      InputGroup null,
+        FormControl props, body
+        InputGroupAddon null, props.addonAfter
+
   _createInput: (props, body) ->
     if @props.isEditing
-      Input(props, body)
+      if not props.addonAfter
+        Input(props, body)
+      else
+        @_createInputWithAddon(props, body)
     else
       StaticText null, props.value
 
