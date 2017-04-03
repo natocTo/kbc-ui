@@ -1,6 +1,6 @@
 React = require 'react'
 
-OverlayTrigger = React.createFactory(require('./../../../../../react/common/KbcBootstrap').OverlayTrigger)
+OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
 Popover = React.createFactory(require('react-bootstrap').Popover)
 PureRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 
@@ -13,7 +13,6 @@ module.exports = React.createClass
   mixins: [PureRenderMixin]
   render: ->
     OverlayTrigger
-      bsSize: 'small'
       overlay: @_renderPopover()
     ,
       i  className: 'fa fa-question-circle'
