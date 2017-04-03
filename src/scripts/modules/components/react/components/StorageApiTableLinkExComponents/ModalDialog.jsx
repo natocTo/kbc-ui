@@ -53,7 +53,7 @@ export default React.createClass({
         </SapiTableLink>);
     }
     return (
-      <div className="static-modal">
+      <span className="static-modal">
         <Modal
           bsSize="large"
           show={this.props.show}
@@ -73,7 +73,7 @@ export default React.createClass({
             {modalBody}
           </Modal.Body>
         </Modal>
-      </div>
+      </span>
     );
   },
 

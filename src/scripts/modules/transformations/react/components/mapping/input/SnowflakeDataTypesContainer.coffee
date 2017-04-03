@@ -52,6 +52,9 @@ module.exports = React.createClass
     NUMBER:
       name: "NUMBER",
       size: true
+    FLOAT:
+      name: "FLOAT",
+      size: false
     VARCHAR:
       name: "VARCHAR",
       size: true,

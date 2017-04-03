@@ -14,12 +14,9 @@ import storeProvisioning from '../../../storeProvisioning';
 import actionsProvisioning from '../../../actionsProvisioning';
 
 // specific components
-import SettingsStatic from '../../components/SettingsStatic';
-import SettingsEdit from '../../components/SettingsEdit';
-import CredentialsStatic from '../../components/CredentialsStatic';
-import CredentialsEdit from '../../components/CredentialsEdit';
-import AdvancedStatic from '../../components/AdvancedStatic';
-import AdvancedEdit from '../../components/AdvancedEdit';
+import Settings from '../../components/Settings';
+import Credentials from '../../components/Credentials';
+import Advanced from '../../components/Advanced';
 
 // global components
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
@@ -28,12 +25,11 @@ import DeleteConfigurationButton from '../../../../components/react/components/D
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
-import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
+import SaveButtons from '../../../../../react/common/SaveButtons';
 import {TabbedArea, TabPane} from 'react-bootstrap';
 
 // utils
 import {getDefaultTable, getDefaultBucket} from '../../../utils';
-import {Map, List} from 'immutable';
 
 // css
 import './Index.less';
@@ -55,129 +51,80 @@ export default React.createClass({
       actions: actions,
       tables: StorageTablesStore.getAll(),
       localState: store.getLocalState(),
-      editingState: store.getLocalState().get('settings', Map()),
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
-      destination: store.destination,
-      incremental: store.incremental,
-      primaryKey: store.primaryKey,
-      delimiter: store.delimiter,
-      enclosure: store.enclosure,
-      awsAccessKeyId: store.awsAccessKeyId,
-      awsSecretAccessKey: store.awsSecretAccessKey,
-      s3Bucket: store.s3Bucket,
-      s3Key: store.s3Key,
-      wildcard: store.wildcard
+      settings: store.settings,
+      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId)
     };
   },
 
 
   renderButtons() {
-    if (this.state.localState.get('isEditing')) {
-      return (
-        <div className="tab-edit-buttons">
-          <ConfirmButtons
-            isSaving={this.state.localState.get('isSaving', false)}
-            onSave={this.state.actions.editSave}
-            onCancel={this.state.actions.editCancel}
-            placement="right"
-            saveLabel="Save Settings"
-              />
-        </div>
-      );
-    } else {
-      return (
-        <div className="tab-edit-buttons">
-          <button
-            className="btn btn-link"
-            onClick={this.state.actions.editStart}>
-            <span className="kbc-icon-pencil"/> Change Settings
-          </button>
-        </div>
-      );
-    }
+    return (
+      <div className="text-right">
+        <SaveButtons
+          isSaving={this.state.localState.get('isSaving', false)}
+          isChanged={this.state.localState.get('isChanged', false)}
+          onSave={this.state.actions.editSave}
+          onReset={this.state.actions.editReset}
+            />
+      </div>
+    );
   },
 
   renderSettings() {
-    if (this.state.localState.get('isEditing')) {
-      return (
-        <TabbedArea defaultActiveEventKey={1} animation={false}>
-          <TabPane tab="General" eventKey={1}>
-            <SettingsEdit
-              s3Bucket={this.state.editingState.get('s3Bucket', '')}
-              s3Key={this.state.editingState.get('s3Key', '')}
-              wildcard={this.state.editingState.get('wildcard', false)}
-              destination={this.state.editingState.get('destination', getDefaultTable(this.state.configId))}
-              destinationDefaultBucket={getDefaultBucket(this.state.configId)}
-              destinationDefaultTable={getDefaultTable(this.state.configId)}
-              incremental={this.state.editingState.get('incremental', false)}
-              primaryKey={this.state.editingState.get('primaryKey', List())}
-              onChange={this.state.actions.editChange}
-              tables={this.state.tables}
-              defaultTable={getDefaultTable(this.state.configId)}
-            />
-          </TabPane>
-          <TabPane tab="AWS Credentials" eventKey={2}>
-            <CredentialsEdit
-              awsAccessKeyId={this.state.editingState.get('awsAccessKeyId', '')}
-              awsSecretAccessKey={this.state.editingState.get('awsSecretAccessKey', '')}
-              onChange={this.state.actions.editChange}
-            />
-          </TabPane>
-          <TabPane tab="Advanced" eventKey={3}>
-            <AdvancedEdit
-              delimiter={this.state.editingState.get('delimiter', ',')}
-              enclosure={this.state.editingState.get('enclosure', '"')}
-              onChange={this.state.actions.editChange}
-            />
-          </TabPane>
-        </TabbedArea>
-      );
-    } else {
-      return (
-        <TabbedArea defaultActiveEventKey={1} animation={false}>
-          <TabPane tab="General" eventKey={1}>
-            <SettingsStatic
-              awsAccessKeyId={this.state.awsAccessKeyId}
-              awsSecretAccessKey={this.state.awsSecretAccessKey}
-              s3Bucket={this.state.s3Bucket}
-              s3Key={this.state.s3Key}
-              wildcard={this.state.wildcard}
-              destination={this.state.destination}
-              incremental={this.state.incremental}
-              primaryKey={this.state.primaryKey}
-            />
-          </TabPane>
-          <TabPane tab="AWS Credentials" eventKey={2}>
-            <CredentialsStatic
-              awsAccessKeyId={this.state.awsAccessKeyId}
-              awsSecretAccessKey={this.state.awsSecretAccessKey}
-            />
-          </TabPane>
-          <TabPane tab="Advanced" eventKey={3}>
-            <AdvancedStatic
-              delimiter={this.state.delimiter}
-              enclosure={this.state.enclosure}
-            />
-          </TabPane>
-        </TabbedArea>
-      );
-    }
+    return (
+      <TabbedArea defaultActiveEventKey={1} animation={false}>
+        <TabPane tab="General" eventKey={1}>
+          <Settings
+            s3Bucket={this.state.settings.get('s3Bucket')}
+            s3Key={this.state.settings.get('s3Key')}
+            wildcard={this.state.settings.get('wildcard')}
+            destination={this.state.settings.get('destination')}
+            destinationDefaultBucket={getDefaultBucket(this.state.configId)}
+            destinationDefaultTable={getDefaultTable(this.state.configId)}
+            incremental={this.state.settings.get('incremental')}
+            primaryKey={this.state.settings.get('primaryKey')}
+            onChange={this.state.actions.editChange}
+            tables={this.state.tables}
+            defaultTable={getDefaultTable(this.state.configId)}
+            disabled={this.state.localState.get('isSaving', false)}
+            destinationEditing={this.state.localState.get('isDestinationEditing', false)}
+            onDestinationEdit={this.state.actions.destinationEdit}
+          />
+        </TabPane>
+        <TabPane tab="AWS Credentials" eventKey={2}>
+          <Credentials
+            awsAccessKeyId={this.state.settings.get('awsAccessKeyId')}
+            awsSecretAccessKey={this.state.settings.get('awsSecretAccessKey')}
+            onChange={this.state.actions.editChange}
+            disabled={this.state.localState.get('isSaving', false)}
+          />
+        </TabPane>
+        <TabPane tab="Advanced" eventKey={3}>
+          <Advanced
+            delimiter={this.state.settings.get('delimiter')}
+            enclosure={this.state.settings.get('enclosure')}
+            onChange={this.state.actions.editChange}
+            disabled={this.state.localState.get('isSaving', false)}
+          />
+        </TabPane>
+      </TabbedArea>
+    );
   },
 
   render() {
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="row kbc-header">
-            <div className="col-sm-12">
-              <ComponentDescription
-                componentId={COMPONENT_ID}
-                configId={this.state.configId}
-              />
-            </div>
+          <div className="kbc-header kbc-header-without-row-fix">
+            <ComponentDescription
+              componentId={COMPONENT_ID}
+              configId={this.state.configId}
+            />
           </div>
-          {this.renderButtons()}
-          {this.renderSettings()}
+          <div className="kbc-header kbc-header-without-row-fix">
+            {this.renderButtons()}
+            {this.renderSettings()}
+          </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata

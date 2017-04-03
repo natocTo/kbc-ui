@@ -1,4 +1,4 @@
-import {Map, List} from 'immutable';
+import {Map} from 'immutable';
 
 import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
@@ -13,7 +13,7 @@ import 'aws-sdk/dist/aws-sdk';
 const AWS = window.AWS;
 
 // utils
-import {getDefaultTable} from './utils';
+import {createConfiguration} from './utils';
 
 const COMPONENT_ID = 'keboola.csv-import';
 
@@ -22,38 +22,6 @@ const COMPONENT_ID = 'keboola.csv-import';
   localState: PropTypes.object.isRequired,
   updateLocalState: PropTypes.func.isRequired,
 */
-
-function createConfigurationFromSettings(settings, configId) {
-  let config = Map();
-
-  if (settings.get('destination') && settings.get('destination') !== '') {
-    config = config.set('destination', settings.get('destination'));
-  } else {
-    config = config.set('destination', getDefaultTable(configId));
-  }
-
-  config = config.set('incremental', settings.get('incremental', false));
-
-  if (settings.get('primaryKey') && settings.get('primaryKey').count() > 0) {
-    config = config.set('primaryKey', settings.get('primaryKey'));
-  } else {
-    config = config.set('primaryKey', List());
-  }
-
-  if (settings.get('delimiter') && settings.get('delimiter') !== '') {
-    config = config.set('delimiter', settings.get('delimiter'));
-  } else {
-    config = config.set('delimiter', ',');
-  }
-
-  if (settings.get('enclosure') && settings.get('enclosure') !== '') {
-    config = config.set('enclosure', settings.get('enclosure'));
-  } else {
-    config = config.set('enclosure', '"');
-  }
-  return config;
-}
-
 
 export default function(configId) {
   const store = storeProvisioning(configId);
@@ -74,18 +42,10 @@ export default function(configId) {
     return installedComponentsStore.getLocalState(COMPONENT_ID, configId);
   }
 
-  function editStart() {
-    var settings = installedComponentsStore.getConfigData(COMPONENT_ID, configId);
-    if (!settings) {
-      settings = Map();
-    }
-    updateLocalState(['settings'], settings);
-    updateLocalState(['isEditing'], true);
-  }
-
-  function editCancel() {
-    updateLocalState(['isEditing'], false);
+  function editReset() {
+    removeFromLocalState(['isChanged']);
     removeFromLocalState(['settings']);
+    removeFromLocalState(['isDestinationEditing']);
   }
 
   function setFile(file) {
@@ -97,19 +57,28 @@ export default function(configId) {
   }
 
   function editChange(newSettings) {
-    const localState = getLocalState();
-    componentsActions.updateLocalState(COMPONENT_ID, configId,
-      localState.set('settings', newSettings)
-    );
+    updateLocalState(['settings'], newSettings);
+    if (!getLocalState().get('isChanged', false)) {
+      updateLocalState(['isChanged'], true);
+    }
+  }
+
+  function destinationEdit() {
+    updateLocalState(['isDestinationEditing'], true);
+    if (!getLocalState().get('isChanged', false)) {
+      updateLocalState(['isChanged'], true);
+    }
   }
 
   function editSave() {
     const localState = getLocalState();
-    const config = createConfigurationFromSettings(localState.get('settings', Map()), configId);
-
+    const config = createConfiguration(localState.get('settings', Map()), configId);
+    removeFromLocalState(['isDestinationEditing']);
+    updateLocalState(['isSaving'], true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config).then(() => {
-      updateLocalState(['isEditing'], false);
       removeFromLocalState(['settings']);
+      removeFromLocalState(['isSaving']);
+      removeFromLocalState(['isChanged']);
     });
   }
 
@@ -189,25 +158,25 @@ export default function(configId) {
             resetUploadState();
             resultError(err.toString());
           } else {
-            var tableId = store.destination;
-            var bucketId = tableId.substr(0, tableId.lastIndexOf('.'));
-            var tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
+            const tableId = store.settings.get('destination');
+            const bucketId = tableId.substr(0, tableId.lastIndexOf('.'));
+            const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
 
-            var createTable = function() {
+            const createTable = function() {
               updateLocalState(['uploadingMessage'], 'Creating table ' + tableId);
               updateLocalState(['uploadingProgress'], 75);
               var createTableParams = {
                 name: tableName,
                 dataFileId: fileId
               };
-              if (store.primaryKey) {
-                createTableParams.primaryKey = store.primaryKey.toJS().join(',');
+              if (store.settings.get('primaryKey')) {
+                createTableParams.primaryKey = store.settings.get('primaryKey').toJS().join(',');
               }
-              if (store.delimiter) {
-                createTableParams.delimiter = store.delimiter;
+              if (store.settings.get('delimiter')) {
+                createTableParams.delimiter = store.settings.get('delimiter');
               }
-              if (store.enclosure) {
-                createTableParams.enclosure = store.enclosure;
+              if (store.settings.get('enclosure')) {
+                createTableParams.enclosure = store.settings.get('enclosure');
               }
 
               storageApiActions.createTable(bucketId, createTableParams).then(function() {
@@ -226,7 +195,7 @@ export default function(configId) {
               updateLocalState(['uploadingMessage'], 'Creating bucket ' + bucketId);
               updateLocalState(['uploadingProgress'], 60);
 
-              var createBucketParams = {
+              const createBucketParams = {
                 name: bucketId.substr(bucketId.indexOf('-') + 1),
                 stage: bucketId.substr(0, bucketId.lastIndexOf('.'))
               };
@@ -238,13 +207,13 @@ export default function(configId) {
                 });
             } else if (tablesStore.hasTable(tableId)) {
               // table exist? load
-              var loadTableParams = {
+              const loadTableParams = {
                 dataFileId: fileId
               };
 
-              store.incremental && (loadTableParams.incremental = store.incremental);
-              store.delimiter && (loadTableParams.delimiter = store.delimiter);
-              store.enclosure && (loadTableParams.enclosure = store.enclosure);
+              store.settings.get('incremental') && (loadTableParams.incremental = store.settings.get('incremental'));
+              store.settings.get('delimiter') && (loadTableParams.delimiter = store.settings.get('delimiter'));
+              store.settings.get('enclosure') && (loadTableParams.enclosure = store.settings.get('enclosure'));
 
               updateLocalState(['uploadingMessage'], 'Loading into table ' + tableId);
               updateLocalState(['uploadingProgress'], 90);
@@ -266,11 +235,11 @@ export default function(configId) {
 
   return {
     startUpload,
-    editStart,
-    editCancel,
+    editReset,
     editSave,
     setFile,
     editChange,
-    dismissResult
+    dismissResult,
+    destinationEdit
   };
 }

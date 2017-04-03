@@ -20,18 +20,22 @@ module.exports = React.createClass({
     return (
       <Modal
         show={this.props.show}
-        title={this.props.title}
         onHide={this.props.onHide}
       >
-        <div className="modal-body">
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {this.props.title}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           {this.props.body}
-        </div>
-        <div className="modal-footer">
+        </Modal.Body>
+        <Modal.Footer>
           <ButtonToolbar>
             <Button bsStyle="link" onClick={this.props.onHide}>Close</Button>
             <Button bsStyle="primary" onClick={this._handleRun}>Run</Button>
           </ButtonToolbar>
-        </div>
+        </Modal.Footer>
       </Modal>
     );
   }

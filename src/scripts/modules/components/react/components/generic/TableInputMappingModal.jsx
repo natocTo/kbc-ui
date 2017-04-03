@@ -80,10 +80,10 @@ export default React.createClass({
               {title}
             </Modal.Title>
           </Modal.Header>
-          <div className="modal-body">
+          <Modal.Body>
             {this.editor()}
-          </div>
-          <div className="modal-footer">
+          </Modal.Body>
+          <Modal.Footer>
             <ConfirmButtons
               saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
               isSaving={this.state.isSaving}
@@ -91,7 +91,7 @@ export default React.createClass({
               onSave={this.handleSave}
               isDisabled={!this.isValid()}
               />
-          </div>
+          </Modal.Footer>
         </Modal>
       </span>
     );

@@ -7,6 +7,7 @@ Modal = React.createFactory(require('react-bootstrap').Modal)
 ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
 ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
 ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
+ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 Input = React.createFactory(require('react-bootstrap').Input)
 RouterStore = require('../../../../stores/RoutesStore')
 
@@ -78,7 +79,7 @@ module.exports = React.createClass
                 @setState
                   description: event.target.value
 
-          div className: 'modal-footer',
+          ModalFooter null,
             ButtonToolbar null,
               Button
                 onClick: @close
