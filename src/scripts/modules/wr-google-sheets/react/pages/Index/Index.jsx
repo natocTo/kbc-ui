@@ -186,8 +186,8 @@ export default function(COMPONENT_ID) {
         <SheetModal
           show={this.state.localState.get('showTableModal', false)}
           onHideFn={() => {
-            this.state.actions.updateLocalState(['SheetModal'], Map());
             this.state.actions.updateLocalState('showTableModal', false);
+            this.state.actions.updateLocalState(['SheetModal'], Map());
           }}
           onSaveFn={this.state.actions.saveTable}
           isSavingFn={this.state.store.isSaving}
