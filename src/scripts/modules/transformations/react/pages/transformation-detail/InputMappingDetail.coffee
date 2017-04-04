@@ -119,7 +119,7 @@ InputMappingDetail = React.createClass(
             span {className: "col-md-6"},
               if @props.inputMapping.get('datatypes', Immutable.List()).count()
                 ul {},
-                  @props.inputMapping.get('datatypes').map((definition, column) ->
+                  @props.inputMapping.get('datatypes').sort().map((definition, column) ->
                     li {key: column},
                       strong {}, column
                       ' '
