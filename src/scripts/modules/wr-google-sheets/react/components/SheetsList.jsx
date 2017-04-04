@@ -156,18 +156,18 @@ export default React.createClass({
       return <span className="btn btn-link"><Loader/></span>;
     }
     return (
-      <Tooltip placement="top" tooltip="Delete">
-        <Confirm
-          title="Delete"
-          text={`Do you really want to remove ${item.get('title')} from configuration?`}
-          buttonLabel="Delete"
-          onConfirm={() => this.props.onDeleteFn(item)}
-        >
+      <Confirm
+        title="Delete"
+        text={`Do you really want to remove ${item.get('title')} from configuration?`}
+        buttonLabel="Delete"
+        onConfirm={() => this.props.onDeleteFn(item)}
+      >
+        <Tooltip placement="top" tooltip="Delete">
           <button className="btn btn-link">
             <i className="kbc-icon-cup" />
           </button>
-        </Confirm>
-      </Tooltip>
+        </Tooltip>
+      </Confirm>
     );
   },
 
