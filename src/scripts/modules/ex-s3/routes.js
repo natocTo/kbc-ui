@@ -3,12 +3,17 @@ import storageActions from '../components/StorageActionCreators';
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import jobsActions from '../jobs/ActionCreators';
+import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 
 const COMPONENT_ID = 'keboola.ex-s3';
 
 export default {
   name: COMPONENT_ID,
   path: ':config',
+  title: (routerState) => {
+    const configId = routerState.getIn(['params', 'config']);
+    return InstalledComponentsStore.getConfig(COMPONENT_ID, configId).get('name');
+  },
   isComponent: true,
   defaultRouteHandler: Index,
   poll: {
