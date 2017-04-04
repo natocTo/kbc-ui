@@ -95,6 +95,7 @@ var JupyterSandbox = React.createClass({
       <div className="row">
         <h4>Jupyter</h4>
         <div className="col-md-9">
+          <small className="help-text help-text-expire">If not used, the sandbox will be deleted after 5 days.</small>
           {this._renderCredentials()}
         </div>
         <div className="col-md-3">
