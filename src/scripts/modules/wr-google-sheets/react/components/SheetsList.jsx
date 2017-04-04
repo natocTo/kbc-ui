@@ -42,10 +42,6 @@ export default React.createClass({
     );
   },
 
-  handleSearchQueryChange(query) {
-    return this.props.updateLocalState(['searchQuery'], query);
-  },
-
   handleToggleBucket(bucketId) {
     const bucketToggles = this.props.localState.get('bucketToggles', Map());
     return this.props.updateLocalState(['bucketToggles'], bucketToggles.set(bucketId, !bucketToggles.get(bucketId)));
@@ -54,6 +50,12 @@ export default React.createClass({
   isBucketToggled(bucketId) {
     const bucketToggles = this.props.localState.get('bucketToggles', Map());
     return !!bucketToggles.get(bucketId);
+  },
+
+  filterBuckets(buckets) {
+    return buckets.filter((bucket) => {
+      return bucket.get('stage') === 'out' || bucket.get('stage') === 'in';
+    });
   },
 
   renderHeaderRow() {

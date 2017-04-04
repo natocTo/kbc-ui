@@ -166,6 +166,21 @@ export default function(COMPONENT_ID) {
       );
     },
 
+    renderAuthorizedInfo(clName) {
+      return (
+        <AuthorizationRow
+          className={this.isAuthorized() ? clName : 'col-xs-12'}
+          id={this.state.oauthCredentialsId}
+          configId={this.state.configId}
+          componentId={COMPONENT_ID}
+          credentials={this.state.oauthCredentials}
+          isResetingCredentials={false}
+          onResetCredentials={this.deleteCredentials}
+          showHeader={false}
+        />
+      );
+    },
+
     renderTableModal() {
       return (
         <SheetModal
@@ -191,7 +206,6 @@ export default function(COMPONENT_ID) {
         .set('uploadType', sheet ? 'existing' : 'new')
         .set('currentMapping', mapping)
         .set('exclude', this.state.store.mappings.filter((t) => t.get('source') !== dirtySheet.get('tableId')));
-
       this.state.actions.updateLocalState(['SheetModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);
     },
@@ -214,19 +228,8 @@ export default function(COMPONENT_ID) {
       return false;
     },
 
-    renderAuthorizedInfo(clName) {
-      return (
-        <AuthorizationRow
-          className={this.isAuthorized() ? clName : 'col-xs-12'}
-          id={this.state.oauthCredentialsId}
-          configId={this.state.configId}
-          componentId={COMPONENT_ID}
-          credentials={this.state.oauthCredentials}
-          isResetingCredentials={false}
-          onResetCredentials={this.deleteCredentials}
-          showHeader={false}
-        />
-      );
+    handleSearchQueryChange(query) {
+      return this.state.actions.updateLocalState(['searchQuery'], query);
     },
 
     runParams() {
