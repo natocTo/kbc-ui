@@ -204,6 +204,7 @@ export default function(COMPONENT_ID) {
         .set('currentSheet', sheet)
         .set('step', step)
         .set('uploadType', sheet ? 'existing' : 'new')
+        .set('mapping', mapping)
         .set('currentMapping', mapping)
         .set('exclude', this.state.store.mappings.filter((t) => t.get('source') !== dirtySheet.get('tableId')));
       this.state.actions.updateLocalState(['SheetModal'], modalData);

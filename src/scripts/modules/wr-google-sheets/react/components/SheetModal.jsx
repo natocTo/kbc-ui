@@ -43,7 +43,7 @@ export default React.createClass({
               <InputTab
                 onSelect={this.onChangeInputMapping}
                 tables={storageTables}
-                mapping={this.localState(['currentMapping'], Map())}
+                mapping={this.localState(['mapping'], Map())}
                 exclude={this.localState(['exclude'], Map())}
               />
             </TabPane>
@@ -109,10 +109,12 @@ export default React.createClass({
   },
 
   isSavingDisabled() {
-    const hasChanged = !this.sheet(null, Map()).equals(this.localState('currentSheet'));
+    const mapping = this.localState(['mapping'], Map());
+    const mappingChanged = !mapping.equals(this.localState('currentMapping'));
+    const sheetChanged = !this.sheet(null, Map()).equals(this.localState('currentSheet'));
     const titleEmpty = !!this.sheet(['title']);
     const sheetTitleEmpty = !!this.sheet(['sheetTitle']);
-    return !hasChanged || !titleEmpty || !sheetTitleEmpty;
+    return !sheetChanged || !titleEmpty || !sheetTitleEmpty || !mappingChanged;
   },
 
   localState(path, defaultVal) {
@@ -130,7 +132,7 @@ export default React.createClass({
   onChangeInputMapping(value) {
     const tableId = value.get('source');
     const title = tableId.substr(tableId.lastIndexOf('.') + 1);
-    this.updateLocalState(['currentMapping'], value);
+    this.updateLocalState(['mapping'], value);
     this.updateLocalState(['sheet', 'tableId'], tableId);
     this.updateLocalState(['sheet', 'title'], title);
   },
@@ -158,7 +160,7 @@ export default React.createClass({
 
   handleSave() {
     const sheet = this.sheet();
-    const mapping = this.localState('currentMapping');
+    const mapping = this.localState('mapping');
     this.props.onSaveFn(sheet, mapping).then(
       () => this.props.onHideFn()
     );
