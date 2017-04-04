@@ -64,7 +64,7 @@ export default function(COMPONENT_ID) {
                 />
               </div>
               {
-                (this.isAuthorized() &&  this.state.store.hasTables) ?
+                (this.isAuthorized() &&  this.hasTables()) ?
                   <div className="col-sm-4 kbc-buttons">
                     <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
                       Add Table
@@ -78,7 +78,7 @@ export default function(COMPONENT_ID) {
             </div>
             {this.renderSearchRow()}
             {
-              this.state.store.hasTables ?
+              this.hasTables() ?
                 this.renderSheetsList()
                 :
                 this.renderEmptyItems()
@@ -121,7 +121,7 @@ export default function(COMPONENT_ID) {
     },
 
     renderSearchRow() {
-      if (this.state.store.hasTables) {
+      if (this.hasTables()) {
         return (
           <SearchRow
             className="row kbc-search-row"
@@ -191,7 +191,7 @@ export default function(COMPONENT_ID) {
         .set('uploadType', sheet ? 'existing' : 'new')
         .set('currentMapping', mapping)
         .set('exclude', this.state.store.mappings.filter((t) => t.get('source') !== dirtySheet.get('tableId')));
-        // .set('savingMessage', this.state.store.getSavingMessage());
+
       this.state.actions.updateLocalState(['SheetModal'], modalData);
       this.state.actions.updateLocalState('showTableModal', true);
     },
@@ -200,9 +200,16 @@ export default function(COMPONENT_ID) {
       return this.state.store.isAuthorized();
     },
 
+    hasTables() {
+      return this.state.store.hasTables;
+    },
+
     invalidToRun() {
       if (!this.isAuthorized()) {
         return 'No Google account authorized';
+      }
+      if (!this.hasTables()) {
+        return 'No tables registered for upload';
       }
       return false;
     },
