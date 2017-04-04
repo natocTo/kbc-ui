@@ -60,7 +60,7 @@ module.exports = React.createClass
                 ref: 'name'
                 autoFocus: true
                 value: @props.configuration.get 'name'
-                placeholder: "My #{@props.component.get('name')}"
+                placeholder: "My #{@props.component.get('name')} #{@props.component.get('type')}"
                 labelClassName: 'col-xs-3'
                 wrapperClassName: 'col-xs-8'
                 onChange: @_handleChange.bind @, 'name'
