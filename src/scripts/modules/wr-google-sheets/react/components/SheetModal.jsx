@@ -114,7 +114,7 @@ export default React.createClass({
     const sheetChanged = !this.sheet(null, Map()).equals(this.localState('currentSheet'));
     const titleEmpty = !!this.sheet(['title']);
     const sheetTitleEmpty = !!this.sheet(['sheetTitle']);
-    return !sheetChanged || !titleEmpty || !sheetTitleEmpty || !mappingChanged;
+    return (!sheetChanged && !mappingChanged) || !titleEmpty || !sheetTitleEmpty;
   },
 
   localState(path, defaultVal) {
