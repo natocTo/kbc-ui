@@ -147,7 +147,7 @@ export default React.createClass({
       sheet
         .set('title', '')
         .set('fileId', '')
-        .set('sheetTitle', '')
+        .set('sheetTitle', 'Sheet1')
         .set('sheetId', ''));
     this.updateLocalState(['uploadType'], event.target.value);
   },
