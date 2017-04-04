@@ -6,7 +6,7 @@
 
 React = require 'react'
 Immutable = require 'immutable'
-{div, span, ul, li, input} = React.DOM
+{div, span, ul, li, input, a} = React.DOM
 
 CurrentUser = require('./react/layout/CurrentUser').default
 ProjectsList = require './react/layout/project-select/List'
@@ -16,6 +16,12 @@ App = React.createClass
     div className: 'kbc-outer-container',
       div className: 'kbc-outer-logo',
         span className: 'kbc-icon-keboola-logo'
+        span className: 'kbc-notification',
+          a null,
+            span className: "kbc-notification-icon fa fa-bell",
+              span className: "kbc-notification-icon-badge",
+                span className: "kbc-notification-icon-badge-inner"
+
         React.createElement CurrentUser,
           user: @props.user
           maintainers: @props.maintainers
