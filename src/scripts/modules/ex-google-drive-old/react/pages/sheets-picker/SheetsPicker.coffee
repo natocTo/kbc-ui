@@ -108,8 +108,8 @@ module.exports = React.createClass
           ActionCreators.addMoreFiles(@state.configId, data)
 
         views: [
-          ViewTemplates.sharedSheets
           ViewTemplates.sheets
+          ViewTemplates.sharedSheets
           ViewTemplates.recent
         ]
 

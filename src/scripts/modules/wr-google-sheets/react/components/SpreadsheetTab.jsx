@@ -78,8 +78,10 @@ export default React.createClass({
               }}
               views={[
                 ViewTemplates.sheets,
-                ViewTemplates.sharedSheets
+                ViewTemplates.sharedSheets,
+                ViewTemplates.starredSheets
               ]}
+              multiselectEnabled={false}
             />
             <span className="help-block">
               Choose Spreadsheet, in which you want to upload the data
@@ -110,8 +112,10 @@ export default React.createClass({
                   }}
                   views={[
                     ViewTemplates.rootFolder,
-                    ViewTemplates.recentFolders
+                    ViewTemplates.sharedFolders,
+                    ViewTemplates.starredFolders
                   ]}
+                  multiselectEnabled={false}
                 />
               </div>
               <input

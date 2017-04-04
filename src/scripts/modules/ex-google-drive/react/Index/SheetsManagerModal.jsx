@@ -82,8 +82,9 @@ export default React.createClass({
           onPickedFn={this.onPickSpreadsheet}
           requireSheetsApi={true}
           views={[
-            ViewTemplates.sharedSheets,
             ViewTemplates.sheets,
+            ViewTemplates.sharedSheets,
+            ViewTemplates.starredSheets,
             ViewTemplates.recent
           ]}
         />

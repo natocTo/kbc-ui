@@ -194,8 +194,9 @@ module.exports = React.createClass
         bsSize: bsize
       views: [
         ViewTemplates.rootFolder
-        ViewTemplates.flatFolders
-        ViewTemplates.recentFolders
+        ViewTemplates.sharedFolders
+        ViewTemplates.starredFolders
+        ViewTemplates.recent
       ]
 
   _renderSelect: (options, prop) ->

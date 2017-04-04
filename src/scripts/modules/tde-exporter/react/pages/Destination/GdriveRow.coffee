@@ -124,8 +124,9 @@ module.exports = React.createClass
         bsStyle: 'link'
       views: [
         ViewTemplates.rootFolder
-        ViewTemplates.flatFolders
-        ViewTemplates.recentFolders
+        ViewTemplates.sharedFolders
+        ViewTemplates.starredFolders
+        ViewTemplates.recent
       ]
 
 
