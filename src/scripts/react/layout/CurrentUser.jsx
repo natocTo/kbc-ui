@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import _ from 'underscore';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { Dropdown, MenuItem} from 'react-bootstrap';
 
 const modes = {
   NORMAL: 'normal',
@@ -27,24 +27,35 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-user" onClick={this._handleUserClick}>
+      <div className="kbc-user">
         <img
           src={this.props.user.get('profileImageUrl')}
           className="kbc-user-avatar"
           width={this._iconSize()}
           height={this._iconSize()}
         />
-        <div>
-          <strong>{ this.props.user.get('name') }</strong>
-          <DropdownButton
-            className="kbc-user-menu"
+        <Dropdown
+          id="react-layout-current-user-dropdown"
+          dropup={this.props.dropup}
+          pullRight
+        >
+          <Dropdown.Toggle
+            style={{
+              padding: '3px 0 0',
+              fontSize: '12px',
+              textDecoration: 'none',
+              color: '#89959f',
+              textAlign: 'left'
+            }}
+            noCaret
             bsStyle="link"
-            dropup={this.props.dropup}
-            title={<span className="kbc-icon-picker"/>}
-            ref="dropdownButton"
-            noCaret={true}
-            id="react-layout-current-user-dropdown"
           >
+            <strong>{ this.props.user.get('name') }</strong>
+            <br/>
+            { this._userEmail() }
+            <span className="kbc-icon-picker"/>
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
             <MenuItem
               key="changePassword"
               href={this.props.urlTemplates.get('changePassword')}
@@ -59,9 +70,8 @@ export default React.createClass({
               href={this.props.urlTemplates.get('logout')}
               key="logout"
             >Logout</MenuItem>
-          </DropdownButton>
-        </div>
-        { this._userEmail() }
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     );
   },
@@ -69,9 +79,7 @@ export default React.createClass({
   _userEmail() {
     if (this.props.mode === modes.NORMAL) {
       return (
-        <div>
-          <span>{ this.props.user.get('email') }</span>
-        </div>
+        <span>{ this.props.user.get('email') }</span>
       );
     }
   },
@@ -125,11 +133,5 @@ export default React.createClass({
   _maintainerUrl(id) {
     return _.template(this.props.urlTemplates.get('maintainer'))({maintainerId: id});
   }
-
-  /* _handleUserClick(e) {
-   *   if (e.target.tagName !== 'A') {
-   *     this.refs.dropdownButton.handleDropdownClick(e);
-   *   }
-   * }*/
 
 });
