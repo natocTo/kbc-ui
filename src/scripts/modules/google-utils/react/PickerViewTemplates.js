@@ -12,7 +12,7 @@ export default {
     const {google} = window;
     return new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
       .setIncludeFolders(true)
-      // .setOwnedByMe(true)
+      .setOwnedByMe(false)
       .setSelectFolderEnabled(false)
       .setLabel('Shared with Me');
   },
