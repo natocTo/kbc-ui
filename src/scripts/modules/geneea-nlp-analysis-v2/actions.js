@@ -78,8 +78,12 @@ export function startEditing(configId) {
     }
     let value = configData.getIn(['parameters'].concat(key), defaultVal);
     if (key === ADVANCED) {
-      const advancedMap = configData.getIn(['parameters', ADVANCED], Map());
-      value = JSON.stringify(advancedMap.toJS(), null, '  ');
+      const advancedMap = configData.getIn(['parameters', ADVANCED], Map()).toJS();
+      if (_.isEmpty(advancedMap)) {
+        value = '{}';
+      } else {
+        value = JSON.stringify(advancedMap, null, '  ');
+      }
     }
     return memo.setIn([].concat(key), value);
   }, Map());

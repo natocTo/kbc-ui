@@ -230,8 +230,12 @@ export default React.createClass({
   renderAdvancedSettings() {
     let data = this.getEditingValue(params.ADVANCED);
     if (!this.state.editing) {
-      const advancedData = this.parameter(params.ADVANCED, Map());
-      data = JSON.stringify(advancedData, null, '  ');
+      const advancedData = this.parameter(params.ADVANCED, Map()).toJS();
+      if (_.isEmpty(advancedData)) {
+        data = '{}';
+      } else {
+        data = JSON.stringify(advancedData, null, '  ');
+      }
     }
     const element = (
       <AdvancedSettings
