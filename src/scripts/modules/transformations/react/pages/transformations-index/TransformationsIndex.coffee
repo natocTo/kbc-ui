@@ -11,6 +11,7 @@ TransformationBucketsStore = require('../../../stores/TransformationBucketsStore
 TransformationsStore = require('../../../stores/TransformationsStore')
 InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore')
 SearchRow = require('../../../../../react/common/SearchRow').default
+EmptyStateIndex = require('../../components/EmptyStateIndex').default
 
 {Panel, PanelGroup} = require('react-bootstrap')
 
@@ -33,37 +34,34 @@ TransformationsIndex = React.createClass
     TransformationActionCreators.setTransformationBucketsFilter(query)
 
   render: ->
-    div className: 'container-fluid',
-      div className: 'kbc-main-content',
-        React.createElement SearchRow,
-          className: 'row kbc-search-row'
-          onChange: @_handleFilterChange
-          query: @state.filter
-        span {},
-          if @_getFilteredBuckets().count()
-            div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'
-            ,
-              @_getFilteredBuckets().map (bucket) ->
-                @_renderBucketPanel bucket
-              , @
-              .toArray()
-          else
-            @_renderEmptyState()
+    if (@state.buckets && @state.buckets.count() > 0)
+      div className: 'container-fluid',
+        div className: 'kbc-main-content',
+          React.createElement SearchRow,
+            className: 'row kbc-search-row'
+            onChange: @_handleFilterChange
+            query: @state.filter
+          span {},
+            if @_getFilteredBuckets().count()
+              div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'
+              ,
+                @_getFilteredBuckets().map (bucket) ->
+                  @_renderBucketPanel bucket
+                , @
+                .toArray()
+            else
+              h2 null,
+                'No buckets or transformations found.'
+    else
+      div className: 'container-fluid',
+        div className: 'kbc-main-content',
+          React.createElement EmptyStateIndex
+
 
   _renderEmptyState: ->
     div {className: 'kbc-search-row'},
-      if @state.filter && @state.filter != ''
-        h2 null,
-          'No buckets or transformations found.'
-      else
-        span {},
-          h2 null,
-            'Transformations allow you to modify your data.'
-          p null,
-            'A Transformation picks data from Storage, manipulates it and then stores it back.
-              A transformation can be written in SQL (MySQL, Redshift), R or Python.'
-          p null,
-            React.createElement NewTransformationBucketButton
+      h2 null,
+        'No buckets or transformations found.'
 
   _renderBucketPanel: (bucket) ->
     header = span null,

@@ -29,12 +29,15 @@ Phase = require('./Phase').default
 AddOutputMapping = require('./AddOutputMapping').default
 AddInputMapping = require('./AddInputMapping').default
 InlineEditArea = require '../../../../../react/common/InlineEditArea'
+require('./TransformationDetailStatic.less')
+TransformationEmptyInputImage = require '../../../../../../images/transformation-empty-input-small.png'
+TransformationEmptyOutputImage = require '../../../../../../images/transformation-empty-output-small.png'
 
 {getInputMappingValue, getOutputMappingValue,
   findInputMappingDefinition, findOutputMappingDefinition} = require('../../../../components/utils/mappingDefinitions')
 
 
-{div, span, input, strong, form, button, h2, i, ul, li, button, a, small, p, code, em} = React.DOM
+{div, span, input, strong, form, button, h2, i, ul, li, button, a, small, p, code, em, small, img} = React.DOM
 
 module.exports = React.createClass
   displayName: 'TransformationDetailStatic'
@@ -128,26 +131,24 @@ module.exports = React.createClass
         onEditSubmit: =>
           TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
             @props.transformationId, 'requires')
-      span {},
-        div {},
-          h2 {}, 'Dependent transformations'
-          if @_getDependentTransformations().count()
-            span {},
-              div {className: "help-block"}, small {},
-                "These transformations are dependent on the current transformation."
-              div {},
-                @_getDependentTransformations().map((dependent) ->
-                  Link
-                    key: dependent.get("id")
-                    to: 'transformationDetail'
-                    params: {row: dependent.get("id"), config: @props.bucket.get('id')}
-                  ,
-                    span {className: 'label kbc-label-rounded-small label-default'},
-                      dependent.get("name")
-                , @).toArray()
-          else
-            div {className: "help-block"}, small {},
-              "No transformations are dependent on the current transformation."
+      h2 {}, 'Dependent transformations'
+      if @_getDependentTransformations().count()
+        span {},
+          div {className: "help-block"}, small {},
+            "These transformations are dependent on the current transformation."
+          div {},
+            @_getDependentTransformations().map((dependent) ->
+              Link
+                key: dependent.get("id")
+                to: 'transformationDetail'
+                params: {row: dependent.get("id"), config: @props.bucket.get('id')}
+              ,
+                span {className: 'label kbc-label-rounded-small label-default'},
+                  dependent.get("name")
+            , @).toArray()
+      else
+        div {className: "help-block"}, small {},
+          "No transformations are dependent on the current transformation."
 
   _renderDetail: ->
     props = @props
@@ -200,15 +201,19 @@ module.exports = React.createClass
             TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
               @props.transformationId, 'description')
 
-      div {className: 'kbc-row'},
-
-        if @props.transformation.get('backend') != 'docker'
+      if @props.transformation.get('backend') != 'docker'
+        div {className: 'kbc-row'},
           @_renderRequires()
-        div {},
+
+      div {className: 'kbc-row'},
+        div {className: 'mapping'},
           h2 {},
             'Input Mapping'
-            if @_getInputMappingValue().count() >= 1 && !@_isOpenRefineTransformation()
-              span className: 'pull-right',
+            if !@_isOpenRefineTransformation()
+              span className: 'pull-right add-mapping-button',
+                if !@_getInputMappingValue().count()
+                  small className: 'empty-label',
+                    'No input assigned'
                 React.createElement AddInputMapping,
                   tables: @props.tables
                   transformation: @props.transformation
@@ -216,7 +221,7 @@ module.exports = React.createClass
                   mapping: @props.editingFields.get('new-input-mapping', Map())
                   otherDestinations: @_inputMappingDestinations()
           if @_getInputMappingValue().count()
-            div {},
+            div {className: 'mapping-rows'},
               @_getInputMappingValue().map((input, key) ->
                 if (@_isOpenRefineTransformation())
                   definition = findInputMappingDefinition(@openRefine.inputMappingDefinitions, input)
@@ -251,19 +256,17 @@ module.exports = React.createClass
                     definition: definition
               , @).toArray()
           else
-            div {className: "well text-center"},
-              p {}, 'No inputs assigned yet.'
-              React.createElement AddInputMapping,
-                tables: @props.tables
-                transformation: @props.transformation
-                bucket: @props.bucket
-                mapping: @props.editingFields.get('new-input-mapping', Map())
-                otherDestinations: @_inputMappingDestinations()
-        div {},
+            div {className: "text-center"},
+              img className: "empty-mapping", src: TransformationEmptyInputImage
+      div {className: 'kbc-row'},
+        div {className: 'mapping'},
           h2 {},
             'Output Mapping'
-            if  @_getOutputMappingValue().count() >= 1 && !@_isOpenRefineTransformation()
-              span className: 'pull-right',
+            if !@_isOpenRefineTransformation()
+              span className: 'pull-right add-mapping-button',
+                if !@_getOutputMappingValue().count()
+                  small className: 'empty-label',
+                    'No output assigned'
                 React.createElement AddOutputMapping,
                   tables: @props.tables
                   buckets: @props.buckets
@@ -271,7 +274,7 @@ module.exports = React.createClass
                   bucket: @props.bucket
                   mapping: @props.editingFields.get('new-output-mapping', Map())
           if @_getOutputMappingValue().count()
-            div {},
+            div {className: 'mapping-rows'},
               @_getOutputMappingValue().map((output, key) ->
                 if (@_isOpenRefineTransformation())
                   definition = findOutputMappingDefinition(@openRefine.outputMappingDefinitions, output)
@@ -306,38 +309,30 @@ module.exports = React.createClass
 
               , @).toArray()
           else
-            div {className: "well text-center"},
-              p {}, 'No outputs assigned yet.'
-              React.createElement AddOutputMapping,
-                tables: @props.tables
-                buckets: @props.buckets
-                transformation: @props.transformation
-                bucket: @props.bucket
-                mapping: @props.editingFields.get('new-output-mapping', Map())
-
-        if @props.transformation.get('backend') == 'docker' && @props.transformation.get('type') != 'openrefine'
-          div {},
-            h2 {}, 'Packages'
-            React.createElement Packages,
-              bucketId: @props.bucket.get('id')
-              transformation: @props.transformation
-              transformations: @props.transformations
-              isEditing: @props.editingFields.has('packages')
-              isSaving: @props.pendingActions.has('save-packages')
-              packages: @props.editingFields.get('packages', @props.transformation.get("packages", List()))
-              onEditStart: =>
-                TransformationsActionCreators.startTransformationFieldEdit(@props.bucketId,
-                  @props.transformationId, 'packages')
-              onEditCancel: =>
-                TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
-                  @props.transformationId, 'packages')
-              onEditChange: (newValue) =>
-                TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
-                  @props.transformationId, 'packages', newValue)
-              onEditSubmit: =>
-                TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
-                  @props.transformationId, 'packages')
-        if @props.transformation.get('backend') == 'docker' && @props.transformation.get('type') != 'openrefine'
+            div {className: "text-center"},
+              img className: "empty-mapping", src: TransformationEmptyOutputImage
+      if @props.transformation.get('backend') == 'docker' && @props.transformation.get('type') != 'openrefine'
+        div {className: 'kbc-row'},
+          h2 {}, 'Packages'
+          React.createElement Packages,
+            bucketId: @props.bucket.get('id')
+            transformation: @props.transformation
+            transformations: @props.transformations
+            isEditing: @props.editingFields.has('packages')
+            isSaving: @props.pendingActions.has('save-packages')
+            packages: @props.editingFields.get('packages', @props.transformation.get("packages", List()))
+            onEditStart: =>
+              TransformationsActionCreators.startTransformationFieldEdit(@props.bucketId,
+                @props.transformationId, 'packages')
+            onEditCancel: =>
+              TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
+                @props.transformationId, 'packages')
+            onEditChange: (newValue) =>
+              TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
+                @props.transformationId, 'packages', newValue)
+            onEditSubmit: =>
+              TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
+                @props.transformationId, 'packages')
           div {},
             h2 {}, 'Stored Files'
             React.createElement SavedFiles,
@@ -358,6 +353,7 @@ module.exports = React.createClass
                 TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
                   @props.transformationId, 'tags')
 
+      div {className: 'kbc-row'},
         @_renderCodeEditor()
 
   _renderCodeEditor: ->

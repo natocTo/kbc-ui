@@ -14,6 +14,9 @@ TransformationActionCreators = require '../../ActionCreators'
 module.exports = React.createClass
   displayName: 'NewTransformationBucket'
 
+  props:
+    label: React.PropTypes.string.isRequired
+
   getInitialState: ->
     isLoading: false
     name: ''
@@ -79,7 +82,8 @@ module.exports = React.createClass
       bsStyle: 'success'
     ,
       i className: 'fa fa-plus'
-      ' Add Bucket'
+      ' '
+      @props.label
 
   _handleSubmit: (e) ->
     e.preventDefault()

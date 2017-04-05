@@ -5,5 +5,14 @@ NewTransformationBucketModal = React.createFactory(require '../modals/NewTransfo
 module.exports = React.createClass
   displayName: 'NewTransformationBucketButton'
 
+  props: {
+    label: React.PropTypes.string
+  }
+
+  getDefaultProps: ->
+    {
+      label: "Add Bucket"
+    }
+
   render: ->
-    NewTransformationBucketModal null
+    NewTransformationBucketModal {label: @props.label}

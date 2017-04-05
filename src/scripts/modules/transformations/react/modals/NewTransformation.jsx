@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Input } from 'react-bootstrap';
+import { Modal, Input, Button } from 'react-bootstrap';
 import {Map} from 'immutable';
 import {createTransformation} from '../../ActionCreators';
 
@@ -42,7 +42,16 @@ function prepareDataForCreate(data) {
 
 export default React.createClass({
   propTypes: {
-    bucket: React.PropTypes.object.isRequired
+    bucket: React.PropTypes.object.isRequired,
+    type: React.PropTypes.string,
+    label: React.PropTypes.string
+  },
+
+  getDefaultProps() {
+    return {
+      type: 'link',
+      label: 'Add transformation'
+    };
   },
 
   getInitialState() {
@@ -70,34 +79,48 @@ export default React.createClass({
     });
   },
 
-  render() {
+  renderModal() {
     return (
-      <a onClick={this.handleOpenButtonClick}>
-        <i className="fa fa-fw fa-plus" />
-        {' Add transformation'}
-        <Modal onHide={this.close} show={this.state.showModal}>
-          <Modal.Header closeButton={true}>
-            <Modal.Title>
-              New Transformation
-            </Modal.Title>
-          </Modal.Header>
+      <Modal onHide={this.close} show={this.state.showModal}>
+        <Modal.Header closeButton={true}>
+          <Modal.Title>
+            New Transformation
+          </Modal.Title>
+        </Modal.Header>
 
-          <Modal.Body>
-            {this.form()}
-          </Modal.Body>
+        <Modal.Body>
+          {this.form()}
+        </Modal.Body>
 
-          <Modal.Footer>
-            <ConfirmButtons
-              isSaving={this.state.data.get('isSaving')}
-              isDisabled={!this.isValid()}
-              saveLabel="Create"
-              onCancel={this.close}
-              onSave={this.handleCreate}
-              />
-          </Modal.Footer>
-        </Modal>
-      </a>
+        <Modal.Footer>
+          <ConfirmButtons
+            isSaving={this.state.data.get('isSaving')}
+            isDisabled={!this.isValid()}
+            saveLabel="Create"
+            onCancel={this.close}
+            onSave={this.handleCreate}
+            />
+        </Modal.Footer>
+      </Modal>
     );
+  },
+
+  render() {
+    if (this.props.type === 'button') {
+      return (
+        <Button onClick={this.handleOpenButtonClick} bsStyle="success">
+          <i className="fa fa-plus fa-fw" />&nbsp;{this.props.label}
+          {this.renderModal()}
+        </Button>
+      );
+    } else {
+      return (
+        <a onClick={this.handleOpenButtonClick}>
+          <i className="fa fa-fw fa-plus" />&nbsp;{this.props.label}
+          {this.renderModal()}
+        </a>
+      );
+    }
   },
 
   handleOpenButtonClick(e) {

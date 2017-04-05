@@ -18,6 +18,7 @@ LatestJobsStore = require('../../../../jobs/stores/LatestJobsStore')
 SidebarJobs = require('../../../../components/react/components/SidebarJobs')
 SidebarVersions = require('../../../../components/react/components/SidebarVersionsWrapper').default
 VersionsStore = require('../../../../components/stores/VersionsStore')
+EmptyStateBucket = React.createFactory(require('../../components/EmptyStateBucket').default)
 
 {div, span, input, strong, form, button, h4, i, button, small, ul, li, a} = React.DOM
 
@@ -52,7 +53,7 @@ TransformationBucket = React.createClass
         if @state.transformations.count()
           @_renderTable()
         else
-          @_renderEmptyState()
+          EmptyStateBucket bucket: @state.bucket
 
       div className: 'col-md-3 kbc-main-sidebar',
         div className: 'kbc-buttons kbc-text-light',
@@ -117,12 +118,6 @@ TransformationBucket = React.createClass
       phase + name.toLowerCase()
     )
     return sorted
-
-  _renderEmptyState: ->
-    div {className: 'table table-striped'},
-      div {className: 'tfoot'},
-        div {className: 'tr'},
-          div {className: 'td'}, 'No transformations found'
 
   _deleteTransformationBucket: ->
     bucketId = @state.bucket.get('id')
