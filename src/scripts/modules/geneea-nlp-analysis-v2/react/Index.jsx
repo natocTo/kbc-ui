@@ -426,6 +426,9 @@ export default React.createClass({
   },
 
   renderStatic() {
+    const lang = this.parameter(params.LANGUAGE) || '';
+    const langLabel = languageOptions.find((o) => o.value === lang).label;
+
     return (
       <div>
         {this.renderIntableStatic()}
@@ -436,7 +439,7 @@ export default React.createClass({
         {this.RenderStaticInput('Lead Column (optional)', this.parameterList(params.LEAD) )}
 
         {this.RenderStaticInput('Domain', this.findDomainNameByValue(this.parameter(params.DOMAIN)) )}
-        {this.RenderStaticInput('Language', languageOptions.find((o) => o.value === this.parameter(params.LANGUAGE)).label)}
+        {this.RenderStaticInput('Language', langLabel)}
 
         {this.RenderStaticInput('Correction', this.parameter(params.CORRECTION))}
         {this.RenderStaticInput('Diacritization', this.parameter(params.DIACRITIC))}
