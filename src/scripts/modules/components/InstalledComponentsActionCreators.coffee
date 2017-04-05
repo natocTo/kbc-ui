@@ -47,10 +47,10 @@ storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
     .updateComponentConfiguration(componentId, configId, dataToSave, changeDescription)
 
 getComponentTypeForNotification = (componentType) ->
-  componentNotificationType = ''
+  componentTypeNotification = ''
   if componentType != 'transformation'
-    componentNotificationType = componentType
-  return componentNotificationType
+    componentTypeNotification = componentType
+  return componentTypeNotification
 
 module.exports =
 
