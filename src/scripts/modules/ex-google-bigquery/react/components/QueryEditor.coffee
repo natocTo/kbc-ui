@@ -29,9 +29,6 @@ module.exports = React.createClass
     defaultOutputTable: React.PropTypes.string.isRequired
     componentId: React.PropTypes.string.isRequired
 
-  componentDidMount: ->
-    React.findDOMNode(this.refs.queryName).focus()
-
   _handleOutputTableChange: (newValue) ->
     @props.onChange(@props.query.set 'outputTable', newValue)
 
@@ -66,6 +63,7 @@ module.exports = React.createClass
               ref: 'queryName'
               placeholder: 'e.g. Untitled Query'
               onChange: @_handleNameChange
+              autoFocus: true
           label className: 'col-md-2 control-label', 'Primary key'
           div className: 'col-md-4',
           Select

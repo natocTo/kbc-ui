@@ -23,10 +23,6 @@ export default React.createClass({
     };
   },
 
-  componentDidMount() {
-    this.refs.searchInput.getDOMNode().focus();
-  },
-
   onChange(event) {
     this.setState({
       query: event.target.value
@@ -50,6 +46,7 @@ export default React.createClass({
           placeholder="Search"
           ref="searchInput"
           onChange={this.onChange}
+          autoFocus
         />
       </form>
     );

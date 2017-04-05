@@ -13,14 +13,10 @@ export default React.createClass({
     savedMessage: PropTypes.object
   },
 
-  componentDidMount() {
-    this.refs.awsAccessKeyId.getInputDOMNode().focus();
-  },
-
   render() {
     return (
       <div className="form-horizontal">
-        {this.input('AWS Access Key ID', 'awsAccessKeyId', '')}
+        {this.input('AWS Access Key ID', 'awsAccessKeyId', '', 'text', true)}
         {this.input('AWS Secret Access Key', '#awsSecretAccessKey', '', 'password')}
         <Input
           type="select"
@@ -59,7 +55,7 @@ export default React.createClass({
     );
   },
 
-  input(label, field, placeholder, type = 'text') {
+  input(label, field, placeholder, type = 'text', autoFocus = false) {
     return React.createElement(Input, {
       type: type,
       label: label,
@@ -68,7 +64,8 @@ export default React.createClass({
       value: this.props.parameters.get(field),
       onChange: this.handleChange.bind(this, field),
       labelClassName: 'col-xs-4',
-      wrapperClassName: 'col-xs-8'
+      wrapperClassName: 'col-xs-8',
+      autoFocus: autoFocus
     });
   },
 
