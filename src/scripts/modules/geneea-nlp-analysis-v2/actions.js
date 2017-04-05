@@ -13,13 +13,13 @@ const LEAD = ['columns', 'lead']; // optional lead or abstract of the document
 
 const ANALYSIS = 'analysis_types';
 const LANGUAGE = 'language';
-
+const ADVANCED = 'advanced';
 const DOMAIN = 'domain';
 const BETA = 'use_beta';
 const CORRECTION = 'correction';
 const DIACRITIC = 'diacritization';
 
-export const params = {LANGUAGE, PRIMARYKEY, TITLE, LEAD, ANALYSIS, DATACOLUMN, DOMAIN, BETA, CORRECTION, DIACRITIC};
+export const params = {LANGUAGE, PRIMARYKEY, TITLE, LEAD, ANALYSIS, DATACOLUMN, DOMAIN, BETA, CORRECTION, DIACRITIC, ADVANCED};
 
 function getLocalState(configId, path) {
   const state = InstalledComponentStore.getLocalState(componentId, configId);
@@ -76,8 +76,11 @@ export function startEditing(configId) {
     if (key === DIACRITIC) {
       defaultVal = 'none';
     }
-
-    const value = configData.getIn(['parameters'].concat(key), defaultVal);
+    let value = configData.getIn(['parameters'].concat(key), defaultVal);
+    if (key === ADVANCED) {
+      const advancedMap = configData.getIn(['parameters', ADVANCED], Map());
+      value = JSON.stringify(advancedMap.toJS(), null, '  ');
+    }
     return memo.setIn([].concat(key), value);
   }, Map());
   editingData = editingData.set('intable', getInTable(configId) || Map());
@@ -97,8 +100,13 @@ export function isValid(configId) {
     }
     return memo || _.isEmpty(editingValue);
   }, false);
-
-  return (!isMissing);
+  let isAdvancedValid = true;
+  try {
+    JSON.parse(getEditingValue(configId, params.ADVANCED));
+  } catch (e) {
+    isAdvancedValid = false;
+  }
+  return (!isMissing) && isAdvancedValid;
 }
 
 export function cancel(configId) {
@@ -188,7 +196,11 @@ export function save(configId) {
   };
 
   const parameters = _.reduce(_.values(params), (memo, key) => {
-    return memo.setIn([].concat(key), data.getIn([].concat(key)));
+    let valueToSet = data.getIn([].concat(key));
+    if (key === params.ADVANCED) {
+      valueToSet = Map(JSON.parse(valueToSet));
+    }
+    return memo.setIn([].concat(key), valueToSet);
   }, Map())
         .set('columns', data.get('columns').filter((c) => List.isList(c) && c.count() > 0));
 

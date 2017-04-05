@@ -17,17 +17,18 @@ import FiltersDescription from '../../components/react/components/generic/Filter
 import TablesFilterModal from '../../components/react/components/generic/TableFiltersOnlyModal';
 
 import ResultsHelpModal from './ResultsHelpModal';
+import AdvancedSettings from './AdvancedSettings';
 
 const StaticText = FormControls.Static;
 import {params,
-  getInTable,
-  updateLocalState,
-  updateEditingValue,
-  updateEditingMapping,
-  getInputMapping,
-  startEditing,
-  resetEditingMapping,
-  getEditingValue} from '../actions';
+        getInTable,
+        updateLocalState,
+        updateEditingValue,
+        updateEditingMapping,
+        getInputMapping,
+        startEditing,
+        resetEditingMapping,
+        getEditingValue} from '../actions';
 
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../stores/RoutesStore';
@@ -75,9 +76,11 @@ export default React.createClass({
     const intable = getInTable(configId);
     const parameters = configData.get('parameters', Map());
     const allSapiTables = storageTablesStore.getAll();
+
     // console.log(allSapiTables.toJS());
 
     return {
+      isSaving: InstalledComponentStore.getSavingConfigData(componentId, configId),
       configId: configId,
       localState: localState,
       configData: configData,
@@ -219,8 +222,27 @@ export default React.createClass({
                               'Before analysing Czech text where diacritics are missing, add all the wedges and accents. For example, Muj ctyrnohy pritel is changed to Můj čtyřnohý přítel.')}
       {this.renderEditCheckBox(params.BETA, 'Use Beta Version', "Use Geneea's beta server (use only when instructed to do so)")}
         {this.renderAnalysisTypesSelect()}
+        {this.renderAdvancedSettings()}
       </div>
     );
+  },
+
+  renderAdvancedSettings() {
+    let data = this.getEditingValue(params.ADVANCED);
+    if (!this.state.editing) {
+      const advancedData = this.parameter(params.ADVANCED, Map());
+      data = JSON.stringify(advancedData, null, '  ');
+    }
+    const element = (
+      <AdvancedSettings
+        isEditing={!!this.state.editing}
+        data={data}
+        isSaving={this.state.isSaving}
+        onChange={this.updateEditingValue.bind(this, params.ADVANCED)}
+      />
+    );
+
+    return this.renderFormElement('Advanced', element, 'Specifies arbitrary parameters as a JSON object');
   },
 
   renderEditCheckBox(prop, name, description) {
@@ -232,7 +254,7 @@ export default React.createClass({
               type="checkbox"
               checked={this.getEditingValue(prop)}
               onChange= {(event) => this.updateEditingValue(prop, event.target.checked)}/>
-          {name}
+            {name}
           </label>
         </div>
         <p className="help-block">{description}</p>
@@ -418,6 +440,7 @@ export default React.createClass({
 
         {this.RenderStaticInput('Analysis tasks', this.renderStaticTasks())}
         {this.RenderStaticInput(this.renderResultLabel(), this.renderOutput())}
+        {this.renderAdvancedSettings()}
       </div>
     );
   },
