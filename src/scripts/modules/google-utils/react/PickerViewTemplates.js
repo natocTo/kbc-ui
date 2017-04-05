@@ -1,40 +1,29 @@
-// import _ from 'underscore';
-const sheets = () => {
-  const {google} = window;
-  const view = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS);
-  view.setMimeTypes('application/vnd.google-apps.spreadsheet');
-  view.setIncludeFolders(true);
-  view.setOwnedByMe(false);
-  // view.setSelectFolderEnabled(true)
-  view.setParent('root');
-  return view;
-};
-
-const sharedSheets = () => {
-  const {google} = window;
-  const allFoldersView = new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS);
-  allFoldersView.setIncludeFolders(true);
-  allFoldersView.setMode(google.picker.DocsViewMode.GRID);
-  // allFoldersView.setSelectFolderEnabled(true)
-  return allFoldersView;
-};
-
 export default {
-
-  sheetsGroup() { // NOT WORKING
-    let group = new window.google.picker.ViewGroup(sheets());
-    group = group.addLabel('User sheets');
-    group = group.addView(sharedSheets());
-    group = group.addLabel('shared sheets');
-    return group;
-  },
-
   sheets() {
-    return sheets();
+    const {google} = window;
+    return new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+      .setIncludeFolders(true)
+      .setSelectFolderEnabled(false)
+      .setParent('root')
+      .setLabel('My Drive');
   },
 
   sharedSheets() {
-    return sharedSheets();
+    const {google} = window;
+    return new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+      .setIncludeFolders(true)
+      .setOwnedByMe(false)
+      .setSelectFolderEnabled(false)
+      .setLabel('Shared with Me');
+  },
+
+  starredSheets() {
+    const {google} = window;
+    return new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+      .setIncludeFolders(false)
+      .setSelectFolderEnabled(false)
+      .setStarred(true)
+      .setLabel('Starred');
   },
 
   root(foldersOnly) {
@@ -69,18 +58,9 @@ export default {
     return recentView;
   },
 
-  recentFolders() {
-    const {google} = window;
-    const recentView = new google.picker.DocsView(google.picker.ViewId.RECENTLY_PICKED);
-    recentView.setMimeTypes('application/vnd.google-apps.folder');
-    recentView.setSelectFolderEnabled(true);
-    recentView.setIncludeFolders(true);
-    return recentView;
-  },
-
   flatFolders() {
     const {google} = window;
-    const allFoldersView = new google.picker.DocsView();
+    const allFoldersView = new google.picker.DocsView(google.picker.ViewId.FOLDERS);
     allFoldersView.setIncludeFolders(true);
     allFoldersView.setSelectFolderEnabled(true);
     allFoldersView.setMimeTypes('application/vnd.google-apps.folder');
@@ -89,11 +69,29 @@ export default {
 
   rootFolder() {
     const {google} = window;
-    const view = new google.picker.DocsView();
+    const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS);
     view.setIncludeFolders(true);
     view.setSelectFolderEnabled(true);
     view.setMimeTypes('application/vnd.google-apps.folder');
     view.setParent('root');
     return view;
+  },
+
+  sharedFolders() {
+    const {google} = window;
+    return new google.picker.DocsView(google.picker.ViewId.FOLDERS)
+      .setIncludeFolders(true)
+      .setOwnedByMe(false)
+      .setSelectFolderEnabled(true)
+      .setLabel('Shared with Me');
+  },
+
+  starredFolders() {
+    const {google} = window;
+    return new google.picker.DocsView(google.picker.ViewId.FOLDERS)
+      .setIncludeFolders(true)
+      .setSelectFolderEnabled(true)
+      .setStarred(true)
+      .setLabel('Starred');
   }
 };

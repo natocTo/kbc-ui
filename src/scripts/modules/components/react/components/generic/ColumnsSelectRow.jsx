@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import _ from 'underscore';
 import {List} from 'immutable';
 import Select from '../../../../../react/common/Select';
+
 export default React.createClass({
   propTypes: {
     value: PropTypes.object.isRequired,
@@ -12,23 +13,21 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row col-md-12">
-        <div className="form-group form-group-sm">
-          <label className="col-xs-2 control-label"> Columns</label>
-          <div className="col-xs-10">
-            <Select
-              multi={true}
-              name="columns"
-              value={this.props.value.get('columns', List()).toJS()}
-              disabled={this.props.disabled || !this.props.value.get('source')}
-              placeholder="All columns will be imported"
-              onChange={this._handleChangeColumns}
-              options={this._getColumnsOptions()}/>
-            <small
-              className="help-block">
-              Import only specified columns
-            </small>
-          </div>
+      <div className="form-group form-group-sm">
+        <label className="col-xs-2 control-label"> Columns</label>
+        <div className="col-xs-10">
+          <Select
+            multi={true}
+            name="columns"
+            value={this.props.value.get('columns', List()).toJS()}
+            disabled={this.props.disabled || !this.props.value.get('source')}
+            placeholder="All columns will be imported"
+            onChange={this._handleChangeColumns}
+            options={this._getColumnsOptions()}/>
+          <small
+            className="help-block">
+            Import only specified columns
+          </small>
         </div>
       </div>
     );

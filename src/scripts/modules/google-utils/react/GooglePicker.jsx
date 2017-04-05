@@ -32,10 +32,8 @@ const authorizePicker = (userEmail, scope, callbackFn) => {
 };
 
 const createGdrivePicker = (viewsParam, viewGroups) => {
-  let picker = new window.google.picker.PickerBuilder()
-    .setDeveloperKey(apiKey)
-    .enableFeature(window.google.picker.Feature.MULTISELECT_ENABLED);
-  //  .setOrigin($scope.origin)
+  let picker = new window.google.picker.PickerBuilder().setDeveloperKey(apiKey);
+
   let views = viewsParam;
   if (_.isEmpty(views)) views = [templates.root];
 
@@ -45,7 +43,7 @@ const createGdrivePicker = (viewsParam, viewGroups) => {
   for (let view of views) {
     picker = picker.addView(view());
   }
-  // picker.A.style.zIndex = 2000
+
   return picker;
 };
 
@@ -61,7 +59,18 @@ export default React.createClass({
     viewGroups: React.PropTypes.array,
     email: React.PropTypes.string,
     buttonProps: React.PropTypes.object,
-    requireSheetsApi: React.PropTypes.bool
+    requireSheetsApi: React.PropTypes.bool,
+    multiselectEnabled: React.PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      dialogTitle: 'Choose',
+      buttonLabel: 'Choose',
+      views: [],
+      requireSheetsApi: false,
+      multiselectEnabled: true
+    };
   },
 
   getStateFromStores() {
@@ -83,16 +92,6 @@ export default React.createClass({
       </Button>
     );
   },
-
-  getDefaultProps() {
-    return {
-      dialogTitle: 'Choose',
-      buttonLabel: 'Choose',
-      views: [],
-      requireSheetsApi: false
-    };
-  },
-
 
   getInitialState() {
     return {accessToken: null};
@@ -118,6 +117,11 @@ export default React.createClass({
     picker = picker.setTitle(this.props.dialogTitle)
       .setCallback(this._onPicked)
       .setOAuthToken(this.state.accessToken);
+
+    if (this.props.multiselectEnabled) {
+      picker.enableFeature(window.google.picker.Feature.MULTISELECT_ENABLED);
+    }
+
     picker.build().setVisible(true);
     setZIndex();
   },
