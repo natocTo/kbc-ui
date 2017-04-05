@@ -6,8 +6,6 @@ Loader = React.createFactory(require('kbc-react-components').Loader)
 
 {span, div, strong, small, a, p} = React.DOM
 
-require('./sandbox.less')
-
 
 MySqlCredentials = React.createClass
   displayName: 'MySqlCredentials'
