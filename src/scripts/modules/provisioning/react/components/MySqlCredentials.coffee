@@ -4,7 +4,7 @@ Protected = React.createFactory(require('kbc-react-components').Protected)
 Clipboard = React.createFactory(require('../../../../react/common/Clipboard').default)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 
-{span, div, strong, small, a} = React.DOM
+{span, div, strong, small, a, p} = React.DOM
 
 require('./sandbox.less')
 
@@ -42,9 +42,7 @@ MySqlCredentials = React.createClass
             a {href: 'http://www.sequelpro.com/download', target: '_blank'},
               'Sequel Pro'
             '). You can also use the Adminer web application provided by Keboola (click on Connect).'
-      div {className: 'row'},
-        div className: 'col-md-12',
-          small className: 'help-text help-text-expire',
+          p className: 'small help-text help-text-expire',
             'If not used, the sandbox will be deleted after 14 days.'
       div {className: 'row'},
         span {className: 'col-md-3'}, 'Host'
