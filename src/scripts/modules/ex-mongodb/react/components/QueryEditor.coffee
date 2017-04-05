@@ -21,9 +21,6 @@ module.exports = React.createClass
     configId: React.PropTypes.string.isRequired
     componentId: React.PropTypes.string.isRequired
 
-  componentDidMount: ->
-    React.findDOMNode(this.refs.newName).focus()
-
   _handleNameChange: (event) ->
     @props.onChange(@props.query.set 'newName', event.target.value)
 
@@ -67,6 +64,7 @@ module.exports = React.createClass
               ref: 'newName'
               placeholder: 'e.g. last-100-articles'
               onChange: @_handleNameChange
+              autoFocus: true
             if @props.outTableExist
               div className: 'help-block',
                 "Table with such name already exists."
