@@ -1,13 +1,19 @@
 import React from 'react';
 import NewTransformationBucketButton from './NewTransformationBucketButton';
 import TransformationsEmptyImage from '../../../../../images/transformations-empty.png';
+import ApplicationStore from '../../../../stores/ApplicationStore';
+
 require('./EmptyStateIndex.less');
 
 export default React.createClass({
+  imageUrl(image) {
+    return ApplicationStore.getScriptsBasePath() + image;
+  },
+
   render() {
     return (
       <div className="row transformation-index-empty-state">
-        <span className="col-md-4 text-center"><img src={TransformationsEmptyImage} /></span>
+        <span className="col-md-4 text-center"><img src={this.imageUrl(TransformationsEmptyImage)} /></span>
         <span className="col-md-8">
           <h2>Transformations allow you to modify your data.</h2>
           <p>Transformation pick data from Storage, manipulate it and then store it back. They can be written in SQL (MySQL, Redshift, Snowflake), R, Python or OpenRefine.</p>

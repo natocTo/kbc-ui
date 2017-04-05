@@ -30,8 +30,8 @@ AddOutputMapping = require('./AddOutputMapping').default
 AddInputMapping = require('./AddInputMapping').default
 InlineEditArea = require '../../../../../react/common/InlineEditArea'
 require('./TransformationDetailStatic.less')
-TransformationEmptyInputImage = require '../../../../../../images/transformation-empty-input-small.png'
-TransformationEmptyOutputImage = require '../../../../../../images/transformation-empty-output-small.png'
+TransformationEmptyInputImage = React.createFactory(require('../../components/TransformationEmptyInputImage').default)
+TransformationEmptyOutputImage = React.createFactory(require('../../components/TransformationEmptyOutputImage').default)
 
 {getInputMappingValue, getOutputMappingValue,
   findInputMappingDefinition, findOutputMappingDefinition} = require('../../../../components/utils/mappingDefinitions')
@@ -257,7 +257,7 @@ module.exports = React.createClass
               , @).toArray()
           else
             div {className: "text-center"},
-              img className: "empty-mapping", src: TransformationEmptyInputImage
+              TransformationEmptyInputImage {}
       div {className: 'kbc-row'},
         div {className: 'mapping'},
           h2 {},
@@ -310,7 +310,7 @@ module.exports = React.createClass
               , @).toArray()
           else
             div {className: "text-center"},
-              img className: "empty-mapping", src: TransformationEmptyOutputImage
+              TransformationEmptyOutputImage {}
       if @props.transformation.get('backend') == 'docker' && @props.transformation.get('type') != 'openrefine'
         div {className: 'kbc-row'},
           h2 {}, 'Packages'
