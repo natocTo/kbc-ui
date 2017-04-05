@@ -53,7 +53,7 @@ module.exports = React.createClass
   getStateFromStores: ->
     job = JobsStore.get RoutesStore.getCurrentRouteIntParam('jobId')
 
-    configuration = null
+    configuration = new Map()
     if job.hasIn ['params', 'config']
       config = job.getIn ['params', 'config']
       configuration = InstalledComponentsStore.getConfig(getComponentId(job), config?.toString())
@@ -130,7 +130,7 @@ module.exports = React.createClass
 
   _renderRunInfoRow: (job) ->
     componentId = getComponentId(job)
-    if @state.configuration
+    if !@state.configuration.length == 0
       configurationLink = span null,
         React.createElement ComponentConfigurationLink,
           componentId: componentId
