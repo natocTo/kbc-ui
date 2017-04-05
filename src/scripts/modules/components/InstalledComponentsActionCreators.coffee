@@ -46,6 +46,12 @@ storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
     installedComponentsApi
     .updateComponentConfiguration(componentId, configId, dataToSave, changeDescription)
 
+getComponentTypeForNotification = (componentType) ->
+  componentNotificationType = ''
+  if componentType != 'transformation'
+    componentNotificationType = componentType
+  return componentNotificationType
+
 module.exports =
 
   loadComponentsForce: ->
@@ -571,7 +577,7 @@ module.exports =
                   onClick: @props.onClick
                 ,
                   if component
-                    "#{component.get('name')} job"
+                    "#{component.get('name')} job " + getComponentTypeForNotification(component.get('type'))
                   else
                     'Job'
                 ' has been scheduled'
