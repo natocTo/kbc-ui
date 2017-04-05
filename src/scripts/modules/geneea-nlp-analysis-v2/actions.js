@@ -155,9 +155,11 @@ export function updateEditingMapping(configId, newMapping) {
 }
 
 export function resetEditingMapping(configId, newIntableId) {
+  const oldMapping = getInputMapping(configId, true);
   updateEditingValue(configId, 'inputMapping', fromJS({
     source: newIntableId,
-    destination: newIntableId
+    destination: newIntableId,
+    days: oldMapping.get('days') || 2
   }));
 }
 
@@ -165,7 +167,8 @@ export function getInputMapping(configId, isEditing) {
   const configData = getConfigData(configId);
   const ls = getLocalState(configId, ['editing']) || Map();
   const defaultMapping = fromJS({
-    source: ''
+    source: '',
+    days: 2
   });
   const configMapping = configData.getIn(['storage', 'input', 'tables', 0], defaultMapping);
   const editingMapping = ls.get('inputMapping', configMapping);
