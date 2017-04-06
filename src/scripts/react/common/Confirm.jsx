@@ -37,9 +37,7 @@ export default React.createClass({
 
   render() {
     const modal = <ConfirmModal show={this.state.showModal} onHide={this.closeModal} {...this.props}/>;
-    return React.cloneElement(this.props.childrenRootElement,
-                              {onClick: this.onButtonClick},
-                              [this.props.children, modal]);
+    return this.props.childrenRootElement({onClick: this.onButtonClick}, [this.props.children, modal]);
   }
 
 });
