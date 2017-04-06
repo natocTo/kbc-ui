@@ -2,10 +2,25 @@ import React, {PropTypes} from 'react';
 import AutoSuggest from 'react-autosuggest';
 import {List} from 'immutable';
 
+function sortSuggestionsByGeneric(item) {
+  return item;
+}
+
+function mapSuggestionsGeneric(item) {
+  return item;
+}
+
+function filterSuggestionsGeneric(input, value) {
+  return value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+}
+
 export default React.createClass({
   propTypes: {
     suggestions: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
+    filterSuggestionsFn: PropTypes.func,
+    sortSuggestionsByFn: PropTypes.func,
+    mapSuggestionsFn: PropTypes.func,
     value: PropTypes.string.isRequired,
     id: PropTypes.string,
     name: PropTypes.string,
@@ -17,7 +32,10 @@ export default React.createClass({
   getDefaultProps() {
     return {
       inputClassName: 'form-control',
-      disabled: false
+      disabled: false,
+      filterSuggestionsFn: filterSuggestionsGeneric,
+      sortSuggestionsByFn: sortSuggestionsByGeneric,
+      mapSuggestionsFn: mapSuggestionsGeneric
     };
   },
 
@@ -27,13 +45,15 @@ export default React.createClass({
     };
   },
 
-  filterSuggestions(options) {
-    const value = options.value;
-    const suggestions = this.props.suggestions.filter(function(val) {
-      return val.toLowerCase().indexOf(value.toLowerCase()) >= 0;
-    }).sortBy(function(item) {
-      return item;
-    }).slice(0, 10).toList();
+  fetchSuggestions(options) {
+    const input = options.value;
+    const suggestions = this.props.suggestions
+                            .filter((item) => this.props.filterSuggestionsFn(input, item))
+                            .sortBy(this.props.sortSuggestionsByFn)
+                            .slice(0, 10)
+                            .map(this.props.mapSuggestionsFn)
+                            .toList();
+
     this.setState({suggestions: suggestions});
   },
 
@@ -46,7 +66,7 @@ export default React.createClass({
       <AutoSuggest
         suggestions={this.state.suggestions.toJS()}
         onSuggestionsClearRequested={() => this.setState({suggestions: List()})}
-        onSuggestionsFetchRequested={this.filterSuggestions}
+        onSuggestionsFetchRequested={this.fetchSuggestions}
         renderSuggestion={this.renderSuggestion}
         getSuggestionValue={(val) => val}
         inputProps={{
