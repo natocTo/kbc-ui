@@ -5,43 +5,43 @@ import {DropdownButton, MenuItem} from 'react-bootstrap';
 const TEMPLATES = [
   {
     'name': 'today',
-    'since': 'today',
-    'until': 'now'
+    'until': 'today',
+    'since': 'now'
   },
   {
     'name': 'Yesterday',
-    'since': 'yesterday',
-    'until': 'today'
+    'until': 'yesterday',
+    'since': 'today'
   },
   {
     'name': 'Last 7 days',
-    'since': 'today',
-    'until': '7 days ago'
+    'until': 'today',
+    'since': '7 days ago'
   },
   {
     'name': 'Last 30 days',
-    'since': 'today',
-    'until': '30 days ago'
+    'until': 'today',
+    'since': '30 days ago'
   },
   {
     'name': 'This Month',
-    'since': 'midnight first day of this month',
-    'until': 'midnight last day of this month'
+    'until': 'midnight first day of this month',
+    'since': 'midnight last day of this month'
   },
   {
     'name': 'Last Month',
-    'since': 'midnight first day of last month',
-    'until': 'midnight last day of last month'
+    'until': 'midnight first day of last month',
+    'since': 'midnight last day of last month'
   },
   {
     'name': 'This Week',
-    'since': 'monday this week',
-    'until': 'today'
+    'until': 'monday this week',
+    'since': 'today'
   },
   {
     'name': 'Last Week',
-    'since': 'monday last week',
-    'until': 'sunday last week'
+    'until': 'monday last week',
+    'since': 'sunday last week'
 
   }
 
