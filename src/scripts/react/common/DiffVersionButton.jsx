@@ -16,7 +16,7 @@ export default React.createClass({
     onLoadVersionConfig: React.PropTypes.func,
     tooltipMsg: React.PropTypes.string,
     buttonText: React.PropTypes.string,
-    buttonClassName: React.PropTypes.object,
+    buttonClassName: React.PropTypes.string,
     buttonAsSpan: React.PropTypes.bool
   },
 

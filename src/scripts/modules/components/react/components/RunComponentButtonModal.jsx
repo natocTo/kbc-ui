@@ -7,7 +7,7 @@ module.exports = React.createClass({
     onHide: React.PropTypes.func.isRequired,
     onRequestRun: React.PropTypes.func.isRequired,
     title: React.PropTypes.string.isRequired,
-    body: React.PropTypes.string.isRequired,
+    body: React.PropTypes.node.isRequired,
     show: React.PropTypes.bool.isRequired
   },
 
