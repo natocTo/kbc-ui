@@ -16,41 +16,6 @@ export default React.createClass({
     disabled: React.PropTypes.bool.isRequired
   },
 
-  getSuggestionsFunction() {
-    const props = this.props;
-    return function(input, callback) {
-      var suggestions;
-      suggestions = props.options.filter(function(value) {
-        var searchName = value.get('name').toLowerCase();
-        var searchId = value.get('id').toLowerCase();
-        if (props.bucket) {
-          if (value.get('id').indexOf(props.bucket + '.') !== 0) {
-            return false;
-          }
-          searchName = searchName.substring(props.bucket.length + 1);
-          searchId = searchId.substring(props.bucket.length + 1);
-        }
-        if (searchId.indexOf(input.toLowerCase()) >= 0) {
-          return true;
-        }
-        if (searchName.indexOf(input.toLowerCase()) >= 0) {
-          return true;
-        }
-        return false;
-      }).sortBy(function(item) {
-        return item.get('id').toLowerCase();
-      }).slice(0, 10)
-        .map(function(item) {
-          if (props.bucket) {
-            return item.get('id').substring(props.bucket.length + 1);
-          } else {
-            return item.get('id');
-          }
-        })
-        .toList();
-      return callback(null, suggestions.toJS());
-    };
-  },
 
   onChange(value) {
     if (this.props.bucket) {
@@ -84,13 +49,45 @@ export default React.createClass({
     return null;
   },
 
+  filterSuggestions(input, value) {
+    const {props} = this;
+    var searchName = value.get('name').toLowerCase();
+    var searchId = value.get('id').toLowerCase();
+    if (props.bucket) {
+      if (value.get('id').indexOf(props.bucket + '.') !== 0) {
+        return false;
+      }
+      searchName = searchName.substring(props.bucket.length + 1);
+      searchId = searchId.substring(props.bucket.length + 1);
+    }
+    if (searchId.indexOf(input.toLowerCase()) >= 0) {
+      return true;
+    }
+    if (searchName.indexOf(input.toLowerCase()) >= 0) {
+      return true;
+    }
+    return false;
+  },
+
+  mapSuggestions(item) {
+    const {props} = this;
+    if (props.bucket) {
+      return item.get('id').substring(props.bucket.length + 1);
+    } else {
+      return item.get('id');
+    }
+  },
+
   render() {
     return (
       <div>
         <div className={this.props.bucket ? 'input-group' : null}>
           {this.renderBucket()}
           <AutoSuggestWrapper
-            suggestions={this.getSuggestionsFunction()}
+            suggestions={this.props.options}
+            mapSuggestionsFn={this.mapSuggestions}
+            filterSuggestionsFn={this.filterSuggestions}
+            sortSuggestionsByFn={item => item.get('id').toLowerCase()}
             value={this.getValue()}
             onChange={this.onChange}
             placeholder="Table name"
