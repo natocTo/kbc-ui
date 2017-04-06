@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import Sticky from 'react-sticky';
 import {Input} from 'react-bootstrap';
-
 
 export default React.createClass({
   propTypes: {
@@ -49,7 +47,6 @@ export default React.createClass({
       <div>
         <p className="help-block">This information should be provided by the application developer.</p>
         <div className="edit kbc-configuration-editor">
-          <Sticky stickyClass="kbc-sticky-buttons-active" className="kbc-sticky-buttons" topOffset={-60} stickyStyle={{}}>
             <ConfirmButtons
               isSaving={this.props.isSaving}
               onSave={this.props.onSave}
@@ -57,7 +54,6 @@ export default React.createClass({
               placement="right"
               saveLabel={this.props.saveLabel}
               />
-          </Sticky>
 
           <div className="form-horizontal">
             <div className="row col-md-12">
