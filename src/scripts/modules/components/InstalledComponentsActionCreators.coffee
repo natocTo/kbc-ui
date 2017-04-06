@@ -577,7 +577,7 @@ module.exports =
                   onClick: @props.onClick
                 ,
                   if component
-                    "#{component.get('name')} job " + getComponentTypeForNotification(component.get('type'))
+                    "#{component.get('name')} " + getComponentTypeForNotification(component.get('type')) + " job"
                   else
                     'Job'
                 ' has been scheduled'
