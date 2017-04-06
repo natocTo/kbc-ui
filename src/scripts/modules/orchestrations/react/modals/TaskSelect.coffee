@@ -95,7 +95,8 @@ module.exports = React.createClass
     @props.onChange(updatedTask)
 
   _isValid: (e) ->
-    result = @props.tasks.filter((tasks) ->
+    @props.tasks.filter((tasks) ->
       tasks.get('tasks').filter((task) ->
-        task.get('active')).count()).length > 0
-    return result
+        task.get('active')
+      ).count() > 0
+    ).count() > 0
