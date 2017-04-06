@@ -13,7 +13,7 @@ const MESSAGES = {
 
 export default React.createClass({
   propTypes: {
-    expires: React.PropTypes.string.isRequired
+    expires: React.PropTypes.string
   },
 
   render() {
