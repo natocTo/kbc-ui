@@ -4725,9 +4725,9 @@ react-side-effect@^0.3.2:
   dependencies:
     fbjs "0.1.0-alpha.10"
 
-react-sticky@~2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/react-sticky/-/react-sticky-2.5.2.tgz#97e9f276dc4919296f7183172340af6b171528a2"
+react-sticky@~5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/react-sticky/-/react-sticky-5.0.5.tgz#995871273f8a001fa4d462d3b96f381ee54b2649"
 
 react-textarea-autosize@^2.3.1:
   version "2.5.4"
