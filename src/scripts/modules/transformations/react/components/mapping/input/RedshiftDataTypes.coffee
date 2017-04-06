@@ -69,7 +69,7 @@ module.exports = React.createClass
           React.DOM.div {}, React.DOM.small {}, "No data types set yet."
         else
           ListGroup {},
-            @props.datatypes.map((datatype, key) ->
+            @props.datatypes.sort().map((datatype, key) ->
               ListGroupItem {key: key},
                   React.DOM.small {},
                     React.DOM.strong {}, key

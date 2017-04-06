@@ -45,10 +45,10 @@ module.exports = React.createClass
           tooltip: 'Upload table to Dropbox'
         ,
           RunButtonModal
-            title: "Upload #{@props.table.get('id')}"
+            title: "Run"
             tooltip: "Upload #{@props.table.get('id')}"
             mode: 'button'
-            icon: 'fa fa-upload fa-fw'
+            icon: 'fa fa-play fa-fw'
             component: @props.componentId
             runParams: =>
               configData: @props.prepareSingleUploadDataFn(@props.table)
