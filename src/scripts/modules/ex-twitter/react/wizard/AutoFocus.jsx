@@ -17,12 +17,19 @@ export default (Input) => {
     },
 
     triggerFocus() {
-      this.refs.input.getInputDOMNode().focus();
+      this.inputField.focus();
     },
 
     render() {
       return (
-        <Input {...this.props} ref="input"/>
+        <Input
+          {...this.props}
+          inputRef={
+            (ref) => {
+              this.inputField = ref;
+            }
+          }
+        />
       );
     }
   });
