@@ -71,7 +71,7 @@ module.exports = React.createClass
             div className: 'col-sm-6',
               React.createElement ConfirmButtons,
                 isSaving: false
-                isDisabled: false
+                isDisabled: !@_isValid()
                 saveLabel: 'Run'
                 onCancel: @close
                 onSave: @_handleRun
@@ -93,3 +93,10 @@ module.exports = React.createClass
 
   _handleTaskUpdate: (updatedTask) ->
     @props.onChange(updatedTask)
+
+  _isValid: (e) ->
+    @props.tasks.filter((tasks) ->
+      tasks.get('tasks').filter((task) ->
+        task.get('active')
+      ).count() > 0
+    ).count() > 0
