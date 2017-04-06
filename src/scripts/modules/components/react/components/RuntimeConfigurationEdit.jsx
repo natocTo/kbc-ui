@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import Sticky from 'react-sticky';
 import {Input} from 'react-bootstrap';
-
 
 export default React.createClass({
   propTypes: {
@@ -48,83 +46,68 @@ export default React.createClass({
     return (
       <div>
         <p className="help-block">This information should be provided by the application developer.</p>
-        <div className="edit kbc-configuration-editor">
-          <Sticky stickyClass="kbc-sticky-buttons-active" className="kbc-sticky-buttons" topOffset={-60} stickyStyle={{}}>
-            <ConfirmButtons
-              isSaving={this.props.isSaving}
-              onSave={this.props.onSave}
-              onCancel={this.props.onCancel}
-              placement="right"
-              saveLabel={this.props.saveLabel}
-              />
-          </Sticky>
+        <div className="text-right" style={{padding: '1em 0'}}>
+          <ConfirmButtons
+            isSaving={this.props.isSaving}
+            onSave={this.props.onSave}
+            onCancel={this.props.onCancel}
+            placement="right"
+            saveLabel={this.props.saveLabel}
+          />
+        </div>
+        <div className="form-horizontal">
+          <Input
+            type="text"
+            label="Repository"
+            labelClassName="col-xs-3"
+            wrapperClassName="col-xs-9"
+            value={this.props.data.get('repository', '')}
+            onChange={this.onChangeRepository}
+            help="GitHub or Bitbucket repository URL"
+            placeholder="https://github.com/keboola/my-r-app"
+          />
 
-          <div className="form-horizontal">
-            <div className="row col-md-12">
-              <Input
-                type="text"
-                label="Repository"
-                labelClassName="col-xs-3"
-                wrapperClassName="col-xs-9"
-                value={this.props.data.get('repository', '')}
-                onChange={this.onChangeRepository}
-                help="GitHub or Bitbucket repository URL"
-                placeholder="https://github.com/keboola/my-r-app"
-                />
-            </div>
+          <Input
+            type="text"
+            label="Version"
+            labelClassName="col-xs-3"
+            wrapperClassName="col-xs-9"
+            value={this.props.data.get('version', '')}
+            onChange={this.onChangeVersion}
+            help={(<span>Branch or tag in the repository. Using <code>master</code> as a version is inefficient and should not be used in a production setup. We recommend using <a href="http://semver.org/">Semantic versioning</a>.</span>)}
+            placeholder="1.0.0"
+          />
 
-            <div className="row col-md-12">
-              <Input
-                type="text"
-                label="Version"
-                labelClassName="col-xs-3"
-                wrapperClassName="col-xs-9"
-                value={this.props.data.get('version', '')}
-                onChange={this.onChangeVersion}
-                help={(<span>Branch or tag in the repository. Using <code>master</code> as a version is inefficient and should not be used in a production setup. We recommend using <a href="http://semver.org/">Semantic versioning</a>.</span>)}
-                placeholder="1.0.0"
-                />
-            </div>
+          <Input
+            type="checkbox"
+            label="Allow application to access the Internet"
+            wrapperClassName="col-xs-9 col-xs-offset-3"
+            checked={this.props.data.get('network', 'bridge') === 'bridge'}
+            onChange={this.onChangeNetwork}
+            help="Preventing access to the Internet may cause the application to fail. Please consult with the application author(s)."
+            />
 
-            <div className="row col-md-12">
-              <div className="col-xs-9 col-xs-offset-3">
-                <Input
-                  type="checkbox"
-                  label="Allow application to access the Internet"
-                  labelClassName="col-xs-12"
-                  checked={this.props.data.get('network', 'bridge') === 'bridge'}
-                  onChange={this.onChangeNetwork}
-                  help="Preventing access to the Internet may cause the application to fail. Please consult with the application author(s)."
-                  />
-              </div>
-            </div>
+          <Input
+            type="text"
+            label="Username"
+            labelClassName="col-xs-3"
+            wrapperClassName="col-xs-9"
+            value={this.props.data.get('username', '')}
+            onChange={this.onChangeUsername}
+            help="Username and password are required only for private repositories"
+            placeholder=""
+          />
 
-            <div className="row col-md-12">
-              <Input
-                type="text"
-                label="Username"
-                labelClassName="col-xs-3"
-                wrapperClassName="col-xs-9"
-                value={this.props.data.get('username', '')}
-                onChange={this.onChangeUsername}
-                help="Username and password are required only for private repositories"
-                placeholder=""
-                />
-            </div>
+          <Input
+            type="password"
+            label="Password"
+            labelClassName="col-xs-3"
+            wrapperClassName="col-xs-9"
+            value={this.props.data.get('#password', '')}
+            onChange={this.onChangePassword}
+            help="Password will be kept encrypted"
+          />
 
-            <div className="row col-md-12">
-              <Input
-                type="password"
-                label="Password"
-                labelClassName="col-xs-3"
-                wrapperClassName="col-xs-9"
-                value={this.props.data.get('#password', '')}
-                onChange={this.onChangePassword}
-                help="Password will be kept encrypted"
-                />
-            </div>
-
-          </div>
         </div>
       </div>
     );
