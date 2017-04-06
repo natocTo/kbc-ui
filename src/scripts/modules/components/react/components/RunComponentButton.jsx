@@ -23,7 +23,7 @@ module.exports = React.createClass({
     disabled: React.PropTypes.bool,
     disabledReason: React.PropTypes.string,
     tooltipPlacement: React.PropTypes.string,
-    children: React.PropTypes.object
+    children: React.PropTypes.node
   },
 
   getDefaultProps: function() {
