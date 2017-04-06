@@ -78,7 +78,7 @@ module.exports = React.createClass
 
   _selectOptions: ->
     dataTypes = @_getDataTypes()
-    _.map dataTypes.concat('IGNORE'), (opKey, opValue) ->
+    _.map dataTypes.sort().concat('IGNORE'), (opKey, opValue) ->
       option
         value: opKey
         key: opKey
