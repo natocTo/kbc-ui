@@ -12,7 +12,6 @@ Link = React.createFactory(require('react-router').Link)
 
 JobNavRow = React.createClass
   displayName: 'LatestJobsRow'
-  mixins: [ImmutableRendererMixin]
   propTypes:
     job: React.PropTypes.object.isRequired
 
