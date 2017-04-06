@@ -130,7 +130,7 @@ module.exports = React.createClass
 
   _renderRunInfoRow: (job) ->
     componentId = getComponentId(job)
-    if !@state.configuration.length == 0
+    if @state.configuration.size != 0
       configurationLink = span null,
         React.createElement ComponentConfigurationLink,
           componentId: componentId
