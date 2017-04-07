@@ -8,6 +8,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import {Loader} from 'kbc-react-components';
 import Confirm from '../../../../react/common/Confirm';
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
+import {Table} from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -28,31 +29,31 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="table table-striped table-hover">
-        <div className="thead">
-          <div className="tr">
-            <div className="th">
+      <Table className="table table-striped" style={{'word-break': 'break-word'}}>
+        <thead className="thead">
+          <tr className="tr">
+            <th className="th">
               <strong>Query Name</strong>
-            </div>
-            <div className="th">
+            </th>
+            <th className="th">
               <strong>{this.props.accountDescFn('Pages')} to Extract</strong>
-            </div>
-            <div className="th">
+            </th>
+            <th className="th">
               {/* right arrow */}
-            </div>
-            <div className="th">
+            </th>
+            <th className="th">
               <strong>Output Tables</strong>
-            </div>
-            <div className="th pull-right">
+            </th>
+            <th className="th pull-right">
               {this.props.addQueryButton}
               {/* action buttons */}
-            </div>
-          </div>
-        </div>
-        <div className="tbody">
+            </th>
+          </tr>
+        </thead>
+        <tbody className="tbody">
           {this.props.queries.map((q) => this.renderQueryRow(q))}
-        </div>
-      </div>
+        </tbody>
+      </Table>
     );
   },
 
@@ -61,21 +62,21 @@ export default React.createClass({
     // const propValue = (propName) => query.getIn([].concat(propName));
     const qname = query.get('name');
     return (
-      <div
+      <tr
         className="tr">
-        <div className="td">
+        <td className="td">
           {qname}
-        </div>
-        <div className="td">
+        </td>
+        <td className="td">
           {this.renderAccounts(query.getIn(['query']))}
-        </div>
-        <div className="td">
+        </td>
+        <td className="td">
           <i className="kbc-icon-arrow-right" />
-        </div>
-        <div className="td">
+        </td>
+        <td className="td">
           {this.renderTables(qname)}
-        </div>
-        <div className="td text-right kbc-no-wrap">
+        </td>
+        <td className="td text-right kbc-no-wrap">
           {this.renderEditButton(query)}
           {this.renderDeleteButton(query)}
           <ActivateDeactivateButton
@@ -97,8 +98,8 @@ export default React.createClass({
           >
             You are about to run extraction of {qname}
           </RunExtractionButton>
-        </div>
-      </div>
+        </td>
+      </tr>
     );
   },
 
