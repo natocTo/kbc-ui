@@ -111,11 +111,11 @@ module.exports = React.createClass
       header = @props.renderHeaderRowFn(tables)
 
     div className: 'row',
-      div className: 'table table-striped table-hover',
+      div {className: 'table table-striped table-hover'},
         if header
           div className: 'thead', key: 'table-header',
             header
-        div className: 'tbody',
+        div {className: 'tbody', style: {'word-break': 'break-word'}},
           childs
 
   _renderDefaultHeaderRow: ->
