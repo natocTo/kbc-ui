@@ -25,7 +25,7 @@ module.exports = React.createClass(
 
   render: ->
     component = @
-    span {className: 'table'},
+    span {className: 'table', style: {'word-break': 'break-word'}},
       span {className: 'tbody'},
         span {className: 'tr'},
           span {className: 'td col-xs-4'},
