@@ -28,7 +28,7 @@ module.exports = React.createClass(
     definition: Immutable.Map()
 
   render: ->
-    span {className: 'table'},
+    span {className: 'table', style: {'word-break': 'break-word'}},
       span {className: 'tbody'},
         span {className: 'tr'},
           if @props.definition.has('label')
