@@ -51,7 +51,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <div className="tbody">
+        <div className="tbody" style={{'wordBreak': 'break-word'}}>
           {this.props.sheets.map((q) => this.renderSheetRow(q))}
         </div>
       </div>

@@ -54,7 +54,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <div className="tbody">
+        <div className="tbody" style={{'wordBreak': 'break-word'}}>
           {this.props.queries.map((q) => this.renderQueryRow(q))}
         </div>
       </div>
