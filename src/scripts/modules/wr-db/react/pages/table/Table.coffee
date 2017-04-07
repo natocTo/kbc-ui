@@ -304,11 +304,20 @@ templateFn = (componentId) ->
           value = e.target.value.split("__")
           @state.editingColumns.map (ec) =>
             typeInfo = datatypes.get(value[0]).get(value[1]).get('colData').get(ec.get('name'))
+            # if a column is not present, it will be set to ignore
+            if !typeInfo
+              newColumn = ec.set('type', 'IGNORE')
+            else
+              type = typeInfo.get('type')
+              if componentId != value[0]
+                dTypes = @_getDataTypes()
+                if !_.contains(dTypes, type)
+                  type = @_getTypeFromBasetype(typeInfo.get('basetype'))
 
-            newColumn = ec.set('type', typeInfo.get('type'))
-              .set('nullable', typeInfo.get('nullable'))
-              .set('default', typeInfo.get('default'))
-              .set('size', typeInfo.get('length'))
+              newColumn = ec.set('type', type)
+                .set('null', typeInfo.get('nullable'))
+                .set('default', typeInfo.get('default'))
+                .set('size', typeInfo.get('length'))
 
             @_onEditColumn(newColumn)
         option
@@ -351,6 +360,11 @@ templateFn = (componentId) ->
     result = dt?[dataType]?.defaultSize
     return result
 
+  _getTypeFromBasetype: (basetype) ->
+    dtypes = @_getComponentDataTypes()
+    dt = _.find dtypes, (d) ->
+      _.isObject(d) and d.basetype == basetype
+    return _.keys(dt)[0]
 
   _getDataTypes: ->
     dtypes = @_getComponentDataTypes()
