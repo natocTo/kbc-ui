@@ -41,7 +41,7 @@ storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
     dataToSave.changeDescription = changeDescription
   if component.get('flags').includes('encrypt')
     installedComponentsApi
-    .updateComponentConfigurationEncrypted(component.get('uri'), configId, dataToSave, changeDescription)
+    .updateComponentConfigurationEncrypted(component.get('uri'), componentId, configId, dataToSave, changeDescription)
   else
     installedComponentsApi
     .updateComponentConfiguration(componentId, configId, dataToSave, changeDescription)

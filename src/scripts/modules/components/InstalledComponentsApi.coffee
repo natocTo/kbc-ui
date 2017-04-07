@@ -58,14 +58,21 @@ installedComponentsApi =
     .then (response) ->
       response.body
 
-  updateComponentConfigurationEncrypted: (componentUrl, configurationId, data) ->
+  updateComponentConfigurationEncrypted: (componentUrl, componentId, configurationId, data) ->
     request('PUT', "#{componentUrl}/configs/#{configurationId}")
     .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString())
     .type 'form'
     .send data
     .promise()
     .then (response) ->
-      response.body
+      # fixes https://github.com/keboola/kbc-ui/issues/915
+      if JSON.stringify(response.body.configuration).indexOf('[]') >= 0
+        return createRequest('GET', "components/#{componentId}/configs/#{configurationId}")
+        .promise()
+        .then((response) ->
+          response.body
+        )
+      return response.body
 
   createConfiguration: (componentId, data, changeDescription) ->
     if (changeDescription)
