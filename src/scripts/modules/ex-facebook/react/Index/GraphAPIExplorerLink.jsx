@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import Tooltip from '../../../../react/common/Tooltip';
 
 const API_URL = 'https://developers.facebook.com/tools/explorer';
 
@@ -19,11 +20,22 @@ export default React.createClass({
 
   renderDisabledLink() {
     return (
-      <span className="btn btn-link disabled pull-right">
-        Try Query
-      </span>
+      <Tooltip placement="top" tooltip={this.tooltip}>
+        <span style={this.linkStyle} className="btn btn-link pull-right"  disabled>
+          {this.linkText}
+        </span>
+      </Tooltip>
     );
   },
+
+  linkStyle: {
+    'marginTop': '5px',
+    'marginRight': '9px'
+  },
+
+  linkText: 'Try Query',
+
+  tooltip: 'Opens configured query in Facebook Graph API Explorer tool',
 
   generateQueryParams() {
     const version = `version=${this.props.apiVersion}`;
@@ -44,9 +56,12 @@ export default React.createClass({
     const params = this.generateQueryParams();
     const url = `${API_URL}?method=GET&${params}`;
     return (
-      <a href={url} target="_blank" className="pull-right">
-        Try Query
-      </a>
+      <Tooltip placement="top" tooltip={this.tooltip}>
+        <a href={url} style={this.linkStyle}
+          target="_blank" className="btn btn-link pull-right">
+          {this.linkText}
+        </a>
+      </Tooltip>
     );
   },
 
