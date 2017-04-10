@@ -148,7 +148,7 @@ export default React.createClass({
         {this.versionDescription(version)}
         {' '}
         <small>
-          {moment(version.get('created')).fromNow()} by {version.getIn(['creatorToken', 'description'], 'unknown')}
+          <span title={moment(version.get('created')).format()}><i className="fa fa-fw fa-calendar" />{moment(version.get('created')).fromNow()}</span> by {version.getIn(['creatorToken', 'description'], 'unknown')}
         </small>
       </span>
     );
