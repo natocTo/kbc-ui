@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TemplateSelector from './TemplateSelector';
+import GraphAPIExplorerLink from './GraphAPIExplorerLink';
 import DateRangeSelector from './DateRangeSelector';
 import {Modal, OverlayTrigger, Tooltip, TabbedArea, TabPane} from 'react-bootstrap';
 // import Select from 'react-select';
@@ -26,6 +27,7 @@ export default React.createClass({
     isSavingFn: PropTypes.func.isRequired,
     onHideFn: PropTypes.func,
     authorizedDescription: PropTypes.string,
+    apiVersion: PropTypes.string,
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     accountDescFn: PropTypes.func.isRequired,
@@ -47,6 +49,11 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <GraphAPIExplorerLink
+            ids={this.props.accounts.keySeq()}
+            query={this.query('query', Map())}
+            apiVersion={this.props.apiVersion}
+          />
           <TabbedArea defaultActiveEventKey={1} animation={false}>
             <TabPane tab="General" eventKey={1}>
               <div className="row form-horizontal clearfix">
