@@ -19,7 +19,7 @@ module.exports = React.createClass
     columnsValidation: React.PropTypes.object
     editButtons: React.PropTypes.object
     setAllColumnsType: React.PropTypes.object
-
+    setTableTypes: React.PropTypes.object
 
 
 
@@ -66,7 +66,12 @@ module.exports = React.createClass
                     onChange: this.props.onToggleHideIgnored
                   ' Hide Ignored'
               if @props.editingColumns
-                @props.setAllColumnsType
+                div null,
+                  @props.setTableTypes
+              if @props.editingColumns
+                div null,
+                  @props.setAllColumnsType
+
             th null,
               'Null'
               ' '

@@ -41,7 +41,7 @@ defaultDataTypes =
 'DATE', 'DATETIME'
 ]
 
-{option, select, label, input, p, ul, li, span, button, strong, div, i} = React.DOM
+{option, select, label, input, p, ul, li, span, button, strong, div, i, optgroup} = React.DOM
 
 
 module.exports = (componentId) ->
@@ -56,6 +56,7 @@ templateFn = (componentId) ->
     tableId = RoutesStore.getCurrentRouteParam('tableId')
     tableConfig = WrDbStore.getTableConfig(componentId, configId, tableId)
     storageTableColumns = StorageTablesStore.getAll().getIn [tableId, 'columns'], List()
+    columnMetadata = StorageTablesStore.getAll().getIn [tableId, 'columnMetadata'], List()
     localState = InstalledComponentsStore.getLocalState(componentId, configId)
     tablesExportInfo = WrDbStore.getTables(componentId, configId)
     exportInfo = tablesExportInfo.find((tab) ->
@@ -76,6 +77,7 @@ templateFn = (componentId) ->
     editingData: editingData
     isUpdatingTable: isUpdatingTable
     tableConfig: tableConfig
+    componentDatatypes: @_getComponentTableTypes(columnMetadata)
     columns: @_prepareColumns(tableConfig.get('columns'), storageTableColumns)
     tableId: tableId
     configId: configId
@@ -86,8 +88,32 @@ templateFn = (componentId) ->
     v2State: localState.get('v2', Map())
     v2ConfigTable: v2Actions.configTables.find((t) -> t.get('tableId') == tableId)
 
+
   getInitialState: ->
     dataPreview: null
+
+  _getComponentTableTypes: (columnMetadata) ->
+    coltypes = {}
+    columnMetadata.map((metadata, col) ->
+      metadata.forEach( (entry) ->
+        providerParts = entry.get('provider').split("__")
+        keyParts = entry.get('key').split(".")
+        if keyParts[0] == "KBC" && keyParts[1] == "datatype"
+          if !coltypes[providerParts[0]]
+            coltypes[providerParts[0]] = {}
+          if !coltypes[providerParts[0]][providerParts[1]]
+            coltypes[providerParts[0]][providerParts[1]] = {}
+          if !coltypes[providerParts[0]][providerParts[1]]['configName']
+            coltypes[providerParts[0]][providerParts[1]]['configName'] = providerParts[2]
+          if !coltypes[providerParts[0]][providerParts[1]]["colData"]
+            coltypes[providerParts[0]][providerParts[1]]["colData"] = {}
+          if !coltypes[providerParts[0]][providerParts[1]]["colData"][col]
+            coltypes[providerParts[0]][providerParts[1]]["colData"][col] = {}
+          coltypes[providerParts[0]][providerParts[1]]["colData"][col][keyParts[2]] = entry.get('value')
+      )
+    )
+    output = fromJS(coltypes)
+    return output
 
   _prepareColumns: (configColumns, storageColumns) ->
     storageColumns.map (storageColumn) ->
@@ -157,6 +183,7 @@ templateFn = (componentId) ->
         dataPreview: @state.dataPreview
         editButtons: @_renderEditButtons()
         setAllColumnsType: @_renderSetColumnsType()
+        setTableTypes: @_renderSetColumnTypesFromMetadata()
 
   _setValidateColumn: (cname, isValid) ->
     path = ['validation', @state.tableId, cname]
@@ -252,6 +279,51 @@ templateFn = (componentId) ->
     WrDbActions.saveTableColumns(componentId, @state.configId, @state.tableId, columns).then =>
       @_handleEditColumnsCancel()
 
+  _renderSetColumnTypesFromMetadata: ->
+    datatypes = @state.componentDatatypes
+
+    options = datatypes.map( (group, groupName) ->
+      optgroup
+        label: groupName
+      ,
+        group.map (item, configId) ->
+          option
+            disabled: item == ''
+            value: groupName + "__" + configId
+            key: configId
+          ,
+            if item == '' then 'Use Types From' else item.get 'configName'
+    )
+
+    span null,
+      select
+        defaultValue: ''
+        onChange: (e) =>
+          value = e.target.value.split("__")
+          @state.editingColumns.map (ec) =>
+            typeInfo = datatypes.get(value[0]).get(value[1]).get('colData').get(ec.get('name'))
+            # if a column is not present, it will be set to ignore
+            if !typeInfo
+              newColumn = ec.set('type', 'IGNORE')
+            else
+              type = typeInfo.get('type')
+              if componentId != value[0]
+                dTypes = @_getDataTypes()
+                if !_.contains(dTypes, type)
+                  type = @_getTypeFromBasetype(typeInfo.get('basetype'))
+
+              newColumn = ec.set('type', type)
+                .set('null', typeInfo.get('nullable'))
+                .set('default', typeInfo.get('default'))
+                .set('size', typeInfo.get('length'))
+
+            @_onEditColumn(newColumn)
+        option
+          value: ''
+        ,
+          'Use Types From'
+        options
+
   _renderSetColumnsType: ->
     tmpDataTypes = @_getDataTypes()
     options = _.map tmpDataTypes.concat('IGNORE').concat(''), (opKey, opValue) ->
@@ -286,6 +358,11 @@ templateFn = (componentId) ->
     result = dt?[dataType]?.defaultSize
     return result
 
+  _getTypeFromBasetype: (basetype) ->
+    dtypes = @_getComponentDataTypes()
+    dt = _.find dtypes, (d) ->
+      _.isObject(d) and d.basetype == basetype
+    return _.keys(dt)[0]
 
   _getDataTypes: ->
     dtypes = @_getComponentDataTypes()
