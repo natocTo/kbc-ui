@@ -21,11 +21,7 @@ convertFromProvCredentials = (creds, driver) ->
 module.exports =
   resetProvisioning: (componentId, configId, driver) ->
     currentProvisioningCredentials = store.getProvisioningCredentials(componentId, configId)
-    return Promise.resolve()
-    Promise.props
-      token: provisioningUtils.clearProvisioningToken(componentId, configId, driver)
-      credenitals: provisioningUtils.clearProvisioningCredentials(currentProvisioningCredentials)
-
+    provisioningUtils.clearAll(componentId, configId, driver, currentProvisioningCredentials)
 
   loadProvisioningCredentials: (componentId, configId, isReadOnly, driver) ->
     dispatcher.handleViewAction

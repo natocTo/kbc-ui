@@ -9,9 +9,9 @@ NEW_WR_REDSHIFT_COMPONENT_ID = 'keboola.wr-redshift-v2'
 WR_SNOWFLAKE_COMPONENT_ID = 'keboola.wr-db-snowflake'
 
 
-getDriverAndPermission = (pdriver, ppermission) ->
-  driver = pdriver
-  permission = ppermission
+getDriverAndPermission = (driverParam, permissionParam, componentId) ->
+  driver = driverParam
+  permission = permissionParam
   if driver == 'mysql'
     driver = 'wrdb'
   if componentId == OLD_WR_REDSHIFT_COMPONENT_ID
@@ -22,13 +22,12 @@ getDriverAndPermission = (pdriver, ppermission) ->
   if componentId == WR_SNOWFLAKE_COMPONENT_ID
     driver = 'snowflake'
     permission = 'writer'
-  return
-    dirver: driver
-    permission: permission
+  driver: driver
+  permission: permission
 
 # load credentials and if they dont exists then create new
 loadCredentials = (permission, token, driver, forceRecreate, componentId) ->
-  tmp = @getDriverAndPermission(driver, permission)
+  tmp = getDriverAndPermission(driver, permission, componentId)
   driver = tmp.driver
   permission = tmp.permission
   provisioningActions.loadWrDbCredentials(permission, token, driver).then ->
@@ -65,9 +64,11 @@ retrieveProvisioningCredentials = (isReadOnly, wrDbToken, driver, componentId) -
         read: loadCredentials('read', wrDbToken, driver, false, componentId)
         write: if not isReadOnly then loadCredentials('write', wrDbToken, driver, false, componentId)
 
-cleanAll = (isReadOnly) ->
-
-
+clearCredentials = (componentId, driver, permission, token, credentials) ->
+  if !credentials.get(permission, null)
+    return null
+  provTypes = getDriverAndPermission(driver, permission, componentId)
+  provisioningActions.dropWrDbCredentials(provTypes.permission, token, provTypes.driver)
 
 module.exports =
   getCredentials: (isReadOnly, driver, componentId, configId) ->
@@ -91,14 +92,15 @@ module.exports =
         wrDbToken = wrDbToken.get 'token'
         retrieveProvisioningCredentials(isReadOnly, wrDbToken, driver, componentId)
 
-  clearProvisioningToken: (componentId, configId, driver) ->
+  clearAll: (componentId, configId, driver, currentCredentials) ->
     desc = "wrdb#{driver}_#{configId}"
     legacyDesc = "wrdb#{driver}"
-    cleanTokenPromise = getWrDbToken(desc, legacyDesc).then (token) ->
-      return StorageService.deleteToken(token)
-
-  clearProvisioningCredentials: (provisioningCredentials, driver ) ->
-    # TODO drop provisioning based on type and driver
-    Promise.props
-      read: provisioningCredentials.read
-      write: provisioningCredentials.write
+    getWrDbToken(desc, legacyDesc).then (token) ->
+      if not token
+        return
+      tokenStr = token.get('token')
+      credentialsPromise = Promise.props
+        read: clearCredentials(componentId, driver, 'read', tokenStr, currentCredentials)
+        write: clearCredentials(componentId, driver, 'write', tokenStr, currentCredentials)
+      credentialsPromise.then ->
+        return StorageService.deleteToken(token)
