@@ -97,19 +97,23 @@ templateFn = (componentId) ->
     columnMetadata.map((metadata, col) ->
       metadata.forEach( (entry) ->
         providerParts = entry.get('provider').split("__")
+        sourceComponent = providerParts[0]
+        sourceConfigId = providerParts[1]
+        sourceConfigName = providerParts[2]
         keyParts = entry.get('key').split(".")
+        # keyParts[2] is our part of the datatype. ex: type, nullable, default, basetype
         if keyParts[0] == "KBC" && keyParts[1] == "datatype"
-          if !coltypes[providerParts[0]]
-            coltypes[providerParts[0]] = {}
-          if !coltypes[providerParts[0]][providerParts[1]]
-            coltypes[providerParts[0]][providerParts[1]] = {}
-          if !coltypes[providerParts[0]][providerParts[1]]['configName']
-            coltypes[providerParts[0]][providerParts[1]]['configName'] = providerParts[2]
-          if !coltypes[providerParts[0]][providerParts[1]]["colData"]
-            coltypes[providerParts[0]][providerParts[1]]["colData"] = {}
-          if !coltypes[providerParts[0]][providerParts[1]]["colData"][col]
-            coltypes[providerParts[0]][providerParts[1]]["colData"][col] = {}
-          coltypes[providerParts[0]][providerParts[1]]["colData"][col][keyParts[2]] = entry.get('value')
+          if !coltypes[sourceComponent]
+            coltypes[sourceComponent] = {}
+          if !coltypes[sourceComponent][sourceConfigId]
+            coltypes[sourceComponent][sourceConfigId] = {}
+          if !coltypes[sourceComponent][sourceConfigId]['configName']
+            coltypes[sourceComponent][sourceConfigId]['configName'] = sourceConfigName
+          if !coltypes[sourceComponent][sourceConfigId]["colData"]
+            coltypes[sourceComponent][sourceConfigId]["colData"] = {}
+          if !coltypes[sourceComponent][sourceConfigId]["colData"][col]
+            coltypes[sourceComponent][sourceConfigId]["colData"][col] = {}
+          coltypes[sourceComponent][sourceConfigId]["colData"][col][keyParts[2]] = entry.get('value')
       )
     )
     output = fromJS(coltypes)
