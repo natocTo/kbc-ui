@@ -49,15 +49,15 @@ export default React.createClass({
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
   },
 
-  createNewOption(input) {
-    const found = this.props.metadata.find((m) => m.id === input);
+  createNewOption({ label }) {
+    const found = this.props.metadata.find((m) => m.id === label);
     if (found) {
       return found;
     } else {
       return {
         create: true,
-        value: input,
-        label: input
+        value: label,
+        label: label
       };
     }
   },
@@ -115,10 +115,9 @@ export default React.createClass({
           {this.props.name}
         </label>
         <div className={this.props.wrapperClassName}>
-          <Select
+          <Select.Creatable
             multi={true}
             isLoading={this.props.isLoadingMetadata}
-            allowCreate={true}
             value={this.props.selectedValues}
             filterOption={this.filterOption}
             optionRenderer={this.renderOption}
@@ -126,7 +125,9 @@ export default React.createClass({
             options={this.prepareOptionsData(this.props.metadata)}
             onChange={this.props.onSelectValue}
             newOptionCreator={this.createNewOption}
-            name={name} />
+            name={name}
+            simpleValue
+          />
         </div>
       </div>
     );
