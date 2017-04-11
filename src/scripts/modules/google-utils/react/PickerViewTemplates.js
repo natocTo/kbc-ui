@@ -1,4 +1,31 @@
 export default {
+  files() {
+    const {google} = window;
+    return new google.picker.DocsView()
+      .setIncludeFolders(true)
+      .setSelectFolderEnabled(false)
+      .setParent('root')
+      .setLabel('My Drive');
+  },
+
+  sharedFiles() {
+    const {google} = window;
+    return new google.picker.DocsView()
+      .setIncludeFolders(true)
+      .setOwnedByMe(false)
+      .setSelectFolderEnabled(false)
+      .setLabel('Shared with Me');
+  },
+
+  starredFiles() {
+    const {google} = window;
+    return new google.picker.DocsView()
+      .setIncludeFolders(false)
+      .setSelectFolderEnabled(false)
+      .setStarred(true)
+      .setLabel('Starred');
+  },
+
   sheets() {
     const {google} = window;
     return new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)

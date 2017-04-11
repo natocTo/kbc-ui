@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from '../../../../react/common/KbcBootstrap';
+import {Input} from 'react-bootstrap';
 import RadioGroup from 'react-radio-group';
 import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
@@ -41,15 +41,15 @@ export default React.createClass({
             >
               <Input
                 type="radio"
-                label="New spreadsheet"
-                help="Create new Spreadsheet"
+                label="New File"
+                help="Create new File"
                 wrapperClassName="col-sm-8"
                 value="new"
               />
               <Input
                 type="radio"
-                label="Existing spreadsheet"
-                help="Use existing Spreadsheet"
+                label="Existing File"
+                help="Use existing File"
                 wrapperClassName="col-sm-8"
                 value="existing"
               />
@@ -60,7 +60,7 @@ export default React.createClass({
     );
   },
 
-  renderSpreadsheetPicker() {
+  renderFilePicker() {
     return (
       <div className="row">
         <div className="form-group">
@@ -69,22 +69,22 @@ export default React.createClass({
           </label>
           <div className="col-md-10">
             <Picker
-              dialogTitle="Select Spreadsheet"
-              buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select Spreadsheet'}
+              dialogTitle="Select File"
+              buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select File'}
               onPickedFn={this.props.onSelectExisting}
               buttonProps={{
                 bsStyle: 'default',
                 bsSize: 'large'
               }}
               views={[
-                ViewTemplates.sheets,
-                ViewTemplates.sharedSheets,
-                ViewTemplates.starredSheets
+                ViewTemplates.files,
+                ViewTemplates.sharedFiles,
+                ViewTemplates.starredFiles
               ]}
               multiselectEnabled={false}
             />
             <span className="help-block">
-              Choose Spreadsheet, in which you want to upload the data
+              Choose File you wish to update
             </span>
           </div>
         </div>
@@ -119,7 +119,7 @@ export default React.createClass({
                 />
               </div>
               <input
-                placeholder="New Spreadsheet"
+                placeholder="New File"
                 type="text"
                 value={this.props.valueTitle ? this.props.valueTitle : ''}
                 onChange={this.props.onChangeTitle}
@@ -127,7 +127,7 @@ export default React.createClass({
               />
             </div>
             <span className="help-block">
-              Select Spreadsheets parent <strong>folder</strong> and enter Spreadsheets <strong>title</strong>.<br/>The Spreadsheet will be created upon save.
+              Select Files parent <strong>folder</strong> and enter Files <strong>title</strong>.<br/>The File will be created upon save.
             </span>
           </div>
         </div>

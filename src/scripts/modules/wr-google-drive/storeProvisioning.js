@@ -54,7 +54,7 @@ export default function(COMPONENT_ID, configId) {
       return findMapping(tableId);
     },
     getSavingMessage() {
-      return localState().getIn(['SheetModal', 'savingMessage']);
+      return localState().getIn(['FileModal', 'savingMessage']);
     },
     getPendingPath: (what) => pendingPath.concat(what),
     getSavingPath: (what) => savingPath.concat(what),
