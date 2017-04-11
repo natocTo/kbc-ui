@@ -13,15 +13,17 @@ export default React.createClass({
     valueTitle: PropTypes.string.isRequired,
     valueFolder: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['new', 'existing']),
+    action: PropTypes.oneOf(['create', 'update']),
     show: PropTypes.bool.isRequired
   },
 
   render() {
-    const spreadsheet = (this.props.type === 'new') ? this.renderFolderPicker() : this.renderFilePicker();
+    const radio = (this.props.action === 'create') ? null : this.renderTypeRadio();
+    const picker = (this.props.type === 'new') ? this.renderFolderPicker() : this.renderFilePicker();
     return (
       <div className="form-horizontal">
-      {this.renderTypeRadio()}
-      {spreadsheet}
+      {radio}
+      {picker}
       </div>
     );
   },
@@ -31,7 +33,7 @@ export default React.createClass({
       <div className="row">
         <div className="form-group">
           <label className="col-md-2 control-label">
-            Upload data to
+            Does the File already exist?
           </label>
           <div className="col-md-10">
             <RadioGroup
@@ -41,14 +43,14 @@ export default React.createClass({
             >
               <Input
                 type="radio"
-                label="New File"
-                help="Create new File"
+                label="No"
+                help="Create a new File, that will be updated on each run"
                 wrapperClassName="col-sm-8"
                 value="new"
               />
               <Input
                 type="radio"
-                label="Existing File"
+                label="Yes"
                 help="Use existing File"
                 wrapperClassName="col-sm-8"
                 value="existing"
@@ -65,7 +67,7 @@ export default React.createClass({
       <div className="row">
         <div className="form-group">
           <label className="col-md-2 control-label">
-            Spreadsheet
+            File
           </label>
           <div className="col-md-10">
             <Picker
@@ -97,7 +99,7 @@ export default React.createClass({
       <div className="row">
         <div className="form-group">
           <label className="col-md-2 control-label">
-            Spreadsheet
+            File
           </label>
           <div className="col-md-10">
             <div className="input-group">
@@ -127,7 +129,8 @@ export default React.createClass({
               />
             </div>
             <span className="help-block">
-              Select Files parent <strong>folder</strong> and enter Files <strong>title</strong>.<br/>The File will be created upon save.
+              Select Files parent <strong>folder</strong> and enter <strong>title</strong> of the File.<br/>
+              {this.props.action === 'create' ? 'The File will be created on next run. Current date and time will be appended to Files name.' : 'The File will be created upon save.'}
             </span>
           </div>
         </div>

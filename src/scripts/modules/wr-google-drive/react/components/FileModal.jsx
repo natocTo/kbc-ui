@@ -44,13 +44,13 @@ export default React.createClass({
                 disabled={this.props.isSavingFn(this.file('id'))}
               />
             </TabPane>
-            <TabPane tab="Action" eventKey={3} disabled={step !== 3}>
+            <TabPane tab="Action" eventKey={2} disabled={step !== 3}>
               <ActionTab
-                onChangeAction={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}
-                valueAction={this.sheet('action')}
+                onChangeAction={(e) => this.onChangeAction(e.target.value)}
+                valueAction={this.file('action')}
               />
             </TabPane>
-            <TabPane tab="Destination" eventKey={2} disabled={step !== 3}>
+            <TabPane tab="Destination" eventKey={3} disabled={step !== 3}>
               <FileTab
                 onSelectExisting={(data) => {
                   this.updateLocalState(['file'].concat('fileId'), data[0].id);
@@ -65,6 +65,7 @@ export default React.createClass({
                 valueTitle={this.file('title', '')}
                 valueFolder={this.file(['folder', 'title'], '/')}
                 type={this.localState('uploadType', 'new')}
+                action={this.file('action')}
               />
             </TabPane>
           </TabbedArea>
@@ -79,8 +80,8 @@ export default React.createClass({
             isNextDisabled={this.isStepValid(step)}
             isSaveDisabled={this.isSavingDisabled()}
             isPreviousDisabled={step === 1}
-            showNext={step < 2}
-            showSave={step === 2}
+            showNext={step < 3}
+            showSave={step === 3}
             savingMessage={this.localState('savingMessage')}
           />
         </Modal.Footer>
@@ -90,14 +91,13 @@ export default React.createClass({
 
   isStepValid(step) {
     const tableIdEmpty = !!this.file(['tableId']);
-    const titleEmpty = !!this.file(['title']);
     const action = !!this.file(['action']);
 
     if (step === 1) {
       return !tableIdEmpty;
     }
     if (step === 2) {
-      return !tableIdEmpty || !titleEmpty || !action;
+      return !tableIdEmpty || !action;
     }
     return false;
   },
@@ -128,6 +128,14 @@ export default React.createClass({
     this.updateLocalState(['file', 'title'], title);
   },
 
+  onChangeAction(value) {
+    this.updateLocalState(['file', 'action'], value);
+    // if action == 'create' uploadType is always 'new'
+    if (value === 'create') {
+      this.updateLocalState(['uploadType'], 'new');
+    }
+  },
+
   onSwitchType(event) {
     this.updateLocalState(
       'file',
@@ -152,7 +160,7 @@ export default React.createClass({
 
   handleNext() {
     const step = this.localState(['step']);
-    const nextStep = (step >= 2) ? 2 : step + 1;
+    const nextStep = (step >= 3) ? 3 : step + 1;
     this.updateLocalState(['step'], nextStep);
   },
 

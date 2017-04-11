@@ -21,7 +21,7 @@ export default React.createClass({
       <div className="row">
         <div className="form-group">
           <label className="col-md-2 control-label">
-            Action
+            On each run:
           </label>
           <div className="col-md-10">
             <RadioGroup
@@ -32,17 +32,17 @@ export default React.createClass({
               <div className="form-horizontal">
                 <Input
                   type="radio"
-                  label="Create new file"
-                  help="Create new file each run"
+                  label="Update file"
+                  help="Always rewrite the same file"
                   wrapperClassName="col-sm-8"
-                  value="create"
+                  value="update"
                 />
                 <Input
                   type="radio"
-                  label="Update file"
-                  help="Overwrite the same file"
+                  label="Create new file"
+                  help="Every time create a unique file"
                   wrapperClassName="col-sm-8"
-                  value="update"
+                  value="create"
                 />
               </div>
             </RadioGroup>
