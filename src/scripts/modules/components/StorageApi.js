@@ -51,6 +51,12 @@ var storageApi = {
     });
   },
 
+  deleteToken: function(tokenId) {
+    return createRequest('DELETE', 'tokens/' + tokenId).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getTokens: function() {
     return createRequest('GET', 'tokens').promise().then(function(response) {
       return response.body;

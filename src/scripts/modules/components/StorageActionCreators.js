@@ -68,6 +68,20 @@ module.exports = {
     });
   },
 
+  deleteToken: function(tokenObject) {
+    const tokenId = tokenObject.get('id');
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.STORAGE_TOKEN_DELETE,
+      tokenId: tokenId
+    });
+    return storageApi.deleteToken(tokenId).then(function() {
+      return dispatcher.handleViewAction({
+        type: constants.ActionTypes.STORAGE_TOKEN_DELETE_SUCCESS,
+        tokenId: tokenId
+      });
+    });
+  },
+
   deleteCredentials: function(bucketId, credentialsId) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_DELETE,

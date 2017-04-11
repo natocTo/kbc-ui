@@ -9,6 +9,7 @@ _store = Map(
   tokens: List()
   isLoaded: false
   isLoading: false
+  deletingTokens: Map()
 )
 
 StorageTokensStore = StoreUtils.createStore
@@ -43,6 +44,15 @@ Dispatcher.register (payload) ->
         .set 'tokens', Immutable.fromJS action.tokens
         .set 'isLoading', false
         .set 'isLoaded', true
+      StorageTokensStore.emitChange()
+
+    when constants.ActionTypes.STORAGE_TOKEN_DELETE
+      _store = _store.setIn ['deletingTokens', action.tokenId], true
+      StorageTokensStore.emitChange()
+
+    when constants.ActionTypes.STORAGE_TOKEN_DELETE_SUCCESS
+      _store = _store.setIn ['deletingTokens', action.tokenId], false
+      _store = _store.filter((t) -> t.get('id') != action.tokenId)
       StorageTokensStore.emitChange()
 
     when constants.ActionTypes.STORAGE_TOKENS_LOAD_ERROR
