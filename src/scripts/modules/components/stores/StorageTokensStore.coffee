@@ -52,7 +52,8 @@ Dispatcher.register (payload) ->
 
     when constants.ActionTypes.STORAGE_TOKEN_DELETE_SUCCESS
       _store = _store.setIn ['deletingTokens', action.tokenId], false
-      _store = _store.filter((t) -> t.get('id') != action.tokenId)
+      newTokens = _store.get('tokens').filter((t) -> t.get('id') != action.tokenId)
+      _store = _store.set('tokens', newTokens)
       StorageTokensStore.emitChange()
 
     when constants.ActionTypes.STORAGE_TOKENS_LOAD_ERROR
