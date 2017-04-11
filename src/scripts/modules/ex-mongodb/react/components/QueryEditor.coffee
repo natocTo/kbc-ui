@@ -3,7 +3,7 @@ ReactDOM = require 'react-dom'
 fuzzy = require 'fuzzy'
 string = require('../../../../utils/string').default
 Check = React.createFactory(require('../../../../react/common/common').Check)
-Select = React.createFactory require('../../../../react/common/Select').default
+Select = React.createFactory(require('react-select'))
 
 ExportHelp = React.createFactory require('./ExportHelp').default
 LinkToDocs = React.createFactory require('./LinkToDocs').default
@@ -43,8 +43,8 @@ module.exports = React.createClass
   _handleCollectionChange: (event) ->
     @props.onChange(@props.query.set 'collection', event.target.value)
 
-  _handleModeChange: (value) ->
-    @props.onChange(@props.query.set 'mode', value)
+  _handleModeChange: (selected) ->
+    @props.onChange(@props.query.set 'mode', selected.value)
 
   render: ->
     div className: 'row',
