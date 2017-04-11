@@ -8,8 +8,10 @@ OLD_WR_REDSHIFT_COMPONENT_ID = 'wr-db-redshift'
 NEW_WR_REDSHIFT_COMPONENT_ID = 'keboola.wr-redshift-v2'
 WR_SNOWFLAKE_COMPONENT_ID = 'keboola.wr-db-snowflake'
 
-# load credentials and if they dont exists then create new
-loadCredentials = (permission, token, driver, forceRecreate, componentId) ->
+
+getDriverAndPermission = (pdriver, ppermission) ->
+  driver = pdriver
+  permission = ppermission
   if driver == 'mysql'
     driver = 'wrdb'
   if componentId == OLD_WR_REDSHIFT_COMPONENT_ID
@@ -20,7 +22,15 @@ loadCredentials = (permission, token, driver, forceRecreate, componentId) ->
   if componentId == WR_SNOWFLAKE_COMPONENT_ID
     driver = 'snowflake'
     permission = 'writer'
+  return
+    dirver: driver
+    permission: permission
 
+# load credentials and if they dont exists then create new
+loadCredentials = (permission, token, driver, forceRecreate, componentId) ->
+  tmp = @getDriverAndPermission(driver, permission)
+  driver = tmp.driver
+  permission = tmp.permission
   provisioningActions.loadWrDbCredentials(permission, token, driver).then ->
     creds = wrDbProvStore.getCredentials(permission, token)
     if creds and not forceRecreate
@@ -55,6 +65,9 @@ retrieveProvisioningCredentials = (isReadOnly, wrDbToken, driver, componentId) -
         read: loadCredentials('read', wrDbToken, driver, false, componentId)
         write: if not isReadOnly then loadCredentials('write', wrDbToken, driver, false, componentId)
 
+cleanAll = (isReadOnly) ->
+
+
 
 module.exports =
   getCredentials: (isReadOnly, driver, componentId, configId) ->
@@ -77,3 +90,15 @@ module.exports =
       else #token exists
         wrDbToken = wrDbToken.get 'token'
         retrieveProvisioningCredentials(isReadOnly, wrDbToken, driver, componentId)
+
+  clearProvisioningToken: (componentId, configId, driver) ->
+    desc = "wrdb#{driver}_#{configId}"
+    legacyDesc = "wrdb#{driver}"
+    cleanTokenPromise = getWrDbToken(desc, legacyDesc).then (token) ->
+      return StorageService.deleteToken(token)
+
+  clearProvisioningCredentials: (provisioningCredentials, driver ) ->
+    # TODO drop provisioning based on type and driver
+    Promise.props
+      read: provisioningCredentials.read
+      write: provisioningCredentials.write

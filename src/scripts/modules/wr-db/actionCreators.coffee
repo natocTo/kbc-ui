@@ -19,34 +19,44 @@ convertFromProvCredentials = (creds, driver) ->
   return result
 
 module.exports =
+  resetProvisioning: (componentId, configId, driver) ->
+    currentProvisioningCredentials = store.getProvisioningCredentials(componentId, configId)
+    return Promise.resolve()
+    Promise.props
+      token: provisioningUtils.clearProvisioningToken(componentId, configId, driver)
+      credenitals: provisioningUtils.clearProvisioningCredentials(currentProvisioningCredentials)
+
+
   loadProvisioningCredentials: (componentId, configId, isReadOnly, driver) ->
     dispatcher.handleViewAction
       type: constants.ActionTypes.WR_DB_LOAD_PROVISIONING_START
       componentId: componentId
       configId: configId
-    provisioningUtils.getCredentials(isReadOnly, driver, componentId, configId).then (result) =>
-      if isReadOnly
-        dispatcher.handleViewAction
-          type: constants.ActionTypes.WR_DB_LOAD_PROVISIONING_SUCCESS
-          componentId: componentId
-          configId: configId
-          credentials: result
-      else
-        writeCreds = fromJS(convertFromProvCredentials(result.write, driver))
-        @saveCredentials(componentId, configId, writeCreds).then ->
+    resetPromise = if isReadOnly then Promise.resolve() else @resetProvisioning(componentId, configId, driver)
+    resetPromise.then =>
+      provisioningUtils.getCredentials(isReadOnly, driver, componentId, configId).then (result) =>
+        if isReadOnly
           dispatcher.handleViewAction
             type: constants.ActionTypes.WR_DB_LOAD_PROVISIONING_SUCCESS
             componentId: componentId
             configId: configId
             credentials: result
+        else
+          writeCreds = fromJS(convertFromProvCredentials(result.write, driver))
+          @saveCredentials(componentId, configId, writeCreds).then ->
+            dispatcher.handleViewAction
+              type: constants.ActionTypes.WR_DB_LOAD_PROVISIONING_SUCCESS
+              componentId: componentId
+              configId: configId
+              credentials: result
 
-    .catch (err) ->
-      dispatcher.handleViewAction
-        type: constants.ActionTypes.WR_DB_API_ERROR
-        componentId: componentId
-        configId: configId
-        error: err
-      throw err
+      .catch (err) ->
+        dispatcher.handleViewAction
+          type: constants.ActionTypes.WR_DB_API_ERROR
+          componentId: componentId
+          configId: configId
+          error: err
+        throw err
 
 
   loadTableConfig: (componentId, configId, tableId) ->
