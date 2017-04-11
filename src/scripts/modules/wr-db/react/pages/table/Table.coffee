@@ -281,6 +281,8 @@ templateFn = (componentId) ->
 
   _renderSetColumnTypesFromMetadata: ->
     datatypes = @state.componentDatatypes
+    if datatypes.length == 0
+      return null
 
     options = datatypes.map( (group, groupName) ->
       optgroup
