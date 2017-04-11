@@ -226,15 +226,8 @@ export default React.createClass({
     );
   },
 
-  onSelectMetric(strMetrics) {
-    let metricsArray = [];
-    if (strMetrics && strMetrics !== '') {
-      for ( let metric of strMetrics.split(',')) {
-        if (metricsArray.indexOf(metric) < 0) {
-          metricsArray.push(metric);
-        }
-      }
-    }
+  onSelectMetric(metrics) {
+    const metricsArray = metrics.map((item) => {return item.value;});
     const newMetrics = fromJS(metricsArray.map((m) => {return {expression: m};}));
     const newQuery = this.props.query.setIn(['query', 'metrics'], newMetrics);
     this.props.onChangeQuery(newQuery);
@@ -245,15 +238,8 @@ export default React.createClass({
     return metrics.map((m) => m.get('expression')).toArray();
   },
 
-  onSelectDimension(strDimensions) {
-    let dimensionsArray = [];
-    if (strDimensions && strDimensions !== '') {
-      for ( let dimension of strDimensions.split(',')) {
-        if (dimensionsArray.indexOf(dimension) < 0) {
-          dimensionsArray.push(dimension);
-        }
-      }
-    }
+  onSelectDimension(dimensions) {
+    const dimensionsArray = dimensions.map((item) => {return item.value;});
     const newDimensions = fromJS(dimensionsArray.map((m) => {return {name: m};}));
     const newQuery = this.props.query.setIn(['query', 'dimensions'], newDimensions);
     this.props.onChangeQuery(newQuery);
@@ -264,15 +250,8 @@ export default React.createClass({
     return dimensions.map((m) => m.get('name')).toArray();
   },
 
-  onSelectSegment(strSegments) {
-    let segmentsArray = [];
-    if (strSegments && strSegments !== '') {
-      for ( let segment of strSegments.split(',')) {
-        if (segmentsArray.indexOf(segment) < 0) {
-          segmentsArray.push(segment);
-        }
-      }
-    }
+  onSelectSegment(segments) {
+    const segmentsArray = segments.map((item) => {return item.value;});
     const newSegments = fromJS(segmentsArray.map((m) => {return {segmentId: m};}));
     const newQuery = this.props.query.setIn(['query', 'segments'], newSegments);
     this.props.onChangeQuery(newQuery);

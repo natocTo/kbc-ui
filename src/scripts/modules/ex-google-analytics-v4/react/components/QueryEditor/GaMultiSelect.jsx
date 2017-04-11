@@ -126,7 +126,6 @@ export default React.createClass({
             onChange={this.props.onSelectValue}
             newOptionCreator={this.createNewOption}
             name={name}
-            simpleValue
           />
         </div>
       </div>
