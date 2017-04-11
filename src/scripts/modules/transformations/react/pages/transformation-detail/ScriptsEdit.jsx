@@ -37,14 +37,14 @@ export default React.createClass({
         <div>
           {this.props.transformationType === 'r' ? (
             <div className="well">
-              Read on <a href="https://sites.google.com/a/keboola.com/wiki/home/keboola-connection/user-space/transformations/-r">
+              Read on <a href="https://help.keboola.com/manipulation/transformations/r/">
                 R limitations and best practices
               </a>.
             </div>
           ) : null}
           {this.props.transformationType === 'python' ? (
             <div className="well">
-              Introducing <a href="https://sites.google.com/a/keboola.com/wiki/home/keboola-connection/user-space/transformations/python/01---introduction">
+              Introducing <a href="https://help.keboola.com/manipulation/transformations/python">
                 Python in Keboola Connection
               </a>.
             </div>
