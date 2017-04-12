@@ -1,21 +1,18 @@
 import React from 'react';
 import moment from 'moment';
-import {Tooltip} from './common';
+import date from '../../utils/date';
 
 export default React.createClass({
   displayName: 'CreatedWithIcon',
 
   propTypes: {
-    createdTime: React.PropTypes.string,
-    tooltipPlacement: React.PropTypes.string
+    createdTime: React.PropTypes.string
   },
 
   render: function() {
     return (
-      <span>
-        <Tooltip tooltip={this.props.createdTime} placement={this.props.tooltipPlacement}>
-          <i className="fa fa-fw fa-calendar" />
-        </Tooltip>
+      <span title={date.format(this.props.createdTime)}>
+           <i className="fa fa-fw fa-calendar" />
         {moment(this.props.createdTime).fromNow()}
       </span>
     );
