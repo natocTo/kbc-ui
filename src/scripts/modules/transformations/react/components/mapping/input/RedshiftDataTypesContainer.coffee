@@ -20,15 +20,15 @@ module.exports = React.createClass
     size: ""
     compression: ""
 
-  _handleColumnOnChange: (value) ->
+  _handleColumnOnChange: (selected) ->
     @setState
-      column: value
+      column: if selected then selected.value else ""
       size: ""
       compression: ""
 
-  _handleDataTypeOnChange: (value) ->
+  _handleDataTypeOnChange: (selected) ->
     @setState
-      datatype: value
+      datatype: if selected then selected.value else ""
       size: ""
       compression: ""
 
@@ -36,9 +36,9 @@ module.exports = React.createClass
     @setState
       size: value
 
-  _handleCompressionOnChange: (value) ->
+  _handleCompressionOnChange: (selected) ->
     @setState
-      compression: value
+      compression: if selected then selected.value else ""
 
   _handleAddDataType: ->
     datatypeString = @state.datatype

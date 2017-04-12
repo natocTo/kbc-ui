@@ -115,8 +115,8 @@ module.exports = React.createClass
     value = @props.value.set("datatypes", datatypes)
     @props.onChange(value)
 
-  _handleChangeSortKey: (immutable, string) ->
-    value = @props.value.set("sortKey", string)
+  _handleChangeSortKey: (immutable) ->
+    value = @props.value.set("sortKey", immutable.join())
     @props.onChange(value)
 
   _handleChangeDistKey: (string) ->
