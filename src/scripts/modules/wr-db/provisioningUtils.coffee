@@ -65,10 +65,12 @@ retrieveProvisioningCredentials = (isReadOnly, wrDbToken, driver, componentId) -
         write: if not isReadOnly then loadCredentials('write', wrDbToken, driver, false, componentId)
 
 clearCredentials = (componentId, driver, permission, token, credentials) ->
-  if !credentials.get(permission, null)
+  if !credentials || !credentials.get(permission, null)
     return null
+
   provTypes = getDriverAndPermission(driver, permission, componentId)
-  provisioningActions.dropWrDbCredentials(provTypes.permission, token, provTypes.driver)
+  if wrDbProvStore.getCredentials(provTypes.permission, token)
+    provisioningActions.dropWrDbCredentials(provTypes.permission, token, provTypes.driver)
 
 module.exports =
   getCredentials: (isReadOnly, driver, componentId, configId) ->
