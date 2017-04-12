@@ -236,12 +236,15 @@ module.exports = React.createClass
   _handleChange: (propName, newValue) ->
     schedule = @_getSchedule()
     if newValue
-      schedule[propName] = _.unique newValue.split(',')
+      schedule[propName] = _.unique newValue.map((option) ->
+        option.value
+      )
     else
       delete schedule[propName]
     @props.onChange @_scheduleToCron schedule
 
-  _handlePeriodChange: (newValue) ->
+  _handlePeriodChange: (selected) ->
+    newValue = selected.value
     # change current schedule
     schedule = @_getSchedule()
     toDelete = []
