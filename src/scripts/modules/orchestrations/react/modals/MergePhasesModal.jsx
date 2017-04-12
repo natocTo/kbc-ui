@@ -46,14 +46,14 @@ export default React.createClass({
                 Into
               </label>
               <div className="col-sm-11">
-                <Select
+                <Select.Creatable
                   placeholder="Select phase..."
                   clearable={false}
                   key="phases select"
                   name="phaseselector"
                   allowCreate={true}
                   value={this.state.value}
-                  onChange= {(newValue) => this.setState({value: newValue})}
+                  onChange={({value: newValue}) => this.setState({value: newValue})}
                   options= {this.getPhasesOptions()}
                 />
                 <span className="help-block">
