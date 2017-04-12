@@ -19,14 +19,14 @@ module.exports = React.createClass
     datatype: ""
     size: ""
 
-  _handleColumnOnChange: (value) ->
+  _handleColumnOnChange: (selected) ->
     @setState
-      column: value
+      column: if selected then selected.value else ""
       size: ""
 
-  _handleDataTypeOnChange: (value) ->
+  _handleDataTypeOnChange: (selected) ->
     @setState
-      datatype: value
+      datatype: if selected then selected.value else ""
       size: ""
 
   _handleSizeOnChange: (value) ->

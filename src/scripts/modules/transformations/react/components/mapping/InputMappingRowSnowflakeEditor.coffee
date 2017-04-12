@@ -237,7 +237,6 @@ module.exports = React.createClass
                 multi: true
                 disabled: @props.disabled
                 allowCreate: true
-                delimiter: ','
                 placeholder: 'Add a value...'
                 emptyStrings: true,
                 onChange: @_handleChangeWhereValues
