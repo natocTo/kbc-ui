@@ -12,16 +12,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="row">
-          <span className="col-xs-3">
-            <h2 style={{lineHeight: '32px'}}>
-              Stored Files
-            </h2>
-          </span>
-          <span className="col-xs-9 section-help">
-            The latest file with a given tag will be saved to <code>/data/in/user/&#123;tag&#125;</code>.
-          </span>
-        </div>
+        <h2 style={{lineHeight: '32px'}}>
+          Stored Files
+        </h2>
         <div className="form-group">
           <Select
             name="tags"
@@ -34,6 +27,9 @@ export default React.createClass({
             placeholder="Add tags..."
             isLoading={this.props.isSaving}
             />
+          <span className="help-block">
+            The latest file with a given tag will be saved to <code>/data/in/user/&#123;tag&#125;</code>.
+          </span>
         </div>
       </div>
     );

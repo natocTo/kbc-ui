@@ -13,16 +13,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="row">
-          <span className="col-xs-3">
-            <h2 style={{lineHeight: '32px'}}>
-              Packages
-            </h2>
-          </span>
-          <span className="col-xs-9 section-help">
-            {this.hint()}
-          </span>
-        </div>
+        <h2 style={{lineHeight: '32px'}}>
+          Packages
+        </h2>
         <div className="form-group">
           <Select
             name="packages"
@@ -35,6 +28,9 @@ export default React.createClass({
             placeholder="Add packages..."
             isLoading={this.props.isSaving}
             />
+          <span className="help-block">
+            {this.hint()}
+          </span>
         </div>
       </div>
     );

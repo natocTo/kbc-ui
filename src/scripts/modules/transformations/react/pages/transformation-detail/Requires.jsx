@@ -15,16 +15,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="row">
-          <span className="col-xs-3">
-            <h2 style={{lineHeight: '32px'}}>
-              Requires
-            </h2>
-          </span>
-          <span className="col-xs-9 section-help">
-            These transformations are processed before this transformation starts.
-          </span>
-        </div>
+        <h2 style={{lineHeight: '32px'}}>
+          Requires
+        </h2>
         <div className="form-group">
           <Select
             name="packages"
@@ -39,6 +32,9 @@ export default React.createClass({
             isLoading={this.props.isSaving}
             noResultsText="No transformations found"
             />
+          <span className="help-block">
+            These transformations are processed before this transformation starts.
+          </span>
         </div>
       </div>
     );
