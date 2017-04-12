@@ -1,42 +1,60 @@
 import React, {PropTypes} from 'react';
-import Static from './PackagesStatic';
-import Edit from './PackagesEdit';
-
+import Select from 'react-select';
+import {fromJS} from 'immutable';
 
 export default React.createClass({
   propTypes: {
-    bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,
     packages: PropTypes.object.isRequired,
-    isEditing: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    onEditStart: PropTypes.func.isRequired,
-    onEditCancel: PropTypes.func.isRequired,
-    onEditChange: PropTypes.func.isRequired,
-    onEditSubmit: PropTypes.func.isRequired
+    onEditChange: PropTypes.func.isRequired
   },
 
   render() {
-    if (this.props.isEditing) {
+    return (
+      <div>
+        <div className="row">
+          <span className="col-xs-3">
+            <h2 style={{lineHeight: '32px'}}>
+              Packages
+            </h2>
+          </span>
+          <span className="col-xs-9 section-help">
+            {this.hint()}
+          </span>
+        </div>
+        <div className="form-group">
+          <Select
+            name="packages"
+            value={this.props.packages.toArray()}
+            multi="true"
+            disabled={this.props.isSaving}
+            allowCreate="true"
+            delimiter=","
+            onChange={this.handleValueChange}
+            placeholder="Add packages..."
+            isLoading={this.props.isSaving}
+            />
+        </div>
+      </div>
+    );
+  },
+
+  hint() {
+    if (this.props.transformation.get('type') === 'r') {
       return (
-        <Edit
-          packages={this.props.packages}
-          transformationType={this.props.transformation.get('type')}
-          isSaving={this.props.isSaving}
-          onChange={this.props.onEditChange}
-          onCancel={this.props.onEditCancel}
-          onSave={this.props.onEditSubmit}
-          />
-      );
-    } else {
-      return (
-        <Static
-          packages={this.props.transformation.get('packages')}
-          transformationType={this.props.transformation.get('type')}
-          onEditStart={this.props.onEditStart}
-          />
+        <span>These packages will be installed from CRAN and loaded to the R script environment.</span>
       );
     }
-  }
+    if (this.props.transformation.get('type') === 'python') {
+      return (
+        <span>These packages will be installed from PyPI to the Python script environment. Do not forget to load them using <code>import</code>.</span>
+      );
+    }
+  },
 
+  handleValueChange(newValue, newArray) {
+    const values = fromJS(newArray).map((item) => item.get('value'));
+    this.props.onEditChange(values);
+  }
 });

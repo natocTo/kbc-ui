@@ -1,45 +1,65 @@
 import React, {PropTypes} from 'react';
-import Static from './RequiresStatic';
-import Edit from './RequiresEdit';
-
+import _ from 'underscore';
+import Select from 'react-select';
+import {fromJS} from 'immutable';
 
 export default React.createClass({
   propTypes: {
-    bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,
     transformations: PropTypes.object.isRequired,
     requires: PropTypes.object.isRequired,
-    isEditing: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    onEditStart: PropTypes.func.isRequired,
-    onEditCancel: PropTypes.func.isRequired,
-    onEditChange: PropTypes.func.isRequired,
-    onEditSubmit: PropTypes.func.isRequired
+    onEditChange: PropTypes.func.isRequired
   },
 
   render() {
-    if (this.props.isEditing) {
-      return (
-        <Edit
-          transformation={this.props.transformation}
-          transformations={this.props.transformations}
-          isSaving={this.props.isSaving}
-          requires={this.props.requires}
-          onChange={this.props.onEditChange}
-          onCancel={this.props.onEditCancel}
-          onSave={this.props.onEditSubmit}
-          />
-      );
-    } else {
-      return (
-        <Static
-          bucketId={this.props.bucketId}
-          transformation={this.props.transformation}
-          transformations={this.props.transformations}
-          onEditStart={this.props.onEditStart}
-          />
-      );
-    }
+    return (
+      <div>
+        <div className="row">
+          <span className="col-xs-3">
+            <h2 style={{lineHeight: '32px'}}>
+              Requires
+            </h2>
+          </span>
+          <span className="col-xs-9 section-help">
+            These transformations are processed before this transformation starts.
+          </span>
+        </div>
+        <div className="form-group">
+          <Select
+            name="packages"
+            value={this.props.requires.toArray()}
+            options={this.getSelectOptions(this.props.transformations, this.props.transformation)}
+            multi="true"
+            disabled={this.props.isSaving}
+            allowCreate={false}
+            delimiter=","
+            onChange={this.handleValueChange}
+            placeholder="Add required transformation..."
+            isLoading={this.props.isSaving}
+            noResultsText="No transformations found"
+            />
+        </div>
+      </div>
+    );
+  },
+
+  getSelectOptions: function(transformations, currentTransformation) {
+    return _.sortBy(_.map(_.filter(transformations.toArray(), function(transformation) {
+      return parseInt(transformation.get('phase'), 10) === parseInt(currentTransformation.get('phase'), 10) && transformation.get('backend') === currentTransformation.get('backend') && transformation.get('id') !== currentTransformation.get('id');
+    }), function(transformation) {
+      return {
+        label: transformation.get('name'),
+        value: transformation.get('id')
+      };
+    }), function(option) {
+      return option.label.toLowerCase();
+    });
+  },
+
+  handleValueChange(newValue, newArray) {
+    const values = fromJS(newArray).map((item) => item.get('value'));
+    this.props.onEditChange(values);
   }
 
 });

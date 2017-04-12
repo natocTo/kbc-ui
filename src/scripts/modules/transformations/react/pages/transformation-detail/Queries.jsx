@@ -1,21 +1,12 @@
 import React, {PropTypes} from 'react/addons';
-import Static from './QueriesStatic';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
-import string from 'underscore.string';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
+import SaveButtons from '../../../../../react/common/SaveButtons';
 
 /* global require */
 require('codemirror/mode/sql/sql');
 require('./queries.less');
-
-function getQueryPosition(queries, queryNumber) {
-  return queries
-    .take(queryNumber)
-    .reduce((total, query) => {
-      return total + string.lines(query).length + 1;
-    }, 0);
-}
 
 export default React.createClass({
   mixins: [React.addons.PureRenderMixin],
@@ -23,68 +14,56 @@ export default React.createClass({
     bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,
     queries: PropTypes.string.isRequired,
-    isEditing: PropTypes.bool.isRequired,
     isEditingValid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    onEditStart: PropTypes.func.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
-    onEditSubmit: PropTypes.func.isRequired
-  },
-
-  getInitialState() {
-    return {
-      cursorPos: 0
-    };
+    onEditSubmit: PropTypes.func.isRequired,
+    isChanged: PropTypes.bool.isRequired
   },
 
   render() {
     return (
       <div>
-        <h2>
+        <h2 style={{lineHeight: '32px'}}>
           Queries
           <small>
-            <OverlayTrigger trigger="hover" placement="top" overlay={this.hint()}>
+            <OverlayTrigger trigger="click" rootClose placement="top" overlay={this.hint()}>
               <i className="fa fa-fw fa-question-circle" />
             </OverlayTrigger>
             <Clipboard text={this.props.queries}/>
           </small>
+          {this.renderButtons()}
         </h2>
+
         {this.queries()}
       </div>
     );
   },
 
-  queries() {
-    if (this.props.isEditing) {
-      return (
-        <Edit
-          queries={this.props.queries}
-          cursorPos={this.state.cursorPos}
-          backend={this.props.transformation.get('backend')}
+  renderButtons() {
+    return (
+      <span className="pull-right">
+        <SaveButtons
           isSaving={this.props.isSaving}
-          isValid={this.props.isEditingValid}
+          disabled={!this.props.isEditingValid}
+          isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
-          onChange={this.props.onEditChange}
-          onCancel={this.props.onEditCancel}
-          />
-      );
-    } else {
-      return (
-        <Static
-          queries={this.props.transformation.get('queries')}
-          backend={this.props.transformation.get('backend')}
-          onEditStart={this.handleEditStart}
-          />
-      );
-    }
+          onReset={this.props.onEditCancel}
+            />
+      </span>
+    );
   },
 
-  handleEditStart(queryNumber) {
-    this.setState({
-      cursorPos: getQueryPosition(this.props.transformation.get('queries'), queryNumber)
-    });
-    this.props.onEditStart();
+  queries() {
+    return (
+      <Edit
+        queries={this.props.queries}
+        backend={this.props.transformation.get('backend')}
+        disabled={this.props.isSaving}
+        onChange={this.props.onEditChange}
+        />
+    );
   },
 
   hint() {
