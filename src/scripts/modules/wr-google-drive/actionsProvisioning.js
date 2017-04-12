@@ -64,25 +64,23 @@ export default function(COMPONENT_ID, configId) {
     const desc = description || 'Update tables';
     const data = store.configData
       .setIn(['parameters', 'tables'], tables)
-      .setIn(['storage', 'input', 'tables'], mappings)
-    ;
+      .setIn(['storage', 'input', 'tables'], mappings);
     return saveConfigData(data, savingPath, desc);
   }
 
   function saveTable(table, mapping) {
     updateLocalState(store.getSavingPath(table.get('id')), true);
-
-    if (!table.get('fileId')) {
-      // create spreadsheet if not exist
+    // create file if not exists and action is not 'create'
+    if (!table.get('fileId') && table.get('action') !== 'create') {
       updateLocalState(['FileModal', 'savingMessage'], 'Creating new File');
       return createFile(table).then((data) => {
+        console.log(data);
         return updateTable(
-          table.set('fileId', data.file.fileId),
+          table.set('fileId', data.file.id),
           mapping
         );
       });
     }
-
     return updateTable(table, mapping);
   }
 
@@ -112,7 +110,6 @@ export default function(COMPONENT_ID, configId) {
     if (!foundMapping && mapping) {
       newMappings = newMappings.push(mapping);
     }
-
     return saveTables(newTables, newMappings, store.getSavingPath(tid), `Update table ${tid}`);
   }
 
@@ -136,7 +133,6 @@ export default function(COMPONENT_ID, configId) {
         .delete('storage')
         .toJS()
     };
-
     return callDockerAction(COMPONENT_ID, 'createFile', params);
   }
 

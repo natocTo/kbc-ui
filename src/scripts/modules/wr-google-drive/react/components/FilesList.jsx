@@ -68,7 +68,10 @@ export default React.createClass({
           {/* right arrow */}
         </div>
         <div className="th">
-          <strong>Spreadsheet / Sheet</strong>
+          <strong>Folder</strong>
+        </div>
+        <div className="th">
+          <strong>Title</strong>
         </div>
         <div className="th pull-right">
           {/* action buttons */}
@@ -88,7 +91,10 @@ export default React.createClass({
           <i className="kbc-icon-arrow-right" />
         </div>
         <div className="td">
-          {this.renderGoogleLink(item)}
+          {this.renderDriveLink(item.getIn(['folder', 'id']), item.getIn(['folder', 'title']))}
+        </div>
+        <div className="td">
+          {this.renderDriveLink(item.get('fileId'), item.get('title'))}
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderEditButton(item)}
@@ -111,7 +117,10 @@ export default React.createClass({
           <i className="kbc-icon-arrow-right" />
         </div>
         <div className="td">
-          {this.renderGoogleLink(item)}
+          {this.renderDriveLink(item.getIn(['folder', 'id']), item.getIn(['folder', 'title']))}
+        </div>
+        <div className="td">
+          {this.renderDriveLink(item.get('fileId'), item.get('title'))}
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderDeleteButton(item)}
@@ -202,11 +211,11 @@ export default React.createClass({
     );
   },
 
-  renderGoogleLink(sheet) {
-    const url = `https://docs.google.com/spreadsheets/d/${sheet.get('fileId')}/edit#gid=${sheet.get('sheetId')}`;
+  renderDriveLink(googleId, title) {
+    const url = `https://drive.google.com/open?id=${googleId}`;
     return (
       <a href={url} target="_blank">
-        {sheet.get('title')} / {sheet.get('sheetTitle')}
+        {title}
       </a>
     );
   }
