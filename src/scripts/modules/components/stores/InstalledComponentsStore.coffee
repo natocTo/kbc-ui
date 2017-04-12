@@ -96,7 +96,6 @@ InstalledComponentsStore = StoreUtils.createStore
           (
             fuzzy.match(nameFilter, component.get('name').toString()) or
               fuzzy.match(nameFilter, component.get('id').toString()) or
-              fuzzy.match(nameFilter, component.get('description').toString()) or
               @getAllDeletedConfigurationsFiltered(component).count()
           )
         ,
