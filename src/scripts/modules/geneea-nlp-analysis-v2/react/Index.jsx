@@ -204,12 +204,11 @@ export default React.createClass({
             name="language"
             placeholder="autodetect"
             clearable={false}
-            allowCreate={false}
             value={this.getEditingValue(params.LANGUAGE)}
             valueRenderer={(op) => {
               return op.label;
             }}
-            onChange= {(newValue) => this.updateEditingValue(params.LANGUAGE, newValue)}
+            onChange= {({value: newValue}) => this.updateEditingValue(params.LANGUAGE, newValue)}
             options= {languageOptions}/>, 'Language of the text of the data column.')
         }
 
@@ -372,14 +371,13 @@ export default React.createClass({
     const predefinedColumns = domainOptions;
     const prop = params.DOMAIN;
     const result = this.renderFormElement('Domain',
-      <Select
+      <Select.Creatable
         placeholder="Select or type new..."
         clearable={true}
-        allowCreate={true}
         key="domain"
         name="domain"
         value={this.getEditingValue(prop)}
-        onChange= {(newValue) => this.updateEditingValue(prop, newValue)}
+        onChange= {(e) => this.updateEditingValue(prop, e ? e.value : '')}
         options= {predefinedColumns}
       />
     , description);
@@ -399,7 +397,7 @@ export default React.createClass({
         name={prop}
         clearable={false}
         value={this.getEditingValue(prop)}
-        onChange= {(newValue) => this.updateEditingValue(prop, newValue)}
+        onChange= {({value}) => this.updateEditingValue(prop, value)}
         options= {selectOptions}/>
     );
   },
@@ -409,6 +407,7 @@ export default React.createClass({
     const result = this.renderFormElement(label,
       <Select
         multi={isMulti}
+        simpleValue={true}
         clearable={false}
         key={column}
         name={column}
