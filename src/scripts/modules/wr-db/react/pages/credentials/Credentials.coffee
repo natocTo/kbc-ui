@@ -168,7 +168,7 @@ templateFn = (componentId, driver, isProvisioning) ->
             span className: 'td',
               h4 className: 'list-group-item-heading', "Keboola #{driverName} database"
               p className: 'list-group-item-text', "Keboola will provide and setup \
-              dedicated #{driverName} database."
+              dedicated #{driverName} database. Any database formerly provided for this config will be dropped."
 
   _toggleCreateOwnCredentials: ->
     credentials = @state.credentials.map (value, key) ->
