@@ -6,6 +6,7 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.any,
     emptyStrings: PropTypes.bool,
+    allowCreate: PropTypes.bool,
     ignoreCase: PropTypes.bool,
     multi: PropTypes.bool,
     matchProp: PropTypes.string,
@@ -22,6 +23,7 @@ export default React.createClass({
     return {
       value: '',
       emptyStrings: false,
+      allowCreate: false,
       multi: false,
       ignoreCase: true,
       matchProp: 'any',
@@ -65,8 +67,14 @@ export default React.createClass({
     }
 
     var filterOption = function(op) {
-      if (this.props.multi && exclude.indexOf(op.value) > -1) return false;
-      if (this.props.filterOption) return this.props.filterOption.call(this, op, filterString);
+      if (this.props.multi && exclude && Immutable.fromJS(exclude).toMap().find(function(item) {
+        return item.get('value') === op.value;
+      }, op)) {
+        return false;
+      }
+      if (this.props.filterOption) {
+        return this.props.filterOption.call(this, op, filterString);
+      }
       var valueTest = String(op.value);
       var labelTest = String(op.label);
       var filterStr = filterString;
@@ -87,23 +95,38 @@ export default React.createClass({
   },
 
   render() {
-    return (
-      <span>
-        <Select
-          {...this.props}
-          value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
-          valueRenderer={this.valueRenderer}
-          filterOptions={this.filterOptions}
-          onChange={this.onChange}
+    if (this.props.allowCreate) {
+      return (
+        <span>
+          <Select.Creatable
+            {...this.props}
+            value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
+            valueRenderer={this.valueRenderer}
+            filterOptions={this.filterOptions}
+            onChange={this.onChange}
           />
-        {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
-      </span>
-    );
+          {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
+        </span>
+      );
+    } else {
+      return (
+        <span>
+          <Select
+            {...this.props}
+            value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
+            valueRenderer={this.valueRenderer}
+            filterOptions={this.filterOptions}
+            onChange={this.onChange}
+          />
+          {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
+        </span>
+      );
+    }
   },
 
-  onChange(string, array) {
+  onChange(selected) {
     if (this.props.multi) {
-      this.props.onChange(Immutable.fromJS(array.map(function(value) {
+      this.props.onChange(Immutable.fromJS(selected.map(function(value) {
         if (value.value === '%_EMPTY_STRING_%') {
           return '';
         }
@@ -111,25 +134,51 @@ export default React.createClass({
           return ' ';
         }
         return value.value;
-      })), string);
+      })));
     } else {
-      this.props.onChange(string);
+      selected ? this.props.onChange(selected.value) : this.props.onChange('');
     }
   },
 
-  mapValues(values) {
-    if (this.props.multi && values) {
-      return values.map(function(value) {
-        if (value === '') {
-          return '%_EMPTY_STRING_%';
+  mapValues(value) {
+    return this.props.multi
+      ? this.mapValuesMulti(value)
+      : this.mapValuesSingle(value);
+  },
+
+  mapValuesSingle(value) {
+    if (value) {
+      return {
+        label: value,
+        value: value
+      };
+    } else {
+      return null;
+    }
+  },
+
+  mapValuesMulti(value) {
+    if (value) {
+      return value.map(function(item) {
+        if (item === '') {
+          return {
+            label: '%_EMPTY_STRING_%',
+            value: '%_EMPTY_STRING_%'
+          };
+        } else if (item === ' ') {
+          return {
+            label: '%_SPACE_CHARACTER_%',
+            value: '%_SPACE_CHARACTER_%'
+          };
+        } else {
+          return {
+            label: item,
+            value: item
+          };
         }
-        if (value === ' ') {
-          return '%_SPACE_CHARACTER_%';
-        }
-        return value;
       });
     } else {
-      return values;
+      return [];
     }
   }
 
