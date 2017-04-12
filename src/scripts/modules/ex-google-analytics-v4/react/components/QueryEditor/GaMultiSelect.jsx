@@ -81,12 +81,6 @@ export default React.createClass({
     );
   },
 
-
-  renderValue(op) {
-    // console.log('render value', op);
-    return op.id || op.value;
-  },
-
   prepareOptionsData(data) {
     const order = this.props.preferedOrderIds;
     const alldata = data.map((op) => {
@@ -118,10 +112,9 @@ export default React.createClass({
           <Select.Creatable
             multi={true}
             isLoading={this.props.isLoadingMetadata}
-            value={this.props.selectedValues}
+            value={this.prepareValue(this.props.selectedValues)}
             filterOption={this.filterOption}
             optionRenderer={this.renderOption}
-            valueRenderer={this.renderValue}
             options={this.prepareOptionsData(this.props.metadata)}
             onChange={this.props.onSelectValue}
             newOptionCreator={this.createNewOption}
@@ -130,6 +123,16 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  prepareValue(list) {
+    return list.map((item) => {
+      return {
+        label: item,
+        value: item,
+        className: 'Select-create-option-placeholder'
+      };
+    });
   },
 
   renderStatic() {
