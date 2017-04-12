@@ -18,9 +18,9 @@ module.exports = React.createClass
     selectValue: ""
     inputValue: ""
 
-  _handleSelectOnChange: (value) ->
+  _handleSelectOnChange: (selected) ->
     @setState
-      selectValue: value
+      selectValue: if selected then selected.value else ""
 
   _handleInputOnChange: (value) ->
     @setState
