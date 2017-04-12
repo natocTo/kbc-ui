@@ -20,7 +20,7 @@ JobDetailOverview = React.createClass
               strong className: 'col-md-9', date.format(@props.job.get('createdTime'))
             div className: 'row',
               span className: 'col-md-3', 'Start '
-              strong className: 'col-md-9', date.format(@props.job.get('startTime'))
+              strong className: 'col-md-9', @_getValidStartTime()
             div className: 'row',
               span className: 'col-md-3', 'Initialized '
               strong
@@ -54,6 +54,10 @@ JobDetailOverview = React.createClass
       Duration
         startTime: @props.job.get('startTime')
         endTime: @props.job.get('endTime')
+
+  _getValidStartTime: ->
+    return 'waiting' if !@props.job.get('startTime')
+    date.format(@props.job.get('startTime'))
 
 
 module.exports = JobDetailOverview
