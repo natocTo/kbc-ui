@@ -1,6 +1,7 @@
 React = require 'react'
 moment = require 'moment'
 Finished = React.createFactory(require('./common').Finished)
+date = require '../../utils/date'
 
 {span, i} = React.DOM
 
@@ -9,7 +10,7 @@ FinishedWithIcon = React.createClass
   propTypes:
     endTime: React.PropTypes.string
   render: ->
-    span title: @props.endTime,
+    span title: date.format(@props.endTime),
       i {className: 'fa fa-calendar'}
       ' '
       Finished

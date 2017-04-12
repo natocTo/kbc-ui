@@ -4,6 +4,7 @@ import {Map, List} from 'immutable';
 import {Button, Modal} from 'react-bootstrap';
 import {diffJson} from 'diff';
 import DetailedDiff from './VersionsDiffModalComponents/DetailedDiff';
+import date from '../../utils/date';
 
 const COLOR_ADD = '#cfc';
 const COLOR_REMOVE = '#fcc';
@@ -148,7 +149,7 @@ export default React.createClass({
         {this.versionDescription(version)}
         {' '}
         <small>
-          <span title={moment(version.get('created')).format()}><i className="fa fa-fw fa-calendar" />{moment(version.get('created')).fromNow()}</span> by {version.getIn(['creatorToken', 'description'], 'unknown')}
+          <span title={date.format(version.get('created'))}><i className="fa fa-fw fa-calendar" />{moment(version.get('created')).fromNow()}</span> by {version.getIn(['creatorToken', 'description'], 'unknown')}
         </small>
       </span>
     );
