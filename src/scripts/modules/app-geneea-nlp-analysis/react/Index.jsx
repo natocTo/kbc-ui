@@ -194,7 +194,7 @@ export default React.createClass({
             name="language"
             clearable={false}
             value={this.getEditingValue(params.LANGUAGE)}
-            onChange= {(newValue) => this.updateEditingValue(params.LANGUAGE, newValue)}
+            onChange= {({value: newValue}) => this.updateEditingValue(params.LANGUAGE, newValue)}
             options= {languageOptions}/>, 'Language of the text of the data column.')
         }
         {this.renderAnalysisTypesSelect()}
@@ -324,18 +324,22 @@ export default React.createClass({
   renderDomainSelect(description) {
     const predefinedColumns = domainOptions;
     const prop = params.DOMAIN;
-    const result = this.renderFormElement('Domain',
-      <Select
+    const currentValue = this.getEditingValue(prop);
+    const hasValueOption = predefinedColumns.find(({value}) => value === currentValue);
+    const allOptions = !!hasValueOption ? predefinedColumns : predefinedColumns.concat({label: currentValue, value: currentValue});
+    const result = this.renderFormElement(
+      'Domain',
+      <Select.Creatable
         placeholder="Select or type new..."
         clearable={true}
-        allowCreate={true}
+        simpleValue={true}
         key="domain"
         name="domain"
-        value={this.getEditingValue(prop)}
+        value={currentValue}
         onChange= {(newValue) => this.updateEditingValue(prop, newValue)}
-        options= {predefinedColumns}
+        options= {allOptions}
       />
-    , description);
+      , description);
     return result;
   },
 
@@ -346,7 +350,7 @@ export default React.createClass({
         key={column}
         name={column}
         value={this.getEditingValue(column)}
-        onChange= {(newValue) => this.updateEditingValue(column, newValue)}
+        onChange= {({value: newValue}) => this.updateEditingValue(column, newValue)}
         options= {this.getColumns()}
       />
     , description);
