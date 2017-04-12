@@ -370,17 +370,21 @@ export default React.createClass({
   renderDomainSelect(description) {
     const predefinedColumns = domainOptions;
     const prop = params.DOMAIN;
-    const result = this.renderFormElement('Domain',
+    const currentValue = this.getEditingValue(prop);
+    const hasValueOption = predefinedColumns.find(({value}) => value === currentValue);
+    const allOptions = !!hasValueOption ? predefinedColumns : predefinedColumns.concat({label: currentValue, value: currentValue});
+    const result = this.renderFormElement(
+      'Domain',
       <Select.Creatable
         placeholder="Select or type new..."
         clearable={true}
         key="domain"
         name="domain"
-        value={this.getEditingValue(prop)}
+        value={currentValue}
         onChange= {(e) => this.updateEditingValue(prop, e ? e.value : '')}
-        options= {predefinedColumns}
+        options= {allOptions}
       />
-    , description);
+      , description);
     return result;
   },
 
