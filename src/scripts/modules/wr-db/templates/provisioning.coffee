@@ -23,5 +23,6 @@ module.exports =
       password: 'password'
       user: 'user'
       schema: 'schema'
+      warehouse: 'warehouse'
     defaultPort: '443'
     name: 'Snowflake'
