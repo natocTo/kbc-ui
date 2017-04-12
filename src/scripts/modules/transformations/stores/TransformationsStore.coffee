@@ -237,6 +237,28 @@ Dispatcher.register (payload) ->
             action.transformationId
             action.editingId
           ]
+          if (action.editingId == 'queriesString')
+            store = store.deleteIn [
+              'editingTransformationsFields'
+              action.bucketId
+              action.transformationId
+              'queriesChanged'
+            ]
+          if (action.editingId == 'packages')
+            store = store.deleteIn [
+              'editingTransformationsFields'
+              action.bucketId
+              action.transformationId
+              'packagesChanged'
+            ]
+          if (action.editingId == 'tags')
+            store = store.deleteIn [
+              'editingTransformationsFields'
+              action.bucketId
+              action.transformationId
+              'tagsChanged'
+            ]
+
       TransformationsStore.emitChange()
 
     when Constants.ActionTypes.TRANSFORMATION_EDIT_SAVE_ERROR

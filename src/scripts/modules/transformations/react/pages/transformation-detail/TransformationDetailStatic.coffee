@@ -5,6 +5,8 @@ Immutable = require('immutable')
 {Map, List} = Immutable
 Clipboard = React.createFactory(require '../../../../../react/common/Clipboard')
 _ = require('underscore')
+OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
+Popover = React.createFactory(require('react-bootstrap').Popover)
 
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 TransformationsActionCreators = require '../../../ActionCreators'
@@ -111,44 +113,46 @@ module.exports = React.createClass
 
   _renderRequires: ->
     span {},
-      h2 {}, 'Requires'
       React.createElement Requires,
-        bucketId: @props.bucket.get('id')
         transformation: @props.transformation
         transformations: @props.transformations
-        isEditing: @props.editingFields.has('requires')
         isSaving: @props.pendingActions.has('save-requires')
         requires: @props.editingFields.get('requires', @props.transformation.get("requires"))
-        onEditStart: =>
-          TransformationsActionCreators.startTransformationFieldEdit(@props.bucketId,
-            @props.transformationId, 'requires')
-        onEditCancel: =>
-          TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
-            @props.transformationId, 'requires')
         onEditChange: (newValue) =>
           TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
             @props.transformationId, 'requires', newValue)
-        onEditSubmit: =>
           TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
             @props.transformationId, 'requires')
-      h2 {}, 'Dependent transformations'
       if @_getDependentTransformations().count()
-        span {},
-          div {className: "help-block"}, small {},
-            "These transformations are dependent on the current transformation."
-          div {},
-            @_getDependentTransformations().map((dependent) ->
-              Link
-                key: dependent.get("id")
-                to: 'transformationDetail'
-                params: {row: dependent.get("id"), config: @props.bucket.get('id')}
+        [
+          div
+            className: 'row'
+          ,
+            span
+              className: 'col-md-5'
+            ,
+              h2
+                style:
+                  lineHeight: '32px'
               ,
-                span {className: 'label kbc-label-rounded-small label-default'},
-                  dependent.get("name")
-            , @).toArray()
-      else
-        div {className: "help-block"}, small {},
-          "No transformations are dependent on the current transformation."
+                'Dependent transformations'
+            span
+              className: 'col-md-7 section-help'
+            ,
+              'These transformations are dependent on the current transformation.'
+        ,
+          span {},
+            div {},
+              @_getDependentTransformations().map((dependent) ->
+                Link
+                  key: dependent.get("id")
+                  to: 'transformationDetail'
+                  params: {row: dependent.get("id"), config: @props.bucket.get('id')}
+                ,
+                  span {className: 'label kbc-label-rounded-small label-default'},
+                    dependent.get("name")
+              , @).toArray()
+        ]
 
   _renderDetail: ->
     props = @props
@@ -313,79 +317,76 @@ module.exports = React.createClass
               TransformationEmptyOutputImage {}
       if @props.transformation.get('backend') == 'docker' && @props.transformation.get('type') != 'openrefine'
         div {className: 'kbc-row'},
-          h2 {}, 'Packages'
           React.createElement Packages,
-            bucketId: @props.bucket.get('id')
             transformation: @props.transformation
-            transformations: @props.transformations
-            isEditing: @props.editingFields.has('packages')
             isSaving: @props.pendingActions.has('save-packages')
             packages: @props.editingFields.get('packages', @props.transformation.get("packages", List()))
-            onEditStart: =>
-              TransformationsActionCreators.startTransformationFieldEdit(@props.bucketId,
-                @props.transformationId, 'packages')
-            onEditCancel: =>
-              TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
-                @props.transformationId, 'packages')
             onEditChange: (newValue) =>
               TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
                 @props.transformationId, 'packages', newValue)
-            onEditSubmit: =>
               TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
                 @props.transformationId, 'packages')
           div {},
-            h2 {}, 'Stored Files'
             React.createElement SavedFiles,
-              bucketId: @props.bucket.get('id')
-              isEditing: @props.editingFields.has('tags')
               isSaving: @props.pendingActions.has('save-tags')
               tags: @props.editingFields.get('tags', @props.transformation.get("tags", List()))
-              onEditStart: =>
-                TransformationsActionCreators.startTransformationFieldEdit(@props.bucketId,
-                  @props.transformationId, 'tags')
-              onEditCancel: =>
-                TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
-                  @props.transformationId, 'tags')
               onEditChange: (newValue) =>
                 TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
                   @props.transformationId, 'tags', newValue)
-              onEditSubmit: =>
                 TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
                   @props.transformationId, 'tags')
-
       div {className: 'kbc-row'},
         @_renderCodeEditor()
 
   _renderCodeEditor: ->
     if  @props.transformation.get('backend') == 'docker'
-      element = Scripts
-    else
-      element = Queries
-
-    React.createElement element,
-      bucketId: @props.bucket.get('id')
-      transformation: @props.transformation
-      isEditing: @props.editingFields.has('queriesString')
-      isSaving: @props.pendingActions.has('save-queriesString')
-      queries: @props.editingFields.get('queriesString', @props.transformation.get("queriesString"))
-      scripts: @props.editingFields.get('queriesString', @props.transformation.get("queriesString"))
-      isEditingValid: @props.isEditingValid
-      onEditStart: =>
-        TransformationsActionCreators.startTransformationFieldEdit(@props.bucketId,
-          @props.transformationId, 'queriesString')
-      onEditCancel: =>
-        TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
-          @props.transformationId, 'queriesString')
-      onEditChange: (newValue) =>
-        TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
-          @props.transformationId, 'queriesString', newValue)
-      onEditSubmit: =>
-        if  @props.transformation.get('backend') == 'docker'
+      React.createElement Scripts,
+        bucketId: @props.bucket.get('id')
+        transformation: @props.transformation
+        isEditing: @props.editingFields.has('queriesString')
+        isSaving: @props.pendingActions.has('save-queriesString')
+        scripts: @props.editingFields.get('queriesString', @props.transformation.get("queriesString"))
+        isEditingValid: @props.isEditingValid
+        isChanged: @props.editingFields.get('queriesChanged', false)
+        onEditCancel: =>
+          TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
+            @props.transformationId, 'queriesString')
+          TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
+            @props.transformationId, 'queriesChanged')
+        onEditChange: (newValue) =>
+          TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
+            @props.transformationId, 'queriesString', newValue)
+          if !@props.editingFields.get('queriesChanged', false)
+            TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
+              @props.transformationId, 'queriesChanged', true)
+        onEditSubmit: =>
           changeDescription = 'Change Script in ' + @props.transformation.get('name')
-        else
+          TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
+            @props.transformationId, 'queriesString', changeDescription)
+    else
+      React.createElement Queries,
+        bucketId: @props.bucket.get('id')
+        transformation: @props.transformation
+        isEditing: @props.editingFields.has('queriesString')
+        isSaving: @props.pendingActions.has('save-queriesString')
+        queries: @props.editingFields.get('queriesString', @props.transformation.get("queriesString"))
+        isEditingValid: @props.isEditingValid
+        isChanged: @props.editingFields.get('queriesChanged', false)
+        onEditCancel: =>
+          TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
+            @props.transformationId, 'queriesString')
+          TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
+            @props.transformationId, 'queriesChanged')
+        onEditChange: (newValue) =>
+          TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
+            @props.transformationId, 'queriesString', newValue)
+          if !@props.editingFields.get('queriesChanged', false)
+            TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
+              @props.transformationId, 'queriesChanged', true)
+        onEditSubmit: =>
           changeDescription = 'Change Queries in ' + @props.transformation.get('name')
-        TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
-          @props.transformationId, 'queriesString', changeDescription)
+          TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
+            @props.transformationId, 'queriesString', changeDescription)
 
   render: ->
     div null,
