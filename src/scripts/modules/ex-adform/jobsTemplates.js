@@ -48,7 +48,7 @@ export default fromJS([
   },
   {
     id: 'All',
-    name: 'Full - Fetch Advertisers, Campaigns, Campaign Stats and Users',
+    name: 'Full - Fetch Advertisers, Campaigns and Users',
     template: [
       {
         'endpoint': 'Advertiser/Advertisers',
