@@ -129,8 +129,7 @@ templateFn = (componentId) ->
     @state.tables.count() > 0
 
   _renderMainContent: ->
-    configuredTables = @state.tables.filter (table) ->
-      table.get('export')
+    configuredTables = @state.tables
     configuredIds = configuredTables.map((table) ->
       table.get 'id')?.toJS()
     div {className: 'col-md-9 kbc-main-content'},
