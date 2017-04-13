@@ -117,6 +117,7 @@ templateFn = (componentId) ->
       )
     )
     output = fromJS(coltypes)
+
     return output
 
   _prepareColumns: (configColumns, storageColumns) ->
@@ -285,9 +286,8 @@ templateFn = (componentId) ->
 
   _renderSetColumnTypesFromMetadata: ->
     datatypes = @state.componentDatatypes
-    if datatypes.length == 0
+    if datatypes.size == 0
       return null
-
     options = datatypes.map( (group, groupName) ->
       optgroup
         label: groupName
@@ -367,7 +367,7 @@ templateFn = (componentId) ->
   _getTypeFromBasetype: (basetype) ->
     dtypes = @_getComponentDataTypes()
     dt = _.find dtypes, (d) ->
-      _.isObject(d) and d.basetype == basetype
+      _.isObject(d) and d[_.keys(d)[0]].basetype == basetype
     return _.keys(dt)[0]
 
   _getDataTypes: ->
