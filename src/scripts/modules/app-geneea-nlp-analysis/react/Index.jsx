@@ -332,11 +332,10 @@ export default React.createClass({
       <Select.Creatable
         placeholder="Select or type new..."
         clearable={true}
-        simpleValue={true}
         key="domain"
         name="domain"
         value={currentValue}
-        onChange= {(newValue) => this.updateEditingValue(prop, newValue)}
+        onChange= {({value: newValue}) => this.updateEditingValue(prop, newValue)}
         options= {allOptions}
       />
       , description);

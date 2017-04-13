@@ -411,12 +411,11 @@ export default React.createClass({
     const result = this.renderFormElement(label,
       <Select
         multi={isMulti}
-        simpleValue={true}
         clearable={false}
         key={column}
         name={column}
         value={value ? value.toJS() : ''}
-        onChange= {(newValue) => this.updateEditingValue(column, isMulti ? List(newValue.split(',')) : List([newValue]))}
+        onChange= {(newValue) => this.updateEditingValue(column, isMulti ? List(newValue) : List([newValue.value]))}
         options= {this.getColumns()}
       />
     , description);
