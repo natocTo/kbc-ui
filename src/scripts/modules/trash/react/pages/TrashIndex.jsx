@@ -10,7 +10,7 @@ import InstalledComponentsStore from '../../../components/stores/InstalledCompon
 import InstaledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
-import Select from '../../../../react/common/Select';
+import Select from 'react-select';
 import SplashIcon from '../../../../react/common/SplashIcon';
 import SearchRow from '../../../../react/common/SearchRow';
 import DeletedComponentRow from '../components/DeletedComponentRow';
@@ -139,7 +139,10 @@ export default React.createClass({
                 <div className="kbc-trash-filter">
                   <Select
                     value={this.state.filterType}
-                    onChange={(query) => this.handleFilterChange(query, 'type')}
+                    onChange={(selected) => {
+                      const query = selected !== null ? selected.value : '';
+                      this.handleFilterChange(query, 'type');
+                    }}
                     options={typeFilterOptions}
                     placeholder="All components"
                   />
