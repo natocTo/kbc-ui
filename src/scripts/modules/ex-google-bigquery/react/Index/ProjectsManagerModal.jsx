@@ -42,7 +42,7 @@ export default React.createClass({
                   clearable={false}
                   disabled={false}
                   value={this.props.google.get('projectId', '').toString()}
-                  onChange= {(newValue) => this.updateEditingValue('projectId', newValue)}
+                  onChange= {({value: newValue}) => this.updateEditingValue('projectId', newValue)}
                   options= {projectOptions}/>
               </div>
             </div>
@@ -92,7 +92,7 @@ export default React.createClass({
             clearable={false}
             disabled={false}
             value={this.props.google.get('projectId', '').toString()}
-            onChange= {(newValue) => this.updateEditingValue('projectId', newValue)}
+            onChange= {({value: newValue}) => this.updateEditingValue('projectId', newValue)}
             options= {projectOptions}/>
         );
       } else {
