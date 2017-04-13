@@ -85,8 +85,12 @@ export default React.createClass({
                            'label': key,
                            'value': key
                          };
-                       }).toList().toJS();
-    return result;
+                       });
+    const phases = this.state.value !== null
+      ? result.concat({label: this.state.value, value: this.state.value})
+      : result;
+
+    return phases.toList().toJS();
   },
 
   closeModal() {
