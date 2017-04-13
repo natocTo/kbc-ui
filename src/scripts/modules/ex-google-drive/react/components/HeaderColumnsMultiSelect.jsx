@@ -10,14 +10,14 @@ export default React.createClass({
 
   render() {
     return (
-      <Select
+      <Select.Creatable
         multi={true}
         isLoading={false}
-        allowCreate={true}
         value={this.props.value}
+        options={this.prepareOptions()}
         // valueRenderer={this.renderValue}
         // optionRenderer={this.renderOption}
-        onChange={this.props.onChange}
+        onChange={this.onSelectChange}
         // newOptionCreator={this.createNewOption}
         name="headerColumnNames"
         placeholder="Type new values"
@@ -25,8 +25,13 @@ export default React.createClass({
     );
   },
 
-  shouldComponentUpdate() {
-    return false;
+  prepareOptions() {
+    const options = this.props.value ? this.props.value.map(o => {return {'value': o, 'label': o};}) : [];
+    return options;
+  },
+
+  onSelectChange(selectionArray) {
+    this.props.onChange(selectionArray ? selectionArray.map(o => o.value) : []);
   },
 
   renderValue(op) {

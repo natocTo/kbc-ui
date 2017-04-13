@@ -192,16 +192,7 @@ export default React.createClass({
     return columnNamesArr.length > 0 ? columnNamesArr : null;
   },
 
-  onChangeHeaderColumnNames(strColumnNames) {
-    let columnsArray = [];
-    if (strColumnNames && strColumnNames !== '') {
-      for ( let column of strColumnNames.split(',')) {
-        if (columnsArray.indexOf(column) < 0) {
-          columnsArray.push(column);
-        }
-      }
-    }
-
+  onChangeHeaderColumnNames(columnsArray) {
     this.props.updateLocalState('headerColumnNames', fromJS(columnsArray));
   },
 
