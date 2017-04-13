@@ -63,7 +63,6 @@ export default React.createClass({
                   key="primary key select"
                   name="pkelector"
                   multi={true}
-                  allowCreate={false}
                   value={this.state.value}
                   onChange= {(newValue) => this.setState({value: newValue})}
                   options= {this.getColumns()}
@@ -107,7 +106,7 @@ export default React.createClass({
 
   handleSave() {
     let pkToSave = [];
-    if (this.state.value && this.state.value !== '') pkToSave = this.state.value.split(',');
+    pkToSave = this.state.value ? this.state.value.map(o => o.value) : [];
     this.props.onSave(fromJS(pkToSave)).then(() =>
       this.closeModal()
     );
