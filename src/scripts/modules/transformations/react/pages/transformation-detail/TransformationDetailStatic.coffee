@@ -118,6 +118,7 @@ module.exports = React.createClass
         transformations: @props.transformations
         isSaving: @props.pendingActions.has('save-requires')
         requires: @props.editingFields.get('requires', @props.transformation.get("requires"))
+        bucketId: @props.bucketId
         onEditChange: (newValue) =>
           TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
             @props.transformationId, 'requires', newValue)

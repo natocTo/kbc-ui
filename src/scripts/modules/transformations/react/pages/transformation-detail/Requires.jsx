@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import _ from 'underscore';
 import Select from 'react-select';
 import {fromJS} from 'immutable';
+import RoutesStore from '../../../../../stores/RoutesStore';
+
 
 export default React.createClass({
   propTypes: {
@@ -9,7 +11,16 @@ export default React.createClass({
     transformations: PropTypes.object.isRequired,
     requires: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    onEditChange: PropTypes.func.isRequired
+    onEditChange: PropTypes.func.isRequired,
+    bucketId: PropTypes.string.isRequired
+  },
+
+  onOptionLabelClick: function(value) {
+    const props = this.props;
+    return RoutesStore.getRouter().transitionTo('transformationDetail', {
+      config: props.bucketId,
+      row: value.value
+    });
   },
 
   render() {
@@ -31,6 +42,7 @@ export default React.createClass({
             placeholder="Add required transformation..."
             isLoading={this.props.isSaving}
             noResultsText="No transformations found"
+            onOptionLabelClick={this.onOptionLabelClick}
             />
           <span className="help-block">
             These transformations are processed before this transformation starts.
