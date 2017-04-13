@@ -309,7 +309,8 @@ export default React.createClass({
     jobsEditSubmit(this.state.config.get('id'));
   },
 
-  onTemplateChange(templateId) {
+  onTemplateChange(selected) {
+    const templateId = selected ? selected.value : '';
     changeTemplate(this.state.config.get('id'), templateId);
   },
 
