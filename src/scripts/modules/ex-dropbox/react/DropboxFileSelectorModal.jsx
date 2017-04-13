@@ -44,7 +44,7 @@ export default React.createClass({
               placeholder="Select CSV files from Dropbox"
               options={this.props.dropboxFiles}
               value={this.props.selectedCsvFiles()}
-              onChange={this.props.handleCsvSelectChange}
+              onChange={this.onSelectFile}
             />
           </div>
           <div className="section well">
@@ -54,7 +54,7 @@ export default React.createClass({
               options={this.props.keboolaBuckets}
               value={this.props.selectedInputBucket()}
               placeholder="Select a Bucket from the Keboola Storage"
-              onChange={this.props.handleBucketChange}
+              onChange={this.onSelectBucket}
               searchalble={true}
             />
           </div>
@@ -70,5 +70,13 @@ export default React.createClass({
         </Modal.Footer>
       </Modal>
     );
+  },
+
+  onSelectBucket(selected) {
+    this.props.handleBucketChange(selected ? selected.value : '');
+  },
+
+  onSelectFile(values) {
+    this.props.handleCsvSelectChange(values ? values.map(v => v.value) : []);
   }
 });
