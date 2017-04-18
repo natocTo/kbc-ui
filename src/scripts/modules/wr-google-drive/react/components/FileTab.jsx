@@ -9,21 +9,25 @@ export default React.createClass({
     onSelectExisting: PropTypes.func.isRequired,
     onSelectFolder: PropTypes.func.isRequired,
     onChangeTitle: PropTypes.func.isRequired,
+    onToggleConvert: PropTypes.func.isRequired,
     onSwitchType: PropTypes.func.isRequired,
     valueTitle: PropTypes.string.isRequired,
     valueFolder: PropTypes.string.isRequired,
+    valueAction: PropTypes.oneOf(['create', 'update']),
+    valueConvert: PropTypes.bool.isRequired,
     type: PropTypes.oneOf(['new', 'existing']),
-    action: PropTypes.oneOf(['create', 'update']),
     show: PropTypes.bool.isRequired
   },
 
   render() {
-    const radio = (this.props.action === 'create') ? null : this.renderTypeRadio();
+    const radio = (this.props.valueAction === 'create') ? null : this.renderTypeRadio();
     const picker = (this.props.type === 'new') ? this.renderFolderPicker() : this.renderFilePicker();
+    const convertCheckbox = (this.props.type === 'new') ? this.renderConvertCheckbox() : null;
     return (
       <div className="form-horizontal">
-      {radio}
-      {picker}
+        {radio}
+        {picker}
+        {convertCheckbox}
       </div>
     );
   },
@@ -33,7 +37,7 @@ export default React.createClass({
       <div className="row">
         <div className="form-group">
           <label className="col-md-2 control-label">
-            Does the File already exist?
+            File exists?
           </label>
           <div className="col-md-10">
             <RadioGroup
@@ -67,7 +71,7 @@ export default React.createClass({
       <div className="row">
         <div className="form-group">
           <label className="col-md-2 control-label">
-            File
+            File location
           </label>
           <div className="col-md-10">
             <Picker
@@ -99,7 +103,7 @@ export default React.createClass({
       <div className="row">
         <div className="form-group">
           <label className="col-md-2 control-label">
-            File
+            File location
           </label>
           <div className="col-md-10">
             <div className="input-group">
@@ -130,8 +134,29 @@ export default React.createClass({
             </div>
             <span className="help-block">
               Select Files parent <strong>folder</strong> and enter <strong>title</strong> of the File.<br/>
-              {this.props.action === 'create' ? 'The File will be created on next run. Current date and time will be appended to Files name.' : 'The File will be created upon save.'}
+              {this.props.valueAction === 'create' ? 'The File will be created on next run. Current date and time will be appended to Files name.' : 'The File will be created upon save.'}
             </span>
+          </div>
+        </div>
+      </div>
+    );
+  },
+
+  renderConvertCheckbox() {
+    return (
+      <div className="row">
+        <div className="form-group">
+          <label className="col-md-2 control-label">
+            Format
+          </label>
+          <div className="col-md-10">
+            <Input
+              type="checkbox"
+              checked={this.props.valueConvert}
+              onChange={this.props.onToggleConvert}
+              label="Convert to Google Docs format"
+              help="After upload, file will be converted so it can be edited directly in Google Drive"
+            />
           </div>
         </div>
       </div>

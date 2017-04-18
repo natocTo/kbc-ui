@@ -61,11 +61,13 @@ export default React.createClass({
                   this.updateLocalState(['file'].concat(['folder', 'title']), data[0].name);
                 }}
                 onChangeTitle={(e) => this.updateLocalState(['file'].concat('title'), e.target.value)}
+                onToggleConvert={(e) => this.updateLocalState(['file'].concat('convert'), e.target.checked)}
                 onSwitchType={this.onSwitchType}
                 valueTitle={this.file('title', '')}
                 valueFolder={this.file(['folder', 'title'], '/')}
+                valueAction={this.file('action')}
+                valueConvert={this.file('convert', false)}
                 type={this.localState('uploadType', 'new')}
-                action={this.file('action')}
               />
             </TabPane>
           </TabbedArea>

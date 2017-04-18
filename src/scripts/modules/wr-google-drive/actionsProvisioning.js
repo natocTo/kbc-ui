@@ -56,7 +56,8 @@ export default function(COMPONENT_ID, configId) {
     return fromJS({
       'id': generateId(),
       'action': 'update',
-      'enabled': true
+      'enabled': true,
+      'convert': false
     });
   }
 
