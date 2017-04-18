@@ -18,6 +18,7 @@ export default React.createClass({
     onEditFn: PropTypes.func.isRequired,
     toggleEnabledFn: PropTypes.func.isRequired,
     isPendingFn: PropTypes.func.isRequired,
+    isDeletingFn: PropTypes.func.isRequired,
     getRunSingleDataFn: PropTypes.func.isRequired,
     searchQuery: PropTypes.string.isRequired,
     localState: PropTypes.object.isRequired,
@@ -162,7 +163,7 @@ export default React.createClass({
   },
 
   renderDeleteButton(item) {
-    const isPending = this.props.isPendingFn(['delete', item.get('id')]);
+    const isPending = this.props.isDeletingFn(item.get('id'));
     if (isPending) {
       return <span className="btn btn-link"><Loader/></span>;
     }

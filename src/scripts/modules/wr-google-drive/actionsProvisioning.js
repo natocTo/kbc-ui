@@ -116,9 +116,16 @@ export default function(COMPONENT_ID, configId) {
   }
 
   function deleteTable(table) {
+    const pendingPath = store.getDeletingPath(table.get('id'));
+    updateLocalState(pendingPath, true);
     const newTables = store.tables.filter((t) => t.get('id') !== table.get('id'));
     const newMappings = store.mappings.filter((t) => t.get('source') !== table.get('tableId'));
-    return saveTables(newTables, newMappings, store.getSavingPath(table.get('id')), `Update table ${table.get('tableId')}`);
+    return saveTables(
+      newTables,
+      newMappings,
+      store.getSavingPath(table.get('id')),
+      `Update table ${table.get('tableId')}`
+    ).then(() => updateLocalState(pendingPath, false));
   }
 
   function toggleEnabled(table) {

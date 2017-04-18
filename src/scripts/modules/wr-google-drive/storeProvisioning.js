@@ -16,6 +16,7 @@ export default function(COMPONENT_ID, configId) {
   const tempPath = ['_'];
   const pendingPath = tempPath.concat('pending');
   const savingPath = tempPath.concat('saving');
+  const deletingPath = tempPath.concat('deleting');
 
   function findTable(tid) {
     return tables.findLast((t) => t.get('id') === tid);
@@ -58,8 +59,10 @@ export default function(COMPONENT_ID, configId) {
     },
     getPendingPath: (what) => pendingPath.concat(what),
     getSavingPath: (what) => savingPath.concat(what),
+    getDeletingPath: (what) => deletingPath.concat(what),
     isSaving: (what) => localState().getIn(savingPath.concat(what), false),
     isPending: (what) => localState().getIn(pendingPath.concat(what), false),
+    isDeleting: (what) => localState().getIn(deletingPath.concat(what), false),
     isAuthorized() {
       const creds = this.oauthCredentials;
       return creds && creds.has('id');

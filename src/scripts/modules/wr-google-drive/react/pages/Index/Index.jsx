@@ -144,6 +144,7 @@ export default function(COMPONENT_ID) {
           onEditFn={this.showTableModal}
           toggleEnabledFn={this.state.actions.toggleEnabled}
           isPendingFn={this.state.store.isPending}
+          isDeletingFn={this.state.store.isDeleting}
           searchQuery={this.state.localState.get('searchQuery', '')}
           getRunSingleDataFn={this.state.store.getRunSingleData}
           {...this.state.actions.prepareLocalState('SheetsList')}
