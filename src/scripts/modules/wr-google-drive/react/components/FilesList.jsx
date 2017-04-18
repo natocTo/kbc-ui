@@ -117,7 +117,7 @@ export default React.createClass({
           <i className="kbc-icon-arrow-right" />
         </div>
         <div className="td">
-          {this.renderDriveLink(item.getIn(['folder', 'id']), item.getIn(['folder', 'title']))}
+          {this.renderDriveFolder(item.getIn(['folder', 'id']), item.getIn(['folder', 'title']))}
         </div>
         <div className="td">
           {this.renderDriveLink(item.get('fileId'), item.get('title'))}
@@ -209,6 +209,13 @@ export default React.createClass({
         You are about to upload {item.get('title')}
       </RunButton>
     );
+  },
+
+  renderDriveFolder(googleId, title) {
+    if (!googleId || !title) {
+      return '/';
+    }
+    return this.renderDriveLink(googleId, title);
   },
 
   renderDriveLink(googleId, title) {

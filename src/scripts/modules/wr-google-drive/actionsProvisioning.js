@@ -75,9 +75,10 @@ export default function(COMPONENT_ID, configId) {
     if (!table.get('fileId') && table.get('action') !== 'create') {
       updateLocalState(['FileModal', 'savingMessage'], 'Creating new File');
       return createFile(table).then((data) => {
-        console.log(data);
         return updateTable(
-          table.set('fileId', data.file.id),
+          table.set('fileId', data.file.id)
+            .setIn(['folder', 'id'], data.file.folder.id)
+            .setIn(['folder', 'title'], data.file.folder.title),
           mapping
         );
       });
