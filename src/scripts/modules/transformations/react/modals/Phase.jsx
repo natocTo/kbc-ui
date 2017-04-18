@@ -46,7 +46,7 @@ export default React.createClass({
               <div className="form-group">
                 <div className="col-sm-offset-1 col-sm-9">
                   <p>
-                    <a href="http://wiki.keboola.com/home/keboola-connection/devel-space/transformations/intro#Phases">Phase</a> is a set of transformations.
+                    <a href="https://help.keboola.com/manipulation/transformations/#phases">Phase</a> is a set of transformations.
                   </p>
                   <p className="help-block">
                     Phases may be used to divide transformations into logical blocks, transfer data between transformations, transformation engines and remote transformations.
