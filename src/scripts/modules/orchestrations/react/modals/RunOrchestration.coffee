@@ -70,7 +70,7 @@ module.exports = React.createClass
 
         ModalFooter null,
           React.createElement ConfirmButtons,
-            isDisabled: false
+            isDisabled: !@_isValid()
             saveLabel: 'Run'
             onCancel: @_handleCancel
             onSave: @_handleRun
@@ -124,3 +124,12 @@ module.exports = React.createClass
       @props.orchestration.get('id')
       tasks
     )
+
+  _isValid: ->
+    allTasks = @props.tasks
+    if allTasks?
+      allTasks.filter((tasks) ->
+        tasks.get('tasks').filter((task) ->
+          task.get('active')
+        ).count() > 0
+      ).count() > 0
