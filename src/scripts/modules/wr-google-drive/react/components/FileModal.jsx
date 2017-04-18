@@ -108,7 +108,8 @@ export default React.createClass({
     const mapping = this.localState(['mapping'], Map());
     const mappingChanged = !mapping.equals(this.localState('cleanMapping'));
     const fileChanged = !this.file(null, Map()).equals(this.localState('cleanFile'));
-    return (!fileChanged && !mappingChanged);
+    const title = this.file('title');
+    return ((!fileChanged && !mappingChanged) || !title);
   },
 
   localState(path, defaultVal) {
@@ -139,10 +140,16 @@ export default React.createClass({
   },
 
   onSwitchType(event) {
+    let title = '';
+    if (event.target.value === 'new') {
+      const tableId = this.file('tableId');
+      title = tableId.substr(tableId.lastIndexOf('.') + 1);
+    }
+
     this.updateLocalState(
       'file',
       this.file()
-        .set('title', '')
+        .set('title', title)
         .set('fileId', '')
     );
     this.updateLocalState(['uploadType'], event.target.value);
