@@ -147,14 +147,14 @@ module.exports =
         message: React.createClass
           render: ->
             React.DOM.span null,
-              "Optimalization of SLI hashes has been triggered! You can track the job progress "
               React.createElement Link,
                 to: 'jobDetail'
                 params:
                   jobId: job.id
                 onClick: @props.onClick
               ,
-                'here'
+                'Optimalization'
+              " of SLI hashes has been triggered."
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.GOOD_DATA_WRITER_SLI_ERROR
@@ -177,14 +177,14 @@ module.exports =
         message: React.createClass
           render: ->
             React.DOM.span null,
-              "Project has been scheduled to reset! You can track the job progress "
               React.createElement Link,
                 to: 'jobDetail'
                 params:
                   jobId: job.id
                 onClick: @props.onClick
               ,
-                'here'
+                'Project'
+              " has been scheduled to reset."
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.GOOD_DATA_WRITER_RESET_PROJECT_ERROR
@@ -350,16 +350,16 @@ module.exports =
         message: React.createClass
           render: ->
             React.DOM.span null,
-              "GoodData upload of dimension "
-              React.DOM.strong null, dimensionName
-              " has been initiated You can track the job progress "
               React.createElement Link,
                 to: 'jobDetail'
                 params:
                   jobId: job.id
                 onClick: @props.onClick
               ,
-                'here'
+                'GoodData'
+              " upload of dimension "
+              React.DOM.strong null, dimensionName
+              " has been initiated."
 
     .catch (e) ->
       dispatcher.handleViewAction
@@ -396,29 +396,29 @@ module.exports =
           message: React.createClass
             render: ->
               React.DOM.span null,
-                "GoodData upload of table "
-                React.DOM.strong null, table.getIn ['data', 'title']
-                " has been initiated You can track the job progress "
                 React.createElement Link,
                   to: 'jobDetail'
                   params:
                     jobId: job.id
                   onClick: @props.onClick
                 ,
-                  'here'
+                  'GoodData upload'
+                " of table "
+                React.DOM.strong null, table.getIn ['data', 'title']
+                " has been initiated."
       else
         applicationActionCreators.sendNotification
           message: React.createClass
             render: ->
               React.DOM.span null,
-                "GoodData upload has been initiated. You can track the job progress "
                 React.createElement Link,
                   to: 'jobDetail'
                   params:
                     jobId: job.id
                   onClick: @props.onClick
                 ,
-                  'here'
+                  'GoodData upload'
+                " has been initiated."
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.GOOD_DATA_WRITER_UPLOAD_ERROR
@@ -447,14 +447,14 @@ module.exports =
         message: React.createClass
           render: ->
             React.DOM.span null,
-              "Table reset has been initiated. You can track the job progress "
               React.createElement Link,
                 to: 'jobDetail'
                 params:
                   jobId: job.id
                 onClick: @props.onClick
               ,
-                'here'
+                'Table reset'
+              " has been initiated."
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.GOOD_DATA_WRITER_RESET_TABLE_ERROR
@@ -481,14 +481,14 @@ module.exports =
         message: React.createClass
           render: ->
             React.DOM.span null,
-              "Dataset synchronize has been initiated. You can track the job progress "
               React.createElement Link,
                 to: 'jobDetail'
                 params:
                   jobId: job.id
                 onClick: @props.onClick
               ,
-                'here'
+                'Dataset synchronize'
+              " has been initiated."
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.GOOD_DATA_WRITER_SYNC_TABLE_ERROR
