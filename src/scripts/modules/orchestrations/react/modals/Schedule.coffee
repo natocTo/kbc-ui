@@ -32,6 +32,7 @@ module.exports = React.createClass
   open: ->
     @setState
       showModal: true
+      crontabRecord: @props.crontabRecord || '0 0 * * *'
 
   render: ->
     div null,
