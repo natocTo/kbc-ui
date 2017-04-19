@@ -773,6 +773,13 @@ module.exports =
       isStringEditingMode: isStringEditingMode
     )
 
+  setInstalledComponentsConfigurationFilter: (componentType, query) ->
+    dispatcher.handleViewAction(
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_SEARCH_CONFIGURATION_FILTER_CHANGE
+      componentType: componentType
+      filter: query
+    )
+
   ###
   updateEditComponentConfigData: (componentId, configId, newData) ->
     dispatcher.handleViewAction(

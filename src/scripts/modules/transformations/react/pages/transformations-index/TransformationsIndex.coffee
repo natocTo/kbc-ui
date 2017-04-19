@@ -50,8 +50,10 @@ TransformationsIndex = React.createClass
                 , @
                 .toArray()
             else
-              h2 null,
-                'No buckets or transformations found.'
+              div className: 'kbc-header',
+                div className: 'kbc-title',
+                  h2 null,
+                    'No buckets or transformations found.'
     else
       div className: 'container-fluid',
         div className: 'kbc-main-content',
@@ -59,9 +61,10 @@ TransformationsIndex = React.createClass
 
 
   _renderEmptyState: ->
-    div {className: 'kbc-search-row'},
-      h2 null,
-        'No buckets or transformations found.'
+    div className: 'kbc-header',
+      div className: 'kbc-title',
+        h2 null,
+          'No buckets or transformations found.'
 
   _renderBucketPanel: (bucket) ->
     header = span null,

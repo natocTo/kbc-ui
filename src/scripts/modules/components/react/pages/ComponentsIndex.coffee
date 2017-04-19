@@ -6,13 +6,14 @@ createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 InstalledComponentsStore = require '../../stores/InstalledComponentsStore'
 ComponentsStore = require '../../stores/ComponentsStore'
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
+SearchRow = require('../../../../react/common/SearchRow').default
 ApplicationStore = require '../../../../stores/ApplicationStore'
 
 ComponentRow = require('./ComponentRow').default
 
 NewComponentSelection = require '../components/NewComponentSelection'
 
-{div, table, tbody, tr, td, ul, li, a, span, small, strong} = React.DOM
+{div, table, tbody, tr, td, ul, li, a, span, small, strong, h2} = React.DOM
 
 TEXTS =
   noComponents:
@@ -69,14 +70,16 @@ module.exports = React.createClass
       return true
     )
 
+    installedComponentsFiltered: InstalledComponentsStore.getFilteredComponents(@props.type)
     installedComponents: InstalledComponentsStore.getAllForType(@props.type)
     deletingConfigurations: InstalledComponentsStore.getDeletingConfigurations()
     components: components
-    filter: ComponentsStore.getFilter(@props.type)
+    componentFilter: ComponentsStore.getComponentFilter(@props.type)
+    configurationFilter: InstalledComponentsStore.getConfigurationFilter(@props.type)
 
   render: ->
     if @state.installedComponents.count()
-      rows =  @state.installedComponents.map((component) ->
+      rows =  @state.installedComponentsFiltered.map((component) ->
         React.createElement ComponentRow,
           component: component
           deletingConfigurations: @state.deletingConfigurations.get(component.get('id'), Map())
@@ -84,14 +87,29 @@ module.exports = React.createClass
       , @).toArray()
 
       div className: 'container-fluid kbc-main-content kbc-components-list',
-        rows
+        React.createElement SearchRow,
+          className: 'row kbc-search-row'
+          onChange: @_handleFilterChange
+          query: @state.configurationFilter
+        if @state.installedComponentsFiltered.count()
+          rows
+        else
+          div className: 'kbc-header',
+            div className: 'kbc-title',
+              h2 null,
+                'No ' + @props.type + 's found.'
+
     else
       React.createElement NewComponentSelection,
         className: 'container-fluid kbc-main-content'
         components: @state.components
-        filter: @state.filter
+        componentFilter: @state.componentFilter
         componentType: @props.type
       ,
         div className: 'row',
           React.DOM.h2 null, TEXTS['noComponents'][@props.type]
           React.DOM.p null, TEXTS['installFirst'][@props.type]
+
+  _handleFilterChange: (query) ->
+    InstalledComponentsActionCreators.setInstalledComponentsConfigurationFilter(@props.type, query)
+

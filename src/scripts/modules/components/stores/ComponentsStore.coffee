@@ -35,12 +35,12 @@ ComponentsStore = StoreUtils.createStore
     _store.hasIn ['componentsById', id]
 
   getFilteredForType: (type) ->
-    filter = @getFilter(type)
+    filter = @getComponentFilter(type)
     all = @getAllForType(type)
     all.filter (component) ->
       fuzzy.match(filter, component.get 'name') || fuzzy.match(filter, component.get 'description')
 
-  getFilter: (type) ->
+  getComponentFilter: (type) ->
     _store.getIn(['filter', type]) || ''
 
   hasComponentLegacyUI: (id) ->

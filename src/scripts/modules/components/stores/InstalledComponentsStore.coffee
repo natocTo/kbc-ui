@@ -71,6 +71,30 @@ InstalledComponentsStore = StoreUtils.createStore
     @getAll().filter (component) ->
       component.get('type') == type
 
+  getFilteredComponents: (type) ->
+    filterQuery = @getComponentFilter(type)
+
+    filteredConfigurations = @getAllForType(type)
+      .map (component) ->
+        return component.set('configurations',
+          component.get('configurations', Map()).filter((configuration) ->
+            fuzzy.match(filterQuery, configuration.get('name').toString()) or
+              fuzzy.match(filterQuery, configuration.get('description').toString())
+          )
+        )
+      .filter (component) ->
+        return component.get('configurations').count() > 0
+
+    filteredComponents = @getAllForType(type).filter (component) ->
+      fuzzy.match(filterQuery, component.get('name'))
+    filtered = filteredComponents.mergeDeep(filteredConfigurations)
+
+    return filtered
+
+
+  getComponentFilter: (filterType) ->
+    _store.getIn ['filters', 'installedComponents', filterType], ''
+
   getTrashFilter: (filterType) ->
     _store.getIn ['filters', 'trash', filterType], ''
 
@@ -121,6 +145,10 @@ InstalledComponentsStore = StoreUtils.createStore
   getAllDeletedForType: (type) ->
     @getAllDeleted().filter (component) ->
       component.get('type') == type
+
+
+  getConfigurationFilter: (type) ->
+    _store.getIn ['filters', 'installedComponents', type], ''
 
   getComponent: (componentId) ->
     _store.getIn ['components', componentId]
@@ -853,6 +881,10 @@ Dispatcher.register (payload) ->
       else
         _store = _store.deleteIn(["templatedConfigValuesEditingString", action.componentId, action.configId])
         _store = _store.deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_SEARCH_CONFIGURATION_FILTER_CHANGE
+      _store = _store.setIn ['filters', 'installedComponents', action.componentType], action.filter
       InstalledComponentsStore.emitChange()
 
 

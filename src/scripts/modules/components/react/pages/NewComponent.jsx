@@ -18,7 +18,7 @@ export default React.createClass({
 
     return {
       components: components,
-      filter: ComponentsStore.getFilter(this.props.type)
+      componentFilter: ComponentsStore.getComponentFilter(this.props.type)
     };
   },
 
@@ -31,7 +31,7 @@ export default React.createClass({
       <NewComponentSelection
         className="container-fluid kbc-main-content"
         components={this.state.components}
-        filter={this.state.filter}
+        componentFilter={this.state.componentFilter}
         componentType={this.props.type}
         />
     );

@@ -51,10 +51,10 @@ Index = React.createClass
         React.createElement NewOrchestrationButton
 
   _renderNotFound: ->
-    div {className: 'table table-striped'},
-      div {className: 'tfoot'},
-        div {className: 'tr'},
-          div {className: 'td'}, 'No orchestrations found'
+    div className: 'kbc-header',
+      div className: 'kbc-title',
+        h2 null,
+          'No orchestrations found.'
 
   _renderTable: ->
     childs = @state.orchestrations.map((orchestration) ->
