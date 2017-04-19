@@ -17,7 +17,7 @@ export default React.createClass({
   },
 
   render() {
-    const spreadsheet = (this.props.type === 'new') ? this.renderFolderPicker() : this.renderFilePicker();
+    const spreadsheet = (this.props.type === 'new') ? this.renderFolderPicker() : this.renderSpreadsheetPicker();
     return (
       <div className="form-horizontal">
       {this.renderTypeRadio()}
