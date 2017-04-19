@@ -126,21 +126,11 @@ module.exports = React.createClass
             @props.transformationId, 'requires')
       if @_getDependentTransformations().count()
         [
-          div
-            className: 'row'
+          h2
+            style:
+              lineHeight: '32px'
           ,
-            span
-              className: 'col-md-5'
-            ,
-              h2
-                style:
-                  lineHeight: '32px'
-              ,
-                'Dependent transformations'
-            span
-              className: 'col-md-7 section-help'
-            ,
-              'These transformations are dependent on the current transformation.'
+            'Dependent transformations'
         ,
           span {},
             div {},
@@ -153,6 +143,11 @@ module.exports = React.createClass
                   span {className: 'label kbc-label-rounded-small label-default'},
                     dependent.get("name")
               , @).toArray()
+          span
+            className: 'help-block'
+          ,
+            'These transformations are dependent on the current transformation.'
+
         ]
 
   _renderDetail: ->
