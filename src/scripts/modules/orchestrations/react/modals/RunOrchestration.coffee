@@ -126,6 +126,8 @@ module.exports = React.createClass
     )
 
   _isValid: ->
+    if (@props.tasks == undefined)
+      return true
     allTasks = @props.tasks
     if allTasks?
       allTasks.filter((tasks) ->
