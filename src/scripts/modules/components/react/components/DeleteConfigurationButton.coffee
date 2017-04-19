@@ -6,6 +6,7 @@ createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 
 Confirm = require('../../../../react/common/Confirm').default
 {Loader} = require 'kbc-react-components'
+trashUtils = require '../../../trash/utils.js'
 
 module.exports = React.createClass
   displayName: 'DeleteConfigurationButton'
@@ -31,15 +32,22 @@ module.exports = React.createClass
 
 
   render: ->
-    React.createElement Confirm,
-      title: 'Move Configuration to Trash'
-      text: "Are you sure you want to move the configuration #{this.state.config.get('name')} to Trash?"
-      buttonLabel: 'Move to Trash'
-      onConfirm: @_handleDelete
-      childrenRootElement: React.DOM.a
-    ,
-      @_renderIcon()
-      ' Move to Trash'
+    if trashUtils.isObsoleteComponent(@props.componentId)
+      React.createElement Confirm,
+        title: 'Move Configuration to Trash'
+        text: "Are you sure you want to move the configuration #{this.state.config.get('name')} to Trash?"
+        buttonLabel: 'Move to Trash'
+        onConfirm: @_handleDelete
+        childrenRootElement: React.DOM.a
+      ,
+        @_renderIcon()
+        ' Move to Trash'
+    else
+      React.DOM.a
+        onClick: @_handleDelete
+      ,
+        @_renderIcon()
+        ' Move to Trash'
 
   _renderIcon: ->
     if @state.isDeleting

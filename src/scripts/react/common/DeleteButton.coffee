@@ -9,6 +9,7 @@ Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
 Confirm = React.createFactory(require('./Confirm').default)
+trashUtils = require '../../modules/trash/utils.js'
 
 assign = require 'object-assign'
 
@@ -24,6 +25,7 @@ module.exports = React.createClass
     label: React.PropTypes.string
     fixedWidth: React.PropTypes.bool
     icon: React.PropTypes.string
+    componentId: React.PropTypes.string
 
   getDefaultProps: ->
     tooltip: 'Delete'
@@ -41,12 +43,18 @@ module.exports = React.createClass
       React.DOM.span className: 'btn btn-link disabled',
         React.DOM.em className: @props.icon
     else
-      Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
-        OverlayTrigger
-          overlay: Tooltip null, @props.tooltip
-          key: 'delete'
-          placement: 'top'
-        ,
-          button className: 'btn btn-link',
+      if trashUtils.isObsoleteComponent(@props.componentId)
+        Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
+          OverlayTrigger
+            overlay: Tooltip null, @props.tooltip
+            key: 'delete'
+            placement: 'top'
+          ,
+            button className: 'btn btn-link',
+              i className: classnames('fa', @props.icon, 'fa-fw': @props.fixedWidth)
+              if @props.label then ' ' + @props.label
+      else
+        Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
+          button className: 'btn btn-link', onClick: @props.confirm.onConfirm,
             i className: classnames('fa', @props.icon, 'fa-fw': @props.fixedWidth)
             if @props.label then ' ' + @props.label

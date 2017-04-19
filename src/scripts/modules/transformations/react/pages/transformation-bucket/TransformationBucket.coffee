@@ -78,19 +78,10 @@ TransformationBucket = React.createClass
               "You are about to run all transformations in the bucket #{@state.bucket.get('name')}."
             )
           li {},
-            a {},
-              React.createElement Confirm,
-                title: 'Move Bucket to Trash'
-                text: "Are you sure you want to move the bucket " +
-                  @state.bucket.get('name') +
-                  " and all transformations to Trash?"
-                buttonLabel: 'Move to Trash'
-                buttonType: 'danger'
-                onConfirm: @_deleteTransformationBucket
-              ,
-                span {},
-                  span className: 'fa kbc-icon-cup fa-fw'
-                  ' Move to Trash'
+            a
+              onClick: @_deleteTransformationBucket,
+                span className: 'fa kbc-icon-cup fa-fw'
+                ' Move to Trash'
         React.createElement SidebarJobs,
           jobs: @state.latestJobs
           limit: 3
