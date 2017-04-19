@@ -74,6 +74,9 @@ export default React.createClass({
         <div className="th">
           <strong>Title</strong>
         </div>
+        <div className="th">
+          <strong>Action</strong>
+        </div>
         <div className="th pull-right">
           {/* action buttons */}
         </div>
@@ -92,10 +95,13 @@ export default React.createClass({
           <i className="kbc-icon-arrow-right" />
         </div>
         <div className="td">
-          {this.renderDriveLink(item.getIn(['folder', 'id']), item.getIn(['folder', 'title']))}
+          {this.renderDriveFolder(item.getIn(['folder', 'id']), item.getIn(['folder', 'title']))}
         </div>
         <div className="td">
           {this.renderDriveLink(item.get('fileId'), item.get('title'))}
+        </div>
+        <div className="td">
+          {this.renderFieldAction(item.get('action'))}
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderEditButton(item)}
@@ -123,6 +129,9 @@ export default React.createClass({
         <div className="td">
           {this.renderDriveLink(item.get('fileId'), item.get('title'))}
         </div>
+        <div className="td">
+          {this.renderFieldAction(item.get('action'))}
+        </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderDeleteButton(item)}
         </div>
@@ -145,8 +154,16 @@ export default React.createClass({
     );
   },
 
-  renderFieldSpreadsheet(fileId) {
-    return (<span>{fileId}</span>);
+  renderFieldAction(action) {
+    const tooltip = (action === 'create')
+      ? 'Each run, a new file is created'
+      : 'The file is updated on each run';
+
+    return (
+      <Tooltip key="tooltip" tooltip={tooltip} placement="top">
+         <span>{action}</span>
+      </Tooltip>
+    );
   },
 
   renderEditButton(item) {
@@ -220,6 +237,9 @@ export default React.createClass({
   },
 
   renderDriveLink(googleId, title) {
+    if (!googleId || !title) {
+      return 'N/A';
+    }
     const url = `https://drive.google.com/open?id=${googleId}`;
     return (
       <a href={url} target="_blank">

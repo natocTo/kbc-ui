@@ -72,11 +72,23 @@ export default function(COMPONENT_ID, configId) {
   function saveTable(table, mapping) {
     updateLocalState(store.getSavingPath(table.get('id')), true);
     // create file if not exists and action is not 'create'
-    if (!table.get('fileId') && table.get('action') !== 'create') {
+    if (!table.get('fileId')) {
+      if (table.get('action') === 'create') {
+        updateLocalState(['FileModal', 'savingMessage'], 'Saving');
+        return getFolderAction(table).then((data) => {
+          return updateTable(
+            table
+              .setIn(['folder', 'id'], data.file.id)
+              .setIn(['folder', 'title'], data.file.name),
+            mapping
+          );
+        });
+      }
       updateLocalState(['FileModal', 'savingMessage'], 'Creating new File');
-      return createFile(table).then((data) => {
+      return createFileAction(table).then((data) => {
         return updateTable(
-          table.set('fileId', data.file.id)
+          table
+            .set('fileId', data.file.id)
             .setIn(['folder', 'id'], data.file.folder.id)
             .setIn(['folder', 'title'], data.file.folder.title),
           mapping
@@ -135,7 +147,7 @@ export default function(COMPONENT_ID, configId) {
       .then(() => updateLocalState(pendingPath, false));
   }
 
-  function createFile(table) {
+  function createFileAction(table) {
     const params = {
       configData: getConfigData()
         .setIn(['parameters', 'tables'], List().push(table))
@@ -143,6 +155,16 @@ export default function(COMPONENT_ID, configId) {
         .toJS()
     };
     return callDockerAction(COMPONENT_ID, 'createFile', params);
+  }
+
+  function getFolderAction(table) {
+    const params = {
+      configData: getConfigData()
+      .setIn(['parameters', 'tables'], List().push(table))
+      .delete('storage')
+      .toJS()
+    };
+    return callDockerAction(COMPONENT_ID, 'getFolder', params);
   }
 
   return {
