@@ -72,30 +72,28 @@ export default function(COMPONENT_ID, configId) {
   function saveTable(table, mapping) {
     updateLocalState(store.getSavingPath(table.get('id')), true);
     // create file if not exists and action is not 'create'
-    if (!table.get('fileId')) {
-      if (table.get('action') === 'create') {
-        updateLocalState(['FileModal', 'savingMessage'], 'Saving');
-        return getFolderAction(table).then((data) => {
-          return updateTable(
-            table
-              .setIn(['folder', 'id'], data.file.id)
-              .setIn(['folder', 'title'], data.file.name),
-            mapping
-          );
-        });
-      }
+    if (!table.get('fileId') && table.get('action') !== 'create') {
       updateLocalState(['FileModal', 'savingMessage'], 'Creating new File');
       return createFileAction(table).then((data) => {
         return updateTable(
           table
-            .set('fileId', data.file.id)
-            .setIn(['folder', 'id'], data.file.folder.id)
-            .setIn(['folder', 'title'], data.file.folder.title),
+          .set('fileId', data.file.id)
+          .setIn(['folder', 'id'], data.file.folder.id)
+          .setIn(['folder', 'title'], data.file.folder.title),
           mapping
         );
       });
     }
-    return updateTable(table, mapping);
+    updateLocalState(['FileModal', 'savingMessage'], 'Saving');
+    return getFolderAction(table).then((data) => {
+      return updateTable(
+        table
+        .setIn(['folder', 'id'], data.file.id)
+        .setIn(['folder', 'title'], data.file.name),
+        mapping
+      );
+    });
+    // return updateTable(table, mapping);
   }
 
   function updateTable(table, mapping) {
