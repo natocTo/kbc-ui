@@ -25,7 +25,7 @@ module.exports = React.createClass
       @props.configurationId,
       @props.table.get('id'),
       @props.fieldName,
-      @props.table.getIn(['editingFields', @props.fieldName])
+      @props.table.getIn(['editingFields', @props.fieldName]).trim()
     )
 
   _handleEditCancel: ->
