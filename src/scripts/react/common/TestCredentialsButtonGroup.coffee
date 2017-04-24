@@ -4,6 +4,7 @@ Button = React.createFactory(require('react-bootstrap').Button)
 
 Loader = React.createFactory(require('kbc-react-components').Loader)
 Link = React.createFactory(require('react-router').Link)
+RoutesStore = require('../../stores/RoutesStore')
 
 {small, div, span} = React.DOM
 
@@ -46,20 +47,33 @@ module.exports = React.createClass
 
   render: ->
     div className: 'form-group',
-      div className: classnames('col-xs-8', 'col-xs-offset-4': @props.hasOffset),
-        Button
-          bsStyle: 'primary'
-          disabled: @state.isTesting || @props.disabled
-          onClick: @_startTesting
-        ,
-          'Test Credentials'
-        ' '
-        Loader() if @state.isTesting
+      div className: classnames('col-xs-4', 'col-xs-offset-4': @props.hasOffset),
         if @state.result or @state.isError
           if @state.result.status in ['success', 'ok'] and not @state.isError
             @_testSuccess @state.result
           else
             @_testError @state.result
+        else
+          Button
+            bsStyle: 'primary'
+            disabled: @state.isTesting || @props.disabled
+            onClick: @_startTesting
+            ,
+            'Test Credentials'
+        span className: null, ' '
+        Link
+          to: 'keboola.wr-db-snowflake'
+          params:
+            config: RoutesStore.getCurrentRouteParam('config')
+        ,
+            Button
+              bsStyle: 'success'
+              disabled: @state.isTesting || @props.disabled
+              onClick: @_startTesting
+            ,
+              'Continue setup'
+            ' '
+        Loader() if @state.isTesting
 
   _testSuccess: (result) ->
     span className: 'text-success',
