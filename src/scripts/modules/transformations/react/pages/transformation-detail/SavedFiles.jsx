@@ -19,7 +19,7 @@ export default React.createClass({
           <Select.Creatable
             name="tags"
             value={this.getValue()}
-            multi="true"
+            multi={true}
             disabled={this.props.isSaving}
             onChange={this.handleValueChange}
             placeholder="Add tags..."
