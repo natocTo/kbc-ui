@@ -70,7 +70,7 @@ export default function(configId) {
 
     saveNewQuery() {
       let newQuery = store.getNewQuery();
-      if (!newQuery.get('outputTable')) {
+      if (newQuery.get('outputTable', '').trim().length === 0) {
         newQuery = newQuery.set('outputTable', store.getDefaultOutputTableId(newQuery));
       }
       const queries = store.queries.push(newQuery);
