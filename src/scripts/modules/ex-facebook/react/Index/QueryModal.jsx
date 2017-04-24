@@ -6,8 +6,7 @@ import GraphAPIExplorerLink from './GraphAPIExplorerLink';
 import DateRangeSelector from './DateRangeSelector';
 import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
 import {Modal} from 'react-bootstrap';
-// import Select from 'react-select';
-import Select from '../../../../react/common/Select';
+import Select from 'react-select';
 
 const NAME_HELP = 'Helps describing the query and also used to prefix output tables name resulting from the query if they differ.';
 const ENDPOINT_HELP = 'Url part of Facebook Graph API request specifying node-id and/or edge-name, e.g. feed, me/photos etc. Can be empty.';
@@ -211,8 +210,6 @@ export default React.createClass({
         key="ids"
         clearable={false}
         multi={false}
-        allowCreate={false}
-        emptyStrings={false}
         options={selectOptions}
         value={value}
         onChange={this.onSelectAccount}/>
@@ -222,7 +219,7 @@ export default React.createClass({
     return this.renderFormControl(this.props.accountDescFn('Pages'), selectControl, accountsHelp);
   },
 
-  onSelectAccount(value) {
+  onSelectAccount({value}) {
     const query = this.query('query');
     switch (value) {
       case '--non--':
