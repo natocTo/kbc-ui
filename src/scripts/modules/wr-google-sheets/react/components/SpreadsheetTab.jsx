@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from 'react-bootstrap';
+import {Input} from '../../../../react/common/KbcBootstrap';
 import RadioGroup from 'react-radio-group';
 import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
