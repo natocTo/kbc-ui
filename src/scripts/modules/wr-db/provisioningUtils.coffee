@@ -64,13 +64,23 @@ retrieveProvisioningCredentials = (isReadOnly, wrDbToken, driver, componentId) -
         read: loadCredentials('read', wrDbToken, driver, false, componentId)
         write: if not isReadOnly then loadCredentials('write', wrDbToken, driver, false, componentId)
 
-clearCredentials = (componentId, driver, permission, token, credentials) ->
-  if !credentials || !credentials.get(permission, null)
-    return null
+_dropCredentials = (driver, permission, token, configHasCredentials) ->
+  if configHasCredentials && wrDbProvStore.getCredentials(permission, token)
+    provisioningActions.dropWrDbCredentials(permission, token, driver)
 
-  provTypes = getDriverAndPermission(driver, permission, componentId)
-  if wrDbProvStore.getCredentials(provTypes.permission, token)
-    provisioningActions.dropWrDbCredentials(provTypes.permission, token, provTypes.driver)
+clearCredentials = (componentId, driver, token, configCredentials) ->
+  hasReadCredentials = configCredentials && configCredentials.get('read', null)
+  hasWriteCredentials = configCredentials && configCredentials.get('write', null)
+  readTypes = getDriverAndPermission(driver, 'read', componentId)
+  writeTypes = getDriverAndPermission(driver, 'write', componentId)
+  writePromise = _dropCredentials(writeTypes.driver, writeTypes.permission, token, hasWriteCredentials)
+  readPromise = null
+  if readTypes.driver != writeTypes.driver || readTypes.permission != writeTypes.permission || !hasWriteCredentials
+    readPromise = _dropCredentials(readTypes.driver, readTypes.permission, token, hasReadCredentials)
+  Promise.props
+    read: readPromise
+    write: writePromise
+
 
 module.exports =
   getCredentials: (isReadOnly, driver, componentId, configId) ->
@@ -101,8 +111,6 @@ module.exports =
       if not token
         return
       tokenStr = token.get('token')
-      credentialsPromise = Promise.props
-        read: clearCredentials(componentId, driver, 'read', tokenStr, currentCredentials)
-        write: clearCredentials(componentId, driver, 'write', tokenStr, currentCredentials)
-      credentialsPromise.then ->
-        return StorageService.deleteToken(token)
+      clearCredentials(componentId, driver, tokenStr, currentCredentials)
+        .then ->
+          return StorageService.deleteToken(token)
