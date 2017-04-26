@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'underscore';
 import { Dropdown, MenuItem} from 'react-bootstrap';
+import './CurrentUser.less';
 
 const modes = {
   NORMAL: 'normal',
@@ -40,20 +41,12 @@ export default React.createClass({
           pullRight
         >
           <Dropdown.Toggle
-            style={{
-              padding: '3px 0 0',
-              fontSize: '12px',
-              textDecoration: 'none',
-              color: '#89959f',
-              textAlign: 'left'
-            }}
             noCaret
             bsStyle="link"
           >
-            <strong>{ this.props.user.get('name') }</strong>
-            <br/>
-            { this._userEmail() }
             <span className="kbc-icon-picker"/>
+            <span className="kbc-user-name">{ this.props.user.get('name') }</span>
+            { this._userEmail() }
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <MenuItem
@@ -79,7 +72,7 @@ export default React.createClass({
   _userEmail() {
     if (this.props.mode === modes.NORMAL) {
       return (
-        <span>{ this.props.user.get('email') }</span>
+        <span className="kbc-user-email">{ this.props.user.get('email') }</span>
       );
     }
   },
