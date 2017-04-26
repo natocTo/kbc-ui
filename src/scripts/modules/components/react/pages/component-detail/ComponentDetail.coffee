@@ -112,13 +112,12 @@ module.exports = React.createClass
               )
             )
     else
-      div className: "row kbc-row",
+      div className: "kbc-row",
         React.createElement ComponentEmptyState, null,
-          p className: "text-center",
-            AddComponentConfigurationButton
-              disabled: @_isDeprecated()
-              label: "Create New Configuration"
-              component: state.component
+          AddComponentConfigurationButton
+            disabled: @_isDeprecated()
+            label: "Create New Configuration"
+            component: state.component
 
   _openSupportModal: (e) ->
     contactSupport(type: 'project')
