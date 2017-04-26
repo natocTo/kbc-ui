@@ -1,251 +1,337 @@
 exports[`<CurrentUser /> should render 20x20 icon, no email, no admin links, no maintainers, dropup true 1`] = `
 <div
-  className="kbc-user"
-  onClick={[Function]}>
+  className="kbc-user">
   <img
     className="kbc-user-avatar"
     height={20}
     src="/user.png"
     width={20} />
-  <div>
-    <strong>
-      dev user
-    </strong>
-    <DropdownButton
+  <Uncontrolled(Dropdown)
+    dropup={true}
+    id="react-layout-current-user-dropdown"
+    pullRight={true}>
+    <DropdownToggle
+      bsClass="dropdown-toggle"
+      bsRole="toggle"
       bsStyle="link"
-      className="kbc-user-menu"
-      dropup={true}
       noCaret={true}
-      title={
-        <span
-          className="kbc-icon-picker" />
-      }>
+      open={false}
+      useAnchor={false}>
+      <span
+        className="kbc-icon-picker" />
+      <span
+        className="kbc-user-name">
+        dev user
+      </span>
+    </DropdownToggle>
+    <DropdownMenu
+      bsClass="dropdown-menu"
+      bsRole="menu"
+      pullRight={false}>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/change-password">
         Account Settings
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
         divider={true}
-        href="#" />
+        header={false} />
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/logout">
         Logout
       </MenuItem>
-    </DropdownButton>
-  </div>
+    </DropdownMenu>
+  </Uncontrolled(Dropdown)>
 </div>
 `;
 
-exports[`<CurrentUser /> should render 20x20 icon, no email, with admin links, with 1 maintainer, dropup false 1`] = `
+exports[`<CurrentUser /> should render 20x20 icon, no email, no admin links, with 1 maintainer, dropup false 1`] = `
 <div
-  className="kbc-user"
-  onClick={[Function]}>
+  className="kbc-user">
   <img
     className="kbc-user-avatar"
     height={20}
     src="/user.png"
     width={20} />
-  <div>
-    <strong>
-      dev user
-    </strong>
-    <DropdownButton
+  <Uncontrolled(Dropdown)
+    dropup={false}
+    id="react-layout-current-user-dropdown"
+    pullRight={true}>
+    <DropdownToggle
+      bsClass="dropdown-toggle"
+      bsRole="toggle"
       bsStyle="link"
-      className="kbc-user-menu"
-      dropup={false}
       noCaret={true}
-      title={
-        <span
-          className="kbc-icon-picker" />
-      }>
+      open={false}
+      useAnchor={false}>
+      <span
+        className="kbc-icon-picker" />
+      <span
+        className="kbc-user-name">
+        dev user
+      </span>
+    </DropdownToggle>
+    <DropdownMenu
+      bsClass="dropdown-menu"
+      bsRole="menu"
+      pullRight={false}>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/change-password">
         Account Settings
       </MenuItem>
       <MenuItem
-        active={false}
-        header={true}
-        href="#">
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={true}>
         Maintainers
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/maintainers/1">
         First Maintainer
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
         divider={true}
-        href="#" />
+        header={false} />
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/logout">
         Logout
       </MenuItem>
-    </DropdownButton>
-  </div>
+    </DropdownMenu>
+  </Uncontrolled(Dropdown)>
 </div>
 `;
 
 exports[`<CurrentUser /> should render 40x40 icon, with email, no admin links, no maintainers, dropup false (no mode passed) 1`] = `
 <div
-  className="kbc-user"
-  onClick={[Function]}>
+  className="kbc-user">
   <img
     className="kbc-user-avatar"
     height={40}
     src="/user.png"
     width={40} />
-  <div>
-    <strong>
-      dev user
-    </strong>
-    <DropdownButton
+  <Uncontrolled(Dropdown)
+    dropup={true}
+    id="react-layout-current-user-dropdown"
+    pullRight={true}>
+    <DropdownToggle
+      bsClass="dropdown-toggle"
+      bsRole="toggle"
       bsStyle="link"
-      className="kbc-user-menu"
-      dropup={true}
       noCaret={true}
-      title={
-        <span
-          className="kbc-icon-picker" />
-      }>
+      open={false}
+      useAnchor={false}>
+      <span
+        className="kbc-icon-picker" />
+      <span
+        className="kbc-user-name">
+        dev user
+      </span>
+      <span
+        className="kbc-user-email">
+        dev@keboola.com
+      </span>
+    </DropdownToggle>
+    <DropdownMenu
+      bsClass="dropdown-menu"
+      bsRole="menu"
+      pullRight={false}>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/change-password">
         Account Settings
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
         divider={true}
-        href="#" />
+        header={false} />
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/logout">
         Logout
       </MenuItem>
-    </DropdownButton>
-  </div>
-  <div>
-    <span>
-      dev@keboola.com
-    </span>
-  </div>
+    </DropdownMenu>
+  </Uncontrolled(Dropdown)>
 </div>
 `;
 
 exports[`<CurrentUser /> should render 40x40 icon, with email, no admin links, no maintainers, dropup true 1`] = `
 <div
-  className="kbc-user"
-  onClick={[Function]}>
+  className="kbc-user">
   <img
     className="kbc-user-avatar"
     height={40}
     src="/user.png"
     width={40} />
-  <div>
-    <strong>
-      dev user
-    </strong>
-    <DropdownButton
+  <Uncontrolled(Dropdown)
+    dropup={true}
+    id="react-layout-current-user-dropdown"
+    pullRight={true}>
+    <DropdownToggle
+      bsClass="dropdown-toggle"
+      bsRole="toggle"
       bsStyle="link"
-      className="kbc-user-menu"
-      dropup={true}
       noCaret={true}
-      title={
-        <span
-          className="kbc-icon-picker" />
-      }>
+      open={false}
+      useAnchor={false}>
+      <span
+        className="kbc-icon-picker" />
+      <span
+        className="kbc-user-name">
+        dev user
+      </span>
+      <span
+        className="kbc-user-email">
+        dev@keboola.com
+      </span>
+    </DropdownToggle>
+    <DropdownMenu
+      bsClass="dropdown-menu"
+      bsRole="menu"
+      pullRight={false}>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/change-password">
         Account Settings
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
         divider={true}
-        href="#" />
+        header={false} />
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/logout">
         Logout
       </MenuItem>
-    </DropdownButton>
-  </div>
-  <div>
-    <span>
-      dev@keboola.com
-    </span>
-  </div>
+    </DropdownMenu>
+  </Uncontrolled(Dropdown)>
 </div>
 `;
 
 exports[`<CurrentUser /> should render 40x40 icon, with email, with admin links, with 1 maintainer, dropup false 1`] = `
 <div
-  className="kbc-user"
-  onClick={[Function]}>
+  className="kbc-user">
   <img
     className="kbc-user-avatar"
     height={40}
     src="/user.png"
     width={40} />
-  <div>
-    <strong>
-      dev user
-    </strong>
-    <DropdownButton
+  <Uncontrolled(Dropdown)
+    dropup={false}
+    id="react-layout-current-user-dropdown"
+    pullRight={true}>
+    <DropdownToggle
+      bsClass="dropdown-toggle"
+      bsRole="toggle"
       bsStyle="link"
-      className="kbc-user-menu"
-      dropup={false}
       noCaret={true}
-      title={
-        <span
-          className="kbc-icon-picker" />
-      }>
+      open={false}
+      useAnchor={false}>
+      <span
+        className="kbc-icon-picker" />
+      <span
+        className="kbc-user-name">
+        dev user
+      </span>
+      <span
+        className="kbc-user-email">
+        dev@keboola.com
+      </span>
+    </DropdownToggle>
+    <DropdownMenu
+      bsClass="dropdown-menu"
+      bsRole="menu"
+      pullRight={false}>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/change-password">
         Account Settings
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/manage-apps">
         Manage Applications
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/syrup-jobs-monitoring">
         Syrup Jobs Monitoring
       </MenuItem>
       <MenuItem
-        active={false}
-        header={true}
-        href="#">
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={true}>
         Maintainers
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/maintainers/1">
         First Maintainer
       </MenuItem>
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
         divider={true}
-        href="#" />
+        header={false} />
       <MenuItem
-        active={false}
+        bsClass="dropdown"
+        disabled={false}
+        divider={false}
+        header={false}
         href="/admin/logout">
         Logout
       </MenuItem>
-    </DropdownButton>
-  </div>
-  <div>
-    <span>
-      dev@keboola.com
-    </span>
-  </div>
+    </DropdownMenu>
+  </Uncontrolled(Dropdown)>
 </div>
 `;
