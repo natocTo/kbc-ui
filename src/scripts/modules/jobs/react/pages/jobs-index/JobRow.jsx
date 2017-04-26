@@ -72,6 +72,12 @@ export default React.createClass({
       );
     }
 
+    if (this.props.job.getIn(['params', 'orchestration', 'name']) === undefined) {
+      return (
+          <span>N/A</span>
+      );
+    }
+
     return (
       <span>{config.get('name')}</span>
     );
