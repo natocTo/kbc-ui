@@ -56,6 +56,7 @@ JobDetailOverview = React.createClass
         endTime: @props.job.get('endTime')
 
   _getValidStartTime: ->
+    return 'cancelled' if !@props.job.get('startTime') and @props.job.get('status') == 'cancelled'
     return 'waiting' if !@props.job.get('startTime')
     date.format(@props.job.get('startTime'))
 
