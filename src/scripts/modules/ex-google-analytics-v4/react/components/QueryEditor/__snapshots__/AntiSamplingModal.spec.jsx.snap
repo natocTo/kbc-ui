@@ -1,18 +1,39 @@
 exports[`<AntiSamplingModal /> should render hidden modal 1`] = `
 <Modal
+  animation={true}
+  autoFocus={true}
+  backdrop={true}
+  bsClass="modal"
   bsSize="large"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "modals": Array [],
+    }
+  }
   onHide={[Function]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
   show={false}>
   <ModalHeader
-    closeButton={true}
-    modalClassName="modal-header">
+    aria-label="Close"
+    bsClass="modal-header"
+    closeButton={true}>
     <ModalTitle
-      modalClassName="modal-title">
+      bsClass="modal-title"
+      componentClass="h4">
       Setup Anti-sampling
     </ModalTitle>
   </ModalHeader>
   <ModalBody
-    modalClassName="modal-body">
+    bsClass="modal-body"
+    componentClass="div">
     <div
       className="text-muted">
       <span>
@@ -87,7 +108,8 @@ exports[`<AntiSamplingModal /> should render hidden modal 1`] = `
     </div>
   </ModalBody>
   <ModalFooter
-    modalClassName="modal-footer">
+    bsClass="modal-footer"
+    componentClass="div">
     <ConfirmButtons
       cancelLabel="Cancel"
       isDisabled={false}
@@ -104,19 +126,40 @@ exports[`<AntiSamplingModal /> should render hidden modal 1`] = `
 
 exports[`<AntiSamplingModal /> should render modal 1`] = `
 <Modal
+  animation={true}
+  autoFocus={true}
+  backdrop={true}
+  bsClass="modal"
   bsSize="large"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "modals": Array [],
+    }
+  }
   onHide={[Function]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
   show={true}>
   <ModalHeader
-    closeButton={true}
-    modalClassName="modal-header">
+    aria-label="Close"
+    bsClass="modal-header"
+    closeButton={true}>
     <ModalTitle
-      modalClassName="modal-title">
+      bsClass="modal-title"
+      componentClass="h4">
       Setup Anti-sampling
     </ModalTitle>
   </ModalHeader>
   <ModalBody
-    modalClassName="modal-body">
+    bsClass="modal-body"
+    componentClass="div">
     <div
       className="text-muted">
       <span>
@@ -191,7 +234,8 @@ exports[`<AntiSamplingModal /> should render modal 1`] = `
     </div>
   </ModalBody>
   <ModalFooter
-    modalClassName="modal-footer">
+    bsClass="modal-footer"
+    componentClass="div">
     <ConfirmButtons
       cancelLabel="Cancel"
       isDisabled={false}
