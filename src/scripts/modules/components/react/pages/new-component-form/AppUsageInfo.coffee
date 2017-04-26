@@ -1,7 +1,7 @@
 React = require 'react'
 is3rdParty = require('../../../is3rdParty').default
 
-{div, label, ul, li, p, span, strong, address, a, br, em, table, tr, td, h2} = React.DOM
+{div, label, ul, li, p, span, strong, address, a, br, em, table, tbody, tr, td, h2} = React.DOM
 
 module.exports = React.createClass
   displayName: 'appUsageInfo'
@@ -81,7 +81,8 @@ module.exports = React.createClass
 
   render: ->
     table {className: "kbcLicenseTable"},
-      @renderFeatures()
+      tbody null,
+        @renderFeatures()
 
 
   getAppType: ->
