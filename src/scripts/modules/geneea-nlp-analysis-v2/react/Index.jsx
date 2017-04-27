@@ -415,7 +415,12 @@ export default React.createClass({
         key={column}
         name={column}
         value={value ? value.toJS() : ''}
-        onChange= {(newValue) => this.updateEditingValue(column, isMulti ? List(newValue) : List([newValue.value]))}
+        onChange={(newValue) => {
+          this.updateEditingValue(
+            column,
+            isMulti ? List(newValue.map((val) => val.value)) : List([newValue.value])
+          );
+        }}
         options= {this.getColumns()}
       />
     , description);
