@@ -52,12 +52,12 @@ JobTasks = React.createClass
               ' '
               if task.has 'config'
                 ' - ' + task.getIn ['config', 'name']
-            span className: 'td col-xs-1 text-right',
+            span className: 'td col-xs-2 text-right',
               span className: 'label kbc-label-rounded label-default',
                 task.get('phase')
             span className: 'td col-xs-2 text-right',
               Duration startTime: task.get('startTime'), endTime: task.get('endTime')
-            span className: 'td col-xs-2 text-right',
+            span className: 'td col-xs-1 text-right',
               JobStatusLabel status: task.get('status') if task.has('status')
 
     Panel
