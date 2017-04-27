@@ -49,9 +49,6 @@ EditInput = React.createFactory React.createClass
   _onChange: (e) ->
     @props.onChange e.target.value
 
-  componentDidMount: ->
-    @refs.valueInput.getInputDOMNode().focus()
-
   render: ->
     div className: 'form-inline kbc-inline-edit',
       Input
@@ -62,6 +59,7 @@ EditInput = React.createFactory React.createClass
         disabled: @props.isSaving
         placeholder: @props.placeholder
         onChange: @_onChange
+        autoFocus: true
       div className: 'kbc-inline-edit-buttons',
         Button
           className: 'kbc-inline-edit-cancel'
