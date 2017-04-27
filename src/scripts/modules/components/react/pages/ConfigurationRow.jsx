@@ -74,7 +74,8 @@ export default React.createClass({
   deleteConfirmProps() {
     return {
       title: 'Move Configuration to Trash',
-      text: `Are you sure you want to move the configuration ${this.props.config.get('name')} to Trash?`,
+      text: `Are you sure you want to move the configuration ${this.props.config.get('name')} to Trash? 
+      This configuration can't be restored`,
       onConfirm: this.handleDelete,
       buttonLabel: 'Move to Trash'
     };

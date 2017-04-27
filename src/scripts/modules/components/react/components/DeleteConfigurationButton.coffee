@@ -35,7 +35,8 @@ module.exports = React.createClass
     if trashUtils.isObsoleteComponent(@props.componentId)
       React.createElement Confirm,
         title: 'Move Configuration to Trash'
-        text: "Are you sure you want to move the configuration #{this.state.config.get('name')} to Trash?"
+        text: "Are you sure you want to move the configuration #{this.state.config.get('name')} to Trash? This
+ configuration can't be restored."
         buttonLabel: 'Move to Trash'
         onConfirm: @_handleDelete
         childrenRootElement: React.DOM.a
