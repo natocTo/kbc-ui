@@ -335,7 +335,7 @@ export default React.createClass({
         key="domain"
         name="domain"
         value={currentValue}
-        onChange= {({value: newValue}) => this.updateEditingValue(prop, newValue)}
+        onChange= {(newValue) => this.updateEditingValue(prop, newValue ? newValue.value : '')}
         options= {allOptions}
       />
       , description);
