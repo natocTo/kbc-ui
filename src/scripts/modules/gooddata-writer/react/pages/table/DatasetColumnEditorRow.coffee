@@ -67,7 +67,7 @@ module.exports = React.createClass
         @_createInput
           type: 'select'
           value: column.get 'type'
-          disableD: @props.isSaving
+          disabled: @props.isSaving
           onChange: @_handleInputChange.bind @, 'type'
         ,
           @_selectOptions Immutable.fromJS(ColumnTypes)
