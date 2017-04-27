@@ -19,7 +19,7 @@ export default React.createClass({
         <div className="form-group">
           <Select.Creatable
             name="packages"
-            value={this.props.packages.toArray()}
+            value={this.getValue()}
             multi={true}
             disabled={this.props.isSaving}
             onChange={this.handleValueChange}
@@ -50,5 +50,11 @@ export default React.createClass({
   handleValueChange(newArray) {
     const values = fromJS(newArray).map((item) => item.get('value'));
     this.props.onEditChange(values);
+  },
+
+  getValue() {
+    return this.props.packages.map((item) => {
+      return {label: item, value: item};
+    }).toJS();
   }
 });
