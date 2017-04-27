@@ -33,9 +33,6 @@ module.exports = React.createClass
     isSaving: React.PropTypes.bool.isRequired
     onClose: React.PropTypes.func.isRequired
 
-  componentDidMount: ->
-    @refs.name.getInputDOMNode().focus()
-
   getInitialState: ->
     canCreateProdProject: !!ApplicationStore.getCurrentProject().getIn(['limits', 'goodData.prodTokenEnabled', 'value'])
 
@@ -73,6 +70,7 @@ module.exports = React.createClass
                 wrapperClassName: 'col-xs-7'
                 onChange: @_handleChange.bind @, 'name'
                 disabled: @props.isSaving
+                autoFocus: true
               Input
                 type: 'textarea'
                 label: 'Description'
