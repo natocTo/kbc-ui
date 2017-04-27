@@ -14,9 +14,6 @@ TransformationActionCreators = require '../../ActionCreators'
 module.exports = React.createClass
   displayName: 'NewTransformationBucket'
 
-  componentDidMount: ->
-    @refs.name?.focus()
-
   props:
     label: React.PropTypes.string.isRequired
 
