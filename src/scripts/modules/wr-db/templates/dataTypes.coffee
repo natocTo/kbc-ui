@@ -127,9 +127,10 @@ pgsql = [
   'bytea'
   'date'
   'time'
-  'time with timezone'
+  'time with time zone'
   'timestamp'
-  'timestamp with timezone'
+  'timestamptz'
+  'timestamp with time zone'
   'interval'
   {'enum': defaultSize: 'my_enum_type'}
   'json'
