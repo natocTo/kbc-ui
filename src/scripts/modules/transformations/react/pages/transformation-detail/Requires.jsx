@@ -34,10 +34,8 @@ export default React.createClass({
             name="packages"
             value={this.props.requires.toArray()}
             options={this.getSelectOptions(this.props.transformations, this.props.transformation)}
-            multi="true"
+            multi={true}
             disabled={this.props.isSaving}
-            allowCreate={false}
-            delimiter=","
             onChange={this.handleValueChange}
             placeholder="Add required transformation..."
             isLoading={this.props.isSaving}
@@ -65,7 +63,7 @@ export default React.createClass({
     });
   },
 
-  handleValueChange(newValue, newArray) {
+  handleValueChange(newArray) {
     const values = fromJS(newArray).map((item) => item.get('value'));
     this.props.onEditChange(values);
   }

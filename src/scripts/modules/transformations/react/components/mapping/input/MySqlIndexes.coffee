@@ -1,7 +1,6 @@
 React = require 'react'
 ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
-{Button} = require('react-bootstrap')
-Button = React.createFactory Button
+Button = React.createFactory(require('react-bootstrap').Button)
 Select = React.createFactory(require('react-select'))
 _ = require('underscore')
 
@@ -18,8 +17,8 @@ module.exports = React.createClass
     handleAddIndex: React.PropTypes.func.isRequired
     handleRemoveIndex: React.PropTypes.func.isRequired
 
-  _handleSelectOnChange: (string, array) ->
-    @props.selectOnChange(_.pluck(array, "value"))
+  _handleSelectOnChange: (selected) ->
+    @props.selectOnChange(_.pluck(selected, "value"))
 
   render: ->
     component = @
@@ -33,6 +32,7 @@ module.exports = React.createClass
             React.DOM.span {key: key},
               React.DOM.span {className: 'label label-default'},
                 index.toArray().join(', ')
+                ' '
                 React.DOM.span
                   className: "kbc-icon-cup kbc-cursor-pointer"
                   onClick: ->

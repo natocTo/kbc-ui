@@ -1,52 +1,80 @@
-import React, {PropTypes} from 'react';
-import {DragDropMixin} from 'react-dnd';
-import _ from 'underscore';
+import React, { PropTypes } from 'react';
+import { DragSource, DropTarget } from 'react-dnd';
+import flow from 'lodash/flow';
 import Tooltip from '../../../../../react/common/Tooltip';
 
-export default React.createClass({
-  mixins: [DragDropMixin],
+const ItemType = 'PhaseRow';
+
+const phaseRowSource = {
+  beginDrag(props) {
+    return {
+      id: props.phase.get('id')
+    };
+  }
+};
+
+const phaseRowTarget = {
+  canDrop(props, monitor) {
+    const draggedId = monitor.getItem().id;
+    return draggedId === props.phase.get('id');
+  },
+  hover(props, monitor) {
+    const draggedId = monitor.getItem().id;
+    const hoverId = props.phase.get('id');
+
+    if (draggedId === hoverId) {
+      return;
+    }
+
+    props.onPhaseMove(hoverId, draggedId);
+  }
+};
+
+function collectForDragSource(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  };
+}
+
+function collectForDropTarget(connect) {
+  return {
+    connectDropTarget: connect.dropTarget()
+  };
+}
+
+const PhaseEditRow = React.createClass({
   propTypes: {
     toggleHide: PropTypes.func.isRequired,
     phase: PropTypes.object.isRequired,
     onPhaseMove: PropTypes.func.isRequired,
     onMarkPhase: PropTypes.func.isRequired,
-    togglePhaseIdChange: PropTypes.bool.isRequired,
+    togglePhaseIdChange: PropTypes.func.isRequired,
     isMarked: PropTypes.bool.isRequired,
     toggleAddNewTask: PropTypes.func.isRequired,
     color: PropTypes.string,
-    isPhaseHidden: PropTypes.bool
-  },
+    isPhaseHidden: PropTypes.bool,
 
-  statics: {
-    configureDragDrop: (register) => {
-      register('phase', {
-        dragSource: {beginDrag: (phaseRow) => {
-          // TODO this.props.onBeginDrag(phaseRow.props.phase.get('id'));
-          return {item: phaseRow.props.phase};
-        }
-        },
-        dropTarget: {over: (phaseRow, phase) => {
-          // TODO this.props.onEndDrag(phaseRow.props.phase.get('id'));
-          phaseRow.props.onPhaseMove(phase.get('id'), phaseRow.props.phase.get('id'));
-        }}});
-    }
+    // react-dnd
+    isDragging: PropTypes.bool.isRequired,
+    connectDragSource: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired
   },
 
   render() {
-    const isDragging = this.getDragState('phase').isDragging;
+    const { isDragging, connectDragSource, connectDropTarget } = this.props;
     let style = {
       opacity: isDragging ? 0.5 : 1,
-      'background-color': this.props.color
+      'backgroundColor': isDragging ? '#ffc' : this.props.color,
+      cursor: 'move'
     };
     if (this.props.isPhaseHidden) {
-      style['border-bottom'] = '2px groove';
+      style.borderBottom = '2px groove';
     }
-    const tdcn = 'dkb-orchestrator-task-drag';
-    const dragprops = _.extend({style: {cursor: 'move'}, className: tdcn}, this.dragSourceFor('phase'), this.dropTargetFor('phase'));
-    return (
-      <tr style={style}
-        onClick={this.onRowClick}>
-        <td {...dragprops} >
+    return connectDragSource(connectDropTarget(
+      <tr style={style} onClick={this.onRowClick}>
+
+        <td>
           <div className="row">
             <div className="col-xs-3">
               <i  className="fa fa-bars"/>
@@ -56,10 +84,9 @@ export default React.createClass({
               {this.renderSelectPhaseCheckbox()}
             </div>
           </div>
-
         </td>
-        <td colSpan="5" className="kbc-cursor-pointer text-center">
 
+        <td colSpan="5" className="kbc-cursor-pointer text-center">
           <div className="text-center form-group form-group-sm">
             <strong>
               <span>{this.props.phase.get('id')} </span>
@@ -72,6 +99,7 @@ export default React.createClass({
             </Tooltip>
           </div>
         </td>
+
         <td>
           <div className="pull-right">
               <button
@@ -85,13 +113,11 @@ export default React.createClass({
         </td>
 
       </tr>
-    );
+    ));
   },
 
   renderSelectPhaseCheckbox() {
     return (
-
-
       <Tooltip
         tooltip="Select phase to merge">
         <input
@@ -100,8 +126,6 @@ export default React.createClass({
           onClick={this.toggleMarkPhase}
         />
       </Tooltip>
-
-
     );
   },
 
@@ -130,15 +154,9 @@ export default React.createClass({
     e.stopPropagation();
   }
 
-  /* <TasksEditTableRow
-     task=this.props.task
-     component: @props.components.get(task.get('component'))
-     disabled: @props.disabled
-     key: task.get('id')
-     onTaskDelete: @props.onTaskDelete
-     onTaskUpdate: @props.onTaskUpdate
-     onTaskMove: @props.onTaskMove
-   */
-
-
 });
+
+export default flow(
+  DragSource(ItemType, phaseRowSource, collectForDragSource),
+  DropTarget(ItemType, phaseRowTarget, collectForDropTarget)
+)(PhaseEditRow);

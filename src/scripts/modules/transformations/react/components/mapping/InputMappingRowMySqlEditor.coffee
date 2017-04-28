@@ -1,7 +1,7 @@
 React = require 'react'
 _ = require('underscore')
 Immutable = require('immutable')
-{Input} = require('react-bootstrap')
+{Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 MySqlIndexesContainer = React.createFactory(require("./input/MySqlIndexesContainer"))
@@ -174,16 +174,17 @@ module.exports = React.createClass
               onChange: @_handleChangeSource
               options: @_getTables()
             if @state.showDetails
-              React.DOM.div {},
-                Input
-                  standalone: true
-                  type: 'checkbox'
-                  label: React.DOM.small {}, 'Optional'
-                  checked: @props.value.get("optional")
-                  disabled: @props.disabled
-                  onChange: @_handleChangeOptional
-                  help: React.DOM.small {},
-                    "If this table does not exist in Storage, the transformation won't show an error."
+              React.DOM.div className: 'checkbox',
+                React.DOM.label null,
+                  React.DOM.input
+                    standalone: true
+                    type: 'checkbox'
+                    checked: @props.value.get("optional")
+                    disabled: @props.disabled
+                    onChange: @_handleChangeOptional
+                  React.DOM.small null, ' Optional'
+                React.DOM.small className: 'help-block',
+                  "If this table does not exist in Storage, the transformation won't show an error."
       React.DOM.div {className: "row col-md-12"},
         Input
           type: 'text'

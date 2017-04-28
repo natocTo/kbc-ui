@@ -63,7 +63,7 @@ module.exports = React.createClass
 
   componentDidMount: ->
     window.addEventListener('resize', @handleResize)
-    @graph = new GraphCanvas {}, @refs.graph.getDOMNode()
+    @graph = new GraphCanvas {}, @refs.graph
     @_renderGraph()
 
   _handleZoomIn: ->

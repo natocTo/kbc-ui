@@ -10,7 +10,6 @@ ComponentEmptyState = require('../../../../components/react/components/Component
 AddNewTableButton = require('../../components/AddNewTableButton').default
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
-{Panel, PanelGroup, Alert, DropdownButton} = require('react-bootstrap')
 
 SearchRow = require('../../../../../react/common/SearchRow').default
 TablesList = require './BucketTablesList'
@@ -20,7 +19,7 @@ TablesByBucketsPanel = require '../../../../components/react/components/TablesBy
 
 ActiveCountBadge = require './ActiveCountBadge'
 {Link} = require('react-router')
-{Tooltip, Confirm} = require '../../../../../react/common/common'
+{Confirm} = require '../../../../../react/common/common'
 {Loader} = require 'kbc-react-components'
 
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
@@ -31,6 +30,7 @@ goodDataWriterStore = require '../../../store'
 actionCreators = require '../../../actionCreators'
 installedComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 {label, small, strong, br, ul, li, div, span, i, a, button, p} = React.DOM
+{ Panel, Alert, DropdownButton } = require('react-bootstrap')
 
 module.exports = React.createClass
   displayName: 'GooddDataWriterIndex'
@@ -196,9 +196,10 @@ module.exports = React.createClass
                   React.createElement Loader
               React.createElement DropdownButton,
                 title: span null,
-                  span className: 'fa fa-cog fa-fw'
+                  i className: 'fa fa-cog fa-fw'
                   ' Advanced'
-                navItem: true
+                bsStyle: 'link'
+                id: 'modules-gooddata-writer-react-pages-index-index-dropdown'
               ,
                 li null,
                   React.createElement Confirm,
@@ -251,7 +252,7 @@ module.exports = React.createClass
           limit: 3
 
 
-  _handleBucketSelect: (bucketId, e) ->
+  _handleBucketSelect: (bucketId, eventKey, e) ->
     actionCreators.toggleBucket(@state.writer.getIn(['config', 'id']), bucketId)
 
   _handleProjectUpload: ->

@@ -95,7 +95,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    var el = React.findDOMNode(this.refs.metric);
+    var el = this.refs.metric;
     var query = new Keen.Query('average', this.props.query);
 
 

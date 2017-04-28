@@ -1,5 +1,4 @@
 import React from 'react';
-import {DropdownButton, MenuItem} from 'react-bootstrap';
 import RollbackVersionMenuItem from './RollbackVersionMenuItem';
 import CopyVersionMenuItem from './CopyVersionMenuItem';
 import DiffMenuItem from './DiffMenuItem';
@@ -13,6 +12,7 @@ import {getPreviousVersion} from '../../utils/VersionsDiffUtils';
 import VersionsActionCreators from '../../../scripts/modules/components/VersionsActionCreators';
 // import {Loader} from 'kbc-react-components';
 import RoutesStore from '../../stores/RoutesStore';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [createStoreMixin(VersionsStore, InstalledComponentStore)],
@@ -140,8 +140,13 @@ export default React.createClass({
   render() {
     return (
       <span>
-        <DropdownButton bsSize={this.props.dropDownButtonSize}
-          title={this.dropdownTitle()} pullRight className="kbcVersionsButton">
+        <DropdownButton
+          bsSize={this.props.dropDownButtonSize}
+          title={this.dropdownTitle()}
+          pullRight
+          className="kbcVersionsButton"
+          id="react-common-versions-dropdown-dropdown"
+        >
           {
             this.getVersions().map(function(version, i) {
               const previousVersion = getPreviousVersion(this.state.versions, version);

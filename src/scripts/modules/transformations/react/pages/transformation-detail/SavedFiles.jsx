@@ -16,13 +16,11 @@ export default React.createClass({
           Stored Files
         </h2>
         <div className="form-group">
-          <Select
+          <Select.Creatable
             name="tags"
-            value={this.props.tags.toArray()}
-            multi="true"
+            value={this.getValue()}
+            multi={true}
             disabled={this.props.isSaving}
-            allowCreate="true"
-            delimiter=","
             onChange={this.handleValueChange}
             placeholder="Add tags..."
             isLoading={this.props.isSaving}
@@ -35,8 +33,14 @@ export default React.createClass({
     );
   },
 
-  handleValueChange(newValue, newArray) {
+  handleValueChange(newArray) {
     const values = fromJS(newArray).map((item) => item.get('value'));
     this.props.onEditChange(values);
+  },
+
+  getValue() {
+    return this.props.tags.map((item) => {
+      return {label: item, value: item};
+    }).toJS();
   }
 });

@@ -4,7 +4,6 @@ _ = require 'underscore'
 {ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'
 {a, small, button, option, span, i, button, strong, div, input} = React.DOM
 Link = React.createFactory(require('react-router').Link)
-Input = React.createFactory(require('react-bootstrap').Input)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 
 RowEditor = require './RowEditor'

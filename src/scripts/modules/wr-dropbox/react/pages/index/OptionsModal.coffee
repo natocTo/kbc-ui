@@ -8,7 +8,6 @@ ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
 ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
 ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
-Input = React.createFactory(require('react-bootstrap').Input)
 OptionsForm = React.createFactory OptionsForm
 Loader = React.createFactory(require('kbc-react-components').Loader)
 

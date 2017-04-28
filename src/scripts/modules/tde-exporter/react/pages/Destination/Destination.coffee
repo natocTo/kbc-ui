@@ -20,7 +20,6 @@ ApplicationActionCreators = require '../../../../../actions/ApplicationActionCre
 
 RoutesStore = require '../../../../../stores/RoutesStore'
 {List, Map, fromJS} = require 'immutable'
-{OverlayTrigger, Tooltip, Button} = require 'react-bootstrap'
 
 DropboxRow = React.createFactory require './DropboxRow'
 GdriveRow = React.createFactory require './GdriveRow'

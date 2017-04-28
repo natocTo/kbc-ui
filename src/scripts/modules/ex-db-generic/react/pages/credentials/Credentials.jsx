@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import CredentialsForm from './CredentialsForm';
 import SSLForm from './SSLForm';
-import {TabbedArea, TabPane} from 'react-bootstrap';
+import {TabbedArea, TabPane} from './../../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -19,8 +19,8 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid kbc-main-content">
-        <TabbedArea defaultActiveKey="db" animation={false}>
-          <TabPane eventKey="db" tab="Database Credentials">
+        <TabbedArea defaultActiveKey="db" animation={false} id="credentialstab">
+          <TabPane eventKey="db" title="Database Credentials">
             <CredentialsForm
               savedCredentials={this.props.savedCredentials}
               credentials={this.props.credentials}
@@ -42,7 +42,7 @@ export default React.createClass({
   renderSSLForm() {
     if (this.props.componentId === 'keboola.ex-db-mysql' || this.props.componentId === 'keboola.ex-db-mysql-custom') {
       return (
-          <TabPane eventKey="ssl" tab="SSL">
+          <TabPane eventKey="ssl" title="SSL">
             <SSLForm
                 credentials={this.props.credentials}
                 enabled={this.props.isEditing}

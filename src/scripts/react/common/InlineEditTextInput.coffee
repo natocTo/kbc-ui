@@ -1,11 +1,10 @@
 React = require 'react'
 _ = require 'underscore'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('./Tooltip').default)
 Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./KbcBootstrap').Input)
 
 {div, span, i, textarea} = React.DOM
 
@@ -22,8 +21,8 @@ StaticInput = React.createFactory React.createClass
   render: ->
     props = _.omit @props, 'text'
     props.className = 'kbc-inline-edit-link'
-    OverlayTrigger
-      overlay: Tooltip null, @props.editTooltip
+    Tooltip
+      tooltip: @props.editTooltip
       placement: @props.tooltipPlacement
     ,
       span props,
@@ -50,9 +49,6 @@ EditInput = React.createFactory React.createClass
   _onChange: (e) ->
     @props.onChange e.target.value
 
-  componentDidMount: ->
-    @refs.valueInput.getInputDOMNode().focus()
-
   render: ->
     div className: 'form-inline kbc-inline-edit',
       Input
@@ -63,6 +59,7 @@ EditInput = React.createFactory React.createClass
         disabled: @props.isSaving
         placeholder: @props.placeholder
         onChange: @_onChange
+        autoFocus: true
       div className: 'kbc-inline-edit-buttons',
         Button
           className: 'kbc-inline-edit-cancel'
@@ -125,4 +122,3 @@ module.exports = React.createClass
         tooltipPlacement: @props.tooltipPlacement
         placeholder: @props.placeholder
         onClick: @props.onEditStart
-

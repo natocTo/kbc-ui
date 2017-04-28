@@ -2,20 +2,9 @@ React = require 'react'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 _ = require('underscore')
 Immutable = require('immutable')
-Input = React.createFactory require('react-bootstrap').Input
+Input = React.createFactory require('./../../../../../react/common/KbcBootstrap').Input
 AutosuggestWrapper = require('./AutoSuggestWrapper').default
 Select = React.createFactory require('../../../../../react/common/Select').default
-
-createGetSuggestions = (getOptions) ->
-  (input, callback) ->
-    suggestions = getOptions()
-    .filter (value) -> value.toLowerCase().indexOf(input.toLowerCase()) >= 0
-    .sortBy( (item) ->
-      item
-    )
-    .slice 0, 10
-    .toList()
-    callback(null, suggestions.toJS())
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
@@ -153,11 +142,9 @@ module.exports = React.createClass
             React.DOM.label className: 'col-xs-2 control-label', 'Destination'
             React.DOM.div className: 'col-xs-10',
               React.createElement AutosuggestWrapper,
-                suggestions: createGetSuggestions(@_getTablesAndBuckets)
+                suggestions: @_getTablesAndBuckets()
                 value: @props.value.get("destination", "")
                 onChange: @_handleChangeDestination
-                id: 'output-destination'
-                name: 'output-destination'
                 placeholder: 'Destination table in Storage'
               if @state.showDetails
                 Input
@@ -205,12 +192,10 @@ module.exports = React.createClass
               React.DOM.label className: 'col-xs-2 control-label', 'Delete rows'
               React.DOM.div className: 'col-xs-4',
                 React.createElement AutosuggestWrapper,
-                  suggestions: createGetSuggestions(@_getColumns)
+                  suggestions: @_getColumns()
                   placeholder: 'Select column'
                   value: @props.value.get("deleteWhereColumn", "")
                   onChange: @_handleChangeDeleteWhereColumn
-                  id: 'output-delete-rows'
-                  name: 'output-delete-rows'
               React.DOM.div className: 'col-xs-2',
                 Input
                   bsSize: 'small'
@@ -236,4 +221,3 @@ module.exports = React.createClass
                   onChange: @_handleChangeDeleteWhereValues
               React.DOM.div className: 'col-xs-10 col-xs-offset-2 small help-block bottom-margin',
                 "Delete matching rows in the destination table before importing the result"
-

@@ -5,7 +5,7 @@ RunComponentButton = React.createFactory(require '../../../../components/react/c
 DeleteButton = React.createFactory(require '../../../../../react/common/DeleteButton')
 TransformationActionCreators = require '../../../ActionCreators'
 RoutesStore = require '../../../../../stores/RoutesStore'
-{OverlayTrigger, Tooltip} = require 'react-bootstrap'
+Tooltip = require('./../../../../../react/common/Tooltip').default
 descriptionExcerpt = require('../../../../../utils/descriptionExcerpt').default
 
 {span, div, a, button, i, h4, small, em} = React.DOM
@@ -48,8 +48,8 @@ TransformationBucketRow = React.createClass(
     ))
 
     buttons.push(
-      React.createElement OverlayTrigger,
-        overlay: React.createElement(Tooltip, null, 'Go to Bucket Detail')
+      React.createElement Tooltip,
+        tooltip: 'Go to Bucket Detail'
         placement: 'top'
       ,
         button

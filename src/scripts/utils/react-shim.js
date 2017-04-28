@@ -5,5 +5,4 @@ if (process.env.NODE_ENV === 'production') {
   DOMProperty.ID_ATTRIBUTE_NAME = 'data-keboolaid';
 }
 
-require('react/addons');
 require('react');

@@ -5,7 +5,6 @@ PhaseEditRow = React.createFactory(require('./PhaseEditRow').default)
 PhaseModal = require('../../modals/Phase').default
 MergePhasesModal = require('../../modals/MergePhasesModal').default
 MoveTasksModal = require('../.././modals/MoveTasksModal').default
-Tooltip = React.createFactory(require('../../../../../react/common/Tooltip').default)
 {p, small, a, ul, li, i, div, span, strong, table, button, thead, tbody, th, td, tr} = React.DOM
 AddTaskModal = require('../../modals/add-task/AddTaskModal')
 EmptyState = require('../../../../components/react/components/ComponentEmptyState').default
@@ -59,11 +58,10 @@ TasksEditTable = React.createClass
   renderHeaderActionButtons: ->
     ul className: 'nav nav-stacked',
       DropdownButton
-        bsSize: 'small'
-        bsStyle: 'small'
-        style: {padding: '0'}
+        bsStyle: 'link'
+        style: {paddingLeft: 0}
         title: span null, 'Actions'
-        navItem: true
+        id: 'modules-orchestrations-react-pages-orchestration-tasks-tasks-edit-table-dropdown'
       ,
         li className: (if @canMergePhases() then '' else 'disabled'),
           a
@@ -141,7 +139,6 @@ TasksEditTable = React.createClass
           key: taskId
           onTaskDelete: @props.onTaskDelete
           onTaskUpdate: @props.onTaskUpdate
-          isDraggingPhase: @props.localState.getIn ['phases', phase.get('id'), 'isDragging']
           isMarked: @props.localState.getIn(['moveTasks', 'marked', taskId], false)
           toggleMarkTask: =>
             @_toggleMarkTask(task)
@@ -159,7 +156,7 @@ TasksEditTable = React.createClass
     return result.toArray()
 
   _renderEmptyTasksRow: (phaseId, color) ->
-    tr {style: {'background-color': color}},
+    tr {style: {'backgroundColor': color}},
       td
         className: 'text-muted'
         colSpan: 7

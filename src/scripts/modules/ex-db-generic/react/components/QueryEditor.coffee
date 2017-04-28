@@ -1,23 +1,16 @@
 React = require 'react'
+ReactDOM = require 'react-dom'
 fuzzy = require 'fuzzy'
 string = require('../../../../utils/string').default
 CodeEditor  = React.createFactory(require('../../../../react/common/common').CodeEditor)
 Check = React.createFactory(require('../../../../react/common/common').Check)
 Select = React.createFactory require('../../../../react/common/Select').default
 
-Autosuggest = React.createFactory(require 'react-autosuggest')
+AutoSuggestWrapperComponent = require('../../../transformations/react/components/mapping/AutoSuggestWrapper').default
+AutoSuggestWrapper = React.createFactory(AutoSuggestWrapperComponent)
 editorMode = require('../../templates/editorMode').default
 
 {div, table, tbody, tr, td, ul, li, a, span, h2, p, strong, input, label} = React.DOM
-
-createGetSuggestions = (getOptions) ->
-  (input, callback) ->
-    suggestions = getOptions()
-      .filter (value) -> fuzzy.match(input, value)
-      .slice 0, 10
-      .toList()
-    callback(null, suggestions.toJS())
-
 
 module.exports = React.createClass
   displayName: 'ExDbQueryEditor'
@@ -77,13 +70,11 @@ module.exports = React.createClass
         div className: 'form-group',
           label className: 'col-md-2 control-label', 'Output table'
           div className: 'col-md-6',
-            Autosuggest
-              suggestions: createGetSuggestions(@_tableSelectOptions)
-              inputAttributes:
-                className: 'form-control'
-                placeholder: @_tableNamePlaceholder()
-                value: @props.query.get 'outputTable'
-                onChange: @_handleOutputTableChange
+            AutoSuggestWrapper
+              suggestions: @_tableSelectOptions()
+              placeholder: @_tableNamePlaceholder()
+              value: @props.query.get 'outputTable'
+              onChange: @_handleOutputTableChange
             div className: 'help-block',
               "if empty then default will be used"
           div className: 'col-md-4 checkbox',

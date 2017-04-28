@@ -18,8 +18,8 @@ JobsNav = React.createFactory(require './JobsNav')
 JobOverview = React.createFactory(require './Overview')
 Events = React.createFactory(require '../../../../sapi-events/react/Events')
 
-TabbedArea = React.createFactory(require('react-bootstrap').TabbedArea)
-TabPane = React.createFactory(require('react-bootstrap').TabPane)
+TabbedArea = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabbedArea)
+TabPane = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabPane)
 
 {div} = React.DOM
 

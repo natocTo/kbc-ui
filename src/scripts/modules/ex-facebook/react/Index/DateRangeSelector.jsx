@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import {DropdownButton, MenuItem} from 'react-bootstrap';
 // import {Map} from 'immutable';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 const TEMPLATES = [
   {
@@ -63,7 +63,9 @@ export default React.createClass({
         pullRight={true}
         onSelect={this.selectTemplate}
         bsStyle="default"
-        title={this.state.text}>
+        title={this.state.text}
+        id="modules-ex-facebook-react-index-date-range-selector-dropdown"
+      >
         {TEMPLATES.map((t) =>
           <MenuItem eventKey={t.name}>
               {t.name}

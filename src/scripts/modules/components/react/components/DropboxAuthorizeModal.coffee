@@ -8,7 +8,7 @@ ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
 ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
 ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
 RouterStore = require('../../../../stores/RoutesStore')
 
 {i, span, div, p, strong, form, input, label, div} = React.DOM

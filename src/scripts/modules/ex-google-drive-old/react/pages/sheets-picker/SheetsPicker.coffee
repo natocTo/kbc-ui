@@ -12,13 +12,10 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 Picker = React.createFactory(require('../../../../google-utils/react/GooglePicker').default)
 ViewTemplates = require('../../../../google-utils/react/PickerViewTemplates').default
 
-{Panel, PanelGroup} = require('react-bootstrap')
-Accordion = React.createFactory(require('react-bootstrap').Accordion)
-PanelGroup = React.createFactory PanelGroup
 GdriveFilePanel = React.createFactory(require('./GdriveFilePanel'))
 ConfigSheetsPanels = React.createFactory(require('./ConfigSheetsPanels'))
-TabbedArea = React.createFactory(require('react-bootstrap').TabbedArea)
-TabPane = React.createFactory(require('react-bootstrap').TabPane)
+TabbedArea = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabbedArea)
+TabPane = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabPane)
 SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
 Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)

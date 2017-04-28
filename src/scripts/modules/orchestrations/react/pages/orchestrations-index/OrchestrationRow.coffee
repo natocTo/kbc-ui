@@ -11,9 +11,6 @@ ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMix
 
 OrchestrationActionCreators = require '../../../ActionCreators'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-
 {span, div, a, button, i} = React.DOM
 
 

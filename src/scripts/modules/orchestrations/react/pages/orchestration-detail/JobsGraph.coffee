@@ -1,4 +1,5 @@
 React = require 'react'
+ReactDOM = require 'react-dom'
 moment = require 'moment'
 numeral = require 'numeral'
 date = require '../../../../../utils/date'
@@ -12,8 +13,8 @@ JobsGraph = React.createClass
     jobs: React.PropTypes.object.isRequired
 
   componentDidMount: ->
-    width = @getDOMNode().offsetWidth
-    svg = dimple.newSvg(@getDOMNode(), width, 0.3 * width)
+    width = ReactDOM.findDOMNode(@).offsetWidth
+    svg = dimple.newSvg(ReactDOM.findDOMNode(@), width, 0.3 * width)
 
     data = @_prepareData()
 
@@ -43,7 +44,7 @@ JobsGraph = React.createClass
     window.removeEventListener("resize", @_refreshGraph)
 
   _refreshGraph: ->
-    width = @getDOMNode().offsetWidth
+    width = ReactDOM.findDOMNode(@).offsetWidth
     data = @_prepareData()
     @chart.axes[1].title = "Duration (#{data.get('unit')})"
     @chart.data = data.get('jobs').toJS()

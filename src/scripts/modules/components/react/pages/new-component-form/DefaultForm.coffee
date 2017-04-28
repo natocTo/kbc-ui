@@ -1,16 +1,16 @@
 React = require 'react'
 
 FormHeader = React.createFactory(require './FormHeader')
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 AppVendorInfo = React.createFactory(require './AppVendorInfo')
 AppUsageInfo = React.createFactory(require './AppUsageInfo')
 {div, p, form, label, span, h3} = React.DOM
 Immutable = require('immutable')
 
-ModalHeader = React.createFactory(require('react-bootstrap/lib/ModalHeader'))
-ModalTitle = React.createFactory(require('react-bootstrap/lib/ModalTitle'))
-ModalBody = React.createFactory(require('react-bootstrap/lib/ModalBody'))
-ModalFooter = React.createFactory(require('react-bootstrap/lib/ModalFooter'))
+ModalHeader = React.createFactory(require('react-bootstrap').ModalHeader)
+ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
+ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
+ModalFooter = React.createFactory(require('react-bootstrap').ModalFooter)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)

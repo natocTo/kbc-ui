@@ -16,13 +16,11 @@ module.exports = React.createClass
     value: React.PropTypes.string.isRequired
     excludeTableFn: React.PropTypes.func
     allowedBuckets: React.PropTypes.array
-    allowCreate: React.PropTypes.bool
 
   getDefaultProps: ->
     excludeTableFn: (tableId) ->
       return false
     allowedBuckets: ['in','out']
-    allowCreate: false
 
   getStateFromStores: ->
     isTablesLoading = storageTablesStore.getIsLoading()
@@ -48,16 +46,15 @@ module.exports = React.createClass
 
     Select
       name: 'source'
-      clearable: @props.allowCreate
-      allowCreate: @props.allowCreate
+      clearable: false
       value: @props.value
       placeholder: @props.placeholder
-      onChange: (tableId) =>
+      onChange: (selectedOption) =>
+        tableId = selectedOption.value
         table = @state.tables.find (t) ->
           t.get('id') == tableId
         @props.onSelectTableFn(tableId, table)
       options: @_getTables()
-      newOptionCreator: @_newOptionCreator
 
   _getTables: ->
     tables = @state.tables
@@ -74,17 +71,3 @@ module.exports = React.createClass
         value: tableId
       }
     tables.toList().toJS()
-
-  _newOptionCreator: (value) ->
-    create = false
-    label = value
-    if (validateStorageTableId(value))
-      create = true
-    else
-      label = value + ' is not a valid table identifier'
-    return {
-      value: value
-      label: label
-      create: create
-    }
-    return false

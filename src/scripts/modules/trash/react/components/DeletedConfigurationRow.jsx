@@ -1,13 +1,14 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import {Finished, Tooltip} from '../../../../react/common/common';
 import RestoreConfigurationButton from '../../../../react/common/RestoreConfigurationButton';
 import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import {isObsoleteComponent} from '../../utils';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     config: PropTypes.object.isRequired,
     component: PropTypes.object.isRequired,

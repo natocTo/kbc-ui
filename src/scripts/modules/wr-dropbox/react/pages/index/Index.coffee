@@ -1,10 +1,9 @@
 React = require 'react'
 {fromJS, Map, List} = require('immutable')
-{Button} = require 'react-bootstrap'
 classnames = require 'classnames'
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
 {Loader, Check} = require 'kbc-react-components'
-{ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'
+{ActivateDeactivateButton, Confirm} = require '../../../../../react/common/common'
 AddNewTableModal = require('../../../../../react/common/AddNewTableModal').default
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentEmptyState = require('../../../../components/react/components/ComponentEmptyState').default

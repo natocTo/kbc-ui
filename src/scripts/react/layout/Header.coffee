@@ -86,9 +86,11 @@ Header = React.createClass
             componentId: @state.component.get 'id'
             configId: @state.currentRouteParams.get 'config'
       else if @state.currentRouteConfig?.get 'nameEdit'
-        breadcrumbs.push @state.currentRouteConfig.get('nameEdit')(
-          @state.currentRouteParams.toJS()
-        )
+        nameEdit = span key: 'name-edit-wrapper',
+          @state.currentRouteConfig.get('nameEdit')(
+            @state.currentRouteParams.toJS()
+          )
+        breadcrumbs.push nameEdit
       else
         # last breadcrumb in all other cases
         # just h1 element with text

@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ConfigurationLink from '../components/ComponentConfigurationLink';
 import RunConfigurationButton from '../components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
@@ -6,7 +7,7 @@ import InstalledComponentsActionCreators from '../../InstalledComponentsActionCr
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     config: PropTypes.object.isRequired,
     component: PropTypes.object.isRequired,

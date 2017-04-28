@@ -3,7 +3,12 @@ _ = require 'underscore'
 {select, input, table, tr, th, tbody, thead, div, span, td, option} = React.DOM
 ColumnDataPreview = React.createFactory(require './ColumnDataPreview')
 
-Input = React.createFactory(require('react-bootstrap').Input)
+{FormControl, InputGroup, FormGroup} = require('react-bootstrap')
+FormControl = React.createFactory FormControl
+InputGroupAddon = React.createFactory InputGroup.Addon
+InputGroup = React.createFactory InputGroup
+FormGroup = React.createFactory FormGroup
+
 DateFormatHint = React.createFactory(require './DateFormatHint')
 columnTdeTypes = ['string','boolean', 'number', 'decimal','date', 'datetime']
 defaults =
@@ -87,21 +92,26 @@ module.exports = React.createClass
             @props.onChange(newData)
         ,
           @_selectOptions()
-      @_renderDatetFormatInput() if showFormat
+      if showFormat
+        FormGroup className: 'col-sm-7',
+          InputGroup null,
+            @_renderDatetFormatInput()
+            InputGroupAddon null, DateFormatHint()
 
   _renderDatetFormatInput: ->
     format = @props.editing.get 'format'
-    Input
+    FormControl
       type: 'text'
       #bsSize: 'small'
-      wrapperClassName: ''
-      groupClassName: 'col-sm-7'
       value: format
       disabled: @props.isSaving
       onChange: (e) =>
-        newData = @props.editing.set('format', event.target.value)
+        newData = @props.editing.set('format', e.target.value)
         @props.onChange(newData)
-      addonAfter: DateFormatHint()
+
+
+
+
 
 
   _selectOptions: ->

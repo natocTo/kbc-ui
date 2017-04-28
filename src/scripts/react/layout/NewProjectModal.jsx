@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Modal, Input} from 'react-bootstrap';
+import {Input} from './../common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../common/ConfirmButtons';
 import numeral from 'numeral';
 
@@ -189,6 +190,6 @@ export default React.createClass({
     this.setState({
       isSaving: true
     });
-    this.refs.projectCreateForm.getDOMNode().submit();
+    this.refs.projectCreateForm.submit();
   }
 });

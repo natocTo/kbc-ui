@@ -1,12 +1,11 @@
 React = require 'react'
 FormHeader = React.createFactory(require './FormHeader')
-Button = React.createFactory(require('react-bootstrap').Button)
 contactSupport = require('../../../../../utils/contactSupport').default
 
-ModalHeader = React.createFactory(require('react-bootstrap/lib/ModalHeader'))
-ModalBody = React.createFactory(require('react-bootstrap/lib/ModalBody'))
-ModalFooter = React.createFactory(require('react-bootstrap/lib/ModalFooter'))
-ModalTitle = React.createFactory(require('react-bootstrap/lib/ModalTitle'))
+ModalHeader = React.createFactory(require('react-bootstrap').ModalHeader)
+ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
+ModalFooter = React.createFactory(require('react-bootstrap').ModalFooter)
+ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 

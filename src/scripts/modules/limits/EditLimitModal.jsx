@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Modal, Input, ButtonToolbar, Button} from 'react-bootstrap';
+import {Input} from './../../react/common/KbcBootstrap';
 import ApplicationStore from '../../stores/ApplicationStore';
+import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
 
 
 export default React.createClass({
@@ -102,7 +103,7 @@ export default React.createClass({
     this.setState({
       isSaving: true
     });
-    this.refs.limitEditForm.getDOMNode().submit();
+    this.refs.limitEditForm.submit();
   }
 
 });

@@ -1,9 +1,9 @@
 React = require 'react'
 _ = require('underscore')
 Immutable = require('immutable')
-{Input} = require('react-bootstrap')
+{Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
-Select = React.createFactory(require('react-select'))
+SelectCreatable = React.createFactory(require('react-select').Creatable)
 
 module.exports = React.createClass
   displayName: 'FileOutputMappingEditor'
@@ -32,8 +32,9 @@ module.exports = React.createClass
     value = @props.value.set("source", e.target.value.trim())
     @props.onChange(value)
 
-  _handleChangeTags: (value) ->
-    parsedValues = _.filter(_.invoke(value.split(","), "trim"), (value) ->
+  _handleChangeTags: (newOptions) ->
+    listOfValues = newOptions.map((newOption) -> newOption.value)
+    parsedValues = _.filter(_.invoke(listOfValues, "trim"), (value) ->
       value != ''
     )
 
@@ -52,7 +53,13 @@ module.exports = React.createClass
     @props.onChange(value)
 
   _getTags: ->
-    @props.value.get("tags", Immutable.List()).join(",")
+    tags = @props.value.get("tags", Immutable.List())
+    newTags = tags.map (tag) ->
+      {
+        label: tag,
+        value: tag
+      }
+    newTags.toArray()
 
   render: ->
     React.DOM.div {className: 'form-horizontal clearfix'},
@@ -84,13 +91,11 @@ module.exports = React.createClass
         React.DOM.div className: 'form-group',
           React.DOM.label className: 'col-xs-2 control-label', 'Tags'
           React.DOM.div className: 'col-xs-10',
-            Select
+            SelectCreatable
               name: 'tags'
               value: @_getTags()
               disabled: @props.disabled
               placeholder: "Add tags"
-              allowCreate: true
-              delimiter: ','
               multi: true
               onChange: @_handleChangeTags
             React.DOM.span

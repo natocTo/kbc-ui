@@ -1,6 +1,6 @@
 import React from 'react';
 import {Check, Loader} from 'kbc-react-components';
-import {Tooltip, OverlayTrigger} from 'react-bootstrap';
+import Tooltip from './Tooltip';
 
 const MODE_BUTTON = 'button', MODE_LINK = 'link';
 
@@ -48,12 +48,12 @@ export default React.createClass({
       );
     } else {
       return (
-        <OverlayTrigger placement={this.props.tooltipPlacement} overlay={<Tooltip>{this.tooltip()}</Tooltip>}>
+        <Tooltip placement={this.props.tooltipPlacement} tooltip={this.tooltip()}>
           <button disabled={this.props.buttonDisabled}
             style={this.props.buttonStyle} className="btn btn-link" onClick={this.handleClick}>
             {this.renderIcon(this.props.isActive)}
           </button>
-        </OverlayTrigger>
+        </Tooltip>
       );
     }
   },

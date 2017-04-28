@@ -13,7 +13,6 @@ export default React.createClass({
   render() {
     return (
       <Modal
-        bsSize="medium"
         show={this.props.show}
         onHide={this.props.onHideFn}
       >

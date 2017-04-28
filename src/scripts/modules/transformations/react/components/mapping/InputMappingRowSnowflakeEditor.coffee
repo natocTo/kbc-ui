@@ -1,7 +1,7 @@
 React = require 'react'
 _ = require('underscore')
 Immutable = require('immutable')
-{Input} = require('react-bootstrap')
+{Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 SnowflakeDataTypesContainer = React.createFactory(require("./input/SnowflakeDataTypesContainer"))
@@ -237,7 +237,6 @@ module.exports = React.createClass
                 multi: true
                 disabled: @props.disabled
                 allowCreate: true
-                delimiter: ','
                 placeholder: 'Add a value...'
                 emptyStrings: true,
                 onChange: @_handleChangeWhereValues

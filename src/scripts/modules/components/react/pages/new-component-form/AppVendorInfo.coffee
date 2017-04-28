@@ -1,5 +1,5 @@
 React = require 'react'
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 List = require('immutable').List
 VendorInfo = React.createFactory(require '../component-detail/VendorInfo.coffee')
 

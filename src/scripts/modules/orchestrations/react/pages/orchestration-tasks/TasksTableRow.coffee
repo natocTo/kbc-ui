@@ -2,7 +2,6 @@ React = require 'react'
 {ComponentIcon, ComponentName} = require '../../../../../react/common/common'
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
 TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
-Tooltip = React.createFactory(require('../../../../../react/common/Tooltip').default)
 OrchestrationTaskRunButton = React.createFactory(require('../../components/OrchestrationTaskRunButton').default)
 
 {Tree, Check} = require 'kbc-react-components'
@@ -19,7 +18,7 @@ module.exports = React.createClass
     color: React.PropTypes.string
 
   render: ->
-    tr {style: {'background-color': @props.color}},
+    tr {style: {'backgroundColor': @props.color}},
       td null,
         span className: 'kbc-component-icon',
           if @props.component

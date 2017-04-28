@@ -20,6 +20,9 @@ SearchRow = React.createFactory(require('../../../../../react/common/SearchRow')
 TasksTable = React.createFactory(require './TasksTable')
 TasksEditor = React.createFactory(require './TasksEditor')
 
+HTML5Backend = require 'react-dnd-html5-backend'
+DragDropContext = require('react-dnd').DragDropContext
+
 {div, button} = React.DOM
 
 componentId = 'orchestrations'
@@ -116,4 +119,4 @@ OrchestrationTasks = React.createClass
     installedComponentsActions.updateLocalState(componentId, @state.orchestrationId, newState, path)
 
 
-module.exports = OrchestrationTasks
+module.exports = DragDropContext(HTML5Backend)(OrchestrationTasks)

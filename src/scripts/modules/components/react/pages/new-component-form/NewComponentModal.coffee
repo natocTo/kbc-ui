@@ -15,10 +15,6 @@ hiddenComponents = require '../../../../components/utils/hiddenComponents'
 
 {div} = React.DOM
 
-ModalHeader = React.createFactory(require('react-bootstrap/lib/ModalHeader'))
-ModalBody = React.createFactory(require('react-bootstrap/lib/ModalBody'))
-ModalFooter = React.createFactory(require('react-bootstrap/lib/ModalFooter'))
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 
 module.exports = React.createClass

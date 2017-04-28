@@ -6,7 +6,7 @@ ActiveCountBadge = require './ActiveCountBadge'
 storageTablesStore = require '../../stores/StorageTablesStore'
 storageActionCreators = require '../../StorageActionCreators'
 {strong, br, ul, li, div, span, i, a, button, p} = React.DOM
-{Panel, PanelGroup, Alert, DropdownButton} = require('react-bootstrap')
+{Panel} = require('react-bootstrap')
 
 module.exports = React.createClass
 
@@ -141,7 +141,7 @@ module.exports = React.createClass
     togled = @props.isBucketToggledFn(bucketId)
     return togled
 
-  _handleBucketSelect: (bucketId, e) ->
+  _handleBucketSelect: (bucketId, eventKey, e) ->
     e.preventDefault()
     e.stopPropagation()
     @props.onToggleBucketFn bucketId

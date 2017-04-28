@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
-import {Modal, TabbedArea, TabPane} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
+import {TabbedArea, TabPane} from '../../../../react/common/KbcBootstrap.jsx';
 import WizardButtons from './WizardButtons';
 import InputTab from './InputTab';
 import SpreadsheetTab from './SpreadsheetTab';
@@ -39,38 +40,37 @@ export default React.createClass({
           }}
         >
           <TabbedArea activeKey={step} defaultActiveEventKey={1} animation={false}>
-            <TabPane tab="Source" eventKey={1} disabled={step !== 1}>
+            <TabPane title="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
-                onSelect={this.onChangeInputMapping}
-                tables={storageTables}
-                mapping={this.localState(['mapping'], Map())}
-                exclude={this.localState(['exclude'], Map())}
-              />
+                 onSelect={this.onChangeInputMapping}
+                 tables={storageTables}
+                 mapping={this.localState(['mapping'], Map())}
+                 exclude={this.localState(['exclude'], Map())}
+               />
             </TabPane>
-            <TabPane tab="Destination" eventKey={2} disabled={step !== 3}>
+            <TabPane title="Destination" eventKey={2} disabled={step !== 3}>
               <SpreadsheetTab
-                onSelectExisting={(data) => {
-                  this.updateLocalState(['sheet'].concat('fileId'), data[0].id);
-                  this.updateLocalState(['sheet'].concat('title'), data[0].name);
-                }}
+                  onSelectExisting={(data) => {
+                    this.updateLocalState(['sheet'].concat('fileId'), data[0].id);
+                    this.updateLocalState(['sheet'].concat('title'), data[0].name);
+                  }}
                 onSelectFolder={(data) => {
                   this.updateLocalState(['sheet'].concat(['folder', 'id']), data[0].id);
                   this.updateLocalState(['sheet'].concat(['folder', 'title']), data[0].name);
                 }}
-                onChangeTitle={(e) => this.updateLocalState(['sheet'].concat('title'), e.target.value)}
-                onSwitchType={this.onSwitchType}
-                valueTitle={this.sheet('title', '')}
-                valueFolder={this.sheet(['folder', 'title'], '/')}
-                type={this.localState('uploadType', 'new')}
-              />
+                  onChangeTitle={(e) => this.updateLocalState(['sheet'].concat('title'), e.target.value)}
+                  onSwitchType={this.onSwitchType}
+                  valueTitle={this.sheet('title', '')}
+                  valueFolder={this.sheet(['folder', 'title'], '/')}
+                  type={this.localState('uploadType', 'new')}
+                  />
             </TabPane>
-            <TabPane tab="Options" eventKey={3} disabled={step !== 3}>
+            <TabPane title="Options" eventKey={3} disabled={step !== 3}>
               <SheetTab
                 onChangeSheetTitle={this.onChangeSheetTitle}
-                onChangeAction={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}
-                valueSheetTitle={this.sheet('sheetTitle')}
+                onChangeAction={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}                 valueSheetTitle={this.sheet('sheetTitle')}
                 valueAction={this.sheet('action')}
-              />
+                />
             </TabPane>
           </TabbedArea>
         </Modal.Body>

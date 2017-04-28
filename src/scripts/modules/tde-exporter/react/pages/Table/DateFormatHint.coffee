@@ -13,14 +13,12 @@ module.exports = React.createClass
   mixins: [PureRenderMixin]
   render: ->
     OverlayTrigger
-      bsSize: 'small'
       overlay: @_renderPopover()
     ,
       i  className: 'fa fa-question-circle'
 
   _renderPopover: ->
     Popover
-      bsSize: 'small'
       title: 'Supported Date Formats'
     ,
       ul null,

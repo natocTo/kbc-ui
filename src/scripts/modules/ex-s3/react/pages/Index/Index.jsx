@@ -26,7 +26,7 @@ import RunComponentButton from '../../../../components/react/components/RunCompo
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import SaveButtons from '../../../../../react/common/SaveButtons';
-import {TabbedArea, TabPane} from 'react-bootstrap';
+import {TabbedArea, TabPane} from './../../../../../react/common/KbcBootstrap';
 
 // utils
 import {getDefaultTable, getDefaultBucket} from '../../../utils';
@@ -72,8 +72,12 @@ export default React.createClass({
 
   renderSettings() {
     return (
-      <TabbedArea defaultActiveEventKey={1} animation={false}>
-        <TabPane tab="General" eventKey={1}>
+      <TabbedArea
+        defaultActiveEventKey={1}
+        animation={false}
+        id="modules-ex-s3-react-pages-index-index-tabbed-area"
+      >
+        <TabPane title="General" eventKey={1}>
           <Settings
             s3Bucket={this.state.settings.get('s3Bucket')}
             s3Key={this.state.settings.get('s3Key')}
@@ -91,7 +95,7 @@ export default React.createClass({
             onDestinationEdit={this.state.actions.destinationEdit}
           />
         </TabPane>
-        <TabPane tab="AWS Credentials" eventKey={2}>
+        <TabPane title="AWS Credentials" eventKey={2}>
           <Credentials
             awsAccessKeyId={this.state.settings.get('awsAccessKeyId')}
             awsSecretAccessKey={this.state.settings.get('awsSecretAccessKey')}
@@ -99,7 +103,7 @@ export default React.createClass({
             disabled={this.state.localState.get('isSaving', false)}
           />
         </TabPane>
-        <TabPane tab="Advanced" eventKey={3}>
+        <TabPane title="Advanced" eventKey={3}>
           <Advanced
             delimiter={this.state.settings.get('delimiter')}
             enclosure={this.state.settings.get('enclosure')}

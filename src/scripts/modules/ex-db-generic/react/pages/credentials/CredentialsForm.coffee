@@ -3,9 +3,9 @@ React = require 'react'
 _ = require 'underscore'
 Clipboard = React.createFactory(require('../../../../../react/common/Clipboard').default)
 
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 TestCredentialsButtonGroup = React.createFactory(require '../../../../../react/common/TestCredentialsButtonGroup')
-StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
+StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
 Tooltip = require('../../../../../react/common/Tooltip').default
 SshTunnelRow = React.createFactory(require('../../../../../react/common/SshTunnelRow').default)
 

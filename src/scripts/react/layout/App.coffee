@@ -7,7 +7,7 @@ SidebarNavigation = React.createFactory(require '././SidebarNavigation')
 FloatingNotifications = require('./FloatingNotifications').default
 ErrorPage = React.createFactory(require './../pages/ErrorPage')
 LoadingPage = React.createFactory(require './../pages/LoadingPage')
-ProjectSelect = React.createFactory(require './project-select/ProjectSelect')
+ProjectSelect = React.createFactory(require('./project-select/ProjectSelect').default)
 PageTitle = React.createFactory(require './PageTitle')
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)

@@ -1,7 +1,7 @@
 React = require 'react'
 _ = require('underscore')
 Immutable = require('immutable')
-{Input} = require('react-bootstrap')
+{Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 RedshiftDataTypesContainer = React.createFactory(require("./input/RedshiftDataTypesContainer"))
@@ -115,8 +115,8 @@ module.exports = React.createClass
     value = @props.value.set("datatypes", datatypes)
     @props.onChange(value)
 
-  _handleChangeSortKey: (immutable, string) ->
-    value = @props.value.set("sortKey", string)
+  _handleChangeSortKey: (immutable) ->
+    value = @props.value.set("sortKey", immutable.join())
     @props.onChange(value)
 
   _handleChangeDistKey: (string) ->
@@ -220,15 +220,18 @@ module.exports = React.createClass
               onChange: @_handleChangeSource
               options: @_getTables()
             if @state.showDetails
-              Input
-                standalone: true
-                type: 'checkbox'
-                label: React.DOM.small {}, 'Optional'
-                checked: @props.value.get("optional")
-                disabled: @props.disabled
-                onChange: @_handleChangeOptional
-                help: React.DOM.small {},
+              React.DOM.div className: 'checkbox',
+                React.DOM.label null,
+                  React.DOM.input
+                    standalone: true
+                    type: 'checkbox'
+                    checked: @props.value.get("optional")
+                    disabled: @props.disabled
+                    onChange: @_handleChangeOptional
+                  React.DOM.small null, ' Optional'
+                React.DOM.small className: 'help-block',
                   "If this table does not exist in Storage, the transformation won't show an error."
+
       React.DOM.div {className: "row col-md-12"},
         Input
           type: 'text'

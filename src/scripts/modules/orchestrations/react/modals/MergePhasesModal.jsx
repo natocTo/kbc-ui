@@ -1,10 +1,11 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     tasks: PropTypes.object.isRequired,
     phases: PropTypes.object.isRequired,
@@ -15,7 +16,8 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      value: null
+      value: null,
+      isSaving: false
     };
   },
 
@@ -44,14 +46,14 @@ export default React.createClass({
                 Into
               </label>
               <div className="col-sm-11">
-                <Select
+                <Select.Creatable
                   placeholder="Select phase..."
                   clearable={false}
                   key="phases select"
                   name="phaseselector"
                   allowCreate={true}
                   value={this.state.value}
-                  onChange= {(newValue) => this.setState({value: newValue})}
+                  onChange={({value: newValue}) => this.setState({value: newValue})}
                   options= {this.getPhasesOptions()}
                 />
                 <span className="help-block">
@@ -67,6 +69,7 @@ export default React.createClass({
             isDisabled={!this.isValid()}
             onCancel={this.closeModal}
             onSave={this.handleSave}
+            isSaving={this.state.isSaving}
           />
         </Modal.Footer>
       </Modal>
@@ -79,8 +82,13 @@ export default React.createClass({
         'label': key,
         'value': key
       };
-    }).toList().toJS();
-    return result;
+    });
+
+    const phases = this.state.value !== null
+      ? result.concat({label: this.state.value, value: this.state.value})
+      : result;
+
+    return phases.toList().toJS();
   },
 
   closeModal() {
@@ -91,9 +99,13 @@ export default React.createClass({
   },
 
   handleSave() {
+    this.setState({
+      isSaving: true
+    });
     this.props.onMergePhases(this.state.value);
     this.setState({
-      value: null
+      value: null,
+      isSaving: false
     });
   }
 

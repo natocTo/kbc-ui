@@ -14,7 +14,7 @@ Button = React.createFactory(require('react-bootstrap').Button)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 RouterStore = require('../../../../../stores/RoutesStore')
 {i, span, div, p, strong, form, input, label, div} = React.DOM
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 
 module.exports = React.createClass
   displayName: 'TableauServerCredentialsModal'

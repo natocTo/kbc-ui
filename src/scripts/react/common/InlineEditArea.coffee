@@ -2,8 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 {List} = require 'immutable'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('./Tooltip').default)
 Button = React.createFactory(require('react-bootstrap').Button)
 {Loader} = require('kbc-react-components')
 Markdown = React.createFactory(require('./Markdown').default)
@@ -27,8 +26,8 @@ StaticArea = React.createFactory React.createClass
       div props,
         if @props.text
           [
-            OverlayTrigger
-              overlay: Tooltip null, @props.editTooltip
+            Tooltip
+              tooltip: @props.editTooltip
               placement: 'top'
             ,
               div className: 'text-right',
@@ -49,8 +48,8 @@ StaticArea = React.createFactory React.createClass
           div
             className: 'text-right'
           ,
-            OverlayTrigger
-              overlay: Tooltip null, @props.editTooltip
+            Tooltip
+              tooltip: @props.editTooltip
               placement: 'top'
             ,
               button
@@ -146,4 +145,3 @@ module.exports = React.createClass
         editTooltip: @props.editTooltip
         placeholder: @props.placeholder
         onEditStart: @props.onEditStart
-

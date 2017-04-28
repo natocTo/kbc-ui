@@ -1,10 +1,11 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     phases: PropTypes.object.isRequired,
     onMoveTasks: React.PropTypes.func.isRequired,
@@ -43,14 +44,14 @@ export default React.createClass({
             <div className={formDivClass}>
               <label htmlFor="title" className="col-sm-1 control-label" />
               <div className="col-sm-11">
-                <Select
+                <Select.Creatable
                   placeholder="Select phase or type new..."
                   clearable={false}
                   key="phases select"
                   name="phaseselector"
                   allowCreate={true}
                   value={this.state.value}
-                  onChange= {(newValue) => this.setState({value: newValue})}
+                  onChange={({value: newValue}) => this.setState({value: newValue})}
                   options= {this.getPhasesOptions()}
                 />
                 <span className="help-block">
@@ -84,8 +85,12 @@ export default React.createClass({
                            'label': key,
                            'value': key
                          };
-                       }).toList().toJS();
-    return result;
+                       });
+    const phases = this.state.value !== null
+      ? result.concat({label: this.state.value, value: this.state.value})
+      : result;
+
+    return phases.toList().toJS();
   },
 
   closeModal() {

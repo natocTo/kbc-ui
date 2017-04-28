@@ -114,7 +114,6 @@ export default React.createClass({
   },
 
   drawGraph() {
-    const element = React.findDOMNode(this.refs.lastMonthUsage);
     const chartOptions = createChartOptions({
       vAxisFormat: format('credits')
     });
@@ -122,7 +121,7 @@ export default React.createClass({
 
     /* global google */
     const ds = new google.visualization.arrayToDataTable(graphData);
-    const combo = new google.visualization.ComboChart(element);
+    const combo = new google.visualization.ComboChart(this.refs.lastMonthUsage);
     combo.draw(ds, chartOptions.toJS());
   },
 

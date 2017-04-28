@@ -34,7 +34,7 @@ module.exports = React.createClass
         span className: 'td',
           React.createElement OverlayTrigger,
             overlay: React.createElement Tooltip,
-              null
+              id: @props.tdeFile.get('id')
             ,
               div null, @props.tdeFile.getIn(['creatorToken','description'])
               div null, date.format @props.tdeFile.get('created')

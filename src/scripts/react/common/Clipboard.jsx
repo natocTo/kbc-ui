@@ -40,7 +40,7 @@ export default React.createClass({
 
   tooltip() {
     return (
-      <Tooltip>{this.state.isError ? this.errorTooltip() : this.okTooltip()}</Tooltip>
+      <Tooltip id="clipboardtooltip">{this.state.isError ? this.errorTooltip() : this.okTooltip()}</Tooltip>
     );
   },
 

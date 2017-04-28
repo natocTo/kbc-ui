@@ -3,7 +3,7 @@ React = require 'react'
 JobRow = require './SidebarJobsRow'
 {Loader} = require 'kbc-react-components'
 {Link} = require('react-router')
-PureRenderMixin = require('react/addons').addons.PureRenderMixin
+PureRenderMixin = require('react-addons-pure-render-mixin')
 {div, small} = React.DOM
 
 require('./SidebarJobs.less')

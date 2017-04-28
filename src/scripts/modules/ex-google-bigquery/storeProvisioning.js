@@ -50,7 +50,7 @@ export default function(configId) {
       name: '',
       query: '',
       flattenResults: true, // non editable yet
-      outputTable: null,
+      outputTable: '',
       enabled: true,
       incremental: false,
       useLegacySql: true,

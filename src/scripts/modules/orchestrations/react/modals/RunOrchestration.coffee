@@ -1,12 +1,10 @@
 React = require 'react'
 Modal = React.createFactory(require('react-bootstrap').Modal)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
+Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
 ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
 ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Panel = React.createFactory(require('react-bootstrap').Panel)
 ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
@@ -76,14 +74,11 @@ module.exports = React.createClass
             onSave: @_handleRun
 
   renderOpenButton: ->
-    OverlayTrigger
-      overlay:
-        Tooltip null,
-          'Run'
-      key: 'run'
+    Tooltip
+      tooltip: 'Run'
+      id: 'run'
       placement: @props.tooltipPlacement
     ,
-
       Button
         onClick: @_handleOpenButtonClick
         bsStyle: 'link'

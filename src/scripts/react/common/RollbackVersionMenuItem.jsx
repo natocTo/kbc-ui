@@ -1,5 +1,5 @@
 import React from 'react';
-import {MenuItem} from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
 import RollbackVersionModal from './RollbackVersionModal';
 import {Loader} from 'kbc-react-components';
 import {Tooltip} from '../../react/common/common';

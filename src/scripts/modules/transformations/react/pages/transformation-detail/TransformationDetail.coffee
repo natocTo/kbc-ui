@@ -14,7 +14,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 TransformationsActionCreators = require '../../../ActionCreators'
 RunComponentButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
-{Tooltip, Confirm, Loader} = require '../../../../../react/common/common'
+{Confirm, Loader} = require '../../../../../react/common/common'
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
 
 SqlDepModal = React.createFactory(require './../../modals/SqlDepModal')

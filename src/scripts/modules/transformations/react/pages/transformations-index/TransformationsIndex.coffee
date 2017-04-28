@@ -13,7 +13,7 @@ InstalledComponentsStore = require('../../../../components/stores/InstalledCompo
 SearchRow = require('../../../../../react/common/SearchRow').default
 EmptyStateIndex = require('../../components/EmptyStateIndex').default
 
-{Panel, PanelGroup} = require('react-bootstrap')
+{Panel} = require('react-bootstrap')
 
 NewTransformationBucketButton = require '../../components/NewTransformationBucketButton'
 
@@ -89,7 +89,7 @@ TransformationsIndex = React.createClass
         transformations: @_getFilteredTransformations(bucket.get('id'))
         pendingActions: @state.transformationPendingActions.getIn([bucket.get('id')], Immutable.Map())
 
-  _handleBucketSelect: (bucketId, e) ->
+  _handleBucketSelect: (bucketId, eventKey, e) ->
     e.preventDefault()
     e.stopPropagation()
     TransformationActionCreators.toggleBucket bucketId

@@ -4,9 +4,9 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TemplateSelector from './TemplateSelector';
 import GraphAPIExplorerLink from './GraphAPIExplorerLink';
 import DateRangeSelector from './DateRangeSelector';
-import {Modal, OverlayTrigger, Tooltip, TabbedArea, TabPane} from 'react-bootstrap';
-// import Select from 'react-select';
-import Select from '../../../../react/common/Select';
+import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
+import Select from 'react-select';
 
 const NAME_HELP = 'Helps describing the query and also used to prefix output tables name resulting from the query if they differ.';
 const ENDPOINT_HELP = 'Url part of Facebook Graph API request specifying node-id and/or edge-name, e.g. feed, me/photos etc. Can be empty.';
@@ -54,8 +54,8 @@ export default React.createClass({
             query={this.query('query', Map())}
             apiVersion={this.props.apiVersion}
           />
-          <TabbedArea defaultActiveEventKey={1} animation={false}>
-            <TabPane tab="General" eventKey={1}>
+          <TabbedArea defaultActiveKey={1} animation={false}>
+            <TabPane title="General" eventKey={1}>
               <div className="row form-horizontal clearfix">
                 {this.renderTemplateSelect()}
                 {this.renderInput('Name', 'name', NAME_HELP, placeholders.name, this.nameInvalidReason)}
@@ -64,7 +64,7 @@ export default React.createClass({
                 {this.renderAccountSelector()}
               </div>
             </TabPane>
-            <TabPane tab="Advanced" eventKey={2}>
+            <TabPane title="Advanced" eventKey={2}>
               <div className="row form-horizontal clearfix">
                 {this.renderDateRangeSelector()}
                 {this.renderInput('Since', ['query', 'since'], SINCE_HELP, 'yyyy-mm-dd or 15 days ago')}
@@ -191,17 +191,6 @@ export default React.createClass({
     );
   },
 
-  renderTooltipHelp(message) {
-    if (!message) return null;
-    return (
-      <small>
-        <OverlayTrigger placement="right" overlay={<Tooltip>{message}</Tooltip>}>
-          <i className="fa fa-fw fa-question-circle"/>
-        </OverlayTrigger>
-      </small>
-    );
-  },
-
   renderAccountSelector() {
     const hasIds = this.query('query', Map()).has('ids');
     const ids = this.query(['query', 'ids'], '');
@@ -221,8 +210,6 @@ export default React.createClass({
         key="ids"
         clearable={false}
         multi={false}
-        allowCreate={false}
-        emptyStrings={false}
         options={selectOptions}
         value={value}
         onChange={this.onSelectAccount}/>
@@ -232,7 +219,7 @@ export default React.createClass({
     return this.renderFormControl(this.props.accountDescFn('Pages'), selectControl, accountsHelp);
   },
 
-  onSelectAccount(value) {
+  onSelectAccount({value}) {
     const query = this.query('query');
     switch (value) {
       case '--non--':

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, Input, Button } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
+import { Input } from './../../../../react/common/KbcBootstrap';
 import {Map} from 'immutable';
 import {createTransformation} from '../../ActionCreators';
 

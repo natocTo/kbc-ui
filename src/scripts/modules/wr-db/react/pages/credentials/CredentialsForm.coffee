@@ -10,8 +10,8 @@ TestCredentialsButton = require '../../../../../react/common/TestCredentialsButt
 _ = require 'underscore'
 contactSupport = require('../../../../../utils/contactSupport').default
 {div} = React.DOM
-Input = React.createFactory(require('react-bootstrap').Input)
-StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
+StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
 {Protected} = require 'kbc-react-components'
 
 {a, span, form, div, h2, small, label, p, option} = React.DOM

@@ -1,6 +1,6 @@
 import {fromJS, Map} from 'immutable';
 import StoreUtils from '../../../utils/StoreUtils';
-import keyMirror from 'react/lib/keyMirror';
+import keyMirror from 'fbjs/lib/keyMirror';
 import Dispatcher from '../../../Dispatcher';
 import {loadMetadata} from '../AnalyticsMetadata';
 import Promise from 'bluebird';

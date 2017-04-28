@@ -6,11 +6,10 @@ ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
-Input = React.createFactory(require('react-bootstrap').Input)
 Check = React.createFactory(require('kbc-react-components').Check)
 NewDimensionForm = React.createFactory(require('./../../components/NewDimensionForm').default)
 
-{TabbedArea, TabPane} = require 'react-bootstrap'
+{TabbedArea, TabPane} = require './../../../../../react/common/KbcBootstrap'
 actionCreators = require '../../../actionCreators'
 dateDimensionStore = require '../../../dateDimensionsStore'
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'

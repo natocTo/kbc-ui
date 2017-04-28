@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
 
 export default React.createClass({
@@ -6,7 +7,7 @@ export default React.createClass({
     title: PropTypes.string.isRequired,
     children: PropTypes.any.isRequired
   },
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   render() {
     return (

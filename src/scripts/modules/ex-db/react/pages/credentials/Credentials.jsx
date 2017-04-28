@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import CredentialsForm from './CredentialsForm';
 import SSLForm from './SSLForm';
 import FixedIP from './FixedIP';
-import {TabbedArea, TabPane} from 'react-bootstrap';
+import {TabbedArea, TabPane} from './../../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -14,22 +14,22 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid kbc-main-content">
-        <TabbedArea defaultActiveKey="db" animation={false}>
-          <TabPane eventKey="db" tab="Database Credentials">
+        <TabbedArea defaultActiveKey="db" animation={false} id="odlexdbcredentialstab">
+          <TabPane eventKey="db" title="Database Credentials">
             <CredentialsForm
               credentials={this.props.credentials}
               enabled={this.props.isEditing}
               onChange={this.props.onChange}
               />
           </TabPane>
-          <TabPane eventKey="ssl" tab="SSL">
+          <TabPane eventKey="ssl" title="SSL">
             <SSLForm
               credentials={this.props.credentials}
               enabled={this.props.isEditing}
               onChange={this.props.onChange}
               />
           </TabPane>
-          <TabPane eventKey="fixedIp" tab="Fixed IP">
+          <TabPane eventKey="fixedIp" title="Fixed IP">
             <FixedIP
               credentials={this.props.credentials}
               />

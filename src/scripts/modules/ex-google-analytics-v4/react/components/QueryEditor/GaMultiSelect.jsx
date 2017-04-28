@@ -49,15 +49,15 @@ export default React.createClass({
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
   },
 
-  createNewOption(input) {
-    const found = this.props.metadata.find((m) => m.id === input);
+  createNewOption({ label }) {
+    const found = this.props.metadata.find((m) => m.id === label);
     if (found) {
       return found;
     } else {
       return {
         create: true,
-        value: input,
-        label: input
+        value: label,
+        label: label
       };
     }
   },
@@ -79,12 +79,6 @@ export default React.createClass({
         <div className="SearchSuggestMatch-extra">{data.desc}</div>
       </div>
     );
-  },
-
-
-  renderValue(op) {
-    // console.log('render value', op);
-    return op.id || op.value;
   },
 
   prepareOptionsData(data) {
@@ -115,21 +109,30 @@ export default React.createClass({
           {this.props.name}
         </label>
         <div className={this.props.wrapperClassName}>
-          <Select
+          <Select.Creatable
             multi={true}
             isLoading={this.props.isLoadingMetadata}
-            allowCreate={true}
-            value={this.props.selectedValues}
+            value={this.prepareValue(this.props.selectedValues)}
             filterOption={this.filterOption}
             optionRenderer={this.renderOption}
-            valueRenderer={this.renderValue}
             options={this.prepareOptionsData(this.props.metadata)}
             onChange={this.props.onSelectValue}
             newOptionCreator={this.createNewOption}
-            name={name} />
+            name={name}
+          />
         </div>
       </div>
     );
+  },
+
+  prepareValue(list) {
+    return list.map((item) => {
+      return {
+        label: item,
+        value: item,
+        className: 'Select-create-option-placeholder'
+      };
+    });
   },
 
   renderStatic() {

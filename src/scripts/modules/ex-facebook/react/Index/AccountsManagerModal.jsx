@@ -4,7 +4,6 @@ import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {Loader} from 'kbc-react-components';
 import SearchRow from '../../../../react/common/SearchRow';
-// import {ListGroup, ListGroupItem} from 'react-bootstrap';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 
@@ -28,7 +27,6 @@ export default React.createClass({
     const getDesc = this.props.accountDescFn;
     return (
       <Modal
-        bsSize="medium"
         show={this.props.show}
         onHide={this.props.onHideFn}
       >

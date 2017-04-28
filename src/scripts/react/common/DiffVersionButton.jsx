@@ -16,7 +16,7 @@ export default React.createClass({
     onLoadVersionConfig: React.PropTypes.func,
     tooltipMsg: React.PropTypes.string,
     buttonText: React.PropTypes.string,
-    buttonClassName: React.PropTypes.object,
+    buttonClassName: React.PropTypes.string,
     buttonAsSpan: React.PropTypes.bool
   },
 
@@ -47,7 +47,7 @@ export default React.createClass({
     const tooltipMsg = `Compare with previous (#${this.props.previousVersion.get('version')} to #${this.props.version.get('version')})`;
     const content = [
       this.props.isSmall ?
-      (<small>
+      (<small key="diff-button-icon-and-text">
         {this.renderIcon()}
         {this.props.buttonText}
       </small>)
@@ -82,6 +82,7 @@ export default React.createClass({
   renderDiffModal() {
     return (
       <VersionsDiffModal
+        key="diff-button-modal"
         onClose={this.closeModal}
         show={this.state.showModal}
         referentialVersion={this.props.versionConfig}

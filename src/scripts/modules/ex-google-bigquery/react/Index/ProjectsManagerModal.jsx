@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Modal, Input} from 'react-bootstrap';
+import {Input} from './../../../../react/common/KbcBootstrap';
+import {Modal} from 'react-bootstrap';
 import Select from 'react-select';
 
 import {Loader} from 'kbc-react-components';
@@ -41,7 +42,7 @@ export default React.createClass({
                   clearable={false}
                   disabled={false}
                   value={this.props.google.get('projectId', '').toString()}
-                  onChange= {(newValue) => this.updateEditingValue('projectId', newValue)}
+                  onChange= {({value: newValue}) => this.updateEditingValue('projectId', newValue)}
                   options= {projectOptions}/>
               </div>
             </div>
@@ -91,7 +92,7 @@ export default React.createClass({
             clearable={false}
             disabled={false}
             value={this.props.google.get('projectId', '').toString()}
-            onChange= {(newValue) => this.updateEditingValue('projectId', newValue)}
+            onChange= {({value: newValue}) => this.updateEditingValue('projectId', newValue)}
             options= {projectOptions}/>
         );
       } else {

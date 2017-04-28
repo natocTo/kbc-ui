@@ -1,10 +1,9 @@
 React = require('react')
 ActionCreators = require '../../../exGdriveActionCreators'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
-{Panel, PanelGroup, ListGroup, ListGroupItem} = require('react-bootstrap')
+{ Panel, ListGroup, ListGroupItem } = require('react-bootstrap')
 
 #Panel  = React.createFactory Panel
-PanelGroup = React.createFactory PanelGroup
 ListGroup = React.createFactory ListGroup
 ListGroupItem = React.createFactory ListGroupItem
 
@@ -28,7 +27,6 @@ module.exports = React.createClass
 
 
   render: ->
-    #PanelGroup accordion: true,
     div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'
     ,
       if @props.files and @props.files.count() > 0
@@ -113,7 +111,7 @@ module.exports = React.createClass
     return expanded
 
 
-  _onClick: (file, e) ->
+  _onClick: (file, eventKey, e) ->
     e.preventDefault()
     e.stopPropagation()
     if @_isLoaded(file)

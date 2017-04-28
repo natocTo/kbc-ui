@@ -1,5 +1,5 @@
 import React from 'react';
-import {addons} from 'react/addons';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Link} from 'react-router';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
@@ -12,7 +12,7 @@ import date from '../../../../../utils/date';
 import getComponentId from '../../../getJobComponentId';
 
 export default React.createClass({
-  mixins: [addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     job: React.PropTypes.object.isRequired,

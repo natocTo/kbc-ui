@@ -1,10 +1,12 @@
-import React, {PropTypes} from 'react/addons';
-import { Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import {Modal} from 'react-bootstrap';
+import Tooltip from './../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import actionCreators from '../../ActionCreators';
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     transformation: PropTypes.object.isRequired,
     bucketId: PropTypes.string.isRequired
@@ -53,13 +55,13 @@ export default React.createClass({
                   </p>
                   <p>
                     Phase # <input
-                      type="number"
-                      className="form-control"
-                      value={parseInt(this.state.phase, 10)}
-                      onChange={this.handlePhaseChange}
-                      disabled={this.state.isSaving}
-                      style={{width: '50px', display: 'inline-block'}}
-                      />
+                              type="number"
+                              className="form-control"
+                              value={parseInt(this.state.phase, 10)}
+                              onChange={this.handlePhaseChange}
+                              disabled={this.state.isSaving}
+                              style={{width: '50px', display: 'inline-block'}}
+                            />
                   </p>
                 </div>
               </div>
@@ -71,7 +73,7 @@ export default React.createClass({
               onCancel={this.close}
               onSave={this.handleSave}
               isDisabled={!this.isValid()}
-              />
+            />
           </Modal.Footer>
         </Modal>
       </span>
@@ -80,13 +82,13 @@ export default React.createClass({
 
   renderOpenButton() {
     return (
-      <OverlayTrigger overlay={<Tooltip>Change Transformation Phase</Tooltip>} placement="top">
+      <Tooltip tooltip="Change Transformation Phase" placement="top">
         <span onClick={this.open} className="label kbc-label-rounded-small label-default kbc-cursor-pointer">
-            Phase: {this.props.transformation.get('phase')}
-            {' '}
+          Phase: {this.props.transformation.get('phase')}
+          {' '}
           <span className="kbc-icon-pencil"/>
         </span>
-      </OverlayTrigger>
+      </Tooltip>
     );
   },
 
@@ -104,18 +106,18 @@ export default React.createClass({
       isSaving: true
     });
     actionCreators
-    .changeTransformationProperty(this.props.bucketId,
-      this.props.transformation.get('id'),
-      'phase',
-      this.state.phase
-    )
-    .then(() => this.close())
-    .catch((e) => {
-      this.setState({
-        isSaving: false
+      .changeTransformationProperty(this.props.bucketId,
+                                    this.props.transformation.get('id'),
+                                    'phase',
+                                    this.state.phase
+      )
+      .then(() => this.close())
+      .catch((e) => {
+        this.setState({
+          isSaving: false
+        });
+        throw e;
       });
-      throw e;
-    });
   },
 
   isValid() {

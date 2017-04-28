@@ -2,7 +2,7 @@ React = require 'react'
 
 GraphCanvas = require '../../../../../react/common/GraphCanvas'
 Button = React.createFactory(require('react-bootstrap').Button)
-PureRenderMixin = require('react/addons').addons.PureRenderMixin
+PureRenderMixin = require('react-addons-pure-render-mixin')
 Navigation = require('react-router').Navigation
 
 graphUtils = require '../../../../../utils/graphUtils'
@@ -64,7 +64,7 @@ module.exports = React.createClass
 
   componentDidMount: ->
     window.addEventListener('resize', @handleResize)
-    @graph = new GraphCanvas {}, @refs.graph.getDOMNode()
+    @graph = new GraphCanvas {}, @refs.graph
     @_renderGraph()
 
   componentDidUpdate: ->

@@ -17,9 +17,7 @@ WrDbActions = require '../../../actionCreators'
 V2Actions = require('../../../v2-actions').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
-Input = React.createFactory(require('react-bootstrap').Input)
-{FormControls} = require 'react-bootstrap'
-StaticText = FormControls.Static
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'

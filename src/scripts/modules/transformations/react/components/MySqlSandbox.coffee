@@ -13,8 +13,7 @@ DeleteButton = React.createFactory(require '../../../../react/common/DeleteButto
 Loader = React.createFactory(require('kbc-react-components').Loader)
 StorageBucketsStore = require '../../../components/stores/StorageBucketsStore'
 StorageTablesStore = require '../../../components/stores/StorageTablesStore'
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
+Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 MySqlSSLInfoModal = React.createFactory(require './MySqlSSLInfoModal')
 
 
@@ -73,9 +72,9 @@ MySqlSandbox = React.createClass
               span {className: 'fa fa-fw fa-database'}
               " Connect"
         div {},
-          OverlayTrigger
-            overlay: Tooltip null, "Information about secure connection"
-            key: 'ssl'
+          Tooltip
+            tooltip: 'Information about secure connection'
+            id: 'ssl'
             placement: 'top'
           ,
             button

@@ -1,11 +1,12 @@
-import React, {PropTypes} from 'react/addons';
+import React, {PropTypes} from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {fromJS} from 'immutable';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 
 export default React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
   propTypes: {
     columns: PropTypes.object.isRequired,
     currentValue: PropTypes.object.isRequired,
@@ -62,7 +63,6 @@ export default React.createClass({
                   key="primary key select"
                   name="pkelector"
                   multi={true}
-                  allowCreate={false}
                   value={this.state.value}
                   onChange= {(newValue) => this.setState({value: newValue})}
                   options= {this.getColumns()}
@@ -106,7 +106,7 @@ export default React.createClass({
 
   handleSave() {
     let pkToSave = [];
-    if (this.state.value && this.state.value !== '') pkToSave = this.state.value.split(',');
+    pkToSave = this.state.value ? this.state.value.map(o => o.value) : [];
     this.props.onSave(fromJS(pkToSave)).then(() =>
       this.closeModal()
     );

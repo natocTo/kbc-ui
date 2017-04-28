@@ -1,7 +1,7 @@
 React = require 'react'
 DatePicker = React.createFactory require('react-datepicker')
 moment = require 'moment'
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
 {div, p, strong, form, input, label, h3} = React.DOM
 Button = React.createFactory(require('react-bootstrap').Button)
 

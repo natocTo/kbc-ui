@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import moment from 'moment';
 import date from '../../../../../utils/date';
 import string from 'underscore.string';
-import {Table, Input} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 
@@ -69,8 +69,8 @@ export default React.createClass({
     );
 
     return (
-      <span>
-        <Input>
+      <div>
+        <div>
           <div className="row">
             <div className="col-xs-3">
               <div className="checkbox">
@@ -93,7 +93,7 @@ export default React.createClass({
               </div>
             </div>
           </div>
-        </Input>
+        </div>
         <Table responsive className="table">
           <thead className="thead">
             <tr className="tr">
@@ -119,7 +119,8 @@ export default React.createClass({
             {rows}
           </tbody>
         </Table>
-      </span>);
+      </div>
+    );
   },
 
   eventsTemplates: {

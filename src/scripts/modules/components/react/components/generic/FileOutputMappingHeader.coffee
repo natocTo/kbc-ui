@@ -1,7 +1,6 @@
 React = require 'react'
 Immutable = require 'immutable'
 Link = React.createFactory(require('react-router').Link)
-{OverlayTrigger, Tooltip} = require 'react-bootstrap'
 DeleteButton = require '../../../../../react/common/DeleteButton'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 FileOutputMappingModal = require('./FileOutputMappingModal').default

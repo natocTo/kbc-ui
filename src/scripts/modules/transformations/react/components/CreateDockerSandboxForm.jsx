@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input} from 'react-bootstrap';
+import {Input} from './../../../../react/common/KbcBootstrap';
 import Immutable from 'immutable';
 import Select from 'react-select';
 
@@ -60,7 +60,7 @@ module.exports = React.createClass({
     });
     this.onChange(this.state.tables, value);
   },
-  onChangeTables: function(valueString, valueArray) {
+  onChangeTables: function(valueArray) {
     const value = Immutable.fromJS(valueArray);
     this.setState({
       tables: value

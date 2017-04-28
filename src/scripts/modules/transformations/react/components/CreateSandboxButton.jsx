@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import CreateSandboxModal from '../modals/ConfigureSandbox';
-import {OverlayTrigger, Tooltip} from 'react-bootstrap';
+import Tooltip from './../../../../react/common/Tooltip';
 
 export default React.createClass({
   propTypes: {
@@ -32,12 +32,12 @@ export default React.createClass({
   render() {
     if (this.props.mode === 'button') {
       return (
-        <OverlayTrigger placement="top" overlay={React.createElement(Tooltip, null, 'Create sandbox')}>
+        <Tooltip placement="top" tooltip="Create sandbox">
           <button className="btn btn-link" onClick={this.openModal}>
             <i className="fa fa-fw fa-wrench"/>
             {this.renderModal()}
           </button>
-        </OverlayTrigger>
+        </Tooltip>
       );
     } else {
       return (

@@ -3,8 +3,7 @@ OrchestrationActionCreators = require '../../ActionCreators'
 
 Router = require 'react-router'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 Confirm = React.createFactory(require('../../../../react/common/Confirm').default)
 Loader = React.createFactory(require('kbc-react-components').Loader)
 
@@ -35,9 +34,9 @@ OrchestrationDeleteButton = React.createClass
         buttonLabel: 'Move to Trash'
         onConfirm: @_deleteOrchestration
       ,
-        OverlayTrigger
-          overlay: Tooltip null, 'Move to Trash'
-          key: 'delete'
+        Tooltip
+          tooltip: 'Move to Trash'
+          id: 'delete'
           placement: @props.tooltipPlacement
         ,
           button className: 'btn btn-link',

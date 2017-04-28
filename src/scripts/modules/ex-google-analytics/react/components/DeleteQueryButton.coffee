@@ -1,8 +1,7 @@
 React = require 'react'
 ExGanalctionCreators = require '../../exGanalActionCreators'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
+Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 Confirm = React.createFactory(require('../../../../react/common/Confirm').default)
 
 {button, span, i} = React.DOM
@@ -17,16 +16,16 @@ module.exports = React.createClass
     configurationId: React.PropTypes.string.isRequired
 
   render: ->
-    OverlayTrigger
-      overlay: Tooltip null, 'Delete Query'
-      key: 'delete'
-      placement: 'top'
+    Confirm
+      title: 'Delete Query'
+      text: "Do you really want to delete the query?"
+      buttonLabel: 'Delete'
+      onConfirm: @_deleteQuery
     ,
-      Confirm
-        title: 'Delete Query'
-        text: "Do you really want to delete the query?"
-        buttonLabel: 'Delete'
-        onConfirm: @_deleteQuery
+      Tooltip
+        tooltip: 'Delete Query'
+        id: 'delete'
+        placement: 'top'
       ,
         button className: 'btn btn-link',
           i className: 'kbc-icon-cup'

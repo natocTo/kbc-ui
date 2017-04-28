@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from 'react-bootstrap';
+import {Input} from '../../../../react/common/KbcBootstrap';
 import Select from '../../../../react/common/Select';
 import {List} from 'immutable';
 import DaysFilterInput from '../../../components/react/components/generic/DaysFilterInput';

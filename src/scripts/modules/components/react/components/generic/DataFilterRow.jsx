@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import Select from '../../../../../react/common/Select';
-import {Input} from 'react-bootstrap';
+import {Input} from './../../../../../react/common/KbcBootstrap';
 import _ from 'underscore';
 
 export default React.createClass({

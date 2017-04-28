@@ -58,7 +58,7 @@ ConfigureSandbox = React.createClass
               ref: 'preserve'
             ' Preserve existing data'
 
-  _setInclude: (string, array) ->
+  _setInclude: (array) ->
     values = _.map(array, (item) ->
       item.value
     )

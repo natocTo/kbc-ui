@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import {DropdownButton, MenuItem} from 'react-bootstrap';
 // import {Map} from 'immutable';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -19,7 +19,9 @@ export default React.createClass({
         pullRight={true}
         onSelect={this.selectTemplate}
         bsStyle="default"
-        title={this.state.text}>
+        title={this.state.text}
+        id="modules-ex-facebook-react-index-template-selector-dropdown"
+      >
         {this.props.templates.map((t) =>
           <MenuItem eventKey={t.get('id')}>
               {t.get('name')}

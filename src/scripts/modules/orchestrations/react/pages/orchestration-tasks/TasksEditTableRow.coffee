@@ -23,13 +23,11 @@ TasksEditTableRow = React.createClass
     onTaskDelete: React.PropTypes.func.isRequired
     onTaskUpdate: React.PropTypes.func.isRequired
     toggleMarkTask: React.PropTypes.func.isRequired
-    isDraggingPhase: React.PropTypes.bool.isRequired
     isMarked: React.PropTypes.bool.isRequired
-    onAddNewTask: React.PropTypes.func.isRequired
     color: React.PropTypes.string
 
   render: ->
-    tr {style: {'background-color': @props.color}},
+    tr {style: {'backgroundColor': @props.color}},
       td className: 'kb-orchestrator-task-drasg',
         Tooltip
           tooltip: 'Select task to move between phases'

@@ -3,9 +3,6 @@ Immutable = require('immutable')
 {ul, li, span, div, a, p, h2, label, input, form} = React.DOM
 Check = React.createFactory(require('kbc-react-components').Check)
 _ = require 'underscore'
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Input = React.createFactory(require('react-bootstrap').Input)
 TableLink = React.createFactory(require('../../../../components/react/components/StorageApiTableLink').default)
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentDescription = React.createFactory(ComponentDescription)
@@ -26,16 +23,9 @@ fuzzy = require 'fuzzy'
 getTemplates = require './../../components/templates'
 validation = require './../../components/validation'
 RoutesStore = require '../../../../../stores/RoutesStore'
-StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
-Autosuggest = React.createFactory(require 'react-autosuggest')
-
-createGetSuggestions = (getOptions) ->
-  (input, callback) ->
-    suggestions = getOptions()
-      .filter (value) -> fuzzy.match(input, value)
-      .slice 0, 10
-      .toList()
-    callback(null, suggestions.toJS())
+StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
+AutoSuggestWrapperComponent = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
+AutosuggestWrapper = React.createFactory(AutoSuggestWrapperComponent)
 
 module.exports = (componentId) ->
   React.createClass
@@ -228,18 +218,16 @@ module.exports = (componentId) ->
         div className: 'form-group',
           label className: 'control-label col-xs-2', 'Output Table'
           div className: "col-xs-10",
-            Autosuggest
-              suggestions: createGetSuggestions(@_getOutTables)
-              inputAttributes:
-                className: 'form-control'
-                placeholder: 'to get hint start typing'
-                value: @state.editingData.outtable
-                onChange: (newValue) =>
-                  newEditingData = @state.editingData
-                  newEditingData.outtable = newValue
-                  @setState
-                    editingData: newEditingData
-                  @_updateEditingConfig()
+            AutosuggestWrapper
+              suggestions: @_getOutTables()
+              placeholder: 'to get hint start typing'
+              value: @state.editingData.outtable
+              onChange: (newValue) =>
+                newEditingData = @state.editingData
+                newEditingData.outtable = newValue
+                @setState
+                  editingData: newEditingData
+                @_updateEditingConfig()
           ,
             p className: 'help-block', @tooltips.outtable
         if @_isLangParam()
@@ -306,11 +294,6 @@ module.exports = (componentId) ->
     _createInput: (caption, value, tooltip, isTable) ->
       if isTable and not _.isEmpty value
         value = TableLink tableId: value, value
-      # OverlayTrigger
-      #   overlay: Tooltip null, tooltip
-      #   key: caption
-      #   placement: 'top'
-      # ,
       StaticText
         label: caption
         labelClassName: 'col-xs-4'

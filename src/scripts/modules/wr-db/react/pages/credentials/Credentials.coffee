@@ -17,8 +17,6 @@ InstalledComponentsStore = require '../../../../components/stores/InstalledCompo
 MissingRedshiftModal = require('./MissingRedshiftModal').default
 CredentialsForm = require './CredentialsForm'
 {div} = React.DOM
-Input = React.createFactory(require('react-bootstrap').Input)
-StaticText = React.createFactory(require('react-bootstrap').FormControls.Static)
 {Protected} = require 'kbc-react-components'
 
 

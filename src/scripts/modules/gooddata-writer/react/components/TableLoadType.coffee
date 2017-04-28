@@ -8,7 +8,7 @@ ModalTitle = React.createFactory(require('react-bootstrap').Modal.Title)
 ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 
-{Input} = require 'react-bootstrap'
+{Input} = require './../../../../react/common/KbcBootstrap'
 
 {strong, a, small, option, select, label, input, div, span} = React.DOM
 Loader = React.createFactory(require('kbc-react-components').Loader)

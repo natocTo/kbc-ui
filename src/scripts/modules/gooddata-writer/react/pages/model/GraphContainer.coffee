@@ -6,7 +6,7 @@ api = require '../../../api'
 {Loader} = require 'kbc-react-components'
 Graph = require './Graph'
 
-PureRenderMixin = require('react/addons').addons.PureRenderMixin
+PureRenderMixin = require('react-addons-pure-render-mixin')
 
 module.exports = React.createClass
   displayName: 'GraphContainer'

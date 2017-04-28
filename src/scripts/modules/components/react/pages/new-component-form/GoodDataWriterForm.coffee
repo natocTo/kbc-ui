@@ -1,14 +1,14 @@
 React = require 'react'
 
 FormHeader = React.createFactory(require './FormHeader')
-Input = React.createFactory(require('react-bootstrap').Input)
+Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 
 {GoodDataWriterModes, GoodDataWriterTokenTypes} = require '../../../Constants'
 
-ModalHeader = React.createFactory(require('react-bootstrap/lib/ModalHeader'))
-ModalBody = React.createFactory(require('react-bootstrap/lib/ModalBody'))
-ModalFooter = React.createFactory(require('react-bootstrap/lib/ModalFooter'))
-ModalTitle = React.createFactory(require('react-bootstrap/lib/ModalTitle'))
+ModalHeader = React.createFactory(require('react-bootstrap').ModalHeader)
+ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
+ModalFooter = React.createFactory(require('react-bootstrap').ModalFooter)
+ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('kbc-react-components').Loader)
@@ -32,9 +32,6 @@ module.exports = React.createClass
     isValid: React.PropTypes.bool.isRequired
     isSaving: React.PropTypes.bool.isRequired
     onClose: React.PropTypes.func.isRequired
-
-  componentDidMount: ->
-    @refs.name.getInputDOMNode().focus()
 
   getInitialState: ->
     canCreateProdProject: !!ApplicationStore.getCurrentProject().getIn(['limits', 'goodData.prodTokenEnabled', 'value'])
@@ -73,6 +70,7 @@ module.exports = React.createClass
                 wrapperClassName: 'col-xs-7'
                 onChange: @_handleChange.bind @, 'name'
                 disabled: @props.isSaving
+                autoFocus: true
               Input
                 type: 'textarea'
                 label: 'Description'

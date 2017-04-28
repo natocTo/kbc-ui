@@ -382,11 +382,11 @@ export default React.createClass({
       const localBucket = this.state.localState.get('selectedInputBucket');
       const localState = this.state.localState.get('selectedDropboxFiles').map((dropboxFile) => {
         return {
-          file: dropboxFile.label,
+          file: dropboxFile,
           bucket: localBucket,
           timestamp: moment().unix(),
-          hash: MD5(dropboxFile.label + localBucket).toString(),
-          output: localBucket + '.' + getDestinationName(dropboxFile.label)
+          hash: MD5(dropboxFile + localBucket).toString(),
+          output: localBucket + '.' + getDestinationName(dropboxFile)
         };
       });
 
@@ -441,16 +441,14 @@ export default React.createClass({
   },
 
   getSelectedBucket() {
-    let selectedInputBucket = [];
-
     let localConfigDataBucket = this.state.localState.get('selectedInputBucket');
     let hasLocalConfigDataBucket = this.state.localState.has('selectedInputBucket');
 
     if (hasLocalConfigDataBucket && localConfigDataBucket !== '') {
-      selectedInputBucket.push({label: localConfigDataBucket, value: localConfigDataBucket});
+      return localConfigDataBucket;
     }
 
-    return selectedInputBucket;
+    return '';
   },
 
   handleDeletingSingleElement(element) {
@@ -484,7 +482,7 @@ export default React.createClass({
     return getBucketsForSelection(listBucketNames(filterBuckets(this.state.keboolaBuckets)));
   },
 
-  handleCsvSelectChange(value, values) {
+  handleCsvSelectChange(values) {
     this.updateLocalState(['selectedDropboxFiles'], values);
   },
 

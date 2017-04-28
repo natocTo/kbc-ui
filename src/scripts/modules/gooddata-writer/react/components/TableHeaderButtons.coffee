@@ -8,12 +8,13 @@ RoutesStore = require '../../../../stores/RoutesStore'
 Loader = require('kbc-react-components').Loader
 TableLoadType = React.createFactory(require './TableLoadType')
 
-{ButtonGroup, Button, DropdownButton, MenuItem, Tooltip} = require 'react-bootstrap'
+{Button} = require 'react-bootstrap'
 
 Confirm = require('../../../../react/common/Confirm').default
-PureRenderMixin = require('react/addons').addons.PureRenderMixin
+PureRenderMixin = require('react-addons-pure-render-mixin')
 
 
+{ ButtonGroup, DropdownButton, MenuItem } = require 'react-bootstrap'
 {button, span, div} = React.DOM
 
 module.exports = React.createClass
@@ -106,34 +107,36 @@ module.exports = React.createClass
         configurationId: @state.configurationId
       ' '
       React.createElement ButtonGroup, null,
-        React.createElement DropdownButton, null,
-          React.createElement MenuItem, null,
-            React.createElement Confirm,
-              title: 'Reset export status'
-              text: resetExportStatusText
-              buttonLabel: 'Reset'
-              buttonType: 'success'
-              onConfirm: @_handleResetExportStatus
-            ,
-              React.DOM.span null, 'Reset export status'
-          React.createElement MenuItem, null,
-            React.createElement Confirm,
-              title: 'Reset table'
-              text: resetTableText
-              buttonLabel: 'Reset'
-              buttonType: 'success'
-              onConfirm: @_handleResetTable
-            ,
-              React.DOM.span null, 'Reset table'
-          React.createElement MenuItem, null,
-            React.createElement Confirm,
-              title: 'Synchronize dataset'
-              text: synchronizeTableText
-              buttonLabel: 'Synchronize'
-              buttonType: 'success'
-              onConfirm: @_handleSynchronizeTable
-            ,
-              React.DOM.span null, 'Synchronize dataset'
+        React.createElement DropdownButton,
+          title: ''
+          id: 'modules-gooddata-writer-react-components-table-header-buttons-dropdown',
+            React.createElement MenuItem, null,
+              React.createElement Confirm,
+                title: 'Reset export status'
+                text: resetExportStatusText
+                buttonLabel: 'Reset'
+                buttonType: 'success'
+                onConfirm: @_handleResetExportStatus
+              ,
+                React.DOM.span null, 'Reset export status'
+            React.createElement MenuItem, null,
+              React.createElement Confirm,
+                title: 'Reset table'
+                text: resetTableText
+                buttonLabel: 'Reset'
+                buttonType: 'success'
+                onConfirm: @_handleResetTable
+              ,
+                React.DOM.span null, 'Reset table'
+            React.createElement MenuItem, null,
+              React.createElement Confirm,
+                title: 'Synchronize dataset'
+                text: synchronizeTableText
+                buttonLabel: 'Synchronize'
+                buttonType: 'success'
+                onConfirm: @_handleSynchronizeTable
+              ,
+                React.DOM.span null, 'Synchronize dataset'
         if @state.table.get('pendingActions').contains 'uploadTable'
           React.createElement Button, null,
             React.createElement Loader, className: 'fa-fw'

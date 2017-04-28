@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import moment from 'moment';
-import {TabbedArea, TabPane, Button, Modal} from 'react-bootstrap';
+import {TabbedArea, TabPane} from './../../../../../react/common/KbcBootstrap';
+import {Button, Modal} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
@@ -82,11 +83,11 @@ export default React.createClass({
           <Modal.Title>Change Date Range</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <TabbedArea activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false}>
-            <TabPane eventKey="relative" tab="Relative">
+          <TabbedArea activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false} id="daterangemodaltab">
+            <TabPane eventKey="relative" title="Relative">
               {this.renderRelative()}
             </TabPane>
-            <TabPane eventKey="absolute" tab="Absolute">
+            <TabPane eventKey="absolute" title="Absolute">
               {this.renderAbsolute()}
             </TabPane>
           </TabbedArea>
@@ -139,6 +140,7 @@ export default React.createClass({
         </label>
         <div className="col-sm-6">
           <DatePicker
+            className="form-control"
             name={name}
             dateFormat={DATE_FORMAT}
             {...extraProps}

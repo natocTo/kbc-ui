@@ -5,9 +5,8 @@
 React = require 'react'
 classnames = require 'classnames'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
+Tooltip = React.createFactory(require('./Tooltip').default)
 Loader = React.createFactory(require('kbc-react-components').Loader)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
 Confirm = React.createFactory(require('./Confirm').default)
 trashUtils = require '../../modules/trash/utils.js'
 
@@ -45,9 +44,9 @@ module.exports = React.createClass
     else
       if trashUtils.isObsoleteComponent(@props.componentId)
         Confirm assign({}, buttonLabel: 'Delete', @props.confirm),
-          OverlayTrigger
-            overlay: Tooltip null, @props.tooltip
-            key: 'delete'
+          Tooltip
+            tooltip: @props.tooltip
+            id: 'delete'
             placement: 'top'
           ,
             button className: 'btn btn-link',

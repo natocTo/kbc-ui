@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import Immutable from 'immutable';
-import {Input} from 'react-bootstrap';
+import {FormGroup, FormControl} from 'react-bootstrap';
 import Markdown from '../../../../react/common/Markdown';
 import templateFinder from '../../../components/utils/templateFinder';
 import deepEqual from 'deep-equal';
@@ -22,24 +22,28 @@ export default React.createClass({
   },
 
   jobsSelector() {
-    var selectedDefault = false;
-    if (!this.props.value || this.props.value.isEmpty()) {
-      selectedDefault = true;
-    }
     return (
       <div>
-        <Input
-          type="select"
-          ref="config"
-          onChange={this.handleSelectorChange}
-          disabled={this.props.readOnly}>
-          <option
-            value={Immutable.List().hashCode()}
-            disabled
-            selected={selectedDefault}
-          >Select template...</option>
-          {this.templatesSelectorOptions()}
-        </Input>
+        <FormGroup>
+          <FormControl
+            componentClass="select"
+            type="select"
+            inputRef={
+              (ref) => {
+                this.selectedTemplate = ref;
+              }
+            }
+            onChange={this.handleSelectorChange}
+            disabled={this.props.readOnly}
+            value={this.getSelectedValue()}
+          >
+            <option
+              value={''}
+              disabled
+            >Select template...</option>
+            {this.templatesSelectorOptions()}
+          </FormControl>
+        </FormGroup>
         {this.templateDescription()}
       </div>
     );
@@ -63,12 +67,10 @@ export default React.createClass({
   templatesSelectorOptions() {
     return this.props.templates.map(
       function(option) {
-        var selected = deepEqual(option.toJS(), this.props.value.toJS());
         return (
           <option
             value={JSON.stringify(option.toJS())}
             key={option.hashCode()}
-            selected={selected}
           >
             {option.get('name')}
           </option>
@@ -77,8 +79,17 @@ export default React.createClass({
     , this);
   },
 
+  getSelectedValue() {
+    const value = this.props.templates.find((option) => {
+      return deepEqual(option.toJS(), this.props.value.toJS());
+    });
+    return typeof value !== 'undefined'
+      ? JSON.stringify(value.toJS())
+      : '';
+  },
+
   handleSelectorChange() {
-    var selectedTemplate = Immutable.fromJS(JSON.parse(this.refs.config.getValue()));
+    const selectedTemplate = Immutable.fromJS(JSON.parse(this.selectedTemplate.value));
     if (selectedTemplate) {
       this.props.onChange(selectedTemplate);
     } else {

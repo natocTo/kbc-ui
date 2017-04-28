@@ -49,7 +49,7 @@ describe('<CurrentUser />', function() {
     );
   });
 
-  it('should render 20x20 icon, no email, with admin links, with 1 maintainer, dropup false', function() {
+  it('should render 20x20 icon, no email, no admin links, with 1 maintainer, dropup false', function() {
     shallowSnapshot(
       <CurrentUser
         user={user}

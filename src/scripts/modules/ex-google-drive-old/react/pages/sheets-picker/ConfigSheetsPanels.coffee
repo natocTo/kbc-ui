@@ -1,10 +1,8 @@
 React = require('react')
 ActionCreators = require '../../../exGdriveActionCreators'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
-{Panel, PanelGroup, ListGroup, ListGroupItem} = require('react-bootstrap')
+{ ListGroup, ListGroupItem } = require('react-bootstrap')
 
-Panel  = React.createFactory Panel
-PanelGroup = React.createFactory PanelGroup
 ListGroup = React.createFactory ListGroup
 ListGroupItem = React.createFactory ListGroupItem
 Button = React.createFactory(require('react-bootstrap').Button)

@@ -5,9 +5,8 @@
 React = require 'react'
 classnames = require 'classnames'
 
-Tooltip = React.createFactory(require('react-bootstrap').Tooltip)
+Tooltip = React.createFactory(require('./Tooltip').default)
 Loader = React.createFactory(require('kbc-react-components').Loader)
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
 Confirm = React.createFactory(require('./Confirm').default)
 
 assign = require 'object-assign'
@@ -41,9 +40,9 @@ module.exports = React.createClass
         React.DOM.em className: 'fa-reply'
     else
       Confirm assign({}, buttonLabel: 'Restore', @props.confirm),
-        OverlayTrigger
-          overlay: Tooltip null, @props.tooltip
-          key: 'delete'
+        Tooltip
+          tooltip: @props.tooltip
+          id: 'delete'
           placement: 'top'
         ,
           button className: 'btn btn-link',

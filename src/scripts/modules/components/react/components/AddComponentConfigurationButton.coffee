@@ -8,10 +8,6 @@ ComponentsStore = require('../../stores/ComponentsStore.coffee')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin.coffee')
 
 Modal = React.createFactory(require('react-bootstrap').Modal)
-ModalHeader = React.createFactory(require('react-bootstrap/lib/ModalHeader'))
-ModalBody = React.createFactory(require('react-bootstrap/lib/ModalBody'))
-ModalFooter = React.createFactory(require('react-bootstrap/lib/ModalFooter'))
-ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 NewComponentModal = React.createFactory(require('../pages/new-component-form/NewComponentModal'))
 
@@ -46,7 +42,6 @@ module.exports = React.createClass
         span className: 'kbc-icon-plus'
         @props.label
       Modal
-        bsSize: 'medium'
         show: @state.showModal
         onHide: @close
       ,

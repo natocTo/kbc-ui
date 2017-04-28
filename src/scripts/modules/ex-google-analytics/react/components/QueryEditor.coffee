@@ -2,9 +2,8 @@ React = require 'react'
 Immutable = require('immutable')
 _ = require 'underscore'
 _.str = require 'underscore.string'
-Input = React.createFactory(require('react-bootstrap').Input)
-Label = React.createFactory(require('react-bootstrap').Label)
-Select = React.createFactory(require('react-select'))
+Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
+SelectCreatable = React.createFactory(require('react-select').Creatable)
 
 {p, div, form, span, option, optgroup, a, label, fieldset} = React.DOM
 
@@ -45,8 +44,12 @@ module.exports = React.createClass
 
 
   _createArraySelect: (caption, propName) ->
-    values = @props.query.get(propName).toJS().join(',')
-    values = null if values == ''
+    values = @props.query.get(propName, Immutable.List()).toMap()
+    valuesForSelect = values.map (item) ->
+      {
+        label: item,
+        value: item
+      }
     helpBlock = span className: 'help-block',
       p className: 'text-danger',
         @props.validation.get propName if @props.validation
@@ -54,19 +57,13 @@ module.exports = React.createClass
     div className: 'form-group',
       label className: 'control-label col-xs-4', caption
       div className: 'col-xs-8',
-        Select
+        SelectCreatable
           multi: true
-          value: values
-          noResultsText: ''
-          clearable: true
+          value: valuesForSelect.toArray()
           placeholder: 'type value and press enter'
-          filterOptions: (options, filter, currentValues) ->
-            [filter]
           onChange: (stringOptions) =>
-            if not stringOptions or stringOptions == ''
-              @props.onChange(@props.query.set(propName, Immutable.fromJS([])))
-            else
-              @props.onChange(@props.query.set(propName, Immutable.fromJS(stringOptions.split(','))))
+            value = stringOptions.map (item) -> item.value
+            @props.onChange(@props.query.set(propName, Immutable.fromJS(value)))
         helpBlock
 
 
