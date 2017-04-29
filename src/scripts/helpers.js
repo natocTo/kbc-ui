@@ -1,9 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import request from './utils/request';
 import Promise from 'bluebird';
 
-export {React, Immutable, request, Promise};
+export {React, ReactDOM, Immutable, request, Promise};
 
 export function getUrlParameterByName(name, searchString, defaultValue = '') {
   const escapedName = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]'),
