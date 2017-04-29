@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import _ from 'underscore';
 import { Dropdown, MenuItem} from 'react-bootstrap';
-import './CurrentUser.less';
 
 const modes = {
   NORMAL: 'normal',

@@ -7,7 +7,7 @@ require './utils/react-shim'
 global.kbcApp =
   helpers: require './helpers'
   parts:
-    ProjectSelect: require './react/layout/project-select/ProjectSelect'
+    ProjectSelect: require('./react/layout/project-select/ProjectSelect').default
     CurrentUser: require('./react/layout/CurrentUser').default
     ProjectsList: require './react/layout/project-select/List'
     NewProjectModal: require './react/layout/NewProjectModal'
