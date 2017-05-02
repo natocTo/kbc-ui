@@ -30,9 +30,9 @@ module.exports = React.createClass
     editFn: React.PropTypes.func.isRequired
     table: React.PropTypes.object
     editData: React.PropTypes.object.isRequired
-    isSavingFn: React.PropTypes.bool
+    isSavingFn: React.PropTypes.func.isRequired
     email: React.PropTypes.string.isRequired
-    googleInfo: React.PropTypes.object.isRequired
+    googleInfo: React.PropTypes.object
     saveFn: React.PropTypes.func.isRequired
     updateGoogleFolderFn: React.PropTypes.func.isRequired
     renderToModal: React.PropTypes.bool.isRequired
@@ -154,7 +154,7 @@ module.exports = React.createClass
   _renderTitleInput: ->
     bsize = 'small'
     if @props.renderToModal
-      bsize = 'medium'
+      bsize = 'large'
     Input
       value: @props.editData?.get 'title'
       bsSize: bsize
@@ -173,7 +173,7 @@ module.exports = React.createClass
     file = @props.editData
     bsize = 'small'
     if @props.renderToModal
-      bsize = 'medium'
+      bsize = 'large'
     folderId = file.get 'targetFolder' if file
     folderName = @props.googleInfo?.get(folderId).get 'title' if folderId
     Picker
@@ -202,7 +202,7 @@ module.exports = React.createClass
   _renderSelect: (options, prop) ->
     bsize = 'small'
     if @props.renderToModal
-      bsize = 'medium'
+      bsize = 'large'
 
     return Input
       bsSize: bsize
