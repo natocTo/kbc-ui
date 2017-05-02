@@ -51,6 +51,7 @@ TransformationBucketRow = React.createClass(
       React.createElement Tooltip,
         tooltip: 'Go to Bucket Detail'
         placement: 'top'
+        key: 'bucket-detail'
       ,
         button
           key: 'bucket'
