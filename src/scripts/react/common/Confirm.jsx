@@ -4,7 +4,7 @@ import ConfirmModal from './ConfirmModal';
 export default React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string.isRequired,
+    text: React.PropTypes.node.isRequired,
     onConfirm: React.PropTypes.func.isRequired,
     buttonLabel: React.PropTypes.string.isRequired,
     buttonType: React.PropTypes.string,
