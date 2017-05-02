@@ -96,10 +96,10 @@ export default React.createClass({
   },
 
   handleDelete() {
-    actionCreators.deleteDateDimension(this.props.configurationId, this.props.dimension.get('name'));
+    actionCreators.deleteDateDimension(this.props.configurationId, this.props.dimension.getIn(['data', 'name']));
   },
 
   handleUpload() {
-    actionCreators.uploadDateDimensionToGoodData(this.props.configurationId, this.props.dimension.get('name'), this.props.pid);
+    actionCreators.uploadDateDimensionToGoodData(this.props.configurationId, this.props.dimension.getIn(['data', 'name']), this.props.pid);
   }
 });
