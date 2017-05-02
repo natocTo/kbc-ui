@@ -27,6 +27,7 @@ exS3Routes = require('../ex-s3/routes').default
 appGeneeaRoutes = require '../app-geneea/appGeneeaRoutes'
 goodDataWriterRoutes = require '../gooddata-writer/routes'
 dropoxExtractorRoutes = require('../ex-dropbox/routes').default
+dropoxExtractorRoutesV2 = require('../ex-dropbox-v2/routes').default
 dropoxWriterRoutes = require '../wr-dropbox/routes'
 wrPortalCreateRouteFn = require('../wr-portal/Routes').default
 createDbWriterRoutes = require '../wr-db/routes'
@@ -119,6 +120,8 @@ routes =
       createComponentRoute 'keboola.ex-twitter', [twitterRoutes]
     ,
       createComponentRoute 'ex-dropbox', [dropoxExtractorRoutes]
+    ,
+      createComponentRoute 'radektomasek.ex-dropbox-v2', [dropoxExtractorRoutesV2]
     ,
       createComponentRoute 'keboola.ex-db-pgsql', [exDbGenericRoutes('keboola.ex-db-pgsql')]
       createComponentRoute 'keboola.ex-db-redshift', [exDbGenericRoutes('keboola.ex-db-redshift')]
