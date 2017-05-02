@@ -75,34 +75,34 @@ TransformationRow = React.createClass(
     ,
       if @props.hideButtons
         [
-          span {className: 'td col-xs-3'},
+          span {className: 'td col-xs-3', key: 'col1'},
             h4 {},
               span {className: 'label kbc-label-rounded-small label-default pull-left'},
                 @props.transformation.get('phase') || 1
               ' '
               @props.transformation.get('name')
-          span {className: 'td col-xs-1'},
+          span {className: 'td col-xs-1', key: 'col2'},
             TransformationTypeLabel
               backend: @props.transformation.get 'backend'
               type: @props.transformation.get 'type'
-          span {className: 'td col-xs-8'},
+          span {className: 'td col-xs-8', key: 'col3'},
             small {}, descriptionExcerpt(@props.transformation.get('description')) || em {}, 'No description'
         ]
       else
         [
-          span {className: 'td col-xs-3'},
+          span {className: 'td col-xs-3', key: 'col1'},
             h4 {},
               span {className: 'label kbc-label-rounded-small label-default pull-left'},
                 @props.transformation.get('phase') || 1
               ' '
               @props.transformation.get('name')
-          span {className: 'td col-xs-1'},
+          span {className: 'td col-xs-1', key: 'col2'},
             TransformationTypeLabel
               backend: @props.transformation.get 'backend'
               type: @props.transformation.get 'type'
-          span {className: 'td col-xs-4'},
+          span {className: 'td col-xs-4', key: 'col3'},
             small {}, descriptionExcerpt(@props.transformation.get('description')) || em {}, 'No description'
-          span {className: 'td text-right col-xs-4'},
+          span {className: 'td text-right col-xs-4', key: 'col4'},
             @buttons()
         ]
 
