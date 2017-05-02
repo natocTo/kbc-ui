@@ -17,7 +17,7 @@ ConfirmModal = React.createClass
   propTypes: {
     buttonType: React.PropTypes.string,
     buttonLabel: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string.isRequired,
+    text: React.PropTypes.node.isRequired,
     title: React.PropTypes.string.isRequired,
     onConfirm: React.PropTypes.func.isRequired,
     onHide: React.PropTypes.func.isRequired
