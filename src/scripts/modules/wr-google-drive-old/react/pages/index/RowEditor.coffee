@@ -154,7 +154,7 @@ module.exports = React.createClass
   _renderTitleInput: ->
     bsize = 'small'
     if @props.renderToModal
-      bsize = 'large'
+      bsize = 'medium'
     Input
       value: @props.editData?.get 'title'
       bsSize: bsize
@@ -173,7 +173,7 @@ module.exports = React.createClass
     file = @props.editData
     bsize = 'small'
     if @props.renderToModal
-      bsize = 'large'
+      bsize = 'medium'
     folderId = file.get 'targetFolder' if file
     folderName = @props.googleInfo?.get(folderId).get 'title' if folderId
     Picker
@@ -202,7 +202,7 @@ module.exports = React.createClass
   _renderSelect: (options, prop) ->
     bsize = 'small'
     if @props.renderToModal
-      bsize = 'large'
+      bsize = 'medium'
 
     return Input
       bsSize: bsize
