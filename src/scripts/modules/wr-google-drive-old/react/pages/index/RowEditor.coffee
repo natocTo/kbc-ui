@@ -79,7 +79,7 @@ module.exports = React.createClass
     React.createElement Modal,
       onHide: =>
         @_cancel()
-
+      show: true
       ModalHeader closeButton: true,
         ModalTitle null,
           'Add New Table'
