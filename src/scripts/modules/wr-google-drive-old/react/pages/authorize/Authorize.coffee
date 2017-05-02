@@ -30,12 +30,11 @@ module.exports = React.createClass
       componentName: 'wr-google-drive'
       refererUrl: @_getReferrer()
       isInstantOnly: true
-
-
-  _renderExtLink: ->
-    div className: 'pre', @state.extLink.get('link')
-  _generateExternalLink: ->
-    ActionCreators.generateExternalLink(@state.configId)
+      isGeneratingExtLink: false
+      generateExternalLinkFn: ->
+        false
+      sendEmailFn: ->
+        false
 
   _getReferrer: ->
     origin = window.location.origin
