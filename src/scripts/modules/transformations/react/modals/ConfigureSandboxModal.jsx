@@ -16,11 +16,11 @@ export default React.createClass({
     onHide: PropTypes.func.isRequired,
     mode: PropTypes.string.isRequired,
     backend: PropTypes.string.isRequired,
-    progress: PropTypes.string.isRequired,
-    progressStatus: PropTypes.string.isRequired,
+    progress: PropTypes.string,
+    progressStatus: PropTypes.string,
     isRunning: PropTypes.bool,
     isCreated: PropTypes.bool,
-    jobId: PropTypes.string.isRequired,
+    jobId: PropTypes.string,
     mysqlCredentials: PropTypes.object.isRequired,
     redshiftCredentials: PropTypes.object.isRequired,
     snowflakeCredentials: PropTypes.object.isRequired,
@@ -118,9 +118,7 @@ export default React.createClass({
   },
 
   renderRedshiftCredentials() {
-    return React.createElement(RedshiftCredentialsContainer, {
-      isAutoLoad: true
-    });
+    return (<RedshiftCredentialsContainer isAutoLoad={true}/>);
   },
 
   renderSnowflakeCredentials() {
@@ -175,5 +173,4 @@ export default React.createClass({
       </ConnectToMySqlSandbox>
     );
   }
-
 });
