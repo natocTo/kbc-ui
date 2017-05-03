@@ -10,7 +10,7 @@ Select = React.createFactory(require('react-select'))
 _ = require('underscore')
 
 module.exports = React.createClass
-  displayName: 'RedshiftDataTypes'
+  displayName: 'SnowflakeDataTypesAddForm'
   mixins: [ImmutableRenderMixin]
 
   propTypes:
@@ -24,23 +24,16 @@ module.exports = React.createClass
     showSize: React.PropTypes.bool.isRequired
 
     handleAddDataType: React.PropTypes.func.isRequired
-    handleRemoveDataType: React.PropTypes.func.isRequired
     columnOnChange: React.PropTypes.func.isRequired
     datatypeOnChange: React.PropTypes.func.isRequired
     sizeOnChange: React.PropTypes.func.isRequired
 
+    availableColumns: React.PropTypes.array.isRequired
 
   _handleSizeOnChange: (e) ->
     @props.sizeOnChange(e.target.value)
 
-  _getColumnsOptions: ->
-    component = @
-    _.filter(@props.columnsOptions, (option) ->
-      !_.contains(_.keys(component.props.datatypes.toJS()), option.value)
-    )
-
   _getDatatypeOptions: ->
-    component = @
     _.map(@props.datatypeOptions, (datatype) ->
       {
         label: datatype
@@ -48,26 +41,11 @@ module.exports = React.createClass
       }
     )
 
+  _convertEmptyValuesToNullOnChange: (e) ->
+    @props.convertEmptyValuesToNullOnChange(e.target.checked)
+
   render: ->
-    component = @
     React.DOM.span {},
-      React.DOM.div {className: "row"},
-        React.DOM.span {className: "col-xs-12"},
-        if !@props.datatypes.count()
-          React.DOM.div {}, React.DOM.small {}, "No data types set yet."
-        else
-          ListGroup {},
-            @props.datatypes.sort().map((datatype, key) ->
-              ListGroupItem {key: key},
-                  React.DOM.small {},
-                    React.DOM.strong {}, key
-                    " "
-                    React.DOM.span {}, datatype
-                    React.DOM.i
-                      className: "kbc-icon-cup kbc-cursor-pointer pull-right"
-                      onClick: ->
-                        component.props.handleRemoveDataType(key)
-            , @).toArray()
       React.DOM.div {className: "row"},
         React.DOM.span {className: "col-xs-3"},
           Select
@@ -76,7 +54,7 @@ module.exports = React.createClass
             disabled: @props.disabled
             placeholder: "Column"
             onChange: @props.columnOnChange
-            options: @_getColumnsOptions()
+            options: @props.availableColumns
         React.DOM.span {className: "col-xs-4"},
           Select
             name: 'add-datatype'
@@ -103,6 +81,17 @@ module.exports = React.createClass
           ,
             React.DOM.i {className: "kbc-icon-plus"}
             " Add"
+      React.DOM.div {className: "row", style: {paddingTop: "5px"}},
+        React.DOM.span {className: "col-xs-12"},
+          Input
+            checked: @props.convertEmptyValuesToNullValue
+            onChange: @_convertEmptyValuesToNullOnChange
+            standalone: true
+            type: 'checkbox'
+            label: React.DOM.small {},
+              'Convert empty values to '
+              React.DOM.code null,
+                'null'
       React.DOM.div {className: "row", style: {paddingTop: "5px"}},
         React.DOM.div {className: "help-block col-xs-12"},
           React.DOM.small {},

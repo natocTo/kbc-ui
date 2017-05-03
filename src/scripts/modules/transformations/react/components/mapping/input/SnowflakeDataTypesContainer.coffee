@@ -1,7 +1,8 @@
 React = require 'react'
 Immutable = require 'immutable'
 ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
-SnowflakeDataTypes = React.createFactory(require('./SnowflakeDataTypes'))
+SnowflakeDataTypesList = React.createFactory(require('./SnowflakeDataTypesList'))
+SnowflakeDataTypesAddForm = React.createFactory(require('./SnowflakeDataTypesAddForm'))
 _ = require('underscore')
 
 module.exports = React.createClass
@@ -18,6 +19,7 @@ module.exports = React.createClass
     column: ""
     datatype: ""
     size: ""
+    convertEmptyValuesToNull: false
 
   _handleColumnOnChange: (selected) ->
     @setState
@@ -28,21 +30,29 @@ module.exports = React.createClass
     @setState
       datatype: if selected then selected.value else ""
       size: ""
+      convertEmptyValuesToNull: false
 
   _handleSizeOnChange: (value) ->
     @setState
       size: value
 
+  _handleConvertEmptyValuesToNullOnChange: (value) ->
+    @setState
+      convertEmptyValuesToNull: value
+
   _handleAddDataType: ->
-    datatypeString = @state.datatype
-    if @state.size
-      datatypeString += " (#{@state.size})"
-    value = @props.value.set(@state.column, datatypeString)
+    datatype =
+      column: @state.column
+      type: @state.datatype
+      length: @state.size
+      convertEmptyValuesToNull: @state.convertEmptyValuesToNull
+    value = @props.value.set(@state.column, Immutable.fromJS(datatype))
     @props.onChange(value)
     @setState
       column: ""
       datatype: ""
       size: ""
+      convertEmptyValuesToNull: false
 
   _handleRemoveDataType: (key) ->
     value = @props.value.remove(key)
@@ -77,19 +87,30 @@ module.exports = React.createClass
   _getDatatypeOptions: ->
     _.keys(@_datatypesMap)
 
-  render: ->
+  _getAvailableColumnsOptions: ->
     component = @
-    SnowflakeDataTypes
-      datatypes: @props.value
-      columnValue: @state.column
-      datatypeValue: @state.datatype
-      sizeValue: @state.size
-      datatypeOptions: @_getDatatypeOptions()
-      showSize: if @state.datatype then @_datatypesMap[@state.datatype].size else false
-      columnsOptions: @props.columnsOptions
-      columnOnChange: @_handleColumnOnChange
-      datatypeOnChange: @_handleDataTypeOnChange
-      sizeOnChange: @_handleSizeOnChange
-      handleAddDataType: @_handleAddDataType
-      handleRemoveDataType: @_handleRemoveDataType
-      disabled: @props.disabled
+    _.filter(@props.columnsOptions, (option) ->
+      !_.contains(_.keys(component.props.value.toJS()), option.value)
+    )
+
+  render: ->
+    React.DOM.span null,
+      SnowflakeDataTypesList
+        datatypes: @props.value
+        handleRemoveDataType: @_handleRemoveDataType
+      SnowflakeDataTypesAddForm
+        datatypes: @props.value
+        columnValue: @state.column
+        datatypeValue: @state.datatype
+        sizeValue: @state.size
+        convertEmptyValuesToNullValue: @state.convertEmptyValuesToNull
+        datatypeOptions: @_getDatatypeOptions()
+        showSize: if @state.datatype then @_datatypesMap[@state.datatype].size else false
+        columnsOptions: @props.columnsOptions
+        columnOnChange: @_handleColumnOnChange
+        datatypeOnChange: @_handleDataTypeOnChange
+        sizeOnChange: @_handleSizeOnChange
+        convertEmptyValuesToNullOnChange: @_handleConvertEmptyValuesToNullOnChange
+        handleAddDataType: @_handleAddDataType
+        disabled: @props.disabled
+        availableColumns: @_getAvailableColumnsOptions()

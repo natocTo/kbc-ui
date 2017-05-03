@@ -10,6 +10,8 @@ ListGroupItem = React.createFactory(require('react-bootstrap').ListGroupItem)
 _ = require('underscore')
 TableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 Immutable = require('immutable')
+DatatypeLabel = React.createFactory require('../../components/mapping/input/DatatypeLabel').default
+
 
 ApplicationStore = require('../../../../../stores/ApplicationStore')
 
@@ -121,9 +123,9 @@ InputMappingDetail = React.createClass(
                 ul {},
                   @props.inputMapping.get('datatypes').sort().map((definition, column) ->
                     li {key: column},
-                      strong {}, column
-                      ' '
-                      span {}, definition
+                      DatatypeLabel
+                        column: column
+                        datatype: definition
                   , @).toArray()
               else
                 'No data types set'
