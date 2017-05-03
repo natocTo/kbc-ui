@@ -56,7 +56,7 @@ module.exports = React.createClass
       component = "+component:#{firstJob.get('component')}"
 
     config = params.get('config')
-    div className: 'jobs-link',
+    div className: 'jobs-link', key: 'jobs-link',
       React.createElement Link,
         to: 'jobs'
         query:
