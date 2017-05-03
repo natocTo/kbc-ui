@@ -9,12 +9,24 @@ import ComponentName from './../../../react/common/ComponentName';
 import ComponentIcon from './../../../react/common/ComponentIcon';
 import {componentIoSummary} from './Index';
 import Loader from './Loader';
+import ApplicationStore from '../../../stores/ApplicationStore';
 
 function getDatesForMonthlyUsage() {
   return {
-    dateFrom: '2017-01-01',
+    dateFrom: getDateFrom(),
     dateTo: moment().subtract(1, 'day').format('YYYY-MM-DD')
   };
+}
+
+function getDateFrom() {
+  const collectingStartDate = '2017-01-01';
+  const project = ApplicationStore.getCurrentProject();
+  const creationDate = moment(project.get('created', null));
+  if (creationDate.isValid() && creationDate.isAfter(moment(collectingStartDate))) {
+    return creationDate.format('YYYY-MM-DD');
+  } else {
+    return collectingStartDate;
+  }
 }
 
 function sortComponentsByStorageIoDesc(first, second) {
