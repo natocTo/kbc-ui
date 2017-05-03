@@ -100,8 +100,14 @@ templateFn = (componentId) ->
         sourceComponent = providerParts[0]
         sourceConfigId = providerParts[1]
         sourceConfigName = providerParts[2]
+        if (providerParts.length > 3)
+          # include the bucket and transformation name for transformation configs
+          sourceConfigId = providerParts[1] + "=" + providerParts[3]
+          sourceConfigName = sourceConfigName + " - " + providerParts[4]
+
         keyParts = entry.get('key').split(".")
-        # keyParts[2] is our part of the datatype. ex: type, nullable, default, basetype
+        # keyParts[2] is what we are interested in from datatype key.
+        # ex: type, nullable, default, basetype
         if keyParts[0] == "KBC" && keyParts[1] == "datatype"
           if !coltypes[sourceComponent]
             coltypes[sourceComponent] = {}
