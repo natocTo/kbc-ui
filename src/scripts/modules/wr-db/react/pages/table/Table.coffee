@@ -97,29 +97,30 @@ templateFn = (componentId) ->
     columnMetadata.map((metadata, col) ->
       metadata.forEach( (entry) ->
         providerParts = entry.get('provider').split("__")
-        sourceComponent = providerParts[0]
-        sourceConfigId = providerParts[1]
-        sourceConfigName = providerParts[2]
-        if (providerParts.length > 3)
-          # include the bucket and transformation name for transformation configs
-          sourceConfigId = providerParts[1] + "=" + providerParts[3]
-          sourceConfigName = sourceConfigName + " - " + providerParts[4]
+        if providerParts.length > 2
+          sourceComponent = providerParts[0]
+          sourceConfigId = providerParts[1]
+          sourceConfigName = providerParts[2]
+          if (providerParts.length > 3)
+            # include the bucket and transformation name for transformation configs
+            sourceConfigId = providerParts[1] + "=" + providerParts[3]
+            sourceConfigName = sourceConfigName + " - " + providerParts[4]
 
-        keyParts = entry.get('key').split(".")
-        # keyParts[2] is what we are interested in from datatype key.
-        # ex: type, nullable, default, basetype
-        if keyParts[0] == "KBC" && keyParts[1] == "datatype"
-          if !coltypes[sourceComponent]
-            coltypes[sourceComponent] = {}
-          if !coltypes[sourceComponent][sourceConfigId]
-            coltypes[sourceComponent][sourceConfigId] = {}
-          if !coltypes[sourceComponent][sourceConfigId]['configName']
-            coltypes[sourceComponent][sourceConfigId]['configName'] = sourceConfigName
-          if !coltypes[sourceComponent][sourceConfigId]["colData"]
-            coltypes[sourceComponent][sourceConfigId]["colData"] = {}
-          if !coltypes[sourceComponent][sourceConfigId]["colData"][col]
-            coltypes[sourceComponent][sourceConfigId]["colData"][col] = {}
-          coltypes[sourceComponent][sourceConfigId]["colData"][col][keyParts[2]] = entry.get('value')
+          keyParts = entry.get('key').split(".")
+          # keyParts[2] is what we are interested in from datatype key.
+          # ex: type, nullable, default, basetype
+          if keyParts[0] == "KBC" && keyParts[1] == "datatype"
+            if !coltypes[sourceComponent]
+              coltypes[sourceComponent] = {}
+            if !coltypes[sourceComponent][sourceConfigId]
+              coltypes[sourceComponent][sourceConfigId] = {}
+            if !coltypes[sourceComponent][sourceConfigId]['configName']
+              coltypes[sourceComponent][sourceConfigId]['configName'] = sourceConfigName
+            if !coltypes[sourceComponent][sourceConfigId]["colData"]
+              coltypes[sourceComponent][sourceConfigId]["colData"] = {}
+            if !coltypes[sourceComponent][sourceConfigId]["colData"][col]
+              coltypes[sourceComponent][sourceConfigId]["colData"][col] = {}
+            coltypes[sourceComponent][sourceConfigId]["colData"][col][keyParts[2]] = entry.get('value')
       )
     )
     output = fromJS(coltypes)
