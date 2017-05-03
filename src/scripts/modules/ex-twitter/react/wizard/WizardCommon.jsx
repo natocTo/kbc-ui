@@ -23,7 +23,6 @@ export default React.createClass({
       }
       return React.cloneElement(child, {
         eventKey: child.props.step,
-        tab: child.props.title,
         goToStep: goToStep
       });
     });
