@@ -37,6 +37,7 @@ TransformationRow = React.createClass(
     )
 
     buttons.push(React.createElement CreateSandboxButton,
+      key: 'create-sandbox'
       backend: @props.transformation.get("backend")
       mode: "button"
       runParams: Immutable.Map
