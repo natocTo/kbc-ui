@@ -71,7 +71,7 @@ module.exports = React.createClass
           React.createElement TabbedArea, null,
             React.createElement TabPane,
               eventKey: 'select'
-              tab: 'Select from existing'
+              title: 'Select from existing'
             ,
               if @state.isLoading
                 p className: 'panel-body',
@@ -80,7 +80,7 @@ module.exports = React.createClass
                 @_renderTable()
             React.createElement TabPane,
               eventKey: 'new'
-              tab: 'Create new'
+              title: 'Create new'
             ,
               NewDimensionForm
                 isPending: @state.isCreatingNewDimension
