@@ -52,7 +52,7 @@ module.exports = React.createClass
     div {className: 'container-fluid kbc-main-content'},
       TabbedArea defaultActiveKey: @state.defaultActiveKey, animation: false,
         if not @props.isExtLinkOnly
-          TabPane eventKey: 'instant', tab: 'Instant Authorization',
+          TabPane eventKey: 'instant', title: 'Instant Authorization',
             form {className: 'form-horizontal', action: @_getOAuthUrl(), method: 'POST'},
               div  className: 'row',
                 div className: 'well',
@@ -66,7 +66,7 @@ module.exports = React.createClass
                   type: 'submit',
                     @props.caption
         if not @props.isInstantOnly
-          TabPane eventKey: 'external', tab: 'External Authorization',
+          TabPane eventKey: 'external', title: 'External Authorization',
             form {className: 'form-horizontal'},
               div className: 'row',
                 div className: 'well',
