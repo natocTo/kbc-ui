@@ -65,9 +65,9 @@ OrchestrationJobDetail = React.createClass
       div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
         div {},
           TabbedArea defaultActiveKey: @state.openedTab, animation: false,
-            TabPane eventKey: 'overview', tab: 'Overview',
+            TabPane eventKey: 'overview', title: 'Overview',
               JobOverview(job: @state.job)
-            TabPane eventKey: 'log', tab: 'Log',
+            TabPane eventKey: 'log', title: 'Log',
               Events
                 link:
                   to: 'orchestrationJob'
