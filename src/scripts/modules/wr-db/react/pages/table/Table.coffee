@@ -98,14 +98,15 @@ templateFn = (componentId) ->
       metadata.forEach( (entry) ->
         providerParts = entry.get('provider').split("__")
         if providerParts.length > 2
-          sourceComponent = providerParts[0]
           sourceConfigId = providerParts[1]
           sourceConfigName = providerParts[2]
           if (providerParts.length > 3)
             # include the bucket and transformation name for transformation configs
             sourceConfigId = providerParts[1] + "=" + providerParts[3]
             sourceConfigName = sourceConfigName + " - " + providerParts[4]
-
+            sourceComponent = "Transformations"
+          else
+            sourceComponent = InstalledComponentsStore.getComponent(providerParts[0]).get('name')
           keyParts = entry.get('key').split(".")
           # keyParts[2] is what we are interested in from datatype key.
           # ex: type, nullable, default, basetype
@@ -301,11 +302,10 @@ templateFn = (componentId) ->
       ,
         group.map (item, configId) ->
           option
-            disabled: item == ''
             value: groupName + "__" + configId
             key: configId
           ,
-            if item == '' then 'Use Types From' else item.get 'configName'
+            item.get 'configName'
     )
 
     span null,
@@ -332,7 +332,9 @@ templateFn = (componentId) ->
 
             @_onEditColumn(newColumn)
         option
+          disabled: true
           value: ''
+          selected: false
         ,
           'Use Types From'
         options
