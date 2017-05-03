@@ -311,7 +311,7 @@ snowflake = [
 ];
 
 pgsql = [
-  'int', 'smallint', 'bigint', 'text', 'bytea', 'time', 'time with timezone', 'timestamp with timezone', 'interval',
+  'int', 'smallint', 'bigint', 'text', 'bytea', 'time', 'time with time zone', 'timestamp with time zone', 'timestamptz', 'interval',
   'double precision', 'float4', 'float8', 'serial', 'bigserial', 'smallserial', 'money', 'json', 'jsonb',
   {
     'boolean': {
