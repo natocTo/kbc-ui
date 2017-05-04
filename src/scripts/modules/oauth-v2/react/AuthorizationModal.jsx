@@ -93,11 +93,9 @@ export default React.createClass({
       : null
     );
     return (
-      <div>
-        <p style={{marginTop: '20px'}}>
-          <span>
-            To authorize an account from a non-Keboola Connection user, generate a link to the external authorization app and send it to the user you want to have the authorized account for. The generated link is valid for <strong>48</strong> hours and will not be stored anywhere.
-          </span>
+      <div style={{padding: '1.5em'}}>
+        <p>
+          To authorize an account from a non-Keboola Connection user, generate a link to the external authorization app and send it to the user you want to have the authorized account for. The generated link is valid for <strong>48</strong> hours and will not be stored anywhere.
         </p>
         {externalLink}
       </div>
