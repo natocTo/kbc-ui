@@ -44,24 +44,23 @@ export default React.createClass({
 
   render() {
     return (
-      <div style={{'padding-top': '20px'}} className="form-group">
-        <div className="col-xs-12">
+      <div style={{padding: '1.5em 1.5em 0'}}>
+        <div className="form-group">
           <label className="control-label col-xs-2">
             Description
           </label>
-          <div className="col-xs-9">
+          <div className="col-xs-10">
             <input
               className="form-control"
               type="text"
               name="authorizedFor"
-              help="Describe this authorization, e.g by the account name."
               defaultValue={this.state.authorizedFor}
               onChange={this.makeSetStatePropertyFn('authorizedFor')}
               autoFocus={true}
             />
-            <span className="help-block">
+            <p className="help-block">
               Describe this authorization, e.g. by the account name.
-            </span>
+            </p>
           </div>
         </div>
         {this.renderCustomFields()}
@@ -70,28 +69,29 @@ export default React.createClass({
   },
 
   renderCustomFields() {
-    if (this.props.componentId === 'keboola.ex-zendesk') return this.renderZendeskFields();
+    if (this.props.componentId === 'keboola.ex-zendesk') {
+      return this.renderZendeskFields();
+    }
     return null;
   },
 
   renderZendeskFields() {
     return [
-      <div className="col-xs-12">
+      <div className="form-group">
         <label className="control-label col-xs-2">
           Domain
         </label>
-        <div className="col-xs-9">
+        <div className="col-xs-10">
           <input
             className="form-control"
             type="text"
             name="zendeskSubdomain"
             defaultValue={this.state.subdomain}
             onChange={this.makeSetStatePropertyFn('subdomain')}
-            autoFocus={true}
           />
-          <span className="help-text">
+          <p className="help-block">
             Zendes Subdomain, e.g. keboola
-          </span>
+          </p>
         </div>
       </div>,
       <input type="hidden" name="userData"
