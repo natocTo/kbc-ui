@@ -184,8 +184,7 @@ export default React.createClass({
                           component={componentId}
                           runParams={handleUploadingSingleElement}
                         >
-                          You are about to upload <strong>1 csv file</strong> from your Dropbox.
-                          The result will be stored into selected buckets.
+                          You are about to run extraction of <strong>{table.name}</strong> from Dropbox.
                         </RunButtonModal>
                       </td>
                     </tr>
@@ -232,8 +231,7 @@ export default React.createClass({
               disabledReason="A Dropbox file must be selected."
               runParams={this.runParams()}
             >
-              You are about to run upload of <strong>{this.state.configData.getIn(['parameters', 'config', 'dropboxFiles'], List()).count()} csv files</strong> from your Dropbox.
-              The result will be stored into selected bucket(s).
+              You are about to run extraction of all configured csv files from Dropbox.
             </RunButtonModal>
           </li>
           <li>
