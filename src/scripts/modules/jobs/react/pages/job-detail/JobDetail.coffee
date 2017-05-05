@@ -138,7 +138,7 @@ module.exports = React.createClass
         ,
           @state.configuration.get 'name'
     else
-      configurationLink = null
+      configurationLink = 'N/A'
     jobStarted = ->
       job.get('startTime')
     renderDate = (pdate) ->
