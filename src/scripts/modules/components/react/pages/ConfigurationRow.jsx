@@ -87,7 +87,7 @@ export default React.createClass({
     ];
     if (isObsoleteComponent(this.props.componentId)) {
       texts.push(
-        <p key="warning" className="alert alert-warning"><i className="fa fa-exclamation-triangle" /> This configuration can't be restored.</p>
+        <p key="warning"><i className="fa fa-exclamation-triangle" /> This configuration can't be restored.</p>
       );
     }
     return texts;
