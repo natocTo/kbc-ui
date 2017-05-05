@@ -167,7 +167,11 @@ export default React.createClass({
                   const {defaultBucket} = this.state;
                   return (
                     <tr key={index}>
-                      <td>{table.name}</td>
+                      <td>
+                        <a href={table.link} target="_blank">
+                          {table.name}
+                        </a>
+                      </td>
                       <td>{converter(table.bytes, 'B', 'MB').toFixed(5)} MB</td>
                       <td>&gt;</td>
                       <td><SapiTableLinkEx tableId={defaultBucket + '.' + table.output} /></td>
