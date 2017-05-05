@@ -2,7 +2,7 @@ import _ from 'underscore';
 import React from 'react';
 import moment from 'moment';
 
-import AuthorizationModal from './DropboxAuthorizationModal';
+import AuthorizeModal from '../../components/react/components/DropboxAuthorizeModal';
 import FileSelectorModal from './DropboxFileSelectorModal';
 import RunButtonModal from '../../components/react/components/RunComponentButton';
 
@@ -235,7 +235,11 @@ export default React.createClass({
       return (
         <div className="row component-empty-state text-center">
           <p>No Dropbox account authorized!</p>
-          <AuthorizationModal configId={this.state.configId} />
+          <AuthorizeModal
+              configId={this.state.configId}
+              componentId={componentId}
+              redirectRouterPath="ex-dropbox-oauth-redirect"
+          />
         </div>
       );
     }
@@ -340,9 +344,11 @@ export default React.createClass({
     } else {
       return (
         <div>
-          <AuthorizationModal
+          <AuthorizeModal
             configId={this.state.configId}
+            componentId={componentId}
             renderOpenButtonAsLink={true}
+            redirectRouterPath="ex-dropbox-oauth-redirect"
           />
         </div>
       );
