@@ -5,6 +5,7 @@ import RunConfigurationButton from '../components/RunComponentButton';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
+import {isObsoleteComponent} from '../../../../modules/trash/utils';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -74,10 +75,22 @@ export default React.createClass({
   deleteConfirmProps() {
     return {
       title: 'Move Configuration to Trash',
-      text: `Are you sure you want to move the configuration ${this.props.config.get('name')} to Trash?`,
+      text: this.getDeleteConfirmText(),
       onConfirm: this.handleDelete,
       buttonLabel: 'Move to Trash'
     };
+  },
+
+  getDeleteConfirmText() {
+    let texts = [
+      <p key="question">Are you sure you want to move the configuration {this.props.config.get('name')} to Trash?</p>
+    ];
+    if (isObsoleteComponent(this.props.componentId)) {
+      texts.push(
+        <p key="warning" className="alert alert-warning"><i className="fa fa-exclamation-triangle" /> This configuration can't be restored.</p>
+      );
+    }
+    return texts;
   },
 
   runParams() {

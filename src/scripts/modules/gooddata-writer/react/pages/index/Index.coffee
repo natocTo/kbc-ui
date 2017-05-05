@@ -233,7 +233,13 @@ module.exports = React.createClass
             li null,
               React.createElement Confirm,
                 title: 'Delete Writer'
-                text: "Are you sure you want to delete the writer with its GoodData project?"
+                text: [
+                  React.DOM.p key: 'question',
+                    "Are you sure you want to delete the writer with its GoodData project?",
+                  React.DOM.p key: 'warning', className: 'alert alert-warning',
+                    React.DOM.i className: 'fa fa-exclamation-triangle'
+                    " This is permanent and configuration can't be restored."
+                ]
                 buttonLabel: 'Delete'
                 onConfirm: @_handleProjectDelete
                 childrenRootElement: React.DOM.a
