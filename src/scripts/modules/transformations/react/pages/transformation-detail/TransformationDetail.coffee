@@ -54,6 +54,18 @@ module.exports = React.createClass
   getInitialState: ->
     sandboxModalOpen: false
 
+  resolveLinkDocumentationLink: ->
+    documentationLink = "https://help.keboola.com/manipulation/transformations/"
+    transformationType = @state.transformation.get('type')
+
+    if transformationType == 'simple'
+      subpageName = @state.transformation.get('backend')
+    else
+      subpageName = transformationType
+
+    return documentationLink + subpageName
+
+
   _deleteTransformation: ->
     transformationId = @state.transformation.get('id')
     bucketId = @state.bucket.get('id')
@@ -159,3 +171,9 @@ module.exports = React.createClass
                 span {},
                   span className: 'fa kbc-icon-cup fa-fw'
                   ' Delete transformation'
+          li {},
+            a {href: @resolveLinkDocumentationLink()}
+            ,
+              span className: 'fa fa-question-circle fa-fw'
+              ' Documentation'
+
