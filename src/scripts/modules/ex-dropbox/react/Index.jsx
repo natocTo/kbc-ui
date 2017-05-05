@@ -289,7 +289,6 @@ export default React.createClass({
               mode="link"
               component="ex-dropbox"
               disabled={!this.canRunUpload()}
-              redirectRouterPath="ex-dropbox-oauth-redirect"
               disabledReason="A Dropbox account must be authorized and a table selected."
               runParams={this.runParams()}
               >
@@ -347,7 +346,9 @@ export default React.createClass({
         <div>
           <AuthorizeModal
             configId={this.state.configId}
+            componentId={componentId}
             renderOpenButtonAsLink={true}
+            redirectRouterPath="ex-dropbox-oauth-redirect"
           />
         </div>
       );
