@@ -359,6 +359,7 @@ export default React.createClass({
     if (this.state.configData.hasIn(['parameters', 'config', 'dropboxFiles'])) {
       const selectedFile = this.state.configData.getIn(['parameters', 'config', 'dropboxFiles']).get(element).toJS();
       return {
+        config: this.state.configId,
         configData: {
           parameters: {
             config: {
