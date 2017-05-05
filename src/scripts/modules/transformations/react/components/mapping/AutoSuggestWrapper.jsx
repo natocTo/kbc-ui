@@ -41,8 +41,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      suggestions: List()
+      suggestions: List(),
+      value: this.props.value
     };
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.value
+    });
   },
 
   fetchSuggestions(options) {
@@ -71,7 +78,7 @@ export default React.createClass({
         getSuggestionValue={(val) => val}
         inputProps={{
           onChange: this.handleChange,
-          value: this.props.value,
+          value: this.state.value,
           className: this.props.inputClassName,
           placeholder: this.props.placeholder,
           disabled: this.props.disabled
@@ -80,6 +87,7 @@ export default React.createClass({
   },
 
   handleChange(e, options) {
+    this.setState({value: options.newValue});
     this.props.onChange(options.newValue);
   }
 
