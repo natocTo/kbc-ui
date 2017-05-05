@@ -1,6 +1,5 @@
 import { first } from 'underscore';
 import React from 'react';
-import Select from 'react-select';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import {Modal} from 'react-bootstrap';
 import DropboxChooser from 'react-dropbox-chooser';
@@ -14,10 +13,7 @@ export default React.createClass({
     saveConfig: React.PropTypes.func,
     cancelConfig: React.PropTypes.func,
     isSaving: React.PropTypes.bool,
-    selectedInputBucket: React.PropTypes.func,
     handleCsvSelectChange: React.PropTypes.func,
-    handleBucketChange: React.PropTypes.func,
-    keboolaBuckets: React.PropTypes.array,
     selectedDropboxFiles: React.PropTypes.array
   },
 
@@ -38,31 +34,21 @@ export default React.createClass({
         </Modal.Header>
         <Modal.Body>
           <div className="section well">
-            <h3 className="section-heading">1.Please specify CSV files you want to upload to Keboola Storage.</h3>
-            <DropboxChooser
-              appKey={'2is8jmvnwbchcyr'}
-              cancel={() => {}}
-              success={files => this.onSelectFiles(files)}
-              multiselect={false}
-              extensions={['.csv']} >
-              <div className="dropbox-button">
+            <h3 className="section-heading">Please specify CSV file you want to upload to Keboola Storage.</h3>
+            <div className="dropbox-button">
+              <DropboxChooser
+                appKey={'2is8jmvnwbchcyr'}
+                cancel={() => {}}
+                success={files => this.onSelectFiles(files)}
+                multiselect={false}
+                extensions={['.csv']} >
                 <Button bsStyle="success">
                   <i className={Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 ? 'fa fa-fw fa-check-circle-o' : 'fa fa-fw fa-dropbox' } /> Choose from Dropbox
                 </Button>
-              </div>
-            </DropboxChooser>
+
+              </DropboxChooser>
+            </div>
             {Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 && <div><br /><div>Selected: {first(this.props.selectedDropboxFiles).name}</div></div>}
-          </div>
-          <div className="section well">
-            <h3 className="section-heading">2. Please specify a KBC Bucket where the files will be uploaded.</h3>
-            <Select
-              ref="stateSelect"
-              options={this.props.keboolaBuckets}
-              value={this.props.selectedInputBucket()}
-              placeholder="Select a Bucket from the Keboola Storage"
-              onChange={this.onSelectBucket}
-              searchalble={true}
-            />
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -80,9 +66,6 @@ export default React.createClass({
 
   onSelectFiles(values = []) {
     this.props.handleCsvSelectChange(values);
-  },
-
-  onSelectBucket(selected) {
-    this.props.handleBucketChange(selected ? selected.value : '');
   }
+
 });

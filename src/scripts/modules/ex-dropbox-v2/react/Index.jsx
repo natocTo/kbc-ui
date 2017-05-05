@@ -4,12 +4,12 @@ import moment from 'moment';
 import byteConverter from 'byte-converter';
 import FileSelectorModal from './DropboxFileSelectorModal';
 import RunButtonModal from '../../components/react/components/RunComponentButton';
-
+import string from '../../../utils/string';
 import classnames from 'classnames';
 import ComponentDescription from '../../components/react/components/ComponentDescription';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
-
+import getDefaultBucket from '../../../utils/getDefaultBucket';
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
 import actions from '../../components/InstalledComponentsActionCreators';
 
@@ -21,17 +21,14 @@ import InstalledComponentsStore from '../../components/stores/InstalledComponent
 import ExDropboxStore from '../stores/ExDropboxStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../stores/RoutesStore';
-import StorageActionCreators from '../../components/StorageActionCreators';
-import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
+// import StorageActionCreators from '../../components/StorageActionCreators';
+// import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
 import LatestJobsStore from '../../jobs/stores/LatestJobsStore';
 import LatestJobs from '../../components/react/components/SidebarJobs';
 import ComponentsMetadata from '../../components/react/components/ComponentMetadata';
 
 import {
-  filterBuckets,
-  listBucketNames,
   getDestinationName,
-  getBucketsForSelection,
   sortTimestampsInAscendingOrder,
   sortTimestampsInDescendingOrder
 } from '../actions/ApplicationActions';
@@ -40,7 +37,7 @@ const componentId = 'radektomasek.ex-dropbox-v2';
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, ExDropboxStore, StorageBucketsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, ExDropboxStore)],
 
   getStateFromStores() {
     let configId = RoutesStore.getCurrentRouteParam('config');
@@ -48,23 +45,18 @@ export default React.createClass({
     let localState = InstalledComponentsStore.getLocalState(componentId, configId);
     let parameters = configData.get('parameters', Map());
     let dropboxFiles = ExDropboxStore.getCsvFiles();
-    let keboolaBuckets = StorageBucketsStore.getAll();
     let isSaving = InstalledComponentsStore.isSavingConfigData(componentId, configId);
-    let selectedInputBucket = localState.get('selectedInputBucket', Map());
     let selectedDropboxFiles = localState.get('selectedDropboxFiles', Map());
-    let isDefaultBucketSelected = localState.get('isDefaultBucketSelected', true);
 
     return {
+      defaultBucket: getDefaultBucket('in', componentId, configId),
       configId: configId,
       isSaving: isSaving,
       configData: configData,
       parameters: parameters,
       localState: localState,
       dropboxFiles: dropboxFiles,
-      keboolaBuckets: keboolaBuckets,
-      selectedInputBucket: selectedInputBucket,
       selectedDropboxFiles: selectedDropboxFiles,
-      isDefaultBucketSelected: isDefaultBucketSelected,
       latestJobs: LatestJobsStore.getJobs(componentId, configId)
     };
   },
@@ -85,13 +77,7 @@ export default React.createClass({
     this.setState({
       showFileSelectorModal: this.state.isSaving
     });
-
     this.updateLocalState(['selectedDropboxFiles'], fromJS([]));
-    this.updateLocalState(['selectedInputBucket'], '');
-  },
-
-  componentDidMount() {
-    StorageActionCreators.loadBucketsForce();
   },
 
   render() {
@@ -146,11 +132,9 @@ export default React.createClass({
           cancelConfig={this.cancelConfig}
           canSaveConfig={this.canSaveConfig}
           onHide={this.closeFileSelectorModal}
-          keboolaBuckets={this.getInputBuckets()}
           show={this.state.showFileSelectorModal}
-          selectedInputBucket={this.getSelectedBucket}
           handleCsvSelectChange={this.handleCsvSelectChange}
-          handleBucketChange={this.handleInputBucketChange}
+
           selectedDropboxFiles={this.getSelectedCsvFiles()}
         />
       </div>
@@ -166,45 +150,44 @@ export default React.createClass({
       return (
         <div className="section">
           <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Dropbox File</th>
-              <th>Size</th>
-              <th>Bucket</th>
-              <th />
-              <th>Output Table</th>
-              <th />
-            </tr>
-          </thead>
+            <thead>
+              <tr>
+                <th>Dropbox File</th>
+                <th>Size</th>
+                <th />
+                <th>Output Table</th>
+                <th />
+              </tr>
+            </thead>
             <tbody>
-            {
-              selectedFiles.toJS().map((table, index) => {
-                const handleDeletingSingleElement = this.handleDeletingSingleElement.bind(this, index);
-                const handleUploadingSingleElement = this.handleUploadingSingleElement.bind(this, index);
-                return (
-                  <tr key={index}>
+              {
+                selectedFiles.toJS().map((table, index) => {
+                  const handleDeletingSingleElement = this.handleDeletingSingleElement.bind(this, index);
+                  const handleUploadingSingleElement = this.handleUploadingSingleElement.bind(this, index);
+                  const {defaultBucket} = this.state;
+                  return (
+                    <tr key={index}>
                       <td>{table.name}</td>
                       <td>{converter(table.bytes, 'B', 'MB').toFixed(5)} MB</td>
-                      <td>{table.bucket}</td>
                       <td>&gt;</td>
-                      <td><SapiTableLinkEx tableId={table.output} /></td>
+                      <td><SapiTableLinkEx tableId={defaultBucket + '.' + table.output} /></td>
                       <td className="text-right">
-                      {this.state.isSaving ? <Loader /> : <button className="btn btn-link" onClick={handleDeletingSingleElement}><i className="fa kbc-icon-cup" /></button>}
-                      <RunButtonModal
-                        title="Upload"
-                        icon="fa fa-fw fa-play"
-                        mode="button"
-                        component={componentId}
-                        runParams={handleUploadingSingleElement}
+                        {this.state.isSaving ? <Loader /> : <button className="btn btn-link" onClick={handleDeletingSingleElement}><i className="fa kbc-icon-cup" /></button>}
+                        <RunButtonModal
+                          title="Upload"
+                          icon="fa fa-fw fa-play"
+                          mode="button"
+                          component={componentId}
+                          runParams={handleUploadingSingleElement}
                         >
-                        You are about to upload <strong>1 csv file</strong> from your Dropbox.
-                        The result will be stored into selected buckets.
-                      </RunButtonModal>
-                    </td>
-                  </tr>
-                );
-              })
-            }
+                          You are about to upload <strong>1 csv file</strong> from your Dropbox.
+                          The result will be stored into selected buckets.
+                        </RunButtonModal>
+                      </td>
+                    </tr>
+                  );
+                })
+              }
             </tbody>
           </table>
         </div>
@@ -244,7 +227,7 @@ export default React.createClass({
               disabled={!this.canRunUpload()}
               disabledReason="A Dropbox file must be selected."
               runParams={this.runParams()}
-              >
+            >
               You are about to run upload of <strong>{this.state.configData.getIn(['parameters', 'config', 'dropboxFiles'], List()).count()} csv files</strong> from your Dropbox.
               The result will be stored into selected bucket(s).
             </RunButtonModal>
@@ -272,12 +255,9 @@ export default React.createClass({
   },
 
   canSaveConfig() {
-    let hasLocalConfigDataBucket = this.state.localState.has('selectedInputBucket');
-    let localConfigDataBucket = this.state.localState.get('selectedInputBucket');
-
     // We can save new config whether user changed files selection.
     // On the other hand the bucket may be changed, but we also have to make sure the bucket is set.
-    return !(hasLocalConfigDataBucket && this.getLocalConfigDataFilesCount() > 0 && localConfigDataBucket !== '');
+    return !(this.getLocalConfigDataFilesCount() > 0);
   },
 
   getLocalConfigDataFilesCount() {
@@ -297,20 +277,16 @@ export default React.createClass({
   },
 
   saveConfig() {
-    const hasSelectedBucket = this.state.localState.has('selectedInputBucket');
     const hasSelectedDropboxFiles = this.state.localState.has('selectedDropboxFiles');
-
-    if (hasSelectedBucket && hasSelectedDropboxFiles) {
-      const localBucket = this.state.localState.get('selectedInputBucket');
+    if (hasSelectedDropboxFiles) {
       const localState = this.state.localState.get('selectedDropboxFiles').map((dropboxFile) => {
         return {
           bytes: dropboxFile.bytes,
           link: dropboxFile.link,
           name: dropboxFile.name,
-          bucket: localBucket,
           timestamp: moment().unix(),
-          hash: MD5(dropboxFile.name + localBucket).toString(),
-          output: localBucket + '.' + getDestinationName(dropboxFile.name)
+          hash: MD5(dropboxFile.name).toString(),
+          output: string.sanitizeKbcTableIdString(getDestinationName(dropboxFile.name))
         };
       });
 
@@ -343,7 +319,6 @@ export default React.createClass({
 
   cancelConfig() {
     this.updateLocalState(['selectedDropboxFiles'], fromJS([]));
-    this.updateLocalState(['selectedInputBucket'], '');
   },
 
   canRunUpload() {
@@ -364,17 +339,6 @@ export default React.createClass({
     return selectedDropboxFiles;
   },
 
-  getSelectedBucket() {
-    let localConfigDataBucket = this.state.localState.get('selectedInputBucket');
-    let hasLocalConfigDataBucket = this.state.localState.has('selectedInputBucket');
-
-    if (hasLocalConfigDataBucket && localConfigDataBucket !== '') {
-      return localConfigDataBucket;
-    }
-
-    return '';
-  },
-
   handleDeletingSingleElement(element) {
     if (this.state.configData.hasIn(['parameters', 'config', 'dropboxFiles'])) {
       let newConfig = this.state.configData.getIn(['parameters', 'config', 'dropboxFiles']).delete(element);
@@ -392,7 +356,6 @@ export default React.createClass({
               dropboxFiles: [{
                 link: selectedFile.link,
                 name: selectedFile.name,
-                bucket: selectedFile.bucket,
                 output: selectedFile.output
               }]
             }
@@ -402,17 +365,10 @@ export default React.createClass({
     }
   },
 
-  getInputBuckets() {
-    return getBucketsForSelection(listBucketNames(filterBuckets(this.state.keboolaBuckets)));
-  },
-
   handleCsvSelectChange(values) {
     this.updateLocalState(['selectedDropboxFiles'], values);
   },
 
-  handleInputBucketChange(value) {
-    this.updateLocalState(['selectedInputBucket'], value);
-  },
 
   updateLocalState(path, data) {
     let newLocalState = this.state.localState.setIn(path, data);
