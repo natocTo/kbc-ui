@@ -275,15 +275,17 @@ export default React.createClass({
     this.updateAndSaveConfigData(['parameters'], newParameters);
   },
 
-  updateAndSaveConfigData(path, data) {
+  updateAndSaveConfigData(path, data, changeDescription) {
     let newData = this.state.configData.setIn(path, data);
-    return actions.saveComponentConfigData(componentId, this.state.configId, newData);
+    return actions.saveComponentConfigData(componentId, this.state.configId, newData, changeDescription);
   },
 
   saveConfig() {
     const hasSelectedDropboxFiles = this.state.localState.has('selectedDropboxFiles');
+    let changeDescription = '';
     if (hasSelectedDropboxFiles) {
       const localState = this.state.localState.get('selectedDropboxFiles').map((dropboxFile) => {
+        changeDescription = `Add file ${dropboxFile.name}`;
         return {
           bytes: dropboxFile.bytes,
           link: dropboxFile.link,
@@ -317,7 +319,7 @@ export default React.createClass({
         }
       })).sort(sortTimestampsInAscendingOrder);
 
-      return this.updateAndSaveConfigData(['parameters', 'config', 'dropboxFiles'], fromJS(newState));
+      return this.updateAndSaveConfigData(['parameters', 'config', 'dropboxFiles'], fromJS(newState), changeDescription);
     }
   },
 
@@ -345,8 +347,11 @@ export default React.createClass({
 
   handleDeletingSingleElement(element) {
     if (this.state.configData.hasIn(['parameters', 'config', 'dropboxFiles'])) {
+      const name = this.state.configData.getIn(['parameters', 'config', 'dropboxFiles', element]).get('name');
+      const changeDescription = `Delete file ${name}`;
       let newConfig = this.state.configData.getIn(['parameters', 'config', 'dropboxFiles']).delete(element);
-      this.updateAndSaveConfigData(['parameters', 'config', 'dropboxFiles'], newConfig);
+
+      this.updateAndSaveConfigData(['parameters', 'config', 'dropboxFiles'], newConfig, changeDescription);
     }
   },
 
