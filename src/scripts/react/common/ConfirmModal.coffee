@@ -30,7 +30,7 @@ ConfirmModal = React.createClass
         ModalTitle null,
           @props.title
       ModalBody null,
-        p null,
+        div null,
           @props.text
       ModalFooter null,
         ButtonToolbar null,
