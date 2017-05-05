@@ -14,7 +14,7 @@ JobsGraph = React.createClass
 
   componentDidMount: ->
     width = ReactDOM.findDOMNode(@).offsetWidth
-    svg = dimple.newSvg(ReactDOM.findDOMNode(@), width, 0.3 * width)
+    svg = dimple.newSvg(ReactDOM.findDOMNode(@), width, 0.35 * width)
 
     data = @_prepareData()
 
@@ -49,6 +49,7 @@ JobsGraph = React.createClass
     @chart.axes[1].title = "Duration (#{data.get('unit')})"
     @chart.data = data.get('jobs').toJS()
     @chart.svg.style('width', width)
+    @chart.setMargins("80px", "20px", "40px", "60px")
     @chart.draw(200)
 
   _prepareData: ->
