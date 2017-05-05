@@ -62,19 +62,15 @@ export default React.createClass({
 
     const configId = this.props.job.getIn(['params', 'config']);
     if (!configId) {
-      return null;
+      return (
+        <span>N/A</span>
+      );
     }
 
     const config = InstalledComponentsStore.getConfig(componentId, configId);
     if (!config) {
       return (
         <span>{configId}</span>
-      );
-    }
-
-    if (this.props.job.getIn(['params', 'orchestration', 'name']) === undefined) {
-      return (
-          <span>N/A</span>
       );
     }
 
