@@ -41,7 +41,7 @@ JobTasks = React.createClass
       span className: 'table',
         span className: 'tbody',
           span className: 'tr',
-            span className: 'td col-xs-7',
+            span className: 'td col-xs-6',
               if component
                 span {},
                   ComponentIcon size: '32', component: component
@@ -52,8 +52,8 @@ JobTasks = React.createClass
               ' '
               if task.has 'config'
                 ' - ' + task.getIn ['config', 'name']
-            span className: 'td col-xs-1 text-right',
-              span className: 'label kbc-label-rounded label-default',
+            span className: 'td col-xs-2 text-right',
+              span className: 'label kbc-label-rounded kbc-label-block label-default',
                 task.get('phase')
             span className: 'td col-xs-2 text-right',
               Duration startTime: task.get('startTime'), endTime: task.get('endTime')
