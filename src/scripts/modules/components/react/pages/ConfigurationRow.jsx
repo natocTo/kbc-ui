@@ -83,11 +83,11 @@ export default React.createClass({
 
   getDeleteConfirmText() {
     let texts = [
-      <p>Are you sure you want to move the configuration {this.props.config.get('name')} to Trash?</p>
+      <p key="question">Are you sure you want to move the configuration {this.props.config.get('name')} to Trash?</p>
     ];
     if (isObsoleteComponent(this.props.componentId)) {
       texts.push(
-        <p className="alert alert-warning"><i className="fa fa-exclamation-triangle" /> This configuration can't be restored.</p>
+        <p key="warning" className="alert alert-warning"><i className="fa fa-exclamation-triangle" /> This configuration can't be restored.</p>
       );
     }
     return texts;

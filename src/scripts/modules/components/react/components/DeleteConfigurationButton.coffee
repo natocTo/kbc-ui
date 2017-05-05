@@ -36,9 +36,9 @@ module.exports = React.createClass
       React.createElement Confirm,
         title: 'Move Configuration to Trash'
         text: [
-          React.DOM.p null,
+          React.DOM.p key: 'question',
             "Are you sure you want to move the configuration #{this.state.config.get('name')} to Trash?",
-          React.DOM.p className: 'alert alert-warning',
+          React.DOM.p key: 'warning', className: 'alert alert-warning',
             React.DOM.i className: 'fa fa-exclamation-triangle'
             " This configuration can't be restored."
         ]
