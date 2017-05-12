@@ -146,6 +146,7 @@ Scheduler = React.createClass
       options: PERIOD_OPTIONS
       value: @props.period
       onChange: @props.onPeriodChange
+      clearable: false
 
   _daySelect: ->
     React.createElement Select,
