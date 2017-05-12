@@ -168,9 +168,7 @@ export default React.createClass({
                   return (
                     <tr key={index}>
                       <td>
-                        <a href={table.link} target="_blank">
-                          {table.name}
-                        </a>
+                        {table.name}
                       </td>
                       <td>{converter(table.bytes, 'B', 'MB').toFixed(5)} MB</td>
                       <td>&gt;</td>
@@ -286,7 +284,7 @@ export default React.createClass({
         changeDescription = `Add file ${dropboxFile.name}`;
         return {
           bytes: dropboxFile.bytes,
-          link: dropboxFile.link,
+          '#link': dropboxFile.link,
           name: dropboxFile.name,
           timestamp: moment().unix(),
           hash: MD5(dropboxFile.name).toString(),
@@ -362,7 +360,7 @@ export default React.createClass({
           parameters: {
             config: {
               dropboxFiles: [{
-                link: selectedFile.link,
+                '#link': selectedFile['#link'],
                 name: selectedFile.name,
                 output: selectedFile.output
               }]
