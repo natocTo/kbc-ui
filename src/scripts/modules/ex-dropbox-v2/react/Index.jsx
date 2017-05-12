@@ -89,31 +89,30 @@ export default React.createClass({
     );
   },
 
-  renderMainContent() {
+  hasFiles() {
     const hasFiles = this.state.configData.hasIn(['parameters', 'config', 'dropboxFiles']);
     const filesCount = hasFiles ? this.state.configData.getIn(['parameters', 'config', 'dropboxFiles']).count() : 0;
+    return filesCount > 0;
+  },
 
+  renderMainContent() {
     return (
       <div className="col-md-9 kbc-main-content">
-        {this.renderComponentDescription(hasFiles, filesCount)}
+        {this.renderComponentDescription()}
         {this.renderConfigSummary()}
-        {this.renderInitialSelectionOfFiles(hasFiles, filesCount)}
+        {this.renderInitialSelectionOfFiles()}
       </div>
     );
   },
 
-  renderComponentDescription(hasFiles, filesCount) {
-    const renderStandardFileSelection = hasFiles && filesCount > 0 ? this.renderFileSelectorModal() : null;
+  renderComponentDescription() {
     return (
       <div className="row kbc-header">
-        <div className="col-sm-8">
+        <div className="col-sm-12">
           <ComponentDescription
             componentId={componentId}
             configId={this.state.configId}
           />
-        </div>
-        <div className="col-sm-4 kbc-buttons">
-          {renderStandardFileSelection}
         </div>
       </div>
     );
@@ -123,7 +122,7 @@ export default React.createClass({
     return (
       <div>
         <a onClick={this.openFileSelectorModal}>
-          <span className="btn btn-success">+ Add Files</span>
+          <span className="btn btn-success">Add File</span>
         </a>
         <FileSelectorModal
           configId={this.state.configId}
@@ -145,7 +144,6 @@ export default React.createClass({
     const hasSelectedFiles = this.state.configData.hasIn(['parameters', 'config', 'dropboxFiles']);
     const selectedFiles = hasSelectedFiles ? this.state.configData.getIn(['parameters', 'config', 'dropboxFiles']) : List();
     const converter = byteConverter.converterBase10;
-
     if (hasSelectedFiles && selectedFiles.count() > 0) {
       return (
         <div className="section">
@@ -156,7 +154,7 @@ export default React.createClass({
                 <th>Size</th>
                 <th />
                 <th>Output Table</th>
-                <th />
+                <th> {this.renderFileSelectorModal()}</th>
               </tr>
             </thead>
             <tbody>
@@ -197,8 +195,8 @@ export default React.createClass({
   },
 
   // This component will popup once the authorization is done, but no file has been selected yet.
-  renderInitialSelectionOfFiles(hasFiles, filesCount) {
-    if (!hasFiles || filesCount === 0) {
+  renderInitialSelectionOfFiles() {
+    if (!this.hasFiles()) {
       return (
         <div className="row component-empty-state text-center">
           <p>No files selected yet.</p>
