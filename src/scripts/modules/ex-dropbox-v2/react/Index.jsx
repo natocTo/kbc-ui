@@ -274,11 +274,12 @@ export default React.createClass({
     return actions.saveComponentConfigData(componentId, this.state.configId, newData, changeDescription);
   },
 
-  saveConfig() {
-    const hasSelectedDropboxFiles = this.state.localState.has('selectedDropboxFiles');
+  saveConfig(forceData) {
+    const hasSelectedDropboxFiles = !!forceData || this.state.localState.has('selectedDropboxFiles');
     let changeDescription = '';
+    const data = forceData || this.state.localState.get('selectedDropboxFiles');
     if (hasSelectedDropboxFiles) {
-      const localState = this.state.localState.get('selectedDropboxFiles').map((dropboxFile) => {
+      const localState = data.map((dropboxFile) => {
         changeDescription = `Add file ${dropboxFile.name}`;
         return {
           bytes: dropboxFile.bytes,
