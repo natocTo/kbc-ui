@@ -281,13 +281,14 @@ export default React.createClass({
     if (hasSelectedDropboxFiles) {
       const localState = data.map((dropboxFile) => {
         changeDescription = `Add file ${dropboxFile.name}`;
+        const output = dropboxFile.manualInsert ? dropboxFile.name : string.sanitizeKbcTableIdString(getDestinationName(dropboxFile.name));
         return {
           bytes: dropboxFile.bytes,
           '#link': dropboxFile.link,
           name: dropboxFile.name,
           timestamp: moment().unix(),
           hash: MD5(dropboxFile.name).toString(),
-          output: string.sanitizeKbcTableIdString(getDestinationName(dropboxFile.name))
+          output: output
         };
       });
 

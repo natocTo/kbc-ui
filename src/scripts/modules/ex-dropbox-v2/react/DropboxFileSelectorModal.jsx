@@ -5,6 +5,7 @@ import {TabbedArea, TabPane} from '../../../react/common/KbcBootstrap';
 import {Modal} from 'react-bootstrap';
 import DropboxChooser from 'react-dropbox-chooser';
 import { Button } from 'react-bootstrap';
+import {getDestinationName} from '../actions/ApplicationActions.js';
 
 export default React.createClass({
   propTypes: {
@@ -35,9 +36,10 @@ export default React.createClass({
     if (this.state.activeTab === 'external') {
       const forceData = [{
         link: this.state.link,
-        name: this.state.name + '.csv'
+        name: this.state.name,
+        manualInsert: true
       }];
-      this.props.saveConfig(forceData).then(() => this.props.onHide());
+      return this.props.saveConfig(forceData).then(() => this.props.onHide());
     }
     return this.props.saveConfig().then(() => this.props.onHide());
   },
@@ -78,7 +80,7 @@ export default React.createClass({
                  <div>
                    <br />
                    <div>
-                     Selected: {first(this.props.selectedDropboxFiles).name}
+                     <h4>Selected: {first(this.props.selectedDropboxFiles).name}</h4>
                    </div>
                  </div>
                 }
@@ -109,6 +111,15 @@ export default React.createClass({
     return this.props.canSaveConfig();
   },
 
+  onInsertLink(e) {
+    const value = e.target.value;
+    let name = this.state.name;
+    if (isEmpty(name)) {
+      name = getDestinationName(value.split('?')[0]);
+    }
+    this.setState({link: value, name: name});
+  },
+
   renderManualInsert() {
     return (
       <div className="form form-horizontal">
@@ -123,7 +134,7 @@ export default React.createClass({
                 type="text"
                 name="link"
                 value={this.state.link}
-                onChange={(e) => this.setState({link: e.target.value})}
+                onChange={this.onInsertLink}
                 autoFocus={true}
               />
               <span className="help-block">
