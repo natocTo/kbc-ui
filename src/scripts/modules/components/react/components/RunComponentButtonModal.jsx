@@ -2,13 +2,14 @@ import React from 'react';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
 
 module.exports = React.createClass({
-
+  displayName: 'RunComponentButtonModal',
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     onRequestRun: React.PropTypes.func.isRequired,
     title: React.PropTypes.string.isRequired,
     body: React.PropTypes.node.isRequired,
-    show: React.PropTypes.bool.isRequired
+    show: React.PropTypes.bool.isRequired,
+    disabled: React.PropTypes.bool.isRequired
   },
 
   _handleRun: function() {
@@ -33,7 +34,7 @@ module.exports = React.createClass({
         <Modal.Footer>
           <ButtonToolbar>
             <Button bsStyle="link" onClick={this.props.onHide}>Close</Button>
-            <Button bsStyle="primary" onClick={this._handleRun}>Run</Button>
+            <Button bsStyle="primary" onClick={this._handleRun} disabled={this.props.disabled}>Run</Button>
           </ButtonToolbar>
         </Modal.Footer>
       </Modal>

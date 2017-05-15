@@ -8,7 +8,7 @@ import classnames from 'classnames';
 import RunModal from './RunComponentButtonModal';
 
 module.exports = React.createClass({
-  displayName: 'RunExtraction',
+  displayName: 'RunComponentButton',
 
   propTypes: {
     title: React.PropTypes.string.isRequired,
@@ -23,7 +23,8 @@ module.exports = React.createClass({
     disabled: React.PropTypes.bool,
     disabledReason: React.PropTypes.string,
     tooltipPlacement: React.PropTypes.string,
-    children: React.PropTypes.node
+    children: React.PropTypes.node,
+    modalRunButtonDisabled: React.PropTypes.bool
   },
 
   getDefaultProps: function() {
@@ -35,7 +36,8 @@ module.exports = React.createClass({
       tooltip: 'Run',
       disabled: false,
       disabledReason: '',
-      tooltipPlacement: 'top'
+      tooltipPlacement: 'top',
+      modalRunButtonDisabled: false
     };
   },
 
@@ -94,6 +96,7 @@ module.exports = React.createClass({
         title={this.props.title}
         body={this.props.children}
         onRequestRun={this._handleRunStart}
+        disabled={this.props.modalRunButtonDisabled}
       />
     );
 
