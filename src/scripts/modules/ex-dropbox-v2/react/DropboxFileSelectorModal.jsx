@@ -57,8 +57,8 @@ export default React.createClass({
         <Modal.Body>
           <TabbedArea activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}>
             <TabPane eventKey="instant" title="Choose From Dropbox">
-              <div className="section well">
-                <h3 className="section-heading">Please specify CSV file you want to upload to Keboola Storage.</h3>
+              <div style={{padding: '1.5em'}}>
+                <p>Please choose a CSV file you want to extract via Dropbox Chooser that uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
                 <div className="dropbox-button">
                   <DropboxChooser
                     appKey={'2is8jmvnwbchcyr'}
@@ -67,15 +67,24 @@ export default React.createClass({
                     multiselect={false}
                     extensions={['.csv']} >
                     <Button bsStyle="success">
-                      <i className={Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 ? 'fa fa-fw fa-check-circle-o' : 'fa fa-fw fa-dropbox' } /> Choose from Dropbox
+                      <i className={Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 ?
+                                    'fa fa-fw fa-check-circle-o'
+                                  : 'fa fa-fw fa-dropbox'} />
+                      Choose from Dropbox
                     </Button>
-
                   </DropboxChooser>
                 </div>
-                {Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 && <div><br /><div>Selected: {first(this.props.selectedDropboxFiles).name}</div></div>}
+                {Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 &&
+                 <div>
+                   <br />
+                   <div>
+                     Selected: {first(this.props.selectedDropboxFiles).name}
+                   </div>
+                 </div>
+                }
               </div>
             </TabPane>
-            <TabPane eventKey="external" title="Manually Insert Link">
+            <TabPane eventKey="external" title="Insert Link Manually">
               {this.renderManualInsert()}
             </TabPane>
           </TabbedArea>
