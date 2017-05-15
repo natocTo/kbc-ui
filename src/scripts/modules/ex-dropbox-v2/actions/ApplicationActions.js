@@ -1,8 +1,10 @@
 export function getDestinationName(fileName) {
   let destinationFile = fileName.toString().split('/');
-  let file = destinationFile[destinationFile.length - 1].slice(0, -4);
-
-  return `${file}`;
+  let resultName = destinationFile[destinationFile.length - 1];
+  if (resultName.endsWith('.csv')) {
+    resultName = resultName.slice(0, -4);
+  }
+  return resultName;
 }
 
 export function sortTimestampsInDescendingOrder(obj1, obj2) {
