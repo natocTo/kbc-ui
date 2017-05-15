@@ -63,7 +63,7 @@ RedshiftSandbox = React.createClass
             label: "Load data"
             disabled: @state.pendingActions.get 'drop'
             runParams: ->
-              @state.sandboxConfiguration
+              component.state.sandboxConfiguration
             modalRunButtonDisabled: @state.sandboxConfiguration.get('include', Immutable.List()).size == 0
           ,
             ConfigureSandbox

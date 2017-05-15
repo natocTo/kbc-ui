@@ -53,7 +53,7 @@ MySqlSandbox = React.createClass
             label: "Load data"
             disabled: @state.pendingActions.get 'drop'
             runParams: ->
-              @state.sandboxConfiguration.toJS()
+              component.state.sandboxConfiguration.toJS()
             modalRunButtonDisabled: @state.sandboxConfiguration.get('include', Immutable.List()).size == 0
           ,
             ConfigureSandbox
