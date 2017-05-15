@@ -107,7 +107,7 @@ var JupyterSandbox = React.createClass({
     );
   },
   _createCredentials: function() {
-    return CredentialsActionCreators.createRStudioSandboxCredentials(this.state.sandboxConfiguration.toJS());
+    return CredentialsActionCreators.createJupyterSandboxCredentials(this.state.sandboxConfiguration.toJS());
   },
   _dropCredentials: function() {
     return CredentialsActionCreators.dropJupyterSandboxCredentials();
