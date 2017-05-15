@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import JupyterSandboxCredentialsStore from '../../../provisioning/stores/JupyterSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
@@ -24,7 +25,7 @@ var JupyterSandbox = React.createClass({
   getInitialState() {
     return {
       showModal: false,
-      sandboxConfiguration: {}
+      sandboxConfiguration: Immutable.Map()
     };
   },
   _renderCredentials: function() {
@@ -78,6 +79,7 @@ var JupyterSandbox = React.createClass({
             tables={this.tablesList()}
             type="Jupyter"
             onConfigurationChange={this.onConfigurationChange}
+            disabled={this.state.sandboxConfiguration.getIn(['input', 'tables'], Immutable.List()).size === 0}
           />
           <button
             className="btn btn-link"
@@ -105,7 +107,7 @@ var JupyterSandbox = React.createClass({
     );
   },
   _createCredentials: function() {
-    return CredentialsActionCreators.createJupyterSandboxCredentials(this.state.sandboxConfiguration);
+    return CredentialsActionCreators.createRStudioSandboxCredentials(this.state.sandboxConfiguration.toJS());
   },
   _dropCredentials: function() {
     return CredentialsActionCreators.dropJupyterSandboxCredentials();
@@ -117,7 +119,7 @@ var JupyterSandbox = React.createClass({
     this.setState({ showModal: true });
   },
   onConfigurationChange(configuration) {
-    this.setState({sandboxConfiguration: configuration});
+    this.setState({sandboxConfiguration: Immutable.fromJS(configuration)});
   },
   tablesList() {
     return this.state.tables.map(function(table) {

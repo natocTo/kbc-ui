@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
@@ -11,7 +12,7 @@ import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 
 var SnowflakeSandbox = React.createClass({
   mixins: [createStoreMixin(SnowflakeSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
-  displayName: 'RStudioSandbox',
+  displayName: 'SnowflakeSandbox',
   getStateFromStores: function() {
     return {
       credentials: SnowflakeSandboxCredentialsStore.getCredentials(),
@@ -22,6 +23,13 @@ var SnowflakeSandbox = React.createClass({
       buckets: StorageBucketsStore.getAll()
     };
   },
+
+  getInitialState: function() {
+    return {
+      sandboxConfiguration: Immutable.Map()
+    };
+  },
+
   _renderCredentials: function() {
     return (
       <span>
@@ -32,11 +40,12 @@ var SnowflakeSandbox = React.createClass({
       </span>
     );
   },
+
   _renderControlButtons: function() {
-    var sandboxConfiguration;
+    var state = this.state;
+    var component = this;
     const connectLink = 'https://' + this.state.credentials.get('hostname') + '/console/login#/?returnUrl=sql/worksheet';
     if (this.state.credentials.get('id')) {
-      sandboxConfiguration = {};
       return (
         <div>
           <div>
@@ -47,16 +56,19 @@ var SnowflakeSandbox = React.createClass({
               mode="button"
               label="Load data"
               runParams={() => {
-                return sandboxConfiguration;
+                return state.sandboxConfiguration.toJS();
               }}
               disabled={this.state.pendingActions.get('drop')}
+              modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', Immutable.List()).size === 0}
             >
                 <ConfigureSandbox
                   backend="snowflake"
                   tables={this.state.tables}
                   buckets={this.state.buckets}
                   onChange={(params) => {
-                    sandboxConfiguration = params;
+                    component.setState({
+                      sandboxConfiguration: Immutable.fromJS(params)
+                    });
                   }}/>
               </RunComponentButton>
           </div>

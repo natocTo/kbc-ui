@@ -26,6 +26,7 @@ MySqlSandbox = React.createClass
 
   getInitialState: ->
     showSSLInfoModal: false
+    sandboxConfiguration: Immutable.Map()
 
   getStateFromStores: ->
     credentials: MySqlSandboxCredentialsStore.getCredentials()
@@ -41,7 +42,7 @@ MySqlSandbox = React.createClass
 
   _renderControlButtons: ->
     if @state.credentials.get "id"
-      sandboxConfiguration = {}
+      component = @
       div {},
         div {},
           RunComponentButton(
@@ -52,14 +53,17 @@ MySqlSandbox = React.createClass
             label: "Load data"
             disabled: @state.pendingActions.get 'drop'
             runParams: ->
-              sandboxConfiguration
+              @state.sandboxConfiguration.toJS()
+            modalRunButtonDisabled: @state.sandboxConfiguration.get('include', Immutable.List()).size == 0
           ,
             ConfigureSandbox
               backend: 'mysql'
               tables: @state.tables
               buckets: @state.buckets
               onChange: (params) ->
-                sandboxConfiguration = params
+                component.setState(
+                  sandboxConfiguration: Immutable.fromJS(params)
+                )
           )
         div {},
           ConnectToMySqlSandbox {credentials: @state.credentials},

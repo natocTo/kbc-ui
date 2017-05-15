@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RStudioSandboxCredentialsStore from '../../../provisioning/stores/RStudioSandboxCredentialsStore';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
@@ -24,7 +25,7 @@ var RStudioSandbox = React.createClass({
   getInitialState() {
     return {
       showModal: false,
-      sandboxConfiguration: {}
+      sandboxConfiguration: Immutable.Map()
     };
   },
   _renderCredentials: function() {
@@ -78,6 +79,7 @@ var RStudioSandbox = React.createClass({
             tables={this.tablesList()}
             type="RStudio"
             onConfigurationChange={this.onConfigurationChange}
+            disabled={this.state.sandboxConfiguration.getIn(['input', 'tables'], Immutable.List()).size === 0}
           />
           <button
             className="btn btn-link"
@@ -105,7 +107,7 @@ var RStudioSandbox = React.createClass({
     );
   },
   _createCredentials: function() {
-    return CredentialsActionCreators.createRStudioSandboxCredentials(this.state.sandboxConfiguration);
+    return CredentialsActionCreators.createRStudioSandboxCredentials(this.state.sandboxConfiguration.toJS());
   },
   _dropCredentials: function() {
     return CredentialsActionCreators.dropRStudioSandboxCredentials();
@@ -117,7 +119,7 @@ var RStudioSandbox = React.createClass({
     this.setState({ showModal: true });
   },
   onConfigurationChange(configuration) {
-    this.setState({sandboxConfiguration: configuration});
+    this.setState({sandboxConfiguration: Immutable.fromJS(configuration)});
   },
   tablesList() {
     return this.state.tables.map(function(table) {

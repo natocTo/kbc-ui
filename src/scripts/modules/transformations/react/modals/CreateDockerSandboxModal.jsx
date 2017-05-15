@@ -10,8 +10,16 @@ module.exports = React.createClass({
     create: React.PropTypes.func.isRequired,
     tables: React.PropTypes.object.isRequired,
     type: React.PropTypes.string.isRequired,
-    onConfigurationChange: React.PropTypes.func.isRequired
+    onConfigurationChange: React.PropTypes.func.isRequired,
+    disabled: React.PropTypes.bool
   },
+
+  getDefaultProps: function() {
+    return {
+      disabled: false
+    };
+  },
+
   render: function() {
     return (
       <Modal show={this.props.show} onHide={this.props.close} bsSize="large">
@@ -27,7 +35,7 @@ module.exports = React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.close} bsStyle="link">Close</Button>
-          <Button onClick={this.create} bsStyle="primary">Create</Button>
+          <Button onClick={this.create} bsStyle="primary" disabled={this.props.disabled}>Create</Button>
         </Modal.Footer>
       </Modal>
     );
