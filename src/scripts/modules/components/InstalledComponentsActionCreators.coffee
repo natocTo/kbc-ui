@@ -562,27 +562,35 @@ module.exports =
       component: params.component
       data: params.data
       method: params.method
-    .then (job) ->
-      JobsActionCreators.recieveJobDetail(job)
-      if params.notify
-        component =  ComponentsStore.getComponent params.component
-        ApplicationActionCreators.sendNotification(
-          message: React.createClass
-            render: ->
-              React.DOM.span null,
-                React.createElement Link,
-                  to: 'jobDetail'
-                  params:
-                    jobId: job.id
-                  onClick: @props.onClick
-                ,
-                  if component
-                    "#{component.get('name')} " + getComponentTypeForNotification(component.get('type')) + " job"
-                  else
-                    'Job'
-                ' has been scheduled'
-      )
-      job
+    .then (runJobResult) ->
+      loadJobDataPromise = Promise.resolve(runJobResult)
+      if params.component == 'gooddata-writer'
+        # force to reload all jobs so the just triggered gooddata job
+        # contains proper data, because run gooddata writer response
+        # is different/inconsistent than response of any other component run
+        loadJobDataPromise = JobsActionCreators.reloadJobs().then( -> runJobResult)
+      else
+        JobsActionCreators.recieveJobDetail(runJobResult)
+      loadJobDataPromise.then (job) ->
+        if params.notify
+          component =  ComponentsStore.getComponent params.component
+          ApplicationActionCreators.sendNotification(
+            message: React.createClass
+              render: ->
+                React.DOM.span null,
+                  React.createElement Link,
+                    to: 'jobDetail'
+                    params:
+                      jobId: job.id
+                    onClick: @props.onClick
+                  ,
+                    if component
+                      "#{component.get('name')} " + getComponentTypeForNotification(component.get('type')) + " job"
+                    else
+                      'Job'
+                  ' has been scheduled'
+        )
+        job
 
   toggleMapping: (componentId, configId, index) ->
     dispatcher.handleViewAction(
