@@ -10,23 +10,21 @@ import ComponentIcon from './../../../react/common/ComponentIcon';
 import {componentIoSummary} from './Index';
 import Loader from './Loader';
 import ApplicationStore from '../../../stores/ApplicationStore';
+import { compute as computeDatesForMonthlyUsage } from './datesForMonthlyUsage';
 
-function getDatesForMonthlyUsage() {
-  return {
-    dateFrom: getDateFrom(),
-    dateTo: moment().subtract(1, 'day').format('YYYY-MM-DD')
-  };
+function getProjectCreationDate() {
+  const project = ApplicationStore.getCurrentProject();
+  return project.get('created', null);
 }
 
-function getDateFrom() {
+function getDatesForMonthlyUsage() {
   const collectingStartDate = '2017-01-01';
-  const project = ApplicationStore.getCurrentProject();
-  const creationDate = moment(project.get('created', null));
-  if (creationDate.isValid() && creationDate.isAfter(moment(collectingStartDate))) {
-    return creationDate.format('YYYY-MM-DD');
-  } else {
-    return collectingStartDate;
-  }
+
+  return computeDatesForMonthlyUsage(
+    moment(collectingStartDate),
+    moment(),
+    moment(getProjectCreationDate())
+  );
 }
 
 function sortComponentsByStorageIoDesc(first, second) {
