@@ -227,7 +227,7 @@ export default function(COMPONENT_ID) {
       if (!this.hasTables()) {
         return 'No tables registered for upload';
       }
-      return false;
+      return '';
     },
 
     handleSearchQueryChange(query) {

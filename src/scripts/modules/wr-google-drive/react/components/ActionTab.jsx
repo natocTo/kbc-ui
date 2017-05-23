@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import RadioGroup from 'react-radio-group';
-import {Input} from 'react-bootstrap';
+import {Input} from '../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

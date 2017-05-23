@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
-import {Modal, TabbedArea, TabPane} from 'react-bootstrap';
+import {Modal, Tab, Tabs} from 'react-bootstrap';
+// import {TabbedArea, TabPane} from '../../../../react/common/KbcBootstrap.jsx';
 import WizardButtons from '../../../components/react/components/WizardButtons';
 import InputTab from './InputTab';
 import FileTab from './FileTab';
@@ -34,8 +35,8 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <TabbedArea activeKey={step} defaultActiveEventKey={1} animation={false}>
-            <TabPane tab="Source" eventKey={1} disabled={step !== 1}>
+          <Tabs activeKey={step} animation={false} onSelect={() => {return true;}} generateChildId={true}>
+            <Tab title="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
                 mapping={this.localState(['mapping'], Map())}
                 tables={storageTables}
@@ -43,14 +44,14 @@ export default React.createClass({
                 exclude={this.localState(['exclude'], Map())}
                 disabled={this.props.isSavingFn(this.file('id'))}
               />
-            </TabPane>
-            <TabPane tab="Action" eventKey={2} disabled={step !== 3}>
+            </Tab>
+            <Tab title="Action" eventKey={2} disabled={step !== 3}>
               <ActionTab
                 onChangeAction={(e) => this.onChangeAction(e.target.value)}
-                valueAction={this.file('action')}
+                valueAction={this.file('action', 'update')}
               />
-            </TabPane>
-            <TabPane tab="Destination" eventKey={3} disabled={step !== 3}>
+            </Tab>
+            <Tab title="Destination" eventKey={3} disabled={step !== 3}>
               <FileTab
                 onSelectExisting={(data) => {
                   this.updateLocalState(['file'].concat('fileId'), data[0].id);
@@ -69,8 +70,8 @@ export default React.createClass({
                 valueConvert={this.file('convert', false)}
                 type={this.localState('uploadType', 'new')}
               />
-            </TabPane>
-          </TabbedArea>
+            </Tab>
+          </Tabs>
         </Modal.Body>
         <Modal.Footer>
           <WizardButtons

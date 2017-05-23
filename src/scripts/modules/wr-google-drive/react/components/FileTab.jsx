@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from 'react-bootstrap';
+import {Input} from '../../../../react/common/KbcBootstrap';
 import RadioGroup from 'react-radio-group';
 import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
@@ -15,8 +15,7 @@ export default React.createClass({
     valueFolder: PropTypes.string.isRequired,
     valueAction: PropTypes.oneOf(['create', 'update']),
     valueConvert: PropTypes.bool.isRequired,
-    type: PropTypes.oneOf(['new', 'existing']),
-    show: PropTypes.bool.isRequired
+    type: PropTypes.oneOf(['new', 'existing'])
   },
 
   render() {
@@ -162,5 +161,4 @@ export default React.createClass({
       </div>
     );
   }
-
 });
