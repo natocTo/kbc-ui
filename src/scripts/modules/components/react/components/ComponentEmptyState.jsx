@@ -6,7 +6,7 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="component-empty-state text-center">
+      <div className="row component-empty-state text-center">
         {this.props.children}
       </div>
     );
