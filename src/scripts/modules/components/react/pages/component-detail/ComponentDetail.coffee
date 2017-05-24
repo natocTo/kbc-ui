@@ -114,7 +114,7 @@ module.exports = React.createClass
     else
       div className: "row kbc-row",
         React.createElement ComponentEmptyState, null,
-          p className: "text-center",
+          div className: "text-center",
             AddComponentConfigurationButton
               disabled: @_isDeprecated()
               label: "Create New Configuration"
