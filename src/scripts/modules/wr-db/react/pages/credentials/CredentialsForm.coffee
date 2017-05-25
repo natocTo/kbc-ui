@@ -55,7 +55,7 @@ module.exports = React.createClass
 
       div className: 'row',
         _.map fields, (field) =>
-          @_createInput(field[0], field[1], field[2], field[3], field[4], field[5])
+          @_createInput(field[0], field[1], field[2], field[3], field[4], field[5], field[6], field[7])
       @_renderSshTunnelRow()
       @_renderTestCredentials()
 
@@ -94,7 +94,15 @@ module.exports = React.createClass
       data: @props.credentials.get('ssh', Map())
       isEditing: @props.isEditing
 
-  _createInput: (labelValue, propName, type = 'text', isProtected = false, defaultValue = null,  options = []) ->
+  _createInput: (
+    labelValue,
+    propName, type = 'text',
+    isProtected = false,
+    defaultValue = null,
+    options = [],
+    isRequired = false,
+    helpText = null
+  ) ->
     if type == 'select'
       allOptions = _.map(options, (label, value) ->
         option value: value,
@@ -108,13 +116,14 @@ module.exports = React.createClass
 
     if @props.isEditing
       if isHashed
-        @_createProtectedInput(labelValue, propName)
+        @_createProtectedInput(labelValue, propName, helpText)
       else
         Input
           label: @_getName(propName) or labelValue
           type: type
           disabled: @props.isSaving
           value: @props.credentials.get(propName) or defaultValue
+          help: helpText
           labelClassName: 'col-xs-4'
           wrapperClassName: 'col-xs-8'
           onChange: (event) =>
@@ -155,13 +164,14 @@ module.exports = React.createClass
             @props.credentials.get propName
           Clipboard text: @props.credentials.get propName
 
-  _createProtectedInput: (labelValue, propName) ->
+  _createProtectedInput: (labelValue, propName, helpText = null) ->
     savedValue = @props.savedCredentials.get(propName)
     Input
       label: @_renderProtectedLabel(labelValue, !!savedValue)
       type: 'password'
       placeholder: if savedValue then 'type new password to change it' else ''
       value: @props.credentials.get propName
+      help: helpText
       labelClassName: 'col-xs-4'
       wrapperClassName: 'col-xs-8'
       onChange: (event) =>
