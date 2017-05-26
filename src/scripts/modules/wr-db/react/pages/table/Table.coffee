@@ -17,7 +17,7 @@ WrDbActions = require '../../../actionCreators'
 V2Actions = require('../../../v2-actions').default
 RoutesStore = require '../../../../../stores/RoutesStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
-Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
+#Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
@@ -25,14 +25,10 @@ InstalledComponentsStore = require '../../../../components/stores/InstalledCompo
 ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactivateButton').default
 FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
 FilterTableModal = require('../../../../components/react/components/generic/TableFiltersOnlyModal').default
-InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
+#InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
 PrimaryKeyModal = React.createFactory(require('./PrimaryKeyModal').default)
 IsDockerBasedFn = require('../../../templates/dockerProxyApi').default
 
-#componentId = 'wr-db'
-
-#IGNORE is automatically included
-#defaultDataTypes = ['INT','BIGINT', 'VARCHAR', 'TEXT', 'DECIMAL', 'DATE', 'DATETIME']
 defaultDataTypes =
 ['INT','BIGINT',
 'VARCHAR': {defaultSize: '255'},
@@ -41,7 +37,7 @@ defaultDataTypes =
 'DATE', 'DATETIME'
 ]
 
-{option, select, label, input, p, ul, li, span, button, strong, div, i} = React.DOM
+{option, select, p, span, button, strong, div} = React.DOM
 
 
 module.exports = (componentId) ->
@@ -132,14 +128,6 @@ templateFn = (componentId) ->
           @_renderIncremetnalSetup()
         if isRenderIncremental
           @_renderTableFiltersRow()
-        if componentId == 'keboola.wr-db-mssql-v2'
-          @_renderBCPToggle()
-        # div className: 'col-sm-offset-7 col-sm-3',
-        #   if !!@state.editingColumns
-        #     @_renderSetColumnsType()
-        #   else
-        #     ' '
-        # div className: 'col-sm-2 kbc-buttons', ''
 
       ColumnsEditor
         onToggleHideIgnored: (e) =>
@@ -254,7 +242,7 @@ templateFn = (componentId) ->
 
   _renderSetColumnsType: ->
     tmpDataTypes = @_getDataTypes()
-    options = _.map tmpDataTypes.concat('IGNORE').concat(''), (opKey, opValue) ->
+    options = _.map tmpDataTypes.concat('IGNORE').concat(''), (opKey) ->
       option
         disabled: opKey == ''
         value: opKey
@@ -346,7 +334,6 @@ templateFn = (componentId) ->
   _renderFilterModal: ->
     v2Actions = @state.v2Actions
     v2State = @state.v2State
-    v2ConfigTable = @state.v2ConfigTable
     editingFilter = v2State.getIn(v2Actions.editingFilterPath)
     React.createElement FilterTableModal,
       value: editingFilter
@@ -362,24 +349,6 @@ templateFn = (componentId) ->
       isSaving: @state.v2State.get('saving')
       saveStyle: 'success'
       setLabel: 'Save'
-
-  _renderBCPToggle: ->
-    exportInfo = @state.v2ConfigTable
-    isBCP = exportInfo.get('bcp')
-
-    span null,
-      p null,
-        strong className: 'col-sm-3',
-          'Import using BCP (Beta)'
-        React.createElement ActivateDeactivateButton,
-          isActive: isBCP
-          activateTooltip: 'Activate BCP import'
-          deactivateTooltip: 'Deactivate BCP import'
-          isPending: @state.v2State.get('saving')
-          buttonStyle: {'paddingTop': '0', 'paddingBottom': '0'}
-          buttonDisabled: !!@state.editingColumns
-          onChange: =>
-            @setV2TableInfo(exportInfo.set('bcp', !isBCP))
 
   _renderEditButtons: ->
     isValid = @state.columnsValidation?.reduce((memo, value) ->
