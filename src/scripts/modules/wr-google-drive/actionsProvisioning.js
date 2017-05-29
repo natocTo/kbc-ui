@@ -136,7 +136,7 @@ export default function(COMPONENT_ID, configId) {
       newTables,
       newMappings,
       store.getSavingPath(table.get('id')),
-      `Update table ${table.get('tableId')}`
+      `Delete table upload ${table.get('tableId')}`
     ).then(() => updateLocalState(pendingPath, false));
   }
 
