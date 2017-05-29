@@ -22,14 +22,14 @@ export default React.createClass({
     if (this.props.canEdit) {
       return (
         <div>
-          <strong>Error Note</strong><br/>
+          <strong>Note from Support</strong><br/>
           <span>{this.inlineEdit()}</span>
         </div>
       );
     } else if (this.props.errorNote) {
       return (
         <p>
-          <strong>Note from support</strong><br/>
+          <strong>Note from Support</strong><br/>
           <span>{this.props.errorNote}</span>
         </p>
       );

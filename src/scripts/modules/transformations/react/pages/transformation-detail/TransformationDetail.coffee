@@ -36,6 +36,8 @@ module.exports = React.createClass
   getStateFromStores: ->
     bucketId = RoutesStore.getCurrentRouteParam 'config'
     transformationId = RoutesStore.getCurrentRouteParam 'row'
+    if RoutesStore.getRouter().getCurrentQuery().highlightQueryNumber
+      highlightQueryNumber = parseInt(RoutesStore.getRouter().getCurrentQuery().highlightQueryNumber)
     bucket: TransformationBucketsStore.get(bucketId)
     transformation: TransformationsStore.getTransformation(bucketId, transformationId)
     editingFields: TransformationsStore.getTransformationEditingFields(bucketId, transformationId)
@@ -50,6 +52,7 @@ module.exports = React.createClass
     isTransformationEditingValid: TransformationsStore.getTransformationEditingIsValid(
       bucketId, transformationId
     )
+    highlightQueryNumber: highlightQueryNumber
 
   getInitialState: ->
     sandboxModalOpen: false
@@ -109,6 +112,7 @@ module.exports = React.createClass
             openOutputMappings: @state.openOutputMappings
             showDetails: @_showDetails()
             isEditingValid: @state.isTransformationEditingValid
+            highlightQueryNumber: @state.highlightQueryNumber
       div className: 'col-md-3 kbc-main-sidebar',
         ul className: 'nav nav-stacked',
           li {},

@@ -17,19 +17,22 @@ JobRunId = React.createFactory(require('../../../../../react/common/JobRunId').d
 JobStatsContainer = require('./JobStatsContainer').default
 GoodDataStatsContainer = require('./GoodDataStatsContainer')
 {PanelGroup, Panel} = require 'react-bootstrap'
-{Link} = require 'react-router'
+Link = React.createFactory require('react-router').Link
 getComponentId = require('../../../getJobComponentId').default
 JobStatusLabel = React.createFactory(require('../../../../../react/common/common').JobStatusLabel)
 ActionCreators = require '../../../ActionCreators'
 
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
+ComponentConfigurationRowLink = React.createFactory(
+  require('../../../../components/react/components/ComponentConfigurationRowLink')
+)
 ErrorNote = require('./ErrorNote').default
 
 contactSupport = require('../../../../../utils/contactSupport').default
 
 date = require '../../../../../utils/date'
 {Tree, NewLineToBr} = require 'kbc-react-components'
-{strong,div, h2, span, h4, section, p} = React.DOM
+{strong,div, h2, span, h4, section, p, pre, code, br, blockquote, small} = React.DOM
 
 APPLICATION_ERROR = 'application'
 
@@ -48,7 +51,7 @@ accordionHeader = (text, isActive) ->
 
 module.exports = React.createClass
   mixins: [createStoreMixin(JobsStore, InstalledComponentsStore), PureRendererMixin]
-
+  displayName: "JobDetail"
 
   getStateFromStores: ->
     job = JobsStore.get RoutesStore.getCurrentRouteIntParam('jobId')
@@ -63,10 +66,12 @@ module.exports = React.createClass
     configuration: configuration
     canUpdateErrorNote: ApplicationStore.getKbcVars().get('canDoSupport')
 
-
   getInitialState: ->
     job = JobsStore.get RoutesStore.getCurrentRouteIntParam('jobId')
-    activeAccordion: if job.get('component') == 'gooddata-writer' then 'gdresults' else 'stats'
+    activeAccordion = 'stats'
+    if job.get('component') == 'gooddata-writer'
+      activeAccordion = 'gdresults'
+    activeAccordion: activeAccordion
 
   componentDidUpdate: (prevProps, prevState) ->
     currentStatus = @state.job.get 'status'
@@ -94,39 +99,111 @@ module.exports = React.createClass
       @_renderAccordion(job)
       @_renderLogRow(job)
 
-
-  _renderErrorResultRow: (job) ->
+  _renderErrorDetails: (job) ->
     exceptionId = job.getIn ['result', 'exceptionId']
+    parts = []
+    componentId = getComponentId(job)
     if job.get('error') == APPLICATION_ERROR
       message = 'Internal Error'
     else
       message =  job.getIn ['result', 'message']
-    div {className: 'row row-alert'},
-      div {className: 'alert alert-danger'},
-        p null,
+
+    if job.hasIn(['result', 'context', 'rowId']) and
+    job.hasIn(['result', 'context', 'queryNumber']) and
+    job.hasIn(['result', 'context', 'query'])
+      message = job.getIn(['result', 'message'])
+      if message.match(/Executing query #(\d*) failed:/)
+        matches = message.match(/Executing query #(\d*) failed:/)
+        message = message.substr(matches.index + matches[0].length)
+      parts.push(
+        p {key: 'transformationlink'},
+          'Transformation '
+          ComponentConfigurationRowLink
+            componentId: componentId
+            configId: @state.configuration.get 'id'
+            rowId: job.getIn(['result', 'context', 'rowId']).toString()
+          ,
+            span null,
+                job.getIn(['result', 'context', 'rowName'])
+          ' has failed'
+        )
+      parts.push(
+        p {key: 'transformationerror', style: {marginTop: "10px"}},
+          strong null,
+            'Error'
+          div {style: {marginTop: "5px"}},
+            React.createElement NewLineToBr,
+              text: message
+      )
+      parts.push(
+        p {key: 'transformationqueryheadline', style: {marginTop: "10px"}},
+          strong null,
+            'Query '
+            small null,
+              ComponentConfigurationRowLink
+                componentId: componentId
+                configId: @state.configuration.get 'id'
+                rowId: job.getIn(['result', 'context', 'rowId']).toString()
+                query: {highlightQueryNumber: job.getIn(['result', 'context', 'queryNumber'])}
+              ,
+                span null,
+                  'Open query'
+          div {style: {marginTop: "5px"}},
+            pre null,
+              code null,
+                React.createElement NewLineToBr,
+                  text: job.getIn(['result', 'context', 'query'])
+
+      )
+    else
+      parts.push(
+        p {key: "genericerrordesc"},
           React.DOM.strong null,
             React.createElement NewLineToBr,
               text: message
-        if job.get('error') == job.get('error') == APPLICATION_ERROR
-          p null,
-            'Something is broken. Our developers were notified about this error and will let you know what went wrong.'
-        p null,
-          if exceptionId
-            span null, 'ExceptionId ' + exceptionId
+      )
+      if job.get('error') == job.get('error') == APPLICATION_ERROR
+        parts.push (
+          p {key: "apperror"},
+            'Something is broken.'
+            'Our developers were notified about this error and will let you know what went wrong.'
+        )
+
+    parts.push (
+      p {key: "exceptionId", style: {marginTop: "10px"}},
+        if exceptionId
+          span null, 'ExceptionId ' + exceptionId
+    )
+
+    parts.push(
+      div {key: 'errornote', style: {marginTop: "10px"}},
         React.createElement ErrorNote,
           jobId: job.get('id')
           errorNote: job.get('errorNote')
           onSave: @_handleErrorNoteSave
           canEdit: @state.canUpdateErrorNote
-        React.DOM.button
-          className: 'btn btn-danger'
-          onClick: @_contactSupport
-          style:
-            marginTop: '10px'
-        ,
-          'Contact Support'
+          key: 'errornote'
+    )
+    parts.push(
+      React.DOM.button
+        className: 'btn btn-danger'
+        onClick: @_contactSupport
+        style:
+          marginTop: '10px'
+      ,
+        'Contact Support'
+    )
+    parts
 
-
+  _renderErrorResultRow: (job) ->
+    div {className: 'row row-alert'},
+      div {className: 'alert alert-danger', style: {
+        marginBottom: 0
+        paddingLeft: "50px"
+        paddingTop: "20px"
+        paddingBottom: "20px"
+      }},
+        @_renderErrorDetails(job)
 
   _renderRunInfoRow: (job) ->
     componentId = getComponentId(job)
@@ -167,7 +244,7 @@ module.exports = React.createClass
               renderDate(job.get('startTime'))
           div {className: 'row'},
             span {className: 'col-md-3'},
-              'Initialized '
+              'Initialized'
             strong className: 'col-md-9',
               job.getIn(['token', 'description'])
           div {className: 'row'},
@@ -190,14 +267,6 @@ module.exports = React.createClass
           div className: 'row',
             span className: 'col-md-3', 'Token '
             strong className: 'col-md-9', job.getIn(['token', 'description'])
-          div {className: 'row'},
-            span {className: 'col-md-3'},
-              'Duration'
-            strong {className: 'col-md-9'},
-              if jobStarted()
-                Duration({startTime: job.get('startTime'), endTime: job.get('endTime')})
-              else
-                'N/A'
 
   _renderAccordion: (job) ->
     isTransformation = job.get('component') == 'transformation'

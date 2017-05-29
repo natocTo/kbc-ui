@@ -1,5 +1,6 @@
 React = require 'react'
 createStoreMixin = require '../mixins/createStoreMixin'
+Immutable = require 'immutable'
 
 RoutesStore = require '../../stores/RoutesStore'
 ComponentsStore = require '../../modules/components/stores/ComponentsStore'
@@ -64,6 +65,17 @@ Header = React.createClass
         ComponentIcon component: @state.component
         ' '
 
+  _getCurrentRouteQueryParams: ->
+    persistQueryParams = @state.currentRouteConfig.get('persistQueryParams', Immutable.List())
+    currentRouteQuery = @state.currentRouteQuery
+    queryParams = persistQueryParams.reduce((result, item) ->
+      if currentRouteQuery.has(item) and (currentRouteQuery.get(item, '') != '')
+        result = result.set(item, currentRouteQuery.get(item))
+      result
+    ,
+      Immutable.Map())
+    queryParams.toJS()
+
   _renderBreadcrumbs: ->
     breadcrumbs = []
     @state.breadcrumbs.forEach((part, i) ->
@@ -73,7 +85,7 @@ Header = React.createClass
           key: part.get('name')
           to: part.getIn(['link', 'to'])
           params: part.getIn(['link', 'params']).toJS()
-          query: @state.currentRouteQuery.toJS() # keep query
+          query: @_getCurrentRouteQueryParams() # persist chosen query params
         ,
           part.get 'title'
         breadcrumbs.push partElement

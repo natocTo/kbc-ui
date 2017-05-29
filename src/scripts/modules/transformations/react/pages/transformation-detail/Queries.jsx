@@ -20,7 +20,8 @@ export default React.createClass({
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
-    isChanged: PropTypes.bool.isRequired
+    isChanged: PropTypes.bool.isRequired,
+    highlightQueryNumber: PropTypes.number
   },
 
   render() {
@@ -63,6 +64,7 @@ export default React.createClass({
         backend={this.props.transformation.get('backend')}
         disabled={this.props.isSaving}
         onChange={this.props.onEditChange}
+        highlightQueryNumber={this.props.highlightQueryNumber}
         />
     );
   },

@@ -216,7 +216,8 @@ Dispatcher.register (payload) ->
             .remove 'error'
             .set 'routerState', newState
 
-        store.set 'breadcrumbs', generateBreadcrumbs(store)
+        store = store.set 'breadcrumbs', generateBreadcrumbs(store)
+        store
 
     when Constants.ActionTypes.ROUTER_ROUTE_CHANGE_ERROR
       _store = _store.withMutations (store) ->

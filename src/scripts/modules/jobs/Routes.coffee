@@ -7,6 +7,7 @@ JobDetailReloaderButton = require('./react/components/JobDetailReloaderButton')
 JobDetailButtons = require './react/components/JobDetailButtons'
 JobsStore = require('./stores/JobsStore')
 Promise = require('bluebird')
+InstalledComponentsActionCreators = require('../components/InstalledComponentsActionCreators')
 
 routes =
       name: 'jobs'
@@ -14,11 +15,15 @@ routes =
       path: 'jobs'
       defaultRouteHandler: JobsIndex
       reloaderHandler: JobsReloaderButton
+      persistQueryParams: ['q']
       poll:
         interval: 10
         action: (params) ->
           JobsActionCreators.reloadJobs()
       requireData: [
+        ->
+          InstalledComponentsActionCreators.loadComponents()
+      ,
         (params, query) ->
           currentQuery = JobsStore.getQuery()
           if params.jobId
@@ -34,6 +39,7 @@ routes =
       childRoutes: [
         name: 'jobDetail'
         path: ':jobId'
+        persistQueryParams: ['q']
         title: (routerState) ->
           jobId = routerState.getIn(['params', 'jobId'])
           "Job " + jobId

@@ -1,16 +1,39 @@
 import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
-
+import splitSqlQueries from '../../../utils/splitSqlQueries';
 /* global require */
 require('./queries.less');
+
 
 export default React.createClass({
   propTypes: {
     queries: PropTypes.string.isRequired,
     backend: PropTypes.string.isRequired,
     disabled: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    highlightQueryNumber: PropTypes.number
+  },
+
+  componentDidMount() {
+    // highlight query
+    if (this.props.highlightQueryNumber) {
+      const splitQueries = splitSqlQueries(this.props.queries);
+      const query = splitQueries.get(this.props.highlightQueryNumber - 1);
+      const positionStart = this.props.queries.indexOf(query);
+      if (positionStart === -1) {
+        return;
+      }
+      const lineStart = (this.props.queries.substring(0, positionStart).match(/\n/g) || []).length;
+      const positionEnd = positionStart + query.length;
+      const lineEnd = (this.props.queries.substring(0, positionEnd).match(/\n/g) || []).length + 1;
+      this.refs.CodeMirror.editor.setSelection({line: lineStart, ch: 0}, {line: lineEnd, ch: 0});
+      const scrollTop = this.refs.CodeMirror.editor.cursorCoords({line: lineStart, ch: 0}).top - 100;
+      /* global window */
+      setTimeout(function() {
+        window.scrollTo(0, scrollTop);
+      });
+    }
   },
 
   render() {
@@ -28,7 +51,7 @@ export default React.createClass({
               autofocus={true}
               onChange={this.handleChange}
               readOnly={this.props.disabled ? 'nocursor' : false}
-              placeholder="CREATE VIEW `sample-transformed` AS SELECT `id` FROM `in.c-main.sample`;"
+              placeholder="CREATE VIEW transformed AS SELECT id FROM source;"
               />
           </div>
         </div>
