@@ -80,7 +80,8 @@ export default function(COMPONENT_ID, configId) {
           .set('fileId', data.file.id)
           .setIn(['folder', 'id'], data.file.folder.id)
           .setIn(['folder', 'title'], data.file.folder.title),
-          mapping
+          mapping,
+          'Create'
         );
       });
     }
@@ -96,8 +97,9 @@ export default function(COMPONENT_ID, configId) {
     // return updateTable(table, mapping);
   }
 
-  function updateTable(table, mapping) {
+  function updateTable(table, mapping, actionDesc = 'Update') {
     const tid = table.get('id');
+    const tableId = table.get('tableId');
     let found = false;
     let newTables = store.tables.map((t) => {
       if (t.get('id') === tid) {
@@ -122,7 +124,7 @@ export default function(COMPONENT_ID, configId) {
     if (!foundMapping && mapping) {
       newMappings = newMappings.push(mapping);
     }
-    return saveTables(newTables, newMappings, store.getSavingPath(tid), `Update table ${tid}`);
+    return saveTables(newTables, newMappings, store.getSavingPath(tid), `${actionDesc} table ${tableId}`);
   }
 
   function deleteTable(table) {
