@@ -267,6 +267,14 @@ module.exports = React.createClass
           div className: 'row',
             span className: 'col-md-3', 'Token '
             strong className: 'col-md-9', job.getIn(['token', 'description'])
+          div {className: 'row'},
+            span {className: 'col-md-3'},
+              'Duration'
+            strong {className: 'col-md-9'},
+              if jobStarted()
+                Duration({startTime: job.get('startTime'), endTime: job.get('endTime')})
+              else
+                'N/A'
 
   _renderAccordion: (job) ->
     isTransformation = job.get('component') == 'transformation'
