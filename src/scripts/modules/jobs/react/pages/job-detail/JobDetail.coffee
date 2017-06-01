@@ -165,7 +165,7 @@ module.exports = React.createClass
       if job.get('error') == job.get('error') == APPLICATION_ERROR
         parts.push (
           p {key: "apperror"},
-            'Something is broken.'
+            'Something is broken. '
             'Our developers were notified about this error and will let you know what went wrong.'
         )
 
