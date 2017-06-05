@@ -9,7 +9,7 @@ QueryEditor = React.createFactory(require '../../components/QueryEditor')
 QueryDetailStatic = React.createFactory(require './QueryDetailStatic')
 QueryNav = require('../../../../ex-db-generic/react/pages/query-detail/QueryNav').default
 EditButtons = require '../../../../../react/common/EditButtons'
-
+constants = require './../../../constants'
 
 {div, table, tbody, tr, td, ul, li, a, span, h2, p, strong} = React.DOM
 
@@ -40,6 +40,7 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
       queriesFilter: ExDbStore.getQueriesFilter()
       queriesFiltered: ExDbStore.getQueriesFiltered()
       outTableExist: ExDbStore.outTableExist(editingQuery)
+      component: storeProvisioning.componentsStore.getComponent(constants.COMPONENT_ID)
 
     _handleQueryChange: (newQuery) ->
       ExDbActionCreators.updateEditingQuery @state.configId, newQuery
@@ -81,7 +82,9 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
               configId: @state.configId
               componentId: componentId
               outTableExist: @state.outTableExist
+              component: @state.component
           else
             QueryDetailStatic
               query: @state.query
               componentId: componentId
+              component: @state.component

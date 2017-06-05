@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 export default React.createClass({
 
+  propTypes: {
+    documentationUrl: PropTypes.string.isRequired
+  },
+
   render() {
     return (
-      <p>
-        <small>
-          {'For more information about configuring MongoDB Extractor follow guide at '}
-           <a href="https://help.keboola.com/extractors/mongodb/">https://help.keboola.com</a>.
-        </small>
+      <p className="small">
+        {'For more information about configuring MongoDB Extractor follow guide at '}
+         <a href={this.props.documentationUrl} target="_blank">https://help.keboola.com</a>.
       </p>
     );
   }
-
 });

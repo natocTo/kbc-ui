@@ -9,6 +9,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
 
 QueryEditor = React.createFactory(require '../../components/QueryEditor')
+constants = require './../../../constants'
 
 module.exports = (componentId) ->
   ExDbActionCreators = actionsProvisioning.createActions(componentId)
@@ -21,6 +22,7 @@ module.exports = (componentId) ->
       ExDbStore = storeProvisioning.createStore(componentId, configId)
       newQuery = ExDbStore.getNewQuery()
 
+      component: storeProvisioning.componentsStore.getComponent(constants.COMPONENT_ID)
       configId: configId
       newQuery: newQuery
       exports: StorageTablesStore.getAll()
@@ -38,3 +40,4 @@ module.exports = (componentId) ->
           configId: @state.configId
           outTableExist: @state.outTableExist
           componentId: componentId
+          component: @state.component
