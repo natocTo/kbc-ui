@@ -6,7 +6,7 @@ Textarea = require 'react-textarea-autosize'
 TestCredentials = require './TestCredentialsButtonGroup'
 {NewLineToBr} = require('kbc-react-components')
 
-_helpUrl = 'https://help.keboola.com/extractors/database/#mysql-encryption'
+_helpUrl = 'https://help.keboola.com/extractors/database/sqldb/#mysql-encryption'
 
 module.exports = React.createClass
   displayName: 'SSLForm'

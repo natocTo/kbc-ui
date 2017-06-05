@@ -15,10 +15,11 @@ module.exports = React.createClass
     query: React.PropTypes.object.isRequired
     mode: React.PropTypes.string.isRequired
     componentId: React.PropTypes.string.isRequired
+    component: React.PropTypes.object.isRequired
 
   render: ->
     div className: 'row',
-      LinkToDocs null
+      LinkToDocs documentationUrl: @props.component.get('documentationUrl')
 
       div className: 'form-horizontal',
         div className: 'form-group',
