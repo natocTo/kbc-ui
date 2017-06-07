@@ -80,11 +80,20 @@ export default React.createClass({
   loadStatus(additionalState) {
     const newState = _.extend({}, additionalState, {loadingStatus: true});
     this.setState(newState);
+    const replacementApp = this.getReplacementApp();
+    let parameters = {
+      component: this.props.componentId
+    };
+    if (replacementApp) {
+      parameters = {
+        origin: this.props.componentId,
+        destination: replacementApp
+      };
+    }
+
     const params = {
       configData: {
-        parameters: {
-          component: this.props.componentId
-        }
+        parameters: parameters
       }
     };
     const componentsPromise = InstalledComponentsActionCreators.loadComponentsForce();
