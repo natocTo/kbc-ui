@@ -65,8 +65,9 @@ export default React.createClass({
     return {
       loadingStatus: false,
       isLoading: false,
-      status: null,
-      showModal: false
+      status: Map(),
+      showModal: false,
+      error: null
     };
   },
 
@@ -96,11 +97,15 @@ export default React.createClass({
         status: statusPromise
       }
     ).then((result) => {
-      return this.setState({
-        job: result.job,
-        status: fromJS(result.status),
-        loadingStatus: false
-      });
+      if (result.status.status === 'error') {
+        return this.setState({error: result.status.message, loadingStatus: false});
+      } else {
+        return this.setState({
+          job: result.job,
+          status: fromJS(result.status),
+          loadingStatus: false
+        });
+      }
     });
   },
 
@@ -142,8 +147,13 @@ export default React.createClass({
     const orchHelpText = 'List of orchestrations containing tasks of either the old db extractor or new db extractors. After a successful migration there should be only new db extractor tasks.';
 
     const body = (
-      this.state.status ?
+      !this.state.loadingStatus ?
       <span>
+        {this.state.error ?
+         <p className="alert alert-danger">
+           Error Loading status: {this.state.error}
+         </p>
+         :
         <div>
           <TabbedArea defaultActiveKey="general" animation={false} id="daterangetab">
 
@@ -157,6 +167,7 @@ export default React.createClass({
             }
           </TabbedArea>
         </div>
+        }
       </span>
     : 'Loading migration status...'
     );
@@ -166,7 +177,7 @@ export default React.createClass({
         saveStyle="success"
         saveLabel="Migrate"
         isSaving={this.state.isLoading}
-        isDisabled={this.state.isLoading || this.state.loadingStatus}
+        isDisabled={this.state.isLoading || this.state.loadingStatus || this.state.error}
         onSave={this.onMigrate}
         onCancel={this.hideModal}
       />
