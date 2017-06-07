@@ -57,7 +57,8 @@ const GoodDataMigrationDescription = (
 
 export default React.createClass({
   propTypes: {
-    componentId: React.PropTypes.string.isRequired
+    componentId: React.PropTypes.string.isRequired,
+    component: React.PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -111,7 +112,14 @@ export default React.createClass({
 
   canMigrate() {
     const isPernament = PERNAMENT_MIGRATION_COMPONENTS.indexOf(this.props.componentId) >= 0;
-    return isPernament || ApplicationStore.hasCurrentAdminFeature(MIGRATION_ALLOWED_FEATURE);
+    const hasAdminMigrationFeature = ApplicationStore.hasCurrentAdminFeature(MIGRATION_ALLOWED_FEATURE);
+    const hasReplacementApp = this.getReplacementApp();
+    return isPernament || hasAdminMigrationFeature || hasReplacementApp;
+  },
+
+  getReplacementApp() {
+    if (this.props.component) return this.props.component.getIn(['data', 'replacementApp']);
+    return null;
   },
 
   renderTabTitle(title, helptext) {
@@ -142,9 +150,11 @@ export default React.createClass({
             <TabPane eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
               {this.renderConfigStatus()}
             </TabPane>
+            {this.getReplacementApp() ? null :
             <TabPane eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
               {this.renderOrhcestrationsStatus()}
             </TabPane>
+            }
           </TabbedArea>
         </div>
       </span>
@@ -214,6 +224,7 @@ export default React.createClass({
   },
 
   getInfo() {
+    const replacementApp = this.getReplacementApp();
     if (this.props.componentId === 'ex-db') {
       return 'Migrate your current configurations to new vendor specific database extractors (MySql, Postgres, Oracle, Microsoft SQL). This extractor will continue to work until August 2016. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
     } else if (this.props.componentId === 'ex-google-analytics') {
@@ -224,6 +235,8 @@ export default React.createClass({
       return 'Migrate your current configurations to new Database Writer. This writer will continue to work until May 2017. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new writers. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
     } else if (this.props.componentId === 'ex-gooddata') {
       return GoodDataMigrationDescription;
+    } else if (replacementApp) {
+      return `Migration process will migrate all configurations of ${this.props.componentId} to new configurations of ${replacementApp} component within this project. Any encrypted values or authorized accounts will not be migrated and have to be entered/authorized manually again.`;
     } else {
       return '';
     }
@@ -424,14 +437,22 @@ export default React.createClass({
 
   onMigrate() {
     this.setState({isLoading: true});
+    const replacementApp = this.getReplacementApp();
+    let parameters = {
+      component: this.props.componentId
+    };
+    if (replacementApp) {
+      parameters = {
+        origin: this.props.componentId,
+        destination: replacementApp
+      };
+    }
     const params = {
       method: 'run',
       component: MIGRATION_COMPONENT_ID,
       data: {
         configData: {
-          parameters: {
-            component: this.props.componentId
-          }
+          parameters: parameters
         }
       },
       notify: true

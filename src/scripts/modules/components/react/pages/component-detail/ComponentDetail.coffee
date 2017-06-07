@@ -63,6 +63,7 @@ module.exports = React.createClass
             component: @state.component
       if @_isDeprecated()
         React.createElement MigrationRow,
+          component: @state.component
           componentId: @state.component.get('id')
       if (@state.component.get('longDescription'))
         div className: "row",
@@ -116,7 +117,7 @@ module.exports = React.createClass
         React.createElement ComponentEmptyState, null,
           div className: "text-center",
             AddComponentConfigurationButton
-              disabled: @_isDeprecated()
+              disabled: false
               label: "Create New Configuration"
               component: state.component
 
