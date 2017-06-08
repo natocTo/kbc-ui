@@ -64,7 +64,7 @@ module.exports = React.createClass
       if @_isDeprecated()
         React.createElement MigrationRow,
           componentId: @state.component.get('id')
-          replacementAppId: @state.component.getIn(['data', 'replacementApp'])
+          replacementAppId: @state.component.getIn(['uiOptions', 'replacementApp'])
       if (@state.component.get('longDescription'))
         div className: "row",
           div className: "col-md-12",
