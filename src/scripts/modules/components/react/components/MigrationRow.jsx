@@ -429,14 +429,12 @@ export default React.createClass({
 
   getNewComponentId(componentId) {
     const replacementApp = this.props.replacementAppId;
-    if (componentId.indexOf('ex-db') > -1) {
-      return `ex-db-generic-${componentId}`;
-    } else if (componentNameMap.has(componentId)) {
+    if (componentNameMap.has(componentId)) {
       return componentNameMap.get(componentId);
     } else if (replacementApp) {
       return replacementApp;
     } else {
-      return `keboola.${componentId}`;
+      return componentId;
     }
   },
 
