@@ -20,6 +20,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 import ComponentConfigurationLink from './ComponentConfigurationLink';
 import { Alert, Modal } from 'react-bootstrap';
+import ComponentEmptyState from '../../../components/react/components/ComponentEmptyState';
 
 const PERNAMENT_MIGRATION_COMPONENTS = [
   'ex-db',
@@ -279,38 +280,45 @@ export default React.createClass({
   },
 
   renderOrhcestrationsStatus() {
+    const orchestrations = this.state.status.get('orchestrations', List());
     return (
       <span>
-        <Table responsive className="table table-stripped">
-          <thead>
-            <tr>
-              <th>
-                Orchestration
-              </th>
-              <th>
-                Contains Old extractor tasks
-              </th>
-              <th>
-                Contains New extractors tasks
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.status.get('orchestrations', List()).map((row) =>
-              <tr>
-                <td>
-                  {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
-                </td>
-                <td>
-                  <Check isChecked={row.get('hasOld')} />
-                </td>
-                <td>
-                  <Check isChecked={row.get('hasNew')} />
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        {orchestrations.count() > 0 ?
+         <Table responsive className="table table-stripped">
+           <thead>
+             <tr>
+               <th>
+                 Orchestration
+               </th>
+               <th>
+                 Contains Old extractor tasks
+               </th>
+               <th>
+                 Contains New extractors tasks
+               </th>
+             </tr>
+           </thead>
+           <tbody>
+             {orchestrations.map((row) =>
+               <tr>
+                 <td>
+                   {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
+                 </td>
+                 <td>
+                   <Check isChecked={row.get('hasOld')} />
+                 </td>
+                 <td>
+                   <Check isChecked={row.get('hasNew')} />
+                 </td>
+               </tr>
+             )}
+           </tbody>
+         </Table>
+         :
+         <ComponentEmptyState>
+           No affected orchestrations found.
+         </ComponentEmptyState>
+        }
       </span>
     );
   },
