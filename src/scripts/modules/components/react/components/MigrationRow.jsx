@@ -424,7 +424,7 @@ export default React.createClass({
   renderNewConfigLink(row) {
     const newComponentId = this.getNewComponentId(row.get('componentId'));
     const newLabel = `${newComponentId} / ${row.get('configId')}`;
-    const configExists = InstalledComponentsStore.getConfig(newComponentId, row.get('configId')).count > 0;
+    const configExists = InstalledComponentsStore.getConfig(newComponentId, row.get('configId')).count() > 0;
     if (configExists) {
       return this.renderConfigLink(row.get('configId'), newComponentId, newLabel);
     } else {
