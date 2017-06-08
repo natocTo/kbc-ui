@@ -255,7 +255,7 @@ export default React.createClass({
     } else if (this.props.componentId === 'ex-gooddata') {
       return GoodDataMigrationDescription;
     } else if (replacementApp) {
-      return `Migration process will migrate all configurations of ${this.props.componentId} to new configurations of ${replacementApp} component within this project. Any encrypted values or authorized accounts will not be migrated and have to be entered/authorized manually again.`;
+      return `Migration process will migrate all configurations of ${this.props.componentId} to new configurations of ${replacementApp} component within this project. Any encrypted values or authorized accounts will not be migrated and have to be entered/authorized manually again. Beside that all orchestration tasks of the ${this.props.componentId} configurations will be replaced with configurations of the new ${replacementApp}`;
     } else {
       return '';
     }
