@@ -59,7 +59,7 @@ const GoodDataMigrationDescription = (
 export default React.createClass({
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
-    component: React.PropTypes.object.isRequired
+    replacementAppId: React.PropTypes.string
   },
 
   getInitialState() {
@@ -81,7 +81,7 @@ export default React.createClass({
   loadStatus(additionalState) {
     const newState = _.extend({}, additionalState, {loadingStatus: true});
     this.setState(newState);
-    const replacementApp = this.getReplacementApp();
+    const replacementApp = this.props.replacementAppId;
     let parameters = {
       component: this.props.componentId
     };
@@ -128,13 +128,8 @@ export default React.createClass({
   canMigrate() {
     const isPernament = PERNAMENT_MIGRATION_COMPONENTS.indexOf(this.props.componentId) >= 0;
     const hasAdminMigrationFeature = ApplicationStore.hasCurrentAdminFeature(MIGRATION_ALLOWED_FEATURE);
-    const hasReplacementApp = this.getReplacementApp();
+    const hasReplacementApp = this.props.replacementAppId;
     return isPernament || hasAdminMigrationFeature || hasReplacementApp;
-  },
-
-  getReplacementApp() {
-    if (this.props.component) return this.props.component.getIn(['data', 'replacementApp']);
-    return null;
   },
 
   renderTabTitle(title, helptext) {
@@ -243,7 +238,7 @@ export default React.createClass({
   },
 
   getInfo() {
-    const replacementApp = this.getReplacementApp();
+    const replacementApp = this.props.replacementAppId;
     if (this.props.componentId === 'ex-db') {
       return 'Migrate your current configurations to new vendor specific database extractors (MySql, Postgres, Oracle, Microsoft SQL). This extractor will continue to work until August 2016. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
     } else if (this.props.componentId === 'ex-google-analytics') {
@@ -346,7 +341,7 @@ export default React.createClass({
   },
 
   renderConfigStatus() {
-    const isReplacementApp = this.getReplacementApp();
+    const isReplacementApp = this.props.replacementAppId;
     return (
       <Table responsive className="table table-stripped">
         <thead>
@@ -423,7 +418,7 @@ export default React.createClass({
 
   renderNewConfigLink(row) {
     const newComponentId = this.getNewComponentId(row.get('componentId'));
-    const newLabel = `${newComponentId} / ${row.get('configId')}`;
+    const newLabel = `${newComponentId} / ${row.get('configName')}`;
     const configExists = InstalledComponentsStore.getConfig(newComponentId, row.get('configId')).count() > 0;
     if (configExists) {
       return this.renderConfigLink(row.get('configId'), newComponentId, newLabel);
@@ -433,7 +428,7 @@ export default React.createClass({
   },
 
   getNewComponentId(componentId) {
-    const replacementApp = this.getReplacementApp();
+    const replacementApp = this.props.replacementAppId;
     if (componentId.indexOf('ex-db') > -1) {
       return `ex-db-generic-${componentId}`;
     } else if (componentNameMap.has(componentId)) {
@@ -471,7 +466,7 @@ export default React.createClass({
 
   onMigrate() {
     this.setState({isLoading: true});
-    const replacementApp = this.getReplacementApp();
+    const replacementApp = this.props.replacementAppId;
     let parameters = {
       component: this.props.componentId
     };
