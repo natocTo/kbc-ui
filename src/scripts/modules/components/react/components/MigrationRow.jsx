@@ -163,22 +163,20 @@ export default React.createClass({
            Error Loading status: {this.state.error}
          </p>
          :
-        <div>
-          <TabbedArea defaultActiveKey="general" animation={false} id="daterangetab">
+         <div>
+           <TabbedArea defaultActiveKey="general" animation={false} id="daterangetab">
 
-            <TabPane eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
-              {this.renderConfigStatus()}
-            </TabPane>
-            {this.getReplacementApp() ? null :
-            <TabPane eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
-              {this.renderOrhcestrationsStatus()}
-            </TabPane>
-            }
-          </TabbedArea>
-        </div>
+             <TabPane eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
+               {this.renderConfigStatus()}
+             </TabPane>
+             <TabPane eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
+               {this.renderOrhcestrationsStatus()}
+             </TabPane>
+           </TabbedArea>
+         </div>
         }
       </span>
-    : 'Loading migration status...'
+      : 'Loading migration status...'
     );
     const dialogTitle = this.renderDialogTitle();
     const footer = (
@@ -310,7 +308,7 @@ export default React.createClass({
                   <Check isChecked={row.get('hasNew')} />
                 </td>
               </tr>
-             )}
+            )}
           </tbody>
         </Table>
       </span>
@@ -340,6 +338,7 @@ export default React.createClass({
   },
 
   renderConfigStatus() {
+    const isReplacementApp = this.getReplacementApp();
     return (
       <Table responsive className="table table-stripped">
         <thead>
@@ -347,9 +346,11 @@ export default React.createClass({
             <th>
               Configuration
             </th>
-            <th>
-              Config Table
-            </th>
+            {isReplacementApp ? null :
+             <th>
+               Config Table
+             </th>
+            }
             <th />
             <th>New Configuration</th>
             <th>
@@ -363,9 +364,11 @@ export default React.createClass({
               <td>
                 {this.renderConfigLink(row.get('configId'), this.props.componentId, row.get('configName'))}
               </td>
-              <td>
-                {this.renderTableLink(row.get('tableId'))}
-              </td>
+              {isReplacementApp ? null :
+               <td>
+                 {this.renderTableLink(row.get('tableId'))}
+               </td>
+              }
               <td>
                 <i className="kbc-icon-arrow-right" />
               </td>
@@ -376,7 +379,7 @@ export default React.createClass({
                 {row.get('status')}
               </td>
             </tr>
-           )}
+          )}
         </tbody>
       </Table>
     );
@@ -412,8 +415,8 @@ export default React.createClass({
 
   renderNewConfigLink(row) {
     const newComponentId = this.getNewComponentId(row.get('componentId'));
-    const newLabel = `${row.get('componentId')} / ${row.get('configId')}`;
-    const configExists = InstalledComponentsStore.getConfig(row.get('componentId'), row.get('configId'));
+    const newLabel = `${newComponentId} / ${row.get('configId')}`;
+    const configExists = InstalledComponentsStore.getConfig(newComponentId, row.get('configId')).count > 0;
     if (configExists) {
       return this.renderConfigLink(row.get('configId'), newComponentId, newLabel);
     } else {
@@ -422,10 +425,13 @@ export default React.createClass({
   },
 
   getNewComponentId(componentId) {
+    const replacementApp = this.getReplacementApp();
     if (componentId.indexOf('ex-db') > -1) {
       return `ex-db-generic-${componentId}`;
     } else if (componentNameMap.has(componentId)) {
       return componentNameMap.get(componentId);
+    } else if (replacementApp) {
+      return replacementApp;
     } else {
       return `keboola.${componentId}`;
     }
