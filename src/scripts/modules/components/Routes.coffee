@@ -12,7 +12,7 @@ ComponentsStore = require './stores/ComponentsStore'
 InstalledComponentsActionsCreators = require './InstalledComponentsActionCreators'
 ComponentsActionCreators = require './ComponentsActionCreators'
 
-
+exApifyRoutes = require('../apify/routes').default
 exDbRoutes = require '../ex-db/exDbRoutes'
 exDbGenericRoutes = require '../ex-db-generic/routes'
 exMongoDbRoutes = require '../ex-mongodb/routes'
@@ -129,6 +129,7 @@ routes =
     ,
       createComponentRoute 'keboola.csv-import', [csvImportRoutes]
       createComponentRoute 'keboola.ex-s3', [exS3Routes]
+      createComponentRoute 'apify.apify', [exApifyRoutes]
     ,
       createGenericDetailRoute 'extractor'
 
