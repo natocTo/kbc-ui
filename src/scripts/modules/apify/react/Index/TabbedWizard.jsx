@@ -61,7 +61,7 @@ export default React.createClass({
         theme="solarized"
         lineNumbers={true}
         value={this.props.settings}
-        readOnly={true}
+        readOnly={false}
         height="auto"
         mode="application/json"
         lineWrapping={true}
@@ -91,10 +91,12 @@ export default React.createClass({
   },
 
   renderTokenForm() {
+    const userHelp = <span>User ID from your <a href="https://www.apifier.com/account" target="_blank">account page</a>.</span>;
+    const tokenHelp = <span>Manage Acts token from your <a href="https://www.apifier.com/account" target="_blank">account page</a>.</span>;
     return (
       <div className="row form-horizontal clearfix">
-        {this.renderInput('User ID', 'userId', 'user Id', 'Enter User ID')}
-        {this.renderInput('Token', '#token', 'manage token', 'Enter token')}
+        {this.renderInput('User ID', 'userId', userHelp, 'Enter User ID')}
+        {this.renderInput('Token', '#token', tokenHelp, 'Enter token')}
       </div>
 
     );
@@ -134,13 +136,15 @@ export default React.createClass({
     const selectControl = (
       <InputGroup>
         <Select
+          placeholder="Select crawler"
           name="ids"
           key="ids"
           clearable={false}
           multi={false}
           options={options}
           value={value}
-          onChange={({value: crawlerId}) => this.updateParameter('crawlerId', crawlerId)}/>
+          onChange={({value: crawlerId}) =>
+            this.updateParameter('crawlerId', crawlerId)}/>
         <InputGroup.Addon>{refresh}</InputGroup.Addon>
       </InputGroup>);
     return (

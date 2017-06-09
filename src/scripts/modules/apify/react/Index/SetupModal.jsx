@@ -12,7 +12,9 @@ export default React.createClass({
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     prepareLocalState: PropTypes.func.isRequired,
-    loadCrawlers: PropTypes.func.isRequired
+    loadCrawlers: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+    onSave: PropTypes.func.isRequired
   },
 
   render() {
@@ -34,15 +36,15 @@ export default React.createClass({
           <WizardButtons
             onNext={() => this.cycleTab(1)}
             onPrevious={() => this.cycleTab(-1)}
-            onSave={() => null}
+            onSave={this.handleSave}
             onCancel={this.props.onHideFn}
-            isSaving={false}
-            isSaveDisabled={false}
-            isNextDisabled={false}
+            isSaving={this.props.isSaving}
+            isSaveDisabled={!this.canSave()}
+            isNextDisabled={!this.canNext()}
             isPreviousDisabled={step === 1}
             showNext={step < 3}
             showSave={true}
-            savingMessage="Saving"
+            savingMessage=""
           />
         </Modal.Footer>
       </Modal>
@@ -50,6 +52,52 @@ export default React.createClass({
     );
   },
 
+  handleSave() {
+    const crawlerSettings = fromJS(JSON.parse(this.getSettings()));
+    const parameters = this.localState('parameters', Map()).set('crawlerSettings', crawlerSettings);
+    const crawlerId = parameters.get('crawlerId');
+    const crawler = this.localState(['crawlers', 'data']).find((c) => c.get('id') === crawlerId);
+    const paramsToSave = parameters
+      .set('customId', crawler.get('customId'))
+      .set('settingsLink', crawler.get('settingsLink'));
+    this.props.onSave(paramsToSave);
+  },
+
+  canNext() {
+    const step = this.step();
+    if (step === AUTH_KEY) return this.hasAuth();
+    if (step === CRAWLER_KEY) return this.hasCrawler();
+  },
+
+  getSettings() {
+    return this.localState('settings', '{}');
+  },
+
+  isSettingsValid() {
+    try {
+      JSON.parse(this.getSettings());
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  hasAuth() {
+    const params = this.localState('parameters', Map());
+    return !!params.get('userId') && !!params.get('#token');
+  },
+
+  hasCrawler() {
+    const params = this.localState('parameters', Map());
+    return !!params.get('crawlerId');
+  },
+
+  canSave() {
+    const hasAuth = this.hasAuth();
+    const hasCrawler = this.hasCrawler();
+    const hasSettingsValid = this.isSettingsValid();
+    return hasAuth && hasCrawler && hasSettingsValid;
+  },
 
   cycleTab(delta) {
     let newStep = this.step() + delta;
@@ -70,7 +118,7 @@ export default React.createClass({
         updateLocalState={this.props.updateLocalState}
         parameters={this.localState('parameters', Map())}
         updateParameters={(parameters) => this.updateLocalState('parameters', parameters)}
-        settings={this.localState('settings', '{}')}
+        settings={this.getSettings()}
         updateSettings={(val) => this.updateLocalState('settings', val)}
       />
     );

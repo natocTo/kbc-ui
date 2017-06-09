@@ -30,8 +30,8 @@ export default React.createClass({
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
-    const store = storeProvisioning(COMPONENT_ID, configId);
-    const actions = actionsProvisioning(COMPONENT_ID, configId);
+    const store = storeProvisioning(configId);
+    const actions = actionsProvisioning(configId);
     const component = ComponentStore.getComponent(COMPONENT_ID);
 
     return {
@@ -102,12 +102,18 @@ export default React.createClass({
     const {localState, actions} = this.state;
     const path = ['SetupModal'];
     const showPath = path.concat('show');
+    const closeFn = () => {
+      this.updateLocalState(showPath, false);
+      this.updateLocalState(path, Map());
+    };
     return (
       <SetupModal
         show={localState.getIn(showPath, false)}
-        onHideFn={() => this.updateLocalState(path, Map())}
+        onHideFn={closeFn}
         {...actions.prepareLocalState(path.concat('data'))}
         loadCrawlers={actions.loadCrawlers}
+        onSave={(params) => actions.saveParams(params).then(closeFn)}
+        isSaving={localState.get('saving')}
       />
     );
   },

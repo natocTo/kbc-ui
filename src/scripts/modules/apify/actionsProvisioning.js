@@ -32,22 +32,21 @@ export default function(configId) {
   }
 
 
-  /* function saveConfigData(data, waitingPath, changeDescription) {
-   *   let dataToSave = data;
-   *   // check default output bucket and save default if non set
-   *   const ob = dataToSave.getIn(['parameters', 'outputBucket']);
-   *   if (!ob) {
-   *     dataToSave = dataToSave.setIn(['parameters', 'outputBucket'], common.getDefaultBucket(COMPONENT_ID, configId));
-   *   }
+  function saveConfigData(data, waitingPath, changeDescription) {
+    // check default output bucket and save default if non set
+    updateLocalState(waitingPath, true);
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription).then(() => updateLocalState(waitingPath, false));
+  }
 
-   *   updateLocalState(waitingPath, true);
-   *   return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave, changeDescription)
-   *                           .then(() => updateLocalState(waitingPath, false));
-   * }*/
+  function saveParameters(newParams) {
+    const data = store.configData.set('parameters', newParams);
+    return saveConfigData(data, 'saving', 'Setup crawler');
+  }
 
   return {
     updateLocalState: updateLocalState,
     prepareLocalState: prepareLocalState,
+    saveParams: saveParameters,
     loadCrawlers(settings) {
       const runData = store.configData.setIn(['parameters'], settings);
       const params = {
