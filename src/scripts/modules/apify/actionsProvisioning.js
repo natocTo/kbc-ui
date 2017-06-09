@@ -1,5 +1,6 @@
 import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
+import _ from 'underscore';
 
 const COMPONENT_ID = 'apify.apify';
 export default function(configId) {

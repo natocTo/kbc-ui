@@ -16,7 +16,7 @@ export default React.createClass({
         bsSize="large"
         show={this.props.show}
         onHide={this.props.onHideFn}>
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title>
             Setup Crawler
           </Modal.Title>
@@ -25,7 +25,7 @@ export default React.createClass({
           {this.renderWizard()}
         </Modal.Body>
         <Modal.Footer>
-
+          blablabl
         </Modal.Footer>
       </Modal>
 
@@ -38,7 +38,7 @@ export default React.createClass({
         <Tab title="Setup Token">
           <div className="row form-horizontal clearfix">
             <div className="form-group">
-              {this.renderFormControl()}
+              blablabla
             </div>
           </div>
         </Tab>
@@ -57,8 +57,8 @@ export default React.createClass({
       <input
         placeholder={placeholder}
         type="text"
-        value={this.query(propertyPath)}
-        onChange={(e) => this.updateLocalState(['query'].concat(propertyPath), e.target.value)}
+        value={1}
+        onChange={() => null}
         className="form-control"
       />
     );
@@ -79,6 +79,6 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
 });

@@ -19,6 +19,8 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
+import SetupModal from './SetupModal';
+
 // import {Button} from 'react-bootstrap';
 
 const COMPONENT_ID = 'apify.apify';
@@ -54,6 +56,10 @@ export default React.createClass({
                 configId={this.state.configId}
               />
             </div>
+          </div>
+          <div className="row">
+            {this.renderSetupModal()}
+            {this.renderStartSetup()}
           </div>
         </div>
 
@@ -92,10 +98,26 @@ export default React.createClass({
     );
   },
 
+  renderSetupModal() {
+    const {localState} = this.state;
+    const path = ['SetupModal'];
+    const showPath = path.concat('show');
+    return (
+      <SetupModal
+        show={localState.getIn(showPath, false)}
+        onHideFn={() => this.updateLocalState(showPath, false)}
+      />
+    );
+  },
+
+  showSetupModal() {
+    this.updateLocalState(['SetupModal', 'show'], true);
+  },
+
   renderStartSetup() {
     return (
       <div>
-        <button className="btn btn-success">
+        <button className="btn btn-success" onClick={this.showSetupModal}>
           Setup
         </button>
       </div>
@@ -109,6 +131,10 @@ export default React.createClass({
 
   runParams() {
     return () => ({config: this.state.configId});
+  },
+
+  updateLocalState(path, data) {
+    this.state.actions.updateLocalState(path, data);
   }
 
 });
