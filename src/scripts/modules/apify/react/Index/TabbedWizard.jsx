@@ -1,6 +1,10 @@
 import React, {PropTypes} from 'react';
 import {Tab, Tabs} from 'react-bootstrap';
 
+const AUTH_KEY = 1;
+const CRAWLER_KEY = 2;
+const OPTIONS_KEY = 3;
+
 export default React.createClass({
 
   propTypes: {
@@ -10,20 +14,34 @@ export default React.createClass({
     updateSettings: PropTypes.func.isRequired
   },
 
+  getInitialState() {
+    return {
+      step: AUTH_KEY
+    };
+  },
+
   render() {
     return (
-      <Tabs>
-        <Tab title="Setup Token">
+      <Tabs activeKey={this.state.step} animation={false} onSelect={this.selectTab} generateChildId={true}>
+        <Tab title="Setup Token" eventKey={AUTH_KEY} disabled={this.isTabDisabled(AUTH_KEY)}>
           {this.renderTokenForm()}
         </Tab>
-        <Tab title="Select Crawler">
-          Select crawler
+        <Tab title="Select Crawler" eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
+
         </Tab>
-        <Tab title="Crawler Settings(optional)">
+        <Tab title="Crawler Settings(optional)" eventKey={OPTIONS_KEY} disabled={this.isTabDisabled(OPTIONS_KEY)}>
           Crawler Settings
         </Tab>
       </Tabs>
     );
+  },
+
+  isTabDisabled(tabKey) {
+    return this.state.step !== tabKey;
+  },
+
+  selectTab(tabKey) {
+    this.setState({step: tabKey});
   },
 
   renderTokenForm() {
