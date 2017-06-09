@@ -107,6 +107,7 @@ export default React.createClass({
         show={localState.getIn(showPath, false)}
         onHideFn={() => this.updateLocalState(showPath, false)}
         {...actions.prepareLocalState(path.concat('data'))}
+        loadCrawlers={actions.loadCrawlers}
       />
     );
   },

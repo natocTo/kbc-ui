@@ -1,7 +1,9 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
-import TabbedWizard from './TabbedWizard';
+import TabbedWizard, {AUTH_KEY} from './TabbedWizard';
 import {Map} from 'immutable';
+import WizardButtons from '../../../components/react/components/WizardButtons';
+
 export default React.createClass({
 
   propTypes: {
@@ -9,11 +11,12 @@ export default React.createClass({
     show: PropTypes.bool.isRequired,
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
-    prepareLocalState: PropTypes.func.isRequired
-
+    prepareLocalState: PropTypes.func.isRequired,
+    loadCrawlers: PropTypes.func.isRequired
   },
 
   render() {
+    const step = this.step();
     return (
       <Modal
         bsSize="large"
@@ -28,16 +31,38 @@ export default React.createClass({
           {this.renderWizard()}
         </Modal.Body>
         <Modal.Footer>
-          blabl
+          <WizardButtons
+            onNext={() => this.cycleTab(1)}
+            onPrevious={() => this.cycleTab(-1)}
+            onSave={() => null}
+            onCancel={this.props.onHideFn}
+            isSaving={false}
+            isSaveDisabled={false}
+            isNextDisabled={false}
+            isPreviousDisabled={step === 1}
+            showNext={step < 3}
+            showSave={true}
+            savingMessage="Saving"
+          />
         </Modal.Footer>
       </Modal>
 
     );
   },
 
+
+  cycleTab(delta) {
+    let newStep = this.step() + delta;
+    newStep = newStep === 0 ? AUTH_KEY : newStep;
+    newStep = newStep > 3 ? AUTH_KEY : newStep;
+    this.updateLocalState('step', newStep);
+  },
+
   renderWizard() {
     return (
       <TabbedWizard
+        loadCrawlers={this.props.loadCrawlers}
+        step={this.step()}
         localState={this.props.localState}
         updateLocalState={this.props.updateLocalState}
         settings={this.localState('settings', Map())}
@@ -77,6 +102,10 @@ export default React.createClass({
 
   localState(key, defaultValue) {
     return this.props.localState.getIn([].concat(key), defaultValue);
+  },
+
+  step() {
+    return this.localState('step', AUTH_KEY);
   },
 
   updateLocalState(path, value) {

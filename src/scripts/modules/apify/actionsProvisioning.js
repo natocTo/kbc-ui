@@ -1,6 +1,7 @@
 import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import _ from 'underscore';
+import callDockerAction from '../components/DockerActionsApi';
 
 const COMPONENT_ID = 'apify.apify';
 export default function(configId) {
@@ -46,6 +47,14 @@ export default function(configId) {
 
   return {
     updateLocalState: updateLocalState,
-    prepareLocalState: prepareLocalState
+    prepareLocalState: prepareLocalState,
+    loadCrawlers(settings) {
+      const runData = store.configData.setIn(['parameters'], settings);
+      const params = {
+        configData: runData.toJS()
+      };
+      return callDockerAction(COMPONENT_ID, 'listCrawlers', params);
+    }
+
   };
 }
