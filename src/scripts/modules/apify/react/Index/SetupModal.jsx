@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
-import TabbedWizard, {AUTH_KEY} from './TabbedWizard';
-import {Map} from 'immutable';
+import TabbedWizard, {AUTH_KEY, CRAWLER_KEY} from './TabbedWizard';
+import {fromJS, Map} from 'immutable';
 import WizardButtons from '../../../components/react/components/WizardButtons';
 
 export default React.createClass({
@@ -55,19 +55,40 @@ export default React.createClass({
     let newStep = this.step() + delta;
     newStep = newStep === 0 ? AUTH_KEY : newStep;
     newStep = newStep > 3 ? AUTH_KEY : newStep;
+    if (newStep === CRAWLER_KEY) this.onLoadCrawlers();
     this.updateLocalState('step', newStep);
   },
 
   renderWizard() {
     return (
       <TabbedWizard
-        loadCrawlers={this.props.loadCrawlers}
+        loadCrawlers={this.onLoadCrawlersForce}
+        crawlers={this.localState('crawlers', Map())}
         step={this.step()}
         localState={this.props.localState}
         updateLocalState={this.props.updateLocalState}
         settings={this.localState('settings', Map())}
         updateSettings={(settings) => this.updateLocalState('settings', settings)}
       />
+    );
+  },
+
+  onLoadCrawlers() {
+    if (this.localState(['settings', 'crawlerId'])) return;
+    this.onLoadCrawlersForce();
+  },
+
+  onLoadCrawlersForce() {
+    this.updateLocalState(['crawlers'], Map({'loading': true, 'error': null}));
+    this.props.loadCrawlers(this.localState('settings')).then((data) => {
+      const crawlers = {
+        data: data.status !== 'error' ? data : null,
+        loading: false,
+        error: data.status === 'error' ? 'Error: ' + data.message : null
+      };
+      return this.updateLocalState('crawlers', fromJS(crawlers));
+    }).catch(() =>
+      this.updateLocalState('crawlers', fromJS({loading: false, data: null, error: 'Error Loading Crawlers'}))
     );
   },
 
