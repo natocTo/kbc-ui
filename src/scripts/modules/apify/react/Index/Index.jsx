@@ -92,6 +92,17 @@ export default React.createClass({
     );
   },
 
+  renderStartSetup() {
+    return (
+      <div>
+        <button className="btn btn-success">
+          Setup
+        </button>
+      </div>
+    );
+  },
+
+
   invalidToRun() {
     return '';
   },

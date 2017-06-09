@@ -11,6 +11,25 @@ export default function(configId) {
     componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
   }
 
+  // returns localState for @path and function to update local state
+  // on @path+@subPath
+  function prepareLocalState(path) {
+    const ls = store.getLocalState(path);
+    const updateLocalSubstateFn = (subPath, newData)  =>  {
+      if (_.isEmpty(subPath)) {
+        return updateLocalState([].concat(path), newData);
+      } else {
+        return updateLocalState([].concat(path).concat(subPath), newData);
+      }
+    };
+    return {
+      localState: ls,
+      updateLocalState: updateLocalSubstateFn,
+      prepareLocalState: (newSubPath) => prepareLocalState([].concat(path).concat(newSubPath))
+    };
+  }
+
+
   /* function saveConfigData(data, waitingPath, changeDescription) {
    *   let dataToSave = data;
    *   // check default output bucket and save default if non set
@@ -25,6 +44,7 @@ export default function(configId) {
    * }*/
 
   return {
-    updateLocalState: updateLocalState
+    updateLocalState: updateLocalState,
+    prepareLocalState: prepareLocalState
   };
 }
