@@ -1,5 +1,5 @@
 import React from 'react';
-// import {Map} from 'immutable';
+import {Map} from 'immutable';
 
 // stores
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
@@ -105,7 +105,7 @@ export default React.createClass({
     return (
       <SetupModal
         show={localState.getIn(showPath, false)}
-        onHideFn={() => this.updateLocalState(showPath, false)}
+        onHideFn={() => this.updateLocalState(path, Map())}
         {...actions.prepareLocalState(path.concat('data'))}
         loadCrawlers={actions.loadCrawlers}
       />
