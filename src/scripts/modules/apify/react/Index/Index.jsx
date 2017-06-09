@@ -99,13 +99,14 @@ export default React.createClass({
   },
 
   renderSetupModal() {
-    const {localState} = this.state;
+    const {localState, actions} = this.state;
     const path = ['SetupModal'];
     const showPath = path.concat('show');
     return (
       <SetupModal
         show={localState.getIn(showPath, false)}
         onHideFn={() => this.updateLocalState(showPath, false)}
+        {...actions.prepareLocalState(path.concat('data'))}
       />
     );
   },

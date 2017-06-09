@@ -1,13 +1,16 @@
 import React, {PropTypes} from 'react';
-import {Modal, Tab, Tabs} from 'react-bootstrap';
-
+import {Modal} from 'react-bootstrap';
+import TabbedWizard from './TabbedWizard';
+import {Map} from 'immutable';
 export default React.createClass({
 
   propTypes: {
     onHideFn: PropTypes.func,
     show: PropTypes.bool.isRequired,
     localState: PropTypes.object.isRequired,
-    updateLocalState: PropTypes.func.isRequired
+    updateLocalState: PropTypes.func.isRequired,
+    prepareLocalState: PropTypes.func.isRequired
+
   },
 
   render() {
@@ -25,7 +28,7 @@ export default React.createClass({
           {this.renderWizard()}
         </Modal.Body>
         <Modal.Footer>
-          blablabl
+          blabl
         </Modal.Footer>
       </Modal>
 
@@ -34,21 +37,12 @@ export default React.createClass({
 
   renderWizard() {
     return (
-      <Tabs>
-        <Tab title="Setup Token">
-          <div className="row form-horizontal clearfix">
-            <div className="form-group">
-              blablabla
-            </div>
-          </div>
-        </Tab>
-        <Tab title="Select Crawler">
-          Select crawler
-        </Tab>
-        <Tab title="Crawler Settings(optional)">
-          Crawler Settings
-        </Tab>
-      </Tabs>
+      <TabbedWizard
+        localState={this.props.localState}
+        updateLocalState={this.props.updateLocalState}
+        settings={this.localState('settings', Map())}
+        updateSettings={(settings) => this.updateLocalState('settings', settings)}
+      />
     );
   },
 
@@ -79,6 +73,14 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  localState(key, defaultValue) {
+    return this.props.localState.getIn([].concat(key), defaultValue);
+  },
+
+  updateLocalState(path, value) {
+    this.props.updateLocalState(path, value);
   }
 
 });
