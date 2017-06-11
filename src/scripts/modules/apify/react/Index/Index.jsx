@@ -14,6 +14,7 @@ import actionsProvisioning from '../../actionsProvisioning';
 
 // ui components
 import ComponentDescription from '../../../components/react/components/ComponentDescription';
+import SapiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
@@ -54,56 +55,56 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-      <div className="col-md-9 kbc-main-content">
-      <div className="kbc-header kbc-header-without-row-fix">
-      <div className="col-sm-12">
-      <ComponentDescription
-      componentId={COMPONENT_ID}
-      configId={this.state.configId}
-      />
-      </div>
-      </div>
-      <div className="kbc-header kbc-header-without-row-fix">
-      {this.renderSetupModal()}
-      {this.isConfigured() ?
-       this.renderStatic()
-       :
-       this.renderStartSetup()
-      }
+        <div className="col-md-9 kbc-main-content">
+          <div className="kbc-header kbc-header-without-row-fix">
+            <div className="col-sm-12">
+              <ComponentDescription
+                componentId={COMPONENT_ID}
+                configId={this.state.configId}
+              />
+            </div>
           </div>
-      </div>
+          <div className="kbc-header kbc-header-without-row-fix">
+            {this.renderSetupModal()}
+            {this.isConfigured() ?
+             this.renderStatic()
+             :
+             this.renderStartSetup()
+            }
+          </div>
+        </div>
 
-      <div className="col-md-3 kbc-main-sidebar">
-        <ComponentMetadata
-          configId={this.state.configId}
-          componentId={COMPONENT_ID}
-        />
-        <ul className="nav nav-stacked">
-          <li className={!!this.invalidToRun() ? 'disabled' : null}>
-            <RunComponentButton
-              title="Run"
-              component={COMPONENT_ID}
-              mode="link"
-              runParams={this.runParams()}
-              disabled={!!this.invalidToRun()}
-              disabledReason={this.invalidToRun()}
-            >
-              You are about to run extraction.
-            </RunComponentButton>
-          </li>
-          <li>
-            <DeleteConfigurationButton
-              componentId={COMPONENT_ID}
-              configId={this.state.configId}
-            />
-          </li>
-        </ul>
-        <LatestJobs jobs={this.state.latestJobs} limit={3} />
-        <LatestVersions
-          limit={3}
-          componentId={COMPONENT_ID}
-        />
-      </div>
+        <div className="col-md-3 kbc-main-sidebar">
+          <ComponentMetadata
+            configId={this.state.configId}
+            componentId={COMPONENT_ID}
+          />
+          <ul className="nav nav-stacked">
+            <li className={!!this.invalidToRun() ? 'disabled' : null}>
+              <RunComponentButton
+                title="Run"
+                component={COMPONENT_ID}
+                mode="link"
+                runParams={this.runParams()}
+                disabled={!!this.invalidToRun()}
+                disabledReason={this.invalidToRun()}
+              >
+                You are about to run extraction.
+              </RunComponentButton>
+            </li>
+            <li>
+              <DeleteConfigurationButton
+                componentId={COMPONENT_ID}
+                configId={this.state.configId}
+              />
+            </li>
+          </ul>
+          <LatestJobs jobs={this.state.latestJobs} limit={3} />
+          <LatestVersions
+            limit={3}
+            componentId={COMPONENT_ID}
+          />
+        </div>
       </div>
     );
   },
@@ -130,7 +131,7 @@ export default React.createClass({
         {...actions.prepareLocalState(path.concat('data'))}
         loadCrawlers={actions.loadCrawlers}
         onSave={(params) => actions.saveParams(params).then(closeFn)}
-        isSaving={localState.get('saving')}
+        isSaving={localState.get('saving') || false}
       />
     );
   },
@@ -156,6 +157,9 @@ export default React.createClass({
     const crawler = this.renderCrawlerStatic(parameters);
     const user = <p className="form-control-static">{parameters.get('userId')}</p>;
     const settings = <div className="form-control-static"> {this.renderStaticCralwerSettings(parameters.get('crawlerSettings').toJS())}</div>;
+    const bucketId = this.state.store.outputBucket;
+    const tableId = `${bucketId}.crawlerResults`;
+    const resultsTable = <p className="form-control-static"><SapiTableLinkEx tableId={tableId} /></p>;
 
     return (
       <div className="form-horizontal">
@@ -171,6 +175,8 @@ export default React.createClass({
             </button>
           </span>
         </div>
+        <br />
+        {this.renderStaticFormGroup('Results table', resultsTable)}
       </div>
     );
   },
@@ -213,7 +219,7 @@ export default React.createClass({
     return (
       <CodeMirror
         theme="solarized"
-        lineNumbers={true}
+        lineNumbers={false}
         defaultValue={value}
         readOnly={true}
         cursorHeight={0}
