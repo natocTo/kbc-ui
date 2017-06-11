@@ -126,8 +126,8 @@ export default React.createClass({
     );
     const staticElement = (
       <FormControl.Static>
-        {isLoading ? refresh
-         : error}
+        {error}
+        {refresh}
       </FormControl.Static>
     );
     const options = crawlersData.map((c) => {

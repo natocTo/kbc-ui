@@ -21,6 +21,12 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import SetupModal from './SetupModal';
 
+import CodeMirror from 'react-code-mirror';
+/* global require */
+require('codemirror/addon/lint/lint');
+require('../../../../utils/codemirror/json-lint');
+
+
 // import {Button} from 'react-bootstrap';
 
 const COMPONENT_ID = 'apify.apify';
@@ -49,7 +55,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="row kbc-header">
+          <div className="kbc-header kbc-header-without-row-fix">
             <div className="col-sm-12">
               <ComponentDescription
                 componentId={COMPONENT_ID}
@@ -57,9 +63,10 @@ export default React.createClass({
               />
             </div>
           </div>
-          <div className="row">
+          <div className="kbc-header kbc-header-without-row-fix">
             {this.renderSetupModal()}
             {this.renderStartSetup()}
+            {this.renderStatic()}
           </div>
         </div>
 
@@ -104,7 +111,6 @@ export default React.createClass({
     const showPath = path.concat('show');
     const closeFn = () => {
       this.updateLocalState(showPath, false);
-      this.updateLocalState(path, Map());
     };
     return (
       <SetupModal
@@ -119,6 +125,7 @@ export default React.createClass({
   },
 
   showSetupModal() {
+    this.updateLocalState('SetupModal', Map());
     this.updateLocalState(['SetupModal', 'show'], true);
   },
 
@@ -132,6 +139,68 @@ export default React.createClass({
     );
   },
 
+  renderStatic() {
+    const parameters = this.state.store.parameters;
+    const crawler = this.renderCrawlerStatic(parameters);
+    const user = <p className="form-control-static">{parameters.get('userId')}</p>;
+    const settings = <div className="form-control-static"> {this.renderStaticCralwerSettings(parameters.get('crawlerSettings').toJS())}</div>;
+
+    return (
+      <div className="form-horizontal">
+      {this.renderStaticFormGroup('User ID', user)}
+      {this.renderStaticFormGroup('Crawler', crawler)}
+      {this.renderStaticFormGroup('Crawler Settings', settings)}
+      </div>
+    );
+  },
+
+  renderCrawlerStatic(parameters) {
+    const cname = parameters.get('customId', parameters.get('crawlerId'));
+    return (
+      <p className="form-control-static">
+        {parameters.get('settingsLink') ?
+         <a target="_blank" href={parameters.get('settingsLink')}>
+           {cname}
+         </a>
+         : <span> {cname} </span>
+        }
+      </p>
+    );
+  },
+
+  renderStaticFormGroup(controlLabel, control, helpText) {
+    return (
+      <div className={'form-group'}>
+        <label className="col-xs-2 control-label">
+          {controlLabel}
+        </label>
+        <div className="col-xs-10">
+          {control}
+          <span className="help-block">
+            {helpText}
+          </span>
+        </div>
+      </div>
+    );
+  },
+
+  renderStaticCralwerSettings(data) {
+    let value = '{}';
+    if (data) {
+      value = JSON.stringify(data, null, '  ');
+    }
+    return (
+      <CodeMirror
+        theme="solarized"
+        lineNumbers={true}
+        defaultValue={value}
+        readOnly={true}
+        cursorHeight={0}
+        mode="application/json"
+        lineWrapping={true}
+      />
+    );
+  },
 
   invalidToRun() {
     return '';
