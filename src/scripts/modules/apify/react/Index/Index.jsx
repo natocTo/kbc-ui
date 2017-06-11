@@ -1,6 +1,6 @@
 import React from 'react';
 import {Map} from 'immutable';
-
+import ComponentEmptyState from '../../../components/react/components/ComponentEmptyState';
 // stores
 import storeProvisioning, {storeMixins} from '../../storeProvisioning';
 import ComponentStore from '../../../components/stores/ComponentsStore';
@@ -54,55 +54,65 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="col-md-9 kbc-main-content">
-          <div className="kbc-header kbc-header-without-row-fix">
-            <div className="col-sm-12">
-              <ComponentDescription
-                componentId={COMPONENT_ID}
-                configId={this.state.configId}
-              />
-            </div>
+      <div className="col-md-9 kbc-main-content">
+      <div className="kbc-header kbc-header-without-row-fix">
+      <div className="col-sm-12">
+      <ComponentDescription
+      componentId={COMPONENT_ID}
+      configId={this.state.configId}
+      />
+      </div>
+      </div>
+      <div className="kbc-header kbc-header-without-row-fix">
+      {this.renderSetupModal()}
+      {this.isConfigured() ?
+       this.renderStatic()
+       :
+       this.renderStartSetup()
+      }
           </div>
-          <div className="kbc-header kbc-header-without-row-fix">
-            {this.renderSetupModal()}
-            {this.renderStartSetup()}
-            {this.renderStatic()}
-          </div>
-        </div>
+      </div>
 
-        <div className="col-md-3 kbc-main-sidebar">
-          <ComponentMetadata
-            configId={this.state.configId}
-            componentId={COMPONENT_ID}
-          />
-          <ul className="nav nav-stacked">
-            <li className={!!this.invalidToRun() ? 'disabled' : null}>
-              <RunComponentButton
-                title="Upload"
-                component={COMPONENT_ID}
-                mode="link"
-                runParams={this.runParams()}
-                disabled={!!this.invalidToRun()}
-                disabledReason={this.invalidToRun()}
-              >
-                You are about to upload data.
-              </RunComponentButton>
-            </li>
-            <li>
-              <DeleteConfigurationButton
-                componentId={COMPONENT_ID}
-                configId={this.state.configId}
-              />
-            </li>
-          </ul>
-          <LatestJobs jobs={this.state.latestJobs} limit={3} />
-          <LatestVersions
-            limit={3}
-            componentId={COMPONENT_ID}
-          />
-        </div>
+      <div className="col-md-3 kbc-main-sidebar">
+        <ComponentMetadata
+          configId={this.state.configId}
+          componentId={COMPONENT_ID}
+        />
+        <ul className="nav nav-stacked">
+          <li className={!!this.invalidToRun() ? 'disabled' : null}>
+            <RunComponentButton
+              title="Run"
+              component={COMPONENT_ID}
+              mode="link"
+              runParams={this.runParams()}
+              disabled={!!this.invalidToRun()}
+              disabledReason={this.invalidToRun()}
+            >
+              You are about to run extraction.
+            </RunComponentButton>
+          </li>
+          <li>
+            <DeleteConfigurationButton
+              componentId={COMPONENT_ID}
+              configId={this.state.configId}
+            />
+          </li>
+        </ul>
+        <LatestJobs jobs={this.state.latestJobs} limit={3} />
+        <LatestVersions
+          limit={3}
+          componentId={COMPONENT_ID}
+        />
+      </div>
       </div>
     );
+  },
+
+  isConfigured() {
+    const params = this.state.store.parameters;
+    const hasAuth = !!params.get('userId') && !!params.get('#token');
+    const hasCrawler = !!params.get('crawlerId');
+    return hasAuth && hasCrawler;
   },
 
   renderSetupModal() {
@@ -132,11 +142,12 @@ export default React.createClass({
 
   renderStartSetup() {
     return (
-      <div>
+      <ComponentEmptyState>
+        <p> No Crawler configured.</p>
         <button className="btn btn-success" onClick={this.showSetupModal}>
-          Setup
+          Configure Crawler
         </button>
-      </div>
+      </ComponentEmptyState>
     );
   },
 
@@ -213,7 +224,7 @@ export default React.createClass({
   },
 
   invalidToRun() {
-    return '';
+    return this.isConfigured() ? '' : 'No crawler configured';
   },
 
   runParams() {

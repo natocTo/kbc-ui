@@ -43,7 +43,7 @@ export default React.createClass({
             disabled={this.isTabDisabled(AUTH_KEY)}>
             {this.renderTokenForm()}
           </Tab>
-          <Tab title="Select Crawler"
+          <Tab title="Crawler"
             eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
             {this.renderCrawlersForm()}
           </Tab>
@@ -161,7 +161,7 @@ export default React.createClass({
 
 
   renderInputControl(propertyPath, placeholder) {
-    const propValue = this.parameter(propertyPath);
+    const propValue = this.parameter(propertyPath, '');
     const isEncrypted = propValue.includes('KBC::') && propValue.includes('Encrypted');
     let value = '';
     let placeholderValue = '';
@@ -183,8 +183,8 @@ export default React.createClass({
     );
   },
 
-  parameter(key) {
-    return this.props.parameters.get(key);
+  parameter(key, defaultValue) {
+    return this.props.parameters.get(key, defaultValue);
   },
 
   updateParameter(key, newValue) {
