@@ -10,10 +10,11 @@ export default React.createClass({
     onHideFn: PropTypes.func,
     show: PropTypes.bool.isRequired,
     localState: PropTypes.object.isRequired,
+    parameters: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     prepareLocalState: PropTypes.func.isRequired,
     loadCrawlers: PropTypes.func.isRequired,
-    isSaving: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool,
     onSave: PropTypes.func.isRequired
   },
 
@@ -54,7 +55,7 @@ export default React.createClass({
 
   handleSave() {
     const crawlerSettings = fromJS(JSON.parse(this.getSettings()));
-    const parameters = this.localState('parameters', Map()).set('crawlerSettings', crawlerSettings);
+    const parameters = this.parameters().set('crawlerSettings', crawlerSettings);
     const crawlerId = parameters.get('crawlerId');
     const crawler = this.localState(['crawlers', 'data']).find((c) => c.get('id') === crawlerId);
     const paramsToSave = parameters
@@ -83,12 +84,12 @@ export default React.createClass({
   },
 
   hasAuth() {
-    const params = this.localState('parameters', Map());
+    const params = this.parameters();
     return !!params.get('userId') && !!params.get('#token');
   },
 
   hasCrawler() {
-    const params = this.localState('parameters', Map());
+    const params = this.parameters();
     return !!params.get('crawlerId');
   },
 
@@ -116,7 +117,7 @@ export default React.createClass({
         selectTab={(s) => this.updateLocalState('step', s)}
         localState={this.props.localState}
         updateLocalState={this.props.updateLocalState}
-        parameters={this.localState('parameters', Map())}
+        parameters={this.parameters()}
         updateParameters={(parameters) => this.updateLocalState('parameters', parameters)}
         settings={this.getSettings()}
         updateSettings={(val) => this.updateLocalState('settings', val)}
@@ -131,7 +132,7 @@ export default React.createClass({
 
   onLoadCrawlersForce() {
     this.updateLocalState(['crawlers'], Map({'loading': true, 'error': null}));
-    this.props.loadCrawlers(this.localState('parameters')).then((data) => {
+    this.props.loadCrawlers(this.parameters()).then((data) => {
       const crawlers = {
         data: data.status !== 'error' ? data : null,
         loading: false,
@@ -174,6 +175,10 @@ export default React.createClass({
 
   localState(key, defaultValue) {
     return this.props.localState.getIn([].concat(key), defaultValue);
+  },
+
+  parameters() {
+    return this.localState('parameters', this.props.parameters);
   },
 
   step() {

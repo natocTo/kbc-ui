@@ -106,7 +106,7 @@ export default React.createClass({
   },
 
   renderSetupModal() {
-    const {localState, actions} = this.state;
+    const {localState, actions, store} = this.state;
     const path = ['SetupModal'];
     const showPath = path.concat('show');
     const closeFn = () => {
@@ -114,6 +114,7 @@ export default React.createClass({
     };
     return (
       <SetupModal
+        parameters={store.parameters}
         show={localState.getIn(showPath, false)}
         onHideFn={closeFn}
         {...actions.prepareLocalState(path.concat('data'))}
@@ -147,9 +148,18 @@ export default React.createClass({
 
     return (
       <div className="form-horizontal">
-      {this.renderStaticFormGroup('User ID', user)}
-      {this.renderStaticFormGroup('Crawler', crawler)}
-      {this.renderStaticFormGroup('Crawler Settings', settings)}
+        {this.renderStaticFormGroup('User ID', user)}
+        {this.renderStaticFormGroup('Crawler', crawler)}
+        {this.renderStaticFormGroup('Crawler Settings', settings)}
+        <div className="col-md-12">
+          <span className="pull-right">
+            <button className="btn btn-link" onClick={this.showSetupModal}>
+              <span className="kbc-icon-pencil" />
+              {' '}
+              Edit Configuration
+            </button>
+          </span>
+        </div>
       </div>
     );
   },

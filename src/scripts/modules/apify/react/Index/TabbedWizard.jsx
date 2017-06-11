@@ -87,7 +87,7 @@ export default React.createClass({
 
 
   isTabDisabled(tabKey) {
-    return this.props.step !== tabKey && false;
+    return this.props.step !== tabKey;
   },
 
   renderTokenForm() {
@@ -113,7 +113,7 @@ export default React.createClass({
   renderCrawlerSelector() {
     const crawlersData = this.props.crawlers.get('data') || List();
     const value = this.props.parameters.get('crawlerId');
-    const isLoading = this.props.crawlers.get('loading');
+    const isLoading = this.props.crawlers.get('loading', false);
     const error = this.props.crawlers.get('error');
     const refresh = (
       <span>
@@ -161,11 +161,22 @@ export default React.createClass({
 
 
   renderInputControl(propertyPath, placeholder) {
+    const propValue = this.parameter(propertyPath);
+    const isEncrypted = propValue.includes('KBC::') && propValue.includes('Encrypted');
+    let value = '';
+    let placeholderValue = '';
+    if (isEncrypted ) {
+      value = '';
+      placeholderValue = 'Encrypted value, leave blank to keep it';
+    } else {
+      value = propValue;
+      placeholderValue = placeholder;
+    }
     return (
       <input
-        placeholder={placeholder}
+        placeholder={placeholderValue}
         type="text"
-        value={this.parameter(propertyPath)}
+        value={value}
         onChange={(e) => this.updateParameter(propertyPath, e.target.value)}
         className="form-control"
       />
@@ -182,6 +193,7 @@ export default React.createClass({
 
   renderInput(caption, propertyPath, helpText, placeholder, validationFn = () => null) {
     const validationText = validationFn();
+
     const inputControl = this.renderInputControl(propertyPath, placeholder);
     return this.renderFormControl(caption, inputControl, helpText, validationText);
   },
