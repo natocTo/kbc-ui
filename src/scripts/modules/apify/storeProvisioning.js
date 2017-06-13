@@ -11,7 +11,7 @@ export default function(configId) {
   const localState = () => InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
   const parameters = configData.get('parameters', Map());
-  const defaultOutputBucket = getDefaultBucket('out', COMPONENT_ID, configId);
+  const defaultOutputBucket = getDefaultBucket('in', COMPONENT_ID, configId);
 
   return {
     parameters: parameters,
