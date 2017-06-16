@@ -16,7 +16,7 @@ export default React.createClass({
           <MySqlSandbox />
           {ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false) ? (<RedshiftSandbox />) : null}
           {ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false) ? (<SnowflakeSandbox />) : null}
-          {ApplicationStore.hasCurrentAdminFeature('docker-sandbox') ? (<RStudioSandbox />) : null}
+          <RStudioSandbox />
           <JupyterSandbox />
         </div>
       </div>
