@@ -95,7 +95,13 @@ var RStudioSandbox = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <h4>RStudio</h4>
+        <h4>
+          RStudio
+          {' '}
+          <span className="label label-info">
+            <a style={{color: '#fff'}} href="http://status.keboola.com/call-for-testers-rstudio-and-jupyter-sandboxes">BETA</a>
+          </span>
+        </h4>
         <div className="col-md-9">
           <p className="small">If not used, the sandbox will be deleted after 5 days.</p>
           {this._renderCredentials()}

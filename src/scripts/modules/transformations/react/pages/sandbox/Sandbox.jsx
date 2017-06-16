@@ -17,7 +17,7 @@ export default React.createClass({
           {ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false) ? (<RedshiftSandbox />) : null}
           {ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false) ? (<SnowflakeSandbox />) : null}
           {ApplicationStore.hasCurrentAdminFeature('docker-sandbox') ? (<RStudioSandbox />) : null}
-          {ApplicationStore.hasCurrentAdminFeature('docker-sandbox') ? (<JupyterSandbox />) : null}
+          <JupyterSandbox />
         </div>
       </div>
     );
