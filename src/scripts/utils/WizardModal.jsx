@@ -21,37 +21,42 @@ export default React.createClass({
   displayName: 'WizardModal',
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
+    setWizardStep: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     collapsed: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired
   },
-
-  getDefaultProps: function() {
+  getInitialState() {
     return {
-      disabled: false
+      step: this.props.step
     };
   },
-
   render: function() {
+    console.log(this.state.step);
     return (
-        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={false} bsSize="large"
+      <Modal show={this.props.show} onHide={this.props.onHide} backdrop={false} bsSize="large"
                className={'wiz wiz-' + this.props.collapsed}>
           <Modal.Header closeButton>
             <Modal.Title>Wizard</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-
               {steps.map((step) => {
                 return (
                     <Link to={step.link}>{step.id}. {step.title}</Link>
                 );
               })}
-            
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.props.onHide} bsStyle="link">Close</Button>
+            <Button onClick={this.setstep} bsStyle="link">2.step</Button>
           </Modal.Footer>
         </Modal>
     );
+  },
+  setstep() {
+    this.setState({
+      step: 2
+    });
+    console.log(this.props.step);
   }
 });

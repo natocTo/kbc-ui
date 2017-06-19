@@ -1,6 +1,4 @@
 import React from 'react';
-// import {Modal, Button, Link} from 'react-bootstrap';
-// import {Modal, ModalHeader, ModalBody, ModalFooter, ButtonToolbar, Button, Link} from 'react-bootstrap';
 import WizardModal from './WizardModal';
 
 
