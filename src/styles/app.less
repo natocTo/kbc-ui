@@ -231,3 +231,26 @@ a .kbcComponentIcon-3rdParty-64px {
   display: inline-block;
   white-space: normal;
 }
+
+.modal.wiz {
+
+  position: static;
+
+  .modal-dialog {
+    position: fixed;
+    z-index: 1000;
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%);
+    width: 400px;
+    height: 250px;
+    transition: all 250ms ease-out;
+  }
+
+  &.wiz-aside .modal-dialog {
+    right: 170px;
+    // height: 600px;
+    width: 350px;
+  }
+
+}
