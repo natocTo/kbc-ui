@@ -1,21 +1,35 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import { Link } from 'react-router';
-// import {Modal, ModalHeader, ModalBody, ModalFooter, ButtonToolbar, Button, Link} from 'react-bootstrap';
 
 
 const steps = [
   {
     id: 1,
+    position: 'center',
     title: 'Extractor example',
     link: 'extractors'
   },
   {
     id: 2,
+    position: 'aside',
     title: 'Writer example',
     link: 'writers'
   }
 ];
+
+const stepsss = {
+  1: {
+    position: 'center',
+    title: 'Extractor example',
+    link: 'extractors'
+  },
+  2: {
+    position: 'aside',
+    title: 'Writer example',
+    link: 'writers'
+  }
+};
 
 export default React.createClass({
   displayName: 'WizardModal',
@@ -23,7 +37,7 @@ export default React.createClass({
     onHide: React.PropTypes.func.isRequired,
     setWizardStep: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
-    collapsed: React.PropTypes.string.isRequired,
+    position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired
   },
   getInitialState() {
@@ -32,10 +46,9 @@ export default React.createClass({
     };
   },
   render: function() {
-    console.log(this.state.step);
     return (
       <Modal show={this.props.show} onHide={this.props.onHide} backdrop={false} bsSize="large"
-               className={'wiz wiz-' + this.props.collapsed}>
+               className={'wiz wiz-' + this.getPosition()}>
           <Modal.Header closeButton>
             <Modal.Title>Wizard</Modal.Title>
           </Modal.Header>
@@ -57,6 +70,10 @@ export default React.createClass({
     this.setState({
       step: 2
     });
-    console.log(this.props.step);
+  },
+  getPosition() {
+    console.log(this.state.step);
+    console.log(stepsss[this.state.step].position);
+    return stepsss[this.state.step].position;
   }
 });

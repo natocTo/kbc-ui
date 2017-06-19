@@ -7,7 +7,7 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-        <WizardModal show={true} onHide={this.hideWizardModal} collapsed="aside" step={1}>aaa</WizardModal>
+        <WizardModal show={true} onHide={this.hideWizardModal} position="aside" step={1}>aaa</WizardModal>
     );
   },
   showWizardModal: function() {
