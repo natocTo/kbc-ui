@@ -15,7 +15,7 @@ StorageBucketsStore = require '../../../components/stores/StorageBucketsStore'
 StorageTablesStore = require '../../../components/stores/StorageTablesStore'
 Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 MySqlSSLInfoModal = React.createFactory(require './MySqlSSLInfoModal')
-
+ExtendMySqlCredentials = React.createFactory(require '../../../provisioning/react/components/ExtendMySqlCredentials')
 
 {div, span, input, strong, form, button, h3, h4, i, button, small, ul, li, a} = React.DOM
 MySqlSandbox = React.createClass
@@ -30,6 +30,7 @@ MySqlSandbox = React.createClass
 
   getStateFromStores: ->
     credentials: MySqlSandboxCredentialsStore.getCredentials()
+    validUntil: MySqlSandboxCredentialsStore.getValidUntil()
     pendingActions: MySqlSandboxCredentialsStore.getPendingActions()
     isLoading: MySqlSandboxCredentialsStore.getIsLoading()
     isLoaded: MySqlSandboxCredentialsStore.getIsLoaded()
@@ -38,7 +39,11 @@ MySqlSandbox = React.createClass
 
   _renderCredentials: ->
     span {},
-      MySqlCredentials {credentials: @state.credentials, isCreating: @state.pendingActions.get("create")}
+      MySqlCredentials
+        credentials: @state.credentials,
+        validUntil: @state.validUntil,
+        isCreating: @state.pendingActions.get("create")
+
 
   _renderControlButtons: ->
     if @state.credentials.get "id"
@@ -99,6 +104,8 @@ MySqlSandbox = React.createClass
               title: 'Delete MySQL Sandbox'
               text: 'Do you really want to delete the MySQL sandbox?'
               onConfirm: @_dropCredentials
+        div {},
+          ExtendMySqlCredentials null
     else
       if !@state.pendingActions.get("create")
         button {className: 'btn btn-link', onClick: @_createCredentials},

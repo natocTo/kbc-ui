@@ -5,6 +5,7 @@ import Dispatcher from '../../../Dispatcher';
 
 var _store = Immutable.Map({
   credentials: Immutable.Map(),
+  touch: null,
   pendingActions: Immutable.Map(),
   isLoading: false,
   isLoaded: false
@@ -13,6 +14,10 @@ var _store = Immutable.Map({
 var RStudioSandboxCredentialsStore = StoreUtils.createStore({
   getCredentials: function() {
     return _store.get('credentials');
+  },
+  getValidUntil: function() {
+    const validUntil = (_store.get('touch') + 3600 * 120) * 1000;
+    return validUntil;
   },
   hasCredentials: function() {
     return !!_store.getIn(['credentials', 'id']);
@@ -40,6 +45,7 @@ Dispatcher.register(function(payload) {
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_LOAD_SUCCESS:
       credentials = Immutable.fromJS(action.credentials);
       _store = _store.set('credentials', credentials);
+      _store = _store.set('touch', action.touch);
       _store = _store.set('isLoaded', true);
       _store = _store.set('isLoading', false);
       return RStudioSandboxCredentialsStore.emitChange();
@@ -55,6 +61,7 @@ Dispatcher.register(function(payload) {
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_CREATE_JOB_SUCCESS:
       credentials = Immutable.fromJS(action.credentials);
       _store = _store.set('credentials', credentials);
+      _store = _store.set('touch', action.touch);
       _store = _store.setIn(['pendingActions', 'create'], false);
       return RStudioSandboxCredentialsStore.emitChange();
 
@@ -68,11 +75,25 @@ Dispatcher.register(function(payload) {
 
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_DROP_JOB_SUCCESS:
       _store = _store.set('credentials', Immutable.Map());
+      _store = _store.set('touch', null);
       _store = _store.setIn(['pendingActions', 'drop'], false);
       return RStudioSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_DROP_JOB_ERROR:
       _store = _store.setIn(['pendingActions', 'drop'], false);
+      return RStudioSandboxCredentialsStore.emitChange();
+
+    case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND:
+      _store = _store.setIn(['pendingActions', 'extend'], true);
+      return RStudioSandboxCredentialsStore.emitChange();
+
+    case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND_SUCCESS:
+      _store = _store.set('touch', action.touch);
+      _store = _store.setIn(['pendingActions', 'extend'], false);
+      return RStudioSandboxCredentialsStore.emitChange();
+
+    case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND_ERROR:
+      _store = _store.setIn(['pendingActions', 'extend'], false);
       return RStudioSandboxCredentialsStore.emitChange();
 
     default:

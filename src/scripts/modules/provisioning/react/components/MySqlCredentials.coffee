@@ -3,7 +3,8 @@ React = require 'react'
 Protected = React.createFactory(require('kbc-react-components').Protected)
 Clipboard = React.createFactory(require('../../../../react/common/Clipboard').default)
 Loader = React.createFactory(require('kbc-react-components').Loader)
-
+ValidUntilWithIcon = React.createFactory(require('../../../../react/common/ValidUntilWithIcon'))
+Extend = React.createFactory(require('./ExtendMySqlCredentials'))
 {span, div, strong, small, a, p} = React.DOM
 
 
@@ -11,6 +12,7 @@ MySqlCredentials = React.createClass
   displayName: 'MySqlCredentials'
   propTypes:
     credentials: React.PropTypes.object
+    validUntil: React.PropTypes.string
     isCreating: React.PropTypes.bool
     hideClipboard: React.PropTypes.bool
 
@@ -67,6 +69,10 @@ MySqlCredentials = React.createClass
         strong {className: 'col-md-9'},
           @props.credentials.get "db"
           @_renderClipboard Clipboard text: @props.credentials.get "db"
+      div {className: 'row'},
+        span {className: 'col-md-3'}, 'Expires'
+        strong {className: 'col-md-9'},
+          ValidUntilWithIcon validUntil: @props.validUntil
 
   _renderClipboard: (cpElement) ->
     if not @props.hideClipboard

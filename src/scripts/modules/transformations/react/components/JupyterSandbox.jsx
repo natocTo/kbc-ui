@@ -8,6 +8,7 @@ import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import CreateDockerSandboxModal from '../modals/CreateDockerSandboxModal';
+import ExtendJupyterCredentials from '../../../provisioning/react/components/ExtendJupyterCredentials';
 
 var JupyterSandbox = React.createClass({
   mixins: [createStoreMixin(JupyterSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
@@ -15,6 +16,7 @@ var JupyterSandbox = React.createClass({
   getStateFromStores: function() {
     return {
       credentials: JupyterSandboxCredentialsStore.getCredentials(),
+      validUntil: JupyterSandboxCredentialsStore.getValidUntil(),
       pendingActions: JupyterSandboxCredentialsStore.getPendingActions(),
       isLoading: JupyterSandboxCredentialsStore.getIsLoading(),
       isLoaded: JupyterSandboxCredentialsStore.getIsLoaded(),
@@ -33,6 +35,7 @@ var JupyterSandbox = React.createClass({
       <span>
         <JupyterCredentials
           credentials={this.state.credentials}
+          validUntil={this.state.validUntil}
           isCreating={this.state.pendingActions.get('create')}
         />
       </span>
@@ -65,6 +68,9 @@ var JupyterSandbox = React.createClass({
                   onConfirm: this._dropCredentials
                 }}
               />
+            </div>
+            <div>
+              <ExtendJupyterCredentials/>
             </div>
           </div>
         </div>

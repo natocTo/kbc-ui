@@ -8,6 +8,7 @@ import DeleteButton from '../../../../react/common/DeleteButton';
 import StorageBucketsStore from '../../../components/stores/StorageBucketsStore';
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import CreateDockerSandboxModal from '../modals/CreateDockerSandboxModal';
+import ExtendRStudioCredentials from '../../../provisioning/react/components/ExtendRStudioCredentials';
 
 var RStudioSandbox = React.createClass({
   mixins: [createStoreMixin(RStudioSandboxCredentialsStore, StorageBucketsStore, StorageTablesStore)],
@@ -15,6 +16,7 @@ var RStudioSandbox = React.createClass({
   getStateFromStores: function() {
     return {
       credentials: RStudioSandboxCredentialsStore.getCredentials(),
+      validUntil: RStudioSandboxCredentialsStore.getValidUntil(),
       pendingActions: RStudioSandboxCredentialsStore.getPendingActions(),
       isLoading: RStudioSandboxCredentialsStore.getIsLoading(),
       isLoaded: RStudioSandboxCredentialsStore.getIsLoaded(),
@@ -33,6 +35,7 @@ var RStudioSandbox = React.createClass({
       <span>
         <RStudioCredentials
           credentials={this.state.credentials}
+          validUntil={this.state.validUntil}
           isCreating={this.state.pendingActions.get('create')}
         />
       </span>
@@ -65,6 +68,9 @@ var RStudioSandbox = React.createClass({
                   onConfirm: this._dropCredentials
                 }}
               />
+            </div>
+            <div>
+              <ExtendRStudioCredentials/>
             </div>
           </div>
         </div>

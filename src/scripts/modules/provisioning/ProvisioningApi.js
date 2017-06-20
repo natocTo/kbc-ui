@@ -49,6 +49,14 @@ const ProvisioningApi = {
       });
   },
 
+  extendCredentials: function(backend, credentialsId, token) {
+    return createRequest('POST', backend + '/' + credentialsId + '/extend', token)
+      .promise()
+      .then(function(response) {
+        return response.body;
+      });
+  },
+
   createCredentialsAsync: function(backend, credentialsType, data) {
     var requestData = data;
     if (!requestData) {

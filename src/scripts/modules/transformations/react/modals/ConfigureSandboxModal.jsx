@@ -8,6 +8,7 @@ import RedshiftCredentialsContainer from '../components/RedshiftCredentialsConta
 import SnowflakeCredentialsContainer from '../components/SnowflakeCredentialsContainer';
 import ConnectToMySqlSandbox from '../components/ConnectToMySqlSandbox';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import ExtendMySqlCredentials from '../../../provisioning/react/components/ExtendMySqlCredentials';
 
 
 export default React.createClass({
@@ -166,11 +167,14 @@ export default React.createClass({
       return null;
     }
     return (
-      <ConnectToMySqlSandbox credentials={this.props.mysqlCredentials}>
-        <button className="btn btn-link" title="Connect to Sandbox" type="submit">
-          <span className="fa fa-fw fa-database"/> Connect
-        </button>
-      </ConnectToMySqlSandbox>
+      <span>
+        <ConnectToMySqlSandbox credentials={this.props.mysqlCredentials}>
+          <button className="btn btn-link" title="Connect to Sandbox" type="submit">
+            <span className="fa fa-fw fa-database"/> Connect
+          </button>
+        </ConnectToMySqlSandbox>
+        <ExtendMySqlCredentials />
+      </span>
     );
   }
 });

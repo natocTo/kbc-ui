@@ -22,6 +22,7 @@ MySqlCredentialsContainer = React.createClass
 
   getStateFromStores: ->
     credentials: MySqlSandboxCredentialsStore.getCredentials()
+    validUntil: MySqlSandboxCredentialsStore.getValidUntil()
     pendingActions: MySqlSandboxCredentialsStore.getPendingActions()
     isLoading: MySqlSandboxCredentialsStore.getIsLoading()
     isLoaded: MySqlSandboxCredentialsStore.getIsLoaded()
@@ -29,6 +30,7 @@ MySqlCredentialsContainer = React.createClass
   render: ->
     MySqlCredentials
       credentials: @state.credentials
+      validUntil: @state.validUntil
       isCreating: @state.pendingActions.get("create")
       hideClipboard: false
 

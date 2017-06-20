@@ -26,6 +26,7 @@ module.exports = {
     return provisioningApi.getCredentials('mysql', 'sandbox').then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_LOAD_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(HttpError, function(error) {
@@ -64,6 +65,7 @@ module.exports = {
     return provisioningApi.createCredentials('mysql', 'sandbox').then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_CREATE_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(function(error) {
@@ -90,6 +92,23 @@ module.exports = {
     });
   },
 
+  extendMySqlSandboxCredentials: function() {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND
+    });
+    return provisioningApi.extendCredentials('mysql', mySqlSandboxCredentialsStore.getCredentials().get('id')).then(function(response) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND_SUCCESS,
+        touch: response.touch
+      });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND_ERROR
+      });
+      throw error;
+    });
+  },
+
   /*
   Request specified orchestration load from server
   @return Promise
@@ -101,6 +120,7 @@ module.exports = {
     return provisioningApi.getCredentials(this.getRedshiftBackend(), 'sandbox').then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_LOAD_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(HttpError, function(error) {
@@ -142,6 +162,7 @@ module.exports = {
     }).then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_CREATE_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(function(error) {
@@ -175,6 +196,7 @@ module.exports = {
     return provisioningApi.createCredentials(this.getRedshiftBackend(), 'sandbox').then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_REFRESH_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(function(error) {
@@ -198,6 +220,7 @@ module.exports = {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_WRDB_LOAD_SUCCESS,
         credentials: response.credentials,
+        touch: response.touch,
         permission: permissionType,
         token: token
       });
@@ -246,6 +269,7 @@ module.exports = {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_WRDB_CREATE_SUCCESS,
         credentials: response.credentials,
+        touch: response.touch,
         permission: permissionType,
         token: token
       });
@@ -294,6 +318,7 @@ module.exports = {
     return provisioningApi.getCredentials('snowflake', 'sandbox').then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_SNOWFLAKE_SANDBOX_LOAD_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(HttpError, function(error) {
@@ -332,6 +357,7 @@ module.exports = {
     return provisioningApi.createCredentials('snowflake', 'sandbox').then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_SNOWFLAKE_SANDBOX_CREATE_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(function(error) {
@@ -378,6 +404,7 @@ module.exports = {
     return provisioningApi.getCredentials('docker', 'rstudio').then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_LOAD_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(HttpError, function(error) {
@@ -409,6 +436,7 @@ module.exports = {
     return provisioningApi.createCredentialsAsync('docker', 'rstudio', data).then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_CREATE_JOB_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(function(error) {
@@ -435,6 +463,23 @@ module.exports = {
     });
   },
 
+  extendRStudioSandboxCredentials: function() {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND
+    });
+    return provisioningApi.extendCredentials('docker', rStudioSandboxCredentialsStore.getCredentials().get('id')).then(function(response) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND_SUCCESS,
+        touch: response.touch
+      });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND_ERROR
+      });
+      throw error;
+    });
+  },
+
   loadJupyterSandboxCredentials: function() {
     if (jupyterSandboxCredentialsStore.getIsLoaded()) {
       return Promise.resolve();
@@ -454,6 +499,7 @@ module.exports = {
     return provisioningApi.getCredentials('docker', 'jupyter').then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_LOAD_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(HttpError, function(error) {
@@ -485,6 +531,7 @@ module.exports = {
     return provisioningApi.createCredentialsAsync('docker', 'jupyter', data).then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_CREATE_JOB_SUCCESS,
+        touch: response.touch,
         credentials: response.credentials
       });
     }).catch(function(error) {
@@ -506,6 +553,23 @@ module.exports = {
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_DROP_JOB_ERROR
+      });
+      throw error;
+    });
+  },
+
+  extendJupyterSandboxCredentials: function() {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_EXTEND
+    });
+    return provisioningApi.extendCredentials('docker', jupyterSandboxCredentialsStore.getCredentials().get('id')).then(function(response) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_EXTEND_SUCCESS,
+        touch: response.touch
+      });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_EXTEND_ERROR
       });
       throw error;
     });
