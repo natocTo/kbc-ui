@@ -13,11 +13,8 @@ const steps = [
     link: 'home',
     text: 'Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni ' +
     'patogenů likviduje živin Vojtěchovi slavení hledali zvýší výjimkou, mj. tři jemu tahů publikujeme dostaly ke unii ' +
-    'vědní. Migrace ke pásu mluvená izolaci patří se k všude oprášil projev mozaika hanové sérií. Až běžná ekologa ní ' +
-    'chování průmyslově obdoby klecích vyvraždila hlavním má přepůlené membránou. Přetvořit chce ně drží hladem, pod ' +
-    'zemí žluté mé oprášil z lheureux. Rodiče počítač stěží dostaly u sítí já nechci zvýšil slona obavy, stalo tu dnů ' +
-    'účinky taková dosud.'
-
+    'vědní. ',
+    media: 'http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png'
   },
   {
     stepId: 2,
@@ -30,8 +27,8 @@ const steps = [
     'vědní. Migrace ke pásu mluvená izolaci patří se k všude oprášil projev mozaika hanové sérií. Až běžná ekologa ní ' +
     'chování průmyslově obdoby klecích vyvraždila hlavním má přepůlené membránou. Přetvořit chce ně drží hladem, pod ' +
     'zemí žluté mé oprášil z lheureux. Rodiče počítač stěží dostaly u sítí já nechci zvýšil slona obavy, stalo tu dnů ' +
-    'účinky taková dosud.'
-
+    'účinky taková dosud.',
+    media: ''
   },
   {
     stepId: 3,
@@ -44,8 +41,8 @@ const steps = [
     'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
     'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
     ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ' +
-    'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.'
-
+    'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.',
+    media: ''
   },
   {
     stepId: 4,
@@ -58,7 +55,8 @@ const steps = [
     'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
     'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
     ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ' +
-    'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.'
+    'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.',
+    media: ''
 
   },
   {
@@ -72,8 +70,8 @@ const steps = [
     'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
     'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
     ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ' +
-    'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.'
-
+    'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.',
+    media: ''
   }
 ];
 
@@ -99,22 +97,31 @@ export default React.createClass({
             <Modal.Title>{this.getTitle()}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <div className="row">
+              <div className="col-md-6">
+                {this.getText()}
 
-              {this.getText()}
-              <ListGroup>
+                <ListGroup>
                   {steps.map((step) => {
                     let isActive = 'active';
                     if (this.state.step - 1 < step.stepId) {
                       isActive = '';
                     }
                     return (
-                      <ListGroupItem className={isActive}>
+                        <ListGroupItem className={isActive}>
                           <Link to={step.link}>{step.stepId}. {step.title}</Link>
-                      </ListGroupItem>
+                        </ListGroupItem>
                     );
                   })}
-              </ListGroup>
-
+                </ListGroup>
+              </div>
+              {this.getMedia().length > 0 &&
+              <div className="col-md-6">
+               MEDIA
+                <img className="img-responsive" src={this.getMedia()} alt=""/>
+              </div>
+              }
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.decreaseStep} bsStyle="link">Prev step</Button>
@@ -146,5 +153,8 @@ export default React.createClass({
   },
   getBackdrop() {
     return steps[this.state.step - 1].backdrop;
+  },
+  getMedia() {
+    return steps[this.state.step - 1].media;
   }
 });
