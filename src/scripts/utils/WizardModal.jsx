@@ -1,11 +1,12 @@
 import React from 'react';
 import {Modal, Button, ListGroup, ListGroupItem} from 'react-bootstrap';
 import { Link } from 'react-router';
+import RoutesStore from '../stores/RoutesStore';
 
 
 const steps = [
   {
-    id: 1,
+    stepId: 1,
     position: 'center',
     backdrop: true,
     title: 'Lesson 1 - Composition',
@@ -19,7 +20,7 @@ const steps = [
 
   },
   {
-    id: 2,
+    stepId: 2,
     position: 'aside',
     backdrop: false,
     title: 'Extract data',
@@ -33,7 +34,7 @@ const steps = [
 
   },
   {
-    id: 3,
+    stepId: 3,
     position: 'aside',
     backdrop: false,
     title: 'Store example',
@@ -47,7 +48,7 @@ const steps = [
 
   },
   {
-    id: 4,
+    stepId: 4,
     position: 'aside',
     backdrop: false,
     title: 'Write data',
@@ -61,7 +62,7 @@ const steps = [
 
   },
   {
-    id: 5,
+    stepId: 5,
     position: 'aside',
     backdrop: false,
     title: 'Check data',
@@ -82,7 +83,8 @@ export default React.createClass({
     onHide: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
-    step: React.PropTypes.number.isRequired
+    step: React.PropTypes.number.isRequired,
+    lesson: React.PropTypes.number.isRequired
   },
   getInitialState() {
     return {
@@ -91,7 +93,7 @@ export default React.createClass({
   },
   render: function() {
     return (
-        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={false} bsSize="large"
+        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.getBackdrop()} bsSize="large"
                className={'wiz wiz-' + this.getPosition()}>
           <Modal.Header closeButton>
             <Modal.Title>{this.getTitle()}</Modal.Title>
@@ -102,12 +104,12 @@ export default React.createClass({
               <ListGroup>
                   {steps.map((step) => {
                     let isActive = 'active';
-                    if (this.state.step - 1 < step.id) {
+                    if (this.state.step - 1 < step.stepId) {
                       isActive = '';
                     }
                     return (
                       <ListGroupItem className={isActive}>
-                          <Link to={step.link}>{step.id}. {step.title}</Link>
+                          <Link to={step.link}>{step.stepId}. {step.title}</Link>
                       </ListGroupItem>
                     );
                   })}
@@ -125,11 +127,13 @@ export default React.createClass({
     this.setState({
       step: this.state.step - 1
     });
+    RoutesStore.getRouter().transitionTo(steps[this.state.step].link);
   },
   increaseStep() {
     this.setState({
       step: this.state.step + 1
     });
+    RoutesStore.getRouter().transitionTo(steps[this.state.step].link);
   },
   getPosition() {
     return steps[this.state.step - 1].position;

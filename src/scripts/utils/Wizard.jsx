@@ -1,22 +1,18 @@
 import React from 'react';
 import WizardModal from './WizardModal';
-import {Button} from 'react-bootstrap';
-
+// import {Button} from 'react-bootstrap';
 
 module.exports = React.createClass({
   displayName: 'Wizard',
-
   getInitialState() {
     return {
-      showModal: false
+      showModal: true,
+      lessson: 1
     };
   },
   render: function() {
     return (
-      <span>
-        <WizardModal show={this.state.showModal} onHide={this.hideWizardModal} position="aside" step={1}>aaa</WizardModal>
-        <Button className="btn btn-link" onClick={this.openModal}>open</Button>
-      </span>
+      <WizardModal show={this.state.showModal} onHide={this.hideWizardModal} position="aside" step={1} lesson={this.state.lesson}>aaa</WizardModal>
     );
   },
   showWizardModal: function() {
@@ -27,6 +23,9 @@ module.exports = React.createClass({
   },
   openModal() {
     this.setState({ showModal: true });
+  },
+  openLessonModal(event) {
+    this.setState({ lesson: event.target.dataset.lesson });
+    this.openModal();
   }
 });
-

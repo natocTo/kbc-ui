@@ -68,6 +68,7 @@ App = React.createClass
                 dropup: true
               UserLinks()
               PoweredByKeboola()
+              Wizard()
           div className: 'col-xs-9 col-xs-offset-3 kbc-main',
             if @props.isError
               ErrorPage()
