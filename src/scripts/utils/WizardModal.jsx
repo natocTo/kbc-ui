@@ -7,8 +7,9 @@ const steps = [
   {
     id: 1,
     position: 'center',
+    backdrop: true,
     title: 'Lesson 1 - Composition',
-    link: '',
+    link: 'home',
     text: 'Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni ' +
     'patogenů likviduje živin Vojtěchovi slavení hledali zvýší výjimkou, mj. tři jemu tahů publikujeme dostaly ke unii ' +
     'vědní. Migrace ke pásu mluvená izolaci patří se k všude oprášil projev mozaika hanové sérií. Až běžná ekologa ní ' +
@@ -20,6 +21,7 @@ const steps = [
   {
     id: 2,
     position: 'aside',
+    backdrop: false,
     title: 'Extract data',
     link: 'extractors',
     text: 'Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni ' +
@@ -33,8 +35,9 @@ const steps = [
   {
     id: 3,
     position: 'aside',
+    backdrop: false,
     title: 'Store example',
-    link: 'storage',
+    link: '/storage',
     text: 'Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace ' +
     'zůstal 2800 nejlogičtějším hospůdky telefonu plné v nejenže nemalé pomáhá. Náročnější uzavřenost, amoku hmyz ' +
     'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
@@ -46,6 +49,7 @@ const steps = [
   {
     id: 4,
     position: 'aside',
+    backdrop: false,
     title: 'Write data',
     link: 'writers',
     text: 'Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace ' +
@@ -59,6 +63,7 @@ const steps = [
   {
     id: 5,
     position: 'aside',
+    backdrop: false,
     title: 'Check data',
     link: 'jobs',
     text: 'Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace ' +
@@ -86,7 +91,7 @@ export default React.createClass({
   },
   render: function() {
     return (
-      <Modal show={this.props.show} onHide={this.props.onHide} backdrop={false} bsSize="large"
+        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={false} bsSize="large"
                className={'wiz wiz-' + this.getPosition()}>
           <Modal.Header closeButton>
             <Modal.Title>{this.getTitle()}</Modal.Title>
@@ -134,5 +139,8 @@ export default React.createClass({
   },
   getTitle() {
     return steps[this.state.step - 1].title;
+  },
+  getBackdrop() {
+    return steps[this.state.step - 1].backdrop;
   }
 });

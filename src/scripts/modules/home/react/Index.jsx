@@ -52,8 +52,27 @@ export default React.createClass({
     return (
       <div className="container-fluid kbc-main-content">
         <Expiration expires={this.state.expires} />
-        <LimitsOverQuota limits={this.state.limitsOverQuota} />
         <Deprecation components={this.state.installedComponents} />
+        <LimitsOverQuota limits={this.state.limitsOverQuota}/>
+        <div className="jumbotron">
+          <div className="well">
+            <h1>Welcome, new user</h1>
+            <p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda doloremque, expedita
+              facere facilis modi molestiae provident quibusdam veritatis vero. Dolorum facere fuga illum incidunt
+              nesciunt reiciendis saepe, sed sequi.</span><span>Ab asperiores consectetur cupiditate dicta dolore,
+              eligendi magni modi quo. Alias aut consequatur culpa cumque dignissimos doloremque dolorum ea,
+              laudantium minus natus nihil perferendis porro provident repellendus sapiente tempore voluptatum?</span>
+              <span>Ab at culpa cumque deleniti distinctio ducimus earum eligendi facilis fuga harum id, impedit incidunt
+                itaque, laboriosam magnam maxime modi mollitia necessitatibus optio perspiciatis quibusdam quod ratione
+                rem sapiente totam.</span>
+              <ul>
+                <li>1. Lesson - Composing</li>
+                <li>2. Lesson - Transformation</li>
+                <li>3. Lesson - Orchestration</li>
+              </ul>
+            </p>
+          </div>
+        </div>
         <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
           <div className="tbody">
             <div className="tr">
