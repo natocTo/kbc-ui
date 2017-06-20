@@ -1,5 +1,6 @@
 import React from 'react';
 import ApplicationStore from '../../../stores/ApplicationStore';
+import Wizard from '../../../utils/Wizard';
 import filesize from 'filesize';
 import string from 'underscore.string';
 import LimitsOverQuota from './LimitsOverQuota';
@@ -65,6 +66,7 @@ export default React.createClass({
               <span>Ab at culpa cumque deleniti distinctio ducimus earum eligendi facilis fuga harum id, impedit incidunt
                 itaque, laboriosam magnam maxime modi mollitia necessitatibus optio perspiciatis quibusdam quod ratione
                 rem sapiente totam.</span>
+              <Wizard>a</Wizard>
               <ul>
                 <li>1. Lesson - Composing</li>
                 <li>2. Lesson - Transformation</li>
