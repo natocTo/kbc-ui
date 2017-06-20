@@ -40,9 +40,6 @@ MySqlCredentials = React.createClass
         a {href: 'http://www.sequelpro.com/download', target: '_blank'},
           'Sequel Pro'
         '). You can also use the Adminer web application provided by Keboola (click on Connect).'
-      p className: 'small',
-        'If not used, the sandbox will be deleted after 14 days.'
-
       div {className: 'row'},
         span {className: 'col-md-3'}, 'Host'
         strong {className: 'col-md-9'},
