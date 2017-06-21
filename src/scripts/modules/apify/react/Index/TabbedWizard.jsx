@@ -103,7 +103,7 @@ export default React.createClass({
         readOnly={false}
         mode="application/json"
         lineWrapping={true}
-        autofocus={true}
+        autofocus={false}
         onChange={this.handleCrawlerSettingsChange}
         lint={true}
         gutters={['CodeMirror-lint-markers']}

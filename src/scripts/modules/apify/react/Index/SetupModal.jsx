@@ -63,7 +63,8 @@ export default React.createClass({
       paramsToSave = paramsToSave
         .set('customId', crawler.get('customId'))
         .set('settingsLink', crawler.get('settingsLink'))
-        .set('crawlerSettings', crawlerSettings);
+        .set('crawlerSettings', crawlerSettings)
+        .delete('executionId');
     }
     this.props.onSave(paramsToSave.delete('action'));
   },
@@ -138,7 +139,7 @@ export default React.createClass({
   },
 
   onLoadCrawlers() {
-    if (this.localState(['parameters', 'crawlerId'])) return;
+    if (this.localState('crawlers')) return;
     this.onLoadCrawlersForce();
   },
 
