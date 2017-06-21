@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
-import TabbedWizard, {AUTH_KEY, CRAWLER_KEY} from './TabbedWizard';
+import TabbedWizard, {AUTH_KEY, OPTIONS_KEY} from './TabbedWizard';
 import {fromJS, Map} from 'immutable';
 import WizardButtons from '../../../components/react/components/WizardButtons';
 
@@ -55,19 +55,23 @@ export default React.createClass({
 
   handleSave() {
     const crawlerSettings = fromJS(JSON.parse(this.getSettings()));
-    const parameters = this.parameters().set('crawlerSettings', crawlerSettings);
-    const crawlerId = parameters.get('crawlerId');
-    const crawler = this.localState(['crawlers', 'data']).find((c) => c.get('id') === crawlerId);
-    const paramsToSave = parameters
-      .set('customId', crawler.get('customId'))
-      .set('settingsLink', crawler.get('settingsLink'));
-    this.props.onSave(paramsToSave);
+    let paramsToSave = this.parameters();
+    const action = this.getAction();
+    if (action === 'crawler') {
+      const crawlerId = paramsToSave.get('crawlerId');
+      const crawler = this.localState(['crawlers', 'data']).find((c) => c.get('id') === crawlerId);
+      paramsToSave = paramsToSave
+        .set('customId', crawler.get('customId'))
+        .set('settingsLink', crawler.get('settingsLink'))
+        .set('crawlerSettings', crawlerSettings);
+    }
+    this.props.onSave(paramsToSave.delete('action'));
   },
 
   canNext() {
     const step = this.step();
     if (step === AUTH_KEY) return this.hasAuth();
-    if (step === CRAWLER_KEY) return this.hasCrawler();
+    return true;
   },
 
   getSettings() {
@@ -88,9 +92,16 @@ export default React.createClass({
     return !!params.get('userId') && !!params.get('#token');
   },
 
+  getAction() {
+    const params = this.parameters();
+    const action = params.get('action', !!params.get('executionId') ? 'executionId' : 'crawler');
+    return action;
+  },
+
   hasCrawler() {
     const params = this.parameters();
-    return !!params.get('crawlerId');
+    const action = this.getAction();
+    return action === 'executionId' ? !!params.get('executionId') : !!params.get('crawlerId');
   },
 
   canSave() {
@@ -104,7 +115,7 @@ export default React.createClass({
     let newStep = this.step() + delta;
     newStep = newStep === 0 ? AUTH_KEY : newStep;
     newStep = newStep > 3 ? AUTH_KEY : newStep;
-    if (newStep === CRAWLER_KEY) this.onLoadCrawlers();
+    if (newStep === OPTIONS_KEY && this.getAction() === 'crawler') this.onLoadCrawlers();
     this.updateLocalState('step', newStep);
   },
 
@@ -114,6 +125,7 @@ export default React.createClass({
         loadCrawlers={this.onLoadCrawlersForce}
         crawlers={this.localState('crawlers', Map())}
         step={this.step()}
+        action={this.getAction()}
         selectTab={(s) => this.updateLocalState('step', s)}
         localState={this.props.localState}
         updateLocalState={this.props.updateLocalState}

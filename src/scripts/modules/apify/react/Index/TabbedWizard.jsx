@@ -1,6 +1,9 @@
 import React, {PropTypes} from 'react';
 import {List} from 'immutable';
 import {InputGroup, FormControl, Tab, Tabs} from 'react-bootstrap';
+import RadioGroup from 'react-radio-group';
+import {Input} from '../../../../react/common/KbcBootstrap';
+
 import Select from 'react-select';
 // import {Loader} from 'kbc-react-components';
 import {RefreshIcon} from 'kbc-react-components';
@@ -19,6 +22,7 @@ export default React.createClass({
   propTypes: {
     localState: PropTypes.object.isRequired,
     settings: PropTypes.string.isRequired,
+    action: PropTypes.string.isRequired,
     updateSettings: PropTypes.func.isRequired,
     crawlers: PropTypes.object.isRequired,
     step: PropTypes.number.isRequired,
@@ -43,15 +47,50 @@ export default React.createClass({
             disabled={this.isTabDisabled(AUTH_KEY)}>
             {this.renderTokenForm()}
           </Tab>
-          <Tab title="Crawler"
+          <Tab title="Action"
             eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
-            {this.renderCrawlersForm()}
+            {this.renderActionForm()}
           </Tab>
-          <Tab title="Crawler Settings (optional)"
-            eventKey={OPTIONS_KEY} disabled={this.isTabDisabled(OPTIONS_KEY)}/>
+          <Tab title="Specification"
+            eventKey={OPTIONS_KEY} disabled={this.isTabDisabled(OPTIONS_KEY)} >
+            {this.props.step === OPTIONS_KEY ? this.renderCrawlerSettingsForm() : null}
+          </Tab>
         </Tabs>
-        {this.props.step === OPTIONS_KEY ? this.renderCrawlerSettingsForm() : null}
+
       </span>
+    );
+  },
+
+  renderActionForm() {
+    return (
+      <div className="row form-horizontal clearfix">
+        <div className="form-group">
+          <div className="col-md-12">
+            <RadioGroup
+              name="Action"
+              value={this.props.action}
+              onChange={(e) => this.updateParameter('action', e.target.value)}
+            >
+              <div className="form-horizontal">
+                <Input
+                  type="radio"
+                  label="Run Crawler"
+                  help="Will run specified crawler or wait if it is already running, and eventually retrieve its results if it finishes succesfully"
+                  wrapperClassName="col-sm-8"
+                  value="crawler"
+                />
+                <Input
+                  type="radio"
+                  label="Retrieve results only"
+                  help="Retrieve results of a crawler run specified by executionId"
+                  wrapperClassName="col-sm-8"
+                  value="executionId"
+                />
+              </div>
+            </RadioGroup>
+          </div>
+        </div>
+      </div>
     );
   },
 
@@ -59,10 +98,9 @@ export default React.createClass({
     const editor = (
       <CodeMirror
         theme="solarized"
-        lineNumbers={true}
+        lineNumbers={false}
         value={this.props.settings}
         readOnly={false}
-        height="auto"
         mode="application/json"
         lineWrapping={true}
         autofocus={true}
@@ -71,12 +109,29 @@ export default React.createClass({
         gutters={['CodeMirror-lint-markers']}
       />
     );
+    const eidHelp = 'Execution id of a crawler run to retrieve results from';
+    const executionIdControl = (
+      <div className="row form form-horizontal">
+        {this.renderInput('Execution ID', 'executionId', eidHelp, 'Enter Execution ID')}
+      </div>
+    );
+    const action = this.props.action;
     return (
-      <div className="row form-horizontal clearfix">
-        <div className="col-xs-10">
-          {editor}
+      action === 'executionId' ? executionIdControl
+      :
+      <div className="row form form-horizontal">
+        {this.renderCrawlerSelector()}
+        <div className="form-group">
+          <div className="col-xs-2 control-label">
+            Crawler Settings
+          </div>
+          <div className="col-xs-8">
+            {editor}
+          </div>
         </div>
       </div>
+
+
     );
   },
 
@@ -149,6 +204,9 @@ export default React.createClass({
       </InputGroup>);
     return (
       <div className={error ? 'form-group has-error' : 'form-group'}>
+        <div className="col-xs-2 control-label">
+          Crawler
+        </div>
         <div className="col-xs-8">
           {isLoading || error ? staticElement : selectControl}
         </div>

@@ -160,12 +160,18 @@ export default React.createClass({
     const bucketId = this.state.store.outputBucket;
     const tableId = `${bucketId}.crawlerResult`;
     const resultsTable = <p className="form-control-static"><SapiTableLinkEx tableId={tableId} /></p>;
-
+    const executionId = parameters.get('executionId');
     return (
       <div className="form-horizontal">
         {this.renderStaticFormGroup('User ID', user)}
-        {this.renderStaticFormGroup('Crawler', crawler)}
-        {this.renderStaticFormGroup('Crawler Settings', settings)}
+        {executionId ? this.renderStaticFormGroup('Execution ID', <p className="form-control-static">{executionId}</p>)
+          :
+          <span>
+            {this.renderStaticFormGroup('Crawler', crawler)}
+            {this.renderStaticFormGroup('Crawler Settings', settings)}
+          </span>
+
+        }
         <div className="col-md-12">
           <span className="pull-right">
             <button className="btn btn-link" onClick={this.showSetupModal}>
@@ -198,10 +204,10 @@ export default React.createClass({
   renderStaticFormGroup(controlLabel, control, helpText) {
     return (
       <div className={'form-group'}>
-        <label className="col-xs-2 control-label">
+        <label className="col-xs-3 control-label">
           {controlLabel}
         </label>
-        <div className="col-xs-10">
+        <div className="col-xs-9">
           {control}
           <span className="help-block">
             {helpText}
