@@ -12,7 +12,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <WizardModal show={this.state.showModal} onHide={this.hideWizardModal} position="aside" step={1} lesson={this.state.lesson}>aaa</WizardModal>
+      <WizardModal show={this.state.showModal} onHide={this.hideWizardModal} position="aside" step={1} lesson={this.state.lesson} backdrop={true}>aaa</WizardModal>
     );
   },
   showWizardModal: function() {

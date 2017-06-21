@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, Button, ListGroup, ListGroupItem} from 'react-bootstrap';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 import RoutesStore from '../stores/RoutesStore';
 
 
@@ -80,6 +80,7 @@ export default React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
+    backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
     lesson: React.PropTypes.number.isRequired
@@ -109,7 +110,7 @@ export default React.createClass({
                     }
                     return (
                         <ListGroupItem className={isActive}>
-                          <Link to={step.link}>{step.stepId}. {step.title}</Link>
+                          <a data-steppp={step.stepId} onClick={this.goToStep} > {step.stepId}. {step.title}</a>
                         </ListGroupItem>
                     );
                   })}
@@ -117,7 +118,6 @@ export default React.createClass({
               </div>
               {this.getMedia().length > 0 &&
               <div className="col-md-6">
-               MEDIA
                 <img className="img-responsive" src={this.getMedia()} alt=""/>
               </div>
               }
@@ -130,18 +130,6 @@ export default React.createClass({
         </Modal>
     );
   },
-  decreaseStep() {
-    this.setState({
-      step: this.state.step - 1
-    });
-    RoutesStore.getRouter().transitionTo(steps[this.state.step].link);
-  },
-  increaseStep() {
-    this.setState({
-      step: this.state.step + 1
-    });
-    RoutesStore.getRouter().transitionTo(steps[this.state.step].link);
-  },
   getPosition() {
     return steps[this.state.step - 1].position;
   },
@@ -152,9 +140,33 @@ export default React.createClass({
     return steps[this.state.step - 1].title;
   },
   getBackdrop() {
+    console.log('backdropId: ', this.state.step);
     return steps[this.state.step - 1].backdrop;
   },
   getMedia() {
     return steps[this.state.step - 1].media;
+  },
+  decreaseStep() {
+    this.setState({
+      step: this.state.step - 1
+    }, () => {
+      RoutesStore.getRouter().transitionTo(steps[this.state.step - 1].link);
+    });
+  },
+  increaseStep() {
+    this.setState({
+      step: this.state.step + 1
+    }, () => {
+      RoutesStore.getRouter().transitionTo(steps[this.state.step - 1].link);
+    });
+  },
+  goToStep(event) {
+    this.setState({
+      step: event.target.dataset.steppp - 1
+    });
+    RoutesStore.getRouter().transitionTo(steps[this.props.step - 1].link);
+  },
+  goToSubpage() {
+
   }
 });
