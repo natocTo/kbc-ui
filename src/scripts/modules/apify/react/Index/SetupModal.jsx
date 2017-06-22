@@ -109,7 +109,12 @@ export default React.createClass({
     const hasAuth = this.hasAuth();
     const hasCrawler = this.hasCrawler();
     const hasSettingsValid = this.isSettingsValid();
-    return hasAuth && hasCrawler && hasSettingsValid;
+    const isCrawlerAction = this.getAction() === 'crawler';
+    if (isCrawlerAction) {
+      return hasAuth && hasCrawler && hasSettingsValid;
+    } else {
+      return hasCrawler;
+    }
   },
 
   cycleTab(delta) {
