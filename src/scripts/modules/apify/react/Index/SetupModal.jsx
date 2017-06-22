@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
-import TabbedWizard, {AUTH_KEY, OPTIONS_KEY} from './TabbedWizard';
+import TabbedWizard, {CRAWLER_KEY, AUTH_KEY, OPTIONS_KEY} from './TabbedWizard';
 import {fromJS, Map} from 'immutable';
 import WizardButtons from '../../../components/react/components/WizardButtons';
 
@@ -113,11 +113,44 @@ export default React.createClass({
   },
 
   cycleTab(delta) {
-    let newStep = this.step() + delta;
-    newStep = newStep === 0 ? AUTH_KEY : newStep;
-    newStep = newStep > 3 ? AUTH_KEY : newStep;
-    if (newStep === OPTIONS_KEY && this.getAction() === 'crawler') this.onLoadCrawlers();
-    this.updateLocalState('step', newStep);
+    const currentStep = this.step();
+    let nextStep = 0;
+    const isCrawlerAction = this.getAction() === 'crawler';
+    switch (currentStep) {
+      case CRAWLER_KEY:
+        if (delta === 1) {
+          if (isCrawlerAction) {
+            nextStep = AUTH_KEY;
+          } else {
+            nextStep = OPTIONS_KEY;
+          }
+        }
+        break;
+      case AUTH_KEY:
+        if (delta === 1) {
+          nextStep = OPTIONS_KEY;
+        } else {
+          nextStep = CRAWLER_KEY;
+        }
+        break;
+      case OPTIONS_KEY:
+        if (delta === -1) {
+          if (isCrawlerAction) {
+            nextStep = AUTH_KEY;
+          } else {
+            nextStep = CRAWLER_KEY;
+          }
+        }
+        break;
+      default:
+        nextStep = currentStep;
+    }
+    if (nextStep === OPTIONS_KEY && isCrawlerAction) this.onLoadCrawlers();
+    /* let newStep = this.step() + delta;
+     * newStep = newStep === 0 ? AUTH_KEY : newStep;
+     * newStep = newStep > 3 ? AUTH_KEY : newStep;
+     * */
+    this.updateLocalState('step', nextStep);
   },
 
   renderWizard() {
@@ -195,7 +228,7 @@ export default React.createClass({
   },
 
   step() {
-    return this.localState('step', AUTH_KEY);
+    return this.localState('step', CRAWLER_KEY);
   },
 
   updateLocalState(path, value) {

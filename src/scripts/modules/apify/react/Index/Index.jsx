@@ -163,13 +163,13 @@ export default React.createClass({
     const executionId = parameters.get('executionId');
     return (
       <div className="form-horizontal">
-        {this.renderStaticFormGroup('User ID', user)}
         {executionId ? this.renderStaticFormGroup('Execution ID', <p className="form-control-static">{executionId}</p>)
-          :
-          <span>
-            {this.renderStaticFormGroup('Crawler', crawler)}
-            {this.renderStaticFormGroup('Crawler Settings', settings)}
-          </span>
+         :
+         <span>
+           {this.renderStaticFormGroup('User ID', user)}
+           {this.renderStaticFormGroup('Crawler', crawler)}
+           {this.renderStaticFormGroup('Crawler Settings', settings)}
+         </span>
 
         }
         <div className="col-md-12">

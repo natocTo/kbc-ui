@@ -7,8 +7,9 @@ import {Input} from '../../../../react/common/KbcBootstrap';
 import Select from 'react-select';
 // import {Loader} from 'kbc-react-components';
 import {RefreshIcon} from 'kbc-react-components';
-export const AUTH_KEY = 1;
-export const CRAWLER_KEY = 2;
+
+export const CRAWLER_KEY = 1;
+export const AUTH_KEY = 2;
 export const OPTIONS_KEY = 3;
 
 import CodeMirror from 'react-code-mirror';
@@ -43,14 +44,17 @@ export default React.createClass({
     return (
       <span>
         <Tabs activeKey={this.props.step} animation={false} onSelect={this.props.selectTab} id="controlled-tab-wizard">
-          <Tab title="Authentication" eventKey={AUTH_KEY}
-            disabled={this.isTabDisabled(AUTH_KEY)}>
-            {this.renderTokenForm()}
-          </Tab>
           <Tab title="Action"
             eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
             {this.renderActionForm()}
           </Tab>
+          {this.props.action === 'crawler' ?
+           <Tab title="Authentication" eventKey={AUTH_KEY}
+             disabled={this.isTabDisabled(AUTH_KEY)}>
+             {this.renderTokenForm()}
+           </Tab>
+           : null
+          }
           <Tab title="Specification"
             eventKey={OPTIONS_KEY} disabled={this.isTabDisabled(OPTIONS_KEY)} >
             {this.props.step === OPTIONS_KEY ? this.renderCrawlerSettingsForm() : null}
