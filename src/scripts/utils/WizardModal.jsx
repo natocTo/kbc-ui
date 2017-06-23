@@ -1,8 +1,6 @@
 import React from 'react';
-import {Modal, Button, ListGroup, ListGroupItem} from 'react-bootstrap';
-// import { Link } from 'react-router';
+import {Modal, Button, ListGroup, ListGroupItem, Link} from 'react-bootstrap';
 import RoutesStore from '../stores/RoutesStore';
-
 
 const steps = [
   {
@@ -95,7 +93,10 @@ export default React.createClass({
         <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.getBackdrop()} bsSize="large"
                className={'wiz wiz-' + this.getPosition()}>
           <Modal.Header closeButton>
-            <Modal.Title>{this.getTitle()}</Modal.Title>
+            <Modal.Title>
+              <Link to="home">Lesson name </Link> <i className="fa fa-chevron-right"/>
+               {this.getTitle()}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="row">
@@ -104,9 +105,12 @@ export default React.createClass({
 
                 <ListGroup>
                   {steps.map((step) => {
-                    let isActive = 'active';
+                    let isActive = 'passed';
                     if (this.state.step - 1 < step.stepId) {
                       isActive = '';
+                    }
+                    if (this.state.step === step.stepId) {
+                      isActive = 'active';
                     }
                     return (
                         <ListGroupItem className={isActive}>
@@ -140,7 +144,7 @@ export default React.createClass({
     return steps[this.state.step - 1].title;
   },
   getBackdrop() {
-    console.log('backdropId: ', this.state.step);
+    // console.log('backdropId: ', this.state.step);
     return steps[this.state.step - 1].backdrop;
   },
   getMedia() {
