@@ -111,7 +111,7 @@ export default React.createClass({
 
   isConfigured() {
     const params = this.state.store.parameters;
-    const hasAuth = !!params.get('userId') && !!params.get('#token');
+    const hasAuth = (!!params.get('userId') && !!params.get('#token')) || !!params.get('executionId');
     const hasCrawler = !!params.get('crawlerId') || !!params.get('executionId');
     return hasAuth && hasCrawler;
   },
