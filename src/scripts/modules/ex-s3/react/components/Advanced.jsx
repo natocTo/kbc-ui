@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
+import CsvDelimiterInput from './../../../../react/common/CsvDelimiterInput';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -12,8 +13,8 @@ export default React.createClass({
     disabled: PropTypes.bool.isRequired
   },
 
-  onChangeDelimiter(e) {
-    this.props.onChange('delimiter', e.target.value);
+  onChangeDelimiter(value) {
+    this.props.onChange('delimiter', value);
   },
 
   onChangeEnclosure(e) {
@@ -23,8 +24,7 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
-        <Input
-          type="text"
+        <CsvDelimiterInput
           label="Delimiter"
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
