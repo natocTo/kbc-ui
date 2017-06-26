@@ -46,7 +46,7 @@ export default React.createClass({
               </div>
               <div className="td">
                 <h2>Access</h2>
-                <h3 style={ {fontSize: '42px'} }>{this.state.tokens.get('adminCount')} <small style={ {fontSize: '16px'} }>Admins</small></h3>
+                <h3 style={ {fontSize: '42px'} }>{this.state.tokens.get('adminCount')} <small style={ {fontSize: '16px'} }>Users</small></h3>
                 <h3 style={ {fontSize: '24px'} }>{this.state.tokens.get('totalCount') - this.state.tokens.get('adminCount')} <small>API Tokens</small></h3>
               </div>
             </div>
