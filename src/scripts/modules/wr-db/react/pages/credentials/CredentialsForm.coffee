@@ -13,6 +13,7 @@ contactSupport = require('../../../../../utils/contactSupport').default
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 StaticText = React.createFactory(require('./../../../../../react/common/KbcBootstrap').FormControls.Static)
 {Protected} = require 'kbc-react-components'
+ApplicationStore = require '../../../../../stores/ApplicationStore'
 
 {a, span, form, div, h2, small, label, p, option} = React.DOM
 
@@ -31,6 +32,7 @@ module.exports = React.createClass
     componentId: React.PropTypes.string
     driver: React.PropTypes.string
     testCredentialsFn: React.PropTypes.func
+
 
   render: ->
     provDescription = 'These are readonly credentials to the database provided by Keboola.'
@@ -68,10 +70,14 @@ module.exports = React.createClass
     a {onClick: @_openSupportModal}, " Contact support"
 
   _snowflakeDescription: ->
+    timeout = ApplicationStore.getSapiToken().getIn(
+      ['owner','limits', 'keboola.wr-db-snowflake.statementTimeout', 'value'],
+      15
+    )
     span null,
-      """
-      These are write credentials to the snowflake database provided by Keboola. All executed queries have 15 seconds timeout and there can be 2 concurrent sessions running at most.
-      """
+      'These are write credentials to the snowflake database provided by Keboola. All executed queries have '
+      timeout
+      ' seconds timeout and there can be 2 concurrent sessions running at most.'
       @_renderContactUs()
       ' if you would like to raise these limits.'
 
