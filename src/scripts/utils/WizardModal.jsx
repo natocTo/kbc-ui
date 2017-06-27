@@ -178,7 +178,7 @@ export default React.createClass({
   decreaseStep() {
     if (this.state.step > 1) {
       this.setState({
-        step: this.state.step
+        step: this.state.step - 1
       });
     }
   },
