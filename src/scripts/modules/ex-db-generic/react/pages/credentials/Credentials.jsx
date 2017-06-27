@@ -8,6 +8,7 @@ export default React.createClass({
     savedCredentials: PropTypes.object.isRequired,
     credentials: PropTypes.object.isRequired,
     isEditing: PropTypes.bool.isRequired,
+    isValidEditingCredentials: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     configId: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
@@ -22,6 +23,7 @@ export default React.createClass({
         <TabbedArea defaultActiveKey="db" animation={false} id="credentialstab">
           <TabPane eventKey="db" title="Database Credentials">
             <CredentialsForm
+              isValidEditingCredentials={this.props.isValidEditingCredentials}
               savedCredentials={this.props.savedCredentials}
               credentials={this.props.credentials}
               enabled={this.props.isEditing}

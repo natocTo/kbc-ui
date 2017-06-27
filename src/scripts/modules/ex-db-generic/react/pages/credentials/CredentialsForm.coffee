@@ -17,6 +17,7 @@ module.exports = React.createClass
     savedCredentials: React.PropTypes.object.isRequired
     credentials: React.PropTypes.object.isRequired
     enabled: React.PropTypes.bool.isRequired
+    isValidEditingCredentials: React.PropTypes.bool.isRequired
     onChange: React.PropTypes.func
     componentId: React.PropTypes.string.isRequired
     configId: React.PropTypes.string.isRequired
@@ -26,6 +27,7 @@ module.exports = React.createClass
 
   getDefaultProps: ->
     onChange: ->
+    isValidEditingCredentials: true
 
   render: ->
     form className: 'form-horizontal',
@@ -40,6 +42,7 @@ module.exports = React.createClass
           onChange: (sshObject) =>
             @props.onChange(@props.credentials.set('ssh', sshObject))
       TestCredentialsButtonGroup
+        disabled: !this.props.isValidEditingCredentials
         testCredentialsFn: @testCredentials
 
   testCredentials: ->

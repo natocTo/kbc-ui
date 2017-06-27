@@ -11,9 +11,11 @@ module.exports = React.createClass
   displayName: 'TestCredentialsButtonGroup'
   propTypes:
     hasOffset: React.PropTypes.bool.isRequired
-    testCredentialsFn: React.PropTypes.func.isRequired
+    testCredentialsFn: React.PropTypes.func.isRequired,
+    disabled: React.PropTypes.bool
 
   getDefaultProps: ->
+    disabled: false
     hasOffset: true
 
   getInitialState: ->
@@ -47,7 +49,7 @@ module.exports = React.createClass
       div className: classnames('col-xs-8', 'col-xs-offset-4': @props.hasOffset),
         Button
           bsStyle: 'primary'
-          disabled: @state.isTesting
+          disabled: @state.isTesting || @props.disabled
           onClick: @_startTesting
         ,
           'Test Credentials'
