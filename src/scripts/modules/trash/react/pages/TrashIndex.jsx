@@ -112,10 +112,6 @@ export default React.createClass({
       {
         'label': 'Applications',
         'value': 'application'
-      },
-      {
-        'label': 'Extractors',
-        'value': 'extractor'
       }
     ];
 
