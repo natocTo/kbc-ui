@@ -1,42 +1,34 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import WizardModal from './WizardModal';
+import WizardStore, { hideWizardModalFn } from './WizardStore';
 // import {Button} from 'react-bootstrap';
+import createStoreMixin from '../react/mixins/createStoreMixin';
 
 module.exports = React.createClass({
   displayName: 'Wizard',
 
-  propTypes: {
-    lessonNumber: PropTypes.number.isRequired,
-    showLessonModal: PropTypes.bool.isRequired,
-    onHideFn: PropTypes.func.isRequired
+  mixins: [createStoreMixin(WizardStore)],
+
+  getStateFromStores() {
+    return {
+      wizard: WizardStore.getState()
+    };
   },
 
   render() {
-    if (!this.props.showLessonModal || this.props.lessonNumber === 0) {
+    if (!this.state.wizard.showLessonModal || this.state.wizard.lessonNumber === 0) {
       return null;
     }
     return (
       <WizardModal
-        show={this.props.showLessonModal}
-        onHide={this.props.onHideFn}
+        show={this.state.wizard.showLessonModal}
+        onHide={hideWizardModalFn}
         position="aside"
         step={1}
-        lesson={this.props.lessonNumber}
+        lesson={this.state.wizard.lessonNumber}
         backdrop={true}
       />
     );
-  },
-  showWizardModal: function() {
-    this.setState({showWizardModal: true});
-  },
-  hideWizardModal: function() {
-    this.setState({showModal: false});
-  },
-  openModal() {
-    this.setState({ showModal: true });
-  },
-  openLessonModal(event) {
-    this.setState({ lesson: event.target.dataset.lesson });
-    this.openModal();
   }
+
 });
