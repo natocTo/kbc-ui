@@ -2,6 +2,83 @@ import React from 'react';
 import {Modal, Button, ListGroup, ListGroupItem, Link} from 'react-bootstrap';
 import RoutesStore from '../stores/RoutesStore';
 
+// const lessons = [
+//   {
+//     lessonId: 1,
+//     title: 'Explore Keboola',
+//     steps: [
+//       {
+//         stepId: 1,
+//         position: 'center',
+//         backdrop: true,
+//         title: 'Lesson 1 - Composition',
+//         link: 'home',
+//         text: 'Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni ' +
+//         'patogenů likviduje živin Vojtěchovi slavení hledali zvýší výjimkou, mj. tři jemu tahů publikujeme dostaly ke unii ' +
+//         'vědní. ',
+//         media: 'http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png'
+//       },
+//       {
+//         stepId: 2,
+//         position: 'aside',
+//         backdrop: false,
+//         title: 'Extract data',
+//         link: 'extractors',
+//         text: 'Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni ' +
+//         'patogenů likviduje živin Vojtěchovi slavení hledali zvýší výjimkou, mj. tři jemu tahů publikujeme dostaly ke unii ' +
+//         'vědní. Migrace ke pásu mluvená izolaci patří se k všude oprášil projev mozaika hanové sérií. Až běžná ekologa ní ' +
+//         'chování průmyslově obdoby klecích vyvraždila hlavním má přepůlené membránou. Přetvořit chce ně drží hladem, pod ' +
+//         'zemí žluté mé oprášil z lheureux. Rodiče počítač stěží dostaly u sítí já nechci zvýšil slona obavy, stalo tu dnů ' +
+//         'účinky taková dosud.',
+//         media: ''
+//       },
+//       {
+//         stepId: 3,
+//         position: 'aside',
+//         backdrop: false,
+//         title: 'Store example',
+//         link: '/storage',
+//         text: 'Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace ' +
+//         'zůstal 2800 nejlogičtějším hospůdky telefonu plné v nejenže nemalé pomáhá. Náročnější uzavřenost, amoku hmyz ' +
+//         'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
+//         'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
+//         ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ' +
+//         'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.',
+//         media: ''
+//       },
+//       {
+//         stepId: 4,
+//         position: 'aside',
+//         backdrop: false,
+//         title: 'Write data',
+//         link: 'writers',
+//         text: 'Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace ' +
+//         'zůstal 2800 nejlogičtějším hospůdky telefonu plné v nejenže nemalé pomáhá. Náročnější uzavřenost, amoku hmyz ' +
+//         'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
+//         'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
+//         ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ' +
+//         'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.',
+//         media: ''
+//
+//       },
+//       {
+//         stepId: 5,
+//         position: 'aside',
+//         backdrop: false,
+//         title: 'Check data',
+//         link: 'jobs',
+//         text: 'Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace ' +
+//         'zůstal 2800 nejlogičtějším hospůdky telefonu plné v nejenže nemalé pomáhá. Náročnější uzavřenost, amoku hmyz ' +
+//         'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
+//         'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
+//         ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ' +
+//         'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.',
+//         media: ''
+//       }
+//     ]
+//   }
+// ];
+
 const steps = [
   {
     stepId: 1,

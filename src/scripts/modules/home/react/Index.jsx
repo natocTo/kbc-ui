@@ -66,13 +66,9 @@ export default React.createClass({
                 itaque, laboriosam magnam maxime modi mollitia necessitatibus optio perspiciatis quibusdam quod ratione
                 rem sapiente totam.</span>
               <ul>
-                <li>1. Lesson - Composing</li>
-                <li>2. Lesson - Transformation</li>
-                <li>3. Lesson - Orchestration</li>
-                <button className="btn btn-link" onClick={this.openLessonModal} data-lesson="1">open 1</button>
-                <button className="btn btn-link" onClick={this.openLessonModal} data-lesson="2">open 2</button>
-                <button className="btn btn-link" onClick={this.openLessonModal} data-lesson="3">open 3</button>
-
+                <li><button className="btn btn-link" onClick={this.openLessonModal} data-lesson="1">1. Lesson - Composing</button></li>
+                <li><button className="btn btn-link" onClick={this.openLessonModal} data-lesson="2">2. Lesson - Transformation</button></li>
+                <li><button className="btn btn-link" onClick={this.openLessonModal} data-lesson="3">3. Lesson - Orchestration</button></li>
               </ul>
             </p>
           </div>
