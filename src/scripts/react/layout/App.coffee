@@ -9,6 +9,8 @@ ErrorPage = React.createFactory(require './../pages/ErrorPage')
 LoadingPage = React.createFactory(require './../pages/LoadingPage')
 ProjectSelect = React.createFactory(require('./project-select/ProjectSelect').default)
 PageTitle = React.createFactory(require './PageTitle')
+Wizard =  React.createFactory(require('../../utils/Wizard'))
+WizardStore = require('../../utils/WizardStore').default
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')
@@ -73,5 +75,6 @@ App = React.createClass
               LoadingPage()
             else
               RouteHandler()
+            Wizard()
 
 module.exports = App

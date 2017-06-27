@@ -10,7 +10,8 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 // import InstalledComponentsApi from '../../components/InstalledComponentsApi';
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import Wizard from '../../../utils/Wizard';
+import { showWizardModalFn } from '../../../utils/WizardStore';
+
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore)],
@@ -45,23 +46,12 @@ export default React.createClass({
       tokens: tokenStats,
       projectId: currentProject.get('id'),
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
-      expires: ApplicationStore.getCurrentProject().get('expires'),
-      showLessonModal: false,
-      lessonNumber: 0
+      expires: ApplicationStore.getCurrentProject().get('expires')
     };
   },
 
   openLessonModal(lessonNumber) {
-    this.setState({
-      lessonNumber: lessonNumber,
-      showLessonModal: true
-    });
-  },
-
-  closeLessonModal() {
-    this.setState({
-      showLessonModal: false
-    });
+    showWizardModalFn(lessonNumber);
   },
 
   render() {
@@ -107,11 +97,6 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <Wizard
-          showLessonModal={this.state.showLessonModal}
-          lessonNumber={this.state.lessonNumber}
-          onHideFn={this.closeLessonModal}
-        />
         <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
           <div className="tbody">
             <div className="tr">
