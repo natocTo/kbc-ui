@@ -9,8 +9,6 @@ ErrorPage = React.createFactory(require './../pages/ErrorPage')
 LoadingPage = React.createFactory(require './../pages/LoadingPage')
 ProjectSelect = React.createFactory(require('./project-select/ProjectSelect').default)
 PageTitle = React.createFactory(require './PageTitle')
-#Modal = React.createFactory(require('react-bootstrap').Modal)
-Wizard =  React.createFactory(require('../../utils/Wizard'))
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')
@@ -68,7 +66,6 @@ App = React.createClass
                 dropup: true
               UserLinks()
               PoweredByKeboola()
-              Wizard()
           div className: 'col-xs-9 col-xs-offset-3 kbc-main',
             if @props.isError
               ErrorPage()
