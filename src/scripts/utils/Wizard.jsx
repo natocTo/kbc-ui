@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import WizardModal from './WizardModal';
 // import {Button} from 'react-bootstrap';
 
 module.exports = React.createClass({
   displayName: 'Wizard',
-  getInitialState() {
-    return {
-      showModal: true,
-      lessson: 1
-    };
+
+  propTypes: {
+    lessonNumber: PropTypes.number.isRequired,
+    showLessonModal: PropTypes.bool.isRequired,
+    onHideFn: PropTypes.func.isRequired
   },
-  render: function() {
+
+  render() {
+    if (!this.props.showLessonModal || this.props.lessonNumber === 0) {
+      return null;
+    }
     return (
-      <WizardModal show={this.state.showModal} onHide={this.hideWizardModal} position="aside" step={1} lesson={this.state.lesson} backdrop={true}>aaa</WizardModal>
+      <WizardModal
+        show={this.props.showLessonModal}
+        onHide={this.props.onHideFn}
+        position="aside"
+        step={1}
+        lesson={this.props.lessonNumber}
+        backdrop={true}
+      />
     );
   },
   showWizardModal: function() {
