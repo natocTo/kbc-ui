@@ -10,6 +10,7 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 // import InstalledComponentsApi from '../../components/InstalledComponentsApi';
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import Wizard from '../../../utils/Wizard';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore)],
@@ -44,8 +45,23 @@ export default React.createClass({
       tokens: tokenStats,
       projectId: currentProject.get('id'),
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
-      expires: ApplicationStore.getCurrentProject().get('expires')
+      expires: ApplicationStore.getCurrentProject().get('expires'),
+      showLessonModal: false,
+      lessonNumber: 0
     };
+  },
+
+  openLessonModal(lessonNumber) {
+    this.setState({
+      lessonNumber: lessonNumber,
+      showLessonModal: true
+    });
+  },
+
+  closeLessonModal() {
+    this.setState({
+      showLessonModal: false
+    });
   },
 
   render() {
@@ -57,7 +73,9 @@ export default React.createClass({
         <div className="jumbotron">
           <div className="well">
             <h1>Welcome, new user</h1>
-            <p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda doloremque, expedita
+            <div>
+              <p>
+                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda doloremque, expedita
               facere facilis modi molestiae provident quibusdam veritatis vero. Dolorum facere fuga illum incidunt
               nesciunt reiciendis saepe, sed sequi.</span><span>Ab asperiores consectetur cupiditate dicta dolore,
               eligendi magni modi quo. Alias aut consequatur culpa cumque dignissimos doloremque dolorum ea,
@@ -65,14 +83,35 @@ export default React.createClass({
               <span>Ab at culpa cumque deleniti distinctio ducimus earum eligendi facilis fuga harum id, impedit incidunt
                 itaque, laboriosam magnam maxime modi mollitia necessitatibus optio perspiciatis quibusdam quod ratione
                 rem sapiente totam.</span>
+              </p>
               <ul>
-                <li><button className="btn btn-link" onClick={this.openLessonModal} data-lesson="1">1. Lesson - Composing</button></li>
-                <li><button className="btn btn-link" onClick={this.openLessonModal} data-lesson="2">2. Lesson - Transformation</button></li>
-                <li><button className="btn btn-link" onClick={this.openLessonModal} data-lesson="3">3. Lesson - Orchestration</button></li>
+                <li><button className="btn btn-link" onClick={
+                  (e) => {
+                    e.preventDefault();
+                    this.openLessonModal(1);
+                  }
+                } data-lesson="1">1. Lesson - Composing</button></li>
+                <li><button className="btn btn-link" onClick={
+                  (e) => {
+                    e.preventDefault();
+                    this.openLessonModal(2);
+                  }
+                } data-lesson="2">2. Lesson - Transformation</button></li>
+                <li><button className="btn btn-link" onClick={
+                  (e) => {
+                    e.preventDefault();
+                    this.openLessonModal(3);
+                  }
+                } data-lesson="3">3. Lesson - Orchestration</button></li>
               </ul>
-            </p>
+            </div>
           </div>
         </div>
+        <Wizard
+          showLessonModal={this.state.showLessonModal}
+          lessonNumber={this.state.lessonNumber}
+          onHideFn={this.closeLessonModal}
+        />
         <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
           <div className="tbody">
             <div className="tr">
