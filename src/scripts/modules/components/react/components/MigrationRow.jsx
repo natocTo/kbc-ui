@@ -29,7 +29,8 @@ const PERNAMENT_MIGRATION_COMPONENTS = [
   'ex-google-drive',
   'wr-db-mysql',
   'wr-db-oracle',
-  'wr-db-redshift'
+  'wr-db-redshift',
+  'wr-google-drive'
 ];
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
@@ -41,7 +42,8 @@ const componentNameMap = Map({
   'ex-google-drive': 'keboola.ex-google-drive',
   'wr-db-mysql': 'keboola.wr-db-mysql',
   'wr-db-oracle': 'keboola.wr-db-oracle',
-  'wr-db-redshift': 'keboola.wr-redshift-v2'
+  'wr-db-redshift': 'keboola.wr-redshift-v2',
+  'wr-google-drive': ['keboola.wr-google-drive', 'keboola.wr-google-sheets']
 });
 
 const GoodDataMigrationDescription = (
@@ -202,7 +204,6 @@ export default React.createClass({
     return (
       <button
         onClick={this.showModal}
-        type="button"
         disabled={this.state.isLoading}
         type="sumbit" className="btn btn-success">
         Proceed to Migration
@@ -417,14 +418,31 @@ export default React.createClass({
   },
 
   renderNewConfigLink(row) {
-    const newComponentId = this.getNewComponentId(row.get('componentId'));
-    const newLabel = `${newComponentId} / ${row.get('configName')}`;
-    const configExists = InstalledComponentsStore.getConfig(newComponentId, row.get('configId')).count() > 0;
-    if (configExists) {
-      return this.renderConfigLink(row.get('configId'), newComponentId, newLabel);
-    } else {
-      return newLabel;
-    }
+    const newComponentIds = List([].concat(this.getNewComponentId(row.get('componentId'))));
+    const configs = newComponentIds.map(function(value) {
+      return Map()
+        .set('newComponentId', value)
+        .set('config', InstalledComponentsStore.getConfig(value, row.get('configId')).count() > 0)
+        .set('label', `${value} / ${row.get('configName')}`);
+    });
+
+    return (
+      <ul>
+        {configs.map((item) =>
+          item.get('config')
+            ?
+            <li>
+              {this.renderConfigLink(
+                row.get('configId'),
+                item.get('newComponentId'),
+                item.get('label')
+              )}
+            </li>
+            :
+            <li>{item.get('label')}</li>
+        )}
+      </ul>
+    );
   },
 
   getNewComponentId(componentId) {
