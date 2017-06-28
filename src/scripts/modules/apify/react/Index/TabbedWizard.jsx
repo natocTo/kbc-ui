@@ -131,6 +131,9 @@ export default React.createClass({
           </div>
           <div className="col-xs-8">
             {editor}
+            <div className="help-text">
+              Optional crawler settings JSON object which overrides default crawler settings for current run
+            </div>
           </div>
         </div>
       </div>
