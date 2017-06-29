@@ -38,20 +38,6 @@ module.exports = React.createClass({
     return (
       <span>
         <div className="row">
-          <span className="col-md-3">Host</span>
-          <span className="col-md-9">
-            {this.props.credentials.get('hostname')}
-            <Clipboard text={this.props.credentials.get('hostname')}/>
-          </span>
-        </div>
-        <div className="row">
-          <span className="col-md-3">Port</span>
-          <span className="col-md-9">
-            {this.props.credentials.get('port')}
-            <Clipboard text={this.props.credentials.get('port').toString()}/>
-          </span>
-        </div>
-        <div className="row">
           <span className="col-md-3">User</span>
           <span className="col-md-9">
             {this.props.credentials.get('user')}
