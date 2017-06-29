@@ -1,8 +1,8 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Table} from 'react-bootstrap';
-import {RefreshIcon} from 'kbc-react-components';
+import {Alert, Modal, Table} from 'react-bootstrap';
+import {Check, Loader, RefreshIcon} from 'kbc-react-components';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
 import SapiTableLink from './StorageApiTableLink';
@@ -10,16 +10,13 @@ import ApplicationStore from '../../../../stores/ApplicationStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
-import {Loader} from 'kbc-react-components';
 import jobsApi from '../../../jobs/JobsApi';
 import DockerActionFn from '../../DockerActionsApi';
 import date from '../../../../utils/date';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
-import {Check} from 'kbc-react-components';
 import Tooltip from '../../../../react/common/Tooltip';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 import ComponentConfigurationLink from './ComponentConfigurationLink';
-import { Alert, Modal } from 'react-bootstrap';
 import ComponentEmptyState from '../../../components/react/components/ComponentEmptyState';
 
 const PERNAMENT_MIGRATION_COMPONENTS = [
@@ -74,12 +71,6 @@ export default React.createClass({
     };
   },
 
-  /* componentDidMount() {
-   *   if (!this.state.status) {
-   *     this.loadStatus();
-   *   }
-   * },*/
-
   loadStatus(additionalState) {
     const newState = _.extend({}, additionalState, {loadingStatus: true});
     this.setState(newState);
@@ -120,12 +111,6 @@ export default React.createClass({
       }
     });
   },
-
-  /* getDefaultProps() {
-   *  return {
-   *    buttonType: 'danger'
-   *  };
-   *},*/
 
   canMigrate() {
     const isPernament = PERNAMENT_MIGRATION_COMPONENTS.indexOf(this.props.componentId) >= 0;
@@ -380,13 +365,23 @@ export default React.createClass({
                 {this.renderNewConfigLink(row)}
               </td>
               <td>
-                {row.get('status')}
+                {this.renderRowStatus(row.get('status'))}
               </td>
             </tr>
           )}
         </tbody>
       </Table>
     );
+  },
+
+  renderRowStatus(status) {
+    if (status === 'success') {
+      return <span className="label label-success">{status}</span>;
+    }
+    if (status.includes('error')) {
+      return <span className="label label-danger">error</span>;
+    }
+    return <span className="label label-info">{status}</span>;
   },
 
   renderJobInfo() {
@@ -427,7 +422,7 @@ export default React.createClass({
     });
 
     return (
-      <ul>
+      <ul className="list-unstyled">
         {configs.map((item) =>
           item.get('config')
             ?
