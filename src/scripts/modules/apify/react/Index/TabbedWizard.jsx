@@ -137,8 +137,6 @@ export default React.createClass({
           </div>
         </div>
       </div>
-
-
     );
   },
 
@@ -192,9 +190,11 @@ export default React.createClass({
         {refresh}
       </FormControl.Static>
     );
-    const options = crawlersData.map((c) => {
-      return {value: c.get('id'), label: c.get('customId')};
-    }).toArray();
+    const options = crawlersData
+      .sortBy((c) => c.get('customId').toLowerCase())
+      .map((c) => {
+        return {value: c.get('id'), label: c.get('customId')};
+      }).toArray();
     const selectControl = (
       <InputGroup>
         <Select
