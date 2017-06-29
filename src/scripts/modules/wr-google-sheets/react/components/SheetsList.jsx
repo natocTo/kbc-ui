@@ -36,7 +36,7 @@ export default React.createClass({
         onToggleBucketFn={this.handleToggleBucket}
         isBucketToggledFn={this.isBucketToggled}
         showAllTables={false}
-        configuredTables={this.props.inputTables.map((table) => table.get('id')).toJS()}
+        configuredTables={this.props.items.map((item) => item.get('tableId')).toJS()}
         renderDeletedTableRowFn={(table) => this.renderRowDeleted(table)}
       />
     );
