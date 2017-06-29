@@ -3,7 +3,7 @@ import {Modal} from 'react-bootstrap';
 import TabbedWizard, {CRAWLER_KEY, AUTH_KEY, OPTIONS_KEY} from './TabbedWizard';
 import {fromJS, Map} from 'immutable';
 import WizardButtons from '../../../components/react/components/WizardButtons';
-
+import _ from 'underscore';
 export default React.createClass({
 
   propTypes: {
@@ -54,7 +54,8 @@ export default React.createClass({
   },
 
   handleSave() {
-    const crawlerSettings = fromJS(JSON.parse(this.getSettings()));
+    let crawlerSettings = JSON.parse(this.getSettings());
+    crawlerSettings = _.isEmpty(crawlerSettings) ? null : fromJS(crawlerSettings);
     let paramsToSave = this.parameters();
     const action = this.getAction();
     if (action === 'crawler') {
