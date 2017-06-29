@@ -227,7 +227,7 @@ export default React.createClass({
       <CodeMirror
         theme="solarized"
         lineNumbers={false}
-        defaultValue={value}
+        value={value}
         readOnly={true}
         cursorHeight={0}
         mode="application/json"
