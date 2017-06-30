@@ -3,7 +3,7 @@ SapiStorage = require '../components/stores/StorageTokensStore'
 Promise = require 'bluebird'
 wrDbProvStore = require '../provisioning/stores/WrDbCredentialsStore'
 provisioningActions = require '../provisioning/ActionCreators'
-
+_ = require 'underscore'
 OLD_WR_REDSHIFT_COMPONENT_ID = 'wr-db-redshift'
 NEW_WR_REDSHIFT_COMPONENT_ID = 'keboola.wr-redshift-v2'
 WR_SNOWFLAKE_COMPONENT_ID = 'keboola.wr-db-snowflake'
@@ -83,6 +83,16 @@ clearCredentials = (componentId, driver, token, configCredentials) ->
 
 
 module.exports =
+  isProvisioningCredentials: (driver, credentials) ->
+    host = credentials?.get('host')
+    if driver == 'mysql'
+      return host == 'wr-db-aws.keboola.com'
+    if driver == 'redshift'
+      return _.str.include(host,'redshift.amazonaws.com') and _.str.include(host, 'sapi')
+    if driver == 'snowflake'
+      return _.str.include(host,'keboola.snowflakecomputing.com')
+    return false
+
   getCredentials: (isReadOnly, driver, componentId, configId) ->
     desc = "wrdb#{driver}_#{configId}"
     legacyDesc = "wrdb#{driver}"

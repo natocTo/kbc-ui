@@ -229,17 +229,7 @@ templateFn = (componentId, driver, isProvisioning) ->
         @state.v2Actions.testCredentials(credentials)
 
   _isProvCredentials: ->
-    host = @state.credentials?.get('host')
-    if driver == 'mysql'
-      return host == 'wr-db-aws.keboola.com'
-
-    if driver == 'redshift'
-      return _.str.include(host,'redshift.amazonaws.com') and _.str.include(host, 'sapi')
-
-    if driver == 'snowflake'
-      return _.str.include(host,'keboola.snowflakecomputing.com')
-
-    return false
+    return isProvisioningCredentials(driver, @state.credentials)
 
   _handleChange: (propName, event) ->
     if ['port', 'retries'].indexOf(propName) >= 0
