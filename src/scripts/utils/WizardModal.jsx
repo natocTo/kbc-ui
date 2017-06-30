@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal, Button, ListGroup, ListGroupItem} from 'react-bootstrap';
+import RoutesStore from '../stores/RoutesStore';
 
 const lessons = {
   1: {
@@ -192,10 +193,15 @@ export default React.createClass({
   getMedia() {
     return lessons[this.props.lesson].steps[this.getStepNumber()].media;
   },
+  getLink() {
+    return lessons[this.props.lesson].steps[this.getStepNumber()].link;
+  },
   decreaseStep() {
     if (this.state.step > 1) {
       this.setState({
         step: this.state.step - 1
+      }, () => {
+        this.goToSubpage();
       });
     }
   },
@@ -203,16 +209,19 @@ export default React.createClass({
     if (this.state.step < lessons[this.props.lesson].steps.length) {
       this.setState({
         step: this.state.step + 1
+      }, () => {
+        this.goToSubpage();
       });
     }
   },
   goToStep(event) {
+    // console.log(event.target.dataset.steppp);
     this.setState({
       step: event.target.dataset.steppp - 1
     });
   },
   goToSubpage() {
-
+    return RoutesStore.getRouter().transitionTo(this.getLink());
   },
   getModalTitle() {
     let stepName = this.getStepNumber() > 0 ? ' > ' + this.getTitle() : '';
