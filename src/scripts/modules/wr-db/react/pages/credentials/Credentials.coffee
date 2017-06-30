@@ -16,6 +16,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 MissingRedshiftModal = require('./MissingRedshiftModal').default
 CredentialsForm = require './CredentialsForm'
+{isProvisioningCredentials} = require '../../../provisioningUtils'
 {div} = React.DOM
 {Protected} = require 'kbc-react-components'
 
@@ -67,7 +68,6 @@ templateFn = (componentId, driver, isProvisioning) ->
     if state in [
       States.SAVING_NEW_CREDS
       States.PREPARING_PROV_WRITE
-      States.LOADING_PROV_READ
       States.CREATE_NEW_CREDS]
       return
     if isProvisioning == false
@@ -76,21 +76,15 @@ templateFn = (componentId, driver, isProvisioning) ->
 
     hasReadCredentials = @state.provisioningCredentials?.get('read')
     if @_hasDbConnection(@state.credentials)
-      if @_isProvCredentials()
-        if hasReadCredentials
-          @_updateLocalState('credentialsState', States.SHOW_PROV_READ_CREDS)
-        else
-          @_runLoadProvReadCredentials()
-      else
-        @_updateLocalState('credentialsState', States.SHOW_STORED_CREDS)
+      @_updateLocalState('credentialsState', States.SHOW_STORED_CREDS)
     else
       @_updateLocalState('credentialsState', States.INIT)
 
-  _runLoadProvReadCredentials: ->
-    isReadOnly = true
-    @_updateLocalState('credentialsState', States.LOADING_PROV_READ)
-    WrDbActions.loadProvisioningCredentials(componentId, @state.configId, isReadOnly, driver).then =>
-      @_updateLocalState('credentialsState', States.SHOW_PROV_READ_CREDS)
+  # _runLoadProvReadCredentials: ->
+  #   isReadOnly = true
+  #   @_updateLocalState('credentialsState', States.LOADING_PROV_READ)
+  #   WrDbActions.loadProvisioningCredentials(componentId, @state.configId, isReadOnly, driver).then =>
+  #     @_updateLocalState('credentialsState', States.SHOW_PROV_READ_CREDS)
 
   render: ->
     if isProvisioning
@@ -123,16 +117,16 @@ templateFn = (componentId, driver, isProvisioning) ->
       switch state
         when States.INIT
           @_renderInit()
-        when States.LOADING_PROV_READ
-          div className: 'well',
-            'Loading provisioning credentials '
-            React.createElement Loader
+        # when States.LOADING_PROV_READ
+        #   div className: 'well',
+        #     'Loading provisioning credentials '
+        #     React.createElement Loader
         when States.PREPARING_PROV_WRITE
           div className: 'well',
             'Preparing provisioning credentials '
             React.createElement Loader
-        when States.SHOW_PROV_READ_CREDS
-          @_renderCredentialsForm(@_prepareProvReadCredentials(), false)
+        # when States.SHOW_PROV_READ_CREDS
+        #   @_renderCredentialsForm(@_prepareProvReadCredentials(), false)
         when States.SHOW_STORED_CREDS
           @_renderCredentialsForm(@state.credentials, false)
         when States.CREATE_NEW_CREDS
@@ -190,7 +184,7 @@ templateFn = (componentId, driver, isProvisioning) ->
     @_updateLocalState('credentialsState', States.PREPARING_PROV_WRITE)
     isReadOnly = false
     WrDbActions.loadProvisioningCredentials(componentId, @state.configId, isReadOnly, driver).then =>
-      @_updateLocalState('credentialsState', States.SHOW_PROV_READ_CREDS)
+      @_updateLocalState('credentialsState', States.SHOW_STORED_CREDS)
 
   _getDefaultPort: ->
     fields = credentialsTemplate(componentId)
@@ -214,7 +208,7 @@ templateFn = (componentId, driver, isProvisioning) ->
   _renderCredentialsForm: (credentials, isEditing) ->
     state = @state.localState.get('credentialsState')
     isSaving =  state == States.SAVING_NEW_CREDS
-    isProvisioningProp = state == States.SHOW_PROV_READ_CREDS
+    isProvisioningProp = @_isProvCredentials()
     React.createElement CredentialsForm,
       savedCredentials: @state.credentials
       isEditing: isEditing
