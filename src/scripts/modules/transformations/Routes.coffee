@@ -112,12 +112,10 @@ routes =
               ProvisioningActionCreators.loadSnowflakeSandboxCredentials()
         ,
           ->
-            if (ApplicationsStore.hasCurrentAdminFeature('docker-sandbox'))
-              ProvisioningActionCreators.loadRStudioSandboxCredentials()
+            ProvisioningActionCreators.loadRStudioSandboxCredentials()
         ,
           ->
-            if (ApplicationsStore.hasCurrentAdminFeature('docker-sandbox'))
-              ProvisioningActionCreators.loadJupyterSandboxCredentials()
+            ProvisioningActionCreators.loadJupyterSandboxCredentials()
         ,
           ->
             StorageActionCreators.loadBuckets()
