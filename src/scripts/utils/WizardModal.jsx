@@ -42,7 +42,7 @@ const lessons = {
         'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
         ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ' +
         'čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.',
-        media: ''
+        media: 'http://marketingwithcameron.com/wp-content/uploads/2015/07/video-placeholder.jpg'
       },
       {
         id: 4,
@@ -141,18 +141,10 @@ export default React.createClass({
             <div className="row">
               <div className="col-md-6">
                 {this.getText()}
-
                 <ListGroup>
                   {lessons[this.props.lesson].steps.map((step) => {
-                    let isActive = 'passed';
-                    if (this.state.step - 1 < step.stepId) {
-                      isActive = '';
-                    }
-                    if (this.state.step === step.stepId) {
-                      isActive = 'active';
-                    }
                     return (
-                      <ListGroupItem className={isActive} key={this.props.lesson + '-' + step.id }>
+                      <ListGroupItem className={this.getActiveStepState(step)} key={this.props.lesson + '-' + step.id }>
                         <a data-steppp={step.id} onClick={this.goToStep} >
                           {step.id}. {step.title}
                         </a>
@@ -225,5 +217,15 @@ export default React.createClass({
   getModalTitle() {
     let stepName = this.getStepNumber() > 0 ? ' > ' + this.getTitle() : '';
     return ('Lesson ' + this.props.lesson + ' - ' + this.getLessonName() + stepName);
+  },
+  getActiveStepState(step) {
+    let isActive = 'passed';
+    if (this.getStepNumber() < step.id - 1) {
+      isActive = '';
+    }
+    if (this.getStepNumber() === step.id - 1) {
+      isActive = 'active';
+    }
+    return isActive;
   }
 });
