@@ -73,8 +73,6 @@ templateFn = (componentId, driver, isProvisioning) ->
     if isProvisioning == false
       @_updateLocalState('credentialsState', States.SHOW_STORED_CREDS)
       return
-
-    hasReadCredentials = @state.provisioningCredentials?.get('read')
     if @_hasDbConnection(@state.credentials)
       @_updateLocalState('credentialsState', States.SHOW_STORED_CREDS)
     else
@@ -216,7 +214,7 @@ templateFn = (componentId, driver, isProvisioning) ->
       onChangeFn: @_handleChange
       changeCredentialsFn: @setCredentials
       isSaving: isSaving
-      isProvisioning: isProvisioningProp
+      isProvisioning: !isEditing && isProvisioningProp
       componentId: componentId
       driver: driver
       testCredentialsFn: (credentials) =>
