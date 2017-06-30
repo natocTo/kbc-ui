@@ -3,13 +3,13 @@ import {Modal, Button, ListGroup, ListGroupItem} from 'react-bootstrap';
 
 const lessons = {
   1: {
-    title: 'Explore Keboola',
+    title: 'Composition',
     steps: [
       {
         id: 1,
         position: 'center',
         backdrop: true,
-        title: 'Lesson 1 - Composition',
+        title: 'Introduction',
         link: 'home',
         text: 'Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni ' +
         'patogenů likviduje živin Vojtěchovi slavení hledali zvýší výjimkou, mj. tři jemu tahů publikujeme dostaly ke unii ' +
@@ -85,8 +85,28 @@ const lessons = {
         title: 'Lesson 2 - Composition',
         link: 'home',
         text: 'Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni ' +
-        'patogenů likviduje živin Vojtěchovi slavení hledali zvýší výjimkou, mj. tři jemu tahů publikujeme dostaly ke unii ' +
-        'vědní. ',
+        'zůstal 2800 nejlogičtějším hospůdky telefonu plné v nejenže nemalé pomáhá. Náročnější uzavřenost, amoku hmyz ' +
+        'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
+        'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
+        ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ',
+        media: 'http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png'
+      }
+    ]
+  },
+  3: {
+    title: 'Orchestration',
+    steps: [
+      {
+        id: 1,
+        position: 'center',
+        backdrop: true,
+        title: 'Introduction',
+        link: 'home',
+        text: 'žije umístěním k kyčle v spustit potenc indie. Testují zvenčí zvýšil s pomoc vloni ' +
+        'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese uzavřenost, amoku hmyz ' +
+        'dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ' +
+        'ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj' +
+        ' až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě ',
         media: 'http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png'
       }
     ]
@@ -114,7 +134,7 @@ export default React.createClass({
                className={'wiz wiz-' + this.getPosition()}>
           <Modal.Header closeButton>
             <Modal.Title>
-               {this.getTitle()}
+              {this.getModalTitle()}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -156,10 +176,15 @@ export default React.createClass({
     );
   },
 
+  getLessonId() {
+    return lessons[this.props.lesson].id;
+  },
+  getLessonName() {
+    return lessons[this.props.lesson].title;
+  },
   getStepNumber() {
     return this.state.step - 1;
   },
-
   getPosition() {
     return lessons[this.props.lesson].steps[this.getStepNumber()].position;
   },
@@ -196,5 +221,9 @@ export default React.createClass({
   },
   goToSubpage() {
 
+  },
+  getModalTitle() {
+    let stepName = this.getStepNumber() > 0 ? ' > ' + this.getTitle() : '';
+    return ('Lesson ' + this.props.lesson + ' - ' + this.getLessonName() + stepName);
   }
 });
