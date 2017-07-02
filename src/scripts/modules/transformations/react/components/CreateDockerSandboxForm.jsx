@@ -20,8 +20,8 @@ module.exports = React.createClass({
     return {
       rows: 0,
       tables: Immutable.List(),
-      packages: Immutable.List(),
-      tags: Immutable.List()
+      packagesItems: Immutable.List(),
+      tagsItems: Immutable.List()
     };
   },
   render: function() {
@@ -75,7 +75,7 @@ module.exports = React.createClass({
           <div className="col-sm-9">
             <Select.Creatable
               name="packages"
-              value={this.state.packages.toJS()}
+              value={this.state.packagesItems.toJS()}
               multi={true}
               onChange={this.onChangePackages}
               placeholder="Add packages..."
@@ -91,8 +91,8 @@ module.exports = React.createClass({
           </label>
           <div className="col-sm-9">
             <Select.Creatable
-              name="packages"
-              value={this.state.tags.toJS()}
+              name="tags"
+              value={this.state.tagsItems.toJS()}
               multi={true}
               onChange={this.onChangeTags}
               placeholder="Add tags..."
@@ -117,16 +117,16 @@ module.exports = React.createClass({
       tables: value
     }, this.onChange);
   },
-  onChangePackages: function(valueArray) {
-    const value = Immutable.fromJS(valueArray);
+  onChangePackages: function(items) {
+    const value = Immutable.fromJS(items);
     this.setState({
-      packages: value
+      packagesItems: value
     }, this.onChange);
   },
-  onChangeTags: function(valueArray) {
-    const value = Immutable.fromJS(valueArray);
+  onChangeTags: function(items) {
+    const value = Immutable.fromJS(items);
     this.setState({
-      tags: value
+      tagsItems: value
     }, this.onChange);
   },
   getTablesOptions: function() {
@@ -153,13 +153,22 @@ module.exports = React.createClass({
       }
       return retVal;
     }).toList();
+    const packages = this.state.packagesItems.map(function(item) {
+      return item.get('value');
+    }).toJS();
+    const tagsFiles = this.state.tagsItems.map(function(item) {
+      return Immutable.Map().set('tags', Immutable.fromJS([item.get('value')]));
+    }).toJS();
+    const tags = this.state.tagsItems.map(function(item) {
+      return item.get('value');
+    }).toJS();
     this.props.onChange({
       input: {
         tables: tablesList.toJS(),
-        files: this.state.tags.toJS()
+        files: tagsFiles
       },
-      packages: this.state.packages.toJS(),
-      tags: this.state.tags.toJS()
+      packages: packages,
+      tags: tags
     });
   }
 });
