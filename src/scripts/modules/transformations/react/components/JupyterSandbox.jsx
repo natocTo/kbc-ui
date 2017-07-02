@@ -85,7 +85,7 @@ var JupyterSandbox = React.createClass({
             tables={this.tablesList()}
             type="Jupyter"
             onConfigurationChange={this.onConfigurationChange}
-            disabled={this.state.sandboxConfiguration.getIn(['input', 'tables'], Immutable.List()).size === 0}
+            disabled={this.state.sandboxConfiguration.getIn(['input', 'tables'], Immutable.List()).size === 0 && this.state.sandboxConfiguration.getIn(['tags'], Immutable.List()).size === 0}
             showAdvancedParams={true}
           />
           <button
