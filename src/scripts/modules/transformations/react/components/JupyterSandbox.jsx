@@ -86,6 +86,7 @@ var JupyterSandbox = React.createClass({
             type="Jupyter"
             onConfigurationChange={this.onConfigurationChange}
             disabled={this.state.sandboxConfiguration.getIn(['input', 'tables'], Immutable.List()).size === 0}
+            showAdvancedParams={true}
           />
           <button
             className="btn btn-link"

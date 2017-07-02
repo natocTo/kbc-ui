@@ -8,12 +8,20 @@ module.exports = React.createClass({
   propTypes: {
     tables: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
-    type: React.PropTypes.string.isRequired
+    type: React.PropTypes.string.isRequired,
+    showAdvancedParams: React.PropTypes.bool.isRequired
+  },
+  getDefaultProps() {
+    return {
+      showAdvancedParams: false
+    };
   },
   getInitialState() {
     return {
       rows: 0,
-      tables: Immutable.List()
+      tables: Immutable.List(),
+      packages: Immutable.List(),
+      tags: Immutable.List()
     };
   },
   render: function() {
@@ -50,22 +58,76 @@ module.exports = React.createClass({
             />
           </div>
         </div>
+        {this.renderAdvancedParams()}
       </form>
+    );
+  },
+  renderAdvancedParams: function() {
+    if (!this.props.showAdvancedParams) {
+      return null;
+    }
+    return (
+      <span>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">
+            Packages
+          </label>
+          <div className="col-sm-9">
+            <Select.Creatable
+              name="packages"
+              value={this.state.packages.toJS()}
+              multi={true}
+              onChange={this.onChangePackages}
+              placeholder="Add packages..."
+              />
+            <span className="help-block">
+              <span>These packages will be installed from PyPI to the Python script environment. Do not forget to load them using <code>import</code>.</span>
+            </span>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">
+            Stored Files
+          </label>
+          <div className="col-sm-9">
+            <Select.Creatable
+              name="packages"
+              value={this.state.tags.toJS()}
+              multi={true}
+              onChange={this.onChangeTags}
+              placeholder="Add tags..."
+              />
+            <span className="help-block">
+              <span>The latest file with a given tag will be saved to <code>/data/in/user/&#123;tag&#125;</code>.</span>
+            </span>
+          </div>
+        </div>
+      </span>
     );
   },
   onChangeRows: function(e) {
     const value = parseInt(e.target.value, 10);
     this.setState({
       rows: value
-    });
-    this.onChange(this.state.tables, value);
+    }, this.onChange);
   },
   onChangeTables: function(valueArray) {
     const value = Immutable.fromJS(valueArray);
     this.setState({
       tables: value
-    });
-    this.onChange(value, this.state.rows);
+    }, this.onChange);
+  },
+  onChangePackages: function(valueArray) {
+    const value = Immutable.fromJS(valueArray);
+    this.setState({
+      packages: value
+    }, this.onChange);
+  },
+  onChangeTags: function(valueArray) {
+    const value = Immutable.fromJS(valueArray);
+    this.setState({
+      tags: value
+    }, this.onChange);
   },
   getTablesOptions: function() {
     return this.props.tables.map(
@@ -79,21 +141,25 @@ module.exports = React.createClass({
       return table.value.toLowerCase();
     });
   },
-  onChange: function(tables, rows) {
-    const tablesList = tables.map(function(table) {
+  onChange: function() {
+    const state = this.state;
+    const tablesList = this.state.tables.map(function(table) {
       var retVal = {
         source: table.get('value'),
         destination: table.get('value') + '.csv'
       };
-      if (rows > 0) {
-        retVal.limit = rows;
+      if (state.rows > 0) {
+        retVal.limit = state.rows;
       }
       return retVal;
     }).toList();
     this.props.onChange({
       input: {
-        tables: tablesList.toJS()
-      }
+        tables: tablesList.toJS(),
+        files: this.state.tags.toJS()
+      },
+      packages: this.state.packages.toJS(),
+      tags: this.state.tags.toJS()
     });
   }
 });

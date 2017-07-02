@@ -11,12 +11,14 @@ module.exports = React.createClass({
     tables: React.PropTypes.object.isRequired,
     type: React.PropTypes.string.isRequired,
     onConfigurationChange: React.PropTypes.func.isRequired,
-    disabled: React.PropTypes.bool
+    disabled: React.PropTypes.bool,
+    showAdvancedParams: React.PropTypes.bool
   },
 
   getDefaultProps: function() {
     return {
-      disabled: false
+      disabled: false,
+      showAdvancedParams: false
     };
   },
 
@@ -31,6 +33,7 @@ module.exports = React.createClass({
             tables={this.props.tables}
             type={this.props.type}
             onChange={this.props.onConfigurationChange}
+            showAdvancedParams={this.props.showAdvancedParams}
           />
         </Modal.Body>
         <Modal.Footer>
