@@ -151,7 +151,7 @@ export default React.createClass({
     const _this = this;
     return (
         <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.getBackdrop()} bsSize="large"
-               className={'wiz wiz-' + this.getPosition()}>
+               className={'try-wizard try-wizard-' + this.getPosition()}>
           <Modal.Header closeButton>
             <Modal.Title>
               {this.getModalTitle()}
@@ -161,13 +161,13 @@ export default React.createClass({
             <div className="row">
               <div className="col-md-6">
                 {this.getText()}
-                <ListGroup>
+                <ListGroup className="try-navigation">
                   {this.getLessonSteps().filter(function(step) {
                     return step.id < _this.getStepsCount();
                   }).map((step) => {
                     if (_this.getIsNavigationVisible()) {
                       return (
-                        <ListGroupItem className={this.getActiveStepState(step)}>
+                        <ListGroupItem className={this.getActiveStepState(step) + ' try-navigation-item'}>
                           <span>
                             {step.id}. {step.title}
                           </span>

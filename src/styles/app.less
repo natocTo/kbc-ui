@@ -236,25 +236,71 @@ a .kbcComponentIcon-3rdParty-64px {
 /*  TRY MODE  */
 /* ========== */
 
-.try{
-  //prepared for refactor
-}
+.try {
+  @color1: #0199f1;
+  @wizardWidth: 960px;
+  @wizardWidthAside: 350px;
+  @wizardHeight: 500px;
+  @statusBarHeight: 30px;
 
-.modal.wiz {
-
-  //position: static;
-
-  .modal-dialog {
-    position: fixed;
-    //z-index: 1000;
-    right: 50%;
-    top: 50%;
-    transform: translate(50%, -50%);
-    width: 960px;
-    transition: all 250ms ease-out;
+  &-mode {
+    .kbc-sidebar,
+    .kbc-navbar,
+    #react {
+      margin-top: @statusBarHeight;
+    }
+    .kbc-main-content {
+      min-height: 86vh;
+    }
+    &.modal-open{
+      overflow: auto !important;
+    }
   }
 
-  .list-group {
+  &-status-bar {
+    z-index: 1001;
+    background: @color1;
+    position: fixed;
+    top: 0;
+    color: #fff;
+    display: block;
+    width: 100%;
+    height: @statusBarHeight;
+    padding: 4px 8px;
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  }
+
+  &-wizard {
+    &.modal {
+      .modal-dialog {
+        position: fixed;
+        right: 50%;
+        top: 50%;
+        transform: translate(50%, -50%);
+        width: @wizardWidth;
+        transition: all 200ms ease;
+      }
+
+      &.try-wizard-aside {
+        .modal-body {
+          height: @wizardHeight;
+          overflow-y: auto;
+        }
+        .modal-dialog {
+          right: @wizardWidthAside/2 - 5;
+          width: @wizardWidthAside;
+          .col-md-6 {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &-navigation {
     padding: 8px 0;
     &-item {
       padding: 8px;
@@ -262,56 +308,8 @@ a .kbcComponentIcon-3rdParty-64px {
         color: #ddd
       }
       &.active span {
-        color: #02baff
+        color: @color1
       }
-    }
-  }
-
-  &.wiz-aside {
-    .modal-dialog {
-      right: 170px;
-      width: 350px;
-
-      .col-md-6 {
-        width: 100%;
-      }
-    }
-    .modal-body{
-      height: 500px;
-      overflow-y: auto;
-    }
-  }
-}
-
-.modal-open{
-  overflow: auto!important;
-}
-
-.try-mode{
-  .kbc-sidebar,
-  .kbc-navbar,
-  #react{
-    margin-top: 30px;
-  }
-  .kbc-main-content{
-    min-height: 86vh;
-  }
-  &-status-bar{
-    display: none;
-  }
-  .try-mode-status-bar{
-    z-index: 1001;
-    background: #00baff;
-    position: fixed;
-    top: 0;
-    color: #fff;
-    display: block;
-    width: 100%;
-    height: 30px;
-    padding: 4px 8px;
-    a{
-      color: #fff;
-      text-decoration: underline;
     }
   }
 }
