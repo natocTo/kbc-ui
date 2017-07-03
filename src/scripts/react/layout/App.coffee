@@ -9,8 +9,8 @@ ErrorPage = React.createFactory(require './../pages/ErrorPage')
 LoadingPage = React.createFactory(require './../pages/LoadingPage')
 ProjectSelect = React.createFactory(require('./project-select/ProjectSelect').default)
 PageTitle = React.createFactory(require './PageTitle')
-Wizard =  React.createFactory(require('../../utils/Wizard'))
-WizardStore = require('../../utils/WizardStore').default
+Wizard =  React.createFactory(require('../../modules/try-mode/Wizard'))
+WizardStore = require('../../modules/try-mode/WizardStore').default
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, Button, ListGroup, ListGroupItem} from 'react-bootstrap';
-import RoutesStore from '../stores/RoutesStore';
+import RoutesStore from '../../stores/RoutesStore';
 import { hideWizardModalFn } from './WizardStore';
 import lessons from './WizardLessons.json';
 

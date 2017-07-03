@@ -1,5 +1,5 @@
-import Dispatcher from '../Dispatcher';
-import StoreUtils from './StoreUtils';
+import Dispatcher from '../../Dispatcher';
+import StoreUtils from '../../utils/StoreUtils';
 
 const ActionTypes = {
   UPDATE_WIZARD_MODAL_STATE: 'UPDATE_WIZARD_MODAL_STATE'

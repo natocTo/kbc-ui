@@ -2,7 +2,7 @@ import React from 'react';
 import WizardModal from './WizardModal';
 import WizardStore, { hideWizardModalFn } from './WizardStore';
 // import {Button} from 'react-bootstrap';
-import createStoreMixin from '../react/mixins/createStoreMixin';
+import createStoreMixin from '../../react/mixins/createStoreMixin';
 
 module.exports = React.createClass({
   displayName: 'Wizard',
