@@ -270,12 +270,23 @@ export default React.createClass({
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
-    return (
-      <Button onClick={this.decreaseStep} bsStyle="link">{buttonText}</Button>
-    );
+    if (this.state.step === 1) {
+      buttonText = 'Close';
+    }
+    if (this.state.step !== this.getStepsCount()) {
+      return (
+          <Button onClick={this.decreaseStep} bsStyle="link">{buttonText}</Button>
+      );
+    }
+    return '';
   },
   renderButtonNext() {
     let buttonText = 'Next step';
+    if (this.state.step === 1) {
+      buttonText = 'Take lesson';
+    } else if (this.state.step === this.getStepsCount()) {
+      buttonText = 'Close';
+    }
     return (
       <Button onClick={this.increaseStep} bsStyle="primary">{buttonText}</Button>
     );
