@@ -232,6 +232,14 @@ a .kbcComponentIcon-3rdParty-64px {
   white-space: normal;
 }
 
+/* ========== */
+/*  TRY MODE  */
+/* ========== */
+
+.try{
+  //prepared for refactor
+}
+
 .modal.wiz {
 
   //position: static;
@@ -246,8 +254,17 @@ a .kbcComponentIcon-3rdParty-64px {
     transition: all 250ms ease-out;
   }
 
-  .list-group-item.passed a {
-    color: #ddd
+  .list-group {
+    padding: 8px 0;
+    &-item {
+      padding: 8px;
+      &.passed span {
+        color: #ddd
+      }
+      &.active span {
+        color: #02baff
+      }
+    }
   }
 
   &.wiz-aside {
@@ -276,10 +293,14 @@ a .kbcComponentIcon-3rdParty-64px {
   #react{
     margin-top: 30px;
   }
+  .kbc-main-content{
+    min-height: 86vh;
+  }
   &-status-bar{
     display: none;
   }
   .try-mode-status-bar{
+    z-index: 1001;
     background: #00baff;
     position: fixed;
     top: 0;
