@@ -20,7 +20,6 @@ export default React.createClass({
     };
   },
   render: function() {
-    const _this = this;
     return (
         <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.getBackdrop()} bsSize="large"
                className={'try-wizard try-wizard-' + this.getPosition()}>
@@ -35,9 +34,9 @@ export default React.createClass({
                 {this.getText()}
                 <ListGroup className="try-navigation">
                   {this.getLessonSteps().filter(function(step) {
-                    return step.id < _this.getStepsCount();
-                  }).map((step) => {
-                    if (_this.getIsNavigationVisible()) {
+                    return step.id < this.getStepsCount();
+                  }, this).map((step) => {
+                    if (this.getIsNavigationVisible()) {
                       return (
                         <ListGroupItem className={this.getActiveStepState(step) + ' try-navigation-item'}>
                           <span>
