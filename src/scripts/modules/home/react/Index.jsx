@@ -61,17 +61,13 @@ export default React.createClass({
         <LimitsOverQuota limits={this.state.limitsOverQuota}/>
         <div className="jumbotron">
           <div className="well">
-            <h1>Welcome, new user</h1>
+            <h1>Welcome to Keboola Connection Try Mode!</h1>
             <div>
               <p>
-                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda doloremque, expedita
-              facere facilis modi molestiae provident quibusdam veritatis vero. Dolorum facere fuga illum incidunt
-              nesciunt reiciendis saepe, sed sequi.</span><span>Ab asperiores consectetur cupiditate dicta dolore,
-              eligendi magni modi quo. Alias aut consequatur culpa cumque dignissimos doloremque dolorum ea,
-              laudantium minus natus nihil perferendis porro provident repellendus sapiente tempore voluptatum?</span>
-              <span>Ab at culpa cumque deleniti distinctio ducimus earum eligendi facilis fuga harum id, impedit incidunt
-                itaque, laboriosam magnam maxime modi mollitia necessitatibus optio perspiciatis quibusdam quod ratione
-                rem sapiente totam.</span>
+                Here you can learn everything you need to know about Keboola Connection before you actually start using
+                it. The following lessons are designed to walk you through the basic steps of creating a project.
+                <br/>
+                Feel free to switch Try Mode off at any time. You can always bring it back by going to <a href="#">Settings > Try Mode.</a>
               </p>
               <ul>
                 <li><button className="btn btn-link" onClick={

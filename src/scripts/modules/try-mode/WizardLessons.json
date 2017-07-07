@@ -1,6 +1,6 @@
 {
   "1": {
-    "title": "Composition",
+    "title": "Basic Overview",
     "steps": [
       {
         "id": 1,
@@ -9,7 +9,7 @@
         "title": "Introduction",
         "link": "home",
         "isNavigationVisible": true,
-        "text": "Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni patogenů likviduje živin Vojtěchovi slavení hledali zvýší výjimkou, mj. tři jemu tahů publikujeme dostaly ke unii vědní. ",
+        "text": "As a powerful and safe environment for working with data, Keboola Connection consists of many interconnected components. It helps you extract data from various sources, manipulate and enrich the data, write the results to visualizing tools of your choice, etc. In addition, the whole process can be fully automated.",
         "media": "http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png"
       },
       {
@@ -19,41 +19,51 @@
         "title": "Extract data",
         "link": "extractors",
         "isNavigationVisible": true,
-        "text": "Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni patogenů likviduje živin Vojtěchovi slavení hledali zvýší výjimkou, mj. tři jemu tahů publikujeme dostaly ke unii vědní. Migrace ke pásu mluvená izolaci patří se k všude oprášil projev mozaika hanové sérií. Až běžná ekologa ní chování průmyslově obdoby klecích vyvraždila hlavním má přepůlené membránou. Přetvořit chce ně drží hladem, pod zemí žluté mé oprášil z lheureux. Rodiče počítač stěží dostaly u sítí já nechci zvýšil slona obavy, stalo tu dnů účinky taková dosud.",
+        "text": "Every project in Keboola Connection starts with loading data. It is done with Extractors – components for importing data from your own computer, your company’s internal databases, and external sources, such as Facebook or YouTube.",
         "media": ""
       },
       {
         "id": 3,
         "position": "aside",
         "backdrop": false,
-        "title": "Store example",
+        "title": "Store data",
         "link": "/storage",
         "isNavigationVisible": true,
-        "text": "Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace zůstal 2800 nejlogičtějším hospůdky telefonu plné v nejenže nemalé pomáhá. Náročnější uzavřenost, amoku hmyz  dávných urychlovač v nutné vesmíru žije umístěním k kyčle v spustit potenciál si trend slov k s. Sklo sen to ke ideálním soudy folklorní úprav fyzika tahy v. Roky struktury oba šimpanzi EU pokračují, agrese úsilí s aula, o můj až dá, nás ta 750 sondování jistotou jel. Jim poctivé učit nezdá z činem i běžkaře mlh nejde představila, jízdě čemž odpověď dle o stanice až ale nic. O jehož uspoří pronikat rukavicích stěn němž přeji příbuzná.",
+        "text": "All data you upload to your project, as well as all the tables your project creates, are stored in Storage where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.",
         "media": "http://marketingwithcameron.com/wp-content/uploads/2015/07/video-placeholder.jpg"
       },
       {
         "id": 4,
         "position": "aside",
         "backdrop": false,
-        "title": "Write data",
-        "link": "writers",
+        "title": "Manipulate data",
+        "link": "transformations",
         "isNavigationVisible": true,
-        "text": "Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace ",
-        "media": ""
+        "text": "Now it’s time to mix, clean and work with the extracted data. In Transformations, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. Or, select ready-to-use Applications created by Keboola or third parties.",
+        "media": "http://marketingwithcameron.com/wp-content/uploads/2015/07/video-placeholder.jpg"
       },
       {
         "id": 5,
         "position": "aside",
         "backdrop": false,
-        "title": "Check data",
-        "link": "jobs",
+        "title": "Write results",
+        "link": "writers",
         "isNavigationVisible": true,
-        "text": "Obdělávání, mrazem, úrovni, měl komunitního, k liliím vlivů talíře, kameny a vzácné. Více položený migrace ",
+        "text": "Once you’re happy with your results, let Writers deliver them to their final destination –  the systems and applications where the output data gets used or consumed, for instance, visualizing tools or databases.",
         "media": ""
       },
       {
         "id": 6,
+        "position": "aside",
+        "backdrop": false,
+        "title": "Automate",
+        "link": "orchestrations",
+        "isNavigationVisible": true,
+        "text": "If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. Orchestrations allow you to specify at what time or how often your tasks should be executed and in what order.",
+        "media": ""
+      },
+      {
+        "id": 7,
         "position": "center",
         "backdrop": true,
         "title": "Congratulations",
@@ -65,7 +75,7 @@
     ]
   },
   "2": {
-    "title": "Transformation",
+    "title": "Loading Data",
     "steps": [
       {
         "id": 1,
@@ -80,7 +90,37 @@
     ]
   },
   "3": {
-    "title": "Orchestration",
+    "title": "Manipulating Data",
+    "steps": [
+      {
+        "id": 1,
+        "position": "center",
+        "backdrop": true,
+        "title": "Introduction",
+        "link": "home",
+        "isNavigationVisible": true,
+        "text": "žije umístěním k kyčle v spustit potenc indie. Testují zvenčí zvýšil s pomoc vloni ",
+        "media": "http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png"
+      }
+    ]
+  },
+  "4": {
+    "title": "Visualizing Results",
+    "steps": [
+      {
+        "id": 1,
+        "position": "center",
+        "backdrop": true,
+        "title": "Introduction",
+        "link": "home",
+        "isNavigationVisible": true,
+        "text": "žije umístěním k kyčle v spustit potenc indie. Testují zvenčí zvýšil s pomoc vloni ",
+        "media": "http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png"
+      }
+    ]
+  },
+  "5": {
+    "title": "Project Automation",
     "steps": [
       {
         "id": 1,
