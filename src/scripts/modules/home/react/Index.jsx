@@ -11,6 +11,7 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../try-mode/WizardStore';
+import lessons from '../../try-mode/WizardLessons.json';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore)],
@@ -70,24 +71,18 @@ export default React.createClass({
                 Feel free to switch Try Mode off at any time. You can always bring it back by going to <a href="#">Settings > Try Mode.</a>
               </p>
               <ul>
-                <li><button className="btn btn-link" onClick={
-                  (e) => {
-                    e.preventDefault();
-                    this.openLessonModal(1);
-                  }
-                } data-lesson="1">1. Lesson - Composing</button></li>
-                <li><button className="btn btn-link" onClick={
-                  (e) => {
-                    e.preventDefault();
-                    this.openLessonModal(2);
-                  }
-                } data-lesson="2">2. Lesson - Transformation</button></li>
-                <li><button className="btn btn-link" onClick={
-                  (e) => {
-                    e.preventDefault();
-                    this.openLessonModal(3);
-                  }
-                } data-lesson="3">3. Lesson - Orchestration</button></li>
+              {Object.keys(lessons).map((lesson, key) => {
+                return (
+                  <li>
+                    <button className="btn btn-link" onClick={
+                      (e) => {
+                        e.preventDefault();
+                        this.openLessonModal(key + 1);
+                      }
+                  }>{key + 1}. Lesson - {lessons[key + 1].title}</button>
+                  </li>
+                );
+              })}
               </ul>
             </div>
           </div>
