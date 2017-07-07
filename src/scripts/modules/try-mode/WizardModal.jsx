@@ -1,8 +1,9 @@
 import React from 'react';
-import {Modal, Button, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Modal, Button, ListGroup, ListGroupItem, Image} from 'react-bootstrap';
 import RoutesStore from '../../stores/RoutesStore';
 import { hideWizardModalFn } from './WizardStore';
 import lessons from './WizardLessons.json';
+// import { Iframe } from 'react-iframe';
 
 export default React.createClass({
   displayName: 'WizardModal',
@@ -32,6 +33,9 @@ export default React.createClass({
             <div className="row">
               <div className="col-md-6">
                 {this.getText()}
+                {this.getMedia().length > 0 && this.getStepNumber() !== 0 &&
+                  this.printMedia()
+                }
                 <ListGroup className="try-navigation">
                   {this.getLessonSteps().filter(function(step) {
                     return step.id < this.getStepsCount();
@@ -48,9 +52,9 @@ export default React.createClass({
                   })}
                 </ListGroup>
               </div>
-              {this.getMedia().length > 0 &&
+              {this.getMedia().length > 0 && this.getStepNumber() === 0 &&
               <div className="col-md-6">
-                <img className="img-responsive" src={this.getMedia()} alt=""/>
+                {this.printMedia()}
               </div>
               }
             </div>
@@ -92,6 +96,9 @@ export default React.createClass({
   },
   getMedia() {
     return lessons[this.props.lesson].steps[this.getStepNumber()].media;
+  },
+  getMediaType() {
+    return lessons[this.props.lesson].steps[this.getStepNumber()].mediaType;
   },
   getLink() {
     return lessons[this.props.lesson].steps[this.getStepNumber()].link;
@@ -138,6 +145,20 @@ export default React.createClass({
   },
   closeLessonModal() {
     hideWizardModalFn();
+  },
+  printMedia() {
+    if (this.getMediaType() === 'img') {
+      return this.getImageLink();
+    } else if (this.getMediaType() === 'video') {
+      return this.getVideoEmbed();
+    }
+  },
+  getImageLink() {
+    return <Image src={this.getMedia()} responsive />;
+  },
+  getVideoEmbed() {
+    return this.getMedia();
+    // return <Iframe url={this.getMedia()} />;
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
