@@ -60,7 +60,7 @@ export default React.createClass({
         <Expiration expires={this.state.expires} />
         <Deprecation components={this.state.installedComponents} />
         <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-        <div className="jumbotron">
+        <div className="jumbotron try-jumbotron">
           <div className="well">
             <h1>Welcome to Keboola Connection Try Mode!</h1>
             <div>
@@ -71,15 +71,18 @@ export default React.createClass({
                 Feel free to switch Try Mode off at any time. You can always bring it back by going to <a href="#">Settings > Try Mode.</a>
               </p>
               <ul>
+                <li>
+                  Choose the lesson you want to take:
+                </li>
               {Object.keys(lessons).map((lesson, key) => {
                 return (
                   <li>
-                    <button className="btn btn-link" onClick={
+                    <a href="#" onClick={
                       (e) => {
                         e.preventDefault();
                         this.openLessonModal(key + 1);
                       }
-                  }>{key + 1}. Lesson - {lessons[key + 1].title}</button>
+                  }>{key + 1}. Lesson - {lessons[key + 1].title}</a>
                   </li>
                 );
               })}
