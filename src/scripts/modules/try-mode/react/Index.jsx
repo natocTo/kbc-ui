@@ -1,9 +1,9 @@
 import React from 'react';
 import {Map} from 'immutable';
 
-import actionCreators from '../components/InstalledComponentsActionCreators';
-import createStoreMixin from '../../react/mixins/createStoreMixin';
-import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
+import actionCreators from '../../components/InstalledComponentsActionCreators';
+import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
 
 
 const COMPONENT_ID = 'kbc-project-takeout',

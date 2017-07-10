@@ -1,8 +1,9 @@
 import React from 'react';
 import WizardModal from './WizardModal';
-import WizardStore, { hideWizardModalFn } from './WizardStore';
-// import {Button} from 'react-bootstrap';
-import createStoreMixin from '../../react/mixins/createStoreMixin';
+import WizardStore from '../stores/WizardStore';
+import { hideWizardModalFn } from '../stores/ActionCreators.js';
+import createStoreMixin from '../../../react/mixins/createStoreMixin';
+
 
 module.exports = React.createClass({
   displayName: 'Wizard',
@@ -30,5 +31,4 @@ module.exports = React.createClass({
       />
     );
   }
-
 });

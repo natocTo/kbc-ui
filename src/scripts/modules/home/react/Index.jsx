@@ -10,7 +10,7 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 // import InstalledComponentsApi from '../../components/InstalledComponentsApi';
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import { showWizardModalFn } from '../../try-mode/WizardStore';
+import { showWizardModalFn } from '../../try-mode/stores/ActionCreators.js';
 import lessons from '../../try-mode/WizardLessons.json';
 
 export default React.createClass({

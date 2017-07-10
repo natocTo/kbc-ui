@@ -1,8 +1,8 @@
 import React from 'react';
 import {Modal, Button, ListGroup, ListGroupItem, Image} from 'react-bootstrap';
-import RoutesStore from '../../stores/RoutesStore';
-import { hideWizardModalFn } from './WizardStore';
-import lessons from './WizardLessons.json';
+import RoutesStore from '../../../stores/RoutesStore';
+import { hideWizardModalFn } from '../stores/ActionCreators.js';
+import lessons from '../WizardLessons.json';
 // import { Iframe } from 'react-iframe';
 
 export default React.createClass({
