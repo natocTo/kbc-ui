@@ -22,8 +22,8 @@ export default React.createClass({
   },
   render: function() {
     return (
-        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.getBackdrop()} bsSize="large"
-               className={'try-wizard try-wizard-' + this.getPosition()}>
+        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.getStepBackdrop()} bsSize="large"
+               className={'try-wizard try-wizard-' + this.getStepPosition()}>
           <Modal.Header closeButton>
             <Modal.Title>
               {this.getModalTitle()}
@@ -32,9 +32,9 @@ export default React.createClass({
           <Modal.Body>
             <div className="row">
               <div className="col-md-6">
-                {this.getText()}
-                {this.getMedia().length > 0 && this.getStepNumber() !== 0 &&
-                  this.printMedia()
+                {this.getStepText()}
+                {this.getStepMedia().length > 0 && this.getActiveStep() !== 0 &&
+                  this.renderMedia()
                 }
                 <ListGroup className="try-navigation">
                   {this.getLessonSteps().filter(function(step) {
@@ -42,7 +42,7 @@ export default React.createClass({
                   }, this).map((step) => {
                     if (this.getIsNavigationVisible()) {
                       return (
-                        <ListGroupItem className={this.getActiveStepState(step) + ' try-navigation-item'}>
+                        <ListGroupItem className={this.getStepState(step) + ' try-navigation-item'}>
                           <span>
                             {step.id}. {step.title}
                           </span>
@@ -52,9 +52,9 @@ export default React.createClass({
                   })}
                 </ListGroup>
               </div>
-              {this.getMedia().length > 0 && this.getStepNumber() === 0 &&
+              {this.getStepMedia().length > 0 && this.getActiveStep() === 0 &&
               <div className="col-md-6">
-                {this.printMedia()}
+                {this.renderMedia()}
               </div>
               }
             </div>
@@ -66,99 +66,74 @@ export default React.createClass({
         </Modal>
     );
   },
-
-  getLessonSteps() {
-    return lessons[this.props.lesson].steps;
-  },
-  getLessonId() {
-    return lessons[this.props.lesson].id;
-  },
-  getStepsCount() {
-    return lessons[this.props.lesson].steps.length;
-  },
-  getLessonName() {
-    return lessons[this.props.lesson].title;
-  },
-  getStepNumber() {
+  getActiveStep() {
     return this.state.step - 1;
   },
-  getPosition() {
-    return lessons[this.props.lesson].steps[this.getStepNumber()].position;
+  getLesson() {
+    return lessons[this.props.lesson];
   },
-  getText() {
-    return lessons[this.props.lesson].steps[this.getStepNumber()].text;
+  getLessonSteps() {
+    return this.getLesson().steps;
   },
-  getTitle() {
-    return lessons[this.props.lesson].steps[this.getStepNumber()].title;
+  getLessonId() {
+    return this.getLesson().id;
   },
-  getBackdrop() {
-    return lessons[this.props.lesson].steps[this.getStepNumber()].backdrop;
+  getLessonTitle() {
+    return this.getLesson().title;
   },
-  getMedia() {
-    return lessons[this.props.lesson].steps[this.getStepNumber()].media;
+  getStepsCount() {
+    return this.getLessonSteps().length;
   },
-  getMediaType() {
-    return lessons[this.props.lesson].steps[this.getStepNumber()].mediaType;
+  getStepPosition() {
+    return this.getLessonSteps()[this.getActiveStep()].position;
   },
-  getLink() {
-    return lessons[this.props.lesson].steps[this.getStepNumber()].link;
+  getStepText() {
+    return this.getLessonSteps()[this.getActiveStep()].text;
+  },
+  getStepTitle() {
+    return this.getLessonSteps()[this.getActiveStep()].title;
+  },
+  getStepBackdrop() {
+    return this.getLessonSteps()[this.getActiveStep()].backdrop;
+  },
+  getStepMedia() {
+    return this.getLessonSteps()[this.getActiveStep()].media;
+  },
+  getStepMediaType() {
+    return this.getLessonSteps()[this.getActiveStep()].mediaType;
+  },
+  getStepLink() {
+    return this.getLessonSteps()[this.getActiveStep()].link;
   },
   getIsNavigationVisible() {
-    return lessons[this.props.lesson].steps[this.getStepNumber()].isNavigationVisible;
-  },
-  decreaseStep() {
-    if (this.state.step > 1) {
-      this.setState({
-        step: this.state.step - 1
-      }, () => {
-        this.goToSubpage();
-      });
-    }
-  },
-  increaseStep() {
-    if (this.state.step < this.getStepsCount()) {
-      this.setState({
-        step: this.state.step + 1
-      }, () => {
-        this.goToSubpage();
-      });
-    } else {
-      this.closeLessonModal();
-    }
-  },
-  goToSubpage() {
-    return RoutesStore.getRouter().transitionTo(this.getLink());
+    return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
   },
   getModalTitle() {
-    let stepName = this.getStepNumber() > 0 ? ' > ' + this.getTitle() : '';
-    return ('Lesson ' + this.props.lesson + ' - ' + this.getLessonName() + stepName);
+    let stepName = this.getActiveStep() > 0 ? ' > ' + this.getStepTitle() : '';
+    return ('Lesson ' + this.props.lesson + ' - ' + this.getLessonTitle() + stepName);
   },
-  getActiveStepState(step) {
-    let isActive = 'passed';
-    if (this.getStepNumber() < step.id - 1) {
-      isActive = '';
+  getStepState(step) {
+    let stepState = 'passed';
+    if (this.getActiveStep() < step.id - 1) {
+      stepState = '';
     }
-    if (this.getStepNumber() === step.id - 1) {
-      isActive = 'active';
+    if (this.getActiveStep() === step.id - 1) {
+      stepState = 'active';
     }
-    return isActive;
+    return stepState;
   },
-  closeLessonModal() {
-    hideWizardModalFn();
-  },
-  printMedia() {
-    if (this.getMediaType() === 'img') {
+  renderMedia() {
+    if (this.getStepMediaType() === 'img') {
       return this.getImageLink();
-    } else if (this.getMediaType() === 'video') {
+    } else if (this.getStepMediaType() === 'video') {
       return this.getVideoEmbed();
     }
   },
   getImageLink() {
-    return <Image src={this.getMedia()} responsive />;
+    return <Image src={this.getStepMedia()} responsive />;
   },
   getVideoEmbed() {
-    return this.getMedia();
-    // return <Iframe url={this.getMedia()} />;
+    return this.getStepMedia();
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
@@ -182,5 +157,31 @@ export default React.createClass({
     return (
       <Button onClick={this.increaseStep} bsStyle="primary">{buttonText}</Button>
     );
+  },
+  closeLessonModal() {
+    hideWizardModalFn();
+  },
+  decreaseStep() {
+    if (this.state.step > 1) {
+      this.setState({
+        step: this.state.step - 1
+      }, () => {
+        this.goToSubpage();
+      });
+    }
+  },
+  increaseStep() {
+    if (this.state.step < this.getStepsCount()) {
+      this.setState({
+        step: this.state.step + 1
+      }, () => {
+        this.goToSubpage();
+      });
+    } else {
+      this.closeLessonModal();
+    }
+  },
+  goToSubpage() {
+    return RoutesStore.getRouter().transitionTo(this.getStepLink());
   }
 });
