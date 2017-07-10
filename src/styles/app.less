@@ -303,7 +303,7 @@ a .kbcComponentIcon-3rdParty-64px {
           overflow-y: auto;
         }
         .modal-dialog {
-          right: @wizardWidthAside/2 - 5;
+          right: @wizardWidthAside/2 - 1;
           width: @wizardWidthAside;
           .col-md-6 {
             width: 100%;
@@ -318,8 +318,12 @@ a .kbcComponentIcon-3rdParty-64px {
 
   &-navigation {
     padding: 8px 0;
+    border-top: 0;
     &-item {
       padding: 8px;
+      &:first-of-type{
+        border-top: 1px solid #ddd;
+      }
       &.passed span {
         color: #ddd
       }
