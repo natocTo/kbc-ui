@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Button, ListGroup, ListGroupItem, Image} from 'react-bootstrap';
+import {Modal, Button, ListGroup, ListGroupItem, Image, ResponsiveEmbed} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import lessons from '../WizardLessons.json';
@@ -40,7 +40,7 @@ export default React.createClass({
                   {this.getLessonSteps().filter(function(step) {
                     return step.id < this.getStepsCount();
                   }, this).map((step) => {
-                    if (this.getIsNavigationVisible()) {
+                    if (this.IsNavigationVisible()) {
                       return (
                         <ListGroupItem className={this.getStepState(step) + ' try-navigation-item'}>
                           <span>
@@ -105,11 +105,11 @@ export default React.createClass({
   getStepLink() {
     return this.getLessonSteps()[this.getActiveStep()].link;
   },
-  getIsNavigationVisible() {
+  IsNavigationVisible() {
     return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
   },
   getModalTitle() {
-    let stepName = this.getActiveStep() > 0 ? ' > ' + this.getStepTitle() : '';
+    let stepName = ((this.getActiveStep() === this.getStepsCount() -  1) ^ (this.getActiveStep() > 0)) ? ' > ' + this.getStepTitle() : '';
     return ('Lesson ' + this.props.lesson + ' - ' + this.getLessonTitle() + stepName);
   },
   getStepState(step) {
