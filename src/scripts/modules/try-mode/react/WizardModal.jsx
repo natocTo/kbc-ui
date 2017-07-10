@@ -133,7 +133,11 @@ export default React.createClass({
     return <Image src={this.getStepMedia()} responsive />;
   },
   getVideoEmbed() {
-    return this.getStepMedia();
+    return (
+      <ResponsiveEmbed a16by9>
+        <iframe width="100%" height="100%" src={this.getStepMedia()} allowFullScreen />
+      </ResponsiveEmbed>
+    );
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
