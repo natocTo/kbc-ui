@@ -39,7 +39,7 @@ module.exports = React.createClass
       React.DOM.div {className: "row"},
         React.DOM.span {className: "col-xs-12"},
         if !@props.datatypes.count()
-          React.DOM.small {}, "No data types set yet."
+          React.DOM.p {}, React.DOM.small {}, "No data types set yet."
         else
           ListGroup {},
             @props.datatypes.sort().map((datatype, key) ->
@@ -47,44 +47,47 @@ module.exports = React.createClass
                   React.DOM.small {},
                     React.DOM.strong {}, key
                     " "
-                    React.DOM.span {}, datatype
+                    React.DOM.code {}, datatype
                     React.DOM.i
                       className: "kbc-icon-cup kbc-cursor-pointer pull-right"
                       onClick: ->
                         component.props.handleRemoveDataType(key)
             , @).toArray()
-      React.DOM.div {className: "row"},
-        React.DOM.span {className: "col-xs-5"},
-          Select
-            name: 'add-datatype-column'
-            value: @props.selectValue
-            disabled: @props.disabled
-            placeholder: "Select column"
-            onChange: @props.selectOnChange
-            options: @_getColumnsOptions()
-        React.DOM.span {className: "col-xs-5"},
-          Input
-            type: 'text'
-            name: 'add-datatype-value'
-            value: @props.inputValue
-            disabled: @props.disabled || !@props.selectValue
-            placeholder: "Eg. VARCHAR(255)"
-            onChange: @_handleInputOnChange
-            autoComplete: 'off'
-        React.DOM.span {className: "col-xs-2 kbc-col-button"},
-          Button
-            bsSize: 'small'
-            onClick: @props.handleAddDataType
-            disabled: @props.disabled || !@props.selectValue || !@props.inputValue
-          ,
-            React.DOM.i {className: "kbc-icon-plus"}
-            " Add"
-      React.DOM.div {className: "row", style: {paddingTop: "5px"}},
-        React.DOM.div {className: "help-block col-xs-12"},
-          React.DOM.small {},
-            React.DOM.div {},
-              React.DOM.code {}, "VARCHAR(255)"
-              "default for primary key columns"
-            React.DOM.div {},
-              React.DOM.code {}, "TEXT"
-              "default for all other columns"
+      React.DOM.div {className: "well"},
+        React.DOM.div {className: "row"},
+          React.DOM.span {className: "col-xs-6"},
+            Select
+              name: 'add-datatype-column'
+              value: @props.selectValue
+              disabled: @props.disabled
+              placeholder: "Select column"
+              onChange: @props.selectOnChange
+              options: @_getColumnsOptions()
+          React.DOM.span {className: "col-xs-6"},
+            Input
+              type: 'text'
+              name: 'add-datatype-value'
+              value: @props.inputValue
+              disabled: @props.disabled || !@props.selectValue
+              placeholder: "Eg. VARCHAR(255)"
+              onChange: @_handleInputOnChange
+              autoComplete: 'off'
+
+        React.DOM.div {className: "row", style: {paddingTop: "0px"}},
+          React.DOM.div {className: "help-block col-xs-12 text-right"},
+            Button
+              className: "btn-info"
+              onClick: @props.handleAddDataType
+              disabled: @props.disabled || !@props.selectValue || !@props.inputValue
+            ,
+              React.DOM.i {className: "kbc-icon-plus"}
+              " Add data type"
+        React.DOM.div {className: "row", style: {paddingTop: "10px"}},
+          React.DOM.div {className: "help-block col-xs-12"},
+            React.DOM.small {},
+              React.DOM.div {},
+                React.DOM.code {}, "VARCHAR(255)"
+                "default for primary key columns"
+              React.DOM.div {},
+                React.DOM.code {}, "TEXT"
+                "default for all other columns"

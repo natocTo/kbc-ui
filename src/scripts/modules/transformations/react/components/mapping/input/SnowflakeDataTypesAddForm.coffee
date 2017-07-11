@@ -45,9 +45,9 @@ module.exports = React.createClass
     @props.convertEmptyValuesToNullOnChange(e.target.checked)
 
   render: ->
-    React.DOM.span {},
+    React.DOM.div {className: "well"},
       React.DOM.div {className: "row"},
-        React.DOM.span {className: "col-xs-3"},
+        React.DOM.span {className: "col-xs-4"},
           Select
             name: 'add-column'
             value: @props.columnValue
@@ -63,26 +63,16 @@ module.exports = React.createClass
             placeholder: "Datatype"
             onChange: @props.datatypeOnChange
             options: @_getDatatypeOptions()
-        React.DOM.span {className: "col-xs-3"},
-          if @props.showSize
-            Input
-              bsSize: 'small'
-              type: 'text'
-              name: 'add-size'
-              value: @props.sizeValue
-              disabled: @props.disabled || !@props.showSize
-              placeholder: "Eg. 38,0"
-              onChange: @_handleSizeOnChange
-        React.DOM.span {className: "col-xs-1"},
-          Button
-            bsSize: 'small'
-            onClick: @props.handleAddDataType
-            disabled: @props.disabled || !@props.columnValue || !@props.datatypeValue
-          ,
-            React.DOM.i {className: "kbc-icon-plus"}
-            " Add"
+        React.DOM.span {className: "col-xs-4"},
+          Input
+            type: 'text'
+            name: 'add-size'
+            value: @props.sizeValue
+            disabled: @props.disabled || !@props.showSize
+            placeholder: "Length, eg. 38,0"
+            onChange: @_handleSizeOnChange
       React.DOM.div {className: "row", style: {paddingTop: "5px"}},
-        React.DOM.span {className: "col-xs-12"},
+        React.DOM.span {className: "col-xs-6"},
           Input
             checked: @props.convertEmptyValuesToNullValue
             onChange: @_convertEmptyValuesToNullOnChange
@@ -92,9 +82,16 @@ module.exports = React.createClass
               'Convert empty values to '
               React.DOM.code null,
                 'null'
-      React.DOM.div {className: "row", style: {paddingTop: "5px"}},
+        React.DOM.span {className: "col-xs-6 text-right"},
+          Button
+            className: "btn-info"
+            onClick: @props.handleAddDataType
+            disabled: @props.disabled || !@props.columnValue || !@props.datatypeValue
+          ,
+            React.DOM.i {className: "kbc-icon-plus"}
+            " Add data type"
+      React.DOM.div {className: "row", style: {paddingTop: "10px"}},
         React.DOM.div {className: "help-block col-xs-12"},
-          React.DOM.small {},
             React.DOM.div {},
               React.DOM.code {}, "VARCHAR(255)"
               "default for primary key columns"

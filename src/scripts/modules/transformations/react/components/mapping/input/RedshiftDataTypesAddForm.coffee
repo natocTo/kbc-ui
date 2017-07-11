@@ -62,9 +62,9 @@ module.exports = React.createClass
 
   render: ->
     component = @
-    React.DOM.span {},
+    React.DOM.div {className: "well"},
       React.DOM.div {className: "row"},
-        React.DOM.span {className: "col-xs-3"},
+        React.DOM.span {className: "col-xs-4"},
           Select
             name: 'add-column'
             value: @props.columnValue
@@ -80,16 +80,14 @@ module.exports = React.createClass
             placeholder: "Datatype"
             onChange: @props.datatypeOnChange
             options: @_getDatatypeOptions()
-        React.DOM.span {className: "col-xs-2"},
-          if @props.showSize
-            Input
-              bsSize: 'small'
-              type: 'text'
-              name: 'add-size'
-              value: @props.sizeValue
-              disabled: @props.disabled || !@props.showSize
-              placeholder: "Eg. 255"
-              onChange: @_handleSizeOnChange
+        React.DOM.span {className: "col-xs-3"},
+          Input
+            type: 'text'
+            name: 'add-size'
+            value: @props.sizeValue
+            disabled: @props.disabled || !@props.showSize
+            placeholder: "Length, eg. 255"
+            onChange: @_handleSizeOnChange
         React.DOM.span {className: "col-xs-2"},
           Select
             name: 'add-datatype-compression'
@@ -98,16 +96,8 @@ module.exports = React.createClass
             placeholder: "Compression"
             onChange: @props.compressionOnChange
             options: @_getCompressionOptions()
-        React.DOM.span {className: "col-xs-1"},
-          Button
-            bsSize: 'small'
-            onClick: @props.handleAddDataType
-            disabled: @props.disabled || !@props.columnValue || !@props.datatypeValue
-          ,
-            React.DOM.i {className: "kbc-icon-plus"}
-            " Add"
       React.DOM.div {className: "row", style: {paddingTop: "5px"}},
-        React.DOM.span {className: "col-xs-12"},
+        React.DOM.span {className: "col-xs-6"},
           Input
             checked: @props.convertEmptyValuesToNullValue
             onChange: @_convertEmptyValuesToNullOnChange
@@ -117,7 +107,15 @@ module.exports = React.createClass
               'Convert empty values to '
               React.DOM.code null,
                 'null'
-      React.DOM.div {className: "row", style: {paddingTop: "0px"}},
+        React.DOM.span {className: "col-xs-6 text-right"},
+          Button
+            className: "btn-info"
+            onClick: @props.handleAddDataType
+            disabled: @props.disabled || !@props.columnValue || !@props.datatypeValue
+          ,
+            React.DOM.i {className: "kbc-icon-plus"}
+            " Add data type"
+      React.DOM.div {className: "row", style: {paddingTop: "10px"}},
         React.DOM.div {className: "help-block col-xs-12"},
           React.DOM.small {},
             React.DOM.div {},
