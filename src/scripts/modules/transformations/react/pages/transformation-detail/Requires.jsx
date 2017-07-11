@@ -15,7 +15,7 @@ export default React.createClass({
     bucketId: PropTypes.string.isRequired
   },
 
-  onOptionLabelClick: function(value) {
+  onValueClick: function(value) {
     const props = this.props;
     return RoutesStore.getRouter().transitionTo('transformationDetail', {
       config: props.bucketId,
@@ -40,7 +40,7 @@ export default React.createClass({
             placeholder="Add required transformation..."
             isLoading={this.props.isSaving}
             noResultsText="No transformations found"
-            onOptionLabelClick={this.onOptionLabelClick}
+            onValueClick={this.onValueClick}
             />
           <span className="help-block">
             These transformations are processed before this transformation starts.
