@@ -90,7 +90,8 @@ module.exports =
     if driver == 'redshift'
       return _.str.include(host,'redshift.amazonaws.com') and _.str.include(host, 'sapi')
     if driver == 'snowflake'
-      return _.str.include(host,'keboola.snowflakecomputing.com')
+      return _.str.include(host,'keboola.snowflakecomputing.com') or
+          _.str.include(host,'keboola.eu-central-1.snowflakecomputing.com')
     return false
 
   getCredentials: (isReadOnly, driver, componentId, configId) ->
