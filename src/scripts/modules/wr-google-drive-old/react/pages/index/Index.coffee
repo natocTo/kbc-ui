@@ -23,6 +23,7 @@ ComponentMetadata = require '../../../../components/react/components/ComponentMe
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 TableRow = React.createFactory(require './TableRow')
 gdriveActions = require '../../../wrGdriveActionCreators'
+MigrationRow = require('../../../../components/react/components/MigrationRow').default
 
 {button, i, strong, span, div, p, ul, li} = React.DOM
 
@@ -74,6 +75,8 @@ module.exports = React.createClass
   _renderMainContent: ->
     tablesIds = @state.files?.keySeq()
     div {className: 'col-md-9 kbc-main-content'},
+      React.createElement MigrationRow,
+        componentId: 'wr-google-drive'
       div className: 'row kbc-header',
         div className: 'col-sm-8',
           ComponentDescription
