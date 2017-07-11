@@ -22,7 +22,7 @@ export default React.createClass({
   },
   render: function() {
     return (
-        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.getStepBackdrop()} bsSize="large"
+        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.isStepBackdrop()} bsSize="large"
                className={'try-wizard try-wizard-' + this.getStepPosition()}>
           <Modal.Header closeButton>
             <Modal.Title>
@@ -34,13 +34,15 @@ export default React.createClass({
               <div className="col-md-6">
                 {this.getStepText()}
                 {this.getStepMedia().length > 0 && this.getActiveStep() !== 0 &&
-                  this.renderMedia()
+                  <div className="try-media">
+                    {this.renderMedia()}
+                  </div>
                 }
                 <ListGroup className="try-navigation">
                   {this.getLessonSteps().filter(function(step) {
                     return step.id < this.getStepsCount();
                   }, this).map((step) => {
-                    if (this.IsNavigationVisible()) {
+                    if (this.isNavigationVisible()) {
                       return (
                         <ListGroupItem className={this.getStepState(step) + ' try-navigation-item'}>
                           <span>
@@ -54,7 +56,9 @@ export default React.createClass({
               </div>
               {this.getStepMedia().length > 0 && this.getActiveStep() === 0 &&
               <div className="col-md-6">
-                {this.renderMedia()}
+                <div className="try-media">
+                  {this.renderMedia()}
+                </div>
               </div>
               }
             </div>
@@ -93,9 +97,6 @@ export default React.createClass({
   getStepTitle() {
     return this.getLessonSteps()[this.getActiveStep()].title;
   },
-  getStepBackdrop() {
-    return this.getLessonSteps()[this.getActiveStep()].backdrop;
-  },
   getStepMedia() {
     return this.getLessonSteps()[this.getActiveStep()].media;
   },
@@ -105,7 +106,10 @@ export default React.createClass({
   getStepLink() {
     return this.getLessonSteps()[this.getActiveStep()].link;
   },
-  IsNavigationVisible() {
+  isStepBackdrop() {
+    return this.getLessonSteps()[this.getActiveStep()].backdrop;
+  },
+  isNavigationVisible() {
     return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
   },
   getModalTitle() {

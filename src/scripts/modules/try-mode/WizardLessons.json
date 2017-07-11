@@ -32,7 +32,7 @@
         "link": "/storage",
         "isNavigationVisible": true,
         "text": "All data you upload to your project, as well as all the tables your project creates, are stored in Storage where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.",
-        "media": "http://marketingwithcameron.com/wp-content/uploads/2015/07/video-placeholder.jpg",
+        "media": "http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png",
         "mediaType": "img"
       },
       {
@@ -43,7 +43,7 @@
         "link": "transformations",
         "isNavigationVisible": true,
         "text": "Now it’s time to mix, clean and work with the extracted data. In Transformations, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. Or, select ready-to-use Applications created by Keboola or third parties.",
-        "media": "http://marketingwithcameron.com/wp-content/uploads/2015/07/video-placeholder.jpg",
+        "media": "",
         "mediaType": ""
 
       },
@@ -76,7 +76,7 @@
         "title": "Congratulations",
         "isNavigationVisible": false,
         "link": "home",
-        "text": "Congratulations, you have succesfully went through 1.Lesson - Basic Overview",
+        "text": "Congratulations, lesson finished.",
         "media": "",
         "mediaType": ""
       }
