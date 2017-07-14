@@ -81,7 +81,7 @@ module.exports = React.createClass
       onClick: @open
       bsStyle: 'success'
     ,
-      i className: 'fa fa-plus'
+      i className: 'kbc-icon-plus'
       ' '
       @props.label
 

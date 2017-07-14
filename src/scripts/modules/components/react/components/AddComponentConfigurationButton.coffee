@@ -39,7 +39,7 @@ module.exports = React.createClass
         onClick: @open
         disabled: @props.disabled
       ,
-        span className: 'kbc-icon-plus'
+        i className: 'kbc-icon-plus'
         @props.label
       Modal
         show: @state.showModal
