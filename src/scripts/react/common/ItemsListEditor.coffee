@@ -70,7 +70,7 @@ module.exports = React.createClass
             onClick: @_handleClickAddButton
             disabled: @props.disabled || @props.input.trim() == ''
           ,
-            React.DOM.span {className: "kbc-icon-plus"}
+            React.DOM.i {className: "kbc-icon-plus"}
 
   render: ->
     React.DOM.div {},

@@ -206,8 +206,8 @@ module.exports = React.createClass
     ul className: 'list-unstyled kbc-project-select-new',
       li null,
         a onClick: @openModal,
-          span className: 'fa fa-plus-circle'
-          ' New Project'
+          i className: 'kbc-icon-plus'
+          ' Add Project'
         React.createElement NewProjectModal,
           urlTemplates: @props.urlTemplates
           projectTemplates: @props.projectTemplates

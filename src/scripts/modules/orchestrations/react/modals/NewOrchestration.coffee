@@ -65,7 +65,7 @@ NewOrchestration = React.createClass
       onClick: @open
       bsStyle: 'success'
     ,
-      i className: 'fa fa-fw fa-plus'
+      i className: 'kbc-icon-plus'
       'Add Orchestration'
 
   _handleSubmit: (e) ->

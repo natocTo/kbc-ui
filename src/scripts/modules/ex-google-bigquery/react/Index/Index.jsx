@@ -322,7 +322,7 @@ export default React.createClass({
           to={ROUTE_PREFIX + COMPONENT_ID + '-new-query'}
           params={{config: this.state.configId}}
           className="btn btn-success">
-          <span className="kbc-icon-plus" /> Add Query
+          <i className="kbc-icon-plus" /> Add Query
         </Link>
       );
     }

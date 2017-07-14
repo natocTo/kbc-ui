@@ -103,8 +103,8 @@ export default React.createClass({
       );
     } else {
       return (
-        <Button bsStyle="primary" onClick={this.open}>
-          <i className="fa fa-plus" /> Add Input
+        <Button bsStyle="success" onClick={this.open}>
+          <i className="kbc-icon-plus" /> Add Input
         </Button>
       );
     }

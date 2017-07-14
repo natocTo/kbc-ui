@@ -18,6 +18,6 @@ module.exports = React.createClass
     span {},
       React.createElement NewComponentButton,
         to: @props.addRoute
-        text: 'New ' + @props.type[0].toUpperCase() + @props.type.substr(1)
+        text: 'Add ' + @props.type[0].toUpperCase() + @props.type.substr(1)
         type: @props.type
 

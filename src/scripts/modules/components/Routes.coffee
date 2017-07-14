@@ -64,7 +64,7 @@ routes =
     reloaderHandler: ComponentReloaderButton
     childRoutes: [
       name: 'new-application'
-      title: 'New Application'
+      title: 'Add Application'
       defaultRouteHandler: application(NewComponent)
     ,
       createComponentRoute 'geneea-nlp-analysis', [geneeaGeneralRoutes]

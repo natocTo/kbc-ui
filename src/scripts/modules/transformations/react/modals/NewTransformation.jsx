@@ -110,14 +110,14 @@ export default React.createClass({
     if (this.props.type === 'button') {
       return (
         <Button onClick={this.handleOpenButtonClick} bsStyle="success">
-          <i className="fa fa-plus fa-fw" />&nbsp;{this.props.label}
+          <i className="kbc-icon-plus" />&nbsp;{this.props.label}
           {this.renderModal()}
         </Button>
       );
     } else {
       return (
         <a onClick={this.handleOpenButtonClick}>
-          <i className="fa fa-fw fa-plus" />&nbsp;{this.props.label}
+          <i className="kbc-icon-plus" />&nbsp;{this.props.label}
           {this.renderModal()}
         </a>
       );

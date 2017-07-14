@@ -1,6 +1,6 @@
 React = require 'react'
 
-{button, span} = React.DOM
+{button, span, i} = React.DOM
 
 InstalledComponentsStore = require '../../stores/InstalledComponentsStore'
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
@@ -26,7 +26,7 @@ module.exports = React.createClass
         className: 'btn btn-success'
         activeClassName: ''
       ,
-        span className: 'kbc-icon-plus'
+        i className: 'kbc-icon-plus'
         @props.text
     else
       span null

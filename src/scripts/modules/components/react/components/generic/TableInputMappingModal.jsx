@@ -109,11 +109,11 @@ export default React.createClass({
         </Tooltip>
       );
     } else {
-      let buttonBsStyle = this.props.buttonBsStyle ? this.props.buttonBsStyle : 'primary';
+      let buttonBsStyle = this.props.buttonBsStyle ? this.props.buttonBsStyle : 'success';
       let buttonLabel = this.props.buttonLabel ? this.props.buttonLabel : 'Add Table Input';
       return (
         <Button bsStyle={buttonBsStyle} onClick={this.open}>
-          <i className="fa fa-fw fa-plus" /> {buttonLabel}
+          <i className="kbc-icon-plus" /> {buttonLabel}
         </Button>
       );
     }
