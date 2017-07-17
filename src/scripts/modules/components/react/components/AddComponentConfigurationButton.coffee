@@ -1,6 +1,6 @@
 React = require 'react'
 
-{button, span, div} = React.DOM
+{button, i, div} = React.DOM
 
 Link = React.createFactory(require('react-router').Link)
 RoutesStore = require('../../../../stores/RoutesStore.coffee')
