@@ -7,7 +7,7 @@ Link = React.createFactory(require('react-router').Link)
 Button = React.createFactory(require('react-bootstrap').Button)
 
 
-{div, table, tbody, tr, td, ul, li, a, span, h2, p, button} = React.DOM
+{div, table, tbody, tr, td, ul, li, a, span, h2, p, button, i} = React.DOM
 
 require('./NewComponentSelection.less')
 

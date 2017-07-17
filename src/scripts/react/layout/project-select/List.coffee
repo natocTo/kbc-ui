@@ -7,7 +7,7 @@ _ = require 'underscore'
 NewProjectModal = require('../NewProjectModal').default
 Emptylist = require('./EmptyList').default
 
-{div, ul, li, a, span, input} = React.DOM
+{div, ul, li, a, span, input, i} = React.DOM
 
 module.exports = React.createClass
   displayName: 'ProjectSelectDropdown'

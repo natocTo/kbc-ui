@@ -3,7 +3,7 @@ ImmutableRenderMixin = require '../mixins/ImmutableRendererMixin'
 _ = require('underscore')
 Immutable = require('immutable')
 Button = React.createFactory(require('react-bootstrap').Button)
-{span} = React.DOM
+{span, i} = React.DOM
 
 module.exports = React.createClass
   displayName: 'ItemsListEditor'
