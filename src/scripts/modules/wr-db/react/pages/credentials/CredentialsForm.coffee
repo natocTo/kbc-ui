@@ -150,8 +150,16 @@ module.exports = React.createClass
             index == @props.credentials.get(propName)
           )
         else
-          @props.credentials.get propName
+          @_renderStaticValue(propName)
         Clipboard text: @props.credentials.get propName
+
+  _renderStaticValue: (propName) ->
+    value = @props.credentials.get(propName)
+    if (this.props.componentId == 'keboola.wr-db-snowflake' && propName == 'host')
+      return React.DOM.a({href: 'https://' + value, target: '_blank'}, value)
+    else
+      return value
+
 
   _renderProtectedNoHash: (labelValue, propName) ->
     isHashed = propName[0] == '#'

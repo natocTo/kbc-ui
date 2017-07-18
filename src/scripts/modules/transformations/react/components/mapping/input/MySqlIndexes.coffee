@@ -51,7 +51,7 @@ module.exports = React.createClass
             options: @props.columnsOptions
         React.DOM.div {className: "col-xs-2 kbc-col-button"},
           Button
-            bsSize: 'small'
+            className: "btn-info"
             onClick: @props.handleAddIndex
             disabled: @props.disabled || @props.selectValue.count() == 0
           ,

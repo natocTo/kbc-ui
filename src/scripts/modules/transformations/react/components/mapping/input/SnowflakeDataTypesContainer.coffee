@@ -30,7 +30,6 @@ module.exports = React.createClass
     @setState
       datatype: if selected then selected.value else ""
       size: ""
-      convertEmptyValuesToNull: false
 
   _handleSizeOnChange: (value) ->
     @setState

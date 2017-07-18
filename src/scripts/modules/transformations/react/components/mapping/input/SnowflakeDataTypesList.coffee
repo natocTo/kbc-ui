@@ -19,7 +19,7 @@ module.exports = React.createClass
       React.DOM.div {className: "row"},
         React.DOM.span {className: "col-xs-12"},
         if !@props.datatypes.count()
-          React.DOM.div {}, React.DOM.small {}, "No data types set yet."
+          React.DOM.p {}, React.DOM.small {}, "No data types set yet."
         else
           ListGroup {},
             @props.datatypes.sort().map((datatype, key) ->

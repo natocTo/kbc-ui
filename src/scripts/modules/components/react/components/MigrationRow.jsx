@@ -1,8 +1,8 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Table} from 'react-bootstrap';
-import {RefreshIcon} from 'kbc-react-components';
+import {Alert, Modal, Table} from 'react-bootstrap';
+import {Check, Loader, RefreshIcon} from 'kbc-react-components';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
 import SapiTableLink from './StorageApiTableLink';
@@ -10,19 +10,16 @@ import ApplicationStore from '../../../../stores/ApplicationStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
-import {Loader} from 'kbc-react-components';
 import jobsApi from '../../../jobs/JobsApi';
 import DockerActionFn from '../../DockerActionsApi';
 import date from '../../../../utils/date';
 import JobStatusLabel from '../../../../react/common/JobStatusLabel';
-import {Check} from 'kbc-react-components';
 import Tooltip from '../../../../react/common/Tooltip';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 import ComponentConfigurationLink from './ComponentConfigurationLink';
-import { Alert, Modal } from 'react-bootstrap';
 import ComponentEmptyState from '../../../components/react/components/ComponentEmptyState';
 
-const PERNAMENT_MIGRATION_COMPONENTS = [
+const PERMANENT_MIGRATION_COMPONENTS = [
   'ex-db',
   'ex-gooddata',
   'ex-google-analytics',
@@ -41,20 +38,46 @@ const componentNameMap = Map({
   'ex-google-drive': 'keboola.ex-google-drive',
   'wr-db-mysql': 'keboola.wr-db-mysql',
   'wr-db-oracle': 'keboola.wr-db-oracle',
-  'wr-db-redshift': 'keboola.wr-redshift-v2'
+  'wr-db-redshift': 'keboola.wr-redshift-v2',
+  'wr-google-drive': ['keboola.wr-google-drive', 'keboola.wr-google-sheets']
 });
 
-const GoodDataMigrationDescription = (
-  <span>
-    Migration takes place with the following consequences:
+const WR_DB_DESCRIPTION = 'Migrate your current configurations to new Database Writer. This writer will continue to work until May 2017. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new writers. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
+const EX_GOODDATA_DESCRIPTION = (
+  <p>
+    <span>Migration takes place with the following consequences:</span>
     <ul>
       <li><strong>Only GoodData writer reports will be migrated:</strong> Only reports of the GoodData project belonging to a GoodData writer configuration of this project will be migrated. If there are reports from a different(non-writer) GoodData project, then users have to do the migration manually.</li>
       <li><strong>Tables will be stored into different buckets:</strong> A new GoodData extractor will store extracted tables into new buckets.</li>
       <li><strong>Orchestrations tasks update:</strong> All orchestration tasks of the old GoodData extractor configurations will be replaced with configurations of the new GoodData extractor.</li>
       <li><strong>Column naming conventions:</strong> The column names of the extracted table are based on the column names of the GoodData report. However, they can contain only alphanumeric characters and underscores. All other characters are replaced by underscores. For example, if there is a column in the report with the name "Month Revenue", then its corresponding table column name will be "Month_Revenue".</li>
     </ul>
-  </span>
+  </p>
 );
+
+const WR_GOOGLE_DRIVE_DESCRIPTION = (
+  <p>
+    <span>Migrate your current configurations to new Google Drive or Google Sheets writer</span>
+    <ul>
+      <li>Depending on the type of files registered in your configuration, the configuration will be migrated either to new Google Drive Writer, Google Sheets Writer or both.</li>
+      <li>If type of the file is 'sheet' and action is not 'create', the file will be migrated to Google Sheets Writer, otherwise to Google Drive Writer.</li>
+      <li>The migration will also alter your orchestrations to use the new writers.</li>
+      <li>This component will continue to work until October 2017. Then, all your configurations will be migrated automatically.</li>
+      <li>The old configurations will remain intact for now. You can remove them after successful migration.</li>
+    </ul>
+  </p>
+);
+
+const descriptionsMap = Map({
+  'ex-db': 'Migrate your current configurations to new vendor specific database extractors (MySql, Postgres, Oracle, Microsoft SQL). This extractor will continue to work until August 2016. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
+  'ex-gooddata': EX_GOODDATA_DESCRIPTION,
+  'ex-google-analytics': 'Migrate your current configurations to new Google Analytics Extractor, which uses the newest API V4. This extractor will continue to work until November 2016. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
+  'ex-google-drive': 'Migrate your current configurations to new Google Drive Extractor. This extractor will continue to work until April 2017. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.',
+  'wr-db-mysql': WR_DB_DESCRIPTION,
+  'wr-db-oracle': WR_DB_DESCRIPTION,
+  'wr-db-redshift': WR_DB_DESCRIPTION,
+  'wr-google-drive': WR_GOOGLE_DRIVE_DESCRIPTION
+});
 
 export default React.createClass({
   propTypes: {
@@ -71,12 +94,6 @@ export default React.createClass({
       error: null
     };
   },
-
-  /* componentDidMount() {
-   *   if (!this.state.status) {
-   *     this.loadStatus();
-   *   }
-   * },*/
 
   loadStatus(additionalState) {
     const newState = _.extend({}, additionalState, {loadingStatus: true});
@@ -119,17 +136,11 @@ export default React.createClass({
     });
   },
 
-  /* getDefaultProps() {
-   *  return {
-   *    buttonType: 'danger'
-   *  };
-   *},*/
-
   canMigrate() {
-    const isPernament = PERNAMENT_MIGRATION_COMPONENTS.indexOf(this.props.componentId) >= 0;
+    const isPermanent = PERMANENT_MIGRATION_COMPONENTS.indexOf(this.props.componentId) >= 0;
     const hasAdminMigrationFeature = ApplicationStore.hasCurrentAdminFeature(MIGRATION_ALLOWED_FEATURE);
     const hasReplacementApp = this.props.replacementAppId;
-    return isPernament || hasAdminMigrationFeature || hasReplacementApp;
+    return isPermanent || hasAdminMigrationFeature || hasReplacementApp;
   },
 
   renderTabTitle(title, helptext) {
@@ -202,7 +213,6 @@ export default React.createClass({
     return (
       <button
         onClick={this.showModal}
-        type="button"
         disabled={this.state.isLoading}
         type="sumbit" className="btn btn-success">
         Proceed to Migration
@@ -223,7 +233,7 @@ export default React.createClass({
     return (
       <Alert bsStyle="warning">
         <span>
-          <h3 className="text-center">This extractor has been deprecated</h3>
+          <h3 className="text-center">This component has been deprecated</h3>
           <span>
             {this.getInfo()}
           </span>
@@ -239,21 +249,13 @@ export default React.createClass({
 
   getInfo() {
     const replacementApp = this.props.replacementAppId;
-    if (this.props.componentId === 'ex-db') {
-      return 'Migrate your current configurations to new vendor specific database extractors (MySql, Postgres, Oracle, Microsoft SQL). This extractor will continue to work until August 2016. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
-    } else if (this.props.componentId === 'ex-google-analytics') {
-      return 'Migrate your current configurations to new Google Analytics Extractor, which uses the newest API V4. This extractor will continue to work until November 2016. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
-    } else if (this.props.componentId === 'ex-google-drive') {
-      return 'Migrate your current configurations to new Google Drive Extractor. This extractor will continue to work until April 2017. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new extractors. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
-    } else if (['wr-db-mysql', 'wr-db-oracle', 'wr-db-redshift'].includes(this.props.componentId)) {
-      return 'Migrate your current configurations to new Database Writer. This writer will continue to work until May 2017. Then, all your configurations will be migrated automatically. The migration will also alter your orchestrations to use the new writers. The old configurations will remain intact for now. You can remove them yourself after a successful migration.';
-    } else if (this.props.componentId === 'ex-gooddata') {
-      return GoodDataMigrationDescription;
-    } else if (replacementApp) {
-      return `Migration process will migrate all configurations of ${this.props.componentId} to new configurations of ${replacementApp} component within this project. Any encrypted values or authorized accounts will not be migrated and have to be entered/authorized manually again. Beside that all orchestration tasks of the ${this.props.componentId} configurations will be replaced with configurations of the new ${replacementApp}`;
-    } else {
-      return '';
+    if (descriptionsMap.has(this.props.componentId)) {
+      return descriptionsMap.get(this.props.componentId);
     }
+    if (replacementApp) {
+      return `Migration process will migrate all configurations of ${this.props.componentId} to new configurations of ${replacementApp} component within this project. Any encrypted values or authorized accounts will not be migrated and have to be entered/authorized manually again. Beside that all orchestration tasks of the ${this.props.componentId} configurations will be replaced with configurations of the new ${replacementApp}`;
+    }
+    return '';
   },
 
   renderModal(title, body, footer, props) {
@@ -379,13 +381,23 @@ export default React.createClass({
                 {this.renderNewConfigLink(row)}
               </td>
               <td>
-                {row.get('status')}
+                {this.renderRowStatus(row.get('status'))}
               </td>
             </tr>
           )}
         </tbody>
       </Table>
     );
+  },
+
+  renderRowStatus(status) {
+    if (status === 'success') {
+      return <span className="label label-success">{status}</span>;
+    }
+    if (status.includes('error')) {
+      return <span className="label label-danger">error</span>;
+    }
+    return <span className="label label-info">{status}</span>;
   },
 
   renderJobInfo() {
@@ -417,14 +429,31 @@ export default React.createClass({
   },
 
   renderNewConfigLink(row) {
-    const newComponentId = this.getNewComponentId(row.get('componentId'));
-    const newLabel = `${newComponentId} / ${row.get('configName')}`;
-    const configExists = InstalledComponentsStore.getConfig(newComponentId, row.get('configId')).count() > 0;
-    if (configExists) {
-      return this.renderConfigLink(row.get('configId'), newComponentId, newLabel);
-    } else {
-      return newLabel;
-    }
+    const newComponentIds = List([].concat(this.getNewComponentId(row.get('componentId'))));
+    const configs = newComponentIds.map(function(value) {
+      return Map()
+        .set('newComponentId', value)
+        .set('config', InstalledComponentsStore.getConfig(value, row.get('configId')).count() > 0)
+        .set('label', `${value} / ${row.get('configName')}`);
+    });
+
+    return (
+      <ul className="list-unstyled">
+        {configs.map((item) =>
+          item.get('config')
+            ?
+            <li>
+              {this.renderConfigLink(
+                row.get('configId'),
+                item.get('newComponentId'),
+                item.get('label')
+              )}
+            </li>
+            :
+            <li>{item.get('label')}</li>
+        )}
+      </ul>
+    );
   },
 
   getNewComponentId(componentId) {

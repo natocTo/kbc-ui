@@ -10,6 +10,7 @@ InstalledComponentsActions = require '../../../components/InstalledComponentsAct
 Loader = React.createFactory(require('kbc-react-components').Loader)
 {States} = require '../pages/credentials/StateConstants'
 credentialsTemplates = require '../../templates/credentialsFields'
+{isProvisioningCredentials} = require '../../provisioningUtils'
 {button, span} = React.DOM
 
 module.exports = (componentId, driver, isProvisioning) ->
@@ -24,7 +25,8 @@ templateFn = (componentId, driver, isProvisioning) ->
     currentCredentials = WrDbStore.getCredentials componentId, configId
     localState = InstalledComponentsStore.getLocalState(componentId, configId)
     credsState = localState.get 'credentialsState'
-    isProvisionedCreds = credsState == States.SHOW_PROV_READ_CREDS
+    isEditing = !! WrDbStore.getEditingByPath(componentId, configId, 'creds')
+    isProvisionedCreds = isProvisioningCredentials(driver, currentCredentials)
     editingCredentials = WrDbStore.getEditingByPath(componentId, configId, 'creds')
 
     #state
@@ -34,7 +36,7 @@ templateFn = (componentId, driver, isProvisioning) ->
     isEditing: !! WrDbStore.getEditingByPath(componentId, configId, 'creds')
     isSaving: credsState == States.SAVING_NEW_CREDS
     localState: localState
-    isProvisionedCreds: isProvisionedCreds
+    isProvisionedCreds: !isEditing && isProvisionedCreds
 
   _handleEditStart: ->
     creds = @state.currentCredentials
@@ -80,7 +82,7 @@ templateFn = (componentId, driver, isProvisioning) ->
   render: ->
     state = @state.localState.get 'credentialsState'
 
-    if state in [States.SHOW_PROV_READ_CREDS, States.SHOW_STORED_CREDS]
+    if state in [States.SHOW_STORED_CREDS]
       return React.DOM.div null,
         if isProvisioning
           button

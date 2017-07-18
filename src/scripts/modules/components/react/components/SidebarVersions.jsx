@@ -104,7 +104,7 @@ module.exports = React.createClass({
         buttonClassName="pull-right"
         isSmall={true}
         buttonAsSpan={true}
-        buttonText=" Last Update Diff"
+        buttonText=" Compare Latest"
         versionConfig={currentVersionConfig}
         previousVersion={previousVersion}
         previousVersionConfig={previousVersionConfig}
@@ -116,7 +116,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <h4>Last updates
+        <h4>Updates
           {this.renderLatestChangeDiffButton()}
         </h4>
         <div className="kbc-sidebar-versions">

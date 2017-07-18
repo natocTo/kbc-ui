@@ -12,16 +12,19 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
     getStateFromStores() {
       const config = routesStore.getCurrentRouteParam('config');
       const dbStore = storeProvisioning.createStore(componentId, config);
+      const credentials = dbStore.getNewCredentials();
       return {
         configurationId: config,
-        credentials: dbStore.getNewCredentials(),
-        isSaving: dbStore.isSavingCredentials()
+        credentials: credentials,
+        isSaving: dbStore.isSavingCredentials(),
+        isValidNewCredentials: dbStore.hasValidCredentials(credentials)
       };
     },
 
     render() {
       return (
         <Credentials
+          isValidEditingCredentials={this.state.isValidNewCredentials}
           savedCredentials={Map()}
           credentials={ this.state.credentials }
           isEditing={ !this.state.isSaving }

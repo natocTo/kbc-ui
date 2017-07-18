@@ -11,12 +11,15 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
     getStateFromStores() {
       const config = routesStore.getCurrentRouteParam('config');
       const dbStore = storeProvisioning.createStore(componentId, config);
+      const editingCredentials = dbStore.getEditingCredentials();
+      const isEditing = dbStore.isEditingCredentials();
       return {
         configId: config,
         credentials: dbStore.getCredentials(),
-        isEditing: dbStore.isEditingCredentials(),
-        editingCredentials: dbStore.getEditingCredentials(),
-        isSaving: dbStore.isSavingCredentials()
+        isEditing: isEditing,
+        editingCredentials: editingCredentials,
+        isSaving: dbStore.isSavingCredentials(),
+        isValidEditingCredentials: isEditing ? dbStore.hasValidCredentials(editingCredentials) : false
       };
     },
 
@@ -32,6 +35,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
           hasSshTunnel={hasSshTunnel}
           actionsProvisioning={actionsProvisioning}
           savedCredentials={this.state.credentials}
+          isValidEditingCredentials={this.state.isValidEditingCredentials}
         />
       );
     },
