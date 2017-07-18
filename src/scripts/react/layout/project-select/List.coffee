@@ -207,7 +207,7 @@ module.exports = React.createClass
       li null,
         a onClick: @openModal,
           i className: 'kbc-icon-plus'
-          ' Add Project'
+          'Add Project'
         React.createElement NewProjectModal,
           urlTemplates: @props.urlTemplates
           projectTemplates: @props.projectTemplates

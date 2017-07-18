@@ -139,7 +139,7 @@ module.exports = React.createClass
         gdriveActions.setEditingData(@state.configId, path, fromJS(emptyFile))
     ,
       i className: 'kbc-icon-plus'
-      ' Add Table'
+      'Add Table'
 
 
 

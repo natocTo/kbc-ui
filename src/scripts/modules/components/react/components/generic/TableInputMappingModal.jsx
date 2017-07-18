@@ -113,7 +113,7 @@ export default React.createClass({
       let buttonLabel = this.props.buttonLabel ? this.props.buttonLabel : 'Add Table Input';
       return (
         <Button bsStyle={buttonBsStyle} onClick={this.open}>
-          <i className="kbc-icon-plus" /> {buttonLabel}
+          <i className="kbc-icon-plus" />{buttonLabel}
         </Button>
       );
     }

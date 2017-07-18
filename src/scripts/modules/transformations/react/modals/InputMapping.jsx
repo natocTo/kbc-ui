@@ -104,7 +104,7 @@ export default React.createClass({
     } else {
       return (
         <Button bsStyle="success" onClick={this.open}>
-          <i className="kbc-icon-plus" /> Add Input
+          <i className="kbc-icon-plus" />Add Input
         </Button>
       );
     }

@@ -110,7 +110,7 @@ export default React.createClass({
     } else {
       return (
         <Button bsStyle="success" onClick={this.open}>
-          <i className="kbc-icon-plus" /> Add Output
+          <i className="kbc-icon-plus" />Add Output
         </Button>
       );
     }
