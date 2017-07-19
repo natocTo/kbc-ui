@@ -226,7 +226,7 @@ const exfbAdsTemplates = [
       'name': 'campaigns_insights',
       'query': {
         'path': 'campaigns',
-        'fields': 'insights.date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,impressions,clicks,spend,reach}'
+        'fields': 'insights.date_preset(last_28d).time_increment(1){account_id,account_name,campaign_id,campaign_name,impressions,clicks,spend,reach}'
       }
     }
   },
@@ -238,7 +238,7 @@ const exfbAdsTemplates = [
       'name': 'campaigns_insights_type',
       'query': {
         'path': 'campaigns',
-        'fields': 'insights.action_breakdowns(action_type).date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}'
+        'fields': 'insights.action_breakdowns(action_type).date_preset(last_28d).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}'
       }
     }
   },
@@ -250,7 +250,7 @@ const exfbAdsTemplates = [
       'name': 'campaigns_insights_reaction',
       'query': {
         'path': 'campaigns',
-        'fields': 'insights.action_breakdowns(action_reaction).date_preset(last_28_days).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}'
+        'fields': 'insights.action_breakdowns(action_reaction).date_preset(last_28d).time_increment(1){account_id,account_name,campaign_id,campaign_name,actions}'
       }
     }
   }
