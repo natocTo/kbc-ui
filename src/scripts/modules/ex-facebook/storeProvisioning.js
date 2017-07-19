@@ -6,9 +6,13 @@ import OauthStore from '../oauth-v2/Store';
 
 export const storeMixins = [InstalledComponentStore, OauthStore];
 
-export const DEFAULT_API_VERSION = 'v2.8';
+const DEFAULT_VERSIONS_MAP = {
+  'keboola.ex-facebook-ads': 'v2.9',
+  'keboola.ex-facebook': 'v2.8'
+};
 
 export default function(COMPONENT_ID, configId) {
+  const DEFAULT_API_VERSION = DEFAULT_VERSIONS_MAP[COMPONENT_ID];
   const localState = () => InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
   const oauthCredentialsId = configData.getIn(['authorization', 'oauth_api', 'id'], configId);
