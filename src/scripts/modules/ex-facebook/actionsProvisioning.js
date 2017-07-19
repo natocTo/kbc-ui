@@ -22,8 +22,15 @@ export default function(COMPONENT_ID, configId) {
     componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
   }
 
+  function presetVersion(data) {
+    const path = ['parameters', 'api-version'];
+    const defaultVersion = store.DEFAULT_API_VERSION;
+    const version = data.getIn(path, defaultVersion) || defaultVersion;
+    return data.setIn(path, version);
+  }
+
   function saveConfigData(data, waitingPath, changeDescription) {
-    let dataToSave = data;
+    let dataToSave = presetVersion(data);
     updateLocalState(waitingPath, true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave, changeDescription)
       .then(() => updateLocalState(waitingPath, false));
@@ -159,7 +166,7 @@ export default function(COMPONENT_ID, configId) {
       if (!store.isAuthorized()) return null;
       if ((store.syncAccounts.get('data') && !store.syncAccounts.get('isError')) || store.syncAccounts.get('isLoading')) return null;
       const path = store.syncAccountsPath;
-      const data = store.configData;
+      const data = presetVersion(store.configData);
       const params = {
         configData: data.toJS()
       };

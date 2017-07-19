@@ -2,7 +2,7 @@ import React from 'react';
 import {Map} from 'immutable';
 
 // stores
-import storeProvisioning, {storeMixins, DEFAULT_API_VERSION} from '../../storeProvisioning';
+import storeProvisioning, {storeMixins} from '../../storeProvisioning';
 import ComponentStore from '../../../components/stores/ComponentsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
@@ -167,7 +167,7 @@ export default function(COMPONENT_ID) {
         <ApiVersionModal
           show={this.state.localState.get('ShowApiVersionModal', false)}
           currentVersion={this.state.store.version}
-          defaultVersion={DEFAULT_API_VERSION}
+          defaultVersion={this.state.store.DEFAULT_API_VERSION}
           onHide={hideFn}
           isSaving={this.state.store.isPending('version')}
           onSave={this.state.actions.saveApiVersion}

@@ -30,6 +30,7 @@ export default function(COMPONENT_ID, configId) {
 
   // ----ACTUAL STATE OBJECT------
   return {
+    DEFAULT_API_VERSION: DEFAULT_API_VERSION,
     oauthCredentials: OauthStore.getCredentials(COMPONENT_ID, oauthCredentialsId) || Map(),
     oauthCredentialsId: oauthCredentialsId,
 
