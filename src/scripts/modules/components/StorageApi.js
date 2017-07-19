@@ -41,7 +41,7 @@ var storageApi = {
   },
 
   getTables: function() {
-    return createRequest('GET', 'tables?include=attributes,buckets,columns').promise().then(function(response) {
+    return createRequest('GET', 'tables?include=attributes,buckets,columns,metadata,columnMetadata').promise().then(function(response) {
       return response.body;
     });
   },
@@ -125,6 +125,44 @@ var storageApi = {
     .then(function(response) {
       return response.body;
     });
+  },
+
+  saveBucketMetadata: function(bucketId, data) {
+    var payload = this.prepareMetadataPayload(data);
+    return createRequest('POST', 'buckets/' + bucketId + '/metadata').type('form').send(payload).promise()
+    .then(function(response) {
+      return response.body;
+    });
+  },
+
+  saveTableMetadata: function(tableId, data) {
+    var payload = this.prepareMetadataPayload(data);
+    return createRequest('POST', 'tables/' + tableId + '/metadata').type('form').send(payload).promise()
+    .then(function(response) {
+      return response.body;
+    });
+  },
+
+  saveColumnMetadata: function(columnId, data) {
+    var payload = this.prepareMetadataPayload(data);
+    return createRequest('POST', 'columns/' + columnId + '/metadata').type('form').send(payload).promise()
+    .then(function(response) {
+      return response.body;
+    });
+  },
+
+  prepareMetadataPayload: function(data) {
+    var metadata = [];
+    data.map(function(v, k) {
+      metadata = metadata.concat({
+        key: 'KBC.' + k,
+        value: v
+      });
+    });
+    return {
+      provider: 'kbc-ui',
+      metadata: metadata
+    };
   }
 };
 
