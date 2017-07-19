@@ -92,9 +92,69 @@
         "title": "Lesson 2 - Composition",
         "link": "home",
         "isNavigationVisible": true,
-        "text": "Z nejhlouběji blíž migrujícími, uměle soukromým děti obory a indie. Testují zvenčí zvýšil s pomoc vloni",
+        "text": "As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. Note: Your own projects won’t be affected by this in any way.",
         "media": "http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png",
         "mediaType": "img"
+      },{
+        "id": 2,
+        "position": "aside",
+        "backdrop": false,
+        "title": "Lesson 2 - Composition",
+        "link": "extractors/keboola.ex-db-snowflake",
+        "isNavigationVisible": true,
+        "text": "Because the two data tables are stored in a Snowflake database, we’ll be using the Snowflake extractor. By configuring it, we’ll specify what data to extract and how.",
+        "media": "",
+        "mediaType": ""
+      },{
+        "id": 3,
+        "position": "aside",
+        "backdrop": false,
+        "title": "Lesson 2 - Composition",
+        "link": "extractors/keboola.ex-db-snowflake/282225922",
+        "isNavigationVisible": true,
+        "text": "After naming our new configuration of the extractor and providing credentials to access the source database where the data is stored, it’s time to actually extract the data. It’s done using SQL queries. To extract our two tables, we need to write two queries, one for each table.",
+        "media": "",
+        "mediaType": ""
+      },{
+        "id": 4,
+        "position": "aside",
+        "backdrop": false,
+        "title": "Lesson 2 - Composition",
+        "link": "extractors/keboola.ex-db-snowflake/282225922/new-query",
+        "isNavigationVisible": true,
+        "text": "Each database query needs to have a name and an SQL command. The new output table that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.",
+        "media": "",
+        "mediaType": ""
+      },{
+        "id": 5,
+        "position": "aside",
+        "backdrop": false,
+        "title": "Lesson 2 - Composition",
+        "link": "home",
+        "isNavigationVisible": true,
+        "text": "Similarly, we create a query to extract info about population.",
+        "media": "",
+        "mediaType": ""
+      },{
+        "id": 6,
+        "position": "aside",
+        "backdrop": false,
+        "title": "Lesson 2 - Composition",
+        "link": "home",
+        "isNavigationVisible": true,
+        "text": "Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage.",
+        "media": "",
+        "mediaType": ""
+      },{
+        "id": 7,
+        "position": "center",
+        "backdrop": true,
+        "title": "Lesson 2 - Composition",
+        "link": "home",
+        "isNavigationVisible": true,
+        "text": "In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ",
+        "media": "",
+        "mediaType": ""
       }
     ]
   },
