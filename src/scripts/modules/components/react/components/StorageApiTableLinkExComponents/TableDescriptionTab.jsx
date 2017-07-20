@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import Markdown from '../../../../../react/common/Markdown';
+import TableDescriptionEditor from './TableDescriptionEditor';
 
 export default React.createClass({
 
@@ -29,6 +30,7 @@ export default React.createClass({
     }).first().get('value');
     return (
       <div>
+        <TableDescriptionEditor tableId={table.id}/>
         <Markdown source={tableDesc}/>
       </div>
     );

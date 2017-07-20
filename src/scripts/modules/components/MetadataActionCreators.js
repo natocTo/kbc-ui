@@ -1,77 +1,31 @@
 
+import dispatcher from '../../Dispatcher';
+import storageApi from './storageApi';
 
-import MetadataStore from './stores/MetadataStore';
 import StorageTablesStore from './stores/StorageTablesStore';
 import StorageBucketsStore from './stores/StorageBucketsStore';
 
+import constants from './Constants';
+import {fromJS} from 'immutable';
+
 module.exports = {
-
-  loadTableMetadata: function (tableId, provider) {
-    if (MetadataStore.hasMetadata('table', tableId, provider)) {
-      this.loadMetadataForce('table', tableId, provider);
-      return Promise.resolve();
-    }
-    return this.loadMetadataForce('table', tableId, provider);
-  },
-
-  loadBucketMetadata: function (bucketId, provider) {
-    if (MetadataStore.hasMetadata('bucket', bucketId, provider)) {
-      this.loadMetadataForce('bucket', bucketId, provider);
-      return Promise.resolve();
-    }
-    return this.loadMetadataForce('bucket', bucketId, provider);
-  },
-
-  getColumnMetadata: function (tableId, column, provider) {
-    if (MetadataStore.hasMetadata('column', columnId, provider)) {
-      this.getMetadata('column', columnId, provider);
-      return Promise.resolve();
-    }
-    return this.loadMetadataForce('column', columnId, provider);
-  },
 
   getMetadata: function(objectType, objectId, provider) {
     switch (objectType) {
       case 'bucket':
         return StorageBucketsStore.getBucketMetadata(objectId).then(function(result) {
-          byProvider = fromJS(result).getIn('provider', provider);
-          dispatcher.handleViewAction({
-            objectType: 'bucket',
-            objectId: objectId,
-            provider: provider,
-            type: Constants.ActionTypes.METADATA_LOAD_SUCCESS
-          });
-          return byProvider;
-        }).catch(function(error) {
-          dispatcher.handleViewAction({
-            objectType: 'bucket',
-            configId: objectId,
-            provider: provider,
-            type: Constants.ActionTypes.METADATA_LOAD_ERROR
-          });
+          return fromJS(result).getIn('provider', provider);
         });
-        break;
       case 'table':
-
-
+        return StorageTablesStore.getTableMetadata(objectId).then(function(result) {
+          return fromJS(result).getIn('provider', provider);
+        });
+      case 'column':
+        return StorageTablesStore.getColumnMetadata(objectId).then(function(result) {
+          return fromJS(result).getIn('provider', provider);
+        });
+      default:
     }
-    bucketMetadata = ;
-    tableMetadata = StorageTablesStore.getTableMetadata(tableId).then(function(result) {
-      dispatcher.handleViewAction({
-        objectType: objectType,
-        objectId: objectId,
-        type: Constants.ActionTypes.METADATA_LOAD_SUCCESS,
-        metadata: result
-      });
-      return result;
-    }).catch(function(error) {
-      dispatcher.handleViewAction({
-        objectType: objectType,
-        configId: configId,
-        type: Constants.ActionTypes.METADATA_LOAD_ERROR
-      });
-      throw error;
-    });
   },
 
   saveBucketMetadata: function(bucketId, data) {
@@ -100,7 +54,7 @@ module.exports = {
     });
   },
 
-  saveTableMetadata: function(bucketId, data) {
+  saveTableMetadata: function(tableId, data) {
     dispatcher.handleViewAction({
       objectType: 'table',
       objectId: tableId,
@@ -126,7 +80,7 @@ module.exports = {
     });
   },
 
-  saveColumnMetadata: function(bucketId, data) {
+  saveColumnMetadata: function(columnId, data) {
     dispatcher.handleViewAction({
       objectType: 'column',
       objectId: columnId,

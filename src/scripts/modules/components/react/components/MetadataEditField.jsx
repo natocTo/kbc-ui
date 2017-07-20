@@ -1,83 +1,94 @@
 
-import React, {PropTypes, DOM} from 'react';
+import React, {PropTypes} from 'react';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import StorageTablesStore from '../../stores/StorageTablesStore';
+import MetadataStore from '../../stores/MetadataStore';
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import MetadataActionCreators from '../../MetadataActionCreators';
 
 export default React.createClass({
 
   displayName: 'MetadataEditField',
 
-  mixins: [createStoreMixin(StorageTablesStore), immutableMixin],
+  mixins: [createStoreMixin(MetadataStore), immutableMixin],
 
   propTypes: {
-    objectType: React.PropTypes.oneOf(['bucket', 'table', 'column']).isRequired,
-    objectId: React.PropTypes.string.isRequired,
-    fieldName: React.PropTypes.string.isRequired,
-    editElement: React.PropTypes.func.isRequired
-    placeholder: React.PropTypes.string,
-    tooltipPlacement: React.PropTypes.string
+    objectType: PropTypes.oneOf(['bucket', 'table', 'column']).isRequired,
+    objectId: PropTypes.string.isRequired,
+    metadataKey: PropTypes.string.isRequired,
+    editElement: PropTypes.func.isRequired,
+    placeholder: PropTypes.string,
+    tooltipPlacement: PropTypes.string
   },
 
   getDefaultProps: function() {
     return {
       placeholder: 'Describe this ...',
       tooltipPlacement: 'top'
-    }
+    };
   },
 
   componentsWillReceiveProps: function(nextProps) {
-    return @setState(@getState(nextProps));
+    this.setState(this.getState(nextProps));
   },
 
   getStateFromStores: function() {
-    return @getState(@props);
+    return this.getState(this.props);
   },
 
   getState: function(props) {
-    MetadataStore.get
-
     return {
-      value: StorageTablesStore.getTableMetadata(props.objectId)
-      isEditing: StorageTablesStore.isEditingMetadata(props.objectType, props.objectId, props.fieldName)
+      value: MetadataStore.getMetadataValue(props.objectType, props.objectId, 'user', props.metadataKey),
+      editValue: MetadataStore.getEditingMetadataValue(props.objectType, props.objectId, 'user', props.metadataKey),
+      isEditing: MetadataStore.isEditingMetadata(props.objectType, props.objectId, props.metadataKey),
+      isSaving: MetadataStore.isSavingMetadata(props.objectType, props.objectId, props.metadataKey)
     };
-    /*
-    value: InstalledComponentsStore.getConfig(props.componentId, props.configId).get props.fieldName
-    editValue: InstalledComponentsStore.getEditingConfig props.componentId, props.configId, props.fieldName
-    isEditing: InstalledComponentsStore.isEditingConfig props.componentId, props.configId, props.fieldName
-    isSaving: InstalledComponentsStore.isSavingConfig props.componentId, props.configId, props.fieldName
-    isValid: InstalledComponentsStore.isValidEditingConfig props.componentId, props.configId, props.fieldName
-    */
   },
 
   _handleEditStart: function() {
-    StorageActionCreators.startMetadataEdit(@props.objectType, @props.objectId, @props.fieldName);
+    MetadataActionCreators.startMetadataEdit(
+      this.props.objectType,
+      this.props.objectId,
+      this.props.metadataKey
+    );
   },
 
   _handleEditCancel: function() {
-    StorageActionCreators.cancelMetadataEdit(@props.objectType, @props.objectId, @props.fieldName);
+    MetadataActionCreators.cancelMetadataEdit(
+      this.props.objectType,
+      this.props.objectId,
+      this.props.metadataKey
+    );
   },
 
   _handleEditChange: function(newValue) {
-    StorageActionCreators.updateEditingMetadata(@props.objectType, @props.objectId, @props.fieldName, newValue);
+    MetadataActionCreators.updateEditingMetadata(
+      this.props.objectType,
+      this.props.objectId,
+      this.props.metadataKey,
+      newValue
+    );
   },
 
   _handleEditSubmit: function() {
-    StorageActionCreators.saveMetadata(@props.objectType, @props.objectId, @props.fieldName);
+    MetadataActionCreators.saveMetadata(
+      this.props.objectType,
+      this.props.objectId,
+      this.props.metadataKey
+    );
   },
 
   render() {
-    React.createElement(@props.editElement, {
-      text: (@state.isEditing) ? @state.editValue : @state.value,
-      placeholder: @props.placeholder,
-      tooltipPlacement: @props.tooltipPlacement,
-      isSaving: @state.isSaving,
-      isEditing: @state.isEditing,
-      isValid: @state.isValid,
-      onEditStart: @_handleEditStart,
-      onEditChange: @_handleEditChange,
-      onEditSubmit: @_handleEditSubmit
+    React.createElement(this.props.editElement, {
+      text: (this.state.isEditing) ? this.state.editValue : this.state.value,
+      placeholder: this.props.placeholder,
+      tooltipPlacement: this.props.tooltipPlacement,
+      isSaving: this.state.isSaving,
+      isEditing: this.state.isEditing,
+      isValid: this.state.isValid,
+      onEditStart: this._handleEditStart,
+      onEditChange: this._handleEditChange,
+      onEditSubmit: this._handleEditSubmit
     });
   }
 });
