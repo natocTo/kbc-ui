@@ -37,9 +37,11 @@ export default React.createClass({
   },
 
   getState: function(props) {
+    var value = MetadataStore.getMetadataValue(props.objectType, props.objectId, 'user', props.metadataKey);
+    var editValue = MetadataStore.getEditingMetadataValue(props.objectType, props.objectId, props.metadataKey);
     return {
-      value: MetadataStore.getMetadataValue(props.objectType, props.objectId, 'user', props.metadataKey),
-      editValue: MetadataStore.getEditingMetadataValue(props.objectType, props.objectId, 'user', props.metadataKey),
+      value: (value) ? value : '',
+      editValue: (editValue) ? editValue : value,
       isEditing: MetadataStore.isEditingMetadata(props.objectType, props.objectId, props.metadataKey),
       isSaving: MetadataStore.isSavingMetadata(props.objectType, props.objectId, props.metadataKey)
     };
@@ -79,7 +81,7 @@ export default React.createClass({
   },
 
   render() {
-    React.createElement(this.props.editElement, {
+    return React.createElement(this.props.editElement, {
       text: (this.state.isEditing) ? this.state.editValue : this.state.value,
       placeholder: this.props.placeholder,
       tooltipPlacement: this.props.tooltipPlacement,

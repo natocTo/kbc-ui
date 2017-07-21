@@ -4,6 +4,7 @@ module.exports = {
   ActionTypes: keyMirror({
 
     METADATA_EDIT_START: null,
+    METADATA_EDIT_UPDATE: null,
     METADATA_EDIT_CANCEL: null,
     METADATA_EDIT_STOP: null,
 

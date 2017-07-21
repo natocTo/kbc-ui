@@ -115,7 +115,7 @@ export default React.createClass({
     return (
       <TableDescriptionTab
         isLoading={this.props.isLoading}
-        table={this.props.table}
+        tableId={this.props.tableId}
         tableExists={this.props.tableExists}
       />
     );

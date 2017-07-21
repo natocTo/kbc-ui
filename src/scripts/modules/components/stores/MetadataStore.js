@@ -6,7 +6,7 @@ import Constants from '../Constants';
 
 import _ from 'underscore';
 
-var Map = Immutable.Map;
+var Map = Immutable.Map, List = Immutable.List;
 
 var _store = Map({
   savingMetadata: Map(),
@@ -20,30 +20,53 @@ var MetadataStore = StoreUtils.createStore({
 
 
   getColumnMetadata: function(tableId, column, provider, metadataKey) {
-    if (!this.hasMetadata('column', tableId + '.' + column)) {
-      return false;
-    }
-    return this.getAllColumnMetadata(tableId, column).find(metadata =>  metadata.get('provider') === provider && metadata.get('key') === metadataKey);
+    var columnId = tableId + '.' + column;
+    return this.getMetadata('column', columnId, provider, metadataKey);
   },
-
+  /*
   getAllColumnMetadata: function(tableId, column) {
     return this.getMetadataAll('column', tableId + '.' + column);
   },
 
+  getAllTableMetadata: function(tableId) {
+    return this.getMetadataAll('table', tableId);
+  },
+  */
+
+  getTableMetadata: function(tableId, provider, metadataKey) {
+    return this.getMetadata('table', tableId, provider, metadataKey);
+  },
+  /*
+  getTableMetadataValue: function(tableId, provider, metadataKey) {
+    return this.getTableMetadata(tableId, provider, metadataKey).get('value');
+  },
+  */
+
   getMetadata: function(objectType, objectId, provider, metadataKey) {
     if (this.hasMetadata(objectType, objectId)) {
-      return this.getMetadataAll(objectType, objectId).find(metadata =>  metadata.get('provider') === provider && metadata.get('key') === metadataKey);
-    } else {
-      return false;
+      var metadataList = this.getMetadataAll(objectType, objectId);
+      return metadataList.find(
+        metadata =>  (metadata.get('provider') === provider && metadata.get('key') === metadataKey)
+      );
     }
+    return false;
   },
 
   hasMetadata: function(objectType, objectId) {
-    return _store.has('metadata', objectType, objectId);
+    return _store.hasIn(['metadata', objectType, objectId]);
+  },
+  /*
+  hasProviderMetadata: function(objectType, objectId, provider) {
+    return _store.getIn(['metadata', objectType, objectId]).hasIn(['provider', provider]);
   },
 
+  hasMetadataKey: function(objectType, objectId, metadataKey) {
+    return _store.getIn(['metadata', objectType, objectId]).hasIn(['key', metadataKey]);
+  },
+  */
+
   getMetadataAll: function(objectType, objectId) {
-    return _store.get(['metadata', objectType, objectId]);
+    return _store.getIn(['metadata', objectType, objectId], List);
   },
 
   /*
@@ -54,19 +77,23 @@ var MetadataStore = StoreUtils.createStore({
   */
 
   getMetadataValue: function(objectType, objectId, provider, metadataKey) {
-    return this.getMetadata(objectType, objectId, provider, metadataKey).get('value');
+    var metadata = this.getMetadata(objectType, objectId, provider, metadataKey);
+    if (metadata) {
+      return metadata.get('value');
+    }
+    return false;
   },
 
-  getEditingMetadataValue: function(objectType, objectId, provider, metadataKey) {
-    return _store.getIn(['editingMetadata', objectType, objectId, provider, metadataKey]).get('value');
+  getEditingMetadataValue: function(objectType, objectId, metadataKey) {
+    return _store.getIn(['editingMetadata', objectType, objectId, metadataKey]);
   },
 
-  isEditingMetadata: function(objectType, objectId, metadataKey, provider = 'user') {
-    return _store.hasIn(['editingMetadata', objectType, objectId, provider, metadataKey]);
+  isEditingMetadata: function(objectType, objectId, metadataKey) {
+    return _store.hasIn(['editingMetadata', objectType, objectId, metadataKey]);
   },
 
-  isSavingMetadata: function(objectType, objectId, metadataKey, provider = 'user') {
-    return _store.hasIn(['savingMetadata', objectType, objectId, provider, metadataKey]);
+  isSavingMetadata: function(objectType, objectId, metadataKey) {
+    return _store.hasIn(['savingMetadata', objectType, objectId, metadataKey]);
   }
 
 });
@@ -78,9 +105,18 @@ dispatcher.register(function(payload) {
   switch (action.type) {
 
     case MetadataConstants.ActionTypes.METADATA_EDIT_START:
-      _store = _store.setIn(['editingMetadata', action.objectType, action.objectId, action.metadataKey]);
+      _store = _store.setIn(
+        ['editingMetadata', action.objectType, action.objectId, action.metadataKey],
+        MetadataStore.getMetadataValue(action.objectType, action.objectId, action.metadataKey)
+      );
       return MetadataStore.emitChange();
 
+    case MetadataConstants.ActionTypes.METADATA_EDIT_UPDATE:
+      _store = _store.setIn(
+        ['editingMetadata', action.objectType, action.objectId, action.metadataKey],
+        action.value
+      );
+      return MetadataStore.emitChange();
     case MetadataConstants.ActionTypes.METADATA_EDIT_STOP:
       _store = _store.deleteIn(['editingMetadata', action.objectType, action.objectId, action.metadataKey]);
       return MetadataStore.emitChange();
@@ -90,7 +126,7 @@ dispatcher.register(function(payload) {
       return MetadataStore.emitChange();
 
     case MetadataConstants.ActionTypes.METADATA_SAVE_START:
-      _store = _store.setIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey]);
+      _store = _store.setIn(['savingMetadata', action.objectType, action.objectId, action.metadataKey], action.value);
       return MetadataStore.emitChange();
 
     case MetadataConstants.ActionTypes.METADATA_SAVE_ERROR:
@@ -105,11 +141,11 @@ dispatcher.register(function(payload) {
       _.each(action.tables, function(table) {
         const tableMetadata = Immutable.fromJS(table.metadata);
         _store = _store.setIn(
-          ['metadata', 'table', table.id, tableMetadata]
+          ['metadata', 'table', table.id], tableMetadata
         );
         _.each(table.columnMetadata, function(metadata, columnName) {
           _store = _store.setIn(
-            ['metadata', 'column', table.id + '.' + columnName, Immutable.fromJS(metadata)]
+            ['metadata', 'column', table.id + '.' + columnName], Immutable.fromJS(metadata)
           );
         });
       });

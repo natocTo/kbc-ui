@@ -1,14 +1,13 @@
 import React, {PropTypes} from 'react';
 
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
-import Markdown from '../../../../../react/common/Markdown';
 import TableDescriptionEditor from './TableDescriptionEditor';
 
 export default React.createClass({
 
   propTypes: {
     isLoading: PropTypes.bool,
-    table: PropTypes.object,
+    tableId: PropTypes.string.isRequired,
     tableExists: PropTypes.bool.isRequired
   },
 
@@ -24,14 +23,10 @@ export default React.createClass({
         </EmptyState>
       );
     }
-    const table = this.props.table;
-    const tableDesc = table.get('metadata').filter(function(metadata) {
-      return metadata.get('key') === 'KBC.description' && metadata.get('provider') === 'kbc-ui';
-    }).first().get('value');
+    const tableId = this.props.tableId;
     return (
       <div>
-        <TableDescriptionEditor tableId={table.id}/>
-        <Markdown source={tableDesc}/>
+        <TableDescriptionEditor tableId={tableId}/>
       </div>
     );
   }

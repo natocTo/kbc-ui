@@ -1,106 +1,72 @@
 
 import dispatcher from '../../Dispatcher';
 import storageApi from './storageApi';
+import MetadataStore from './stores/MetadataStore';
+import Constants from './MetadataConstants';
+import Immutable from 'immutable';
 
-import StorageTablesStore from './stores/StorageTablesStore';
-import StorageBucketsStore from './stores/StorageBucketsStore';
-
-import constants from './Constants';
-import {fromJS} from 'immutable';
+var Map = Immutable.Map;
 
 module.exports = {
 
-  getMetadata: function(objectType, objectId, provider) {
-    switch (objectType) {
-      case 'bucket':
-        return StorageBucketsStore.getBucketMetadata(objectId).then(function(result) {
-          return fromJS(result).getIn('provider', provider);
-        });
-      case 'table':
-        return StorageTablesStore.getTableMetadata(objectId).then(function(result) {
-          return fromJS(result).getIn('provider', provider);
-        });
-      case 'column':
-        return StorageTablesStore.getColumnMetadata(objectId).then(function(result) {
-          return fromJS(result).getIn('provider', provider);
-        });
-      default:
-    }
-  },
-
-  saveBucketMetadata: function(bucketId, data) {
+  startMetadataEdit: function(objectType, objectId, metadataKey) {
     dispatcher.handleViewAction({
-      objectType: 'bucket',
-      objectId: bucketId,
-      data: data,
-      type: constants.ActionTypes.METADATA_SAVE_START
-    });
-    return storageApi.saveBucketMetadata(bucketId, data).then(function(metadata) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.METADATA_SAVE_SUCCESS,
-        objectType: 'bucket',
-        objectId: bucketId,
-        data: data
-      });
-      return metadata;
-    }).catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.METADATA_SAVE_ERROR,
-        objectType: 'bucket',
-        objectId: bucketId,
-        data: data
-      });
-      throw error;
+      type: Constants.ActionTypes.METADATA_EDIT_START,
+      objectType: objectType,
+      objectId: objectId,
+      metadataKey: metadataKey
     });
   },
 
-  saveTableMetadata: function(tableId, data) {
+  cancelMetadataEdit: function(objectType, objectId, metadataKey) {
     dispatcher.handleViewAction({
-      objectType: 'table',
-      objectId: tableId,
-      data: data,
-      type: constants.ActionTypes.METADATA_SAVE_START
-    });
-    return storageApi.saveTableMetadata(tableId, data).then(function(metadata) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.METADATA_SAVE_SUCCESS,
-        objectType: 'table',
-        objectId: tableId,
-        data: data
-      });
-      return metadata;
-    }).catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.METADATA_SAVE_ERROR,
-        objectType: 'table',
-        objectId: tableId,
-        data: data
-      });
-      throw error;
+      type: Constants.ActionTypes.METADATA_EDIT_CANCEL,
+      objectType: objectType,
+      objectId: objectId,
+      metadataKey: metadataKey
     });
   },
 
-  saveColumnMetadata: function(columnId, data) {
+  updateEditingMetadata: function(objectType, objectId, metadataKey, value) {
     dispatcher.handleViewAction({
-      objectType: 'column',
-      objectId: columnId,
-      data: data,
-      type: constants.ActionTypes.METADATA_EDIT_SAVE
+      type: Constants.ActionTypes.METADATA_EDIT_UPDATE,
+      objectType: objectType,
+      objectId: objectId,
+      metadataKey: metadataKey,
+      value: value
     });
-    return storageApi.saveColumnMetadata(columnId, data).then(function(metadata) {
+  },
+
+  saveMetadata: function(objectType, objectId, metadataKey) {
+    dispatcher.handleViewAction({
+      objectType: objectType,
+      objectId: objectId,
+      metadataKey: metadataKey,
+      type: Constants.ActionTypes.METADATA_SAVE_START
+    });
+    var newValue = MetadataStore.getEditingMetadataValue(objectType, objectId, metadataKey);
+    return storageApi.saveMetadata(objectType, objectId, Map([[metadataKey, newValue]])).then(function(result) {
       dispatcher.handleViewAction({
-        type: constants.ActionTypes.METADATA_EDIT_SAVE_SUCCESS,
-        objectType: 'column',
-        objectId: columnId,
-        data: data
+        type: Constants.ActionTypes.METADATA_SAVE_SUCCESS,
+        objectType: objectType,
+        objectId: objectId,
+        metadataKey: metadataKey,
+        metadata: result
       });
-      return metadata;
+      dispatcher.handleViewAction({
+        type: Constants.ActionTypes.METADATA_EDIT_STOP,
+        objectType: objectType,
+        objectId: objectId,
+        metadataKey: metadataKey
+      });
+      return result;
     }).catch(function(error) {
       dispatcher.handleViewAction({
-        type: constants.ActionTypes.METADATA_EDIT_SAVE_ERROR,
-        objectType: 'column',
-        objectId: columnId,
-        data: data
+        type: Constants.ActionTypes.METADATA_SAVE_ERROR,
+        objectType: objectType,
+        objectId: objectId,
+        metadataKey: metadataKey,
+        value: newValue
       });
       throw error;
     });

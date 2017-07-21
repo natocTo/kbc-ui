@@ -151,16 +151,38 @@ var storageApi = {
     });
   },
 
+  saveMetadata: function(objectType, objectId, data) {
+    var payload = this.prepareMetadataPayload(data);
+    var saveUrl = this.getMetadataSaveUrl(objectType, objectId);
+    return createRequest('POST', saveUrl).type('form').send(payload).promise()
+      .then(function(response) {
+        return response.body;
+      });
+  },
+
+  getMetadataSaveUrl: function(objectType, objectId) {
+    switch (objectType) {
+      case 'bucket':
+        return 'buckets/' + objectId + '/metadata';
+      case 'table':
+        return 'tables/' + objectId + '/metadata';
+      case 'column':
+        return 'columns/' + objectId + '/metadata';
+      default:
+
+    }
+  },
+
   prepareMetadataPayload: function(data) {
     var metadata = [];
     data.map(function(v, k) {
       metadata = metadata.concat({
-        key: 'KBC.' + k,
+        key: k,
         value: v
       });
     });
     return {
-      provider: 'kbc-ui',
+      provider: 'user',
       metadata: metadata
     };
   }
