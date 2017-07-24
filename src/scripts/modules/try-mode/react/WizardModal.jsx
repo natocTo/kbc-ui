@@ -22,7 +22,7 @@ export default React.createClass({
   },
   render: function() {
     return (
-        <Modal show={this.props.show} onHide={this.props.onHide} backdrop={this.isStepBackdrop()} bsSize="large"
+        <Modal show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
                className={'try-wizard try-wizard-' + this.getStepPosition()}>
           <Modal.Header closeButton>
             <Modal.Title>
@@ -167,6 +167,7 @@ export default React.createClass({
     );
   },
   closeLessonModal() {
+    RoutesStore.getRouter().transitionTo('home');
     hideWizardModalFn();
   },
   decreaseStep() {
