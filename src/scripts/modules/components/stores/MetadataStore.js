@@ -17,7 +17,7 @@ var _store = Map({
 });
 
 var MetadataStore = StoreUtils.createStore({
-  
+
   getColumnMetadata: function(tableId, column, provider, metadataKey) {
     var columnId = tableId + '.' + column;
     return this.getMetadata('column', columnId, provider, metadataKey);
