@@ -1,6 +1,6 @@
 
 import dispatcher from '../../Dispatcher';
-import storageApi from './storageApi';
+import storageApi from './StorageApi';
 import MetadataStore from './stores/MetadataStore';
 import Constants from './MetadataConstants';
 import Immutable from 'immutable';

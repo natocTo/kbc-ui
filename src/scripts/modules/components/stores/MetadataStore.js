@@ -17,13 +17,12 @@ var _store = Map({
 });
 
 var MetadataStore = StoreUtils.createStore({
-
-
+  
   getColumnMetadata: function(tableId, column, provider, metadataKey) {
     var columnId = tableId + '.' + column;
     return this.getMetadata('column', columnId, provider, metadataKey);
   },
-  /*
+
   getAllColumnMetadata: function(tableId, column) {
     return this.getMetadataAll('column', tableId + '.' + column);
   },
@@ -31,16 +30,14 @@ var MetadataStore = StoreUtils.createStore({
   getAllTableMetadata: function(tableId) {
     return this.getMetadataAll('table', tableId);
   },
-  */
 
   getTableMetadata: function(tableId, provider, metadataKey) {
     return this.getMetadata('table', tableId, provider, metadataKey);
   },
-  /*
+
   getTableMetadataValue: function(tableId, provider, metadataKey) {
     return this.getTableMetadata(tableId, provider, metadataKey).get('value');
   },
-  */
 
   getMetadata: function(objectType, objectId, provider, metadataKey) {
     if (this.hasMetadata(objectType, objectId)) {
@@ -55,26 +52,23 @@ var MetadataStore = StoreUtils.createStore({
   hasMetadata: function(objectType, objectId) {
     return _store.hasIn(['metadata', objectType, objectId]);
   },
-  /*
-  hasProviderMetadata: function(objectType, objectId, provider) {
-    return _store.getIn(['metadata', objectType, objectId]).hasIn(['provider', provider]);
-  },
 
   hasMetadataKey: function(objectType, objectId, metadataKey) {
     return _store.getIn(['metadata', objectType, objectId]).hasIn(['key', metadataKey]);
   },
-  */
+
 
   getMetadataAll: function(objectType, objectId) {
     return _store.getIn(['metadata', objectType, objectId], List);
   },
 
-  /*
-  getMetadataByProvider: function(objectType, objectId, provider) {
-    objectMetadata = this.getMetadata(objectType, objectId);
-    objectMetadata.find(metadata =>  metadata.get('provider') === provider && metadata.get('key') === metadataKey)
+  hasProviderMetadata: function(objectType, objectId, provider, metadataKey) {
+    var objectMetadata = this.getMetadata(objectType, objectId);
+    var foundMetadata = objectMetadata.find(
+      metadata =>  metadata.get('provider') === provider && metadata.get('key') === metadataKey
+    );
+    return !(typeof foundMetadata === 'undefined' || foundMetadata === null);
   },
-  */
 
   getMetadataValue: function(objectType, objectId, provider, metadataKey) {
     var metadata = this.getMetadata(objectType, objectId, provider, metadataKey);
