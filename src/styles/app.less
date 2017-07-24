@@ -242,6 +242,7 @@ a .kbcComponentIcon-3rdParty-64px {
   @wizardWidthAside: 350px;
   @wizardHeight: 500px;
   @statusBarHeight: 30px;
+  @verticalPadding: 8px;
 
   &-mode {
     .kbc-sidebar,
@@ -304,9 +305,13 @@ a .kbcComponentIcon-3rdParty-64px {
       }
 
       &.try-wizard-aside {
+        position: static;
         .modal-body {
           height: @wizardHeight;
           overflow-y: auto;
+          p {
+            padding: @verticalPadding 0;
+          }
         }
         .modal-dialog {
           right: @wizardWidthAside/2 - 1;
@@ -320,7 +325,7 @@ a .kbcComponentIcon-3rdParty-64px {
   }
 
   &-navigation {
-    padding: 8px 0;
+    padding: @verticalPadding 0;
     border-top: 0;
     &-item {
       padding: 8px;
@@ -337,6 +342,6 @@ a .kbcComponentIcon-3rdParty-64px {
   }
 
   &-media {
-    padding: 16px 0px;
+    padding: @verticalPadding 0px;
   }
 }
