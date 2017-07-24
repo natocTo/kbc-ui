@@ -58,6 +58,7 @@ installedComponentsApi =
     .then (response) ->
       response.body
 
+  # TODO possibly migrate to a generic encrypt method, https://github.com/keboola/docker-bundle/issues/182
   updateComponentConfigurationEncrypted: (componentUrl, componentId, configurationId, data) ->
     request('PUT', "#{componentUrl}/configs/#{configurationId}")
     .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString())
@@ -170,5 +171,24 @@ installedComponentsApi =
     .promise()
     .then (response) ->
       response.body
+
+  # TODO this endpoint does not exist, https://github.com/keboola/docker-bundle/issues/182
+  updateConfigurationRowEncrypted: (componentUrl, componentId, configurationId, rowId, data) ->
+    request('PUT', "#{componentUrl}/configs/#{configurationId}/rows/#{rowId}")
+    .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString())
+    .type 'form'
+    .send data
+    .promise()
+    .then (response) ->
+      # fixes https://github.com/keboola/kbc-ui/issues/915
+      if JSON.stringify(response.body.configuration).indexOf('[]') >= 0
+        return createRequest('GET', "components/#{componentId}/configs/#{configurationId}/rows/#{rowId}")
+        .promise()
+        .then((response) ->
+          response.body
+        )
+      return response.body
+
+
 
 module.exports = installedComponentsApi

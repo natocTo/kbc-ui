@@ -34,6 +34,9 @@ InlineEditArea = require '../../../../../react/common/InlineEditArea'
 require('./TransformationDetailStatic.less')
 TransformationEmptyInputImage = React.createFactory(require('../../components/TransformationEmptyInputImage').default)
 TransformationEmptyOutputImage = React.createFactory(require('../../components/TransformationEmptyOutputImage').default)
+ConfigurationRowEditField = React.createFactory(require(
+  '../../../../components/react/components/ConfigurationRowEditField'
+))
 
 {getInputMappingValue, getOutputMappingValue,
   findInputMappingDefinition, findOutputMappingDefinition} = require('../../../../components/utils/mappingDefinitions')
@@ -182,25 +185,14 @@ module.exports = React.createClass
                 '.'
           ]
 
-        React.createElement InlineEditArea,
-          isEditing: @props.editingFields.has('description')
-          isSaving: @props.pendingActions.has('save-description')
-          text: @props.editingFields.get('description', @props.transformation.get("description"))
-          editTooltip: "Click to edit description"
+        ConfigurationRowEditField
+          componentId: 'transformation'
+          configId: @props.bucketId
+          rowId: @props.transformationId
+          fieldName: 'description'
+          editElement: InlineEditArea
           placeholder: "Describe transformation"
-          onEditStart: =>
-            TransformationsActionCreators.startTransformationFieldEdit(@props.bucketId,
-              @props.transformationId, 'description')
-          onEditCancel: =>
-            TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
-              @props.transformationId, 'description')
-          onEditChange: (newValue) =>
-            TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
-              @props.transformationId, 'description', newValue)
-          onEditSubmit: =>
-            TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
-              @props.transformationId, 'description')
-
+          fallbackValue: @props.transformation.get("description")
       if @props.transformation.get('backend') != 'docker'
         div {className: 'kbc-row'},
           @_renderRequires()

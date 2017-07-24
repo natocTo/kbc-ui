@@ -1,14 +1,16 @@
 import parseTransformation from './parseTransformation';
 
 export default function(bucket) {
-  bucket.transformations = bucket.rows;
-  delete bucket.rows;
-  if (bucket.transformations) {
-    for (var i = 0; i < bucket.transformations.length; i++) {
-      bucket.transformations[i] = parseTransformation(bucket.transformations[i]);
+  // deep cloning hack
+  var response = JSON.parse(JSON.stringify(bucket));
+  response.transformations = response.rows;
+  delete response.rows;
+  if (response.transformations) {
+    for (var i = 0; i < response.transformations.length; i++) {
+      response.transformations[i] = parseTransformation(response.transformations[i]);
     }
   } else {
-    bucket.transformations = [];
+    response.transformations = [];
   }
-  return bucket;
+  return response;
 }

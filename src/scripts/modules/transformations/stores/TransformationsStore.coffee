@@ -4,10 +4,13 @@ Immutable = require('immutable')
 Map = Immutable.Map
 List = Immutable.List
 Constants = require '../Constants'
+InstalledComponentsConstants = require '../../components/Constants'
+InstalledComponentsStore = require '../../components/stores/InstalledComponentsStore'
 fuzzy = require 'fuzzy'
 StoreUtils = require '../../../utils/StoreUtils'
 _ = require 'underscore'
 parseQueries = require('../utils/parseQueries').default
+parseBuckets = require('../utils/parseBuckets').default
 
 _store = Map(
   transformationsByBucketId: Map()
@@ -141,28 +144,22 @@ TransformationsStore = StoreUtils.createStore
       return false
     return true
 
+  getTransformationDescription: (bucketId, transformationId) ->
+    description = InstalledComponentsStore.getConfigRow('transformation', bucketId, transformationId).get('description')
+    if (description == '')
+      description = @getTransformation(bucketId, transformationId).get('description')
+    return description
+
+  getTransformationName: (bucketId, transformationId) ->
+    name = InstalledComponentsStore.getConfigRow('transformation', bucketId, transformationId).get('name')
+    if (name == '')
+      name = @getTransformation(bucketId, transformationId).get('name')
+    return name
+
 Dispatcher.register (payload) ->
   action = payload.action
 
   switch action.type
-
-    when Constants.ActionTypes.TRANSFORMATIONS_LOAD
-      _store = addToLoadingBuckets(_store, action.bucketId)
-      TransformationsStore.emitChange()
-
-    when Constants.ActionTypes.TRANSFORMATIONS_LOAD_ERROR
-      _store = removeFromLoadingBuckets(_store, action.bucketId)
-      TransformationsStore.emitChange()
-
-    when Constants.ActionTypes.TRANSFORMATIONS_LOAD_SUCCESS
-      _store = _store.withMutations((store) ->
-        _.each(action.transformations, (transformation) ->
-          tObj = enhanceTransformation(Immutable.fromJS(transformation))
-          store = store.setIn ['transformationsByBucketId', action.bucketId, tObj.get 'id'], tObj
-        )
-        store = removeFromLoadingBuckets(store, action.bucketId)
-      )
-      TransformationsStore.emitChange()
 
     when Constants.ActionTypes.TRANSFORMATION_CREATE_SUCCESS
       _store = _store.setIn ['transformationsByBucketId', action.bucketId, action.transformation.id],
@@ -265,9 +262,12 @@ Dispatcher.register (payload) ->
       _store = _store.deleteIn ['pendingActions', action.bucketId, action.transformationId, action.pendingAction]
       TransformationsStore.emitChange()
 
-    when Constants.ActionTypes.TRANSFORMATION_BUCKETS_LOAD_SUCCESS
+    when InstalledComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS
+      if (action.componentId != 'transformation')
+        return
+      bucketsData = parseBuckets(action.configData)
       _store = _store.withMutations((store) ->
-        _.each(action.buckets, (bucket) ->
+        _.each(bucketsData, (bucket) ->
           _.each(bucket.transformations, (transformation) ->
             tObj = enhanceTransformation(Immutable.fromJS(transformation))
             store = store.setIn ['transformationsByBucketId', bucket.id, tObj.get 'id'], tObj
@@ -275,6 +275,7 @@ Dispatcher.register (payload) ->
         )
       )
       TransformationsStore.emitChange()
+
 
     when Constants.ActionTypes.TRANSFORMATION_START_EDIT_FIELD
       _store = _store.setIn [

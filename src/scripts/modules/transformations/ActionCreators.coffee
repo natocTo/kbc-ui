@@ -19,45 +19,6 @@ ApplicationActionCreators = require '../../actions/ApplicationActionCreators'
 {capitalize} = require('../../utils/string').default
 module.exports =
 
-  ###
-    Request orchestrations reload from server
-  ###
-  loadTransformationBucketsForce: ->
-    actions = @
-
-    # trigger load initialized
-    dispatcher.handleViewAction(
-      type: constants.ActionTypes.TRANSFORMATION_BUCKETS_LOAD
-    )
-
-    # init load
-    transformationsApi
-    .getTransformationBuckets()
-    .then((buckets) ->
-      # load success
-      actions.receiveTransformationBuckets(buckets)
-    )
-    .catch (err) ->
-      throw err
-
-  receiveTransformationBuckets: (buckets) ->
-    dispatcher.handleViewAction(
-      type: constants.ActionTypes.TRANSFORMATION_BUCKETS_LOAD_SUCCESS
-      buckets: buckets
-    )
-
-  ###
-    Request transformation buckets load only if not already loaded
-    @return Promise
-  ###
-  loadTransformationBuckets: ->
-    # don't load if already loaded
-    if TransformationBucketsStore.getIsLoaded()
-      @.loadTransformationBucketsForce()
-      return Promise.resolve()
-    else
-      return @.loadTransformationBucketsForce()
-
   createTransformationBucket: (data) ->
     newBucket = {}
     changeDescription = "Create transformation bucket " + data.name

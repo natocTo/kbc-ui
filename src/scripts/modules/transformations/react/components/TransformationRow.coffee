@@ -10,6 +10,7 @@ ActivateDeactivateButton = React.createFactory(require('../../../../react/common
 CreateSandboxButton = require('./CreateSandboxButton').default
 TransformationsActionCreators = require '../../ActionCreators'
 descriptionExcerpt = require('../../../../utils/descriptionExcerpt').default
+TransformationStore = require('../../stores/TransformationsStore')
 
 {span, div, a, button, i, h4, small, em} = React.DOM
 
@@ -67,6 +68,9 @@ TransformationRow = React.createClass(
 
     buttons
 
+  getTransformationDescription: ->
+
+
   render: ->
     # TODO - no detail for unsupported transformations! (remote, db/snapshot, ...)
     Link
@@ -81,13 +85,15 @@ TransformationRow = React.createClass(
               span {className: 'label kbc-label-rounded-small label-default pull-left'},
                 @props.transformation.get('phase') || 1
               ' '
-              @props.transformation.get('name')
+              TransformationStore.getTransformationName(@props.bucket.get('id'), @props.transformation.get('id'))
           span {className: 'td col-xs-1', key: 'col2'},
             TransformationTypeLabel
               backend: @props.transformation.get 'backend'
               type: @props.transformation.get 'type'
           span {className: 'td col-xs-8', key: 'col3'},
-            small {}, descriptionExcerpt(@props.transformation.get('description')) || em {}, 'No description'
+            small {}, descriptionExcerpt(
+              TransformationStore.getTransformationDescription(@props.bucket.get('id'), @props.transformation.get('id'))
+            ) || em {}, 'No description'
         ]
       else
         [
@@ -96,13 +102,15 @@ TransformationRow = React.createClass(
               span {className: 'label kbc-label-rounded-small label-default pull-left'},
                 @props.transformation.get('phase') || 1
               ' '
-              @props.transformation.get('name')
+              TransformationStore.getTransformationName(@props.bucket.get('id'), @props.transformation.get('id'))
           span {className: 'td col-xs-1', key: 'col2'},
             TransformationTypeLabel
               backend: @props.transformation.get 'backend'
               type: @props.transformation.get 'type'
           span {className: 'td col-xs-4', key: 'col3'},
-            small {}, descriptionExcerpt(@props.transformation.get('description')) || em {}, 'No description'
+            small {}, descriptionExcerpt(
+              TransformationStore.getTransformationDescription(@props.bucket.get('id'), @props.transformation.get('id'))
+            ) || em {}, 'No description'
           span {className: 'td text-right col-xs-4', key: 'col4'},
             @buttons()
         ]

@@ -30,7 +30,7 @@ routes =
       headerButtonsHandler: TransformationBucketButtons
       requireData: [
         ->
-          TransformationsActionCreators.loadTransformationBuckets()
+          InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
       ,
         ->
           InstalledComponentsActionCreators.loadComponents()

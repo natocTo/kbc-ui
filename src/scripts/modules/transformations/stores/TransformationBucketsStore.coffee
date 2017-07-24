@@ -4,10 +4,11 @@ Immutable = require('immutable')
 Map = Immutable.Map
 List = Immutable.List
 Constants = require '../Constants'
+Constants = require '../Constants'
 InstalledComponentsConstants = require '../../components/Constants'
 fuzzy = require 'fuzzy'
 StoreUtils = require '../../../utils/StoreUtils'
-
+parseBuckets = require('../utils/parseBuckets').default
 _store = Map(
   bucketsById: Map()
   isLoading: false
@@ -60,16 +61,21 @@ Dispatcher.register (payload) ->
   action = payload.action
 
   switch action.type
-    when Constants.ActionTypes.TRANSFORMATION_BUCKETS_LOAD
+    when InstalledComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD
+      if (action.componentId != 'transformation')
+        return
       _store = _store.set 'isLoading', true
       TransformationBucketsStore.emitChange()
 
-    when Constants.ActionTypes.TRANSFORMATION_BUCKETS_LOAD_SUCCESS
+    when InstalledComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS
+      if (action.componentId != 'transformation')
+        return
+      bucketsData = parseBuckets(action.configData)
       _store = _store.withMutations((store) ->
         store
           .set('isLoading', false)
           .set('isLoaded', true)
-          .set('bucketsById', Immutable.fromJS(action.buckets).toMap().mapKeys((key, bucket) ->
+          .set('bucketsById', Immutable.fromJS(bucketsData).toMap().mapKeys((key, bucket) ->
             bucket.get 'id'
           ))
       )

@@ -13,7 +13,10 @@ trashUtils = require('../../trash/utils')
 
 _store = Map(
   configData: Map() #componentId #configId
+  configRowsData: Map() #componentId #configId #rowId
+  configRows: Map() #componentId #configId #rowId
   configDataLoading: Map() #componentId #configId - configuration detail JSON
+  configsDataLoading: Map() #componentId - configurations JSON
   configDataEditing: Map() #componentId #configId - configuration
   configDataEditingObject: Map() #componentId #configId - configuration
   configDataParametersEditing: Map() #componentId #configId - configuration
@@ -33,7 +36,9 @@ _store = Map(
   components: Map()
   deletedComponents: Map()
   editingConfigurations: Map()
+  editingConfigurationRows: Map()
   savingConfigurations: Map()
+  savingConfigurationRows: Map()
   deletingConfigurations: Map()
   restoringConfigurations: Map()
   isLoaded: false
@@ -156,6 +161,9 @@ InstalledComponentsStore = StoreUtils.createStore
   getIsConfigDataLoaded: (componentId, configId) ->
     _store.hasIn ['configData', componentId, configId]
 
+  getIsConfigsDataLoaded: (componentId) ->
+    _store.hasIn ['configData', componentId]
+
   getEditingConfigData: (componentId, configId, defaultValue) ->
     _store.getIn ['configDataEditing', componentId, configId], defaultValue
 
@@ -187,13 +195,16 @@ InstalledComponentsStore = StoreUtils.createStore
     _store.getIn ['deletedComponents', componentId, 'configurations', configId]
 
   getConfigRow: (componentId, configId, rowId) ->
-    _store.getIn ['components', componentId, 'configurations', configId, 'rows', rowId]
+    _store.getIn ['configRows', componentId, configId, rowId], Map()
+
+  getConfigRowData: (componentId, configId, rowId) ->
+    _store.getIn ['configRowsData', componentId, configId, rowId], Map()
 
   isEditingConfig: (componentId, configId, field) ->
     _store.hasIn ['editingConfigurations', componentId, configId, field]
 
   isEditingConfigRow: (componentId, configId, rowId, field) ->
-    _store.hasIn ['editingConfigurations', componentId, configId, 'rows', rowId, field]
+    _store.hasIn ['editingConfigurationRows', componentId, configId, rowId, field]
 
   isEditingConfigData: (componentId, configId) ->
     _store.hasIn ['editingConfigData', componentId, configId]
@@ -211,7 +222,7 @@ InstalledComponentsStore = StoreUtils.createStore
     _store.getIn ['editingConfigurations', componentId, configId, field]
 
   getEditingConfigRow: (componentId, configId, rowId, field) ->
-    _store.getIn ['editingConfigurations', componentId, configId, 'rows', rowId, field]
+    _store.getIn ['editingConfigurationRows', componentId, configId, rowId, field]
 
 
   isValidEditingConfig: (componentId, configId, field) ->
@@ -253,6 +264,9 @@ InstalledComponentsStore = StoreUtils.createStore
 
   isSavingConfig: (componentId, configId, field) ->
     _store.hasIn ['savingConfigurations', componentId, configId, field]
+
+  isSavingConfigRow: (componentId, configId, rowId, field) ->
+    _store.hasIn ['savingConfigurationRows', componentId, configId, rowId, field]
 
   isSavingConfigData: (componentId, configId) ->
     _store.hasIn ['configDataSaving', componentId, configId]
@@ -390,6 +404,37 @@ Dispatcher.register (payload) ->
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_ERROR
       _store = _store.deleteIn ['configDataLoading', action.componentId, action.configId]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD
+      _store = _store.setIn ['configsDataLoading', action.componentId], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS
+      _store = _store.withMutations (store) ->
+        store = store
+          .deleteIn ['configsDataLoading', action.componentId]
+
+        i = 0
+        while i < action.configData.length
+          store = store.setIn [
+            'components', action.componentId, 'configurations', action.configData[i].id
+          ], fromJSOrdered(action.configData[i])
+          j = 0
+          while j < action.configData[i].rows.length
+            store = store.setIn [
+              'configRowsData', action.componentId, action.configData[i].id, action.configData[i].rows[j].id
+            ], fromJSOrdered(action.configData[i].rows[j].configuration)
+            store = store.setIn [
+              'configRows', action.componentId, action.configData[i].id, action.configData[i].rows[j].id
+            ], Immutable.fromJS(action.configData[i].rows[j])
+            j++
+          i++
+
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_ERROR
+      _store = _store.deleteIn ['configsDataLoading', action.componentId]
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_SAVE_START
@@ -887,5 +932,53 @@ Dispatcher.register (payload) ->
       _store = _store.setIn ['filters', 'installedComponents', action.componentType], action.filter
       InstalledComponentsStore.emitChange()
 
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_START
+      value = InstalledComponentsStore.getConfigRow(
+        action.componentId, action.configurationId, action.rowId
+      ).get action.field
+      if value == '' && action.fallbackValue
+        value = action.fallbackValue
+      _store = _store.withMutations (store) ->
+        store.setIn [
+          'editingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field
+          ]
+        ,
+          value
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_UPDATE
+      _store = _store.setIn [
+        'editingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field
+        ]
+      ,
+        action.value
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_CANCEL
+      _store = _store.deleteIn [
+        'editingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field
+      ]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_START
+      _store = _store.setIn [
+        'savingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field
+      ], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_ERROR
+      _store = _store.deleteIn [
+        'savingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field
+      ]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+          .mergeIn ['configRows', action.componentId, action.configurationId, action.rowId],
+          fromJSOrdered(action.data)
+          .deleteIn ['savingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
+          .deleteIn ['editingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
+      InstalledComponentsStore.emitChange()
 
 module.exports = InstalledComponentsStore

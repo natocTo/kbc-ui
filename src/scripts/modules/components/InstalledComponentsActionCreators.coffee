@@ -46,6 +46,30 @@ storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
     installedComponentsApi
     .updateComponentConfiguration(componentId, configId, dataToSave, changeDescription)
 
+
+storeEncodedConfigRow = (componentId, configId, rowId, dataToSave, changeDescription) ->
+  component = InstalledComponentsStore.getComponent(componentId)
+
+  if component.get('flags').includes('encrypt')
+    dataToSave = {
+      configuration: JSON.stringify(
+        removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave))
+      )
+    }
+  else
+    dataToSave = {
+      configuration: JSON.stringify(dataToSave)
+    }
+
+  if changeDescription
+    dataToSave.changeDescription = changeDescription
+  if component.get('flags').includes('encrypt')
+    installedComponentsApi
+    .updateConfigurationRowEncrypted(component.get('uri'), componentId, configId, dataToSave, changeDescription)
+  else
+    installedComponentsApi
+    .updateConfigurationRow(componentId, configId, rowId, dataToSave, changeDescription)
+
 getComponentTypeForNotification = (componentType) ->
   componentTypeNotification = ''
   if componentType != 'transformation'
@@ -136,6 +160,33 @@ module.exports =
       return Promise.resolve()
     else
       return @loadComponentConfigDataForce(componentId, configId)
+
+  loadComponentConfigsDataForce: (componentId) ->
+    dispatcher.handleViewAction(
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD
+      componentId: componentId
+    )
+    installedComponentsApi
+    .getComponentConfigurations(componentId).then (configData) ->
+      dispatcher.handleViewAction(
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS
+        componentId: componentId
+        configData: configData
+      )
+      return configData
+    .catch (error) ->
+      dispatcher.handleViewAction(
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_ERROR
+        componentId: componentId
+      )
+      throw error
+
+  loadComponentConfigsData: (componentId) ->
+    if InstalledComponentsStore.getIsConfigsDataLoaded(componentId)
+      @loadComponentConfigsDataForce(componentId)
+      return Promise.resolve()
+    else
+      return @loadComponentConfigsDataForce(componentId)
 
   saveComponentRawConfigData: (componentId, configId) ->
     dispatcher.handleViewAction(
@@ -787,6 +838,71 @@ module.exports =
       componentType: componentType
       filter: query
     )
+
+  startConfigurationRowEdit: (componentId, configurationId, rowId, field, fallbackValue) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_START
+      componentId: componentId
+      configurationId: configurationId
+      rowId: rowId
+      fallbackValue: fallbackValue
+      field: field
+
+  updateEditingConfigurationRow: (componentId, configurationId, rowId, field, newValue) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_UPDATE
+      configurationId: configurationId
+      componentId: componentId
+      rowId: rowId
+      field: field
+      value: newValue
+
+  cancelConfigurationRowEdit: (componentId, configurationId, rowId, field) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_CANCEL
+      componentId: componentId
+      configurationId: configurationId
+      rowId: rowId
+      field: field
+
+  saveConfigurationRowEdit: (componentId, configurationId, rowId, field) ->
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_START
+      componentId: componentId
+      configurationId: configurationId
+      rowId: rowId
+      field: field
+
+    newValue = InstalledComponentsStore.getEditingConfigRow(componentId, configurationId, rowId, field)
+    if (field == 'configuration')
+      data = newValue
+      data.changeDescription = 'Update configuration'
+      calledFunction = storeEncodedConfigRow
+    else
+      data = {}
+      data.changeDescription = "Update #{field}"
+      data[field] = newValue
+      calledFunction = installedComponentsApi.updateConfigurationRow
+
+    calledFunction(componentId, configurationId, rowId, data)
+    .then (response) ->
+      VersionActionCreators.loadVersionsForce(componentId, configurationId)
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS
+        componentId: componentId
+        configurationId: configurationId
+        rowId: rowId
+        field: field
+        data: response
+    .catch (e) ->
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_ERROR
+        componentId: componentId
+        configurationId: configurationId
+        rowId: rowId
+        field: field
+        error: e
+      throw e
 
   ###
   updateEditComponentConfigData: (componentId, configId, newData) ->

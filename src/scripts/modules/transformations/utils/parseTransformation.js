@@ -1,8 +1,14 @@
 export default function(rowConfig) {
-  var transformationConfig = rowConfig.configuration;
+  // deep cloning hack
+  var transformationConfig = JSON.parse(JSON.stringify(rowConfig.configuration));
 
   // force propagate id
   transformationConfig.id = rowConfig.id;
+
+  // take name from parent if not empty
+  if (rowConfig.name && rowConfig.name !== '') {
+    transformationConfig.name = rowConfig.name;
+  }
 
   // inject missing defaults
   if (!transformationConfig.phase) {
