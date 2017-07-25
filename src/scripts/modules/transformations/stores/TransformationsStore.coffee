@@ -121,6 +121,8 @@ TransformationsStore = StoreUtils.createStore
 
   getTransformationEditingIsValid: (bucketId, transformationId) ->
     transformation = @getTransformation(bucketId, transformationId)
+    if (!transformation)
+      return
     if ['redshift', 'mysql', 'snowflake'].indexOf(transformation.get('backend')) >= 0
       queriesString = _store.getIn([
           'editingTransformationsFields'

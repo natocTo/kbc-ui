@@ -6,6 +6,7 @@ React = require 'react'
 ConfigurationCopiedNotification = require('../components/react/components/ConfigurationCopiedNotification').default
 
 transformationsApi = require './TransformationsApiAdapter'
+installedComponentsApi = require '../components/InstalledComponentsApi'
 TransformationBucketsStore = require './stores/TransformationBucketsStore'
 TransformationsStore = require './stores/TransformationsStore'
 InstalledComponentsActionCreators = require '../components/InstalledComponentsActionCreators'
@@ -62,12 +63,23 @@ module.exports =
       type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE
       bucketId: bucketId
 
-    transformationsApi
-    .deleteTransformationBucket(bucketId)
+    dispatcher.handleViewAction
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_START
+      componentId: 'transformation'
+      configurationId: bucketId
+      transition: false
+
+    installedComponentsApi.deleteConfiguration('transformation', bucketId)
     .then ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_SUCCESS
         bucketId: bucketId
+
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_SUCCESS
+        componentId: 'transformation'
+        configurationId: bucketId
+        transition: false
 
       ApplicationActionCreators.sendNotification
         message: React.createClass
@@ -91,6 +103,13 @@ module.exports =
       dispatcher.handleViewAction
         type: constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_ERROR
         bucketId: bucketId
+      dispatcher.handleViewAction
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ERROR
+        componentId: 'transformation'
+        configurationId: configurationId
+        transition: false
+        error: e
+
       throw e
 
   restoreTransformationBucket: (bucket) ->
@@ -108,7 +127,7 @@ module.exports =
         type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_SUCCESS
         bucketId: bucketId
 
-      actions.loadTransformationBucketsForce()
+      InstalledComponentsActionCreators.loadComponentsForce()
       .then (response) ->
         ApplicationActionCreators.sendNotification
           message: React.createClass
