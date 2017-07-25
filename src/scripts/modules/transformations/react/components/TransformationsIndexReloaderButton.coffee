@@ -3,6 +3,7 @@ React = require 'react'
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 
 TransformationActionCreators = require '../../ActionCreators'
+InstalledComponentsActionCreators = require '../../../components/InstalledComponentsActionCreators'
 TransformationBucketsStore = require '../../stores/TransformationBucketsStore'
 RefreshIcon = React.createFactory(require('kbc-react-components').RefreshIcon)
 {Loader} = require 'kbc-react-components'
@@ -21,7 +22,7 @@ TransformationsIndexReloaderButton = React.createClass
     isLoading: TransformationBucketsStore.getIsLoading()
 
   _handleRefreshClick: (e) ->
-    TransformationActionCreators.loadTransformationBucketsForce()
+    InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
 
   render: ->
     if @props.allowRefresh
