@@ -47,4 +47,4 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
           onClick: @_handleCreate
           disabled: @state.isSaving || !@state.isValid
         ,
-          'Save'
+          'Create Query'

@@ -69,8 +69,6 @@ module.exports = React.createClass
             bsStyle: "success"
             onClick: @_handleClickAddButton
             disabled: @props.disabled || @props.input.trim() == ''
-          ,
-            React.DOM.i {className: "kbc-icon-plus"}
 
   render: ->
     React.DOM.div {},

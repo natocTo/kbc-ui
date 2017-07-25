@@ -190,7 +190,7 @@ module.exports = React.createClass
       onClick: =>
         @_updateLocalState(['newTable', 'show'], true)
       i className: 'kbc-icon-plus'
-      'Add Table'
+      'New Table'
 
   _renderHeaderRow: ->
     div className: 'tr',

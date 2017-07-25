@@ -64,7 +64,7 @@ module.exports = React.createClass
                 className: 'btn btn-success'
               ,
                 i className: 'kbc-icon-plus'
-                ' Add Query'
+                'New Query'
         if !@state.hasCredentials
           div className: 'row component-empty-state text-center',
             p null,
@@ -100,7 +100,7 @@ module.exports = React.createClass
               className: 'btn btn-success'
             ,
               i className: 'kbc-icon-plus'
-              ' Add Query'
+              'New Query'
       div className: 'col-md-3 kbc-main-sidebar',
         div className: 'kbc-buttons kbc-text-light',
           React.createElement ComponentMetadata,

@@ -80,7 +80,7 @@ export default React.createClass({
 
           <Modal.Footer>
             <ConfirmButtons
-              saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
+              saveLabel={this.props.mode === MODE_CREATE ? 'Create Input' : 'Save'}
               isSaving={this.state.isSaving}
               onCancel={this.handleCancel}
               onSave={this.handleSave}
@@ -104,7 +104,7 @@ export default React.createClass({
     } else {
       return (
         <Button bsStyle="success" onClick={this.open}>
-          <i className="kbc-icon-plus" />Add Input
+          <i className="kbc-icon-plus" />New Input
         </Button>
       );
     }

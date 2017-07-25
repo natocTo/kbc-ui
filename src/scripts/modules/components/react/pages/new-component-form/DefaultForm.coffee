@@ -92,7 +92,7 @@ module.exports = React.createClass
             disabled: !(@props.isValid and @_isLicenseAgreed()) || @props.isSaving
             onClick: @props.onSave
           ,
-            'Create'
+            'Create Configuration'
 
   _renderAppVendorInfo: ->
     AppVendorInfo

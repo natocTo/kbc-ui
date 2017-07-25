@@ -51,7 +51,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'link',
-      label: 'Add transformation'
+      label: ' New Transformation'
     };
   },
 
@@ -97,7 +97,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.state.data.get('isSaving')}
             isDisabled={!this.isValid()}
-            saveLabel="Create"
+            saveLabel="Create Transformation"
             onCancel={this.close}
             onSave={this.handleCreate}
             />

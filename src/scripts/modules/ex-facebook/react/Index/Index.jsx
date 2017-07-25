@@ -329,7 +329,7 @@ export default function(COMPONENT_ID) {
         <button
           className="btn btn-success"
           onClick={this.showQueryModal.bind(this, null)}>
-          Add Query
+          <i className="kbc-icon-plus"/>New Query
         </button>
       );
     },

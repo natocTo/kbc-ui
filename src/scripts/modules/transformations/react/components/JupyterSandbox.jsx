@@ -91,8 +91,8 @@ var JupyterSandbox = React.createClass({
             className="btn btn-link"
             onClick={this.openModal}
           >
-            <i className="fa fa-fw fa-plus"/>
-            &nbsp;Create sandbox
+            <i className="kbc-icon-plus"/>
+            New Sandbox
           </button>
         </span>
       );

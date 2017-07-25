@@ -122,7 +122,7 @@ export default React.createClass({
     return (
       <div>
         <a onClick={this.openFileSelectorModal}>
-          <span className="btn btn-success">Add File</span>
+          <span className="btn btn-success"> <i className="kbc-icon-plus"/>New file</span>
         </a>
         <FileSelectorModal
           configId={this.state.configId}
@@ -280,7 +280,7 @@ export default React.createClass({
     const data = forceData || this.state.localState.get('selectedDropboxFiles');
     if (hasSelectedDropboxFiles) {
       const localState = data.map((dropboxFile) => {
-        changeDescription = `Add file ${dropboxFile.name}`;
+        changeDescription = `Create file ${dropboxFile.name}`;
         const output = dropboxFile.manualInsert ? dropboxFile.name : string.sanitizeKbcTableIdString(getDestinationName(dropboxFile.name));
         return {
           bytes: dropboxFile.bytes,

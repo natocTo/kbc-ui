@@ -93,7 +93,7 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            saveLabel="Save"
+            saveLabel="Create file"
             isSaving={this.props.isSaving}
             onCancel={this.handleCancelFunction}
             onSave={this.handleSaveFunction}

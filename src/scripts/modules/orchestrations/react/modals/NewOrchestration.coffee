@@ -56,7 +56,7 @@ NewOrchestration = React.createClass
           React.createElement ConfirmButtons,
             isSaving: @state.isLoading
             isDisabled: !@state.isValid
-            saveLabel: 'Create'
+            saveLabel: 'Create Orchestration'
             onCancel: @close
             onSave: @_handleCreate
 
@@ -66,7 +66,7 @@ NewOrchestration = React.createClass
       bsStyle: 'success'
     ,
       i className: 'kbc-icon-plus'
-      'Add Orchestration'
+      'New Orchestration'
 
   _handleSubmit: (e) ->
     e.preventDefault()

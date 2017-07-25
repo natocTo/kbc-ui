@@ -72,7 +72,7 @@ module.exports = React.createClass
           ConfirmButtons
             isSaving: @state.isLoading
             isDisabled: !@_isValid()
-            saveLabel: 'Create'
+            saveLabel: 'Create Bucket'
             onCancel: @close
             onSave: @_handleCreate
 
@@ -82,7 +82,6 @@ module.exports = React.createClass
       bsStyle: 'success'
     ,
       i className: 'kbc-icon-plus'
-      ' '
       @props.label
 
   _handleSubmit: (e) ->

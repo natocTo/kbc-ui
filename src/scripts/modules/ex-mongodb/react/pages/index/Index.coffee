@@ -70,7 +70,7 @@ module.exports = (componentId) ->
                   className: 'btn btn-success'
                 ,
                   i className: 'kbc-icon-plus'
-                  ' Add Export'
+                  'New Export'
           if !@state.hasCredentials
             div className: 'row component-empty-state text-center',
               p null,
@@ -107,7 +107,7 @@ module.exports = (componentId) ->
                 className: 'btn btn-success'
               ,
                 i className: 'kbc-icon-plus'
-                ' Add Export'
+                'New Export'
         div className: 'col-md-3 kbc-main-sidebar',
           div className: 'kbc-buttons kbc-text-light',
             React.createElement ComponentMetadata,

@@ -118,7 +118,7 @@ module.exports = React.createClass
           div className: "text-center",
             AddComponentConfigurationButton
               disabled: false
-              label: "Create New Configuration"
+              label: "New Configuration"
               component: state.component
 
   _openSupportModal: (e) ->

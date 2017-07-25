@@ -248,7 +248,7 @@ export default React.createClass({
         to={COMPONENT_ID + '-new-query'}
         params={{config: this.state.configId}}
         className="btn btn-success">
-        Add Query
+        <i className="kbc-icon-plus"/>New Query
       </Link>
     );
   },

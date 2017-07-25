@@ -11,7 +11,7 @@ module.exports = React.createClass
 
   getDefaultProps: ->
     {
-      label: "Add Bucket"
+      label: "New Bucket"
     }
 
   render: ->

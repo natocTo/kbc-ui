@@ -23,7 +23,7 @@ module.exports = React.createClass
     showModal: false
 
   getDefaultProps: ->
-    label: 'Add Configuration'
+    label: 'New Configuration'
 
   close: ->
     @setState showModal: false

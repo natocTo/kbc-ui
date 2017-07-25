@@ -178,7 +178,8 @@ export default React.createClass({
       <button
         className="btn btn-success"
         onClick={this.showSheetsManagerModal}>
-        Add Sheet
+        <i className="kbc-icon-plus"/>
+        New Sheet
       </button>
     );
   },
