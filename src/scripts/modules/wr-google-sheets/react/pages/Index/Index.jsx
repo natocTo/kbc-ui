@@ -68,7 +68,7 @@ export default function(COMPONENT_ID) {
                   <div className="col-sm-4 kbc-buttons">
                     <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
                       <i className="kbc-icon-plus"/>
-                      New Table
+                      New Sheet
                     </Button>
                   </div>
                   : null
