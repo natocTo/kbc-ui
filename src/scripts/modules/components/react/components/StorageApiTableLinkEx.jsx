@@ -283,7 +283,7 @@ export default React.createClass({
     });
     const component = this;
     return storageApi
-    .exportTable(this.props.tableId, {limit: 10})
+    .tableDataPreview(this.props.tableId, {limit: 10})
     .then( (csv) => {
       component.setState({
         loadingPreview: false,

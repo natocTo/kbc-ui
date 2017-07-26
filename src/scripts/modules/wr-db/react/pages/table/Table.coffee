@@ -108,7 +108,7 @@ templateFn = (componentId) ->
     tableId = RoutesStore.getCurrentRouteParam('tableId')
     component = @
     storageApi
-    .exportTable tableId,
+    .tableDataPreview tableId,
       limit: 10
     .then (csv) ->
       component.setState
