@@ -15,8 +15,9 @@ WizardStore = require('../../modules/try-mode/stores/WizardStore').default
 CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')
 PoweredByKeboola = React.createFactory(require './PoweredByKeboola')
+classnames = require('classnames')
 
-{div} = React.DOM
+{div, a} = React.DOM
 
 require '../../../styles/app.less'
 
@@ -36,13 +37,19 @@ App = React.createClass
     xsrf: ApplicationStore.getXsrfToken()
     canCreateProject: ApplicationStore.getCanCreateProject()
     canManageApps: ApplicationStore.getKbcVars().get 'canManageApps'
+    projectHasTryModeOn: ApplicationStore.getKbcVars().get 'projectHasTryModeOn'
     homeUrl: ApplicationStore.getUrlTemplates().get 'home'
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
   render: ->
-    mainDivClassName = ''
-    if ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo')
-      mainDivClassName = 'snowflake'
-    div className: mainDivClassName,
+    div className: classnames(
+      snowflake: ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo'),
+      'try-mode': @state.projectHasTryModeOn == 1
+    ),
+      if @state.projectHasTryModeOn == 1
+        div className: 'try-status-bar',
+          'Try mode is on '
+          a href: '#',
+            'Disable Try mode'
       PageTitle()
       Header
         homeUrl: @state.homeUrl
