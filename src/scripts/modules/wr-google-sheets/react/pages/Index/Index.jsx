@@ -93,7 +93,7 @@ export default function(COMPONENT_ID) {
             <ul className="nav nav-stacked">
               <li className={!!this.invalidToRun() ? 'disabled' : null}>
                 <RunComponentButton
-                  title="Upload"
+                  title="Run"
                   component={COMPONENT_ID}
                   mode="link"
                   runParams={this.runParams()}
