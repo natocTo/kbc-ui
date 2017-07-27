@@ -58,48 +58,47 @@ export default React.createClass({
   render() {
     return (
       <div className="container-fluid">
-        <div className="kbc-main-content try-desk-container">
-          {this.state.projectHasTryModeOn === 1 &&
-          <div className="try-desk">
-
-            <h2>Welcome to Keboola Connection</h2>
-            <h1>Try Mode!</h1>
-            <div className="row">
-              <div className="col-xs-5">
-                <p>
-                  Here you can learn everything you need to know about Keboola Connection before you actually start
-                  using
-                  it.
-                  <br/>
-                  <br/>
-                  The following lessons are designed to walk you through the basic steps of creating a project.
-                  <br/>
-                  <br/>
-                  Feel free to switch Try Mode off at any time. You can always bring it back by going to <a
-                    className="try-link" href="user-settings">Settings
-                  > Try Mode.</a>
-                </p>
-              </div>
-              <div className="col-xs-5">
-                <ul>
-                  {Object.keys(lessons).map((lesson, key) => {
-                    return (
-                        <li>
-                          <a className="try-lesson-link" href="#" onClick={
+        {this.state.projectHasTryModeOn === 1 &&
+          <div className="kbc-main-content try-desk-container">
+            <div className="try-desk">
+              <h2>Welcome to Keboola Connection</h2>
+              <h1>Try Mode!</h1>
+              <div className="row">
+                <div className="col-xs-5">
+                  <p>
+                    Here you can learn everything you need to know about Keboola Connection before you actually start
+                    using
+                    it.
+                    <br/>
+                    <br/>
+                    The following lessons are designed to walk you through the basic steps of creating a project.
+                    <br/>
+                    <br/>
+                    Feel free to switch Try Mode off at any time. You can always bring it back by going to <a
+                      className="try-link" href="user-settings">Settings
+                    > Try Mode.</a>
+                  </p>
+                </div>
+                <div className="col-xs-5">
+                  <ul>
+                    {Object.keys(lessons).map((lesson, key) => {
+                      return (
+                          <li>
+                            <a className="try-lesson-link" href="#" onClick={
                       (e) => {
                         e.preventDefault();
                         this.openLessonModal(key + 1);
                       }
                   }>{key + 1}. Lesson - {lessons[key + 1].title}</a>
-                        </li>
-                    );
-                  })}
-                </ul>
+                          </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-          }
-        </div>
+        }
         <div className="kbc-main-content">
         <Expiration expires={this.state.expires} />
         <LimitsOverQuota limits={this.state.limitsOverQuota}/>
