@@ -143,7 +143,7 @@
         "backdrop": false,
         "title": "Lesson 2 - Composition",
         "link": "home",
-        "isNavigationVisible": true,
+        "isNavigationVisible": false,
         "text": "Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage.",
         "media": "",
         "mediaType": ""
