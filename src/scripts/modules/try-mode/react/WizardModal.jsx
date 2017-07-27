@@ -25,9 +25,11 @@ export default React.createClass({
         <Modal show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
                className={'try-wizard try-wizard-' + this.getStepPosition()}>
           <Modal.Header closeButton>
-            <Modal.Title>
-              {this.getModalTitle()}
-            </Modal.Title>
+              { this.getStepPosition() === 'center' ? (
+                  this.getModalTitleExtended()
+              ) : (
+                  this.getModalTitle()
+              )}
           </Modal.Header>
           <Modal.Body>
             <div className="row">
@@ -44,7 +46,7 @@ export default React.createClass({
                   }, this).map((step) => {
                     if (this.isNavigationVisible()) {
                       return (
-                        <ListGroupItem className={this.getStepState(step) + ' try-navigation-item'}>
+                        <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
                           <span>
                             {step.id}. {step.title}
                           </span>
@@ -88,6 +90,9 @@ export default React.createClass({
   getStepsCount() {
     return this.getLessonSteps().length;
   },
+  getStepId() {
+    return this.getLessonSteps()[this.getActiveStep()].id;
+  },
   getStepPosition() {
     return this.getLessonSteps()[this.getActiveStep()].position;
   },
@@ -113,16 +118,18 @@ export default React.createClass({
     return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
   },
   getModalTitle() {
-    let stepName = ((this.getActiveStep() === this.getStepsCount() -  1) ^ (this.getActiveStep() > 0)) ? ' > ' + this.getStepTitle() : '';
-    return ('Lesson ' + this.props.lesson + ' - ' + this.getLessonTitle() + stepName);
+    return (<Modal.Title>{this.getLessonId() + '.' + this.getStepId() + ' ' + this.getStepTitle()}</Modal.Title>);
+  },
+  getModalTitleExtended() {
+    return (<div><h2>Lesson  {this.getLessonId()}</h2><h1>{this.getLessonTitle()}</h1></div>);
   },
   getStepState(step) {
-    let stepState = 'passed';
+    let stepState = 'try-navigation-step-passed';
     if (this.getActiveStep() < step.id - 1) {
       stepState = '';
     }
     if (this.getActiveStep() === step.id - 1) {
-      stepState = 'active';
+      stepState = 'try-navigation-step-active';
     }
     return stepState;
   },
@@ -177,6 +184,8 @@ export default React.createClass({
       }, () => {
         this.goToSubpage();
       });
+    } else {
+      this.closeLessonModal();
     }
   },
   increaseStep() {

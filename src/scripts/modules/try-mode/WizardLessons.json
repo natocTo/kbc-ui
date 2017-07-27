@@ -1,5 +1,6 @@
 {
   "1": {
+    "id": 1,
     "title": "Basic Overview",
     "steps": [
       {
@@ -83,6 +84,7 @@
     ]
   },
   "2": {
+    "id": 2,
     "title": "Loading Data",
     "steps": [
       {
@@ -159,6 +161,7 @@
     ]
   },
   "3": {
+    "id": 3,
     "title": "Manipulating Data",
     "steps": [
       {
@@ -174,6 +177,7 @@
     ]
   },
   "4": {
+    "id": 4,
     "title": "Visualizing Results",
     "steps": [
       {
@@ -190,6 +194,7 @@
     ]
   },
   "5": {
+    "id": 5,
     "title": "Project Automation",
     "steps": [
       {

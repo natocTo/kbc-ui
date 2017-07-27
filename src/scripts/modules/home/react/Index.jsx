@@ -56,40 +56,51 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container-fluid kbc-main-content">
-        <Expiration expires={this.state.expires} />
-        <Deprecation components={this.state.installedComponents} />
-        <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-        <div className="jumbotron try-jumbotron">
-          <div className="well">
-            <h1>Welcome to Keboola Connection Try Mode!</h1>
-            <div>
-              <p>
-                Here you can learn everything you need to know about Keboola Connection before you actually start using
-                it. The following lessons are designed to walk you through the basic steps of creating a project.
-                <br/>
-                Feel free to switch Try Mode off at any time. You can always bring it back by going to <a href="#">Settings > Try Mode.</a>
-              </p>
-              <ul>
-                <li>
-                  Choose the lesson you want to take:
-                </li>
-              {Object.keys(lessons).map((lesson, key) => {
-                return (
-                  <li>
-                    <a href="#" onClick={
+      <div className="container-fluid">
+        <div className="kbc-main-content try-desk-container">
+          <div className="try-desk">
+
+            <h2>Welcome to Keboola Connection</h2>
+            <h1>Try Mode!</h1>
+            <div className="row">
+              <div className="col-xs-5">
+                <p>
+                  Here you can learn everything you need to know about Keboola Connection before you actually start
+                  using
+                  it.
+                  <br/>
+                  <br/>
+                  The following lessons are designed to walk you through the basic steps of creating a project.
+                  <br/>
+                  <br/>
+                  Feel free to switch Try Mode off at any time. You can always bring it back by going to <a className="try-link" href="#">Settings
+                  > Try Mode.</a>
+                </p>
+              </div>
+              <div className="col-xs-5">
+                <ul>
+                  {Object.keys(lessons).map((lesson, key) => {
+                    return (
+                        <li>
+                          <a className="try-lesson-link" href="#" onClick={
                       (e) => {
                         e.preventDefault();
                         this.openLessonModal(key + 1);
                       }
                   }>{key + 1}. Lesson - {lessons[key + 1].title}</a>
-                  </li>
-                );
-              })}
-              </ul>
-            </div>
+                        </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              </div>
+
           </div>
         </div>
+        <div className="kbc-main-content">
+        <Expiration expires={this.state.expires} />
+        <LimitsOverQuota limits={this.state.limitsOverQuota}/>
+        <Deprecation components={this.state.installedComponents} />
         <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
           <div className="tbody">
             <div className="tr">
@@ -106,6 +117,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
+      </div>
       </div>
     );
   }

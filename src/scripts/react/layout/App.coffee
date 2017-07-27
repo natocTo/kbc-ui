@@ -17,7 +17,7 @@ UserLinks = React.createFactory(require './UserLinks')
 PoweredByKeboola = React.createFactory(require './PoweredByKeboola')
 classnames = require('classnames')
 
-{div, a} = React.DOM
+{div, a, i, p} = React.DOM
 
 require '../../../styles/app.less'
 
@@ -47,9 +47,11 @@ App = React.createClass
     ),
       if @state.projectHasTryModeOn == 1
         div className: 'try-status-bar',
-          'Try mode is on '
+          p null,
+            'Try mode — learn everything you need to know about Keboola Connection'
           a href: '#',
-            'Disable Try mode'
+            'Disable Try mode \xa0',
+            i className: 'fa fa-times'
       PageTitle()
       Header
         homeUrl: @state.homeUrl
@@ -82,6 +84,7 @@ App = React.createClass
               LoadingPage()
             else
               RouteHandler()
-            Wizard()
+            if @state.projectHasTryModeOn == 1
+              Wizard()
 
 module.exports = App
