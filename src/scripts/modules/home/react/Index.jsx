@@ -46,7 +46,8 @@ export default React.createClass({
       tokens: tokenStats,
       projectId: currentProject.get('id'),
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
-      expires: ApplicationStore.getCurrentProject().get('expires')
+      expires: ApplicationStore.getCurrentProject().get('expires'),
+      projectHasTryModeOn: ApplicationStore.getKbcVars().get('projectHasTryModeOn')
     };
   },
 
@@ -58,6 +59,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content try-desk-container">
+          {this.state.projectHasTryModeOn === 1 &&
           <div className="try-desk">
 
             <h2>Welcome to Keboola Connection</h2>
@@ -73,7 +75,8 @@ export default React.createClass({
                   The following lessons are designed to walk you through the basic steps of creating a project.
                   <br/>
                   <br/>
-                  Feel free to switch Try Mode off at any time. You can always bring it back by going to <a className="try-link" href="#">Settings
+                  Feel free to switch Try Mode off at any time. You can always bring it back by going to <a
+                    className="try-link" href="user-settings">Settings
                   > Try Mode.</a>
                 </p>
               </div>
@@ -93,9 +96,9 @@ export default React.createClass({
                   })}
                 </ul>
               </div>
-              </div>
-
+            </div>
           </div>
+          }
         </div>
         <div className="kbc-main-content">
         <Expiration expires={this.state.expires} />
