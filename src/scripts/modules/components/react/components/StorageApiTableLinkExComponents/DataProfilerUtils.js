@@ -44,7 +44,7 @@ export function fetchProfilerData(tableId) {
       const okJob = _.find(jobs, j => j.status === 'success');
       const runningJob = _.find(jobs, j => j.status !== 'success');
 
-      return storageApi.exportTable(resultsTableId).then((data) =>{
+      return storageApi.tableDataPreview(resultsTableId).then((data) =>{
         const analysis = {
           okJob: okJob,
           runningJob: runningJob,

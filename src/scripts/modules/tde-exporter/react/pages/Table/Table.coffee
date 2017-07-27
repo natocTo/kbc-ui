@@ -45,7 +45,7 @@ module.exports = React.createClass
 
     component = @
     storageApi
-    .exportTable tableId,
+    .tableDataPreview tableId,
       limit: 10
     .then (csv) ->
       component.setState

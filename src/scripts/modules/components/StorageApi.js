@@ -84,14 +84,14 @@ var storageApi = {
   },
 
   /*
-    Returns parsed CSV info plain arrays
-    [
-      [] - row 1
-      [] - row 2
-    ]
+   Returns parsed CSV info plain arrays
+   [
+   [] - row 1
+   [] - row 2
+   ]
    */
-  exportTable: function(tableId, params) {
-    return createRequest('GET', 'tables/' + tableId + '/export').query(params).promise().then(function(response) {
+  tableDataPreview: function(tableId, params) {
+    return createRequest('GET', 'tables/' + tableId + '/data-preview').query(params).promise().then(function(response) {
       return parse(response.text);
     });
   },
