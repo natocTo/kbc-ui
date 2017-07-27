@@ -5,7 +5,7 @@ wrDbProvStore = require '../provisioning/stores/WrDbCredentialsStore'
 provisioningActions = require '../provisioning/ActionCreators'
 _ = require 'underscore'
 OLD_WR_REDSHIFT_COMPONENT_ID = 'wr-db-redshift'
-NEW_WR_REDSHIFT_COMPONENT_ID = 'keboola.wr-redshift-v2'
+NEW_WR_REDSHIFT_COMPONENT_ID = ['keboola.wr-redshift-v2', 'keboola.wr-qlik', 'keboola.wr-looker']
 WR_SNOWFLAKE_COMPONENT_ID = 'keboola.wr-db-snowflake'
 
 
@@ -16,7 +16,7 @@ getDriverAndPermission = (driverParam, permissionParam, componentId) ->
     driver = 'wrdb'
   if componentId == OLD_WR_REDSHIFT_COMPONENT_ID
     driver = 'redshift'
-  if componentId == NEW_WR_REDSHIFT_COMPONENT_ID
+  if componentId in NEW_WR_REDSHIFT_COMPONENT_ID
     driver = 'redshift-workspace'
     permission = 'writer'
   if componentId == WR_SNOWFLAKE_COMPONENT_ID
