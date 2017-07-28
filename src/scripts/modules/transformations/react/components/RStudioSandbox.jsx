@@ -42,13 +42,12 @@ var RStudioSandbox = React.createClass({
     );
   },
   _renderControlButtons: function() {
-    const connectLink = 'http://' + this.state.credentials.get('hostname') + ':' + this.state.credentials.get('port');
     if (this.state.credentials.get('id')) {
       return (
         <div>
           <div>
             <a
-              href={connectLink}
+              href={this._connectLink(this.state.credentials)}
               className="btn btn-link"
               target="_blank"
               disabled={this.state.pendingActions.get('drop')}
@@ -98,6 +97,11 @@ var RStudioSandbox = React.createClass({
       );
     }
   },
+
+  _connectLink(credentials) {
+    return (credentials.get('hasHttps') ? 'https://' : 'http://') + credentials.get('hostname') + ':' + credentials.get('port');
+  },
+
   render: function() {
     return (
       <div className="row">
