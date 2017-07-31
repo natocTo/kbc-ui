@@ -6,6 +6,8 @@ import MetadataStore from '../../stores/MetadataStore';
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import MetadataActionCreators from '../../MetadataActionCreators';
 
+require('./MetadataEditField.less');
+
 export default React.createClass({
 
   displayName: 'MetadataEditField',
@@ -81,16 +83,19 @@ export default React.createClass({
   },
 
   render() {
-    return React.createElement(this.props.editElement, {
-      text: (this.state.isEditing) ? this.state.editValue : this.state.value,
-      placeholder: this.props.placeholder,
-      tooltipPlacement: this.props.tooltipPlacement,
-      isSaving: this.state.isSaving,
-      isEditing: this.state.isEditing,
-      isValid: this.state.isValid,
-      onEditStart: this._handleEditStart,
-      onEditChange: this._handleEditChange,
-      onEditSubmit: this._handleEditSubmit
-    });
+    return (
+        React.createElement(this.props.editElement, {
+          text: (this.state.isEditing) ? this.state.editValue : this.state.value,
+          placeholder: this.props.placeholder,
+          tooltipPlacement: this.props.tooltipPlacement,
+          isSaving: this.state.isSaving,
+          isEditing: this.state.isEditing,
+          isValid: this.state.isValid,
+          onEditStart: this._handleEditStart,
+          onEditChange: this._handleEditChange,
+          onEditSubmit: this._handleEditSubmit,
+          onEditCancel: this._handleEditCancel
+        })
+    );
   }
 });

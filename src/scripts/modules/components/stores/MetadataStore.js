@@ -75,7 +75,7 @@ var MetadataStore = StoreUtils.createStore({
     if (metadata) {
       return metadata.get('value');
     }
-    return false;
+    return '';
   },
 
   getEditingMetadataValue: function(objectType, objectId, metadataKey) {

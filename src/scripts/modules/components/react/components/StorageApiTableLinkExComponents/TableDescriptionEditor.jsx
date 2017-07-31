@@ -17,12 +17,16 @@ export default React.createClass({
   },
 
   render() {
-    return (<MetadataEditField
-      objectType="table"
-      objectId={this.props.tableId}
-      metadataKey="KBC.description"
-      editElement={InlineEditArea}
-      placeholder={this.props.placeholder}
-    />);
+    return (
+      <div className="kbc-metadata-description">
+        <MetadataEditField
+          objectType="table"
+          objectId={this.props.tableId}
+          metadataKey="KBC.description"
+          editElement={InlineEditArea}
+          placeholder={this.props.placeholder}
+        />
+      </div>
+    );
   }
 });
