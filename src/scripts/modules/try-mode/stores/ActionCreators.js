@@ -1,7 +1,16 @@
 import Dispatcher from '../../../Dispatcher';
 
 const ActionTypes = {
-  UPDATE_WIZARD_MODAL_STATE: 'UPDATE_WIZARD_MODAL_STATE'
+  UPDATE_WIZARD_MODAL_STATE: 'UPDATE_WIZARD_MODAL_STATE',
+  DISABLE_TRY_MODE: 'DISABLE_TRY_MODE'
+};
+
+export const disableTryMode = () => {
+  Dispatcher.handleViewAction({
+    type: ActionTypes.DISABLE_TRY_MODE,
+    projectHasTryModeOn: 0
+  });
+  return false;
 };
 
 export const hideWizardModalFn = () => {

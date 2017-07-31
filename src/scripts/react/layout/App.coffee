@@ -11,6 +11,7 @@ ProjectSelect = React.createFactory(require('./project-select/ProjectSelect').de
 PageTitle = React.createFactory(require './PageTitle')
 Wizard =  React.createFactory(require('../../modules/try-mode/react/Wizard'))
 WizardStore = require('../../modules/try-mode/stores/WizardStore').default
+DisableTryMode = require('../../modules/try-mode/stores/ActionCreators').disableTryMode
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')
@@ -49,9 +50,9 @@ App = React.createClass
         div className: 'try-status-bar',
           p null,
             'Try mode — learn everything you need to know about Keboola Connection'
-          a href: '#',
+          a onClick: DisableTryMode,
             'Disable Try mode \xa0',
-            i className: 'fa fa-times'
+            i className: 'fa fa-times',
       PageTitle()
       Header
         homeUrl: @state.homeUrl
