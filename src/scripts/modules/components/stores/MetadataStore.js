@@ -101,7 +101,7 @@ dispatcher.register(function(payload) {
     case MetadataConstants.ActionTypes.METADATA_EDIT_START:
       _store = _store.setIn(
         ['editingMetadata', action.objectType, action.objectId, action.metadataKey],
-        MetadataStore.getMetadataValue(action.objectType, action.objectId, action.metadataKey)
+        MetadataStore.getMetadataValue(action.objectType, action.objectId, 'user', action.metadataKey)
       );
       return MetadataStore.emitChange();
 
