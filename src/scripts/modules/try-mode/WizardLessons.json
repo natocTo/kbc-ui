@@ -11,7 +11,7 @@
         "link": "home",
         "isNavigationVisible": true,
         "text": "As a powerful and safe environment for working with data, Keboola Connection consists of many interconnected components. It helps you extract data from various sources, manipulate and enrich the data, write the results to visualizing tools of your choice, etc. In addition, the whole process can be fully automated.",
-        "media": "http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png",
+        "media": "kbc_scheme_light_blue.png",
         "mediaType": "img"
       },
       {
@@ -33,7 +33,7 @@
         "link": "/storage",
         "isNavigationVisible": true,
         "text": "All data you upload to your project, as well as all the tables your project creates, are stored in Storage where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.",
-        "media": "http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png",
+        "media": "kbc_scheme_light_blue.png",
         "mediaType": "img"
       },
       {
@@ -78,8 +78,8 @@
         "isNavigationVisible": false,
         "link": "home",
         "text": "Congratulations, lesson finished.",
-        "media": "",
-        "mediaType": ""
+        "media": "keboola-finished.svg",
+        "mediaType": "img"
       }
     ]
   },
@@ -95,7 +95,7 @@
         "link": "home",
         "isNavigationVisible": true,
         "text": "As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. Note: Your own projects won’t be affected by this in any way.",
-        "media": "http://keboola.asia/wp-content/uploads/2015/05/scema1-1024x724.png",
+        "media": "kbc_scheme_light_blue.png",
         "mediaType": "img"
       },{
         "id": 2,

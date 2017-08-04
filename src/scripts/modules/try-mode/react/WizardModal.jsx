@@ -1,9 +1,9 @@
 import React from 'react';
-import {Modal, Button, ListGroup, ListGroupItem, Image, ResponsiveEmbed} from 'react-bootstrap';
+import {Modal, Button, ListGroup, ListGroupItem, ResponsiveEmbed} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import lessons from '../WizardLessons.json';
-// import { Iframe } from 'react-iframe';
+import TryModeImage from './TryModeImage';
 
 export default React.createClass({
   displayName: 'WizardModal',
@@ -33,37 +33,58 @@ export default React.createClass({
           </Modal.Header>
           <Modal.Body>
             <div className="row">
-              <div className="col-md-6">
-                {this.getStepText()}
+              <div className="col-md-12">
+                <p>{this.getStepText()}</p>
                 {this.getStepMedia().length > 0 && this.getActiveStep() !== 0 &&
                   <div className="try-media">
                     {this.renderMedia()}
                   </div>
                 }
+                {this.getActiveStep() !== 0 &&
                 <ListGroup className="try-navigation">
                   {this.getLessonSteps().filter(function(step) {
                     return step.id < this.getStepsCount();
                   }, this).map((step) => {
                     if (this.isNavigationVisible()) {
                       return (
-                        <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
+                          <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
                           <span>
                             {step.id}. {step.title}
                           </span>
-                        </ListGroupItem>
+                          </ListGroupItem>
                       );
                     }
                   })}
                 </ListGroup>
+                }
+              </div>
               </div>
               {this.getStepMedia().length > 0 && this.getActiveStep() === 0 &&
-              <div className="col-md-6">
-                <div className="try-media">
-                  {this.renderMedia()}
-                </div>
-              </div>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <ListGroup className="try-navigation">
+                        {this.getLessonSteps().filter(function(step) {
+                          return step.id < this.getStepsCount();
+                        }, this).map((step) => {
+                          if (this.isNavigationVisible()) {
+                            return (
+                                <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
+                          <span>
+                            {step.id}. {step.title}
+                          </span>
+                                </ListGroupItem>
+                            );
+                          }
+                        })}
+                      </ListGroup>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="try-media">
+                        {this.renderMedia()}
+                      </div>
+                    </div>
+                  </div>
               }
-            </div>
           </Modal.Body>
           <Modal.Footer>
             {this.renderButtonPrev()}
@@ -141,7 +162,7 @@ export default React.createClass({
     }
   },
   getImageLink() {
-    return <Image src={this.getStepMedia()} responsive />;
+    return <TryModeImage imgageName={this.getStepMedia()}/>;
   },
   getVideoEmbed() {
     return (
