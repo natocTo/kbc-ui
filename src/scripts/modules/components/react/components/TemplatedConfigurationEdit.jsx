@@ -86,7 +86,7 @@ export default React.createClass({
             {this.props.isEditingString ? (
               <span>
                 <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
-                <p>JSON configuration uses <a href="https://github.com/keboola/generic-extractor">Generic extractor</a> format.</p>
+                <p>JSON configuration uses <a href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</a> format.</p>
                 <CodeMirror
                   ref="string"
                   value={this.props.editingString}
