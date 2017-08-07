@@ -33,6 +33,13 @@ StorageTablesStore = StoreUtils.createStore
   getIsLoadingTable: ->
     _store.getIn ['pendingTables', 'loading'], false
 
+  getTableMetadata: (tableId) ->
+    _store.get('tables').getIn(tableId, 'metadata')
+
+  getColumnMetadata: (tableId) ->
+    _store.get('tables').getIn(tableId, 'columnMetadata')
+
+
 Dispatcher.register (payload) ->
   action = payload.action
 
@@ -80,5 +87,6 @@ Dispatcher.register (payload) ->
     when constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR
       _store = _store.setIn ['pendingTables', 'loading'], false
       StorageTablesStore.emitChange()
+
 
 module.exports = StorageTablesStore

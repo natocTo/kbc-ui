@@ -41,7 +41,7 @@ var storageApi = {
   },
 
   getTables: function() {
-    return createRequest('GET', 'tables?include=attributes,buckets,columns').promise().then(function(response) {
+    return createRequest('GET', 'tables?include=attributes,buckets,columns,metadata,columnMetadata').promise().then(function(response) {
       return response.body;
     });
   },
@@ -125,6 +125,66 @@ var storageApi = {
     .then(function(response) {
       return response.body;
     });
+  },
+
+  saveBucketMetadata: function(bucketId, data) {
+    var payload = this.prepareMetadataPayload(data);
+    return createRequest('POST', 'buckets/' + bucketId + '/metadata').type('form').send(payload).promise()
+    .then(function(response) {
+      return response.body;
+    });
+  },
+
+  saveTableMetadata: function(tableId, data) {
+    var payload = this.prepareMetadataPayload(data);
+    return createRequest('POST', 'tables/' + tableId + '/metadata').type('form').send(payload).promise()
+    .then(function(response) {
+      return response.body;
+    });
+  },
+
+  saveColumnMetadata: function(columnId, data) {
+    var payload = this.prepareMetadataPayload(data);
+    return createRequest('POST', 'columns/' + columnId + '/metadata').type('form').send(payload).promise()
+    .then(function(response) {
+      return response.body;
+    });
+  },
+
+  saveMetadata: function(objectType, objectId, data) {
+    var payload = this.prepareMetadataPayload(data);
+    var saveUrl = this.getMetadataSaveUrl(objectType, objectId);
+    return createRequest('POST', saveUrl).type('form').send(payload).promise()
+      .then(function(response) {
+        return response.body;
+      });
+  },
+
+  getMetadataSaveUrl: function(objectType, objectId) {
+    switch (objectType) {
+      case 'bucket':
+        return 'buckets/' + objectId + '/metadata';
+      case 'table':
+        return 'tables/' + objectId + '/metadata';
+      case 'column':
+        return 'columns/' + objectId + '/metadata';
+      default:
+
+    }
+  },
+
+  prepareMetadataPayload: function(data) {
+    var metadata = [];
+    data.map(function(v, k) {
+      metadata = metadata.concat({
+        key: k,
+        value: v
+      });
+    });
+    return {
+      provider: 'user',
+      metadata: metadata
+    };
   }
 };
 

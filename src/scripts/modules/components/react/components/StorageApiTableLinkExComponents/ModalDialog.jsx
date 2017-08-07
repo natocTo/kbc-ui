@@ -4,6 +4,7 @@ import EventsTab from './EventsTab';
 import GeneralInfoTab from './GeneralInfoTab';
 import DataSampleTab from './DataSampleTab';
 import ColumnsInfoTab from './ColumnsInfoTab';
+import TableDescriptionTab from './TableDescriptionTab';
 
 import SapiTableLink from '../StorageApiTableLink';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
@@ -84,6 +85,9 @@ export default React.createClass({
         <TabPane eventKey="general" title="General Info">
           {this.renderGeneralInfo()}
         </TabPane>
+        <TabPane eventKey="description" title="Description">
+          {this.renderTableDescription()}
+        </TabPane>
         <TabPane eventKey="columns" title="Columns">
           {this.renderColumnsInfo()}
         </TabPane>
@@ -102,6 +106,16 @@ export default React.createClass({
       <GeneralInfoTab
         isLoading={this.props.isLoading}
         table={this.props.table}
+        tableExists={this.props.tableExists}
+      />
+    );
+  },
+
+  renderTableDescription() {
+    return (
+      <TableDescriptionTab
+        isLoading={this.props.isLoading}
+        tableId={this.props.tableId}
         tableExists={this.props.tableExists}
       />
     );
