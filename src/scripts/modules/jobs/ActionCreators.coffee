@@ -23,18 +23,29 @@ module.exports =
     return Promise.resolve() if JobsStore.getIsLoaded()
     @loadJobsForce(JobsStore.getOffset(), false, true)
 
+  # poll for non terminated jobs
+  reloadNotTerminatedJobs: (self) ->
+    allJobs = JobsStore.getAll()
+      .filter((job, jobId) -> !job.get('isFinished'))
+      .map((j) -> j.get('id'))
+      .toArray()
+    if allJobs.length == 0
+      return Promise.resolve()
+    query = "(id:#{allJobs.join(' OR id:')})"
+    self.loadJobsForce(0, false, true, query)
+
   reloadJobs: ->
     if JobsStore.loadJobsErrorCount() < 10
-      @loadJobsForce(0, false, true)
+      @loadJobsForce(0, false, true).then(@reloadNotTerminatedJobs(@))
 
   loadMoreJobs: ->
     offset = JobsStore.getNextOffset()
     @loadJobsForce(offset, false, false)
 
-  loadJobsForce: (offset, resetJobs, preserveCurrentOffset) ->
+  loadJobsForce: (offset, resetJobs, preserveCurrentOffset, forceQuery) ->
     actions = @
     limit = JobsStore.getLimit()
-    query = JobsStore.getQuery()
+    query = forceQuery || JobsStore.getQuery()
     dispatcher.handleViewAction type: constants.ActionTypes.JOBS_LOAD
     jobsApi
     .getJobsParametrized(query, limit, offset)
