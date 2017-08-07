@@ -23,8 +23,8 @@ module.exports =
     return Promise.resolve() if JobsStore.getIsLoaded()
     @loadJobsForce(JobsStore.getOffset(), false, true)
 
-  # poll for non terminated jobs
-  reloadNotTerminatedJobs: (self) ->
+  # poll for not finished jobs
+  reloadNotFinishedJobs: (self) ->
     allJobs = JobsStore.getAll()
       .filter((job, jobId) -> !job.get('isFinished'))
       .map((j) -> j.get('id'))
@@ -36,7 +36,7 @@ module.exports =
 
   reloadJobs: ->
     if JobsStore.loadJobsErrorCount() < 10
-      @loadJobsForce(0, false, true).then(@reloadNotTerminatedJobs(@))
+      @loadJobsForce(0, false, true).then(@reloadNotFinishedJobs(@))
 
   loadMoreJobs: ->
     offset = JobsStore.getNextOffset()
