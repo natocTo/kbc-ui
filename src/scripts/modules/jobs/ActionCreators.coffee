@@ -42,10 +42,12 @@ module.exports =
     offset = JobsStore.getNextOffset()
     @loadJobsForce(offset, false, false)
 
-  loadJobsForce: (offset, resetJobs, preserveCurrentOffset, forceQuery) ->
+  loadJobsForce: (offset, forceResetJobs, preserveCurrentOffset, forceQuery) ->
     actions = @
     limit = JobsStore.getLimit()
     query = forceQuery || JobsStore.getQuery()
+    # always do reset if there is a filter set on ui
+    resetJobs = forceResetJobs || (JobsStore.getQuery() && !forceQuery)
     dispatcher.handleViewAction type: constants.ActionTypes.JOBS_LOAD
     jobsApi
     .getJobsParametrized(query, limit, offset)
