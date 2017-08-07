@@ -32,51 +32,31 @@ export default React.createClass({
               )}
           </Modal.Header>
           <Modal.Body>
+            {this.isLastStep()}
             <div className="row">
               <div className="col-md-12">
+                {!this.isLastStep() &&
                 <p>{this.getStepText()}</p>
-                {this.getStepMedia().length > 0 && this.getActiveStep() !== 0 &&
-                  <div className="try-media">
-                    {this.renderMedia()}
+                }
+                {!this.isFirstStep() &&
+                  <div>
+                    <div className="try-media">
+                      {this.renderMedia()}
+                    </div>
+                    {this.renderNavigation()}
                   </div>
                 }
-                {this.getActiveStep() !== 0 &&
-                <ListGroup className="try-navigation">
-                  {this.getLessonSteps().filter(function(step) {
-                    return step.id < this.getStepsCount();
-                  }, this).map((step) => {
-                    if (this.isNavigationVisible()) {
-                      return (
-                          <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
-                          <span>
-                            {step.id}. {step.title}
-                          </span>
-                          </ListGroupItem>
-                      );
-                    }
-                  })}
-                </ListGroup>
+                {this.isLastStep() &&
+                <p className="try-congratulations">
+                  {this.getStepText()}
+                </p>
                 }
               </div>
-              </div>
-              {this.getStepMedia().length > 0 && this.getActiveStep() === 0 &&
+            </div>
+              {this.isFirstStep() &&
                   <div className="row">
                     <div className="col-md-6">
-                      <ListGroup className="try-navigation">
-                        {this.getLessonSteps().filter(function(step) {
-                          return step.id < this.getStepsCount();
-                        }, this).map((step) => {
-                          if (this.isNavigationVisible()) {
-                            return (
-                                <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
-                          <span>
-                            {step.id}. {step.title}
-                          </span>
-                                </ListGroupItem>
-                            );
-                          }
-                        })}
-                      </ListGroup>
+                      {this.renderNavigation()}
                     </div>
                     <div className="col-md-6">
                       <div className="try-media">
@@ -138,6 +118,12 @@ export default React.createClass({
   isNavigationVisible() {
     return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
   },
+  isFirstStep() {
+    return this.getActiveStep() === 0;
+  },
+  isLastStep() {
+    return this.getLessonSteps().length - 1 === this.getActiveStep();
+  },
   getModalTitle() {
     return (<Modal.Title>{this.getLessonId() + '.' + this.getStepId() + ' ' + this.getStepTitle()}</Modal.Title>);
   },
@@ -192,6 +178,25 @@ export default React.createClass({
     }
     return (
       <Button onClick={this.increaseStep} bsStyle="primary">{buttonText}</Button>
+    );
+  },
+  renderNavigation() {
+    return (
+        <ListGroup className="try-navigation">
+          {this.getLessonSteps().filter(function(step) {
+            return step.id < this.getStepsCount();
+          }, this).map((step) => {
+            if (this.isNavigationVisible()) {
+              return (
+                  <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
+                    <span>
+                      {step.id}. {step.title}
+                    </span>
+                  </ListGroupItem>
+              );
+            }
+          })}
+        </ListGroup>
     );
   },
   closeLessonModal() {
