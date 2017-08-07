@@ -43,7 +43,7 @@ export default React.createClass({
               <span className="kb-sapi-component-icon pull-left">
                 <img src="https://d3iz2gfan5zufq.cloudfront.net/images/cloud-services/cloudsearch32-1.png" />
               </span>
-              <h2>Try mode</h2>
+              <h2>Try Mode</h2>
               <p>Lessons and data samples</p>
             </div>
           </div>

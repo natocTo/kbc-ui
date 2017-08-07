@@ -49,9 +49,9 @@ App = React.createClass
       if @state.projectHasTryModeOn == 1
         div className: 'try-status-bar',
           p null,
-            'Try mode — learn everything you need to know about Keboola Connection'
+            'Try Mode — learn everything you need to know about Keboola Connection'
           a href: ApplicationStore.getProjectPageUrl('settings-users'),
-            'Disable Try mode \xa0',
+            'Disable Try Mode \xa0',
             i className: 'fa fa-times',
       PageTitle()
       Header

@@ -37,7 +37,7 @@ export default {
     },
     {
       name: 'try-mode',
-      title: 'Try mode',
+      title: 'Try Mode',
       defaultRouteHandler: TryMode
     },
     {
