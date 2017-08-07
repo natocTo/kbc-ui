@@ -46,8 +46,9 @@ module.exports =
     actions = @
     limit = JobsStore.getLimit()
     query = forceQuery || JobsStore.getQuery()
-    # always do reset if there is a filter set on ui
-    resetJobs = forceResetJobs || (JobsStore.getQuery() && !forceQuery)
+    # always reset jobs if showing only first page
+    isFirstPageOnly = offset == 0 && JobsStore.getAll().count() <= limit
+    resetJobs = forceResetJobs || isFirstPageOnly
     dispatcher.handleViewAction type: constants.ActionTypes.JOBS_LOAD
     jobsApi
     .getJobsParametrized(query, limit, offset)
