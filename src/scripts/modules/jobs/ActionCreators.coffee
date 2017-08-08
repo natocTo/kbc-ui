@@ -23,18 +23,32 @@ module.exports =
     return Promise.resolve() if JobsStore.getIsLoaded()
     @loadJobsForce(JobsStore.getOffset(), false, true)
 
+  # poll for not finished jobs
+  reloadNotFinishedJobs: (self) ->
+    allJobs = JobsStore.getAll()
+      .filter((job, jobId) -> !job.get('isFinished'))
+      .map((j) -> j.get('id'))
+      .toArray()
+    if allJobs.length == 0
+      return Promise.resolve()
+    query = "(id:#{allJobs.join(' OR id:')})"
+    self.loadJobsForce(0, false, true, query)
+
   reloadJobs: ->
     if JobsStore.loadJobsErrorCount() < 10
-      @loadJobsForce(0, false, true)
+      @loadJobsForce(0, false, true).then(@reloadNotFinishedJobs(@))
 
   loadMoreJobs: ->
     offset = JobsStore.getNextOffset()
     @loadJobsForce(offset, false, false)
 
-  loadJobsForce: (offset, resetJobs, preserveCurrentOffset) ->
+  loadJobsForce: (offset, forceResetJobs, preserveCurrentOffset, forceQuery) ->
     actions = @
     limit = JobsStore.getLimit()
-    query = JobsStore.getQuery()
+    query = forceQuery || JobsStore.getQuery()
+    # always reset jobs if showing only first page
+    isFirstPageOnly = offset == 0 && JobsStore.getAll().count() <= limit
+    resetJobs = forceResetJobs || (isFirstPageOnly && !forceQuery)
     dispatcher.handleViewAction type: constants.ActionTypes.JOBS_LOAD
     jobsApi
     .getJobsParametrized(query, limit, offset)
