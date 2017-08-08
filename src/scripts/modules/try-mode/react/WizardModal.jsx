@@ -22,8 +22,11 @@ export default React.createClass({
   },
   render: function() {
     return (
+        <div>
+          {this.renderFloatNext()}
         <Modal show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
                className={'try-wizard try-wizard-' + this.getStepPosition()}>
+
           <Modal.Header closeButton>
               { this.getStepPosition() === 'center' ? (
                   this.getModalTitleExtended()
@@ -71,6 +74,7 @@ export default React.createClass({
             {this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
+          </div>
     );
   },
   getActiveStep() {
@@ -156,6 +160,12 @@ export default React.createClass({
         <iframe width="100%" height="100%" src={this.getStepMedia()} allowFullScreen />
       </ResponsiveEmbed>
     );
+  },
+  renderFloatNext() {
+    let floatPoint = this.getLessonSteps()[this.getActiveStep()].floatNext;
+    if (typeof floatPoint !== 'undefined') {
+      return (<div className="try-float-next-wrapper" onClick={this.increaseStep} style={{left: floatPoint.x, top: floatPoint.y}}><div className="try-float-next">Next</div></div>);
+    }
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
