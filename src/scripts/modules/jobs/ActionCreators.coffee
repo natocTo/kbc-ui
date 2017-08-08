@@ -48,7 +48,7 @@ module.exports =
     query = forceQuery || JobsStore.getQuery()
     # always reset jobs if showing only first page
     isFirstPageOnly = offset == 0 && JobsStore.getAll().count() <= limit
-    resetJobs = forceResetJobs || isFirstPageOnly
+    resetJobs = forceResetJobs || (isFirstPageOnly && !forceQuery)
     dispatcher.handleViewAction type: constants.ActionTypes.JOBS_LOAD
     jobsApi
     .getJobsParametrized(query, limit, offset)
