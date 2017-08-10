@@ -200,7 +200,7 @@ export default React.createClass({
               return (
                   <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
                     <span>
-                      {step.id}. {step.title}
+                      {this.getLessonId()}.{step.id}. {step.title}
                     </span>
                   </ListGroupItem>
               );

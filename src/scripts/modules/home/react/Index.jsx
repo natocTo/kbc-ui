@@ -62,7 +62,7 @@ export default React.createClass({
           <div className="kbc-main-content try-desk-container">
             <div className="try-desk">
               <h2>Welcome to Keboola Connection</h2>
-              <h1>Try Mode!</h1>
+              <h1>Try Mode</h1>
               <div className="row">
                 <div className="col-xs-5">
                   <p>

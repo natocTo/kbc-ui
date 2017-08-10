@@ -264,7 +264,7 @@ a .kbcComponentIcon-3rdParty-64px {
     background-color: @color1;
     background-position: right -30px top -20px;
     background-repeat: no-repeat;
-    padding: 40px 30px;
+    padding: 40px 50px;
     color: #fff;
     min-height: 410px;
     border-radius: 5px;
@@ -276,15 +276,22 @@ a .kbcComponentIcon-3rdParty-64px {
     p {
       font-size: 14px;
       padding-top: 16px;
+      line-height: 1.5;
     }
     h1 {
-      font-size: 46px;
-      font-weight: bold;
+      font-size: 36px;
+      line-height: 40px;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 500;
+      margin-top: 0px;
     }
     h2 {
-      font-size: 46px;
-      line-height: 32px;
-      max-width: 80%
+      font-size: 36px;
+      line-height: 40px;
+      max-width: 80%;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 300;
+      margin-bottom: 0px;
     }
     ul {
       list-style: none;
@@ -292,7 +299,8 @@ a .kbcComponentIcon-3rdParty-64px {
       padding-left: 20px;
     }
     li {
-      padding: 4px 8px;
+      //padding: 4px 8px;
+      line-height: 1.5;
     }
     strong {
       font-weight: bold;
@@ -317,7 +325,13 @@ a .kbcComponentIcon-3rdParty-64px {
       float: left;
       font-size: 19px;
       line-height: 23px;
-      margin-left: 110px;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 300;
+      &:first-of-type{
+        font-weight: 500;
+        margin-left: 110px;
+
+      }
     }
     a {
       float: right;
@@ -327,9 +341,13 @@ a .kbcComponentIcon-3rdParty-64px {
         text-decoration: none;
       }
     }
+    strong{
+      font-weight: 400;
+    }
   }
 
   &-wizard {
+
     &.modal {
       .modal-content {
         border: 0;
@@ -338,12 +356,19 @@ a .kbcComponentIcon-3rdParty-64px {
         padding: 40px 40px 20px;
         color: @color1;
         border-bottom: 0;
-        h2 {
-          font-size: 36px;
-        }
+        font-family: "Gotham Rounded A", "Gotham Rounded B";
+        font-weight: 500;
         h1 {
           font-size: 36px;
-          font-weight: bold;
+          font-family: "Gotham Rounded A", "Gotham Rounded B";
+          font-weight: 500;
+          margin-top: 0px;
+        }
+        h2 {
+          font-size: 36px;
+          font-family: "Gotham Rounded A", "Gotham Rounded B";
+          font-weight: 300;
+          margin-bottom: 0;
         }
       }
       .modal-title {
@@ -353,6 +378,8 @@ a .kbcComponentIcon-3rdParty-64px {
         padding: 0 40px 20px;
         p {
           margin-bottom: 20px;
+          color: #7C8498;
+          line-height: 1.5;
         }
       }
       .modal-dialog {
@@ -394,10 +421,13 @@ a .kbcComponentIcon-3rdParty-64px {
     padding: @verticalPadding 0;
     border: 0;
     &-step {
-      padding: 8px;
+      padding: 0px;
+      padding-left: 8px;
+      line-height: 2;
       border: 0;
       font-size: 18px;
       margin-left: 24px;
+
       &-passed {
         &:before {
           left: -16px;
@@ -443,6 +473,8 @@ a .kbcComponentIcon-3rdParty-64px {
     font-size: 24px;
     color: #282d38;
     text-align: center;
+    font-family: "Gotham Rounded A", "Gotham Rounded B";
+    font-weight: 500;
   }
 
   &-float-next {
