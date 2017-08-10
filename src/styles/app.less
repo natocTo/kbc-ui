@@ -251,14 +251,11 @@ a .kbcComponentIcon-3rdParty-64px {
       margin-top: @statusBarHeight;
     }
     .kbc-main-content {
-      margin-top: @statusBarHeight/2 - 8px;
+      margin-top: @statusBarHeight + 15px;
       min-height: 86vh;
     }
     &.modal-open {
       overflow: auto !important;
-    }
-    .kbc-components-list{
-      margin-top: @statusBarHeight + 15px;
     }
   }
 
@@ -275,6 +272,10 @@ a .kbcComponentIcon-3rdParty-64px {
     &-container {
       min-height: 0 !important;
       margin-top: @statusBarHeight!important;
+
+      + .kbc-main-content{
+        margin-top: 17px;
+      }
     }
     p {
       font-size: 14px;
