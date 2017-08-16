@@ -96,6 +96,8 @@ module.exports = React.createClass
     @state.transformation.get('backend') == 'docker'
 
   render: ->
+    backend = @state.transformation.get('backend')
+    transformationType = @state.transformation.get('type')
     div className: 'container-fluid',
       div className: 'col-md-9 kbc-main-content',
           TransformationDetailStatic
@@ -142,21 +144,23 @@ module.exports = React.createClass
               isPending: @state.pendingActions.has 'save-disabled'
               onChange: @_handleActiveChange
 
-          if @state.transformation.get('backend') == 'redshift' or
-          @state.transformation.get('backend') == 'mysql' && @state.transformation.get('type') == 'simple' or
-          @state.transformation.get('backend') == 'snowflake'
+          if backend == 'mysql' && transformationType == 'simple' or
+          backend == 'docker' && transformationType in ['python', 'r'] or
+          backend in ['redshift', 'snowflake']
+
             li {},
               React.createElement CreateSandboxButton,
-                backend: @state.transformation.get("backend")
+                backend: backend,
+                transformationType: transformationType,
                 runParams: Immutable.Map
                   configBucketId: @state.bucketId
                   transformations: [@state.transformationId]
 
-          if @state.transformation.get('backend') == 'redshift' or
-              @state.transformation.get('backend') == 'mysql' && @state.transformation.get('type') == 'simple'
+          if backend == 'redshift' or
+              backend == 'mysql' && transformationType == 'simple'
             li {},
               SqlDepModal
-                backend: @state.transformation.get('backend')
+                backend: backend
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
               ,
@@ -180,4 +184,3 @@ module.exports = React.createClass
             ,
               span className: 'fa fa-question-circle fa-fw'
               ' Documentation'
-
