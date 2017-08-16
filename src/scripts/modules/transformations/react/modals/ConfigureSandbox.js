@@ -1,9 +1,11 @@
 import React, {PropTypes} from 'react';
 import ConfigureSandboxModal from './ConfigureSandboxModal';
+import ConfigureDockerSandboxModal from './ConfigureDockerSandboxModal';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import MySqlSandboxCredentialsStore from '../../../provisioning/stores/MySqlSandboxCredentialsStore';
 import RedshiftSandboxCredentialsStore from '../../../provisioning/stores/RedshiftSandboxCredentialsStore';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
+import JupyterSandboxCredentialsStore from '../../../provisioning/stores/JupyterSandboxCredentialsStore';
 import jobsApi from '../../../jobs/JobsApi';
 import actionCreators from '../../../components/InstalledComponentsActionCreators';
 
@@ -14,15 +16,17 @@ export default React.createClass({
     onHide: PropTypes.func.isRequired,
     defaultMode: PropTypes.string.isRequired,
     backend: PropTypes.string.isRequired,
+    transformationType: PropTypes.string.isRequired,
     runParams: PropTypes.object.isRequired
   },
-  mixins: [createStoreMixin(MySqlSandboxCredentialsStore, RedshiftSandboxCredentialsStore, SnowflakeSandboxCredentialsStore)],
+  mixins: [createStoreMixin(MySqlSandboxCredentialsStore, RedshiftSandboxCredentialsStore, SnowflakeSandboxCredentialsStore, JupyterSandboxCredentialsStore)],
 
   getStateFromStores() {
     return {
       mysqlCredentials: MySqlSandboxCredentialsStore.getCredentials(),
       redshiftCredentials: RedshiftSandboxCredentialsStore.getCredentials(),
-      snowflakeCredentials: SnowflakeSandboxCredentialsStore.getCredentials()
+      snowflakeCredentials: SnowflakeSandboxCredentialsStore.getCredentials(),
+      jupyterCredentials: JupyterSandboxCredentialsStore.getCredentials()
     };
   },
 
@@ -38,22 +42,37 @@ export default React.createClass({
   },
 
   render() {
-    return React.createElement(ConfigureSandboxModal, {
-      mysqlCredentials: this.state.mysqlCredentials,
-      redshiftCredentials: this.state.redshiftCredentials,
-      snowflakeCredentials: this.state.snowflakeCredentials,
-      onHide: this.handleModalClose,
-      show: this.props.show,
-      backend: this.props.backend,
-      mode: this.state.mode,
-      jobId: this.state.jobId,
-      progress: this.state.progress,
-      progressStatus: this.state.progressStatus,
-      isRunning: this.state.isRunning,
-      isCreated: this.state.isCreated,
-      onModeChange: this.handleModeChange,
-      onCreateStart: this.handleSandboxCreate
-    });
+    if (this.props.backend === 'docker') {
+      return React.createElement(ConfigureDockerSandboxModal, {
+        jupyterCredentials: this.state.jupyterCredentials,
+        transformationType: this.props.transformationType,
+        onHide: this.handleModalClose,
+        show: this.props.show,
+        jobId: this.state.jobId,
+        progress: this.state.progress,
+        progressStatus: this.state.progressStatus,
+        isRunning: this.state.isRunning,
+        isCreated: this.state.isCreated
+      });
+    } else {
+      return React.createElement(ConfigureSandboxModal, {
+        mysqlCredentials: this.state.mysqlCredentials,
+        redshiftCredentials: this.state.redshiftCredentials,
+        snowflakeCredentials: this.state.snowflakeCredentials,
+
+        onHide: this.handleModalClose,
+        show: this.props.show,
+        backend: this.props.backend,
+        mode: this.state.mode,
+        jobId: this.state.jobId,
+        progress: this.state.progress,
+        progressStatus: this.state.progressStatus,
+        isRunning: this.state.isRunning,
+        isCreated: this.state.isCreated,
+        onModeChange: this.handleModeChange,
+        onCreateStart: this.handleSandboxCreate
+      });
+    }
   },
 
   handleModeChange(e) {
