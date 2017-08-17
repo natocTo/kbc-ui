@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import ConfigureSandboxModal from './ConfigureSandboxModal';
-import ConfigureDockerSandboxModal from './ConfigureDockerSandboxModal';
+// import ConfigureDockerSandboxModal from './ConfigureDockerSandboxModal';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import MySqlSandboxCredentialsStore from '../../../provisioning/stores/MySqlSandboxCredentialsStore';
 import RedshiftSandboxCredentialsStore from '../../../provisioning/stores/RedshiftSandboxCredentialsStore';
@@ -42,37 +42,23 @@ export default React.createClass({
   },
 
   render() {
-    if (this.props.backend === 'docker') {
-      return React.createElement(ConfigureDockerSandboxModal, {
-        jupyterCredentials: this.state.jupyterCredentials,
-        transformationType: this.props.transformationType,
-        onHide: this.handleModalClose,
-        show: this.props.show,
-        jobId: this.state.jobId,
-        progress: this.state.progress,
-        progressStatus: this.state.progressStatus,
-        isRunning: this.state.isRunning,
-        isCreated: this.state.isCreated
-      });
-    } else {
-      return React.createElement(ConfigureSandboxModal, {
-        mysqlCredentials: this.state.mysqlCredentials,
-        redshiftCredentials: this.state.redshiftCredentials,
-        snowflakeCredentials: this.state.snowflakeCredentials,
-
-        onHide: this.handleModalClose,
-        show: this.props.show,
-        backend: this.props.backend,
-        mode: this.state.mode,
-        jobId: this.state.jobId,
-        progress: this.state.progress,
-        progressStatus: this.state.progressStatus,
-        isRunning: this.state.isRunning,
-        isCreated: this.state.isCreated,
-        onModeChange: this.handleModeChange,
-        onCreateStart: this.handleSandboxCreate
-      });
-    }
+    return React.createElement(ConfigureSandboxModal, {
+      mysqlCredentials: this.state.mysqlCredentials,
+      redshiftCredentials: this.state.redshiftCredentials,
+      snowflakeCredentials: this.state.snowflakeCredentials,
+      onHide: this.handleModalClose,
+      show: this.props.show,
+      backend: this.props.backend,
+      transformationType: this.props.transformationType,
+      mode: this.state.mode,
+      jobId: this.state.jobId,
+      progress: this.state.progress,
+      progressStatus: this.state.progressStatus,
+      isRunning: this.state.isRunning,
+      isCreated: this.state.isCreated,
+      onModeChange: this.handleModeChange,
+      onCreateStart: this.handleSandboxCreate
+    });
   },
 
   handleModeChange(e) {
