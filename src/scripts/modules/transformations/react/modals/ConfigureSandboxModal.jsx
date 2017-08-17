@@ -6,6 +6,7 @@ import RadioGroup from 'react-radio-group';
 import MySqlCredentialsContainer from '../components/MySqlCredentialsContainer';
 import RedshiftCredentialsContainer from '../components/RedshiftCredentialsContainer';
 import SnowflakeCredentialsContainer from '../components/SnowflakeCredentialsContainer';
+import DockerCredentialsContainer from '../components/DockerCredentialsContainer';
 import ConnectToMySqlSandbox from '../components/ConnectToMySqlSandbox';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import ExtendMySqlCredentials from '../../../provisioning/react/components/ExtendMySqlCredentials';
@@ -17,6 +18,7 @@ export default React.createClass({
     onHide: PropTypes.func.isRequired,
     mode: PropTypes.string.isRequired,
     backend: PropTypes.string.isRequired,
+    transformationType: PropTypes.string.isRequired,
     progress: PropTypes.string,
     progressStatus: PropTypes.string,
     isRunning: PropTypes.bool,
@@ -36,19 +38,22 @@ export default React.createClass({
           <Modal.Title>Create sandbox</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div>
-            <h3>Mode</h3>
-            <RadioGroup name="mode" value={this.props.mode} onChange={this.props.onModeChange}>
-              <div className="form-horizontal">
-                <Input type="radio" label="Load input tables only" wrapperClassName="col-sm-offset-1 col-sm-8" value="input" />
-                <Input type="radio" label="Prepare transformation" help="Load input tables AND execute required transformations" wrapperClassName="col-sm-offset-1 col-sm-8" value="prepare" />
-                <Input type="radio" label="Execute transformation without writing to Storage" wrapperClassName="col-sm-offset-1 col-sm-8" value="dry-run" />
-              </div>
-              <div className="help-block">
-                Note: Disabled transformations will NOT be executed in any of these modes.
-              </div>
-            </RadioGroup>
-          </div>
+          {this.props.backend !== 'docker' &&
+           <div>
+             <h3>Mode</h3>
+             <RadioGroup name="mode" value={this.props.mode} onChange={this.props.onModeChange}>
+               <div className="form-horizontal">
+                 <Input type="radio" label="Load input tables only" wrapperClassName="col-sm-offset-1 col-sm-8" value="input" />
+                 <Input type="radio" label="Prepare transformation" help="Load input tables AND execute required transformations" wrapperClassName="col-sm-offset-1 col-sm-8" value="prepare" />
+                 <Input type="radio" label="Execute transformation without writing to Storage" wrapperClassName="col-sm-offset-1 col-sm-8" value="dry-run" />
+               </div>
+               <div className="help-block">
+                 Note: Disabled transformations will NOT be executed in any of these modes.
+               </div>
+
+             </RadioGroup>
+           </div>
+          }
           {this.renderCredentials()}
         </Modal.Body>
         <Modal.Footer>
@@ -68,7 +73,7 @@ export default React.createClass({
             isSaving={this.props.isRunning}
             showSave={!this.props.isCreated}
             isDisabled={!this.hasCredentials()}
-            />
+          />
         </Modal.Footer>
       </Modal>
     );
@@ -103,7 +108,7 @@ export default React.createClass({
   renderCredentials() {
     const { backend } = this.props;
 
-    if (!['mysql', 'redshift', 'snowflake'].includes(backend)) {
+    if (!['docker', 'mysql', 'redshift', 'snowflake'].includes(backend)) {
       return null;
     }
 
@@ -114,6 +119,7 @@ export default React.createClass({
           {backend === 'redshift' ? this.renderRedshiftCredentials() : null}
           {backend === 'mysql' ? this.renderMysqlCredentials() : null}
           {backend === 'snowflake' ? this.renderSnowflakeCredentials() : null}
+          {backend === 'docker' ? this.renderDockerCredentials() : null}
         </div>
       </div>
     );
@@ -121,6 +127,14 @@ export default React.createClass({
 
   renderRedshiftCredentials() {
     return (<RedshiftCredentialsContainer isAutoLoad={true}/>);
+  },
+
+  renderDockerCredentials() {
+    return (
+      <DockerCredentialsContainer
+        type={this.props.transformationType}
+        isAutoLoad={true} />
+    );
   },
 
   renderSnowflakeCredentials() {
