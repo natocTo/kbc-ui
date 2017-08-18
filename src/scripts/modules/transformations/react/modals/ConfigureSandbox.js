@@ -8,7 +8,7 @@ import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/Snowf
 import JupyterSandboxCredentialsStore from '../../../provisioning/stores/JupyterSandboxCredentialsStore';
 import jobsApi from '../../../jobs/JobsApi';
 import actionCreators from '../../../components/InstalledComponentsActionCreators';
-
+import provisioningActions from '../../../provisioning/ActionCreators';
 
 export default React.createClass({
   propTypes: {
@@ -42,6 +42,7 @@ export default React.createClass({
   },
 
   render() {
+    const {backend} = this.props;
     return React.createElement(ConfigureSandboxModal, {
       mysqlCredentials: this.state.mysqlCredentials,
       redshiftCredentials: this.state.redshiftCredentials,
@@ -57,13 +58,47 @@ export default React.createClass({
       isRunning: this.state.isRunning,
       isCreated: this.state.isCreated,
       onModeChange: this.handleModeChange,
-      onCreateStart: this.handleSandboxCreate
+      onCreateStart: backend === 'docker' ? this.handleDockerSandboxCreate : this.handleSandboxCreate
     });
   },
 
   handleModeChange(e) {
     this.setState({
       mode: e.target.value
+    });
+  },
+
+  handleDockerSandboxCreate() {
+    this.setState({
+      isRunning: true,
+      jobId: null,
+      progress: 'Loading data into ...',
+      progressStatus: null
+    });
+    const createSandboxPromise = provisioningActions.createJupyterSandboxCredentials(this.props.runParams.toJS());
+    return createSandboxPromise.then(() =>
+      this.setState({
+        isRunning: false,
+        progress: 'Sandbox is successfully loaded. You can start using it now!',
+        progressStatus: 'success',
+        jobId: null,
+        isCreated: true
+      }),
+      () =>
+        this.setState({
+          isRunning: false,
+          progress: 'Load finished with error.',
+          progressStatus: 'danger',
+          isCreated: true
+        })
+    ).catch((error) => {
+      this.setState({
+        isRunning: false,
+        progress: 'Load finished with error.',
+        progressStatus: 'danger',
+        isCreated: true
+      });
+      throw error;
     });
   },
 
