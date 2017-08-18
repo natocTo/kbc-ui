@@ -66,7 +66,7 @@ export default React.createClass({
           {this.renderCredentials()}
         </Modal.Body>
         <Modal.Footer>
-          {(this.props.backend !== 'docker' || this.hasDockerCredentials()) &&
+          {(this.props.backend !== 'docker' || this.hasDockerCredentials() || this.props.isRunning) &&
            <div className="pull-left" style={{padding: '6px 12px'}}>
              <span className={'text-' + this.props.progressStatus}>
                {this.renderStatusIcon()} {this.props.progress}
