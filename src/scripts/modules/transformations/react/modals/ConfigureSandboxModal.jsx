@@ -27,13 +27,22 @@ export default React.createClass({
     mysqlCredentials: PropTypes.object.isRequired,
     redshiftCredentials: PropTypes.object.isRequired,
     snowflakeCredentials: PropTypes.object.isRequired,
+    jupyterCredentials: PropTypes.object.isRequired,
+    isLoadingDockerCredentials: PropTypes.bool,
     onModeChange: PropTypes.func.isRequired,
     onCreateStart: PropTypes.func.isRequired
   },
 
+  onHide() {
+    if (this.props.isRunning) return;
+    this.props.onHide();
+  },
+
   render() {
     return (
-      <Modal show={this.props.show} bsSize="large" onHide={this.props.onHide} enforceFocus={false}>
+      <Modal show={this.props.show}
+        bsSize={this.props.backend === 'docker' ? 'medium' : 'large'}
+        onHide={this.onHide} enforceFocus={false}>
         <Modal.Header closeButton={true}>
           <Modal.Title>Create sandbox</Modal.Title>
         </Modal.Header>
@@ -57,21 +66,24 @@ export default React.createClass({
           {this.renderCredentials()}
         </Modal.Body>
         <Modal.Footer>
-          <div className="pull-left" style={{padding: '6px 12px'}}>
-            <span className={'text-' + this.props.progressStatus}>
-              {this.renderStatusIcon()} {this.props.progress}
-              <span />
-              {' '}
-              {this.props.jobId ? <Link to="jobDetail" params={{jobId: this.props.jobId}}>More details</Link> : null}
-            </span>
-          </div>
+          {(this.props.backend !== 'docker' || this.hasDockerCredentials()) &&
+           <div className="pull-left" style={{padding: '6px 12px'}}>
+             <span className={'text-' + this.props.progressStatus}>
+               {this.renderStatusIcon()} {this.props.progress}
+               <span />
+               {' '}
+               {this.props.jobId ? <Link to="jobDetail" params={{jobId: this.props.jobId}}>More details</Link> : null}
+             </span>
+           </div>
+          }
           <ConfirmButtons
             onCancel={this.props.onHide}
             onSave={this.props.onCreateStart}
             saveLabel={'Create'}
             cancelLabel={'Close'}
+            saveTooltip="asdasd"
             isSaving={this.props.isRunning}
-            showSave={!this.props.isCreated}
+            showSave={this.showSave()}
             isDisabled={!this.hasCredentials()}
           />
         </Modal.Footer>
@@ -93,6 +105,15 @@ export default React.createClass({
     }
   },
 
+  hasDockerCredentials() {
+    return this.props.jupyterCredentials.get('id');
+  },
+
+  showSave() {
+    if (this.props.backend !== 'docker') return !this.props.isCreated;
+    return !this.props.isLoadingDockerCredentials && !this.hasDockerCredentials();
+  },
+
   hasCredentials() {
     if (this.props.backend === 'mysql') {
       return this.props.mysqlCredentials.has('id');
@@ -108,7 +129,14 @@ export default React.createClass({
   renderCredentials() {
     const { backend } = this.props;
 
-    if (!['docker', 'mysql', 'redshift', 'snowflake'].includes(backend)) {
+    if (backend === 'docker') {
+      return (
+        <div className="clearfix">
+          {this.renderDockerCredentials()}
+        </div>
+      );
+    }
+    if (!['mysql', 'redshift', 'snowflake'].includes(backend)) {
       return null;
     }
 
@@ -119,7 +147,6 @@ export default React.createClass({
           {backend === 'redshift' ? this.renderRedshiftCredentials() : null}
           {backend === 'mysql' ? this.renderMysqlCredentials() : null}
           {backend === 'snowflake' ? this.renderSnowflakeCredentials() : null}
-          {backend === 'docker' ? this.renderDockerCredentials() : null}
         </div>
       </div>
     );

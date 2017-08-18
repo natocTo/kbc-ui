@@ -4,7 +4,6 @@ import DeleteButton from '../../../../react/common/DeleteButton';
 import ExtendJupyterCredentials from '../../../provisioning/react/components/ExtendJupyterCredentials';
 import JupyterSandboxCredentialsStore from '../../../provisioning/stores/JupyterSandboxCredentialsStore';
 import JupyterCredentials from '../../../provisioning/react/components/JupyterCredentials';
-
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 
 export default React.createClass({
@@ -34,22 +33,41 @@ export default React.createClass({
     };
   },
 
-  render() {
+  renderCreateInfo() {
     return (
-      <div className="row">
-        <div className="col-md-9">
-          <JupyterCredentials
-            validUntil={this.state.validUntil}
-            type={this.props.type}
-            credentials={this.state.credentials}
-            isLoading={this.state.isLoading}
-            isCreating={this.state.pendingActions.get('create')}/>
-        </div>
-        <div className="col-md-3">
-          {this.renderDockerConnect()}
-        </div>
-      </div>
+      <p>
+        You are about to create sandbox and load all tables specified in the input mapping of the transformation along with the transformation script.
+      </p>
+    );
+  },
 
+  renderLoadingInfo() {
+    return (<p> Looking for existing sandbox... </p>);
+  },
+
+
+  render() {
+    if (this.state.isLoading) return this.renderLoadingInfo();
+    if (!this.state.credentials.get('id') && !this.state.isLoading) return this.renderCreateInfo();
+    return (
+      <span>
+        <div className="help-block">
+          Note: To create a new sandbox or load new data you have to drop already created sandbox.
+        </div>
+        <div className="col-md-10">
+          <div className="col-md-9">
+            <JupyterCredentials
+              validUntil={this.state.validUntil}
+              type={this.props.type}
+              credentials={this.state.credentials}
+              isLoading={this.state.isLoading}
+              isCreating={this.state.pendingActions.get('create')}/>
+          </div>
+          <div className="col-md-3">
+            {this.renderDockerConnect()}
+          </div>
+        </div>
+      </span>
     );
   },
 

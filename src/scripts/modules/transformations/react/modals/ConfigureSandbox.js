@@ -26,7 +26,9 @@ export default React.createClass({
       mysqlCredentials: MySqlSandboxCredentialsStore.getCredentials(),
       redshiftCredentials: RedshiftSandboxCredentialsStore.getCredentials(),
       snowflakeCredentials: SnowflakeSandboxCredentialsStore.getCredentials(),
-      jupyterCredentials: JupyterSandboxCredentialsStore.getCredentials()
+      jupyterCredentials: JupyterSandboxCredentialsStore.getCredentials(),
+      isLoadingDockerCredentials: JupyterSandboxCredentialsStore.getIsLoading()
+
     };
   },
 
@@ -46,6 +48,8 @@ export default React.createClass({
     return React.createElement(ConfigureSandboxModal, {
       mysqlCredentials: this.state.mysqlCredentials,
       redshiftCredentials: this.state.redshiftCredentials,
+      jupyterCredentials: this.state.jupyterCredentials,
+      isLoadingDockerCredentials: this.state.isLoadingDockerCredentials,
       snowflakeCredentials: this.state.snowflakeCredentials,
       onHide: this.handleModalClose,
       show: this.props.show,
@@ -72,14 +76,14 @@ export default React.createClass({
     this.setState({
       isRunning: true,
       jobId: null,
-      progress: 'Loading data into ...',
+      progress: 'Creating sandbox and loading data...',
       progressStatus: null
     });
     const createSandboxPromise = provisioningActions.createJupyterSandboxCredentials(this.props.runParams.toJS());
     return createSandboxPromise.then(() =>
       this.setState({
         isRunning: false,
-        progress: 'Sandbox is successfully loaded. You can start using it now!',
+        progress: 'Sandbox is successfully created and all data are loaded. You can start using it now!',
         progressStatus: 'success',
         jobId: null,
         isCreated: true
