@@ -45,6 +45,10 @@ StorageBucketsStore = StoreUtils.createStore
   isDeletingCredentials: ->
     _store.getIn ['pendingCredentials', 'deleting'], false
 
+  getBucketMetadata: (bucketId) ->
+    _store.get('buckets').getIn(tableId, 'metadata')
+
+
 Dispatcher.register (payload) ->
   action = payload.action
 

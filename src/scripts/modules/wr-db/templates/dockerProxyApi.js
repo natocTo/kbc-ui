@@ -49,6 +49,19 @@ function updateTablesMapping(data, table) {
   return data.setIn(tablesPath, tables);
 }
 
+function generateInputMapping(paramsTables, inputMappingTables) {
+  return inputMappingTables.map((imTable) => {
+    const pTable = paramsTables.find((t) => t.get('tableId') === imTable.get('source'), Map());
+    const isExported = pTable.get('export');
+    if (isExported) {
+      return imTable.delete('limit');
+    } else {
+      return imTable.set('limit', 1);
+    }
+  });
+}
+
+
 export default function(componentId) {
   if (!isDockerBasedWriter(componentId)) {
     return null;
@@ -142,17 +155,22 @@ export default function(componentId) {
     setTable(configId, tableId, tableData) {
       return this.loadConfigData(configId).then(
         (data) => {
-          const tables = data.getIn(['parameters', 'tables'], List())
-                .map((t) => {
-                  if (t.get('tableId') === tableId) {
-                    return t
-                      .set('export', !!tableData.export)
-                      .set('dbName', tableData.dbName);
-                  } else {
-                    return t;
-                  }
-                }, tableData);
-          var dataToSave = data.setIn(['parameters', 'tables'], tables);
+          const tables = data
+            .getIn(['parameters', 'tables'], List())
+            .map((t) => {
+              if (t.get('tableId') === tableId) {
+                return t
+                  .set('export', !!tableData.export)
+                  .set('dbName', tableData.dbName);
+              } else {
+                return t;
+              }
+            }, tableData);
+          const inputMappingTables = data.getIn(['storage', 'input', 'tables'], List());
+          const newInputMappingTables = generateInputMapping(tables, inputMappingTables);
+          var dataToSave = data
+            .setIn(['parameters', 'tables'], tables)
+            .setIn(['storage', 'input', 'tables'], newInputMappingTables);
           const msg = `Update parameters of ${tableId}`;
           return this.saveConfigData(configId, dataToSave, msg);
         }
