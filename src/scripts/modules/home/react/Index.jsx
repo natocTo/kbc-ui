@@ -49,7 +49,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log(this.state.installedComponents.toJS());
     return (
       <div className="container-fluid kbc-main-content">
         <Expiration expires={this.state.expires} />
