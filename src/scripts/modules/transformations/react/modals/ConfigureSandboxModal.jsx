@@ -81,7 +81,6 @@ export default React.createClass({
             onSave={this.props.onCreateStart}
             saveLabel={'Create'}
             cancelLabel={'Close'}
-            saveTooltip="asdasd"
             isSaving={this.props.isRunning}
             showSave={this.showSave()}
             isDisabled={!this.hasCredentials()}

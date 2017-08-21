@@ -63,7 +63,7 @@ export default React.createClass({
     return (
       <span>
         <div className="help-block">
-          Note: To create a new sandbox or load new data you have to drop already created sandbox.
+          Note: To create a new sandbox or load new data you have to drop the existing one.
         </div>
         <div className="col-md-10">
           <div className="col-md-9">
