@@ -27,7 +27,7 @@ export default React.createClass({
     mysqlCredentials: PropTypes.object.isRequired,
     redshiftCredentials: PropTypes.object.isRequired,
     snowflakeCredentials: PropTypes.object.isRequired,
-    jupyterCredentials: PropTypes.object.isRequired,
+    dockerCredentials: PropTypes.object.isRequired,
     isLoadingDockerCredentials: PropTypes.bool,
     onModeChange: PropTypes.func.isRequired,
     onCreateStart: PropTypes.func.isRequired
@@ -106,7 +106,7 @@ export default React.createClass({
   },
 
   hasDockerCredentials() {
-    return this.props.jupyterCredentials.get('id');
+    return this.props.dockerCredentials.get('id');
   },
 
   showSave() {

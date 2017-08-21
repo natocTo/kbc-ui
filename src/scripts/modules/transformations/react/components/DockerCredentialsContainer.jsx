@@ -2,18 +2,23 @@ import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import DeleteButton from '../../../../react/common/DeleteButton';
 import ExtendJupyterCredentials from '../../../provisioning/react/components/ExtendJupyterCredentials';
+import ExtendRStudioCredentials from '../../../provisioning/react/components/ExtendRStudioCredentials';
 import JupyterSandboxCredentialsStore from '../../../provisioning/stores/JupyterSandboxCredentialsStore';
+import RStudioSandboxCredentialsStore from '../../../provisioning/stores/RStudioSandboxCredentialsStore';
 import JupyterCredentials from '../../../provisioning/react/components/JupyterCredentials';
+import RStudioCredentials from '../../../provisioning/react/components/RStudioCredentials';
 import CredentialsActionCreators from '../../../provisioning/ActionCreators';
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(JupyterSandboxCredentialsStore)],
+  mixins: [createStoreMixin(JupyterSandboxCredentialsStore, RStudioSandboxCredentialsStore)],
 
   componentDidMount() {
     if (!this.state.credentials.get('id') && this.props.isAutoLoad) {
-      if (this.props.type === 'python') {
+      if (this.isPythonTransformation()) {
         CredentialsActionCreators.loadJupyterSandboxCredentials();
+      } else {
+        CredentialsActionCreators.loadRStudioSandboxCredentials();
       }
     }
   },
@@ -24,13 +29,18 @@ export default React.createClass({
   },
 
   getStateFromStores() {
+    const dockerCredentialsStore = this.isPythonTransformation() ? JupyterSandboxCredentialsStore : RStudioSandboxCredentialsStore;
     return {
-      credentials: JupyterSandboxCredentialsStore.getCredentials(),
-      pendingActions: JupyterSandboxCredentialsStore.getPendingActions(),
-      isLoading: JupyterSandboxCredentialsStore.getIsLoading(),
-      isLoaded: JupyterSandboxCredentialsStore.getIsLoaded(),
-      validUntil: JupyterSandboxCredentialsStore.getValidUntil()
+      credentials: dockerCredentialsStore.getCredentials(),
+      pendingActions: dockerCredentialsStore.getPendingActions(),
+      isLoading: dockerCredentialsStore.getIsLoading(),
+      isLoaded: dockerCredentialsStore.getIsLoaded(),
+      validUntil: dockerCredentialsStore.getValidUntil()
     };
+  },
+
+  isPythonTransformation() {
+    return this.props.type === 'python';
   },
 
   renderCreateInfo() {
@@ -49,6 +59,7 @@ export default React.createClass({
   render() {
     if (this.state.isLoading) return this.renderLoadingInfo();
     if (!this.state.credentials.get('id') && !this.state.isLoading) return this.renderCreateInfo();
+    const isPython = this.isPythonTransformation();
     return (
       <span>
         <div className="help-block">
@@ -56,12 +67,19 @@ export default React.createClass({
         </div>
         <div className="col-md-10">
           <div className="col-md-9">
-            <JupyterCredentials
-              validUntil={this.state.validUntil}
-              type={this.props.type}
-              credentials={this.state.credentials}
-              isLoading={this.state.isLoading}
-              isCreating={this.state.pendingActions.get('create')}/>
+            {isPython ?
+             <JupyterCredentials
+               validUntil={this.state.validUntil}
+               type={this.props.type}
+               credentials={this.state.credentials}
+               isLoading={this.state.isLoading}
+               isCreating={this.state.pendingActions.get('create')}/>
+             :
+             <RStudioCredentials
+               credentials={this.state.credentials}
+               validUntil={this.state.validUntil}
+               isCreating={this.state.pendingActions.get('create')}/>
+            }
           </div>
           <div className="col-md-3">
             {this.renderDockerConnect()}
@@ -85,30 +103,42 @@ export default React.createClass({
         </a>
         <div>
           <DeleteButton
-            tooltip="Delete Jupyter Sandbox"
+            tooltip="Delete Sandbox"
             isPending={this.state.pendingActions.get('drop')}
             label="Drop sandbox"
             fixedWidth={true}
             confirm={{
-              title: 'Delete Jupyter Sandbox',
-              text: 'Do you really want to delete the Jupyter sandbox?',
+              title: 'Delete Sandbox',
+              text: 'Do you really want to delete the docker sandbox?',
               onConfirm: this._dropCredentials
             }}
           />
         </div>
         <div>
-          <ExtendJupyterCredentials/>
+          {this.isPythonTransformation() ?
+           <ExtendJupyterCredentials/>
+           :
+           <ExtendRStudioCredentials/>
+          }
         </div>
       </div>
     );
   },
 
   _dropCredentials: function() {
-    return CredentialsActionCreators.dropJupyterSandboxCredentials();
+    if (this.isPythonTransformation()) {
+      return CredentialsActionCreators.dropJupyterSandboxCredentials();
+    } else {
+      return CredentialsActionCreators.dropRStudioSandboxCredentials();
+    }
   },
 
   _connectLink(credentials) {
-    return (credentials.get('hasHttps') ? 'https://' : 'http://') + credentials.get('hostname') + ':' + credentials.get('port') + '/notebooks/notebook.ipynb';
+    if (this.isPythonTransformation()) {
+      return (credentials.get('hasHttps') ? 'https://' : 'http://') + credentials.get('hostname') + ':' + credentials.get('port') + '/notebooks/notebook.ipynb';
+    } else {
+      return (credentials.get('hasHttps') ? 'https://' : 'http://') + credentials.get('hostname') + ':' + credentials.get('port');
+    }
   }
 
 });

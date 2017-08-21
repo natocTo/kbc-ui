@@ -6,6 +6,7 @@ import MySqlSandboxCredentialsStore from '../../../provisioning/stores/MySqlSand
 import RedshiftSandboxCredentialsStore from '../../../provisioning/stores/RedshiftSandboxCredentialsStore';
 import SnowflakeSandboxCredentialsStore from '../../../provisioning/stores/SnowflakeSandboxCredentialsStore';
 import JupyterSandboxCredentialsStore from '../../../provisioning/stores/JupyterSandboxCredentialsStore';
+import RStudioSandboxCredentialsStore from '../../../provisioning/stores/RStudioSandboxCredentialsStore';
 import jobsApi from '../../../jobs/JobsApi';
 import actionCreators from '../../../components/InstalledComponentsActionCreators';
 import provisioningActions from '../../../provisioning/ActionCreators';
@@ -19,16 +20,17 @@ export default React.createClass({
     transformationType: PropTypes.string.isRequired,
     runParams: PropTypes.object.isRequired
   },
-  mixins: [createStoreMixin(MySqlSandboxCredentialsStore, RedshiftSandboxCredentialsStore, SnowflakeSandboxCredentialsStore, JupyterSandboxCredentialsStore)],
+  mixins: [createStoreMixin(MySqlSandboxCredentialsStore, RedshiftSandboxCredentialsStore, SnowflakeSandboxCredentialsStore, JupyterSandboxCredentialsStore, RStudioSandboxCredentialsStore)],
 
   getStateFromStores() {
+    const isPythonTransformation = this.isPythonTransformation();
+    const dockerStore = isPythonTransformation ? JupyterSandboxCredentialsStore : RStudioSandboxCredentialsStore;
     return {
       mysqlCredentials: MySqlSandboxCredentialsStore.getCredentials(),
       redshiftCredentials: RedshiftSandboxCredentialsStore.getCredentials(),
       snowflakeCredentials: SnowflakeSandboxCredentialsStore.getCredentials(),
-      jupyterCredentials: JupyterSandboxCredentialsStore.getCredentials(),
-      isLoadingDockerCredentials: JupyterSandboxCredentialsStore.getIsLoading()
-
+      dockerCredentials: dockerStore.getCredentials(),
+      isLoadingDockerCredentials: dockerStore.getIsLoading()
     };
   },
 
@@ -48,7 +50,7 @@ export default React.createClass({
     return React.createElement(ConfigureSandboxModal, {
       mysqlCredentials: this.state.mysqlCredentials,
       redshiftCredentials: this.state.redshiftCredentials,
-      jupyterCredentials: this.state.jupyterCredentials,
+      dockerCredentials: this.state.dockerCredentials,
       isLoadingDockerCredentials: this.state.isLoadingDockerCredentials,
       snowflakeCredentials: this.state.snowflakeCredentials,
       onHide: this.handleModalClose,
@@ -72,6 +74,10 @@ export default React.createClass({
     });
   },
 
+  isPythonTransformation() {
+    return this.props.transformationType === 'python' && this.props.backend === 'docker';
+  },
+
   handleDockerSandboxCreate() {
     this.setState({
       isRunning: true,
@@ -79,7 +85,8 @@ export default React.createClass({
       progress: 'Creating sandbox and loading data...',
       progressStatus: null
     });
-    const createSandboxPromise = provisioningActions.createJupyterSandboxCredentials(this.props.runParams.toJS());
+    const createCredentialsAction = this.isPythonTransformation() ? provisioningActions.createJupyterSandboxCredentials : provisioningActions.createRStudioSandboxCredentials;
+    const createSandboxPromise = createCredentialsAction(this.props.runParams.toJS());
     return createSandboxPromise.then(() =>
       this.setState({
         isRunning: false,
