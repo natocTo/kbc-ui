@@ -68,7 +68,12 @@ const ProvisioningApi = {
       .send(requestData)
       .promise()
       .then(function(response) {
-        return JobPoller.poll(sapiToken, response.body.url, 1000);
+        const resultResponse = JobPoller.poll(sapiToken, response.body.url, 1000);
+        if (resultResponse.body.status === 'error') {
+          throw resultResponse.body;
+        } else {
+          return resultResponse;
+        }
       })
       .then(function() {
         return ProvisioningApi.getCredentials('docker', credentialsType);

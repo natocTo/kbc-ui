@@ -18,9 +18,6 @@ module.exports = {
             if (_pollStatuses.indexOf(response.body.status) >= 0) {
               return setTimeout(runRequest, timeOutInterval);
             } else {
-              if (response.body.status === 'error') {
-                return reject(response.body);
-              }
               return resolve(response.body);
             }
           }).catch(reject);
