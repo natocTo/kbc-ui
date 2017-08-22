@@ -96,7 +96,7 @@ export default React.createClass({
               };
             }}
           >
-            You are about to run extraction of {qname}
+            You are about to run an extraction of {qname}.
           </RunExtractionButton>
         </td>
       </tr>
@@ -159,7 +159,7 @@ export default React.createClass({
     return (
       <Confirm
         title="Delete query"
-        text={`Do you really want to delete extraction of query ${query.get('name')}?`}
+        text={`Do you really want to delete the extraction of the query ${query.get('name')}?`}
         buttonLabel="Delete"
         onConfirm={() => this.props.deleteQueryFn(query)}
       >

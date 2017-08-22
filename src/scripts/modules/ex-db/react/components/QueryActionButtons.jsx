@@ -52,7 +52,7 @@ export default React.createClass({
           config={this.state.configId}
           tooltipPlacement="bottom"
         >
-          You are about to run extraction
+          You are about to run an extraction.
         </RunExtractionButton>
       </div>
     );

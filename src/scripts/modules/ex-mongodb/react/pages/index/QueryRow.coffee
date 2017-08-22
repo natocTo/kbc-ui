@@ -64,4 +64,4 @@ module.exports = React.createClass
             config: props.configurationId
             configData: actionCreators.prepareSingleQueryRunData(props.configurationId, props.query)
         ,
-          'You are about to run extraction.'
+          'You are about to run an extraction.'

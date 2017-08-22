@@ -80,7 +80,7 @@ exports[`<AntiSamplingModal /> should render hidden modal 1`] = `
                   Adaptive algorithm
                   <small
                     className="help-block">
-                    Will divide the date range into multiple smaller date ranges. This is way more faster, but might not be that precise.
+                    Will divide the date range into multiple smaller date ranges. This is way faster, but might not be that precise.
                   </small>
                 </label>
               </div>
@@ -206,7 +206,7 @@ exports[`<AntiSamplingModal /> should render modal 1`] = `
                   Adaptive algorithm
                   <small
                     className="help-block">
-                    Will divide the date range into multiple smaller date ranges. This is way more faster, but might not be that precise.
+                    Will divide the date range into multiple smaller date ranges. This is way faster, but might not be that precise.
                   </small>
                 </label>
               </div>

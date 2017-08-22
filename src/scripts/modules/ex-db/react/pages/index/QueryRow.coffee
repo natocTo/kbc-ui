@@ -63,4 +63,4 @@ module.exports = React.createClass
             query: props.query.get 'id'
             config: props.configurationId
         ,
-          'You are about to run extraction.'
+          'You are about to run an extraction.'

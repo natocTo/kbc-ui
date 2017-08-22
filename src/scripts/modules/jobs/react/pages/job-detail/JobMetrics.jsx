@@ -24,7 +24,7 @@ export default React.createClass({
             <small>
               <i className="fa fa-info-circle" />
               {' '}
-              Shown number is processed asynchronously and may keep changing until processing is done.
+              The shown number is processed asynchronously and may keep changing until processing is done.
             </small>
           </p>
         </div>

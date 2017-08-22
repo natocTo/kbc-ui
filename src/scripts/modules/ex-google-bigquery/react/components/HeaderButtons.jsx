@@ -70,7 +70,7 @@ export default React.createClass({
           }}
           tooltipPlacement="bottom"
           >
-          You are about to run extraction
+          You are about to run an extraction.
         </RunExtractionButton>
       </div>
     );

@@ -114,7 +114,7 @@ export default React.createClass({
               };
             }}
           >
-            You are about to run extraction.
+            You are about to run an extraction.
           </RunExtractionButton>
 
         </div>

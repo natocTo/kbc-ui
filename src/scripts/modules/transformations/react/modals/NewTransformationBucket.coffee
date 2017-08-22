@@ -45,9 +45,9 @@ module.exports = React.createClass
         ModalBody null,
           form className: 'form-horizontal', onSubmit: @_handleSubmit,
             p className: 'help-block',
-              'Transformation bucket is a container for related transformations.'
+              'A transformation bucket is a container for related transformations.'
               ' '
-              'When the bucket is created you can start creating transformations inside it'
+              'Once the bucket is created, you can create transformations inside it.'
             div className: 'form-group',
               label className: 'col-sm-4 control-label', 'Name'
               div className: 'col-sm-6',

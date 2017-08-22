@@ -152,7 +152,7 @@ module.exports = React.createClass
             runParams: =>
               config: @state.configuration.get 'id'
           ,
-            'You are about to run the extraction of this configuration.'
+            'You are about to run an extraction of this configuration.'
 
         li null,
           DeleteConfigurationButton

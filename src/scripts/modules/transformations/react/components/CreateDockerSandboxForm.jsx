@@ -32,7 +32,7 @@ module.exports = React.createClass({
               placeholder="Select tables to load..."
             />
             <p className="help-block">
-              Tables must be loaded into {this.props.type} when creating. Data cannot be added later.
+              The required tables must be loaded into {this.props.type} when creating the sandbox. Data cannot be added later.
             </p>
           </div>
         </div>
@@ -46,7 +46,7 @@ module.exports = React.createClass({
               placeholder="Number of rows"
               value={this.state.rows}
               onChange={this.onChangeRows}
-              help="0 to import all rows"
+              help="To import all rows, use 0."
             />
           </div>
         </div>

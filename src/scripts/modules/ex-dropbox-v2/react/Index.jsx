@@ -180,7 +180,7 @@ export default React.createClass({
                           component={componentId}
                           runParams={handleUploadingSingleElement}
                         >
-                          You are about to run extraction of <strong>{table.name}</strong> from Dropbox.
+                          You are about to run an extraction of <strong>{table.name}</strong> from Dropbox.
                         </RunButtonModal>
                       </td>
                     </tr>
@@ -227,7 +227,7 @@ export default React.createClass({
               disabledReason="A Dropbox file must be selected."
               runParams={this.runParams()}
             >
-              You are about to run extraction of all configured csv files from Dropbox.
+              You are about to run an extraction of all configured csv files from Dropbox.
             </RunButtonModal>
           </li>
           <li>

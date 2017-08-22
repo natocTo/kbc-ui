@@ -110,7 +110,7 @@ export default React.createClass({
               };
             }}
           >
-            You are about to run extraction of {documentTitle}
+            You are about to run an extraction of {documentTitle}.
           </RunExtractionButton>
         </div>
       </div>
@@ -136,7 +136,7 @@ export default React.createClass({
     return (
       <Confirm
         title="Delete sheet"
-        text={`Do you really want to delete extraction of sheet ${getDocumentTitle(sheet)}?`}
+        text={`Do you really want to delete the extraction of the sheet ${getDocumentTitle(sheet)}?`}
         buttonLabel="Delete"
         onConfirm={() => this.props.deleteSheetFn(sheet.get('id'))}
       >

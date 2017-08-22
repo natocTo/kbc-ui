@@ -89,7 +89,7 @@ export default React.createClass({
                 disabled={!!this.invalidToRun()}
                 disabledReason={this.invalidToRun()}
               >
-                You are about to run extraction.
+                You are about to run an extraction.
               </RunComponentButton>
             </li>
             <li>

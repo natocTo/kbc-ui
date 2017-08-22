@@ -143,7 +143,7 @@ export default React.createClass({
                   mode="link"
                   runParams={() => ({config: this.state.configId})}
               >
-                <span>You are about to run extraction.</span>
+                <span>You are about to run an extraction.</span>
               </RunComponentButton>
             </li>
             <li>

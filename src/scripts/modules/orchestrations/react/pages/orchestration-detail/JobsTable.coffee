@@ -28,7 +28,7 @@ JobsTable = React.createClass(
             className: 'text-muted'
             colSpan: 7
           ,
-            'Orchestration has not been executed yet.'
+            'The orchestration has not been executed yet.'
       ]
 
     jobsTable = (table {className: 'table table-striped table-hover kb-table-jobs kbc-cursor-pointer'},

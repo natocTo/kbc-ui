@@ -93,7 +93,7 @@ export default React.createClass({
                 disabled={!!this.invalidToRun()}
                 disabledReason={this.invalidToRun()}
               >
-                You are about to run extraction of all configured sheets.
+                You are about to run an extraction of all configured sheets.
               </RunComponentButton>
             </li>
             {/* <li>

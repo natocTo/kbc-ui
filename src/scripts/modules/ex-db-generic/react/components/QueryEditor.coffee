@@ -76,7 +76,7 @@ module.exports = React.createClass
               value: @props.query.get 'outputTable'
               onChange: @_handleOutputTableChange
             div className: 'help-block',
-              "if empty then default will be used"
+              "If empty, the default will be used."
           div className: 'col-md-4 checkbox',
             label null,
               input
@@ -89,7 +89,7 @@ module.exports = React.createClass
           if @props.componentId is 'keboola.ex-db-oracle'
             div className: 'col-md-12',
               div className: 'help-block',
-                "Do not leave semicolon at the end of the query."
+                "Do not leave a semicolon at the end of the query."
           div className: 'col-md-12',
             CodeEditor
               readOnly: false

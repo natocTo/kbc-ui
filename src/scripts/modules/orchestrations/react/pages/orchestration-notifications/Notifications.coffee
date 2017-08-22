@@ -41,11 +41,12 @@ module.exports = React.createClass
     div {className: 'kbc-block-with-padding'},
       div null,
         p null,
-          'You can subscribe to some events in orchestration jobs processing.'
+          'Subscribe to receive notifications on some of the orchestration job '
+          'events that might require your attention.'
       div null,
         h2 null, 'Errors'
           p null,
-            'Notified when the orchestration finished with error.'
+            'Get notified when the orchestration finishes with an error.'
           if @props.isEditing
             @_renderNotificationsEditor 'error', errorEmails
           else
@@ -53,7 +54,7 @@ module.exports = React.createClass
               emails: errorEmails
         h2 null, 'Warnings'
           p null,
-            'Notified when the orchestration finished with warning.'
+            'Get notified when the orchestration finishes with a warning.'
           if @props.isEditing
             @_renderNotificationsEditor 'warning', warningEmails
           else
@@ -63,14 +64,14 @@ module.exports = React.createClass
         h2 null, 'Processing'
         if @props.isEditing && processingEmails.count()
           p null,
-            'Notified when job is processing '
+            'Get notified when a job is processing '
             @_renderToleranceInput()
-            ' % longer than usually.'
+            ' % longer than usual.'
         else
           p null,
-            'Notified when job is processing '
+            'Get notified when a job is processing '
             @_getTolerance()
-            '% longer than usually.'
+            '% longer than usual.'
         if @props.isEditing
           @_renderNotificationsEditor 'processing', processingEmails
         else
@@ -93,7 +94,7 @@ module.exports = React.createClass
       input: @props.inputs.get channelName
       disabled: false
       inputPlaceholder: 'Enter email ...'
-      emptyText: 'No subsribers yet.'
+      emptyText: 'No subscribers yet.'
       onChangeValue: @_onChannelChange.bind @, channelName
       onChangeInput: @_onInputChange.bind @, channelName
 

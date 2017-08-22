@@ -68,7 +68,7 @@ module.exports = React.createClass
         if !@state.hasCredentials
           div className: 'row component-empty-state text-center',
             p null,
-              'Please setup database credentials for this extractor'
+              'Please setup database credentials for this extractor.'
             Link
               to: 'ex-db-new-credentials'
               params:
@@ -123,11 +123,11 @@ module.exports = React.createClass
               component: 'ex-db'
               mode: 'link'
               disabled: !@state.hasEnabledQueries
-              disabledReason: 'There are no queries to be executed'
+              disabledReason: 'There are no queries to be executed.'
               runParams: ->
                 config: configurationId
             ,
-              'You are about to run extraction.'
+              'You are about to run an extraction.'
           li null,
             React.createElement DeleteConfigurationButton,
               componentId: 'ex-db'

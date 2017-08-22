@@ -231,12 +231,12 @@ module.exports = (componentId) ->
               mode: 'link'
               component: componentId
               disabled: !@_canRunUpload()
-              disabledReason: "A dropbox account must be authorized and some table selected."
+              disabledReason: "A Dropbox account must be authorized and a table selected."
               runParams: =>
                 config: @state.configId
             ,
-             "You are about to upload #{@_getInputTables().count()} selected table(s) to the dropbox account. \
-             The resulting file(s) will be stored into the 'Apps/Keboola Writer' dropbox folder."
+             "You are about to upload #{@_getInputTables().count()} selected table(s) to the Dropbox account. \
+             The resulting file(s) will be stored into the 'Apps/Keboola Writer' Dropbox folder."
 
           li null,
             if @state.hasCredentials
@@ -279,7 +279,7 @@ module.exports = (componentId) ->
         onChange: @_deleteCredentials
       React.createElement Confirm,
         text: "Do you really want to reset the authorization of #{description}? \
-         Tables configured to upload will not be reset."
+         The tables configured to upload will not be reset."
         title: "Reset Authorization #{description}"
         buttonLabel: 'Reset'
         onConfirm: @_deleteCredentials

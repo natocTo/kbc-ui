@@ -17,7 +17,7 @@ NewComponentSelection = require '../components/NewComponentSelection'
 
 TEXTS =
   noComponents:
-    extractor: 'Extractor allow you to collect data from various sources.'
+    extractor: 'Extractors allow you to collect data from various sources.'
     writer: 'Writers allow you to send data to various destinations.'
     application: 'Use applications to enhance, modify or better understand your data.'
   installFirst:
