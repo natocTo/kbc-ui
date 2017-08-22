@@ -141,7 +141,7 @@ export default React.createClass({
       if (job.status === 'success') {
         this.setState({
           isRunning: false,
-          progress: 'Sandbox is successfully loaded. You can start using it now!',
+          progress: 'Sandbox is successfully loaded. You can start using it now.',
           progressStatus: 'success',
           jobId: null,
           isCreated: true

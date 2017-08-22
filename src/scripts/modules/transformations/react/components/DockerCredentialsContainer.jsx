@@ -47,7 +47,7 @@ export default React.createClass({
     return (
       <div className="col-md-12">
         <p>
-          You are about to create sandbox and load all tables specified in the input mapping of the transformation along with the transformation script.
+          You will create a new sandbox and load all required data in the input mapping of the transformation along with the transformation script.
         </p>
       </div>
     );
@@ -68,7 +68,7 @@ export default React.createClass({
     return (
       <span>
         <div className="help-block col-md-12">
-          Note: To create a new sandbox or load new data you have to drop the existing one.
+          Note: To create a new sandbox or load new data you have to drop the current sandbox.
         </div>
         <div className="col-md-8">
           {isPython ?
@@ -112,7 +112,7 @@ export default React.createClass({
             fixedWidth={true}
             confirm={{
               title: 'Delete Sandbox',
-              text: 'Do you really want to delete the docker sandbox?',
+              text: 'Do you really want to delete the sandbox?',
               onConfirm: this._dropCredentials
             }}
           />
