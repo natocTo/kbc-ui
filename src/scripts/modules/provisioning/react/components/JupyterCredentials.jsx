@@ -17,7 +17,7 @@ module.exports = React.createClass({
         <div>
           <span>
             <Loader />
-            &nbsp;{this.props.isCreating ? 'Creating' : 'Loading Credentials' } sandbox
+            &nbsp;{this.props.isCreating ? 'Creating sandbox' : 'Loading credentials' }
           </span>
         </div>
       );
