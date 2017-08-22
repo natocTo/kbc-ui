@@ -45,16 +45,21 @@ export default React.createClass({
 
   renderCreateInfo() {
     return (
-      <p>
-        You are about to create sandbox and load all tables specified in the input mapping of the transformation along with the transformation script.
-      </p>
+      <div className="col-md-12">
+        <p>
+          You are about to create sandbox and load all tables specified in the input mapping of the transformation along with the transformation script.
+        </p>
+      </div>
     );
   },
 
   renderLoadingInfo() {
-    return (<p> Looking for existing sandbox... </p>);
+    return (
+      <div className="col-md-12">
+        <p> Looking for existing sandbox... </p>
+      </div>
+    );
   },
-
 
   render() {
     if (this.state.isLoading) return this.renderLoadingInfo();
@@ -62,28 +67,26 @@ export default React.createClass({
     const isPython = this.isPythonTransformation();
     return (
       <span>
-        <div className="help-block">
+        <div className="help-block col-md-12">
           Note: To create a new sandbox or load new data you have to drop the existing one.
         </div>
-        <div className="col-md-10">
-          <div className="col-md-9">
-            {isPython ?
-             <JupyterCredentials
-               validUntil={this.state.validUntil}
-               type={this.props.type}
-               credentials={this.state.credentials}
-               isLoading={this.state.isLoading}
-               isCreating={this.state.pendingActions.get('create')}/>
-             :
-             <RStudioCredentials
-               credentials={this.state.credentials}
-               validUntil={this.state.validUntil}
-               isCreating={this.state.pendingActions.get('create')}/>
-            }
-          </div>
-          <div className="col-md-3">
-            {this.renderDockerConnect()}
-          </div>
+        <div className="col-md-8">
+          {isPython ?
+           <JupyterCredentials
+             validUntil={this.state.validUntil}
+             type={this.props.type}
+             credentials={this.state.credentials}
+             isLoading={this.state.isLoading}
+             isCreating={this.state.pendingActions.get('create')}/>
+           :
+           <RStudioCredentials
+             credentials={this.state.credentials}
+             validUntil={this.state.validUntil}
+             isCreating={this.state.pendingActions.get('create')}/>
+          }
+        </div>
+        <div className="col-md-3">
+          {this.renderDockerConnect()}
         </div>
       </span>
     );
