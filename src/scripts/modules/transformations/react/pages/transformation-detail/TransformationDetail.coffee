@@ -20,6 +20,8 @@ CreateSandboxButton = require('../../components/CreateSandboxButton').default
 SqlDepModal = React.createFactory(require './../../modals/SqlDepModal')
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
 
+sandboxUtils = require('../../../utils/sandboxUtils')
+
 {div, span, ul, li, a, em} = React.DOM
 
 module.exports = React.createClass
@@ -165,10 +167,7 @@ module.exports = React.createClass
               isPending: @state.pendingActions.has 'save-disabled'
               onChange: @_handleActiveChange
 
-          if backend == 'mysql' && transformationType == 'simple' or
-          backend == 'docker' && transformationType in ['python', 'r'] or
-          backend in ['redshift', 'snowflake']
-
+          if sandboxUtils.hasSandbox(backend, transformationType)
             li {},
               React.createElement CreateSandboxButton,
                 backend: backend,

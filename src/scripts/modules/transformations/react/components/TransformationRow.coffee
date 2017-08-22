@@ -11,6 +11,7 @@ CreateSandboxButton = require('./CreateSandboxButton').default
 TransformationsActionCreators = require '../../ActionCreators'
 descriptionExcerpt = require('../../../../utils/descriptionExcerpt').default
 TransformationStore = require('../../stores/TransformationsStore')
+sandboxUtils = require('../../utils/sandboxUtils')
 
 {span, div, a, button, i, h4, small, em} = React.DOM
 
@@ -36,15 +37,15 @@ TransformationRow = React.createClass(
         text: "Do you really want to delete transformation #{@props.transformation.get('name')}?"
         onConfirm: @_deleteTransformation
     )
-
-    buttons.push(React.createElement CreateSandboxButton,
-      key: 'create-sandbox'
-      backend: @props.transformation.get("backend")
-      mode: "button"
-      runParams: Immutable.Map
-        configBucketId: @props.bucket.get('id')
-        transformations: [@props.transformation.get('id')]
-  )
+    if sandboxUtils.hasSandbox(@props.transformation.get("backend"), @props.transformation.get("type"))
+      buttons.push(React.createElement CreateSandboxButton,
+        key: 'create-sandbox'
+        backend: @props.transformation.get("backend")
+        mode: "button"
+        runParams: Immutable.Map
+          configBucketId: @props.bucket.get('id')
+          transformations: [@props.transformation.get('id')]
+    )
 
     buttons.push(RunComponentButton(
       key: 'run'
