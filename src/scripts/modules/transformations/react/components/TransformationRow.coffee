@@ -40,11 +40,10 @@ TransformationRow = React.createClass(
     if sandboxUtils.hasSandbox(@props.transformation.get("backend"), @props.transformation.get("type"))
       buttons.push(React.createElement CreateSandboxButton,
         key: 'create-sandbox'
-        backend: @props.transformation.get("backend")
+        transformationType: @props.transformation.get('type')
+        backend: @props.transformation.get('backend')
         mode: "button"
-        runParams: Immutable.Map
-          configBucketId: @props.bucket.get('id')
-          transformations: [@props.transformation.get('id')]
+        runParams: sandboxUtils.generateRunParameters(@props.transformation, @props.bucket.get('id'))
     )
 
     buttons.push(RunComponentButton(
