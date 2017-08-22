@@ -98,7 +98,7 @@ export default React.createClass({
       (errorJob) =>
         this.setState({
           isRunning: false,
-          progress: 'Load finished with error. ',
+          progress: 'Load finished with an error. ',
           jobId: errorJob.id,
           progressStatus: 'danger',
           isCreated: true
@@ -106,7 +106,7 @@ export default React.createClass({
     ).catch((error) => {
       this.setState({
         isRunning: false,
-        progress: 'Load finished with error.',
+        progress: 'Load finished with an error.',
         progressStatus: 'danger',
         isCreated: true
       });
@@ -118,7 +118,7 @@ export default React.createClass({
     this.setState({
       isRunning: true,
       jobId: null,
-      progress: 'Waiting for load start ...',
+      progress: 'Waiting for load to start...',
       progressStatus: null
     });
     actionCreators.runComponent({
@@ -149,7 +149,7 @@ export default React.createClass({
       } else {
         this.setState({
           isRunning: false,
-          progress: 'Load finished with error.',
+          progress: 'Load finished with an error.',
           progressStatus: 'danger',
           jobId: job.id,
           isCreated: true
@@ -158,7 +158,7 @@ export default React.createClass({
     } else {
       this.setState({
         jobId: job.id,
-        progress: job.state === 'waiting' ? 'Waiting for load start ...' : 'Loading data into sandbox ...'
+        progress: job.state === 'waiting' ? 'Waiting for load to start...' : 'Loading data into sandbox ...'
       });
       setTimeout(this.checkJobStatus, 5000);
     }
