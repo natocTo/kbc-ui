@@ -97,27 +97,6 @@ module.exports = React.createClass
     @state.transformation.get('backend') == 'snowflake' and @state.transformation.get('type') == 'simple' or
     @state.transformation.get('backend') == 'docker'
 
-  _decamelizeTableInput: (table) ->
-    table.reduce((memo, value, key) ->
-      newKey = key.replace /[A-Z]/g, (match) ->
-        '_' + match.toLowerCase()
-      memo.set(newKey, value)
-    , Immutable.Map())
-
-  _createSandboxParams: ->
-    backend = @state.transformation.get('backend')
-    transformationType = @state.transformation.get('type')
-    nonDockerParams = Immutable.Map
-      configBucketId: @state.bucketId
-      transformations: [@state.transformationId]
-    dockerParams = Immutable.Map
-      type: if transformationType == 'python' then 'jupyter' else 'rstudio'
-      script: @state.transformation.get('queriesString')
-      input:
-        tables: @state.transformation.get('input').map(@_decamelizeTableInput)
-
-    return if backend == 'docker' then dockerParams else nonDockerParams
-
   render: ->
     backend = @state.transformation.get('backend')
     transformationType = @state.transformation.get('type')
@@ -172,7 +151,7 @@ module.exports = React.createClass
               React.createElement CreateSandboxButton,
                 backend: backend,
                 transformationType: transformationType,
-                runParams: @_createSandboxParams()
+                runParams: sandboxUtils.generateRunParameters(@state.transformation, @state.bucketId)
 
           if backend == 'redshift' or
               backend == 'mysql' && transformationType == 'simple'
