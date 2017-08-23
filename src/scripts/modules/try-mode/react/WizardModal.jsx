@@ -195,19 +195,20 @@ export default React.createClass({
   renderNavigation() {
     return (
       <ListGroup className="try-navigation">
-        {this.getLessonSteps().filter(function(step) {
-           return step.id < this.getStepsCount();
-         }, this).map((step) => {
-           if (this.isNavigationVisible()) {
-             return (
-               <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
-                 <span>
-                   {this.getLessonId()}.{step.id}. {step.title}
-                 </span>
-               </ListGroupItem>
-             );
-           }
-         })}
+        {
+          this.getLessonSteps().filter((step) => {
+            return step.id < this.getStepsCount();
+          }, this).map((step) => {
+            if (this.isNavigationVisible()) {
+              return (
+                <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
+                  <span>
+                    {this.getLessonId()}.{step.id}. {step.title}
+                  </span>
+                </ListGroupItem>
+              );
+            }
+          })}
       </ListGroup>
     );
   },
