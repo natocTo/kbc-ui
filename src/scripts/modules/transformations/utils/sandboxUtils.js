@@ -7,6 +7,11 @@ const _decamelizeTableInput = (table) => {
   }, Map());
 };
 
+const normalizeDockerInputMapping = (table) => {
+  const allowedKeys = ['source', 'destination', 'columns', 'days', 'where_column', 'where_operator', 'where_values', 'limit'];
+  return table.filter((value, key) => allowedKeys.includes(key));
+};
+
 export const hasSandbox = (backend, type) => {
   const mysqlSandbox = backend === 'mysql' && type === 'simple';
   const dockerSandbox = backend === 'docker' && ['python', 'r'].includes(type);
@@ -26,7 +31,10 @@ export const generateRunParameters = (transformation, bucketId) => {
     type: transformationType === 'python' ? 'jupyter' : 'rstudio',
     script: transformation.get('queriesString'),
     input: {
-      tables: transformation.get('input').map(_decamelizeTableInput)
+      tables: transformation
+        .get('input')
+        .map(_decamelizeTableInput)
+        .map(normalizeDockerInputMapping)
     }
   });
   return backend === 'docker' ? dockerParams : nonDockerParams;
