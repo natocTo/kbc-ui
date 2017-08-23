@@ -62,11 +62,11 @@ Dispatcher.register(function(payload) {
       credentials = Immutable.fromJS(action.credentials);
       _store = _store.set('credentials', credentials);
       _store = _store.set('touch', action.touch);
-      _store = _store.setIn(['pendingActions', 'create'], false);
+      _store = _store.deleteIn(['pendingActions', 'create']);
       return RStudioSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_CREATE_JOB_ERROR:
-      _store = _store.setIn(['pendingActions', 'create'], false);
+      _store = _store.deleteIn(['pendingActions', 'create']);
       return RStudioSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_DROP_JOB:
@@ -76,11 +76,11 @@ Dispatcher.register(function(payload) {
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_DROP_JOB_SUCCESS:
       _store = _store.set('credentials', Immutable.Map());
       _store = _store.set('touch', null);
-      _store = _store.setIn(['pendingActions', 'drop'], false);
+      _store = _store.deleteIn(['pendingActions', 'drop']);
       return RStudioSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_DROP_JOB_ERROR:
-      _store = _store.setIn(['pendingActions', 'drop'], false);
+      _store = _store.deleteIn(['pendingActions', 'drop']);
       return RStudioSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND:
@@ -89,11 +89,11 @@ Dispatcher.register(function(payload) {
 
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND_SUCCESS:
       _store = _store.set('touch', action.touch);
-      _store = _store.setIn(['pendingActions', 'extend'], false);
+      _store = _store.deleteIn(['pendingActions', 'extend']);
       return RStudioSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_EXTEND_ERROR:
-      _store = _store.setIn(['pendingActions', 'extend'], false);
+      _store = _store.deleteIn(['pendingActions', 'extend']);
       return RStudioSandboxCredentialsStore.emitChange();
 
     default:

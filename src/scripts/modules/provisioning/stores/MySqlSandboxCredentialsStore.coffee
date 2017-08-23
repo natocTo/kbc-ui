@@ -68,13 +68,13 @@ Dispatcher.register (payload) ->
       credentials = Immutable.fromJS(action.credentials)
       _store = _store.set 'credentials', credentials
       _store = _store.set 'touch', action.touch
-      _store = _store.setIn ['pendingActions', 'create'], false
+      _store = _store.deleteIn ['pendingActions', 'create']
       _store = _store.set 'isLoading', false
       _store = _store.set 'isLoaded', true
       MySqlSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_CREATE_ERROR
-      _store = _store.setIn ['pendingActions', 'create'], false
+      _store = _store.deleteIn ['pendingActions', 'create']
       _store = _store.set 'isLoading', false
       _store = _store.set 'isLoaded', false
       MySqlSandboxCredentialsStore.emitChange()
@@ -86,11 +86,11 @@ Dispatcher.register (payload) ->
     when Constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_DROP_SUCCESS
       _store = _store.set('credentials', Map())
       _store = _store.set 'touch', null
-      _store = _store.setIn ['pendingActions', 'drop'], false
+      _store = _store.deleteIn ['pendingActions', 'drop']
       MySqlSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_DROP_ERROR
-      _store = _store.setIn ['pendingActions', 'drop'], false
+      _store = _store.deleteIn ['pendingActions', 'drop']
       MySqlSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND
@@ -99,11 +99,11 @@ Dispatcher.register (payload) ->
 
     when Constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND_SUCCESS
       _store = _store.set 'touch', action.touch
-      _store = _store.setIn ['pendingActions', 'extend'], false
+      _store = _store.deleteIn ['pendingActions', 'extend']
       MySqlSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_MYSQL_SANDBOX_EXTEND_ERROR
-      _store = _store.setIn ['pendingActions', 'extend'], false
+      _store = _store.deleteIn ['pendingActions', 'extend']
       MySqlSandboxCredentialsStore.emitChange()
 
 

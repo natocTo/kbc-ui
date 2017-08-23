@@ -72,7 +72,7 @@ Dispatcher.register (payload) ->
     when constants.ActionTypes.CREDENTIALS_WRDB_CREATE_ERROR
       token = action.token
       permission = action.permission
-      _store = _store.deleteIn ['creatingCredentials', permission, token], true
+      _store = _store.deleteIn ['creatingCredentials', permission, token]
       provisioningStore.emitChange()
 
     when constants.ActionTypes.CREDENTIALS_WRDB_DROP

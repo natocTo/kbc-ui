@@ -61,7 +61,7 @@ RedshiftSandbox = React.createClass
             title: "Load tables into Redshift sandbox"
             mode: 'button'
             label: "Load data"
-            disabled: @state.pendingActions.get 'drop'
+            disabled: @state.pendingActions.size > 0
             runParams: ->
               component.state.sandboxConfiguration
             modalRunButtonDisabled: @state.sandboxConfiguration.get('include', Immutable.List()).size == 0
@@ -84,7 +84,7 @@ RedshiftSandbox = React.createClass
             button
               className: "btn btn-link"
               onClick: @_showSSLInfoModal
-              disabled: @state.pendingActions.get 'drop'
+              disabled: @state.pendingActions.size > 0
             ,
               span {className: 'fa fa-fw fa-lock '}
               " SSL"
@@ -92,7 +92,9 @@ RedshiftSandbox = React.createClass
         div {},
           DeleteButton
             tooltip: 'Delete Redshift Sandbox'
-            isPending: @state.pendingActions.get 'drop'
+            isPending: @state.pendingActions.size > 0
+            isEnabled: @state.pendingActions.size == 0
+            pendingLabel: 'Deleting sandbox'
             label: 'Drop sandbox'
             fixedWidth: true
             confirm:

@@ -13,7 +13,8 @@ module.exports = React.createClass({
     return {
       credentials: RStudioSandboxCredentialsStore.getCredentials(),
       isLoaded: RStudioSandboxCredentialsStore.getIsLoaded(),
-      isExtending: RStudioSandboxCredentialsStore.getPendingActions().get('extend', false)
+      isExtending: RStudioSandboxCredentialsStore.getPendingActions().get('extend', false),
+      isDisabled: RStudioSandboxCredentialsStore.getPendingActions().size > 0
     };
   },
 
@@ -23,6 +24,7 @@ module.exports = React.createClass({
         <ExtendCredentialsButton
           isExtending={this.state.isExtending}
           onExtend={ActionCreators.extendRStudioSandboxCredentials}
+          disabled={this.state.isDisabled}
         />
       );
     }

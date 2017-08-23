@@ -50,7 +50,7 @@ var JupyterSandbox = React.createClass({
               href={this._connectLink(this.state.credentials)}
               className="btn btn-link"
               target="_blank"
-              disabled={this.state.pendingActions.get('drop')}
+              disabled={this.state.pendingActions.size > 0}
             >
               <span className="fa fa-fw fa-database"/>
               &nbsp;Connect
@@ -59,6 +59,8 @@ var JupyterSandbox = React.createClass({
               <DeleteButton
                 tooltip="Delete Jupyter Sandbox"
                 isPending={this.state.pendingActions.get('drop')}
+                pendingLabel="Deleting sandbox"
+                isEnabled={this.state.pendingActions.size === 0}
                 label="Drop sandbox"
                 fixedWidth={true}
                 confirm={{

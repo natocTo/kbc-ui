@@ -13,7 +13,8 @@ module.exports = React.createClass({
     return {
       credentials: JupyterSandboxCredentialsStore.getCredentials(),
       isLoaded: JupyterSandboxCredentialsStore.getIsLoaded(),
-      isExtending: JupyterSandboxCredentialsStore.getPendingActions().get('extend', false)
+      isExtending: JupyterSandboxCredentialsStore.getPendingActions().get('extend', false),
+      isDisabled: JupyterSandboxCredentialsStore.getPendingActions().size > 0
     };
   },
 
@@ -23,6 +24,7 @@ module.exports = React.createClass({
         <ExtendCredentialsButton
           isExtending={this.state.isExtending}
           onExtend={ActionCreators.extendJupyterSandboxCredentials}
+          disabled={this.state.isDisabled}
         />
       );
     }

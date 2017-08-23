@@ -56,11 +56,11 @@ Dispatcher.register (payload) ->
     when Constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_CREATE_SUCCESS
       credentials = Immutable.fromJS(action.credentials)
       _store = _store.set 'credentials', credentials
-      _store = _store.setIn ['pendingActions', 'create'], false
+      _store = _store.deleteIn ['pendingActions', 'create']
       RedshiftSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_CREATE_ERROR
-      _store = _store.setIn ['pendingActions', 'create'], false
+      _store = _store.deleteIn ['pendingActions', 'create']
       RedshiftSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_DROP
@@ -69,11 +69,11 @@ Dispatcher.register (payload) ->
 
     when Constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_DROP_SUCCESS
       _store = _store.set('credentials', Map())
-      _store = _store.setIn ['pendingActions', 'drop'], false
+      _store = _store.deleteIn ['pendingActions', 'drop']
       RedshiftSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_DROP_ERROR
-      _store = _store.setIn ['pendingActions', 'drop'], false
+      _store = _store.deleteIn ['pendingActions', 'drop']
       RedshiftSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_REFRESH
@@ -83,11 +83,11 @@ Dispatcher.register (payload) ->
     when Constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_REFRESH_SUCCESS
       credentials = Immutable.fromJS(action.credentials)
       _store = _store.set 'credentials', credentials
-      _store = _store.setIn ['pendingActions', 'refresh'], false
+      _store = _store.deleteIn ['pendingActions', 'refresh']
       RedshiftSandboxCredentialsStore.emitChange()
 
     when Constants.ActionTypes.CREDENTIALS_REDSHIFT_SANDBOX_REFRESH_ERROR
-      _store = _store.setIn ['pendingActions', 'refresh'], false
+      _store = _store.deleteIn ['pendingActions', 'refresh']
       RedshiftSandboxCredentialsStore.emitChange()
 
 module.exports = RedshiftSandboxCredentialsStore

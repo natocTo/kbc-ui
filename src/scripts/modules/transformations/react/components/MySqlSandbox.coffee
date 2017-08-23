@@ -56,7 +56,7 @@ MySqlSandbox = React.createClass
             method: 'create-sandbox'
             mode: 'button'
             label: "Load data"
-            disabled: @state.pendingActions.get 'drop'
+            disabled: @state.pendingActions.size > 0
             runParams: ->
               component.state.sandboxConfiguration.toJS()
             modalRunButtonDisabled: @state.sandboxConfiguration.get('include', Immutable.List()).size == 0
@@ -76,7 +76,7 @@ MySqlSandbox = React.createClass
               className: "btn btn-link"
               title: 'Connect To Sandbox'
               type: 'submit'
-              disabled: @state.pendingActions.get 'drop'
+              disabled: @state.pendingActions.size > 0
             ,
               span {className: 'fa fa-fw fa-database'}
               " Connect"
@@ -89,7 +89,7 @@ MySqlSandbox = React.createClass
             button
               className: "btn btn-link"
               onClick: @_showSSLInfoModal
-              disabled: @state.pendingActions.get 'drop'
+              disabled: @state.pendingActions.size > 0
             ,
               span {className: 'fa fa-fw fa-lock '}
               " SSL"
@@ -100,6 +100,8 @@ MySqlSandbox = React.createClass
             tooltip: 'Delete MySQL Sandbox'
             isPending: @state.pendingActions.get 'drop'
             fixedWidth: true
+            isEnabled: @state.pendingActions.size == 0
+            pendingLabel: 'Deleting sandbox'
             confirm:
               title: 'Delete MySQL Sandbox'
               text: 'Do you really want to delete the MySQL sandbox?'

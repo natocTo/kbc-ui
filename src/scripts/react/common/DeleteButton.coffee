@@ -22,6 +22,7 @@ module.exports = React.createClass
     isPending: React.PropTypes.bool
     isEnabled: React.PropTypes.bool
     label: React.PropTypes.string
+    pendingLabel: React.PropTypes.string
     fixedWidth: React.PropTypes.bool
     icon: React.PropTypes.string
     componentId: React.PropTypes.string
@@ -31,16 +32,19 @@ module.exports = React.createClass
     isPending: false
     isEnabled: true
     label: ''
+    pendingLabel: ''
     fixedWidth: false
     icon: 'kbc-icon-cup'
 
   render: ->
     if @props.isPending
-      React.DOM.span className: 'btn btn-link',
-        Loader()
+      React.DOM.span className: 'btn btn-link', disabled: true,
+        Loader className: 'fa-fw'
+        if @props.pendingLabel then ' ' + @props.pendingLabel
     else if !@props.isEnabled
-      React.DOM.span className: 'btn btn-link disabled',
-        React.DOM.em className: @props.icon
+      button className: 'btn btn-link disabled', disabled: true,
+        i className: classnames('fa', @props.icon, 'fa-fw': @props.fixedWidth)
+        if @props.label then ' ' + @props.label
     else
       if trashUtils.isObsoleteComponent(@props.componentId)
         Confirm assign({}, buttonLabel: 'Delete', @props.confirm),

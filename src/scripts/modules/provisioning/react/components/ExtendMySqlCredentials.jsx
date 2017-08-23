@@ -13,7 +13,8 @@ module.exports = React.createClass({
     return {
       credentials: MySqlSandboxCredentialsStore.getCredentials(),
       isLoaded: MySqlSandboxCredentialsStore.getIsLoaded(),
-      isExtending: MySqlSandboxCredentialsStore.getPendingActions().get('extend', false)
+      isExtending: MySqlSandboxCredentialsStore.getPendingActions().has('extend'),
+      isDisabled: MySqlSandboxCredentialsStore.getPendingActions().size > 0
     };
   },
 
@@ -23,6 +24,7 @@ module.exports = React.createClass({
         <ExtendCredentialsButton
           isExtending={this.state.isExtending}
           onExtend={ActionCreators.extendMySqlSandboxCredentials}
+          disabled={this.state.isDisabled}
         />
       );
     }

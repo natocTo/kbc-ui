@@ -55,11 +55,11 @@ Dispatcher.register(function(payload) {
     case Constants.ActionTypes.CREDENTIALS_SNOWFLAKE_SANDBOX_CREATE_SUCCESS:
       credentials = Immutable.fromJS(action.credentials);
       _store = _store.set('credentials', credentials);
-      _store = _store.setIn(['pendingActions', 'create'], false);
+      _store = _store.deleteIn(['pendingActions', 'create']);
       return SnowflakeSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_SNOWFLAKE_SANDBOX_CREATE_ERROR:
-      _store = _store.setIn(['pendingActions', 'create'], false);
+      _store = _store.deleteIn(['pendingActions', 'create']);
       return SnowflakeSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_SNOWFLAKE_SANDBOX_DROP:
@@ -68,11 +68,11 @@ Dispatcher.register(function(payload) {
 
     case Constants.ActionTypes.CREDENTIALS_SNOWFLAKE_SANDBOX_DROP_SUCCESS:
       _store = _store.set('credentials', Immutable.Map());
-      _store = _store.setIn(['pendingActions', 'drop'], false);
+      _store = _store.deleteIn(['pendingActions', 'drop']);
       return SnowflakeSandboxCredentialsStore.emitChange();
 
     case Constants.ActionTypes.CREDENTIALS_SNOWFLAKE_SANDBOX_DROP_ERROR:
-      _store = _store.setIn(['pendingActions', 'drop'], false);
+      _store = _store.deleteIn(['pendingActions', 'drop']);
       return SnowflakeSandboxCredentialsStore.emitChange();
 
     default:

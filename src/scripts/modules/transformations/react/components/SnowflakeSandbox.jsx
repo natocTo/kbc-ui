@@ -58,7 +58,7 @@ var SnowflakeSandbox = React.createClass({
               runParams={() => {
                 return state.sandboxConfiguration.toJS();
               }}
-              disabled={this.state.pendingActions.get('drop')}
+              disabled={this.state.pendingActions.size > 0}
               modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', Immutable.List()).size === 0}
             >
                 <ConfigureSandbox
@@ -77,7 +77,7 @@ var SnowflakeSandbox = React.createClass({
               href={connectLink}
               className="btn btn-link"
               target="_blank"
-              disabled={this.state.pendingActions.get('drop')}
+              disabled={this.state.pendingActions.size > 0}
             >
               <span className="fa fa-fw fa-database"/>
               &nbsp;Connect
@@ -86,6 +86,8 @@ var SnowflakeSandbox = React.createClass({
               <DeleteButton
                 tooltip="Delete Snowflake Sandbox"
                 isPending={this.state.pendingActions.get('drop')}
+                pendingLabel="Deleting sandbox"
+                isEnabled={this.state.pendingActions.size === 0}
                 label="Drop sandbox"
                 fixedWidth={true}
                 confirm={{
