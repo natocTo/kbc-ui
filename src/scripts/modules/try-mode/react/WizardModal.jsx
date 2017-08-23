@@ -22,61 +22,61 @@ export default React.createClass({
   },
   render: function() {
     return (
-        <div>
-          {this.renderFloatNext()}
-          <Modal
-            enforceFocus={false}
-            show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
-               className={'try-wizard try-wizard-' + this.getStepPosition()}>
+      <div>
+        {this.renderFloatNext()}
+        <Modal
+          enforceFocus={false}
+          show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
+          className={'try-wizard try-wizard-' + this.getStepPosition()}>
 
           <Modal.Header closeButton>
-              { this.getStepPosition() === 'center' ? (
-                  this.getModalTitleExtended()
-              ) : (
-                  this.getModalTitle()
-              )}
+            { this.getStepPosition() === 'center' ? (
+                this.getModalTitleExtended()
+            ) : (
+                this.getModalTitle()
+            )}
           </Modal.Header>
           <Modal.Body>
             {this.isLastStep()}
             <div className="row">
               <div className="col-md-12">
                 {!this.isLastStep() &&
-                <p>{this.getStepText()}</p>
+                 <p>{this.getStepText()}</p>
                 }
                 {!this.isFirstStep() &&
-                  <div>
-                    <div className="try-media">
-                      {this.renderMedia()}
-                    </div>
-                    {this.renderNavigation()}
-                  </div>
+                 <div>
+                   <div className="try-media">
+                     {this.renderMedia()}
+                   </div>
+                   {this.renderNavigation()}
+                 </div>
                 }
                 {this.isLastStep() &&
-                <p className="try-congratulations">
-                  {this.getStepText()}
-                </p>
+                 <p className="try-congratulations">
+                   {this.getStepText()}
+                 </p>
                 }
               </div>
             </div>
-              {this.isFirstStep() &&
-                  <div className="row">
-                    <div className="col-md-6">
-                      {this.renderNavigation()}
-                    </div>
-                    <div className="col-md-6">
-                      <div className="try-media">
-                        {this.renderMedia()}
-                      </div>
-                    </div>
-                  </div>
-              }
+            {this.isFirstStep() &&
+             <div className="row">
+               <div className="col-md-6">
+                 {this.renderNavigation()}
+               </div>
+               <div className="col-md-6">
+                 <div className="try-media">
+                   {this.renderMedia()}
+                 </div>
+               </div>
+             </div>
+            }
           </Modal.Body>
           <Modal.Footer>
             {this.renderButtonPrev()}
             {this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
-          </div>
+      </div>
     );
   },
   getActiveStep() {
@@ -176,7 +176,7 @@ export default React.createClass({
     }
     if (this.state.step !== this.getStepsCount()) {
       return (
-          <Button onClick={this.decreaseStep} bsStyle="link">{buttonText}</Button>
+        <Button onClick={this.decreaseStep} bsStyle="link">{buttonText}</Button>
       );
     }
     return '';
@@ -194,21 +194,21 @@ export default React.createClass({
   },
   renderNavigation() {
     return (
-        <ListGroup className="try-navigation">
-          {this.getLessonSteps().filter(function(step) {
-            return step.id < this.getStepsCount();
-          }, this).map((step) => {
-            if (this.isNavigationVisible()) {
-              return (
-                  <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
-                    <span>
-                      {this.getLessonId()}.{step.id}. {step.title}
-                    </span>
-                  </ListGroupItem>
-              );
-            }
-          })}
-        </ListGroup>
+      <ListGroup className="try-navigation">
+        {this.getLessonSteps().filter(function(step) {
+           return step.id < this.getStepsCount();
+         }, this).map((step) => {
+           if (this.isNavigationVisible()) {
+             return (
+               <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
+                 <span>
+                   {this.getLessonId()}.{step.id}. {step.title}
+                 </span>
+               </ListGroupItem>
+             );
+           }
+         })}
+      </ListGroup>
     );
   },
   closeLessonModal() {
