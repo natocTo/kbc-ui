@@ -1,7 +1,7 @@
 import React from 'react';
 import WizardModal from './WizardModal';
 import WizardStore from '../stores/WizardStore';
-import { hideWizardModalFn } from '../stores/ActionCreators.js';
+import { hideWizardModalFn, registerNextStepAction } from '../stores/ActionCreators.js';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
 
@@ -22,6 +22,7 @@ module.exports = React.createClass({
     }
     return (
       <WizardModal
+        registerNextStepAction={registerNextStepAction}
         show={this.state.wizard.showLessonModal}
         onHide={hideWizardModalFn}
         position="aside"

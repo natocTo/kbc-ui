@@ -13,7 +13,8 @@ export default React.createClass({
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
-    lesson: React.PropTypes.number.isRequired
+    lesson: React.PropTypes.number.isRequired,
+    registerNextStepAction: React.PropTypes.func.isRequired
   },
   getInitialState() {
     return {
@@ -222,6 +223,7 @@ export default React.createClass({
         step: this.state.step - 1
       }, () => {
         this.goToSubpage();
+        this.setPreviousPagePredicate();
       });
     } else {
       this.closeLessonModal();
@@ -233,6 +235,7 @@ export default React.createClass({
         step: this.state.step + 1
       }, () => {
         this.goToSubpage();
+        this.setNextPagePredicate();
       });
     } else {
       this.closeLessonModal();
@@ -240,5 +243,13 @@ export default React.createClass({
   },
   goToSubpage() {
     return RoutesStore.getRouter().transitionTo(this.getStepLink());
+  },
+
+  setPreviousPagePredicate() {
+
+  },
+
+  setNextPagePredicate() {
+    this.props.registerNextStepAction(this.getLessonSteps()[this.state.step].nextStepActions);
   }
 });
