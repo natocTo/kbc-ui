@@ -56,6 +56,7 @@ export default React.createClass({
             <span className={'text-' + this.props.progressStatus}>
               {this.renderStatusIcon()} {this.props.progress}
               <span />
+              {' '}
               {this.props.jobId ? <Link to="jobDetail" params={{jobId: this.props.jobId}}>More details</Link> : null}
             </span>
           </div>
