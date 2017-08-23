@@ -74,7 +74,6 @@ export default React.createClass({
           {isPython ?
            <JupyterCredentials
              validUntil={this.state.validUntil}
-             type={this.props.type}
              credentials={this.state.credentials}
              isLoading={this.state.isLoading}
              isCreating={this.state.pendingActions.get('create')}/>

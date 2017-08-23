@@ -8,16 +8,15 @@ module.exports = React.createClass({
   propTypes: {
     credentials: React.PropTypes.object,
     validUntil: React.PropTypes.string,
-    isCreating: React.PropTypes.bool,
-    isLoading: React.PropTypes.bool
+    isCreating: React.PropTypes.bool
   },
   render: function() {
-    if (this.props.isCreating || this.props.isLoading) {
+    if (this.props.isCreating) {
       return (
         <div>
           <span>
             <Loader />
-            &nbsp;{this.props.isCreating ? 'Creating sandbox' : 'Loading credentials' }
+            &nbsp;Creating sandbox
           </span>
         </div>
       );
@@ -55,3 +54,4 @@ module.exports = React.createClass({
     );
   }
 });
+
