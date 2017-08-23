@@ -24,7 +24,9 @@ export default React.createClass({
     return (
         <div>
           {this.renderFloatNext()}
-        <Modal show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
+          <Modal
+            enforceFocus={false}
+            show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
                className={'try-wizard try-wizard-' + this.getStepPosition()}>
 
           <Modal.Header closeButton>
