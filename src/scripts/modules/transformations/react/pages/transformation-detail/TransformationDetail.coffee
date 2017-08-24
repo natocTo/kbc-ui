@@ -20,6 +20,8 @@ CreateSandboxButton = require('../../components/CreateSandboxButton').default
 SqlDepModal = React.createFactory(require './../../modals/SqlDepModal')
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
 
+sandboxUtils = require('../../../utils/sandboxUtils')
+
 {div, span, ul, li, a, em} = React.DOM
 
 module.exports = React.createClass
@@ -96,6 +98,8 @@ module.exports = React.createClass
     @state.transformation.get('backend') == 'docker'
 
   render: ->
+    backend = @state.transformation.get('backend')
+    transformationType = @state.transformation.get('type')
     div className: 'container-fluid',
       div className: 'col-md-9 kbc-main-content',
           TransformationDetailStatic
@@ -142,21 +146,18 @@ module.exports = React.createClass
               isPending: @state.pendingActions.has 'save-disabled'
               onChange: @_handleActiveChange
 
-          if @state.transformation.get('backend') == 'redshift' or
-          @state.transformation.get('backend') == 'mysql' && @state.transformation.get('type') == 'simple' or
-          @state.transformation.get('backend') == 'snowflake'
+          if sandboxUtils.hasSandbox(backend, transformationType)
             li {},
               React.createElement CreateSandboxButton,
-                backend: @state.transformation.get("backend")
-                runParams: Immutable.Map
-                  configBucketId: @state.bucketId
-                  transformations: [@state.transformationId]
+                backend: backend,
+                transformationType: transformationType,
+                runParams: sandboxUtils.generateRunParameters(@state.transformation, @state.bucketId)
 
-          if @state.transformation.get('backend') == 'redshift' or
-              @state.transformation.get('backend') == 'mysql' && @state.transformation.get('type') == 'simple'
+          if backend == 'redshift' or
+              backend == 'mysql' && transformationType == 'simple'
             li {},
               SqlDepModal
-                backend: @state.transformation.get('backend')
+                backend: backend
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
               ,
@@ -180,4 +181,3 @@ module.exports = React.createClass
             ,
               span className: 'fa fa-question-circle fa-fw'
               ' Documentation'
-

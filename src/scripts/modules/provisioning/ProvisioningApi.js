@@ -4,6 +4,14 @@ import ComponentsStore from '../components/stores/ComponentsStore';
 import JobPoller from '../../utils/jobPoller';
 // import later from 'later';
 
+const checkJobResult = (jobResponse) => {
+  if (jobResponse.status === 'error') {
+    throw jobResponse;
+  } else {
+    return jobResponse;
+  }
+};
+
 const createUrl = function(path) {
   const  baseUrl = ComponentsStore.getComponent('provisioning').get('uri');
   return baseUrl + '/' + path;
@@ -68,7 +76,7 @@ const ProvisioningApi = {
       .send(requestData)
       .promise()
       .then(function(response) {
-        return JobPoller.poll(sapiToken, response.body.url, 1000);
+        return JobPoller.poll(sapiToken, response.body.url, 1000).then(checkJobResult);
       })
       .then(function() {
         return ProvisioningApi.getCredentials('docker', credentialsType);
@@ -80,7 +88,7 @@ const ProvisioningApi = {
     return createRequest('DELETE', 'async/' + backend + '/' + credentialsId)
       .promise()
       .then(function(response) {
-        return JobPoller.poll(sapiToken, response.body.url, 1000);
+        return JobPoller.poll(sapiToken, response.body.url, 1000).then(checkJobResult);
       })
       .then(function(jobResult) {
         return jobResult.result;

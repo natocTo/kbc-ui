@@ -5,6 +5,7 @@ import Tooltip from './../../../../react/common/Tooltip';
 export default React.createClass({
   propTypes: {
     backend: PropTypes.string.isRequired,
+    transformationType: PropTypes.string.isRequired,
     runParams: PropTypes.object.isRequired,
     mode: PropTypes.oneOf(['link', 'button'])
   },
@@ -59,6 +60,7 @@ export default React.createClass({
       },
       defaultMode: 'prepare',
       backend: this.props.backend,
+      transformationType: this.props.transformationType,
       runParams: this.props.runParams
     });
   }
