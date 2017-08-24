@@ -1,9 +1,9 @@
 import Dispatcher from '../../../Dispatcher';
 
-const ActionTypes = {
+export const ActionTypes = {
   UPDATE_WIZARD_MODAL_STATE: 'UPDATE_WIZARD_MODAL_STATE',
   DISABLE_TRY_MODE: 'DISABLE_TRY_MODE',
-  TRY_WIZARD_NEXT_ACTION_REGISTER: 'TRY_WIZARD_NEXT_ACTION_REGISTER'
+  TRY_WIZARD_SET_STEP: 'TRY_WIZARD_SET_STEP'
 };
 
 export const disableTryMode = () => {
@@ -22,10 +22,10 @@ export const hideWizardModalFn = () => {
   });
 };
 
-export const registerNextStepAction = (action) => {
+export const setStep = (newStep) => {
   Dispatcher.handleViewAction({
-    type: ActionTypes.TRY_WIZARD_NEXT_ACTION_REGISTER,
-    action: action
+    type: ActionTypes.TRY_WIZARD_SET_STEP,
+    step: newStep
   });
 };
 

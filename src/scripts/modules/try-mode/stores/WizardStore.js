@@ -1,21 +1,18 @@
 import Dispatcher from '../../../Dispatcher';
 import StoreUtils from '../../../utils/StoreUtils';
+import {ActionTypes} from './ActionCreators';
+import wizardLessons from '../WizardLessons.json';
 
 let store = {
   showLessonModal: false,
   lessonNumber: 0,
-  nextStepAction: null,
-  nextActionOccured: false
+  step: 1
 };
 
-const ActionTypes = {
-  UPDATE_WIZARD_MODAL_STATE: 'UPDATE_WIZARD_MODAL_STATE'
-};
 
 const WizardStore = StoreUtils.createStore({
-  getState() {
-    return store;
-  }
+  getState: () => store,
+  getCurrentLesson: () => wizardLessons[store.lessonNumber]
 });
 
 Dispatcher.register((payload) => {
@@ -25,19 +22,20 @@ Dispatcher.register((payload) => {
     const isNextAction = Object.keys(store.nextStepAction).reduce((memo, key) => memo && nextAction[key] === action[key], true);
     if (isNextAction) {
       store.nextStepAction = null;
-      store.nextActionOccured = true;
+      store.step++;
       // todo - tu musi byt step++ preniest zo stavgu modalu
       WizardStore.emitChange();
     }
   }
   switch (action.type) {
-    case ActionTypes.TRY_WIZARD_NEXT_ACTION_REGISTER:
-      store.nextStepAction = action.action;
+    case ActionTypes.TRY_WIZARD_SET_STEP:
+      store.step = action.step;
       return WizardStore.emitChange();
     case ActionTypes.UPDATE_WIZARD_MODAL_STATE:
       store = {
         showLessonModal: action.showLessonModal,
-        lessonNumber: action.lessonNumber
+        lessonNumber: action.lessonNumber,
+        step: action.showLessonModal ? store.step : 1
       };
       return WizardStore.emitChange();
     default:

@@ -2,25 +2,20 @@ import React from 'react';
 import {Modal, Button, ListGroup, ListGroupItem, ResponsiveEmbed} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
-import lessons from '../WizardLessons.json';
 import TryModeImage from './TryModeImage';
 
 export default React.createClass({
   displayName: 'WizardModal',
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
+    setStep: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
-    lesson: React.PropTypes.number.isRequired,
-    registerNextStepAction: React.PropTypes.func.isRequired
+    lesson: React.PropTypes.number.isRequired
   },
-  getInitialState() {
-    return {
-      step: this.props.step
-    };
-  },
+
   render: function() {
     return (
       <div>
@@ -81,10 +76,10 @@ export default React.createClass({
     );
   },
   getActiveStep() {
-    return this.state.step - 1;
+    return this.props.step - 1;
   },
   getLesson() {
-    return lessons[this.props.lesson];
+    return this.props.lesson;
   },
   getLessonSteps() {
     return this.getLesson().steps;
@@ -172,10 +167,10 @@ export default React.createClass({
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
-    if (this.state.step === 1) {
+    if (this.props.step === 1) {
       buttonText = 'Close';
     }
-    if (this.state.step !== this.getStepsCount()) {
+    if (this.props.step !== this.getStepsCount()) {
       return (
         <Button onClick={this.decreaseStep} bsStyle="link">{buttonText}</Button>
       );
@@ -184,9 +179,9 @@ export default React.createClass({
   },
   renderButtonNext() {
     let buttonText = 'Next step';
-    if (this.state.step === 1) {
+    if (this.props.step === 1) {
       buttonText = 'Take lesson';
-    } else if (this.state.step === this.getStepsCount()) {
+    } else if (this.props.step === this.getStepsCount()) {
       buttonText = 'Close';
     }
     return (
@@ -218,38 +213,23 @@ export default React.createClass({
     hideWizardModalFn();
   },
   decreaseStep() {
-    if (this.state.step > 1) {
-      this.setState({
-        step: this.state.step - 1
-      }, () => {
-        this.goToSubpage();
-        this.setPreviousPagePredicate();
-      });
+    if (this.props.step > 1) {
+      this.props.setStep(this.props.step - 1);
+      this.goToSubpage();
     } else {
       this.closeLessonModal();
     }
   },
+
   increaseStep() {
-    if (this.state.step < this.getStepsCount()) {
-      this.setState({
-        step: this.state.step + 1
-      }, () => {
-        this.goToSubpage();
-        this.setNextPagePredicate();
-      });
+    if (this.props.step < this.getStepsCount()) {
+      this.props.setStep(this.props.step + 1);
+      this.goToSubpage();
     } else {
       this.closeLessonModal();
     }
   },
   goToSubpage() {
     return RoutesStore.getRouter().transitionTo(this.getStepLink());
-  },
-
-  setPreviousPagePredicate() {
-
-  },
-
-  setNextPagePredicate() {
-    this.props.registerNextStepAction(this.getLessonSteps()[this.state.step].nextStepActions);
   }
 });
