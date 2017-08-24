@@ -76,7 +76,7 @@ export default React.createClass({
     );
   },
   getActiveStep() {
-    return this.props.step - 1;
+    return this.props.step;
   },
   getLesson() {
     return this.props.lesson;
@@ -161,16 +161,16 @@ export default React.createClass({
   },
   renderFloatNext() {
     let floatPoint = this.getLessonSteps()[this.getActiveStep()].floatNext;
-    if (typeof floatPoint !== 'undefined') {
+    if (floatPoint) {
       return (<div className="try-float-next-wrapper" onClick={this.increaseStep} style={{left: floatPoint.x, top: floatPoint.y}}><div className="try-float-next">Next</div></div>);
     }
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
-    if (this.props.step === 1) {
+    if (this.props.step === 0) {
       buttonText = 'Close';
     }
-    if (this.props.step !== this.getStepsCount()) {
+    if (this.props.step !== this.getStepsCount() - 1) {
       return (
         <Button onClick={this.decreaseStep} bsStyle="link">{buttonText}</Button>
       );
@@ -179,9 +179,9 @@ export default React.createClass({
   },
   renderButtonNext() {
     let buttonText = 'Next step';
-    if (this.props.step === 1) {
+    if (this.props.step === 0) {
       buttonText = 'Take lesson';
-    } else if (this.props.step === this.getStepsCount()) {
+    } else if (this.props.step === this.getStepsCount() - 1) {
       buttonText = 'Close';
     }
     return (
@@ -213,23 +213,28 @@ export default React.createClass({
     hideWizardModalFn();
   },
   decreaseStep() {
-    if (this.props.step > 1) {
-      this.props.setStep(this.props.step - 1);
-      this.goToSubpage();
+    if (this.props.step > 0) {
+      const nextStep = this.props.step - 1;
+      this.props.setStep(nextStep);
+      this.goToSubpage(nextStep);
     } else {
       this.closeLessonModal();
     }
   },
 
   increaseStep() {
-    if (this.props.step < this.getStepsCount()) {
-      this.props.setStep(this.props.step + 1);
-      this.goToSubpage();
+    if (this.props.step < this.getStepsCount() - 1) {
+      const nextStep = this.props.step + 1;
+      this.props.setStep(nextStep);
+      this.goToSubpage(nextStep);
     } else {
       this.closeLessonModal();
     }
   },
-  goToSubpage() {
-    return RoutesStore.getRouter().transitionTo(this.getStepLink());
+  goToSubpage(nextStep) {
+    const nextLink = this.getLessonSteps()[nextStep].link;
+    if (nextLink) {
+      return RoutesStore.getRouter().transitionTo(nextLink);
+    }
   }
 });
