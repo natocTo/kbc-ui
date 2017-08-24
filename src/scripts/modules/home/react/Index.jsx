@@ -11,7 +11,7 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../try-mode/stores/ActionCreators.js';
-import lessons from '../../try-mode/WizardLessons.json';
+import lessons from '../../try-mode/WizardLessons';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore)],
