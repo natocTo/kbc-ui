@@ -34,7 +34,6 @@ export default React.createClass({
   },
 
   onHide() {
-    if (this.props.isRunning) return;
     this.props.onHide();
   },
 
