@@ -14,9 +14,9 @@ export default function(queries) {
     });
     setTimeout(function() {
       if (!success) {
-        worker.terminate();
         reject();
       }
+      worker.terminate();
     }, maxSqlExecutionTime);
   });
   return promise;
