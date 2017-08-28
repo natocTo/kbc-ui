@@ -105,7 +105,7 @@ export default {
         'backdrop': false,
         'title': 'Lesson 2 - Create configuration',
         'link': 'extractors',
-        'incStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
+        'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'isNavigationVisible': true,
         'text': 'Because the two data tables are stored in a Snowflake database, we’ll be using the Snowflake extractor. By configuring it, we’ll specify what data to extract and how.',
         'media': '',

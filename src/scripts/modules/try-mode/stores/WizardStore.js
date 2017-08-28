@@ -26,8 +26,8 @@ const WizardStore = StoreUtils.createStore({
 
 Dispatcher.register((payload) => {
   let action = payload.action;
-  const  incStepDispatchAction = WizardStore.getCurrentStep().incStepDispatchAction;
-  if (incStepDispatchAction && containsAction(action, incStepDispatchAction)) {
+  const  nextStepDispatchAction = WizardStore.getCurrentStep().nextStepDispatchAction;
+  if (nextStepDispatchAction && containsAction(action, nextStepDispatchAction)) {
     store.step = store.step + 1;
     return WizardStore.emitChange();
   }
