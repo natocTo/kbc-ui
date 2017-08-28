@@ -129,11 +129,11 @@ export default {
         'isNavigationVisible': true,
         'text': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection',
         markdown: `
-- Click on **Setup Database Credentials** and set
-- **Host** to \`kebooladev.snowflakecomputing.com\`,
-- **Port** to \`443\`, and
-- **Username**, **Password**, **Database** and **Schema** to \`HELP_TUTORIAL\`.
-- **Warehouse** to \`DEV\`.
+Click on **Setup Database Credentials** and set
+- Host to \`kebooladev.snowflakecomputing.com\`
+- Port to \`443\`
+- Username, Password, Database and Schema to \`HELP_TUTORIAL\`
+- Warehouse to \`DEV\`
 
 Click on **Save** and return back to the configuration index page.
 `,
