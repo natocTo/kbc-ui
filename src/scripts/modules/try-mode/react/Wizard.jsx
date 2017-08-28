@@ -18,6 +18,8 @@ module.exports = React.createClass({
   },
 
   render() {
+    document.body.className += ' ' + 'try-mode';
+
     if (!this.state.wizard.showLessonModal || this.state.wizard.lessonNumber === 0) {
       return null;
     }

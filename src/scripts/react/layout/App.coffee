@@ -43,8 +43,7 @@ App = React.createClass
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
   render: ->
     div className: classnames(
-      snowflake: ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo'),
-      'try-mode': @state.projectHasTryModeOn == 1
+      snowflake: ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo')
     ),
       if @state.projectHasTryModeOn == 1
         div className: 'try-status-bar',
