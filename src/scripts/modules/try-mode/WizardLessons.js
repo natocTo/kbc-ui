@@ -1,5 +1,7 @@
 import ComponentsConstants from '../components/Constants';
-const {COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS} = ComponentsConstants.ActionTypes;
+// import kbcConstants from '../../constants/KbcConstants';
+const {INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS} = ComponentsConstants.ActionTypes;
+
 export default {
   '1': {
     'id': 1,
@@ -103,54 +105,66 @@ export default {
         'id': 2,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Create configuration',
+        'title': 'Lesson 2 - Create Database Extractor',
         'link': 'extractors',
         'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'isNavigationVisible': true,
         'text': 'Because the two data tables are stored in a Snowflake database, we’ll be using the Snowflake extractor. By configuring it, we’ll specify what data to extract and how.',
+        'markdown': `
+### Create Snowflake Extractor Configuration
+
+- Clink on **+ New Extractor**
+- Find **Snowflake**. You can use the search feature to find it quickly.
+- Click on **More** and continue with **Create New Configuration**
+- Name the configuration and click on **Create**
+
+`,
         'media': '',
         'mediaType': ''
       }, {
         'id': 3,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Composition',
+        'title': 'Lesson 2 - Setup Database Connection',
         'isNavigationVisible': true,
-        'text': 'After naming our new configuration of the extractor and providing credentials to access the source database where the data is stored, it’s time to actually extract the data. It’s done using SQL queries. To extract our two tables, we need to write two queries, one for each table.',
+        'text': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection',
+        markdown: `
+- Click on **Setup Database Credentials** and set
+- **Host** to \`kebooladev.snowflakecomputing.com\`,
+- **Port** to \`443\`, and
+- **Username**, **Password**, **Database** and **Schema** to \`HELP_TUTORIAL\`.
+- **Warehouse** to \`DEV\`.
+
+Click on **Save** and return back to the configuration index page.
+`,
+        nextStepDispatchAction: {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'media': '',
         'mediaType': ''
       }, {
         'id': 4,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Composition',
-        'link': 'extractors/keboola.ex-db-snowflake/282225922/new-query',
+        'title': 'Lesson 2 - Create SQL Query',
         'isNavigationVisible': true,
-        'text': 'Each database query needs to have a name and an SQL command. The new output table that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.',
+        markdown: `
+Each database query needs to have a **name** and an **SQL command**. The new **output table** that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.
+
+Start by clicking on **+ Add Query** then create and save the following query:
+- \`SELECT * FROM cars;\` with output table \`in.c-tutorial.cars\``,
+        nextStepDispatchAction: {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'media': '',
         'mediaType': ''
       }, {
         'id': 5,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Composition',
-        'link': 'home',
-        'isNavigationVisible': true,
-        'text': 'Similarly, we create a query to extract info about population.',
-        'media': '',
-        'mediaType': ''
-      }, {
-        'id': 6,
-        'position': 'aside',
-        'backdrop': false,
-        'title': 'Lesson 2 - Composition',
-        'link': 'home',
+        'title': 'Lesson 2 - Run Extracion',
         'isNavigationVisible': false,
         'text': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage.',
         'media': '',
         'mediaType': ''
       }, {
-        'id': 7,
+        'id': 6,
         'position': 'center',
         'backdrop': true,
         'title': 'Lesson 2 - Composition',
