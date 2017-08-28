@@ -357,7 +357,8 @@ module.exports = React.createClass
         transformation: @props.transformation
         isEditing: @props.editingFields.has('queriesString')
         isSaving: @props.pendingActions.has('save-queriesString')
-        queries: @props.editingFields.get('queriesString', @props.transformation.get("queriesString"))
+        queries: @props.editingFields.get('queriesString', @props.transformation.get('queriesString'))
+        splitQueries: @props.editingFields.get('splitQueries', @props.transformation.get('queries'))
         isEditingValid: @props.isEditingValid
         isChanged: @props.editingFields.get('queriesChanged', false)
         highlightQueryNumber: @props.highlightQueryNumber
