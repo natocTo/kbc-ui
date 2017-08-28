@@ -29,6 +29,8 @@ export const generateRunParameters = (transformation, bucketId) => {
   });
   const dockerParams = Map({
     type: transformationType === 'python' ? 'jupyter' : 'rstudio',
+    packages: transformation.get('packages'),
+    tags: transformation.get('tags'),
     script: transformation.get('queriesString'),
     input: {
       tables: transformation
