@@ -7,11 +7,10 @@ import {List} from 'immutable';
  * @return {Object} List of queries
  */
 export default function splitSqlQueries(queries) {
-  const regex = '\s*((?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|' +
-      '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\#.*|\\/\\*[\\w\\W]*?(?=\\*\\/)\\*\\/|--.*|[^"\';#])+(?:;|$))',
-    re = new RegExp(regex, 'g');
-
-  return List(queries.match(re))
+  const regex = /\s*((?:'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'|"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\/\*[^*]*\*+(?:[^*\/][^*]*\*+)*\/|#.*|--.*|[^"';#])+(?:;|$))/g;
+  const re = new RegExp(regex, 'g');
+  const matches = queries.match(re);
+  return List(matches)
     .filter((line) => line.trim() !== '')
     .map((line) => line.trim());
 }
