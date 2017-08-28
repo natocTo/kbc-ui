@@ -3,6 +3,7 @@ import {Modal, Button, ListGroup, ListGroupItem, ResponsiveEmbed} from 'react-bo
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import TryModeImage from './TryModeImage';
+import Remarkable from 'react-remarkable';
 
 export default React.createClass({
   displayName: 'WizardModal',
@@ -37,7 +38,10 @@ export default React.createClass({
             <div className="row">
               <div className="col-md-12">
                 {!this.isLastStep() &&
-                 <p>{this.getStepText()}</p>
+                 <span>
+                   <p>{this.getStepText()}</p>
+                   <Remarkable source={this.getCurrentStep().markdown} />
+                 </span>
                 }
                 {!this.isFirstStep() &&
                  <div>
@@ -48,9 +52,12 @@ export default React.createClass({
                  </div>
                 }
                 {this.isLastStep() &&
-                 <p className="try-congratulations">
-                   {this.getStepText()}
-                 </p>
+                 <span>
+                   <p className="try-congratulations">
+                     {this.getStepText()}
+                   </p>
+                   <Remarkable source={this.getCurrentStep().markdown} />
+                 </span>
                 }
               </div>
             </div>
@@ -93,6 +100,11 @@ export default React.createClass({
   getStepsCount() {
     return this.getLessonSteps().length;
   },
+
+  getCurrentStep() {
+    return this.getLessonSteps()[this.getActiveStep()];
+  },
+
   getStepId() {
     return this.getLessonSteps()[this.getActiveStep()].id;
   },
