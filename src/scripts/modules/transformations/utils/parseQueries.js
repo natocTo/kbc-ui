@@ -1,23 +1,10 @@
-const maxSqlExecutionTime = 2000;
-import Promise from 'bluebird';
+import {List} from 'immutable';
+import splitSqlQueries from './splitSqlQueries';
 
-export default function(queries) {
-  var promise = new Promise(function(resolve, reject) {
-    const worker = require('worker-loader?inline!./splitSqlQueriesWorker.js')();
-    var success = false;
-    worker.onmessage = function(e) {
-      success = true;
-      resolve(e.data);
-    };
-    worker.postMessage({
-      queries: queries
-    });
-    setTimeout(function() {
-      if (!success) {
-        worker.terminate();
-        reject();
-      }
-    }, maxSqlExecutionTime);
-  });
-  return promise;
+export default function(transformation, queries) {
+  if (['redshift', 'mysql', 'snowflake'].indexOf(transformation.get('backend')) >= 0) {
+    return splitSqlQueries(queries);
+  } else {
+    return List([queries]);
+  }
 }

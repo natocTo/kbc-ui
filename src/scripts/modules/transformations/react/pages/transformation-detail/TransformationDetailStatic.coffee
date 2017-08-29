@@ -369,8 +369,6 @@ module.exports = React.createClass
         onEditChange: (newValue) =>
           TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
             @props.transformationId, 'queriesString', newValue)
-          TransformationsActionCreators.updateTransformationEditingFieldQueriesString(@props.bucketId,
-            @props.transformationId, newValue)
           if !@props.editingFields.get('queriesChanged', false)
             TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
               @props.transformationId, 'queriesChanged', true)
