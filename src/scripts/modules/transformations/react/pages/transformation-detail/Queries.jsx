@@ -15,7 +15,6 @@ export default React.createClass({
     bucketId: PropTypes.string.isRequired,
     transformation: PropTypes.object.isRequired,
     queries: PropTypes.string.isRequired,
-    splitQueries: PropTypes.object.isRequired,
     isEditingValid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
@@ -62,7 +61,6 @@ export default React.createClass({
     return (
       <Edit
         queries={this.props.queries}
-        splitQueries={this.props.splitQueries}
         backend={this.props.transformation.get('backend')}
         disabled={this.props.isSaving}
         onChange={this.props.onEditChange}

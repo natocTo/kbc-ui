@@ -6,8 +6,10 @@ List = Immutable.List
 Constants = require '../Constants'
 InstalledComponentsConstants = require '../../components/Constants'
 InstalledComponentsStore = require '../../components/stores/InstalledComponentsStore'
+fuzzy = require 'fuzzy'
 StoreUtils = require '../../../utils/StoreUtils'
 _ = require 'underscore'
+parseQueries = require('../utils/parseQueries').default
 parseBuckets = require('../utils/parseBuckets').default
 
 _store = Map(
@@ -128,13 +130,9 @@ TransformationsStore = StoreUtils.createStore
           transformationId
           'queriesString'
         ], '')
-      splitQueries = _store.getIn([
-          'editingTransformationsFields'
-          bucketId
-          transformationId
-          'splitQueries'
-        ], List())
-      return queriesString.replace(/[\t\n ]/g, '') == splitQueries.toJS().join('').replace(/[\t\n ]/g, '')
+
+      parsedQueriesString = parseQueries(@getTransformation(bucketId, transformationId), queriesString).toJS().join('')
+      return queriesString.replace(/[\t\n ]/g, '') == parsedQueriesString.replace(/[\t\n ]/g, '')
     if transformation.get('backend') == "docker" && transformation.get('type') == "openrefine"
       scriptsString = _store.getIn([
           'editingTransformationsFields'
@@ -312,36 +310,6 @@ Dispatcher.register (payload) ->
         action.fieldId
       ]
       TransformationsStore.emitChange()
-
-    when Constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES
-      _store = _store.setIn [
-        'editingTransformationsFields'
-        action.bucketId
-        action.transformationId
-        'splitQueries'
-      ], List()
-      TransformationsStore.emitChange()
-
-    when Constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_SUCCESS
-      _store = _store.setIn [
-        'editingTransformationsFields'
-        action.bucketId
-        action.transformationId
-        'splitQueries'
-      ], Immutable.fromJS(action.splitQueries)
-      TransformationsStore.emitChange()
-
-    when Constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_ERROR
-      _store = _store.setIn [
-        'editingTransformationsFields'
-        action.bucketId
-        action.transformationId
-        'splitQueries'
-      ], List()
-      TransformationsStore.emitChange()
-
-
-
 
     when Constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_SUCCESS
       _store = _store.withMutations (store) ->
