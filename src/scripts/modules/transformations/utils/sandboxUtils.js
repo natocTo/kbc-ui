@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import {List, Map} from 'immutable';
 
 const _decamelizeTableInput = (table) => {
   return table.reduce((memo, value, key) => {
@@ -27,17 +27,20 @@ export const generateRunParameters = (transformation, bucketId) => {
     configBucketId: bucketId,
     transformations: [transformationId]
   });
-  const dockerParams = Map({
+  const tags = transformation.get('tags');
+  let dockerParams = Map({
     type: transformationType === 'python' ? 'jupyter' : 'rstudio',
     packages: transformation.get('packages'),
-    tags: transformation.get('tags'),
     script: transformation.get('queriesString'),
-    input: {
-      tables: transformation
-        .get('input')
+    input: Map({
+      tables: transformation.get('input')
         .map(_decamelizeTableInput)
         .map(normalizeDockerInputMapping)
-    }
+    })
   });
+  if (tags && tags.count() > 0) {
+    dockerParams = dockerParams.setIn(['input', 'files'], List([{tags: tags}]));
+    dockerParams = dockerParams.set('tags', tags);
+  }
   return backend === 'docker' ? dockerParams : nonDockerParams;
 };
