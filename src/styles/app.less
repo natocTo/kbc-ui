@@ -255,6 +255,7 @@ a .kbcComponentIcon-3rdParty-64px {
     }
     &.modal-open {
       overflow: auto !important;
+      padding-right: 355px!important;
     }
   }
 
@@ -388,7 +389,7 @@ a .kbcComponentIcon-3rdParty-64px {
       .modal-dialog {
         position: fixed;
         right: 50%;
-        top: 50%;
+        top: 380px;
         transform: translate(50%, -50%);
         width: @wizardWidth;
         transition: all 200ms ease;
@@ -396,6 +397,9 @@ a .kbcComponentIcon-3rdParty-64px {
 
       &.try-wizard-aside {
         position: static;
+        .modal-content{
+          border-radius: 5px 0px 0px 5px;
+        }
         .modal-header {
           border-bottom: 1px solid #e8e8ef;
           padding: 15px;
@@ -410,7 +414,7 @@ a .kbcComponentIcon-3rdParty-64px {
           }
         }
         .modal-dialog {
-          right: @wizardWidthAside/2 - 1;
+          right: @wizardWidthAside/2 - 2;
           width: @wizardWidthAside;
           .col-md-6 {
             width: 100%;
