@@ -237,7 +237,8 @@ a .kbcComponentIcon-3rdParty-64px {
 /* ========== */
 
 .try {
-  @color1: #0099CE;
+  @TryColor1: #0099CE;
+  @TryColor2: #25B8EB;
   @wizardWidth: 900px;
   @wizardWidthAside: 350px;
   @wizardHeight: 450px;
@@ -261,7 +262,7 @@ a .kbcComponentIcon-3rdParty-64px {
 
   &-desk {
     background-image: url('../scripts/modules/try-mode/media/keboola-desk.svg');
-    background-color: @color1;
+    background-color: @TryColor1;
     background-position: right -30px top -20px;
     background-repeat: no-repeat;
     padding: 40px 50px;
@@ -314,7 +315,7 @@ a .kbcComponentIcon-3rdParty-64px {
   &-status-bar {
     z-index: 1001;
     background-image: url('../scripts/modules/try-mode/media/keboola-top-blue-bar.svg');
-    background-color: @color1;
+    background-color: @TryColor1;
     background-position: -5px  -32px;
     background-repeat: no-repeat;
 
@@ -358,7 +359,7 @@ a .kbcComponentIcon-3rdParty-64px {
       }
       .modal-header {
         padding: 40px 40px 20px;
-        color: @color1;
+        color: @TryColor2;
         border-bottom: 0;
         font-family: "Gotham Rounded A", "Gotham Rounded B";
         font-weight: 500;
@@ -447,7 +448,7 @@ a .kbcComponentIcon-3rdParty-64px {
         }
       }
       &-active span {
-        color: @color1;
+        color: @TryColor1;
         font-weight: bold;
       }
     }
@@ -492,7 +493,7 @@ a .kbcComponentIcon-3rdParty-64px {
     position: relative;
     height: 45px;
     width: 45px;
-    background: @color1;
+    background: @TryColor1;
     z-index: 9999999;
     opacity: 1;
     right: 1px;
@@ -512,7 +513,7 @@ a .kbcComponentIcon-3rdParty-64px {
       right: 0px;
       top: 0px;
       border-radius: 50%;
-      background: @color1;
+      background: @TryColor1;
       z-index: -1;
       animation: pulseAnimation 3s infinite linear;
     }
