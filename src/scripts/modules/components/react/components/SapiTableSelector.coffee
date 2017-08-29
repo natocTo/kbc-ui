@@ -16,11 +16,13 @@ module.exports = React.createClass
     value: React.PropTypes.string.isRequired
     excludeTableFn: React.PropTypes.func
     allowedBuckets: React.PropTypes.array
+    disabled: React.PropTypes.bool
 
   getDefaultProps: ->
     excludeTableFn: (tableId) ->
       return false
     allowedBuckets: ['in','out']
+    disabled: false
 
   getStateFromStores: ->
     isTablesLoading = storageTablesStore.getIsLoading()
@@ -38,16 +40,12 @@ module.exports = React.createClass
     nextProps.value != @props.value || nextState.isTablesLoading != @state.isTablesLoading
 
   render: ->
-    isTablesLoading = @state.isTablesLoading
-    if isTablesLoading
-      return React.DOM.div null,
-        Loader()
-        ' Loading tables...'
-
     Select
+      disabled: @props.disabled
       name: 'source'
       clearable: false
       value: @props.value
+      isLoading: @state.isTablesLoading
       placeholder: @props.placeholder
       onChange: (selectedOption) =>
         tableId = selectedOption.value
