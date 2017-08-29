@@ -6,9 +6,11 @@ List = Immutable.List
 Constants = require '../Constants'
 InstalledComponentsConstants = require '../../components/Constants'
 InstalledComponentsStore = require '../../components/stores/InstalledComponentsStore'
+fuzzy = require 'fuzzy'
 StoreUtils = require '../../../utils/StoreUtils'
 _ = require 'underscore'
 parseBuckets = require('../utils/parseBuckets').default
+parseQueries = require('../utils/parseQueries').default
 
 _store = Map(
   transformationsByBucketId: Map()

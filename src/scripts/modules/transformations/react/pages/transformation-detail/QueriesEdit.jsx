@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
+import splitSqlQueries from '../../../utils/splitSqlQueries';
 /* global require */
 require('./queries.less');
 
@@ -8,7 +9,6 @@ require('./queries.less');
 export default React.createClass({
   propTypes: {
     queries: PropTypes.string.isRequired,
-    splitQueries: PropTypes.object.isRequired,
     backend: PropTypes.string.isRequired,
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -18,7 +18,7 @@ export default React.createClass({
   componentDidMount() {
     // highlight query
     if (this.props.highlightQueryNumber) {
-      const splitQueries = this.props.splitQueries;
+      const splitQueries = splitSqlQueries(this.props.queries);
       const query = splitQueries.get(this.props.highlightQueryNumber - 1);
       const positionStart = this.props.queries.indexOf(query);
       if (positionStart === -1) {
