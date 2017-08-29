@@ -15,7 +15,7 @@ export default {
         'link': 'home',
         'isNavigationVisible': true,
         'text': 'As a powerful and safe environment for working with data, Keboola Connection consists of many interconnected components. It helps you extract data from various sources, manipulate and enrich the data, write the results to visualizing tools of your choice, etc. In addition, the whole process can be fully automated.',
-        'media': 'kbc_scheme_light_blue.png',
+        'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       },
       {
@@ -37,7 +37,7 @@ export default {
         'link': '/storage',
         'isNavigationVisible': true,
         'text': 'All data you upload to your project, as well as all the tables your project creates, are stored in Storage where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.',
-        'media': 'kbc_scheme_light_blue.png',
+        'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       },
       {
@@ -99,7 +99,7 @@ export default {
         'link': 'home',
         'isNavigationVisible': true,
         'text': 'As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. Note: Your own projects won’t be affected by this in any way.',
-        'media': 'kbc_scheme_light_blue.png',
+        'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       }, {
         'id': 2,
@@ -188,7 +188,7 @@ Start by clicking on **+ Add Query** then create and save the following query:
         'link': 'home',
         'isNavigationVisible': true,
         'text': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will merge the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country.',
-        'media': 'kbc_scheme_light_blue.png',
+        'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       }, {
         'id': 2,
