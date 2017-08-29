@@ -3,7 +3,7 @@ import Promise from 'bluebird';
 
 export default function(queries) {
   var promise = new Promise(function(resolve, reject) {
-    const worker = require('worker-loader!./splitSqlQueriesWorker.js')();
+    const worker = require('worker-loader?inline!./splitSqlQueriesWorker.js')();
     var success = false;
     worker.onmessage = function(e) {
       success = true;
