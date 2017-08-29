@@ -14,7 +14,7 @@ import _ from 'underscore';
 import parseQueries from './utils/parseQueries';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
-import StringUtils from '../../utils/string';
+import {capitalize} from '../../utils/string';
 import {debounce} from 'lodash';
 
 const updateTransformationEditingFieldQueriesStringDebouncer = debounce(function(bucketId, transformationId, queriesString) {
@@ -271,7 +271,7 @@ module.exports = {
     transformation = TransformationsStore.getTransformation(bucketId, transformationId);
     transformation = transformation.set(propertyName, newValue);
     if (!changeDescription) {
-      finalChangeDescription = 'Change ' + StringUtils.capitalize(propertyName) + ' in ' + transformation.get('name');
+      finalChangeDescription = 'Change ' + capitalize(propertyName) + ' in ' + transformation.get('name');
     }
     return transformationsApi.saveTransformation(bucketId, transformationId, transformation.toJS(), finalChangeDescription).then(function(response) {
       dispatcher.handleViewAction({
@@ -354,7 +354,7 @@ module.exports = {
       transformation = transformation.set(fieldId, value);
     }
     if (!finalChangeDescription) {
-      finalChangeDescription = 'Change ' + StringUtils.capitalize(fieldId) + ' in ' + transformation.get('name');
+      finalChangeDescription = 'Change ' + capitalize(fieldId) + ' in ' + transformation.get('name');
     }
     return transformationsApi.saveTransformation(bucketId, transformationId, transformation.toJS(), finalChangeDescription).then(function(response) {
       dispatcher.handleViewAction({
