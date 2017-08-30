@@ -81,7 +81,7 @@ export default {
         'title': 'Congratulations',
         'isNavigationVisible': false,
         'link': 'home',
-        'text': 'Congratulations, lesson finished.',
+        'text': 'Congratulations! Lesson finished.',
         'media': 'keboola-finished.svg',
         'mediaType': 'img'
       }
@@ -95,7 +95,7 @@ export default {
         'id': 1,
         'position': 'center',
         'backdrop': true,
-        'title': 'Lesson 2 - Composition',
+        'title': 'Introduction',
         'link': 'home',
         'isNavigationVisible': true,
         'text': 'As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. Note: Your own projects won’t be affected by this in any way.',
@@ -105,15 +105,15 @@ export default {
         'id': 2,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Create Database Extractor',
+        'title': 'Create Extractor',
         'link': 'extractors',
         'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'isNavigationVisible': true,
         'text': 'Because the two data tables are stored in a Snowflake database, we’ll be using the Snowflake extractor. By configuring it, we’ll specify what data to extract and how.',
         'markdown': `
-### Create Snowflake Extractor Configuration
+### TO DO:
 
-- Clink on **+ New Extractor**
+- Click on **+ New Extractor**
 - Find **Snowflake**. You can use the search feature to find it quickly.
 - Click on **More** and continue with **Create New Configuration**
 - Name the configuration and click on **Create**
@@ -125,17 +125,18 @@ export default {
         'id': 3,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Setup Database Connection',
+        'title': 'Setup Connection',
         'isNavigationVisible': true,
         'text': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection',
         markdown: `
-Click on **Setup Database Credentials** and set
+### TO DO:
+- Click on **Setup Database Credentials** 
 - Host to \`kebooladev.snowflakecomputing.com\`
 - Port to \`443\`
 - Username, Password, Database and Schema to \`HELP_TUTORIAL\`
 - Warehouse to \`DEV\`
-
-Click on **Save** and return back to the configuration index page.
+- Click on **Save** 
+- Return back to the Configuration index page.
 `,
         nextStepDispatchAction: {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'media': '',
@@ -144,13 +145,17 @@ Click on **Save** and return back to the configuration index page.
         'id': 4,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Create SQL Query',
+        'title': 'Create SQL Query',
         'isNavigationVisible': true,
+        'text': 'Each database query needs to have a **name** and an **SQL command**. The new **output table** that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.',
         markdown: `
-Each database query needs to have a **name** and an **SQL command**. The new **output table** that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.
-
-Start by clicking on **+ Add Query** then create and save the following query:
-- \`SELECT * FROM cars;\` with output table \`in.c-tutorial.cars\``,
+### TO DO:
+- Click on **+ Add Query**
+- name the query as you wish
+- set output table \`in.c-tutorial.cars\`
+- paste simple query \`SELECT * FROM cars;\` 
+- click on **Save**
+`,
         nextStepDispatchAction: {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'media': '',
         'mediaType': ''
@@ -158,21 +163,32 @@ Start by clicking on **+ Add Query** then create and save the following query:
         'id': 5,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Run Extracion',
-        'isNavigationVisible': false,
-        'text': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage.',
+        'title': 'Run Extracion',
+        'isNavigationVisible': true,
+        'text': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage. Once you understand what is happening, click on Next step',
         'media': '',
         'mediaType': ''
       }, {
         'id': 6,
-        'position': 'center',
-        'backdrop': true,
-        'title': 'Lesson 2 - Composition',
-        'link': 'home',
+        'position': 'aside',
+        'backdrop': false,
+        'title': 'Stored Extraction',
+        'link': '/storage',
         'isNavigationVisible': true,
         'text': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ',
         'media': '',
         'mediaType': ''
+      },
+      {
+        'id': 7,
+        'position': 'center',
+        'backdrop': true,
+        'title': 'Congratulations',
+        'isNavigationVisible': false,
+        'link': 'home',
+        'text': 'Congratulations! Lesson finished.',
+        'media': 'keboola-finished.svg',
+        'mediaType': 'img'
       }
     ]
   },
