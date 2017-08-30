@@ -5,8 +5,6 @@ import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import TryModeImage from './TryModeImage';
 import Remarkable from 'react-remarkable';
 
-require('try.less');
-
 export default React.createClass({
   displayName: 'WizardModal',
   propTypes: {
