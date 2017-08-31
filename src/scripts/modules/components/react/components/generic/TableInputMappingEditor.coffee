@@ -5,6 +5,7 @@ Immutable = require('immutable')
 {Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
+SapiTableSelector = React.createFactory(require('../SapiTableSelector'))
 DaysFilterInput = require('./DaysFilterInput').default
 DataFilterRow = require('./DataFilterRow').default
 
@@ -57,23 +58,6 @@ module.exports = React.createClass
     value = @props.value.set("destination", e.target.value.trim())
     @props.onChange(value)
 
-  _getTables: ->
-    props = @props
-    inOutTables = @props.tables.filter((table) ->
-      table.get("id").substr(0, 3) == "in." || table.get("id").substr(0, 4) == "out."
-    )
-    map = inOutTables.map((table) ->
-      {
-        label: table.get("id")
-        value: table.get("id")
-      }
-    )
-    map.toList().sort( (valA, valB) ->
-      return 1 if valA.label > valB.label
-      return -1 if valA.label < valB.label
-      return 0
-    ).toJS()
-
   _getFileName: ->
     if @props.value.get("destination") && @props.value.get("destination") != ''
       return @props.value.get("destination")
@@ -97,13 +81,11 @@ module.exports = React.createClass
         React.DOM.div className: 'form-group',
           React.DOM.label className: 'col-xs-2 control-label', 'Source'
           React.DOM.div className: 'col-xs-10',
-            Select
-              name: 'source'
+            SapiTableSelector
               value: @props.value.get("source")
               disabled: @props.disabled
               placeholder: "Source table"
-              onChange: @_handleChangeSource
-              options: @_getTables()
+              onSelectTableFn: @_handleChangeSource
       if (!@props.definition.has('destination'))
         React.DOM.div {className: "row col-md-12"},
           Input
