@@ -1,0 +1,316 @@
+
+/* ========== */
+/*  TRY MODE  */
+/* ========== */
+
+.try {
+  @TryColor1: #0099CE;
+  @TryColor2: #25B8EB;
+  @wizardWidth: 900px;
+  @wizardWidthAside: 350px;
+  @wizardHeight: 450px;
+  @statusBarHeight: 50px;
+  @verticalPadding: 8px;
+
+  &-mode {
+    .kbc-sidebar,
+    .kbc-navbar{
+      margin-top: @statusBarHeight;
+    }
+    .kbc-main-content {
+      margin-top: @statusBarHeight + 15px;
+      min-height: 86vh;
+    }
+    &.modal-open {
+      overflow: auto !important;
+      padding-right: 350px!important;
+    }
+  }
+
+  &-desk {
+    background-image: url('../media/keboola-desk.svg');
+    background-color: @TryColor1;
+    background-position: right -30px top -20px;
+    background-repeat: no-repeat;
+    padding: 40px 50px;
+    color: #fff;
+    min-height: 410px;
+    border-radius: 5px;
+
+    &-container {
+      min-height: 0 !important;
+      margin-top: @statusBarHeight!important;
+
+      + .kbc-main-content{
+        margin-top: 17px;
+      }
+    }
+    p {
+      font-size: 14px;
+      padding-top: 16px;
+      line-height: 1.5;
+    }
+    h1 {
+      font-size: 36px;
+      line-height: 40px;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 500;
+      margin-top: 0px;
+    }
+    h2 {
+      font-size: 36px;
+      line-height: 40px;
+      max-width: 80%;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 300;
+      margin-bottom: 0px;
+    }
+    ul {
+      list-style: none;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      padding-left: 20px;
+    }
+    li {
+      //padding: 4px 8px;
+      line-height: 1.5;
+    }
+    strong {
+      font-weight: bold;
+    }
+  }
+
+  &-status-bar {
+    z-index: 1001;
+    background-image: url('../media/keboola-top-blue-bar.svg');
+    background-color: @TryColor1;
+    background-position: -5px  -32px;
+    background-repeat: no-repeat;
+
+    position: fixed;
+    top: 0;
+    color: #fff;
+    display: block;
+    width: 100%;
+    height: @statusBarHeight;
+    padding: 12px 8px;
+    p {
+      float: left;
+      font-size: 19px;
+      line-height: 23px;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 300;
+      &:first-of-type{
+        font-weight: 500;
+        margin-left: 110px;
+
+      }
+    }
+    a {
+      float: right;
+      color: #fff;
+      line-height: 23px;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    strong{
+      font-weight: 400;
+    }
+  }
+
+  &-wizard {
+
+    &.modal {
+      h3{
+        font-size: 16px;
+        font-family: "Gotham Rounded A", "Gotham Rounded B";
+        color: #7C8498;
+      }
+
+      .modal-content {
+        border: 0;
+      }
+      .modal-header {
+        padding: 40px 40px 20px;
+        color: @TryColor2;
+        border-bottom: 0;
+        h1 {
+          font-size: 36px;
+          font-family: "Gotham Rounded A", "Gotham Rounded B";
+          font-weight: 500;
+          margin-top: 0px;
+        }
+        h2 {
+          font-size: 36px;
+          font-family: "Gotham Rounded A", "Gotham Rounded B";
+          font-weight: 300;
+          margin-bottom: 0;
+        }
+      }
+      .modal-title {
+        line-height: 1.4;
+      }
+      .modal-body {
+        padding: 0 40px 20px;
+        p {
+          margin-bottom: 20px;
+          color: #7C8498;
+          line-height: 1.5;
+        }
+        li {
+          color: #7C8498;
+          line-height: 1.5;
+        }
+      }
+      .modal-dialog {
+        position: fixed;
+        right: 50%;
+        top: 380px;
+        transform: translate(50%, -50%);
+        width: @wizardWidth;
+        transition: all 200ms ease;
+      }
+
+      &.try-wizard-aside {
+        position: static;
+        .modal-content{
+          border-radius: 5px 0px 0px 5px;
+        }
+        .modal-header {
+          border-bottom: 1px solid #e8e8ef;
+          padding: 15px;
+        }
+        .modal-body {
+          padding: 15px;
+          height: @wizardHeight;
+          overflow-y: auto;
+          p {
+            padding: @verticalPadding 0;
+            margin-bottom: 0;
+          }
+        }
+        .modal-dialog {
+          right: @wizardWidthAside/2 - 2;
+          width: @wizardWidthAside;
+          .col-md-6 {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &-navigation {
+    padding: @verticalPadding 0;
+    border: 0;
+    &-step {
+      padding: 0px;
+      padding-left: 8px;
+      line-height: 2!important;
+      border: 0;
+      font-size: 18px;
+      margin-left: 24px;
+
+      &-passed {
+        &:before {
+          left: -16px;
+          position: absolute;
+          content: '\002714';
+          color: #98cf3c
+        }
+        span {
+          color: #ddd;
+        }
+      }
+      &-active span {
+        color: @TryColor2;
+        font-weight: bold;
+      }
+    }
+  }
+
+  &-media {
+    padding: @verticalPadding 0px;
+  }
+
+  &-lesson-link {
+    font-size: 18px;
+    line-height: 38px;
+    text-decoration: none;
+    color: #fff;
+    &:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    &-passed {
+      color: #8AE1FF
+    }
+  }
+
+  &-link {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  &-congratulations {
+    font-size: 24px;
+    color: #282d38;
+    text-align: center;
+    font-family: "Gotham Rounded A", "Gotham Rounded B";
+    font-weight: 500;
+  }
+
+  &-float-next {
+    &-wrapper{
+      position: fixed;
+    }
+    display: inline-block;
+    position: relative;
+    height: 45px;
+    width: 45px;
+    background: @TryColor1;
+    z-index: 9999999;
+    opacity: 1;
+    right: 1px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+
+    line-height: 45px;
+
+    &:before, &:after{
+      content: '';
+      display: inline-block;
+      height: 45px;
+      width: 45px;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      border-radius: 50%;
+      background: @TryColor1;
+      z-index: -1;
+      animation: pulseAnimation 3s infinite linear;
+    }
+    &:after {
+      animation: pulseAnimation 3s infinite linear 1s;
+    }
+  }
+
+  @keyframes pulseAnimation {
+    0% {
+      transform: scale(1);
+      opacity: 0
+    }
+    20% {
+      opacity: 1
+    }
+    75% {
+      transform: scale(1.5);
+      opacity: 0
+    }
+    100% {
+      opacity: 0
+    }
+  }
+}
