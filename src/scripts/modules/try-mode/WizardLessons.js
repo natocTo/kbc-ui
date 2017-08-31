@@ -1,6 +1,10 @@
 import ComponentsConstants from '../components/Constants';
+import TransformationsConstants from '../transformations/Constants';
+import JobsConstants from '../jobs/Constants';
 // import kbcConstants from '../../constants/KbcConstants';
 const {INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS} = ComponentsConstants.ActionTypes;
+const {TRANSFORMATION_BUCKET_CREATE_SUCCESS, TRANSFORMATION_CREATE_SUCCESS} = TransformationsConstants.ActionTypes;
+const {JOB_LOAD_SUCCESS} = JobsConstants.ActionTypes;
 
 export default {
   '1': {
@@ -210,10 +214,11 @@ export default {
         'id': 2,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Step 1',
+        'title': 'Create Bucket',
         'link': 'transformations',
         'isNavigationVisible': true,
         'text': 'Before creating our transformation, we need to add a new bucket for it in the section Transformations. ',
+        'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
         'media': '',
         'mediaType': '',
         'floatNext': {
@@ -224,52 +229,78 @@ export default {
         'id': 3,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Step 2',
-        'link': 'extractors/keboola.ex-db-snowflake/282225922',
+        'title': 'Create Transformation',
+        'link': '',
         'isNavigationVisible': true,
         'text': 'After naming our new configuration of the extractor and providing credentials to access the source database where the data is stored, it’s time to actually extract the data. It’s done using SQL queries. To extract our two tables, we need to write two queries, one for each table.',
+        'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
         'media': '',
         'mediaType': ''
       }, {
         'id': 4,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Composition',
-        'link': 'extractors/keboola.ex-db-snowflake/282225922/new-query',
+        'title': 'Set Mappings',
+        'link': '',
         'isNavigationVisible': true,
         'text': 'Each database query needs to have a name and an SQL command. The new output table that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.',
+        'markdown': `
+### TO DO:
+
+- Click on **+ Add Input** and select in.c-tutorial.cars
+- Click on **+ Add Input** and select in.c-tutorial.cars
+- Click on **+ Add Output** Destination out.c-snowflake.transformed
+- Add Query \`CREATE TABLE transformed AS
+SELECT \`cars\`.*, \`population\`.\`POPULATION\`, (\`population\`.\`POPULATION\` / \`cars\`.\`CARS\`) AS \`PERSON_PER_CAR\`
+FROM \`cars\` JOIN \`population\`
+On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\` 
+- Click on **Next Step**
+
+`,
         'media': '',
         'mediaType': ''
       }, {
         'id': 5,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Composition',
-        'link': 'home',
+        'title': 'Run Transformation',
+        'link': '',
         'isNavigationVisible': true,
         'text': 'Similarly, we create a query to extract info about population.',
+        'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
         'media': '',
         'mediaType': ''
       }, {
         'id': 6,
         'position': 'aside',
         'backdrop': false,
-        'title': 'Lesson 2 - Composition',
-        'link': 'home',
-        'isNavigationVisible': false,
+        'title': 'Check Job',
+        'link': 'jobs',
+        'isNavigationVisible': true,
         'text': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage.',
         'media': '',
         'mediaType': ''
       }, {
         'id': 7,
-        'position': 'center',
-        'backdrop': true,
-        'title': 'Lesson 2 - Composition',
+        'position': 'aside',
+        'backdrop': false,
+        'title': 'Check Storage',
         'link': 'home',
         'isNavigationVisible': true,
         'text': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ',
         'media': '',
         'mediaType': ''
+      },
+      {
+        'id': 8,
+        'position': 'center',
+        'backdrop': true,
+        'title': 'Congratulations',
+        'isNavigationVisible': false,
+        'link': 'home',
+        'text': 'Congratulations! Lesson finished.',
+        'media': 'keboola-finished.svg',
+        'mediaType': 'img'
       }
     ]
   },
