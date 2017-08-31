@@ -46,7 +46,7 @@ module.exports = React.createClass
 
   _renderConfiguration: ->
     parameters = @props.task.get('actionParameters')
-    if parameters.size == 1 && parameters.has('config')
+    if parameters.size == 1 && parameters.has('config') && @props.component
       config = InstalledComponentsStore.getConfig(@props.component.get('id'), parameters.get('config'))
       config.get('name', parameters.get('config'))
     else
