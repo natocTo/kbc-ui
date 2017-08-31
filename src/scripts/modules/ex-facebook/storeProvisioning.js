@@ -11,6 +11,8 @@ const DEFAULT_VERSIONS_MAP = {
   'keboola.ex-facebook': 'v2.8'
 };
 
+const DEFAULT_BACKEND_VERSION = 'v2.8';
+
 export default function(COMPONENT_ID, configId) {
   const DEFAULT_API_VERSION = DEFAULT_VERSIONS_MAP[COMPONENT_ID];
   const localState = () => InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
@@ -52,7 +54,7 @@ export default function(COMPONENT_ID, configId) {
     parameters: parameters,
     queries: queries,
     hasQueries: queries.count() > 0,
-    version: parameters.get('api-version', DEFAULT_API_VERSION),
+    version: parameters.get('api-version', DEFAULT_BACKEND_VERSION),
     accounts: parameters.get('accounts', Map()),
     hasAccounts: parameters.get('accounts', Map()).count() > 0,
     getEditPath: (what) => what ? editPath.concat(what) : editPath,
