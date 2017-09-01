@@ -60,7 +60,12 @@ export default React.createClass({
       events: Immutable.List()
     };
     newState = _.extend(newState, initDataState);
-    this.setState(newState, () => !dontLoadAll ? this.loadAll() : null);
+    this.setState(newState, () => {
+      if (!dontLoadAll) {
+        this.resetTableEvents();
+        this.loadAll();
+      }
+    });
   },
 
   getTableId() {
@@ -238,6 +243,14 @@ export default React.createClass({
     const q = this.prepareEventQuery(checked, this.state.omitExports);
     this.state.eventService.setQuery(q);
     this.state.eventService.load();
+  },
+
+  resetTableEvents() {
+    const {omitExports, omitFetches} = this.state;
+    const q = this.prepareEventQuery(omitFetches, omitExports);
+    this.stopEventService();
+    this.state.eventService.reset();
+    this.state.eventService.setQuery(q);
   },
 
   prepareEventQuery(omitFetches, omitExports) {
