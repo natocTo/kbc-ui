@@ -235,7 +235,7 @@ module.exports = React.createClass
                         tables: @props.tables
                         editingInputMapping: @props.editingFields.get('input-' + key, input)
                         editingId: 'input-' + key
-                        mappingIndex: key
+                        mappingIndex: key.toString()
                         pendingActions: @props.pendingActions
                         otherDestinations: @_inputMappingDestinations(key)
                         definition: definition
@@ -332,7 +332,7 @@ module.exports = React.createClass
         bucketId: @props.bucket.get('id')
         transformation: @props.transformation
         isEditing: @props.editingFields.has('queriesString')
-        isSaving: @props.pendingActions.has('save-queriesString')
+        isSaving: @props.pendingActions.has('save-queries')
         scripts: @props.editingFields.get('queriesString', @props.transformation.get("queriesString"))
         isEditingValid: @props.isEditingValid
         isChanged: @props.editingFields.get('queriesChanged', false)
@@ -348,16 +348,16 @@ module.exports = React.createClass
             TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
               @props.transformationId, 'queriesChanged', true)
         onEditSubmit: =>
-          changeDescription = 'Change Script in ' + @props.transformation.get('name')
-          TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
-            @props.transformationId, 'queriesString', changeDescription)
+          TransformationsActionCreators.saveTransformationScript(@props.bucketId,
+            @props.transformationId)
     else
       React.createElement Queries,
         bucketId: @props.bucket.get('id')
         transformation: @props.transformation
         isEditing: @props.editingFields.has('queriesString')
-        isSaving: @props.pendingActions.has('save-queriesString')
-        queries: @props.editingFields.get('queriesString', @props.transformation.get("queriesString"))
+        isSaving: @props.pendingActions.has('save-queries')
+        queries: @props.editingFields.get('queriesString', @props.transformation.get('queriesString'))
+        splitQueries: @props.editingFields.get('splitQueries', @props.transformation.get('queries'))
         isEditingValid: @props.isEditingValid
         isChanged: @props.editingFields.get('queriesChanged', false)
         highlightQueryNumber: @props.highlightQueryNumber
@@ -369,13 +369,14 @@ module.exports = React.createClass
         onEditChange: (newValue) =>
           TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
             @props.transformationId, 'queriesString', newValue)
+          TransformationsActionCreators.updateTransformationEditingFieldQueriesString(@props.bucketId,
+            @props.transformationId, newValue)
           if !@props.editingFields.get('queriesChanged', false)
             TransformationsActionCreators.updateTransformationEditingField(@props.bucketId,
               @props.transformationId, 'queriesChanged', true)
         onEditSubmit: =>
-          changeDescription = 'Change Queries in ' + @props.transformation.get('name')
-          TransformationsActionCreators.saveTransformationEditingField(@props.bucketId,
-            @props.transformationId, 'queriesString', changeDescription)
+          TransformationsActionCreators.saveTransformationQueries(@props.bucketId,
+            @props.transformationId)
 
   render: ->
     div null,

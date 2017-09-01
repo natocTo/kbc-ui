@@ -29,7 +29,7 @@ OutputMappingRow = React.createClass(
     definition: Immutable.Map()
 
   render: ->
-    span {className: 'table', style: {'word-break': 'break-word'}},
+    span {className: 'table', style: {wordBreak: 'break-word'}},
       span {className: 'tbody'},
         span {className: 'tr'},
           if @props.definition.has('label')
