@@ -42,17 +42,29 @@ export default React.createClass({
     const tables = tablesStore.getAll() || Map();
     const table = tables.get(props.tableId, Map());
     return {
+      tableId: props.tableId,
       table: table,
       isLoading: isLoading
     };
   },
 
   changeTable(newTableId, dontLoadAll) {
-    this.setState(this.prepareStateFromProps({tableId: newTableId}), () => !dontLoadAll ? this.loadAll() : null);
+    let newState = _.clone(this.prepareStateFromProps({tableId: newTableId}));
+    const initDataState = {
+      isCallingRunAnalysis: false,
+      profilerData: Map(),
+      loadingPreview: false,
+      loadingProfilerData: false,
+      dataPreview: Immutable.List(),
+      dataPreviewError: null,
+      events: Immutable.List()
+    };
+    newState = _.extend(newState, initDataState);
+    this.setState(newState, () => !dontLoadAll ? this.loadAll() : null);
   },
 
   getTableId() {
-    return this.state ? this.state.table.get('id') : this.props.tableId;
+    return this.state ? this.state.tableId : this.props.tableId;
   },
 
   getInitialState() {
