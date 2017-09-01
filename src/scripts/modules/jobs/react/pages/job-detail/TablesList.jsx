@@ -5,7 +5,8 @@ import TableLinkEx from '../../../../components/react/components/StorageApiTable
 
 export default React.createClass({
   propTypes: {
-    tables: React.PropTypes.object.isRequired
+    tables: React.PropTypes.object.isRequired,
+    allTablesIds: React.PropTypes.object.isRequired
   },
 
   duration(durationSeconds) {
@@ -15,19 +16,21 @@ export default React.createClass({
   rows() {
     const limit = 10;
     let rows = this.props.tables
-      .get('tables')
-      .toSeq()
-      .slice(0, limit)
-      .map((table) => {
-        return (
-          <li key={table.get('id')}>
-            <TableLinkEx tableId={table.get('id')}>
-              {table.get('id')} <span className="text-muted">{this.duration(table.get('durationTotalSeconds'))}</span>
-            </TableLinkEx>
-          </li>
-        );
-      })
-      .toArray();
+                   .get('tables')
+                   .toSeq()
+                   .slice(0, limit)
+                   .map((table) => {
+                     return (
+                       <li key={table.get('id')}>
+                         <TableLinkEx
+                           moreTables={this.props.allTablesIds}
+                           tableId={table.get('id')}>
+                           {table.get('id')} <span className="text-muted">{this.duration(table.get('durationTotalSeconds'))}</span>
+                         </TableLinkEx>
+                       </li>
+                     );
+                   })
+                   .toArray();
 
     const tablesCount = this.props.tables.get('tables').count();
     if (tablesCount > limit) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import {List} from 'immutable';
 import {Loader} from 'kbc-react-components';
 
 import TablesList from './TablesList';
@@ -40,19 +41,22 @@ export default React.createClass({
 
   render() {
     const isTransformation = this.props.mode === MODE_TRANSFORMATION;
+    const importedIds = this.extractTableIds('import');
+    const exportedIds = this.extractTableIds('export');
+    const allTablesIds = importedIds.concat(exportedIds);
     return (
       <div className="clearfix">
         <div className="col-md-4">
           <h4>
             {isTransformation ? 'Input' : 'Imported Tables'} {this.importsTotal()} {this.loader()}
           </h4>
-          <TablesList tables={this.props.stats.getIn(['tables', isTransformation ? 'export' : 'import'])}/>
+          <TablesList allTablesIds={allTablesIds} tables={this.props.stats.getIn(['tables', isTransformation ? 'export' : 'import'])}/>
         </div>
         <div className="col-md-4">
           <h4>
             {isTransformation ? 'Output' : 'Exported Tables'} {this.exportsTotal()}
           </h4>
-          <TablesList tables={this.props.stats.getIn(['tables', isTransformation ? 'import' : 'export'])}/>
+          <TablesList allTablesIds={allTablesIds} tables={this.props.stats.getIn(['tables', isTransformation ? 'import' : 'export'])}/>
         </div>
         <div className="col-md-4">
           <JobMetrics metrics={this.props.jobMetrics} />
@@ -75,6 +79,10 @@ export default React.createClass({
     }
     const total = this.props.stats.getIn(['tables', 'export', 'totalCount']);
     return total > 0 ? <small>{message('TOTAL_EXPORTS', {totalCount: total})}</small> : null;
+  },
+
+  extractTableIds(tablesType) {
+    return this.props.stats.getIn(['tables', tablesType, 'tables'], List()).map((t) => t.get('id'));
   }
 
 });
