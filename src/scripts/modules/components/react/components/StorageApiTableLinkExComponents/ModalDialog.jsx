@@ -62,6 +62,7 @@ export default React.createClass({
           bsSize="large"
           show={this.props.show}
           onHide={this.props.onHideFn}
+          onKeyDown={this.onKeyDown}
         >
           <Modal.Header closeButton>
             <Modal.Title>
@@ -79,14 +80,37 @@ export default React.createClass({
           {this.props.moreTables &&
            <Modal.Footer>
              <TablesPaginator
-               onChangeTable={this.props.onChangeTable}
-               currentTable={this.props.tableId}
-               tables={this.props.moreTables.toArray()} />
+               nextTable={this.getNextTable()}
+               previousTable={this.getPreviousTable()}
+               onChangeTable={this.props.onChangeTable} />
            </Modal.Footer>
           }
         </Modal>
       </span>
     );
+  },
+
+  getNextTable() {
+    const tables = this.props.moreTables;
+    const position = tables.indexOf(this.props.tableId);
+    return position + 1 < tables.length ? tables[position + 1] : null;
+  },
+
+  getPreviousTable() {
+    const tables = this.props.moreTables;
+    const position = tables.indexOf(this.props.tableId);
+    return position - 1 >= 0 ? tables[position - 1] : null;
+  },
+
+  onKeyDown(e) {
+    const arrowRight = e.key === 'ArrowRight';
+    const arrowLeft = e.key === 'ArrowLeft';
+    if (arrowRight && this.getNextTable()) {
+      return this.props.onChangeTable(this.getNextTable());
+    }
+    if (arrowLeft && this.getPreviousTable()) {
+      return this.props.onChangeTable(this.getPreviousTable());
+    }
   },
 
   renderModalBody() {

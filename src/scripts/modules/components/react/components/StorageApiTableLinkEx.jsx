@@ -1,5 +1,5 @@
 import React from 'react';
-import Immutable, {Map} from 'immutable';
+import Immutable, {List, Map} from 'immutable';
 import _ from 'underscore';
 import Promise from 'bluebird';
 import moment from 'moment';
@@ -27,6 +27,12 @@ export default React.createClass({
     linkLabel: React.PropTypes.string,
     moreTables: React.PropTypes.object,
     children: React.PropTypes.any
+  },
+
+  getDefaultProps() {
+    return {
+      moreTables: List()
+    };
   },
 
   getStateFromStores() {
@@ -195,7 +201,7 @@ export default React.createClass({
   renderModal() {
     return (
       <TableLinkModalDialog
-        moreTables={this.props.moreTables}
+        moreTables={this.props.moreTables.toArray()}
         show={this.state.show}
         tableId={this.getTableId()}
         reload={this.reload}
