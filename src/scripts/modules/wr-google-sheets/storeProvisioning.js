@@ -18,7 +18,7 @@ export default function(COMPONENT_ID, configId) {
   const savingPath = tempPath.concat('saving');
 
   function findTable(tid) {
-    return tables.findLast((t) => t.get('id') === tid);
+    return tables.findLast((t) => t.get('tableId') === tid);
   }
 
   function findMapping(tableId) {

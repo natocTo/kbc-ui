@@ -193,7 +193,7 @@ export default React.createClass({
         runParams={ () => {
           return {
             config: this.props.configId,
-            configData: this.props.getRunSingleDataFn(item.get('id'))
+            configData: this.props.getRunSingleDataFn(item.get('tableId'))
           };
         }}
       >
