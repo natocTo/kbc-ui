@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-
+import TablesPaginator from './TablesPaginator';
 import EventsTab from './EventsTab';
 import GeneralInfoTab from './GeneralInfoTab';
 import DataSampleTab from './DataSampleTab';
@@ -17,6 +17,7 @@ import {RefreshIcon} from 'kbc-react-components';
 export default React.createClass({
 
   propTypes: {
+    moreTables: React.PropTypes.object,
     show: PropTypes.bool.isRequired,
     tableId: PropTypes.string.isRequired,
     reload: PropTypes.func.isRequired,
@@ -35,6 +36,7 @@ export default React.createClass({
     onHideFn: PropTypes.func,
     isRedshift: PropTypes.bool,
     onRunAnalysis: PropTypes.func,
+    onChangeTable: PropTypes.func,
     isCallingRunAnalysis: PropTypes.bool
 
   },
@@ -46,13 +48,13 @@ export default React.createClass({
     let tableLink = (<small className="disabled btn btn-link"> Explore in Console</small>);
     if (this.props.tableExists) {
       tableLink =
-      (
-        <SapiTableLink
-          tableId={this.props.tableId}>
-          <small className="btn btn-link">
-            Explore in Console
-          </small>
-        </SapiTableLink>);
+        (
+          <SapiTableLink
+            tableId={this.props.tableId}>
+            <small className="btn btn-link">
+              Explore in Console
+            </small>
+          </SapiTableLink>);
     }
     return (
       <span className="static-modal">
@@ -60,20 +62,28 @@ export default React.createClass({
           bsSize="large"
           show={this.props.show}
           onHide={this.props.onHideFn}
-          >
+        >
           <Modal.Header closeButton>
             <Modal.Title>
               {this.props.tableId}
               {tableLink}
               <RefreshIcon
-                 isLoading={this.props.isLoading}
-                 onClick={this.props.reload}
+                isLoading={this.props.isLoading}
+                onClick={this.props.reload}
               />
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {modalBody}
           </Modal.Body>
+          {this.props.moreTables &&
+           <Modal.Footer>
+             <TablesPaginator
+               onChangeTable={this.props.onChangeTable}
+               currentTable={this.props.tableId}
+               tables={this.props.moreTables.toArray()} />
+           </Modal.Footer>
+          }
         </Modal>
       </span>
     );
