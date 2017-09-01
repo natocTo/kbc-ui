@@ -25,11 +25,12 @@ export default React.createClass({
   propTypes: {
     tableId: React.PropTypes.string.isRequired,
     linkLabel: React.PropTypes.string,
+    moreTables: React.PropTypes.object,
     children: React.PropTypes.any
   },
 
   getStateFromStores() {
-    return this.prepareStateFromProps(this.props);
+    return this.prepareStateFromProps({tableId: this.getTableId()});
   },
 
   componentWillReceiveProps(nextProps) {
@@ -44,6 +45,14 @@ export default React.createClass({
       table: table,
       isLoading: isLoading
     };
+  },
+
+  changeTable(newTableId, dontLoadAll) {
+    this.setState(this.prepareStateFromProps({tableId: newTableId}), () => !dontLoadAll ? this.loadAll() : null);
+  },
+
+  getTableId() {
+    return this.state ? this.state.table.get('id') : this.props.tableId;
   },
 
   getInitialState() {
@@ -104,7 +113,7 @@ export default React.createClass({
       return;
     }
     this.setState({loadingProfilerData: true});
-    const tableId = this.props.tableId;
+    const tableId = this.getTableId();
     const component = this;
     fetchProfilerData(tableId).then( (result) =>{
       component.setState({
@@ -129,13 +138,13 @@ export default React.createClass({
   renderLink() {
     return (
       <Tooltip key="tooltip"
-                 tooltip={this.renderTooltip()}
-                 placement="top">
-           <span key="buttonlink" className="kbc-sapi-table-link"
-                 onClick={this.onShow}>
-                 {this.props.children || this.props.linkLabel || this.props.tableId}
-           </span>
-       </Tooltip>
+        tooltip={this.renderTooltip()}
+        placement="top">
+        <span key="buttonlink" className="kbc-sapi-table-link"
+          onClick={this.onShow}>
+          {this.props.children || this.props.linkLabel || this.props.tableId}
+        </span>
+      </Tooltip>
     );
   },
 
@@ -169,32 +178,34 @@ export default React.createClass({
   renderModal() {
     return (
       <TableLinkModalDialog
-         show={this.state.show}
-         tableId={this.props.tableId}
-         reload={this.reload}
-         tableExists={this.tableExists()}
-         omitFetches={this.state.omitFetches}
-         omitExports={this.state.omitExports}
-         onHideFn={this.onHide}
-         isLoading={this.isLoading()}
-         table={this.state.table}
-         dataPreview={this.state.dataPreview}
-         dataPreviewError={this.state.dataPreviewError}
-         onOmitExportsFn={this.onOmitExports}
-         onOmitFetchesFn={this.onOmitFetches}
-         events={this.state.events}
-         enhancedAnalysis={this.state.profilerData}
-         onRunAnalysis={this.onRunEnhancedAnalysis}
-         isCallingRunAnalysis={this.state.isCallingRunAnalysis}
-         loadingProfilerData={this.state.loadingProfilerData}
-         isRedshift={this.isRedshift()}
+        moreTables={this.props.moreTables}
+        show={this.state.show}
+        tableId={this.getTableId()}
+        reload={this.reload}
+        tableExists={this.tableExists()}
+        omitFetches={this.state.omitFetches}
+        omitExports={this.state.omitExports}
+        onHideFn={this.onHide}
+        isLoading={this.isLoading()}
+        table={this.state.table}
+        dataPreview={this.state.dataPreview}
+        dataPreviewError={this.state.dataPreviewError}
+        onOmitExportsFn={this.onOmitExports}
+        onOmitFetchesFn={this.onOmitFetches}
+        events={this.state.events}
+        enhancedAnalysis={this.state.profilerData}
+        onRunAnalysis={this.onRunEnhancedAnalysis}
+        isCallingRunAnalysis={this.state.isCallingRunAnalysis}
+        loadingProfilerData={this.state.loadingProfilerData}
+        isRedshift={this.isRedshift()}
+        onChangeTable={this.changeTable}
       />
     );
   },
 
   onRunEnhancedAnalysis() {
     this.setState({isCallingRunAnalysis: true});
-    startDataProfilerJob(this.props.tableId)
+    startDataProfilerJob(this.getTableId())
       .then( () => {
         this.findEnhancedJob().then(() => this.setState({isCallingRunAnalysis: false}));
       })
@@ -221,7 +232,7 @@ export default React.createClass({
     const defs = [omitFetches, omitExports];
     const omitsQuery = _.filter(['tableDetail', 'tableExported'], (val, idx) => defs[idx]
     ).map((ev) => `NOT event:storage.${ev}`);
-    const objectIdQuery = `objectId:${this.props.tableId}`;
+    const objectIdQuery = `objectId:${this.getTableId()}`;
     return _.isEmpty(omitsQuery) ? objectIdQuery : `(${omitsQuery.join(' OR ')} AND ${objectIdQuery})`;
   },
 
@@ -286,29 +297,29 @@ export default React.createClass({
     });
     const component = this;
     return storageApi
-    .tableDataPreview(this.props.tableId, {limit: 10})
-    .then( (csv) => {
-      component.setState({
-        loadingPreview: false,
-        dataPreview: Immutable.fromJS(csv)
-      });
-    })
-    .catch((error) => {
-      let dataPreviewError = null;
-      if (error.response && error.response.body) {
-        if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
-          dataPreviewError = 'Data sample cannot be displayed. Too many columns.';
+      .tableDataPreview(this.getTableId(), {limit: 10})
+      .then( (csv) => {
+        component.setState({
+          loadingPreview: false,
+          dataPreview: Immutable.fromJS(csv)
+        });
+      })
+      .catch((error) => {
+        let dataPreviewError = null;
+        if (error.response && error.response.body) {
+          if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
+            dataPreviewError = 'Data sample cannot be displayed. Too many columns.';
+          } else {
+            dataPreviewError = error.response.body.message;
+          }
         } else {
-          dataPreviewError = error.response.body.message;
+          throw new Error(JSON.stringify(error));
         }
-      } else {
-        throw new Error(JSON.stringify(error));
-      }
-      component.setState({
-        loadingPreview: false,
-        dataPreviewError: dataPreviewError
+        component.setState({
+          loadingPreview: false,
+          dataPreviewError: dataPreviewError
+        });
       });
-    });
   },
 
   tableExists() {
