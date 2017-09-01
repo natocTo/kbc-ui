@@ -77,7 +77,7 @@ export default React.createClass({
           <Modal.Body>
             {modalBody}
           </Modal.Body>
-          {this.props.moreTables &&
+          {this.props.moreTables.length - 1 > 0 &&
            <Modal.Footer>
              <TablesPaginator
                nextTable={this.getNextTable()}
