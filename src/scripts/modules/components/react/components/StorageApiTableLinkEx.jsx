@@ -242,6 +242,7 @@ export default React.createClass({
 
   onHide() {
     this.setState({show: false});
+    this.changeTable(this.props.tableId, true);
     this.stopPollingDataProfilerJob();
     this.stopEventService();
   },
