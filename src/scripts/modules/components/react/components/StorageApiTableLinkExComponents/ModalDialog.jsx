@@ -73,21 +73,25 @@ export default React.createClass({
                 onClick={this.props.reload}
               />
             </Modal.Title>
+            {this.renderPaginator()}
           </Modal.Header>
           <Modal.Body>
             {modalBody}
           </Modal.Body>
-          {this.props.moreTables.length - 1 > 0 &&
-           <Modal.Footer>
-             <TablesPaginator
-               nextTable={this.getNextTable()}
-               previousTable={this.getPreviousTable()}
-               onChangeTable={this.props.onChangeTable} />
-           </Modal.Footer>
-          }
         </Modal>
       </span>
     );
+  },
+
+  renderPaginator() {
+    if (this.props.moreTables.length - 1 > 0) {
+      return (
+        <TablesPaginator
+          nextTable={this.getNextTable()}
+          previousTable={this.getPreviousTable()}
+          onChangeTable={this.props.onChangeTable} />
+      );
+    }
   },
 
   getNextTable() {
