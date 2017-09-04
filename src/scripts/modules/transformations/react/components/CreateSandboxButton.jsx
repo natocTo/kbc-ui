@@ -43,7 +43,7 @@ export default React.createClass({
     } else {
       return (
         <a onClick={this.openModal}>
-          <i className="fa fa-fw fa-wrench"/> Create sandbox
+          <i className="fa fa-fw fa-wrench"/> New Sandbox
           {this.renderModal()}
         </a>
       );

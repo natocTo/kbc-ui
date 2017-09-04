@@ -60,7 +60,7 @@ export default React.createClass({
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
             placement="right"
-            saveLabel="Save Changes"
+            saveLabel="Create Sheet"
             isDisabled={!this.hasSheetsToSave()}
           />
 

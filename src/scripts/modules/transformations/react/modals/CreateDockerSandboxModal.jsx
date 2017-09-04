@@ -35,7 +35,7 @@ module.exports = React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.close} bsStyle="link">Close</Button>
-          <Button onClick={this.create} bsStyle="primary" disabled={this.props.disabled}>Create</Button>
+          <Button onClick={this.create} bsStyle="success" disabled={this.props.disabled}>Create Sandbox</Button>
         </Modal.Footer>
       </Modal>
     );

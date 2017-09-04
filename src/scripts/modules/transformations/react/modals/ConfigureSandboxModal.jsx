@@ -78,7 +78,7 @@ export default React.createClass({
           <ConfirmButtons
             onCancel={this.props.onHide}
             onSave={this.props.onCreateStart}
-            saveLabel={'Create'}
+            saveLabel={'Create Sandbox'}
             cancelLabel={'Close'}
             isSaving={this.props.isRunning}
             showSave={this.showSave()}

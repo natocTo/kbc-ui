@@ -74,7 +74,7 @@ export default function(COMPONENT_ID, configId) {
     updateLocalState(store.getSavingPath(table.get('id')), true);
     if (!table.get('fileId')) {
       // create spreadsheet if not exist
-      updateLocalState(['SheetModal', 'savingMessage'], 'Creating new Spreadsheet');
+      updateLocalState(['SheetModal', 'savingMessage'], 'Creating Spreadsheet');
       return createSpreadsheet(table).then((data) => {
         return updateTable(
           table

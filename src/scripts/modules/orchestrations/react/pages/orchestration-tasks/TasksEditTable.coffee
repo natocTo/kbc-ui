@@ -166,11 +166,12 @@ TasksEditTable = React.createClass
           React.createElement AboutPhases, null
           div null,
             button
-              className: 'btn btn-primary btn-sm'
+              className: 'btn btn-success btn-sm'
               onClick: =>
                 @props.updateLocalState(['newTask', 'phaseId'], phaseId)
             ,
-              'Add task'
+              i className: 'kbc-icon-plus'
+              'New task'
 
   _renderAddTaskModal: ->
     React.createElement AddTaskModal,

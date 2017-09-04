@@ -1,6 +1,6 @@
 React = require 'react'
 
-{button, span, div} = React.DOM
+{button, i, div} = React.DOM
 
 Link = React.createFactory(require('react-router').Link)
 RoutesStore = require('../../../../stores/RoutesStore.coffee')
@@ -23,7 +23,7 @@ module.exports = React.createClass
     showModal: false
 
   getDefaultProps: ->
-    label: 'Add Configuration'
+    label: 'New Configuration'
 
   close: ->
     @setState showModal: false
@@ -39,7 +39,7 @@ module.exports = React.createClass
         onClick: @open
         disabled: @props.disabled
       ,
-        span className: 'kbc-icon-plus'
+        i className: 'kbc-icon-plus'
         @props.label
       Modal
         show: @state.showModal

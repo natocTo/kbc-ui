@@ -67,7 +67,8 @@ export default function(COMPONENT_ID) {
                 (this.isAuthorized() &&  this.hasTables()) ?
                   <div className="col-sm-4 kbc-buttons">
                     <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
-                      Add Table
+                      <i className="kbc-icon-plus"/>
+                      New Sheet
                     </Button>
                   </div>
                   : null
@@ -158,7 +159,8 @@ export default function(COMPONENT_ID) {
             <EmptyState>
               <p>No tables configured</p>
               <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
-                Add Table
+                <i className="kbc-icon-plus"/>
+                New Table
               </Button>
             </EmptyState>
           </div>

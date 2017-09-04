@@ -86,7 +86,7 @@ export default React.createClass({
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
-              saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
+              saveLabel={this.props.mode === MODE_CREATE ? 'Create Output' : 'Save'}
               isSaving={this.state.isSaving}
               onCancel={this.handleCancel}
               onSave={this.handleSave}
@@ -109,8 +109,8 @@ export default React.createClass({
       );
     } else {
       return (
-        <Button bsStyle="primary" onClick={this.open}>
-          <i className="fa fa-plus" /> Add Output
+        <Button bsStyle="success" onClick={this.open}>
+          <i className="kbc-icon-plus" />New Output
         </Button>
       );
     }
