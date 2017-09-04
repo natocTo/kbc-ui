@@ -222,7 +222,7 @@ export default {
         'text': 'Before creating our transformation, we need to add a new bucket for it in the section Transformations. ',
         'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
         'media': '',
-        'mediaType': '',
+        'mediaType': ''
       }, {
         'id': 3,
         'position': 'aside',
