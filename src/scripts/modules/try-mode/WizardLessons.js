@@ -144,7 +144,7 @@ export default {
 - Click on **Save** 
 - Return back to the Configuration index page.
 `,
-        nextStepDispatchAction: {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
+        'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'media': '',
         'mediaType': ''
       }, {
@@ -162,7 +162,6 @@ export default {
 - paste simple query \`SELECT * FROM cars;\` 
 - click on **Save**
 `,
-        // nextStepDispatchAction: {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'media': '',
         'mediaType': ''
       }, {
@@ -343,7 +342,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'position': 'aside',
         'backdrop': false,
         'title': 'Add Table',
-        nextStepDispatchAction: {type: JOB_LOAD_SUCCESS},
+        'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
         'markdown': `
 ### TO DO:
 
