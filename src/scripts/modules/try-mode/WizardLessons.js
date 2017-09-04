@@ -20,7 +20,7 @@ export default {
         'title': 'Introduction',
         'link': 'home',
         'isNavigationVisible': true,
-        'text': 'As a powerful and safe environment for working with data, Keboola Connection consists of many interconnected components. It helps you extract data from various sources, manipulate and enrich the data, write the results to visualizing tools of your choice, etc. In addition, the whole process can be fully automated.',
+        'markdown': 'As a powerful and safe environment for working with data, Keboola Connection consists of many interconnected components. It helps you extract data from various sources, manipulate and enrich the data, write the results to visualizing tools of your choice, etc. In addition, the whole process can be fully automated.',
         'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       },
@@ -31,7 +31,7 @@ export default {
         'title': 'Extract data',
         'link': 'extractors',
         'isNavigationVisible': true,
-        'text': 'Every project in Keboola Connection starts with loading data. It is done with Extractors – components for importing data from your own computer, your company’s internal databases, and external sources, such as Facebook or YouTube.',
+        'markdown': 'Every project in Keboola Connection starts with loading data. It is done with Extractors – components for importing data from your own computer, your company’s internal databases, and external sources, such as Facebook or YouTube.',
         'media': 'https://www.youtube.com/embed/g-VBfkV4xfc',
         'mediaType': 'video'
       },
@@ -42,7 +42,7 @@ export default {
         'title': 'Store data',
         'link': '/storage',
         'isNavigationVisible': true,
-        'text': 'All data you upload to your project, as well as all the tables your project creates, are stored in Storage where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.',
+        'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in Storage where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.',
         'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       },
@@ -53,7 +53,7 @@ export default {
         'title': 'Manipulate data',
         'link': 'transformations',
         'isNavigationVisible': true,
-        'text': 'Now it’s time to mix, clean and work with the extracted data. In Transformations, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. Or, select ready-to-use Applications created by Keboola or third parties.',
+        'markdown': 'Now it’s time to mix, clean and work with the extracted data. In Transformations, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. Or, select ready-to-use Applications created by Keboola or third parties.',
         'media': '',
         'mediaType': ''
 
@@ -65,7 +65,7 @@ export default {
         'title': 'Write results',
         'link': 'writers',
         'isNavigationVisible': true,
-        'text': 'Once you’re happy with your results, let Writers deliver them to their final destination –  the systems and applications where the output data gets used or consumed, for instance, visualizing tools or databases.',
+        'markdown': 'Once you’re happy with your results, let Writers deliver them to their final destination –  the systems and applications where the output data gets used or consumed, for instance, visualizing tools or databases.',
         'media': '',
         'mediaType': ''
       },
@@ -76,7 +76,7 @@ export default {
         'title': 'Automate',
         'link': 'orchestrations',
         'isNavigationVisible': true,
-        'text': 'If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. Orchestrations allow you to specify at what time or how often your tasks should be executed and in what order.',
+        'markdown': 'If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. Orchestrations allow you to specify at what time or how often your tasks should be executed and in what order.',
         'media': '',
         'mediaType': ''
       },
@@ -87,7 +87,7 @@ export default {
         'title': 'Congratulations',
         'isNavigationVisible': false,
         'link': 'home',
-        'text': 'Congratulations! Lesson finished.',
+        'markdown': 'Congratulations! Lesson finished.',
         'media': 'keboola-finished.svg',
         'mediaType': 'img'
       }
@@ -104,7 +104,7 @@ export default {
         'title': 'Introduction',
         'link': 'home',
         'isNavigationVisible': true,
-        'text': 'As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. Note: Your own projects won’t be affected by this in any way.',
+        'markdown': 'As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. Note: Your own projects won’t be affected by this in any way.',
         'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       }, {
@@ -115,8 +115,9 @@ export default {
         'link': 'extractors',
         'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'isNavigationVisible': true,
-        'text': 'Because the two data tables are stored in a Snowflake database, we’ll be using the Snowflake extractor. By configuring it, we’ll specify what data to extract and how.',
-        'markdown': `
+        'markdown': 'Because the two data tables are stored in a Snowflake database, we’ll be using the Snowflake extractor. By configuring it, we’ll specify what data to extract and how.'
+             + `
+        
 ### TO DO:
 
 - Click on **+ New Extractor**
@@ -133,9 +134,11 @@ export default {
         'backdrop': false,
         'title': 'Setup Connection',
         'isNavigationVisible': true,
-        'text': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection',
-        markdown: `
+        'markdown': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection'
+            + `
+        
 ### TO DO:
+
 - Click on **Setup Database Credentials** 
 - Host to \`kebooladev.snowflakecomputing.com\`
 - Port to \`443\`
@@ -153,9 +156,12 @@ export default {
         'backdrop': false,
         'title': 'Create SQL Query',
         'isNavigationVisible': true,
-        'text': 'Each database query needs to have a **name** and an **SQL command**. The new **output table** that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.',
-        markdown: `
+        'markdown':
+        'Each database query needs to have a **name** and an **SQL command**. The new **output table** that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.'
+        + `
+
 ### TO DO:
+
 - Click on **+ Add Query**
 - name the query as you wish
 - set output table \`in.c-tutorial.cars\`
@@ -170,7 +176,7 @@ export default {
         'backdrop': false,
         'title': 'Run Extracion',
         'isNavigationVisible': true,
-        'text': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage. Once you understand what is happening, click on Next step',
+        'markdown': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage. Once you understand what is happening, click on Next step',
         'media': '',
         'mediaType': ''
       }, {
@@ -180,7 +186,7 @@ export default {
         'title': 'Stored Extraction',
         'link': '/storage',
         'isNavigationVisible': true,
-        'text': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ',
+        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ',
         'media': '',
         'mediaType': ''
       },
@@ -191,7 +197,7 @@ export default {
         'title': 'Congratulations',
         'isNavigationVisible': false,
         'link': 'home',
-        'text': 'Congratulations! Lesson finished.',
+        'markdown': 'Congratulations! Lesson finished.',
         'media': 'keboola-finished.svg',
         'mediaType': 'img'
       }
@@ -208,7 +214,7 @@ export default {
         'title': 'Introduction',
         'link': 'home',
         'isNavigationVisible': true,
-        'text': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will merge the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country.',
+        'markdown': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will merge the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country.',
         'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       }, {
@@ -218,7 +224,7 @@ export default {
         'title': 'Create Bucket',
         'link': 'transformations',
         'isNavigationVisible': true,
-        'text': 'Before creating our transformation, we need to add a new bucket for it in the section Transformations. ',
+        'markdown': 'Before creating our transformation, we need to add a new bucket for it in the section Transformations. ',
         'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
         'media': '',
         'mediaType': ''
@@ -229,7 +235,7 @@ export default {
         'title': 'Create Transformation',
         'link': '',
         'isNavigationVisible': true,
-        'text': 'After naming our new configuration of the extractor and providing credentials to access the source database where the data is stored, it’s time to actually extract the data. It’s done using SQL queries. To extract our two tables, we need to write two queries, one for each table.',
+        'markdown': 'After naming our new configuration of the extractor and providing credentials to access the source database where the data is stored, it’s time to actually extract the data. It’s done using SQL queries. To extract our two tables, we need to write two queries, one for each table.',
         'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
         'media': '',
         'mediaType': ''
@@ -240,10 +246,10 @@ export default {
         'title': 'Set Mappings',
         'link': '',
         'isNavigationVisible': true,
-        'text': 'Each database query needs to have a name and an SQL command. The new output table that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.',
-        'markdown': `
-### TO DO:
-
+        'markdown':
+        'Each database query needs to have a name and an SQL command. The new output table that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.' +
+    `
+    ### TO DO:
 - Click on **+ Add Input** and select in.c-tutorial.cars
 - Click on **+ Add Input** and select in.c-tutorial.cars
 - Click on **+ Add Output** Destination out.c-snowflake.transformed
@@ -263,7 +269,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Run Transformation',
         'link': '',
         'isNavigationVisible': true,
-        'text': 'Similarly, we create a query to extract info about population.',
+        'markdown': 'Similarly, we create a query to extract info about population.',
         'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
         'media': '',
         'mediaType': ''
@@ -274,7 +280,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Check Job',
         'link': 'jobs',
         'isNavigationVisible': true,
-        'text': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage.',
+        'markdown': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage.',
         'media': '',
         'mediaType': ''
       }, {
@@ -284,7 +290,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Check Storage',
         'link': 'home',
         'isNavigationVisible': true,
-        'text': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ',
+        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ',
         'media': '',
         'mediaType': ''
       },
@@ -295,7 +301,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Congratulations',
         'isNavigationVisible': false,
         'link': 'home',
-        'text': 'Congratulations! Lesson finished.',
+        'markdown': 'Congratulations! Lesson finished.',
         'media': 'keboola-finished.svg',
         'mediaType': 'img'
       }
@@ -312,7 +318,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Introduction',
         'link': 'home',
         'isNavigationVisible': true,
-        'text': 'Transformation results can be delivered to any analytics or business intelligence tool. In this lesson, we are going to generate a Tableau Data Extract and load it manually into Tableau Desktop for visualization using yet another Keboola Connection component – a Writer.',
+        'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. In this lesson, we are going to generate a Tableau Data Extract and load it manually into Tableau Desktop for visualization using yet another Keboola Connection component – a Writer.',
         'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       },
@@ -324,9 +330,8 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'link': 'writers',
         'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'tde-exporter'},
         'isNavigationVisible': true,
-        'text': 'Let’s say we have Tableau Desktop installed. Now we need to find the Tableau writer in the Writers section.',
-        'markdown': `
-### TO DO:
+        'markdown': 'Let’s say we have Tableau Desktop installed. Now we need to find the Tableau writer in the Writers section.' +
+    `### TO DO:
 
 - Click on **+ New Writer**
 - Find **Tableau**. You can use the search feature to find it quickly.
@@ -343,8 +348,9 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'backdrop': false,
         'title': 'Add Table',
         'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
-        'markdown': `
-### TO DO:
+        'markdown':
+        'Then let’s add the table we want to send to Tableau. For each of its columns we also need to specify whether it contains text or a number.' +
+    `### TO DO:
 
 - Click on **+ Add Table**
 - Find **Tableau**. You can use the search feature to find it quickly.
@@ -353,8 +359,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
 - click Export
 
 `,
-        'isNavigationVisible': true,
-        'text': 'Then let’s add the table we want to send to Tableau. For each of its columns we also need to specify whether it contains text or a number.'
+        'isNavigationVisible': true
       },
 
       {
@@ -363,7 +368,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'backdrop': true,
         'title': 'Run Extracion',
         'isNavigationVisible': false,
-        'text': 'The final step is to open the downloaded file in Tableau and create any reports we want. To see how to automate the whole process, continue to the next lesson - Project Automation. Learn more about Automation, or follow a hands-on tutorial on automation in our user documentation.',
+        'markdown': 'The final step is to open the downloaded file in Tableau and create any reports we want. To see how to automate the whole process, continue to the next lesson - Project Automation. Learn more about Automation, or follow a hands-on tutorial on automation in our user documentation.',
         'media': 'tbl.png',
         'mediaType': 'img'
       },
@@ -374,7 +379,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Congratulations',
         'isNavigationVisible': false,
         'link': 'home',
-        'text': 'Congratulations! Lesson finished.',
+        'markdown': 'Congratulations! Lesson finished.',
         'media': 'keboola-finished.svg',
         'mediaType': 'img'
       }
@@ -391,7 +396,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Introduction',
         'link': 'home',
         'isNavigationVisible': true,
-        'text': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically.',
+        'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically.',
         'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       }, {
@@ -402,7 +407,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'link': 'orchestrations',
         'nextStepDispatchAction': {type: ORCHESTRATION_CREATE_SUCCESS},
         'isNavigationVisible': true,
-        'text': 'Add your first Orchestration by clicking **+ Add Orchestration** and naming it',
+        'markdown': 'Add your first Orchestration by clicking **+ Add Orchestration** and naming it',
         'media': '',
         'mediaType': ''
       }, {
@@ -411,7 +416,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'backdrop': false,
         'title': 'Orchestration Overview',
         'isNavigationVisible': true,
-        'text': 'We only need to specify what tasks should be executed, in which order and when. We can also set up notifications that will be sent to us if something needs your attention. Start by click on ***Configure Tasks***',
+        'markdown': 'We only need to specify what tasks should be executed, in which order and when. We can also set up notifications that will be sent to us if something needs your attention. Start by click on ***Configure Tasks***',
         'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_EDIT_START},
         'media': '',
         'mediaType': ''
@@ -421,14 +426,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'backdrop': false,
         'title': 'Configure Task',
         'isNavigationVisible': true,
-        'text': 'Lets compose new task in desired order from previous lessons. Start by clicking **+ Add Task***',
-        markdown: `
-### Order list:
-- Snowflake extractor
-- Transformation
-- Tableau writer 
-`,
-
+        'markdown': 'Lets compose new task in desired order from previous lessons. Start by clicking',
         'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_SAVE_SUCCESS},
         'media': '',
         'mediaType': ''
@@ -438,7 +436,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'backdrop': false,
         'title': 'Automate Orchestration',
         'isNavigationVisible': true,
-        'text': 'Then we choose how often, on what days and at what time we want the orchestration to run.',
+        'markdown': 'Then we choose how often, on what days and at what time we want the orchestration to run.',
         'media': '',
         'mediaType': ''
       }, {
@@ -447,7 +445,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'backdrop': false,
         'title': 'Setting Notifications',
         'isNavigationVisible': true,
-        'text': 'Finally, we enter our email address to receive error notifications. From data extraction to data writing, we have set up the full pipeline. Any change to our Snowflake database tables will be automatically reflected in our Tableau results. Learn more about Automation, or follow a hands-on tutorial on automation in our user documentation.',
+        'markdown': 'Finally, we enter our email address to receive error notifications. From data extraction to data writing, we have set up the full pipeline. Any change to our Snowflake database tables will be automatically reflected in our Tableau results. Learn more about Automation, or follow a hands-on tutorial on automation in our user documentation.',
         'media': '',
         'mediaType': ''
       },
@@ -458,7 +456,7 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Congratulations',
         'isNavigationVisible': false,
         'link': 'home',
-        'text': 'Congratulations! Lesson finished.',
+        'markdown': 'Congratulations! Lesson finished.',
         'media': 'keboola-finished.svg',
         'mediaType': 'img'
       }

@@ -38,8 +38,7 @@ export default React.createClass({
               <div className="col-md-12">
                 {!this.isLastStep() &&
                  <span>
-                   <p>{this.getStepText()}</p>
-                   <Remarkable source={this.getCurrentStep().markdown} />
+                   <Remarkable source={this.getStepMarkdown()} />
                  </span>
                 }
                 {!this.isFirstStep() &&
@@ -51,11 +50,8 @@ export default React.createClass({
                  </div>
                 }
                 {this.isLastStep() &&
-                 <span>
-                   <p className="try-congratulations">
-                     {this.getStepText()}
-                   </p>
-                   <Remarkable source={this.getCurrentStep().markdown} />
+                 <span className="try-congratulations">
+                   <Remarkable source={this.getStepMarkdown()} />
                  </span>
                 }
               </div>
@@ -108,8 +104,8 @@ export default React.createClass({
   getStepPosition() {
     return this.getLessonSteps()[this.getActiveStep()].position;
   },
-  getStepText() {
-    return this.getLessonSteps()[this.getActiveStep()].text;
+  getStepMarkdown() {
+    return this.getLessonSteps()[this.getActiveStep()].markdown;
   },
   getStepTitle() {
     return this.getLessonSteps()[this.getActiveStep()].title;
