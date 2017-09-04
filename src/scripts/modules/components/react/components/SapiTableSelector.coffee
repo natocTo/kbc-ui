@@ -47,12 +47,23 @@ module.exports = React.createClass
       value: @props.value
       isLoading: @state.isTablesLoading
       placeholder: @props.placeholder
+      valueRenderer: @valueRenderer
+      optionRenderer: @valueRenderer
       onChange: (selectedOption) =>
         tableId = selectedOption.value
         table = @state.tables.find (t) ->
           t.get('id') == tableId
         @props.onSelectTableFn(tableId, table)
       options: @_getTables()
+
+  tableExist: (tableId) ->
+    @state.tables.find((t) -> tableId == t.get('id'))
+
+  valueRenderer: (op) ->
+    if @tableExist(op.value)
+      return op.label
+    else
+      return React.DOM.span className: "text-muted", op.label
 
   _getTables: ->
     tables = @state.tables
@@ -68,4 +79,9 @@ module.exports = React.createClass
         label: tableId
         value: tableId
       }
-    tables.toList().toJS()
+    result = tables.toList().toJS()
+    hasValue = result.find((t) => t.value == @props.value)
+    if !!@props.value and not hasValue
+      return result.concat({label: @props.value, value: @props.value})
+    else
+      return result
