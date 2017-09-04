@@ -260,9 +260,9 @@ export default React.createClass({
   },
 
   prepareEventQuery(omitFetches, omitExports) {
-    const defs = [omitFetches, omitExports];
-    const omitsQuery = _.filter(['tableDetail', 'tableExported'], (val, idx) => defs[idx]
-    ).map((ev) => `NOT event:storage.${ev}`);
+    const omitFetchesEvent = omitFetches ? ['tableDataPreview', 'tableDetail'] : [];
+    const omitExportsEvent = omitExports ? ['tableExported'] : [];
+    const omitsQuery = omitFetchesEvent.concat(omitExportsEvent).map((ev) => `NOT event:storage.${ev}`);
     const objectIdQuery = `objectId:${this.getTableId()}`;
     return _.isEmpty(omitsQuery) ? objectIdQuery : `(${omitsQuery.join(' OR ')} AND ${objectIdQuery})`;
   },
