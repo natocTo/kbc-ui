@@ -98,6 +98,7 @@ export default React.createClass({
       omitExports: omitExports,
       filterIOEvents: filterIOEvents,
       isCallingRunAnalysis: false,
+      detailEventId: null,
       profilerData: Map()
     });
   },
@@ -227,6 +228,8 @@ export default React.createClass({
         onChangeTable={this.changeTable}
         filterIOEvents={this.state.filterIOEvents}
         onFilterIOEvents={this.onFilterIOEvents}
+        onShowEventDetail={(eventId) => this.setState({detailEventId: eventId})}
+        detailEventId={this.state.detailEventId}
       />
     );
   },

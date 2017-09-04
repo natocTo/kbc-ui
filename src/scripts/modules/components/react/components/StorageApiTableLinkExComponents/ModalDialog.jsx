@@ -39,8 +39,9 @@ export default React.createClass({
     onChangeTable: PropTypes.func,
     filterIOEvents: PropTypes.bool,
     onFilterIOEvents: PropTypes.func,
+    onShowEventDetail: PropTypes.func,
+    detailEventId: PropTypes.number,
     isCallingRunAnalysis: PropTypes.bool
-
   },
 
   mixins: [immutableMixin],
@@ -173,6 +174,9 @@ export default React.createClass({
         onOmitExportsFn={this.props.onOmitExportsFn}
         filterIOEvents={this.props.filterIOEvents}
         onFilterIOEvents={this.props.onFilterIOEvents}
+        onShowEventDetail={this.props.onShowEventDetail}
+        detailEventId={this.props.detailEventId}
+
       />
 
     );

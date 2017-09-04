@@ -15,6 +15,8 @@ export default React.createClass({
     omitFetches: PropTypes.bool,
     omitExports: PropTypes.bool,
     filterIOEvents: PropTypes.bool,
+    onShowEventDetail: PropTypes.func,
+    detailEventId: PropTypes.number,
     onFilterIOEvents: PropTypes.func,
     onOmitFetchesFn: PropTypes.func,
     onOmitExportsFn: PropTypes.func
@@ -46,24 +48,29 @@ export default React.createClass({
       const incElement = <p><small><strong>incremental</strong></small></p>;
       info.message = string.replaceAll(info.message, this.props.tableId, '');
       const incremental = e.getIn(['params', 'incremental']) ? incElement : <span />;
-      return (
-        <tr className={cl}>
-          <td className="td">
-            {e.get('id')}
-          </td>
-          <td className="td">
-            {date.format(e.get('created'))}
-            <small> {agoTime} </small>
-          </td>
-          <td className="td">
-            {info.message}
-            {incremental}
-          </td>
-          <td className="td">
-            {e.getIn(['token', 'name'])}
-          </td>
-        </tr>
-      );
+      const isDetail = e.get('id') === this.props.detailEventId;
+      if (isDetail) {
+        return this.renderDetail(e);
+      } else {
+        return (
+          <tr className={cl} role="button" onClick={() => this.setDetailEventId(e.get('id'))}>
+            <td className="td">
+              {e.get('id')}
+            </td>
+            <td className="td">
+              {date.format(e.get('created'))}
+              <small> {agoTime} </small>
+            </td>
+            <td className="td">
+              {info.message}
+              {incremental}
+            </td>
+            <td className="td">
+              {e.getIn(['token', 'name'])}
+            </td>
+          </tr>
+        );
+      }
     }
     );
 
@@ -134,6 +141,20 @@ export default React.createClass({
           </tbody>
         </Table>
       </div>
+    );
+  },
+
+  setDetailEventId(eventId) {
+    this.props.onShowEventDetail(eventId);
+  },
+
+  renderDetail(event) {
+    return (
+      <tr role="button" onClick={() => this.setDetailEventId(null)}>
+        <td colSpan="3">
+          detail {event.get('id')}
+        </td>
+      </tr>
     );
   },
 
