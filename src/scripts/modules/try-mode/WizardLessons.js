@@ -31,7 +31,7 @@ export default {
         'title': 'Extract data',
         'link': 'extractors',
         'isNavigationVisible': true,
-        'markdown': 'Every project in Keboola Connection starts with loading data. It is done with Extractors – components for importing data from your own computer, your company’s internal databases, and external sources, such as Facebook or YouTube.',
+        'markdown': 'Every project in Keboola Connection starts with loading data. It is done with **Extractors** – components for importing data from your own computer, your company’s internal databases, and external sources, such as Facebook or YouTube.',
         'media': 'https://www.youtube.com/embed/g-VBfkV4xfc',
         'mediaType': 'video'
       },
@@ -42,7 +42,7 @@ export default {
         'title': 'Store data',
         'link': '/storage',
         'isNavigationVisible': true,
-        'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in Storage where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.',
+        'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage** where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.',
         'media': 'kbc_scheme_light_blue.svg',
         'mediaType': 'img'
       },
@@ -53,7 +53,7 @@ export default {
         'title': 'Manipulate data',
         'link': 'transformations',
         'isNavigationVisible': true,
-        'markdown': 'Now it’s time to mix, clean and work with the extracted data. In Transformations, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. Or, select ready-to-use Applications created by Keboola or third parties.',
+        'markdown': 'Now it’s time to mix, clean and work with the extracted data. In **Transformations**, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. Or, select ready-to-use Applications created by Keboola or third parties.',
         'media': '',
         'mediaType': ''
 
@@ -65,7 +65,7 @@ export default {
         'title': 'Write results',
         'link': 'writers',
         'isNavigationVisible': true,
-        'markdown': 'Once you’re happy with your results, let Writers deliver them to their final destination –  the systems and applications where the output data gets used or consumed, for instance, visualizing tools or databases.',
+        'markdown': 'Once you’re happy with your results, let **Writers** deliver them to their final destination –  the systems and applications where the output data gets used or consumed, for instance, visualizing tools or databases.',
         'media': '',
         'mediaType': ''
       },
@@ -76,7 +76,7 @@ export default {
         'title': 'Automate',
         'link': 'orchestrations',
         'isNavigationVisible': true,
-        'markdown': 'If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. Orchestrations allow you to specify at what time or how often your tasks should be executed and in what order.',
+        'markdown': 'If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. **Orchestrations** allow you to specify at what time or how often your tasks should be executed and in what order.',
         'media': '',
         'mediaType': ''
       },
@@ -145,7 +145,6 @@ export default {
 - Username, Password, Database and Schema to \`HELP_TUTORIAL\`
 - Warehouse to \`DEV\`
 - Click on **Save** 
-- Return back to the Configuration index page.
 `,
         'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
         'media': '',
@@ -157,7 +156,7 @@ export default {
         'title': 'Create SQL Query',
         'isNavigationVisible': true,
         'markdown':
-        'Each database query needs to have a **name** and an **SQL command**. The new **output table** that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.'
+        'Each database query needs to have a name and an SQL command. The new **output table** that will be created in **Storage** has to be named here too. Let’s create the first query for extracting data about cars and save it.'
         + `
 
 ### TO DO:
@@ -176,7 +175,7 @@ export default {
         'backdrop': false,
         'title': 'Run Extracion',
         'isNavigationVisible': true,
-        'markdown': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage. Once you understand what is happening, click on Next step',
+        'markdown': 'Now let’s click on **Run Extraction** to load the data from the two database tables into the new tables in Storage. Once you understand what is happening, click on Next step',
         'media': '',
         'mediaType': ''
       }, {
@@ -186,7 +185,7 @@ export default {
         'title': 'Stored Extraction',
         'link': '/storage',
         'isNavigationVisible': true,
-        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ',
+        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about [Extractors](https://help.keboola.com/overview/#extractors), or follow a hands-on tutorial on loading in our [user documentation](https://help.keboola.com/tutorial/load). ',
         'media': '',
         'mediaType': ''
       },
@@ -247,10 +246,12 @@ export default {
         'link': '',
         'isNavigationVisible': true,
         'markdown':
-        'Each database query needs to have a name and an SQL command. The new output table that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.' +
-    `
-    ### TO DO:
-- Click on **+ Add Input** and select in.c-tutorial.cars
+        'Each database query needs to have a name and an SQL command. The new output table that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.'
+
+        + `
+        
+### TO DO:
+
 - Click on **+ Add Input** and select in.c-tutorial.cars
 - Click on **+ Add Output** Destination out.c-snowflake.transformed
 - Add Query \`CREATE TABLE transformed AS
@@ -330,16 +331,16 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'link': 'writers',
         'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'tde-exporter'},
         'isNavigationVisible': true,
-        'markdown': 'Let’s say we have Tableau Desktop installed. Now we need to find the Tableau writer in the Writers section.' +
-    `### TO DO:
-
+        'media': '',
+        'markdown': 'Let’s say we have Tableau Desktop installed. Now we need to find the Tableau writer in the Writers section.'
+        + `
+### TO DO:
 - Click on **+ New Writer**
 - Find **Tableau**. You can use the search feature to find it quickly.
 - Click on **More** and continue with **Create New Configuration**
 - Name the configuration and click on **Create**
 
 `,
-        'media': '',
         'mediaType': ''
       },
       {
@@ -349,8 +350,10 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'title': 'Add Table',
         'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
         'markdown':
-        'Then let’s add the table we want to send to Tableau. For each of its columns we also need to specify whether it contains text or a number.' +
-    `### TO DO:
+        'Then let’s add the table we want to send to Tableau. For each of its columns we also need to specify whether it contains text or a number.'
+        + `
+        
+### TO DO:
 
 - Click on **+ Add Table**
 - Find **Tableau**. You can use the search feature to find it quickly.
@@ -426,7 +429,13 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
         'backdrop': false,
         'title': 'Configure Task',
         'isNavigationVisible': true,
-        'markdown': 'Lets compose new task in desired order from previous lessons. Start by clicking',
+        'markdown': 'Lets compose new task in desired order from previous lessons. Start by clicking Add Task. Configure the task in this order:'
+        + `
+- Snowflake extractor
+- Transformation
+- Tableau Writer
+
+`,
         'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_SAVE_SUCCESS},
         'media': '',
         'mediaType': ''
