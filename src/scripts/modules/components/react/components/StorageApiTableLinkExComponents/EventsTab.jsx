@@ -56,9 +56,6 @@ export default React.createClass({
             <small> {agoTime} </small>
           </td>
           <td className="td">
-            {e.get('component')}
-          </td>
-          <td className="td">
             {info.message}
             {incremental}
           </td>
@@ -122,9 +119,6 @@ export default React.createClass({
               </th>
               <th className="th">
                 Created
-              </th>
-              <th className="th">
-                Component
               </th>
               <th className="th">
                 Event
