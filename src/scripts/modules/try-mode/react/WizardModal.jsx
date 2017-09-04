@@ -20,7 +20,6 @@ export default React.createClass({
   render: function() {
     return (
       <div>
-        {this.renderFloatNext()}
         <Modal
           enforceFocus={false}
           show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
@@ -100,11 +99,9 @@ export default React.createClass({
   getStepsCount() {
     return this.getLessonSteps().length;
   },
-
   getCurrentStep() {
     return this.getLessonSteps()[this.getActiveStep()];
   },
-
   getStepId() {
     return this.getLessonSteps()[this.getActiveStep()].id;
   },
@@ -171,12 +168,6 @@ export default React.createClass({
       </ResponsiveEmbed>
     );
   },
-  renderFloatNext() {
-    let floatPoint = this.getLessonSteps()[this.getActiveStep()].floatNext;
-    if (floatPoint) {
-      return (<div className="try-float-next-wrapper" onClick={this.increaseStep} style={{left: floatPoint.x, top: floatPoint.y}}><div className="try-float-next">Next</div></div>);
-    }
-  },
   renderButtonPrev() {
     let buttonText = 'Prev step';
     if (this.props.step === 0) {
@@ -233,7 +224,6 @@ export default React.createClass({
       this.closeLessonModal();
     }
   },
-
   increaseStep() {
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;

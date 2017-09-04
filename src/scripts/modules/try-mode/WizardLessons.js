@@ -223,10 +223,6 @@ export default {
         'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
         'media': '',
         'mediaType': '',
-        'floatNext': {
-          'x': 560,
-          'y': 340
-        }
       }, {
         'id': 3,
         'position': 'aside',
