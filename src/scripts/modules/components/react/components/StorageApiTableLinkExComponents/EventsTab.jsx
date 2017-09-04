@@ -81,7 +81,10 @@ export default React.createClass({
                     disabled={this.props.filterIOEvents}
                     checked={this.props.omitFetches}
                     onClick={this.props.onOmitFetchesFn}
-                    type="checkbox"/> Ignore table fetches
+                    type="checkbox"/>
+                  <span className={this.props.filterIOEvents ? 'text-muted' : ''}>
+                    Ignore table fetches
+                  </span>
                 </label>
               </div>
             </div>
@@ -92,7 +95,10 @@ export default React.createClass({
                     disabled={this.props.filterIOEvents}
                     checked={this.props.omitExports}
                     onClick={this.props.onOmitExportsFn}
-                    type="checkbox"/> Ignore table exports
+                    type="checkbox"/>
+                  <span className={this.props.filterIOEvents ? 'text-muted' : ''}>
+                    Ignore table exports
+                  </span>
                 </label>
               </div>
             </div>
