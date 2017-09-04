@@ -14,6 +14,8 @@ export default React.createClass({
     events: PropTypes.object.isRequired,
     omitFetches: PropTypes.bool,
     omitExports: PropTypes.bool,
+    filterIOEvents: PropTypes.bool,
+    onFilterIOEvents: PropTypes.func,
     onOmitFetchesFn: PropTypes.func,
     onOmitExportsFn: PropTypes.func
 
@@ -76,9 +78,10 @@ export default React.createClass({
               <div className="checkbox">
                 <label>
                   <input
-                      checked={this.props.omitFetches}
-                      onClick={this.props.onOmitFetchesFn}
-                      type="checkbox"/> Ignore table fetches
+                    disabled={this.props.filterIOEvents}
+                    checked={this.props.omitFetches}
+                    onClick={this.props.onOmitFetchesFn}
+                    type="checkbox"/> Ignore table fetches
                 </label>
               </div>
             </div>
@@ -86,9 +89,20 @@ export default React.createClass({
               <div className="checkbox">
                 <label>
                   <input
-                      checked={this.props.omitExports}
-                      onClick={this.props.onOmitExportsFn}
-                      type="checkbox"/> Ignore table exports
+                    disabled={this.props.filterIOEvents}
+                    checked={this.props.omitExports}
+                    onClick={this.props.onOmitExportsFn}
+                    type="checkbox"/> Ignore table exports
+                </label>
+              </div>
+            </div>
+            <div className="col-xs-3">
+              <div className="checkbox">
+                <label>
+                  <input
+                    checked={this.props.filterIOEvents}
+                    onClick={this.props.onFilterIOEvents}
+                    type="checkbox"/> Import/Exports only
                 </label>
               </div>
             </div>

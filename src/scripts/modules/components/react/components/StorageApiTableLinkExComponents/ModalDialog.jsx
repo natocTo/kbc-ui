@@ -37,6 +37,8 @@ export default React.createClass({
     isRedshift: PropTypes.bool,
     onRunAnalysis: PropTypes.func,
     onChangeTable: PropTypes.func,
+    filterIOEvents: PropTypes.bool,
+    onFilterIOEvents: PropTypes.func,
     isCallingRunAnalysis: PropTypes.bool
 
   },
@@ -169,6 +171,8 @@ export default React.createClass({
         omitExports={this.props.omitExports}
         onOmitFetchesFn={this.props.onOmitFetchesFn}
         onOmitExportsFn={this.props.onOmitExportsFn}
+        filterIOEvents={this.props.filterIOEvents}
+        onFilterIOEvents={this.props.onFilterIOEvents}
       />
 
     );

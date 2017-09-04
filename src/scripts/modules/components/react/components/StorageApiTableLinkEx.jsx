@@ -18,6 +18,8 @@ import Tooltip from '../../../../react/common/Tooltip';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import EventsService from '../../../sapi-events/EventService';
 
+const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
+
 export default React.createClass({
 
   mixins: [createStoreMixin(tablesStore)],
@@ -79,9 +81,9 @@ export default React.createClass({
   },
 
   getInitialState() {
-    const omitFetches = true, omitExports = false;
+    const omitFetches = true, omitExports = false, filterIOEvents = false;
     const es = EventsService.factory({limit: 10});
-    const eventQuery = this.prepareEventQuery(omitFetches, omitExports);
+    const eventQuery = this.prepareEventQuery({omitFetches, omitExports, filterIOEvents});
     es.setQuery(eventQuery);
 
     return ({
@@ -94,6 +96,7 @@ export default React.createClass({
       loadingProfilerData: false,
       omitFetches: omitFetches,
       omitExports: omitExports,
+      filterIOEvents: filterIOEvents,
       isCallingRunAnalysis: false,
       profilerData: Map()
     });
@@ -222,6 +225,8 @@ export default React.createClass({
         loadingProfilerData={this.state.loadingProfilerData}
         isRedshift={this.isRedshift()}
         onChangeTable={this.changeTable}
+        filterIOEvents={this.state.filterIOEvents}
+        onFilterIOEvents={this.onFilterIOEvents}
       />
     );
   },
@@ -237,34 +242,49 @@ export default React.createClass({
 
   onOmitExports(e) {
     const checked = e.target.checked;
-    this.setState({omitExports: checked});
-    const q = this.prepareEventQuery(this.state.omitFetches, checked);
-    this.state.eventService.setQuery(q);
-    this.state.eventService.load();
+    this.setState({omitExports: checked}, () => {
+      const q = this.prepareEventQuery();
+      this.state.eventService.setQuery(q);
+      this.state.eventService.load();
+    });
   },
 
   onOmitFetches(e) {
     const checked = e.target.checked;
-    this.setState({omitFetches: checked});
-    const q = this.prepareEventQuery(checked, this.state.omitExports);
-    this.state.eventService.setQuery(q);
-    this.state.eventService.load();
+    this.setState({omitFetches: checked}, () => {
+      const q = this.prepareEventQuery();
+      this.state.eventService.setQuery(q);
+      this.state.eventService.load();
+    });
+  },
+
+  onFilterIOEvents(e) {
+    const checked = e.target.checked;
+    this.setState({filterIOEvents: checked}, () => {
+      const q = this.prepareEventQuery();
+      this.state.eventService.setQuery(q);
+      this.state.eventService.load();
+    });
   },
 
   resetTableEvents() {
-    const {omitExports, omitFetches} = this.state;
-    const q = this.prepareEventQuery(omitFetches, omitExports);
+    const q = this.prepareEventQuery();
     this.stopEventService();
     this.state.eventService.reset();
     this.state.eventService.setQuery(q);
   },
 
-  prepareEventQuery(omitFetches, omitExports) {
+  prepareEventQuery(initState) {
+    const state = initState || this.state;
+    const {omitExports, omitFetches, filterIOEvents} = state;
     const omitFetchesEvent = omitFetches ? ['tableDataPreview', 'tableDetail'] : [];
     const omitExportsEvent = omitExports ? ['tableExported'] : [];
-    const omitsQuery = omitFetchesEvent.concat(omitExportsEvent).map((ev) => `NOT event:storage.${ev}`);
+    let omitsQuery = omitFetchesEvent.concat(omitExportsEvent).map((ev) => `NOT event:storage.${ev}`);
+    if (filterIOEvents) {
+      omitsQuery =  IMPORT_EXPORT_EVENTS.map((ev) => `event:storage.${ev}`);
+    }
     const objectIdQuery = `objectId:${this.getTableId()}`;
-    return _.isEmpty(omitsQuery) ? objectIdQuery : `(${omitsQuery.join(' OR ')} AND ${objectIdQuery})`;
+    return _.isEmpty(omitsQuery) ? objectIdQuery : `((${omitsQuery.join(' OR ')}) AND ${objectIdQuery})`;
   },
 
   isLoading() {
