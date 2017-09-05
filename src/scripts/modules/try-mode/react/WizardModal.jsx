@@ -69,12 +69,10 @@ export default React.createClass({
              </div>
             }
           </Modal.Body>
-          {this.getNextStepDispatchAction() === undefined &&
           <Modal.Footer>
             {this.renderButtonPrev()}
             {this.renderButtonNext()}
           </Modal.Footer>
-            }
         </Modal>
       </div>
     );
