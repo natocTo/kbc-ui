@@ -134,7 +134,7 @@ export default {
         'backdrop': false,
         'title': 'Setup Connection',
         'isNavigationVisible': true,
-        'markdown': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection'
+        'markdown': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection.'
             + `
         
 ### TO DO:
@@ -168,7 +168,8 @@ export default {
 - click on **Save**
 `,
         'media': '',
-        'mediaType': ''
+        'mediaType': '',
+        'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'}
       }, {
         'id': 5,
         'position': 'aside',
@@ -177,7 +178,8 @@ export default {
         'isNavigationVisible': true,
         'markdown': 'Now let’s click on **Run Extraction** to load the data from the two database tables into the new tables in Storage. Once you understand what is happening, click on Next step',
         'media': '',
-        'mediaType': ''
+        'mediaType': '',
+        'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS}
       }, {
         'id': 6,
         'position': 'aside',
@@ -185,7 +187,7 @@ export default {
         'title': 'Stored Extraction',
         'link': '/storage',
         'isNavigationVisible': true,
-        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about [Extractors](https://help.keboola.com/overview/#extractors){:target="_blank"}, or follow a hands-on tutorial on loading in our [user documentation](https://help.keboola.com/tutorial/load){:target="_blank"}. ',
+        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about [Extractors](https://help.keboola.com/overview/#extractors), or follow a hands-on tutorial on loading in our [user documentation](https://help.keboola.com/tutorial/load). ',
         'media': '',
         'mediaType': ''
       },
@@ -223,7 +225,7 @@ export default {
         'title': 'Create Bucket',
         'link': 'transformations',
         'isNavigationVisible': true,
-        'markdown': 'Before creating our transformation, we need to add a new bucket for it in the section Transformations. ',
+        'markdown': 'Before creating our transformation, we need to create a new bucket which serves as folder for Transformations. You will benefit from buckets later in the process.',
         'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
         'media': '',
         'mediaType': ''
@@ -234,7 +236,7 @@ export default {
         'title': 'Create Transformation',
         'link': '',
         'isNavigationVisible': true,
-        'markdown': 'After naming our new configuration of the extractor and providing credentials to access the source database where the data is stored, it’s time to actually extract the data. It’s done using SQL queries. To extract our two tables, we need to write two queries, one for each table.',
+        'markdown': 'Let’s add a new transformation into the new bucket by clicking on **+ New Transformation**, select MySQL as the backend (the engine running the transformation script)',
         'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
         'media': '',
         'mediaType': ''
@@ -246,23 +248,29 @@ export default {
         'link': '',
         'isNavigationVisible': true,
         'markdown':
-        'Each database query needs to have a name and an SQL command. The new output table that will be created in Storage has to be named here too. Let’s create the first query for extracting data about cars and save it.'
+        'Now let’s specify '
 
         + `
+- **Input Mapping** what tables will be used in the transformation.
+- **Output Mapping** what tables will be written to Storage as results.
+- **Queries** what will happen with the data in the transformation.
+
+
         
 ### TO DO:
 
-- Click on **+ Add Input** and select in.c-tutorial.cars
-- Click on **+ Add Output** Destination out.c-snowflake.transformed
+- Click on **+ Add Input** and select \`in.c-tutorial.cars\` as Source
+- Click on **+ Add Output**, set Destination at \`out.c-snowflake.transformed\`
 - Add Query \`CREATE TABLE transformed AS
-SELECT \`cars\`.*, \`population\`.\`POPULATION\`, (\`population\`.\`POPULATION\` / \`cars\`.\`CARS\`) AS \`PERSON_PER_CAR\`
-FROM \`cars\` JOIN \`population\`
-On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\` 
+SELECT cars.*, population.POPULATION, (population.POPULATION / cars.CARS) AS PERSON_PER_CAR
+FROM cars JOIN population
+On cars.COUNTRY = population.COUNTRY\` and Save it.
 - Click on **Next Step**
 
 `,
         'media': '',
         'mediaType': ''
+
       }, {
         'id': 5,
         'position': 'aside',
