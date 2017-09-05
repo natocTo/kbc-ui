@@ -53,7 +53,7 @@ export default {
         'title': 'Manipulate data',
         'link': 'transformations',
         'isNavigationVisible': true,
-        'markdown': 'Now it’s time to mix, clean and work with the extracted data. In **Transformations**, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. Or, select ready-to-use Applications created by Keboola or third parties.',
+        'markdown': 'Now it’s time to mix, clean and work with the extracted data. In **Transformations**, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. You can also select ready-to-use Applications created by Keboola or third parties.',
         'media': '',
         'mediaType': ''
 
