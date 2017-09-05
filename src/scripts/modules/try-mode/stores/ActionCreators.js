@@ -1,4 +1,6 @@
 import Dispatcher from '../../../Dispatcher';
+import WizardStore from './WizardStore';
+import RoutesStore from '../../../stores/RoutesStore';
 
 export const ActionTypes = {
   UPDATE_WIZARD_MODAL_STATE: 'UPDATE_WIZARD_MODAL_STATE',
@@ -27,6 +29,10 @@ export const setStep = (newStep) => {
     type: ActionTypes.TRY_WIZARD_SET_STEP,
     step: newStep
   });
+  const nextLink = WizardStore.getCurrentStep().link;
+  if (nextLink) {
+    return RoutesStore.getRouter().transitionTo(nextLink);
+  }
 };
 
 export const showWizardModalFn = (lessonNumber) => {

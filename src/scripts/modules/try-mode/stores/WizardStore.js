@@ -2,6 +2,7 @@ import Dispatcher from '../../../Dispatcher';
 import StoreUtils from '../../../utils/StoreUtils';
 import {ActionTypes} from './ActionCreators';
 import wizardLessons from '../WizardLessons';
+import RoutesStore from '../../../stores/RoutesStore';
 
 let store = {
   showLessonModal: false,
@@ -29,7 +30,12 @@ Dispatcher.register((payload) => {
   const  nextStepDispatchAction = WizardStore.getCurrentStep().nextStepDispatchAction;
   if (nextStepDispatchAction && containsAction(action, nextStepDispatchAction)) {
     store.step = store.step + 1;
-    return WizardStore.emitChange();
+    WizardStore.emitChange();
+    const nextLink = WizardStore.getCurrentStep().link;
+    if (nextLink) {
+      RoutesStore.getRouter().transitionTo(nextLink);
+    }
+    return null;
   }
 
   switch (action.type) {
