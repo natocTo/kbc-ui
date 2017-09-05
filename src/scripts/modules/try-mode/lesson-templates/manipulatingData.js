@@ -61,8 +61,8 @@ export default {
 
 ### TO DO:
 
-- Click on **+ Add Input** and select \`in.c-tutorial.cars\` as Source
-- Click on **+ Add Output**, set Destination at \`out.c-snowflake.transformed\`
+- Click on **+ New Input** and select \`in.c-tutorial.cars\` as Source
+- Click on **+ New Output**, set Destination at \`out.c-snowflake.transformed\`
 - Add Query \`CREATE TABLE transformed AS
 SELECT cars.*, population.POPULATION, (population.POPULATION / cars.CARS) AS PERSON_PER_CAR
 FROM cars JOIN population
@@ -91,7 +91,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'title': 'Check Job',
       'link': 'jobs',
       'isNavigationVisible': true,
-      'markdown': 'Here you can see that the transformation job was successful. Our input tables were merged and the output table transformed was created.',
+      'markdown': 'Here in **Jobs** you can see that the transformation job was successful. Our input tables were merged and the output table transformed was created. You can check the detail of Job. When you are ready, hit **Next step**.',
       'media': '',
       'mediaType': ''
     }, {
@@ -99,7 +99,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'position': 'aside',
       'backdrop': false,
       'title': 'Check Storage',
-      'link': 'home',
+      'link': '/storage',
       'isNavigationVisible': true,
       'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue with the next step - Visualizing Results. Learn more about [Data Manipulation](https://help.keboola.com/manipulation/), or follow a hands-on tutorial on data transformation in our [user documentation](https://help.keboola.com/tutorial/load).',
       'media': '',

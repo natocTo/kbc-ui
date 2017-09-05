@@ -98,7 +98,9 @@ export default {
       'title': 'Stored Extraction',
       'link': '/storage',
       'isNavigationVisible': true,
-      'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about [Extractors](https://help.keboola.com/overview/#extractors), or follow a hands-on tutorial on loading in our [user documentation](https://help.keboola.com/tutorial/load). ',
+      'markdown': 'Storage let you see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. ' +
+      'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. Learn more about [Extractors](https://help.keboola.com/overview/#extractors), or follow a hands-on tutorial on loading in our [user documentation](https://help.keboola.com/tutorial/load). ' +
+      'Click on **Next step**.',
       'media': '',
       'mediaType': ''
     },
