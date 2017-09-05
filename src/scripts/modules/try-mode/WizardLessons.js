@@ -3,7 +3,7 @@ import TransformationsConstants from '../transformations/Constants';
 import JobsConstants from '../jobs/Constants';
 import OrchestrationsConstants from '../orchestrations/Constants';
 // import kbcConstants from '../../constants/KbcConstants';
-const {INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS} = ComponentsConstants.ActionTypes;
+const {INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, VERSIONS_LOAD_SUCCESS} = ComponentsConstants.ActionTypes;
 const {TRANSFORMATION_BUCKET_CREATE_SUCCESS, TRANSFORMATION_CREATE_SUCCESS} = TransformationsConstants.ActionTypes;
 const {JOB_LOAD_SUCCESS} = JobsConstants.ActionTypes;
 const {ORCHESTRATION_CREATE_SUCCESS, ORCHESTRATION_TASKS_EDIT_START, ORCHESTRATION_TASKS_SAVE_SUCCESS} = OrchestrationsConstants.ActionTypes;
@@ -269,8 +269,8 @@ On cars.COUNTRY = population.COUNTRY\` and Save it.
 
 `,
         'media': '',
-        'mediaType': ''
-
+        'mediaType': '',
+        'nextStepDispatchAction': {type: VERSIONS_LOAD_SUCCESS}
       }, {
         'id': 5,
         'position': 'aside',
@@ -278,7 +278,7 @@ On cars.COUNTRY = population.COUNTRY\` and Save it.
         'title': 'Run Transformation',
         'link': '',
         'isNavigationVisible': true,
-        'markdown': 'Similarly, we create a query to extract info about population.',
+        'markdown': 'Now when everything is ready, we can run the transformation. The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put to Storage again.',
         'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
         'media': '',
         'mediaType': ''
@@ -289,7 +289,7 @@ On cars.COUNTRY = population.COUNTRY\` and Save it.
         'title': 'Check Job',
         'link': 'jobs',
         'isNavigationVisible': true,
-        'markdown': 'Now let’s click on Run Extraction to load the data from the two database tables into the new tables in Storage.',
+        'markdown': 'Here you can see that the transformation job was successful. Our input tables were merged and the output table transformed was created.',
         'media': '',
         'mediaType': ''
       }, {
@@ -299,7 +299,7 @@ On cars.COUNTRY = population.COUNTRY\` and Save it.
         'title': 'Check Storage',
         'link': 'home',
         'isNavigationVisible': true,
-        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about Extractors, or follow a hands-on tutorial on loading in our user documentation. ',
+        'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue with the next step - Visualizing Results. Learn more about [Data Manipulation](https://help.keboola.com/manipulation/), or follow a hands-on tutorial on data transformation in our [user documentation](https://help.keboola.com/tutorial/load).',
         'media': '',
         'mediaType': ''
       },
