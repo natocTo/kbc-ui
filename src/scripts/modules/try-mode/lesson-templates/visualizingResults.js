@@ -54,7 +54,7 @@ export default {
 - Find **Tableau**. You can use the search feature to find it quickly.
 - Select  \`in.c-tutrial.cars\`
 - Select proper **TDE Data Type** and **Save** this table
-- click **Export**
+- click **Export tables to TDE**
 
 `,
       'isNavigationVisible': true

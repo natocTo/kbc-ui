@@ -33,7 +33,7 @@ export default {
       'backdrop': false,
       'title': 'Orchestration Overview',
       'isNavigationVisible': true,
-      'markdown': 'We only need to specify what tasks should be executed, in which order and when. We can also set up notifications that will be sent to us if something needs your attention. Start by click on ***Configure Tasks***',
+      'markdown': 'We only need to specify what tasks should be executed, in which order and when. We can also set up notifications that will be sent to us if something needs your attention. Start by click on **Configure Tasks**',
       'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_EDIT_START},
       'media': '',
       'mediaType': ''
@@ -43,7 +43,7 @@ export default {
       'backdrop': false,
       'title': 'Configure Task',
       'isNavigationVisible': true,
-      'markdown': 'Lets compose new task in desired order from previous lessons. Start by clicking Add Task. Configure the task in this order:'
+      'markdown': 'Lets compose new task in desired order from previous lessons. Start by clicking on green button **Add Task**. Configure the task in this order:'
                 + `
 - Snowflake extractor
 - Transformation
