@@ -122,8 +122,8 @@ export default {
 
 - Click on **+ New Extractor**
 - Find **Snowflake**. You can use the search feature to find it quickly.
-- Click on **More** and continue with **Create New Configuration**
-- Name the configuration and click on **Create**
+- Click on **More** and continue with **+ New Configuration**
+- Name the configuration and click on **Create Configuration**
 
 `,
         'media': '',
@@ -185,7 +185,7 @@ export default {
         'title': 'Stored Extraction',
         'link': '/storage',
         'isNavigationVisible': true,
-        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about [Extractors](https://help.keboola.com/overview/#extractors), or follow a hands-on tutorial on loading in our [user documentation](https://help.keboola.com/tutorial/load). ',
+        'markdown': 'In Storage, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. To find out how you can work with the loaded data, continue to Lesson 3 – Manipulating Data. Learn more about [Extractors](https://help.keboola.com/overview/#extractors){:target="_blank"}, or follow a hands-on tutorial on loading in our [user documentation](https://help.keboola.com/tutorial/load){:target="_blank"}. ',
         'media': '',
         'mediaType': ''
       },
@@ -337,8 +337,8 @@ On \`cars\`.\`COUNTRY\` = \`population\`.\`COUNTRY\`;\`
 ### TO DO:
 - Click on **+ New Writer**
 - Find **Tableau**. You can use the search feature to find it quickly.
-- Click on **More** and continue with **Create New Configuration**
-- Name the configuration and click on **Create**
+- Click on **More** and continue with **+ New Configuration**
+- Name the configuration and click on **Create Configuration**
 
 `,
         'mediaType': ''
