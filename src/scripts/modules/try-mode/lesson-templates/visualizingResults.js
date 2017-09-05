@@ -52,9 +52,9 @@ export default {
 
 - Click on **+ Add Table**
 - Find **Tableau**. You can use the search feature to find it quickly.
-- Select  'in.c-tutrial.cars'
-- Select proper 'TDE Data Type' and Save this table
-- click Export
+- Select  \`in.c-tutrial.cars\`
+- Select proper **TDE Data Type** and **Save** this table
+- click **Export**
 
 `,
       'isNavigationVisible': true

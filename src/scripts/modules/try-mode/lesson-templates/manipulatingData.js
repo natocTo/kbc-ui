@@ -66,7 +66,7 @@ export default {
 - Add Query \`CREATE TABLE transformed AS
 SELECT cars.*, population.POPULATION, (population.POPULATION / cars.CARS) AS PERSON_PER_CAR
 FROM cars JOIN population
-On cars.COUNTRY = population.COUNTRY\` and Save it.
+On cars.COUNTRY = population.COUNTRY\` and **Save** it.
 - Click on **Next Step**
 
 `,
