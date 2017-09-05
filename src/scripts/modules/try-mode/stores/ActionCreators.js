@@ -29,7 +29,7 @@ export const setStep = (newStep) => {
     type: ActionTypes.TRY_WIZARD_SET_STEP,
     step: newStep
   });
-  const nextLink = WizardStore.getCurrentStep().link;
+  const nextLink = WizardStore.getNextLink();
   if (nextLink) {
     return RoutesStore.getRouter().transitionTo(nextLink);
   }
