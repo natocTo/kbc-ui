@@ -61,6 +61,7 @@ export default {
       'isNavigationVisible': true,
       'markdown': 'Then we choose how often, on what days and at what time we want the orchestration to run.',
       'nextStepDispatchAction': {type: ORCHESTRATION_LOAD_SUCCESS},
+      matchLink: '/orchestrations/\\d+',
       'media': '',
       'mediaType': ''
     }, {

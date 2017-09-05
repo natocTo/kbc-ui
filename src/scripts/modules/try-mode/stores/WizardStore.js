@@ -19,6 +19,21 @@ const containsAction = (dispatchedAction, action) => {
 const WizardStore = StoreUtils.createStore({
   getState: () => store,
   getCurrentLesson: () => wizardLessons[store.lessonNumber],
+  getNextLink: () => {
+    const lesson = wizardLessons[store.lessonNumber];
+    const nextStep = lesson ? lesson.steps[store.step] || {} : {};
+    const nextLink = nextStep.link;
+    const matchLink = nextStep.matchLink;
+    if (nextLink) return nextLink;
+    if (matchLink) {
+      const router = RoutesStore.getRouter();
+      const path = router.getCurrentPath();
+      const nextPathMatch = path.match(matchLink);
+      const nextPath = nextPathMatch ? nextPathMatch[0] : null;
+      return nextPath;
+    }
+    return null;
+  },
   getCurrentStep: () => {
     const lesson = wizardLessons[store.lessonNumber];
     return lesson ? lesson.steps[store.step] || {} : {};
@@ -31,7 +46,7 @@ Dispatcher.register((payload) => {
   if (nextStepDispatchAction && containsAction(action, nextStepDispatchAction)) {
     store.step = store.step + 1;
     WizardStore.emitChange();
-    const nextLink = WizardStore.getCurrentStep().link;
+    const nextLink = WizardStore.getNextLink();
     if (nextLink) {
       RoutesStore.getRouter().transitionTo(nextLink);
     }
