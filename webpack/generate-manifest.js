@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 var revision = process.env.KBC_REVISION;
-var s3basePath = "https://d38qy9k7n8xp7k.cloudfront.net/kbc/" + revision + "/";
+var s3basePath = "https://assets-cdn.keboola.com/kbc-ui/" + revision + "/";
 
 var manifest = {
     "name": "kbc",

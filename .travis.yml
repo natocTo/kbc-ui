@@ -18,9 +18,9 @@ deploy:
   access_key_id: AKIAJPIXG5FWMBKORQZA
   secret_access_key:
     secure: YnoCx0iURkQ9H9FLamLh8Hr7n2kosPURs7kYeVc5/AFeaprGSfRjOxP2kkOls9esvNfK3mbMpDStFZc4/BSC5nGG+fOL5WQK8r+YVGzlFXfBNu2FgSC/uGd4QeCOgvEDo7k06320LJrJBqQsUQ5484J7TnDq5AzKljDA77f2+Cc=
-  bucket: kbc-uis
+  bucket: kbc-ui-assets
   local-dir: dist
-  upload-dir: kbc
+  upload-dir: kbc-ui
   acl: public_read
   skip_cleanup: true
   cache_control: max-age=31536000
@@ -29,7 +29,7 @@ deploy:
     repo: keboola/kbc-ui
 after_deploy:
 - echo $KBC_REVISION
-- export BODY="{\"manifestUrl\":\"https://kbc-uis.s3.amazonaws.com/kbc/$KBC_REVISION/manifest.json\",\"activate\":true}"
+- export BODY="{\"manifestUrl\":\"https://assets-cdn.keboola.com/kbc-ui/$KBC_REVISION/manifest.json\",\"activate\":true}"
 - curl -H X-KBC-ManageApiToken:$KBC_ADMIN_TOKEN_DEVEL -d $BODY -H "Content-Type:application/json" https://martin-connection-devel.keboola.com/manage/ui-apps
 - curl -H X-KBC-ManageApiToken:$KBC_ADMIN_TOKEN_PROD -d $BODY -H "Content-Type:application/json" https://connection.keboola.com/manage/ui-apps
 - export BODY="{\"version\":\"$KBC_REVISION\"}"
