@@ -69,10 +69,12 @@ export default React.createClass({
              </div>
             }
           </Modal.Body>
+          {this.getNextStepDispatchAction() === undefined &&
           <Modal.Footer>
             {this.renderButtonPrev()}
             {this.renderButtonNext()}
           </Modal.Footer>
+            }
         </Modal>
       </div>
     );
@@ -163,6 +165,9 @@ export default React.createClass({
         <iframe width="100%" height="100%" src={this.getStepMedia()} allowFullScreen />
       </ResponsiveEmbed>
     );
+  },
+  getNextStepDispatchAction() {
+    return this.getLessonSteps()[this.getActiveStep()].nextStepDispatchAction;
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
