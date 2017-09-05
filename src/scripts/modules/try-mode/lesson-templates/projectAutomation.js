@@ -1,6 +1,6 @@
 import OrchestrationsConstants from '../../orchestrations/Constants';
 
-const {ORCHESTRATION_CREATE_SUCCESS, ORCHESTRATION_TASKS_EDIT_START, ORCHESTRATION_TASKS_SAVE_SUCCESS} = OrchestrationsConstants.ActionTypes;
+const {ORCHESTRATION_CREATE_SUCCESS, ORCHESTRATION_TASKS_EDIT_START, ORCHESTRATION_TASKS_SAVE_SUCCESS, ORCHESTRATION_LOAD_SUCCESS} = OrchestrationsConstants.ActionTypes;
 
 export default {
   'id': 5,
@@ -24,7 +24,7 @@ export default {
       'link': 'orchestrations',
       'nextStepDispatchAction': {type: ORCHESTRATION_CREATE_SUCCESS},
       'isNavigationVisible': true,
-      'markdown': 'Add your first Orchestration by clicking **+ Add Orchestration** and naming it',
+      'markdown': 'Create your first Orchestration by clicking **+ New Orchestration** and naming it',
       'media': '',
       'mediaType': ''
     }, {
@@ -43,7 +43,7 @@ export default {
       'backdrop': false,
       'title': 'Configure Task',
       'isNavigationVisible': true,
-      'markdown': 'Lets compose new task in desired order from previous lessons. Start by clicking on green button **Add Task**. Configure the task in this order:'
+      'markdown': 'Lets compose new task in desired order from previous lessons. Start by clicking on green button **+ New Task**. Configure the task in this order:'
                 + `
 - Snowflake extractor
 - Transformation
@@ -60,6 +60,7 @@ export default {
       'title': 'Automate Orchestration',
       'isNavigationVisible': true,
       'markdown': 'Then we choose how often, on what days and at what time we want the orchestration to run.',
+      'nextStepDispatchAction': {type: ORCHESTRATION_LOAD_SUCCESS},
       'media': '',
       'mediaType': ''
     }, {
