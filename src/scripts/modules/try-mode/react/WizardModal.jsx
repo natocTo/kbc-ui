@@ -218,7 +218,6 @@ export default React.createClass({
     if (this.props.step > 0) {
       const nextStep = this.props.step - 1;
       this.props.setStep(nextStep);
-      this.goToSubpage(nextStep);
     } else {
       this.closeLessonModal();
     }
@@ -227,15 +226,9 @@ export default React.createClass({
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
       this.props.setStep(nextStep);
-      this.goToSubpage(nextStep);
     } else {
       this.closeLessonModal();
     }
-  },
-  goToSubpage(nextStep) {
-    const nextLink = this.getLessonSteps()[nextStep].link;
-    if (nextLink) {
-      return RoutesStore.getRouter().transitionTo(nextLink);
-    }
   }
+
 });
