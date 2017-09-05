@@ -1,6 +1,7 @@
 React = require 'react'
-{label, input, table, tr, th, tbody, thead, div, td, code} = React.DOM
+{span, label, input, table, tr, th, tbody, thead, div, td, code} = React.DOM
 Hint = require('../../../../../react/common/Hint').default
+Tooltip = require('../../../../../react/common/Tooltip').default
 
 module.exports = React.createClass
 
@@ -68,14 +69,16 @@ module.exports = React.createClass
               if @props.editingColumns
                 @props.setAllColumnsType
             th null,
-              'Null'
-              ' '
-              React.createElement Hint,
-                title: 'Nullable Column'
-              ,
-                'Empty strings in the source data will be replaced with SQL '
-                code null, 'NULL'
-                '.'
+              span null,'Null'
+                ' '
+                React.createElement Hint,
+                  title: 'Nullable Column'
+                ,
+                  'Empty strings in the source data will be replaced with SQL '
+                  code null, 'NULL'
+                  '.'
+              if @props.editingColumns
+                @_createCheckbox()
             th null, 'Default Value'
             th null, @props.editButtons
         tbody null,
@@ -86,3 +89,14 @@ module.exports = React.createClass
               td colSpan: "6",
                 div className: 'text-center',
                   'No Columns.'
+
+
+  _createCheckbox: (property) ->
+    allColumnsIgnored = @props.editingColumns.reduce((memo, column) -> memo && column.get('type') == 'IGNORE',
+    true)
+    div className: 'text-center checkbox',
+      React.createElement Tooltip, tooltip: 'Set to all columns',
+        input
+          disabled: allColumnsIgnored
+          type: 'checkbox'
+          onChange: @props.onSetAllColumnsNull

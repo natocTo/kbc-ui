@@ -40,7 +40,7 @@ module.exports = React.createClass
               ' '
           , @).toArray()
       React.DOM.div {className: "row"},
-        React.DOM.div {className: "col-xs-10"},
+        React.DOM.div {className: "col-xs-9"},
           Select
             multi: true
             name: 'add-indexes'
@@ -49,11 +49,10 @@ module.exports = React.createClass
             placeholder: "Select column(s) to create an index"
             onChange: @_handleSelectOnChange
             options: @props.columnsOptions
-        React.DOM.div {className: "col-xs-2 kbc-col-button"},
+        React.DOM.div {className: "col-xs-3 kbc-col-button"},
           Button
-            className: "btn-info"
+            className: "btn-success"
             onClick: @props.handleAddIndex
             disabled: @props.disabled || @props.selectValue.count() == 0
           ,
-            React.DOM.i {className: "kbc-icon-plus"}
-            " Add"
+            "Create Index"

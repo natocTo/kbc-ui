@@ -4,9 +4,7 @@ import ActionCreators from '../../ActionCreators';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ExtendCredentialsButton from './ExtendCredentialsButton';
 
-module.exports = React.createClass({
-  displayName: 'ExtendJupyterCredentials',
-
+export default React.createClass({
   mixins: [createStoreMixin(JupyterSandboxCredentialsStore)],
 
   getStateFromStores: function() {
@@ -28,6 +26,6 @@ module.exports = React.createClass({
         />
       );
     }
+    return null;
   }
 });
-

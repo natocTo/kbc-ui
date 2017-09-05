@@ -68,7 +68,7 @@ export default React.createClass({
     switch (this.props.transformation.get('type')) {
       case 'r':
         return (
-          <Popover title="R" className="popover-wide">
+          <Popover title="R" className="popover-wide" id="r-help">
             <ul>
               <li>Read on <a href="https://help.keboola.com/manipulation/transformations/r/">R limitations and best practices</a></li>
               <li>All source tables are stored in <code>/data/in/tables</code>
@@ -80,7 +80,7 @@ export default React.createClass({
         );
       case 'python':
         return (
-          <Popover title="Python" className="popover-wide">
+          <Popover title="Python" className="popover-wide" id="python-help">
             <ul>
               <li>Read on <a href="https://help.keboola.com/manipulation/transformations/python/">Python limitations and best practices</a></li>
               <li>All source tables are stored in <code>/data/in/tables</code>
@@ -92,7 +92,7 @@ export default React.createClass({
         );
       case 'openrefine':
         return (
-          <Popover title="OpenRefine" className="popover-wide">
+          <Popover title="OpenRefine" className="popover-wide" id="openrefine-help">
             <ul>
               <li>Read on <a href="https://help.keboola.com/manipulation/transformations/openrefine/">OpenRefine limitations and best practices</a></li>
             </ul>

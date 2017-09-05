@@ -86,7 +86,7 @@ export default React.createClass({
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
-              saveLabel={this.props.mode === MODE_CREATE ? 'Create' : 'Save'}
+              saveLabel={this.props.mode === MODE_CREATE ? 'Create Table Input' : 'Save'}
               isSaving={this.state.isSaving}
               onCancel={this.handleCancel}
               onSave={this.handleSave}
@@ -109,11 +109,11 @@ export default React.createClass({
         </Tooltip>
       );
     } else {
-      let buttonBsStyle = this.props.buttonBsStyle ? this.props.buttonBsStyle : 'primary';
-      let buttonLabel = this.props.buttonLabel ? this.props.buttonLabel : 'Add Table Input';
+      let buttonBsStyle = this.props.buttonBsStyle ? this.props.buttonBsStyle : 'success';
+      let buttonLabel = this.props.buttonLabel ? this.props.buttonLabel : 'New Table Input';
       return (
         <Button bsStyle={buttonBsStyle} onClick={this.open}>
-          <i className="fa fa-fw fa-plus" /> {buttonLabel}
+          <i className="kbc-icon-plus" />{buttonLabel}
         </Button>
       );
     }

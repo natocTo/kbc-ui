@@ -25,7 +25,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      saveLabel: 'Save',
+      saveLabel: 'Save Sheet',
       nextLabel: 'Next',
       previousLabel: 'Previous',
       cancelLabel: 'Cancel',

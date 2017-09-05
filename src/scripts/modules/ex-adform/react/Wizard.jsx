@@ -95,7 +95,7 @@ export default React.createClass({
                 disabled={!this.props.template || this.props.isSaving}
                 onClick={this.props.onSave}
                 >
-                Create
+                Create Extractor
               </Button>
             </div>
           </div>

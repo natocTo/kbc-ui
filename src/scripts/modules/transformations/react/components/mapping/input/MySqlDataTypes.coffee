@@ -76,12 +76,11 @@ module.exports = React.createClass
         React.DOM.div {className: "row", style: {paddingTop: "0px"}},
           React.DOM.div {className: "help-block col-xs-12 text-right"},
             Button
-              className: "btn-info"
+              className: "btn-success"
               onClick: @props.handleAddDataType
               disabled: @props.disabled || !@props.selectValue || !@props.inputValue
             ,
-              React.DOM.i {className: "kbc-icon-plus"}
-              " Add data type"
+              "Create data type"
         React.DOM.div {className: "row", style: {paddingTop: "10px"}},
           React.DOM.div {className: "help-block col-xs-12"},
             React.DOM.small {},

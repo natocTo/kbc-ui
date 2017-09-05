@@ -28,7 +28,7 @@ export default React.createClass({
     return (
       <Modal show={this.props.localState.get('show', false)} onHide={this.close}>
         <Modal.Header>
-          <Modal.Title> Add New Table </Modal.Title>
+          <Modal.Title> New Table </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {this.renderBody()}
@@ -39,7 +39,7 @@ export default React.createClass({
           <Button bsStyle="success"
                   disabled={this.props.localState.get('saving', false) || !this.isValid()}
                   onClick={() => this.saveNewTable()}>
-            Add
+            Create Table
           </Button>
         </Modal.Footer>
       </Modal>
@@ -52,7 +52,7 @@ export default React.createClass({
           disabled={this.props.isDisabled}
           onClick={this.onAddNewTableButtonClick}
           bsStyle="success">
-        + Add New Table
+        <i className="kbc-icon-plus"/>New Table
       </Button>
     );
   },

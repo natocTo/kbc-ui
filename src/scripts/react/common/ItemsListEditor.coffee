@@ -3,7 +3,7 @@ ImmutableRenderMixin = require '../mixins/ImmutableRendererMixin'
 _ = require('underscore')
 Immutable = require('immutable')
 Button = React.createFactory(require('react-bootstrap').Button)
-{span} = React.DOM
+{span, i} = React.DOM
 
 module.exports = React.createClass
   displayName: 'ItemsListEditor'
@@ -69,8 +69,6 @@ module.exports = React.createClass
             bsStyle: "success"
             onClick: @_handleClickAddButton
             disabled: @props.disabled || @props.input.trim() == ''
-          ,
-            React.DOM.span {className: "kbc-icon-plus"}
 
   render: ->
     React.DOM.div {},

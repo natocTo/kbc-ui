@@ -7,7 +7,7 @@ _ = require 'underscore'
 NewProjectModal = require('../NewProjectModal').default
 Emptylist = require('./EmptyList').default
 
-{div, ul, li, a, span, input} = React.DOM
+{div, ul, li, a, span, input, i} = React.DOM
 
 module.exports = React.createClass
   displayName: 'ProjectSelectDropdown'
@@ -206,8 +206,8 @@ module.exports = React.createClass
     ul className: 'list-unstyled kbc-project-select-new',
       li null,
         a onClick: @openModal,
-          span className: 'fa fa-plus-circle'
-          ' New Project'
+          i className: 'kbc-icon-plus'
+          'New Project'
         React.createElement NewProjectModal,
           urlTemplates: @props.urlTemplates
           projectTemplates: @props.projectTemplates

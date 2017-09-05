@@ -51,7 +51,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'link',
-      label: 'Add transformation'
+      label: ' New Transformation'
     };
   },
 
@@ -97,7 +97,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.state.data.get('isSaving')}
             isDisabled={!this.isValid()}
-            saveLabel="Create"
+            saveLabel="Create Transformation"
             onCancel={this.close}
             onSave={this.handleCreate}
             />
@@ -110,14 +110,14 @@ export default React.createClass({
     if (this.props.type === 'button') {
       return (
         <Button onClick={this.handleOpenButtonClick} bsStyle="success">
-          <i className="fa fa-plus fa-fw" />&nbsp;{this.props.label}
+          <i className="kbc-icon-plus" />{this.props.label}
           {this.renderModal()}
         </Button>
       );
     } else {
       return (
         <a onClick={this.handleOpenButtonClick}>
-          <i className="fa fa-fw fa-plus" />&nbsp;{this.props.label}
+          <i className="kbc-icon-plus" />{this.props.label}
           {this.renderModal()}
         </a>
       );

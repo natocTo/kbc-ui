@@ -80,7 +80,7 @@ export default React.createClass({
             onSave={this.handleSave}
             onCancel={this.props.onHideFn}
             placement="right"
-            saveLabel="Save Query"
+            saveLabel={this.localState(['currentQuery', 'name'], false) ? 'Save Query' : 'Create'}
             isDisabled={this.isSavingDisabled()}
           />
         </Modal.Footer>

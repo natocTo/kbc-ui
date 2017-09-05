@@ -30,7 +30,7 @@ export default React.createClass({
           onHide={this.props.onHideFn}
           show={this.props.show}>
         <Modal.Header closeButton>
-          <Modal.Title> Add New Table </Modal.Title>
+          <Modal.Title> New Table </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <SapiTableSelector
@@ -44,7 +44,7 @@ export default React.createClass({
               isSaving={this.props.isSaving}
               isDisabled={!this.props.selectedTableId}
               cancelLabel="Cancel"
-              saveLabel="Add"
+              saveLabel="Create Table"
               onCancel={this.props.onHideFn}
               onSave={ () => {
                 this.props.onSaveFn(this.props.selectedTableId).then(() => this.props.onHideFn());

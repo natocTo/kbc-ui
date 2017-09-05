@@ -189,8 +189,8 @@ module.exports = React.createClass
       className: 'btn btn-success'
       onClick: =>
         @_updateLocalState(['newTable', 'show'], true)
-      span className: 'kbc-icon-plus'
-      ' Add Table'
+      i className: 'kbc-icon-plus'
+      'New Table'
 
   _renderHeaderRow: ->
     div className: 'tr',

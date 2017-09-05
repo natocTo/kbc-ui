@@ -156,7 +156,10 @@ export default React.createClass({
       return (
         <div>
           <a onClick={this.openFileSelectorModal}>
-            <span className="btn btn-success">+ Add Files</span>
+            <span className="btn btn-success">
+              <i className="kbc-icon-plus"/>
+              New Files
+            </span>
           </a>
           <FileSelectorModal
             show={this.state.showFileSelectorModal}
