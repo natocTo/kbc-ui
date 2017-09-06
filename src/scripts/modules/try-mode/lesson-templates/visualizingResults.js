@@ -15,7 +15,7 @@ export default {
       'link': 'home',
       'isNavigationVisible': true,
       'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. In this lesson, we are going to generate a Tableau Data Extract and load it manually into Tableau Desktop for visualization using yet another Keboola Connection component – a Writer. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
-      'media': 'kbc_scheme_light_blue.svg',
+      'media': 'kbc_scheme_light_blue-wri.svg',
       'mediaType': 'img'
     },
     {

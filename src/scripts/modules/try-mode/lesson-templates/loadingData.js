@@ -16,7 +16,7 @@ export default {
       'link': 'home',
       'isNavigationVisible': true,
       'markdown': 'As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. Note: Your own projects won’t be affected by this in any way. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
-      'media': 'kbc_scheme_light_blue.svg',
+      'media': 'kbc_scheme_light_blue-ext.svg',
       'mediaType': 'img'
     }, {
       'id': 2,

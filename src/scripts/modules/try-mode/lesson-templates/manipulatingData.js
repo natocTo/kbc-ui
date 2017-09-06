@@ -16,7 +16,7 @@ export default {
       'link': 'home',
       'isNavigationVisible': true,
       'markdown': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will merge the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
-      'media': 'kbc_scheme_light_blue.svg',
+      'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img'
     }, {
       'id': 2,
@@ -88,7 +88,8 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'title': 'Check Job',
       'link': 'jobs',
       'isNavigationVisible': true,
-      'markdown': 'Here in **Jobs** you can see the status of jour jobs. Our input tables were merged and the output table transformed was created. You can check the detail of Job if you want. When you are ready, hit **Next step**.',
+      'markdown': 'Here in **Jobs** you can see the status of jour jobs. Our input tables were merged and the output table transformed was created. You can check the detail of Job if you want' +
+      '. When you are ready, hit **Next step**.',
       'media': '',
       'mediaType': ''
     }, {
