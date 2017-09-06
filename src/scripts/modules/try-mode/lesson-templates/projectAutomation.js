@@ -13,7 +13,7 @@ export default {
       'title': 'Introduction',
       'link': 'home',
       'isNavigationVisible': true,
-      'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically.',
+      'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     }, {
@@ -70,7 +70,7 @@ export default {
       'backdrop': false,
       'title': 'Setting Notifications',
       'isNavigationVisible': true,
-      'markdown': 'Finally, we enter our email address to receive error notifications. From data extraction to data writing, we have set up the full pipeline. Any change to our Snowflake database tables will be automatically reflected in our Tableau results. Learn more about Automation, or follow a hands-on tutorial on automation in our user documentation.',
+      'markdown': 'Finally, we enter our email address to receive error notifications. From data extraction to data writing, we have set up the full pipeline. Any change to our Snowflake database tables will be automatically reflected in our Tableau results. Learn more about <a href="https://help.keboola.com/overview/#full-automation" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
     },

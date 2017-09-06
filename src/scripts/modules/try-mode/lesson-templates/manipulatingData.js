@@ -1,10 +1,8 @@
-import ComponentsConstants from '../../components/Constants';
 import JobsConstants from '../../jobs/Constants';
 import TransformationsConstants from '../../transformations/Constants';
 
 const {JOB_LOAD_SUCCESS} = JobsConstants.ActionTypes;
 const {TRANSFORMATION_BUCKET_CREATE_SUCCESS, TRANSFORMATION_CREATE_SUCCESS} = TransformationsConstants.ActionTypes;
-const {VERSIONS_LOAD_SUCCESS} = ComponentsConstants.ActionTypes;
 
 export default {
   'id': 3,
@@ -17,7 +15,7 @@ export default {
       'title': 'Introduction',
       'link': 'home',
       'isNavigationVisible': true,
-      'markdown': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will merge the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country.',
+      'markdown': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will merge the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     }, {
@@ -27,7 +25,7 @@ export default {
       'title': 'Create Bucket',
       'link': 'transformations',
       'isNavigationVisible': true,
-      'markdown': 'Before creating our transformation, we need to create a new bucket which serves as folder for Transformations. You will benefit from buckets later in the process.',
+      'markdown': 'Before creating our transformation, we need to create a new bucket which serves as folder for Transformations. You will benefit from buckets later in the process. Click on **+ New Transformation Bucket**.',
       'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -38,7 +36,7 @@ export default {
       'title': 'Create Transformation',
       'link': '',
       'isNavigationVisible': true,
-      'markdown': 'Let’s add a new transformation into the new bucket by clicking on **+ New Transformation**, select MySQL as the backend (the engine running the transformation script)',
+      'markdown': 'Let’s add a new transformation into the new bucket by clicking on **+ New Transformation**. Select MySQL as the backend (the engine running the transformation script).',
       'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -63,7 +61,7 @@ export default {
 
 - Click on **+ New Input** and select \`in.c-tutorial.cars\` as Source
 - Click on **+ New Output**, set Destination at \`out.c-snowflake.transformed\`
-- Add Query \`CREATE TABLE transformed AS
+- Paste this code to **Queries** \`CREATE TABLE transformed AS
 SELECT cars.*, population.POPULATION, (population.POPULATION / cars.CARS) AS PERSON_PER_CAR
 FROM cars JOIN population
 On cars.COUNTRY = population.COUNTRY\` and **Save** it.
@@ -71,8 +69,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
 
 `,
       'media': '',
-      'mediaType': '',
-      'nextStepDispatchAction': {type: VERSIONS_LOAD_SUCCESS}
+      'mediaType': ''
     }, {
       'id': 5,
       'position': 'aside',
@@ -80,7 +77,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'title': 'Run Transformation',
       'link': '',
       'isNavigationVisible': true,
-      'markdown': 'Now when everything is ready, we can run the transformation. The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put to Storage again.',
+      'markdown': 'Now when everything is ready, we can click on **Run transformation**. The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put to Storage again.',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -91,7 +88,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'title': 'Check Job',
       'link': 'jobs',
       'isNavigationVisible': true,
-      'markdown': 'Here in **Jobs** you can see that the transformation job was successful. Our input tables were merged and the output table transformed was created. You can check the detail of Job. When you are ready, hit **Next step**.',
+      'markdown': 'Here in **Jobs** you can see the status of jour jobs. Our input tables were merged and the output table transformed was created. You can check the detail of Job if you want. When you are ready, hit **Next step**.',
       'media': '',
       'mediaType': ''
     }, {
@@ -101,7 +98,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'title': 'Check Storage',
       'link': '/storage',
       'isNavigationVisible': true,
-      'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue with the next step - Visualizing Results. Learn more about [Data Manipulation](https://help.keboola.com/manipulation/), or follow a hands-on tutorial on data transformation in our [user documentation](https://help.keboola.com/tutorial/load).',
+      'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue with the next step - Visualizing Results. Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow a hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
     },

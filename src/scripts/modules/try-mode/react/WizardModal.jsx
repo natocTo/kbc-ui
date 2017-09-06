@@ -38,7 +38,7 @@ export default React.createClass({
               <div className="col-md-12">
                 {!this.isLastStep() &&
                  <span>
-                   <Remarkable source={this.getStepMarkdown()} />
+                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
                  </span>
                 }
                 {!this.isFirstStep() &&
@@ -51,7 +51,7 @@ export default React.createClass({
                 }
                 {this.isLastStep() &&
                  <span className="try-congratulations">
-                   <Remarkable source={this.getStepMarkdown()} />
+                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
                  </span>
                 }
               </div>
