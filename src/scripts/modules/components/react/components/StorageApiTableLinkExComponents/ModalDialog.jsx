@@ -60,29 +60,27 @@ export default React.createClass({
           </SapiTableLink>);
     }
     return (
-      <span className="static-modal">
-        <Modal
-          bsSize="large"
-          show={this.props.show}
-          onHide={this.props.onHideFn}
-          onKeyDown={this.onKeyDown}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>
-              {this.props.tableId}
-              {tableLink}
-              <RefreshIcon
-                isLoading={this.props.isLoading}
-                onClick={this.props.reload}
-              />
-            </Modal.Title>
-            {this.renderPaginator()}
-          </Modal.Header>
-          <Modal.Body>
-            {modalBody}
-          </Modal.Body>
-        </Modal>
-      </span>
+      <Modal
+        bsSize="large"
+        show={this.props.show}
+        onHide={this.props.onHideFn}
+        onKeyDown={this.onKeyDown}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {this.props.tableId}
+            {tableLink}
+            <RefreshIcon
+              isLoading={this.props.isLoading}
+              onClick={this.props.reload}
+            />
+          </Modal.Title>
+          {this.renderPaginator()}
+        </Modal.Header>
+        <Modal.Body>
+          {modalBody}
+        </Modal.Body>
+      </Modal>
     );
   },
 
@@ -122,23 +120,25 @@ export default React.createClass({
 
   renderModalBody() {
     return (
-      <TabbedArea defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
-        <TabPane eventKey="general" title="General Info">
-          {this.renderGeneralInfo()}
-        </TabPane>
-        <TabPane eventKey="description" title="Description">
-          {this.renderTableDescription()}
-        </TabPane>
-        <TabPane eventKey="columns" title="Columns">
-          {this.renderColumnsInfo()}
-        </TabPane>
-        <TabPane eventKey="datasample" title="Data Sample">
-          {this.renderDataSample()}
-        </TabPane>
-        <TabPane eventKey="events" title="Events">
-          {this.renderEvents()}
-        </TabPane>
-      </TabbedArea>
+      <div style={{'max-height': '75vh'}} className="pre-scrollable">
+        <TabbedArea defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
+          <TabPane eventKey="general" title="General Info">
+            {this.renderGeneralInfo()}
+          </TabPane>
+          <TabPane eventKey="description" title="Description">
+            {this.renderTableDescription()}
+          </TabPane>
+          <TabPane eventKey="columns" title="Columns">
+            {this.renderColumnsInfo()}
+          </TabPane>
+          <TabPane eventKey="datasample" title="Data Sample">
+            {this.renderDataSample()}
+          </TabPane>
+          <TabPane eventKey="events" title="Events">
+            {this.renderEvents()}
+          </TabPane>
+        </TabbedArea>
+      </div>
     );
   },
 

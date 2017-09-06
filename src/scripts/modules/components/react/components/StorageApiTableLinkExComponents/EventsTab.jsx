@@ -53,7 +53,7 @@ export default React.createClass({
         return this.renderDetail(e);
       } else {
         return (
-          <tr className={cl} role="button" onClick={() => this.setDetailEventId(e.get('id'))}>
+          <tr className={cl} onClick={() => this.setDetailEventId(e.get('id'))}>
             <td className="td">
               {e.get('id')}
             </td>
@@ -118,7 +118,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <Table responsive className="table">
+        <Table responsive className="table table-striped table-hover">
           <thead className="thead">
             <tr className="tr">
               <th className="th">
