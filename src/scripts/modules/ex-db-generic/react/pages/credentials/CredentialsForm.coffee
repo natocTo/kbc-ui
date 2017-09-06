@@ -42,7 +42,7 @@ module.exports = React.createClass
           onChange: (sshObject) =>
             @props.onChange(@props.credentials.set('ssh', sshObject))
       TestCredentialsButtonGroup
-        disabled: !this.props.isValidEditingCredentials
+        disabled: if this.props.enabled then !this.props.isValidEditingCredentials else false
         testCredentialsFn: @testCredentials
 
   testCredentials: ->
