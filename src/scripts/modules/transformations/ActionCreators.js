@@ -101,6 +101,7 @@ module.exports = {
         configurationId: bucketId,
         transition: false
       });
+      InstalledComponentsActionCreators.loadComponentConfigsData('transformation');
       return ApplicationActionCreators.sendNotification({
         message: React.createClass({
           propTypes: {
