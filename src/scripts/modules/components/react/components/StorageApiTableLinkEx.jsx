@@ -59,6 +59,7 @@ export default React.createClass({
   changeTable(newTableId, dontLoadAll) {
     let newState = _.clone(this.prepareStateFromProps({tableId: newTableId}));
     const initDataState = {
+      detailEventId: null,
       isCallingRunAnalysis: false,
       profilerData: Map(),
       loadingPreview: false,
