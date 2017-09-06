@@ -182,7 +182,6 @@ module.exports =
       throw error
 
   loadComponentConfigsData: (componentId) ->
-    console.log 'load config data', InstalledComponentsStore.getIsConfigsDataLoaded(componentId)
     if InstalledComponentsStore.getIsConfigsDataLoaded(componentId)
       @loadComponentConfigsDataForce(componentId)
       return Promise.resolve()
