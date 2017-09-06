@@ -1,4 +1,3 @@
-
 import React, {PropTypes} from 'react';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -30,7 +29,7 @@ export default React.createClass({
     };
   },
 
-  componentsWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps: function(nextProps) {
     this.setState(this.getState(nextProps));
   },
 
