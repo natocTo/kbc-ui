@@ -188,6 +188,7 @@ module.exports = {
         bucketId: bucketId
       });
       VersionActionCreators.loadVersionsForce('transformation', bucketId);
+      InstalledComponentsActionCreators.loadComponentConfigDataForce('transformation', bucketId);
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.TRANSFORMATION_DELETE_ERROR,

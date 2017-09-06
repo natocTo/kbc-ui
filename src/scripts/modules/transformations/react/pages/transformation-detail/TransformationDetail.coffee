@@ -29,7 +29,7 @@ module.exports = React.createClass
 
   mixins: [
     createStoreMixin(TransformationsStore, TransformationBucketsStore, StorageTablesStore, StorageBucketsStore),
-    Router.Navigation
+    Router.Navigation, Router.State
   ]
 
   componentWillReceiveProps: ->
@@ -72,11 +72,19 @@ module.exports = React.createClass
 
 
   _deleteTransformation: ->
-    transformationId = @state.transformation.get('id')
     bucketId = @state.bucket.get('id')
-    TransformationsActionCreators.deleteTransformation(bucketId, transformationId)
     @transitionTo 'transformationBucket',
       config: bucketId
+    transformationId = @state.transformation.get('id')
+    self = @
+    afterTransition = ->
+      setTimeout (->
+        if (self.isActive('transformationBucket', {config: bucketId}))
+          TransformationsActionCreators.deleteTransformation(bucketId, transformationId)
+        else
+          afterTransition()
+      ), 100
+    afterTransition()
 
   _handleActiveChange: (newValue) ->
     if (newValue)
