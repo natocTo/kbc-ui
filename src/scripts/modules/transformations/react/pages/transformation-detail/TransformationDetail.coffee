@@ -76,15 +76,7 @@ module.exports = React.createClass
     @transitionTo 'transformationBucket',
       config: bucketId
     transformationId = @state.transformation.get('id')
-    self = @
-    afterTransition = ->
-      setTimeout (->
-        if (self.isActive('transformationBucket', {config: bucketId}))
-          TransformationsActionCreators.deleteTransformation(bucketId, transformationId)
-        else
-          afterTransition()
-      ), 100
-    afterTransition()
+    TransformationsActionCreators.deleteTransformation(bucketId, transformationId)
 
   _handleActiveChange: (newValue) ->
     if (newValue)
