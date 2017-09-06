@@ -159,7 +159,7 @@ InstalledComponentsStore = StoreUtils.createStore
     _store.getIn ['components', componentId]
 
   getIsConfigDataLoaded: (componentId, configId) ->
-    _store.hasIn ['components', componentId, configId]
+    _store.hasIn ['configData', componentId, configId]
 
   getIsConfigsDataLoaded: (componentId) ->
     _store.hasIn ['components', componentId]
