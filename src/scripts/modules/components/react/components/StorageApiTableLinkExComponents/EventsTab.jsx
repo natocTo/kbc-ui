@@ -86,9 +86,6 @@ export default React.createClass({
            <thead className="thead">
              <tr className="tr">
                <th className="th">
-                 Id
-               </th>
-               <th className="th">
                  Created
                </th>
                <th className="th">
@@ -125,9 +122,6 @@ export default React.createClass({
       const incremental = e.getIn(['params', 'incremental']) ? incElement : <span />;
       return (
         <tr className={cl} onClick={() => this.setDetailEventId(e.get('id'))}>
-          <td className="td">
-            {e.get('id')}
-          </td>
           <td className="td">
             {date.format(e.get('created'))}
             <small> {agoTime} </small>
