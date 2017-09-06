@@ -271,6 +271,7 @@ Dispatcher.register (payload) ->
         return
       bucketsData = parseBuckets(action.configData)
       _store = _store.withMutations((store) ->
+        store = store.delete 'transformationsByBucketId'
         _.each(bucketsData, (bucket) ->
           _.each(bucket.transformations, (transformation) ->
             tObj = enhanceTransformation(Immutable.fromJS(transformation))
