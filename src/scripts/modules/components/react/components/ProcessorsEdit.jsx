@@ -42,10 +42,8 @@ export default React.createClass({
           <div className="edit form-group kbc-processor-editor">
             <CodeMirror {...codeMirrorParams} />
           </div>
-          <div className="help-block">
-            <small>
-              Learn more about <a href="https://developers.keboola.com/integrate/docker-runner/processors/" target="_blank">Processors</a>
-            </small>
+          <div className="small help-block">
+            Learn more about <a href="https://developers.keboola.com/integrate/docker-runner/processors/" target="_blank">Processors</a>
           </div>
         </div>
       </div>
