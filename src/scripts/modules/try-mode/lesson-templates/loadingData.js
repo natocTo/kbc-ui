@@ -15,7 +15,7 @@ export default {
       'title': 'Introduction',
       'link': 'home',
       'isNavigationVisible': true,
-      'markdown': 'As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. Note: Your own projects won’t be affected by this in any way. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-ext.svg',
       'mediaType': 'img'
     }, {
@@ -73,10 +73,10 @@ export default {
 ### TO DO:
 
 - Click on **+ New Query**
-- name the query as you wish
-- set **Output table** \`in.c-tutorial.cars\`
-- paste simple query \`SELECT * FROM cars;\`
-- click on **Create Query**
+- Name the query as you wish
+- Set **Output table** \`in.c-tutorial.cars\`
+- Paste simple query \`SELECT * FROM cars;\`
+- Click on **Create Query**
 `,
       'media': '',
       'mediaType': '',
@@ -99,8 +99,7 @@ export default {
       'link': '/storage',
       'isNavigationVisible': true,
       'markdown': '**Storage** let you see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. ' +
-      'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. Learn more about<a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow a hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>. ' +
-      'Click on **Next step**.',
+      'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow a hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.<br>Click on **Next step**.',
       'media': '',
       'mediaType': ''
     },

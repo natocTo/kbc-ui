@@ -25,7 +25,7 @@ export default {
       'title': 'Create Bucket',
       'link': 'transformations',
       'isNavigationVisible': true,
-      'markdown': 'Before creating our transformation, we need to create a new bucket which serves as folder for Transformations. You will benefit from buckets later in the process. Click on **+ New Transformation Bucket**.',
+      'markdown': 'Before creating our transformation, we need to create a new Bucket which serves as folder for Transformations. You will benefit from buckets later in the process. Click on **+ New Transformation Bucket**.',
       'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -77,7 +77,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'title': 'Run Transformation',
       'link': '',
       'isNavigationVisible': true,
-      'markdown': 'Now when everything is ready, we can click on **Run transformation**. The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put to Storage again.',
+      'markdown': 'Now when everything is ready, we can click on **Run transformation**. The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -85,10 +85,10 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'id': 6,
       'position': 'aside',
       'backdrop': false,
-      'title': 'Check Job',
+      'title': 'Check Jobs',
       'link': 'jobs',
       'isNavigationVisible': true,
-      'markdown': 'Here in **Jobs** you can see the status of jour jobs. Our input tables were merged and the output table transformed was created. You can check the detail of Job if you want' +
+      'markdown': 'Here in **Jobs** you can see the status of your jobs. Our input tables were merged and the output table transformed was created. You can check the detail of Job if you want' +
       '. When you are ready, hit **Next step**.',
       'media': '',
       'mediaType': ''
@@ -99,7 +99,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'title': 'Check Storage',
       'link': '/storage',
       'isNavigationVisible': true,
-      'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue with the next step - Visualizing Results. Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow a hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
+      'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue to next lesson - Visualizing Results. Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow a hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
     },
