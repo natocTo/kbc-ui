@@ -20,16 +20,13 @@ export default React.createClass({
       <div className="row kbc-header kbc-limits">
         <div className="alert alert-danger">
           <h3>
-            <span className="fa fa-exclamation-triangle"/> Project is over quota!
+            Project is over quota!
           </h3>
           <ul>
-            {limits.map(this.limit)}
-          </ul>
-          <p>
             <Link to="settings-limits">
-              Limits Settings
+            {limits.map(this.limit)}
             </Link>
-          </p>
+          </ul>
         </div>
       </div>
     );

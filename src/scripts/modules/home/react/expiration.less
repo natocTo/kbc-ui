@@ -1,18 +1,47 @@
-.kbc-main-content > .kbc-expiration {
-  background-color: #fcf8e3;
-  border-bottom: 1px solid #faebcc;
+.kbc-expiration {
+  background-color: #FFF6DC;
+  background-image: url('media/ic_error.svg'),url('media/ic_error.svg'), url('media/ic_error.svg');
+  background-position: left top, right bottom, left top;
+  background-repeat: no-repeat;
+
+  border: 2px solid #FFD452;
+
+  margin: 0;
+  border-radius: 5px;
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+
 
   h3 {
     margin: 0 0 10px 0;
+    font-size: 18px;
+    margin-bottom: 24px;
+    color: #FF9D52;
+  }
+
+  h4{
+    color: #FF9D52;
+    font-size: 14px;
   }
 
   ul {
     margin-bottom: 10px;
+    list-style-type:none;
   }
 
   .alert {
     margin: 0;
+    margin-bottom: 0;
     padding: 0;
     border: 0;
+    background-color: transparent;
+    color:#7C8498
+  }
+
+  a{
+    color:#7C8498;
+    &:hover{
+      color: #FF9D52;
+    }
   }
 }

@@ -50,27 +50,41 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container-fluid kbc-main-content">
-        <Expiration expires={this.state.expires} />
-        <LimitsOverQuota limits={this.state.limitsOverQuota} />
-        <Deprecation components={this.state.installedComponents} />
-        <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
-          <div className="tbody">
-            <div className="tr">
-              <div className="td">
-                <h2>Storage</h2>
-                <h3 style={ {fontSize: '42px'} }>{filesize(this.state.data.sizeBytes)}</h3>
-                <h3 style={ {fontSize: '24px'} }>{string.numberFormat(this.state.data.rowsCount)} <small>Rows</small></h3>
-              </div>
-              <div className="td">
-                <h2>Access</h2>
-                <h3 style={ {fontSize: '42px'} }>{this.state.tokens.get('adminCount')} <small style={ {fontSize: '16px'} }>Users</small></h3>
-                <h3 style={ {fontSize: '24px'} }>{this.state.tokens.get('totalCount') - this.state.tokens.get('adminCount')} <small>API Tokens</small></h3>
+        <div>
+          <div className="container-fluid">
+            <Expiration expires={this.state.expires}/>
+          </div>
+          <div className="container-fluid">
+            <LimitsOverQuota limits={this.state.limitsOverQuota}/>
+          </div>
+          <div className="container-fluid">
+            <Deprecation components={this.state.installedComponents}/>
+          </div>
+          <div className="container-fluid kbc-main-content">
+            <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
+              <div className="tbody">
+                <div className="tr">
+                  <div className="td">
+                    <h2>Storage</h2>
+                    <h3 style={ {fontSize: '42px'} }>{filesize(this.state.data.sizeBytes)}</h3>
+                    <h3 style={ {fontSize: '24px'} }>{string.numberFormat(this.state.data.rowsCount)}
+                      <small>Rows</small>
+                    </h3>
+                  </div>
+                  <div className="td">
+                    <h2>Access</h2>
+                    <h3 style={ {fontSize: '42px'} }>{this.state.tokens.get('adminCount')}
+                      <small style={ {fontSize: '16px'} }>Users</small>
+                    </h3>
+                    <h3 style={ {fontSize: '24px'} }>{this.state.tokens.get('totalCount') - this.state.tokens.get('adminCount')}
+                      <small>API Tokens</small>
+                    </h3>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
     );
   }
 });

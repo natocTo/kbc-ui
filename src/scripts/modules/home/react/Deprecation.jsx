@@ -4,6 +4,9 @@ import StringUtils from '../../../utils/string';
 // import ComponentIndexLink from '../../../modules/components/react/components/ComponentIndexLink';
 import ComponentDetailLink from '../../../react/common/ComponentDetailLink';
 
+
+import './expiration.less';
+
 export default React.createClass({
   propTypes: {
     components: PropTypes.object
@@ -28,10 +31,12 @@ export default React.createClass({
           <h3>
             <span className="fa fa-exclamation-triangle"/> Project contains deprecated components
           </h3>
+
+            <div className="row">
           {grouped.map(function(components, type) {
             return (
-              <div>
-                <h4>{StringUtils.capitalize(type)}s</h4>
+              <div className="col-md-6">
+                <h4><img src="media/extractor.svg"/>{StringUtils.capitalize(type)}s</h4>
                 <ul>
                   {components.map(function(component) {
                     return (
@@ -49,6 +54,8 @@ export default React.createClass({
               </div>
             );
           })}
+            </div>
+
         </div>
       </div>
     );
