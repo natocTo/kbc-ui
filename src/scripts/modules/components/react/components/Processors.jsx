@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import Edit from './ProcessorsEdit';
-import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default React.createClass({
@@ -27,9 +26,6 @@ export default React.createClass({
       <div>
         <h2 style={{lineHeight: '32px'}}>
           Processors
-          <small>
-            <Clipboard text={this.props.value}/>
-          </small>
           {this.renderButtons()}
         </h2>
         {this.scripts()}
