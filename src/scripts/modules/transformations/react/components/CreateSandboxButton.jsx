@@ -44,8 +44,22 @@ export default React.createClass({
       return (
         <a onClick={this.openModal}>
           <i className="fa fa-fw fa-wrench"/> New Sandbox
+          {this.betaWarning()}
           {this.renderModal()}
         </a>
+      );
+    }
+  },
+
+  betaWarning() {
+    if (this.props.transformationType === 'r' || this.props.transformationType === 'python') {
+      return (
+        <span>
+          {' '}
+          <span className="label label-info">
+            BETA
+          </span>
+        </span>
       );
     }
   },
