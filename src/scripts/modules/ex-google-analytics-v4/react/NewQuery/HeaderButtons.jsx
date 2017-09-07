@@ -12,48 +12,48 @@ import actionsProvisioning from '../../actionsProvisioning';
 // ui components
 import EditButtons from '../../../../react/common/EditButtons';
 
-const COMPONENT_ID = 'keboola.ex-google-analytics-v4';
+export default function(componentId) {
+  return React.createClass({
 
-export default React.createClass({
+    mixins: [createStoreMixin(...storeMixins), Navigation],
 
-  mixins: [createStoreMixin(...storeMixins), Navigation],
+    getStateFromStores() {
+      const configId = RoutesStore.getCurrentRouteParam('config');
+      const store = storeProvisioning(configId, componentId);
+      const actions = actionsProvisioning(configId, componentId);
+      const newQuery = store.getNewQuery();
 
-  getStateFromStores() {
-    const configId = RoutesStore.getCurrentRouteParam('config');
-    const store = storeProvisioning(configId);
-    const actions = actionsProvisioning(configId);
-    const newQuery = store.getNewQuery();
+      return {
+        configId: configId,
+        newQuery: newQuery,
+        store: store,
+        actions: actions
+      };
+    },
 
-    return {
-      configId: configId,
-      newQuery: newQuery,
-      store: store,
-      actions: actions
-    };
-  },
+    render() {
+      return (
+        <EditButtons
+          isEditing={true}
+          isSaving={this.state.store.isSaving('newQuery')}
+          isDisabled={!this.state.store.isQueryValid(this.state.newQuery)}
+          onCancel={this.redirectToIndex}
+          onSave={this.save}
+          onEditStart={() => {}}
+        />
+      );
+    },
 
-  render() {
-    return (
-      <EditButtons
-        isEditing={true}
-        isSaving={this.state.store.isSaving('newQuery')}
-        isDisabled={!this.state.store.isQueryValid(this.state.newQuery)}
-        onCancel={this.redirectToIndex}
-        onSave={this.save}
-        onEditStart={() => {}}
-      />
-    );
-  },
+    redirectToIndex() {
+      this.transitionTo(componentId, {config: this.state.configId});
+      this.state.actions.resetNewQuerySampleDataInfo();
+      return this.state.actions.cancelEditingNewQuery();
+    },
 
-  redirectToIndex() {
-    this.transitionTo(COMPONENT_ID, {config: this.state.configId});
-    this.state.actions.resetNewQuerySampleDataInfo();
-    return this.state.actions.cancelEditingNewQuery();
-  },
-
-  save() {
-    return this.state.actions.saveNewQuery().then( () => {
-      return this.redirectToIndex();
-    });
-  }
-});
+    save() {
+      return this.state.actions.saveNewQuery().then( () => {
+        return this.redirectToIndex();
+      });
+    }
+  });
+}
