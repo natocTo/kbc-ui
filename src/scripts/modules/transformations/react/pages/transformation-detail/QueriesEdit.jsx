@@ -54,9 +54,24 @@ export default React.createClass({
               placeholder="CREATE VIEW transformed AS SELECT id FROM source;"
               />
           </div>
+          <div className="small help-block">
+            {this.help()}
+          </div>
         </div>
       </div>
     );
+  },
+
+  help() {
+    if (this.props.backend === 'snowflake') {
+      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/snowflake/" target="_blank">using Snowflake</a>.</span>);
+    }
+    if (this.props.backend === 'redshift') {
+      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/redshift/" target="_blank">using Redshift</a>.</span>);
+    }
+    if (this.props.backend === 'mysql') {
+      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/mysql/" target="_blank">using MySQL</a>.</span>);
+    }
   },
 
   handleChange(e) {
