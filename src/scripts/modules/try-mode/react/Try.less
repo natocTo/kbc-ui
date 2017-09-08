@@ -7,7 +7,7 @@
   @TryColor1: #0099CE;
   @TryColor2: #25B8EB;
   @wizardWidth: 900px;
-  @wizardWidthAside: 350px;
+  @wizardWidthAside: 320px;
   @wizardHeight: 450px;
   @statusBarHeight: 50px;
   @verticalPadding: 8px;
@@ -26,7 +26,7 @@
     }
     &.modal-open {
       overflow: auto !important;
-      padding-right: 350px!important;
+      padding-right: @wizardWidthAside!important;
     }
   }
 
@@ -178,6 +178,10 @@
       }
 
       &.try-wizard-aside {
+        .try-media {
+          max-width:inherit;
+        }
+
         position: static;
         .modal-content{
           border-radius: 5px 0px 0px 5px;
@@ -212,10 +216,11 @@
     &-step {
       padding: 0px;
       padding-left: 8px;
-      line-height: 2!important;
+      line-height: 1.5!important;
       border: 0;
       font-size: 18px;
       margin-left: 24px;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
 
       &-passed {
         &:before {
@@ -236,7 +241,9 @@
   }
 
   &-media {
-    padding: @verticalPadding 12px @verticalPadding 0;
+    padding: @verticalPadding 0;
+    max-width: 450px;
+    margin: 0 auto;
   }
 
   &-lesson-link {

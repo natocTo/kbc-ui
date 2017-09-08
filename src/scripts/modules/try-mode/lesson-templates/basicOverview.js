@@ -68,9 +68,21 @@ export default {
       'markdown': 'If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. **Orchestrations** allow you to specify at what time or how often your tasks should be executed and in what order.',
       'media': '',
       'mediaType': ''
+
     },
     {
       'id': 7,
+      'position': 'center',
+      'backdrop': true,
+      'title': 'Example Workflow',
+      'link': 'home',
+      'isNavigationVisible': false,
+      'markdown': 'Having learned all the basics, let’s explore the individual steps a little more. In the following lessons, we will extract data from two database tables, merge them into one table, calculate some statistics, and visualize the results. Finally, we will set up the whole process to run automatically.',
+      'media': 'kbc_scheme_light_blue.svg',
+      'mediaType': 'img'
+    },
+    {
+      'id': 8,
       'position': 'center',
       'backdrop': true,
       'title': 'Congratulations',
@@ -80,5 +92,6 @@ export default {
       'media': 'keboola-finished.svg',
       'mediaType': 'img'
     }
+
   ]
 };

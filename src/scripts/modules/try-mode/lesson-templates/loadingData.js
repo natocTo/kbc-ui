@@ -69,20 +69,44 @@ export default {
       'markdown':
       'Each database query needs to have a name and an SQL command. The new **output table** that will be created in **Storage** has to be named here too. Let’s create the first query for extracting data about cars and save it.'
       + `
-
 ### TO DO:
 
 - Click on **+ New Query**
-- Name the query as you wish
+- Name the query \`cars\`
 - Set **Output table** \`in.c-tutorial.cars\`
 - Paste simple query \`SELECT * FROM cars;\`
 - Click on **Create Query**
+
 `,
       'media': '',
       'mediaType': '',
       'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'}
-    }, {
+    },
+    {
       'id': 5,
+      'position': 'aside',
+      'backdrop': false,
+      'title': 'Create second SQL Query',
+      'isNavigationVisible': true,
+      'markdown':
+      'Similarly, we create a query to extract info about population.'
+      + `
+### TO DO:
+
+- Click on **+ New Query**
+- Name the query \`population\`
+- Set **Output table** \`in.c-tutorial.population\`
+- Paste simple query \`SELECT * FROM population;\`
+- Click on **Create Query**
+
+`,
+      'media': '',
+      'mediaType': '',
+      'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'}
+    },
+
+    {
+      'id': 6,
       'position': 'aside',
       'backdrop': false,
       'title': 'Run Extracion',
@@ -92,7 +116,7 @@ export default {
       'mediaType': '',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS}
     }, {
-      'id': 6,
+      'id': 7,
       'position': 'aside',
       'backdrop': false,
       'title': 'Stored Extraction',
@@ -104,7 +128,7 @@ export default {
       'mediaType': ''
     },
     {
-      'id': 7,
+      'id': 8,
       'position': 'center',
       'backdrop': true,
       'title': 'Congratulations',
