@@ -26,7 +26,8 @@ const PERMANENT_MIGRATION_COMPONENTS = [
   'ex-google-drive',
   'wr-db-mysql',
   'wr-db-oracle',
-  'wr-db-redshift'
+  'wr-db-redshift',
+  'wr-google-drive'
 ];
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
