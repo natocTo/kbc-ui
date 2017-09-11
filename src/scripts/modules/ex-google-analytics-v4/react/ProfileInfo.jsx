@@ -9,7 +9,7 @@ export default React.createClass({
     const profile = this.props.profile;
     return (
       <span>
-        {profile.get('accountName')}/ {profile.get('webPropertyName')}/ {profile.get('name')}
+        {profile.get('accountName')} / {profile.get('webPropertyName')} / {profile.get('name')} ({profile.get('id')})
       </span>);
   }
 });
