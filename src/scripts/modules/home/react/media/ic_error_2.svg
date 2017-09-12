@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px" viewBox="0 0 80 200" version="1.1">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_error</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="KBC-screens" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.3" transform="translate(0, -30)">
+        <g id="KBC-Overview---deprecated-components" transform="">
+            <g id="deprecated-components" transform="">
+                <g id="ic_error" transform="">
+                    <g id="Icon-24px">
+
+                        <path d="M98.2068966,4.4137931 C46.4331034,4.4137931 4.4137931,46.4331034 4.4137931,98.2068966 C4.4137931,149.98069 46.4331034,192 98.2068966,192 C149.98069,192 192,149.98069 192,98.2068966 C192,46.4331034 149.98069,4.4137931 98.2068966,4.4137931 L98.2068966,4.4137931 Z M105.931034,145.655172 L88.2758621,145.655172 L88.2758621,125.793103 L105.931034,125.793103 L105.931034,145.655172 L105.931034,145.655172 Z M105.931034,105.931034 L88.2758621,105.931034 L88.2758621,50.7586207 L105.931034,50.7586207 L105.931034,105.931034 L105.931034,105.931034 Z" id="Shape" fill="#FFD452"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

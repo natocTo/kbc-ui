@@ -29,14 +29,17 @@ export default React.createClass({
       <div className="row kbc-header kbc-expiration">
         <div className="alert alert-warning">
           <h3>
-            <span className="fa fa-exclamation-triangle"/> Project contains deprecated components
+            Project contains deprecated components
           </h3>
 
             <div className="row">
           {grouped.map(function(components, type) {
             return (
               <div className="col-md-6">
-                <h4><img src="media/extractor.svg"/>{StringUtils.capitalize(type)}s</h4>
+                <h4>
+                  <span className={'kbc-' + type + '-icon'}/>
+                  {StringUtils.capitalize(type)}s
+                </h4>
                 <ul>
                   {components.map(function(component) {
                     return (
@@ -59,5 +62,9 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  getComponentIcon() {
+    return 'aaaaaa';
   }
 });
