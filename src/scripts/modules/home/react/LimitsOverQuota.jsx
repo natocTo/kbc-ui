@@ -20,7 +20,7 @@ export default React.createClass({
       <div className="row kbc-header kbc-limits">
         <div className="alert alert-danger">
           <h3>
-            Project is over quota!
+            Project is over quota
           </h3>
           <ul>
             <Link to="settings-limits">

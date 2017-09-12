@@ -35,25 +35,24 @@ TransformationsIndex = React.createClass
 
   render: ->
     if (@state.buckets && @state.buckets.count() > 0)
-      div className: 'container-fluid',
-        div className: 'kbc-main-content',
-          React.createElement SearchRow,
-            className: 'row kbc-search-row'
-            onChange: @_handleFilterChange
-            query: @state.filter
-          span {},
-            if @_getFilteredBuckets().count()
-              div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'
-              ,
-                @_getFilteredBuckets().map (bucket) ->
-                  @_renderBucketPanel bucket
-                , @
-                .toArray()
-            else
-              div className: 'kbc-header',
-                div className: 'kbc-title',
-                  h2 null,
-                    'No buckets or transformations found.'
+      div className: 'container-fluid kbc-main-content',
+        React.createElement SearchRow,
+          className: 'row kbc-search-row'
+          onChange: @_handleFilterChange
+          query: @state.filter
+        span {},
+          if @_getFilteredBuckets().count()
+            div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'
+            ,
+              @_getFilteredBuckets().map (bucket) ->
+                @_renderBucketPanel bucket
+              , @
+              .toArray()
+          else
+            div className: 'kbc-header',
+              div className: 'kbc-title',
+                h2 null,
+                  'No buckets or transformations found.'
     else
       div className: 'container-fluid',
         div className: 'kbc-main-content',

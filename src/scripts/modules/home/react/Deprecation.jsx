@@ -26,7 +26,7 @@ export default React.createClass({
     });
 
     return (
-      <div className="row kbc-header kbc-expiration">
+      <div className="row kbc-header kbc-expiration kbc-deprecation">
         <div className="alert alert-warning">
           <h3>
             Project contains deprecated components
@@ -62,9 +62,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
-
-  getComponentIcon() {
-    return 'aaaaaa';
   }
 });

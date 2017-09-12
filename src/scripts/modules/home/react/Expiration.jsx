@@ -27,7 +27,7 @@ export default React.createClass({
       <div className="row kbc-header kbc-expiration">
         <div className="alert alert-warning">
           <h3>
-            This project will expire in {this.days()}.
+            This project will expire in {this.days()}
           </h3>
           <p>Please <a onClick={contactSupport}>contact support</a> for project plan upgrade.</p>
         </div>
