@@ -30,7 +30,7 @@ export default React.createClass({
             {this.regionOptions()}
           </Input>
         {this.input('S3 Bucket', 's3bucket', 'my-bucket')}
-        {this.input('S3 path', 's3path', 'Optional path in S3')}
+        {this.input('S3 Path', 's3path', 'Optional path in S3')}
         <Input type="checkbox"
            wrapperClassName="col-xs-offset-4 col-xs-8"
            label="Export project structure only"
