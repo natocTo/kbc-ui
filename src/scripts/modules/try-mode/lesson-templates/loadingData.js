@@ -26,10 +26,10 @@ export default {
       'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
       'markdown': 'Because the two data tables are stored in a Snowflake database, we’ll be using the Snowflake extractor. By configuring it, we’ll specify what data to extract and how.'
                 + `
-- Click on **+ New Extractor**
+- Click on <span class="btn btn-success btn-xs">+ New Extractor</span>
 - Find **Snowflake**. You can use the search feature to find it quickly.
-- Click on **More** and continue with **+ New Configuration**
-- Name the configuration and click on **Create Configuration**
+- Click on <span class="btn btn-success btn-xs">More</span> and continue with <span class="btn btn-success btn-xs">+ New Configuration</span>
+- Name the configuration and click on <span class="btn btn-success btn-xs">Create Configuration</span>
 
 `,
       'media': '',
@@ -41,12 +41,12 @@ export default {
       'title': 'Setup Connection',
       'markdown': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection.'
                 + `
-- Click on **Setup Database Credentials**
+- Click on <span class="btn btn-success btn-xs">Setup Database Credentials</span>
 - Host to \`kebooladev.snowflakecomputing.com\`
 - Port to \`443\`
 - Username, Password, Database and Schema to \`HELP_TUTORIAL\`
 - Warehouse to \`DEV\`
-- Click on **Save**
+- Click on <span class="btn btn-success btn-xs">Save</span>
 `,
       'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
       'media': '',
@@ -59,11 +59,11 @@ export default {
       'markdown':
       'Each database query needs to have a name and an SQL command. The new **output table** that will be created in **Storage** has to be named here too. Let’s create the first query for extracting data about cars and save it.'
       + `
-- Click on **+ New Query**
+- Click on <span class="btn btn-success btn-xs">+ New Query</span>
 - Name the query \`cars\`
 - Set **Output table** \`in.c-tutorial.cars\`
 - Paste simple query \`SELECT * FROM cars;\`
-- Click on **Create Query**
+- Click on <span class="btn btn-success btn-xs">Create Query</span>
 
 `,
       'media': '',
@@ -78,11 +78,11 @@ export default {
       'markdown':
       'Similarly, we create a query to extract info about population.'
       + `
-- Click on **+ New Query**
+- Click on <span class="btn btn-success btn-xs">+ New Query</span>
 - Name the query \`population\`
 - Set **Output table** \`in.c-tutorial.population\`
 - Paste simple query \`SELECT * FROM population;\`
-- Click on **Create Query**
+- Click on <span class="btn btn-success btn-xs">Create Query</span>
 
 `,
       'media': '',
@@ -95,7 +95,7 @@ export default {
       'position': 'aside',
       'backdrop': false,
       'title': 'Run Extracion',
-      'markdown': 'Now let’s click on **Run Extraction** to load the data from the two database tables into the new tables in **Storage**.',
+      'markdown': 'Now let’s click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> to load the data from the two database tables into the new tables in **Storage**.',
       'media': '',
       'mediaType': '',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS}
