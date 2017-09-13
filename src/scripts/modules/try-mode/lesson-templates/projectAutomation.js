@@ -63,9 +63,7 @@ Then **Save** the task.
       'title': 'Schedule Orchestration',
       'isNavigationVisible': true,
       'markdown': 'Now let`s schedule our configured task. Select how often, which days and at what time we want the orchestration to run.' +
-      `inin
-      
-### TO DO:
+      `
 - Click on **Edit schedule**
 - Choose desired schedule for run your task. Notice the generated **Next Schedules**
 - Click on **Save**
@@ -83,8 +81,6 @@ Then **Save** the task.
       'isNavigationVisible': true,
       'markdown': 'Lat step is to enter email address to receive notifications about your scheduled tasks.' +
       `
-      
-### TO DO:
 - Click on **Configure Notifications**
 - Click on **Edit Notifications**
 - Add your email address for all of three inputs and click **+** button.

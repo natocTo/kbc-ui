@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Button, ListGroup, ListGroupItem, ResponsiveEmbed} from 'react-bootstrap';
+import {Modal, Button, ResponsiveEmbed} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import TryModeImage from './TryModeImage';
@@ -46,7 +46,7 @@ export default React.createClass({
                    <div className="try-media">
                      {this.renderMedia()}
                    </div>
-                   {this.renderNavigation()}
+
                  </div>
                 }
                 {this.isLastStep() &&
@@ -58,9 +58,7 @@ export default React.createClass({
             </div>
             {this.isFirstStep() &&
              <div className="row">
-               <div className="col-md-6">
-                 {this.renderNavigation()}
-               </div>
+
                <div className="col-md-6">
                  <div className="try-media">
                    {this.renderMedia()}
@@ -70,7 +68,6 @@ export default React.createClass({
             }
           </Modal.Body>
           <Modal.Footer>
-            {this.renderButtonPrev()}
             {this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
@@ -122,9 +119,7 @@ export default React.createClass({
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
   },
-  isNavigationVisible() {
-    return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
-  },
+
   isFirstStep() {
     return this.getActiveStep() === 0;
   },
@@ -136,16 +131,6 @@ export default React.createClass({
   },
   getModalTitleExtended() {
     return (<div><h2>Lesson  {this.getLessonId()}</h2><h1>{this.getLessonTitle()}</h1></div>);
-  },
-  getStepState(step) {
-    let stepState = 'try-navigation-step-passed';
-    if (this.getActiveStep() < step.id - 1) {
-      stepState = '';
-    }
-    if (this.getActiveStep() === step.id - 1) {
-      stepState = 'try-navigation-step-active';
-    }
-    return stepState;
   },
   renderMedia() {
     if (this.getStepMediaType() === 'img') {
@@ -167,22 +152,12 @@ export default React.createClass({
   getNextStepDispatchAction() {
     return this.getLessonSteps()[this.getActiveStep()].nextStepDispatchAction;
   },
-  renderButtonPrev() {
-    let buttonText = 'Prev step';
-    if (this.props.step === 0) {
-      buttonText = 'Close';
-    }
-    if (this.props.step !== this.getStepsCount() - 1) {
-      return (
-        <Button onClick={this.decreaseStep} bsStyle="link">{buttonText}</Button>
-      );
-    }
-    return '';
-  },
   renderButtonNext() {
     let buttonText = 'Next step';
     if (this.props.step === 0) {
       buttonText = 'Take lesson';
+    } else if (this.props.step === this.getStepsCount() - 2) {
+      buttonText = 'Finish';
     } else if (this.props.step === this.getStepsCount() - 1) {
       buttonText = 'Close';
     }
@@ -190,26 +165,7 @@ export default React.createClass({
       <Button onClick={this.increaseStep} bsStyle="primary">{buttonText}</Button>
     );
   },
-  renderNavigation() {
-    return (
-      <ListGroup className="try-navigation">
-        {
-          this.getLessonSteps().filter((step) => {
-            return step.id < this.getStepsCount();
-          }, this).map((step) => {
-            if (this.isNavigationVisible()) {
-              return (
-                <ListGroupItem className={this.getStepState(step) + ' try-navigation-step'}>
-                  <span>
-                    {this.getLessonId()}.{step.id}. {step.title}
-                  </span>
-                </ListGroupItem>
-              );
-            }
-          })}
-      </ListGroup>
-    );
-  },
+
   closeLessonModal() {
     RoutesStore.getRouter().transitionTo('home');
     hideWizardModalFn();

@@ -29,7 +29,6 @@ export default {
       'media': '',
       'markdown': 'Let’s say we have Tableau Desktop installed. Now we need to find the Tableau writer in the Writers section.'
                 + `
-### TO DO:
 - Click on **+ New Writer**
 - Find **Tableau**. You can use the search feature to find it quickly.
 - Click on **More** and continue with **+ New Configuration**
@@ -47,9 +46,6 @@ export default {
       'markdown':
       'Then let’s add the table we want to send to Tableau. For each of its columns we also need to specify whether it contains text or a number.'
       + `
-
-### TO DO:
-
 - Click on **+ New Table**
 - Select  \`in.c-tutrial.cars\`
 - Select proper **TDE Data Type** and **Save** this table

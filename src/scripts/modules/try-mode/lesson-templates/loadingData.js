@@ -28,9 +28,6 @@ export default {
       'isNavigationVisible': true,
       'markdown': 'Because the two data tables are stored in a Snowflake database, we’ll be using the Snowflake extractor. By configuring it, we’ll specify what data to extract and how.'
                 + `
-
-### TO DO:
-
 - Click on **+ New Extractor**
 - Find **Snowflake**. You can use the search feature to find it quickly.
 - Click on **More** and continue with **+ New Configuration**
@@ -47,9 +44,6 @@ export default {
       'isNavigationVisible': true,
       'markdown': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection.'
                 + `
-
-### TO DO:
-
 - Click on **Setup Database Credentials**
 - Host to \`kebooladev.snowflakecomputing.com\`
 - Port to \`443\`
@@ -69,8 +63,6 @@ export default {
       'markdown':
       'Each database query needs to have a name and an SQL command. The new **output table** that will be created in **Storage** has to be named here too. Let’s create the first query for extracting data about cars and save it.'
       + `
-### TO DO:
-
 - Click on **+ New Query**
 - Name the query \`cars\`
 - Set **Output table** \`in.c-tutorial.cars\`
@@ -91,8 +83,6 @@ export default {
       'markdown':
       'Similarly, we create a query to extract info about population.'
       + `
-### TO DO:
-
 - Click on **+ New Query**
 - Name the query \`population\`
 - Set **Output table** \`in.c-tutorial.population\`

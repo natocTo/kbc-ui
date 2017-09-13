@@ -56,9 +56,6 @@ export default {
 - **Queries** what will happen with the data in the transformation.
 
 
-
-### TO DO:
-
 - Click on **+ New Input** and select \`in.c-tutorial.cars\` as Source
 - Click on **+ New Output**, set Destination at \`out.c-snowflake.transformed\`
 - Paste this code to **Queries** \`CREATE TABLE transformed AS
