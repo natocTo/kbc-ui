@@ -46,7 +46,7 @@ export default {
       'Then let’s add the table we want to send to Tableau. For each of its columns we also need to specify whether it contains text or a number.'
       + `
 - Click on **+ New Table**
-- Select  \`in.c-tutrial.cars\`
+- Select  \`in.c-tutorial.cars\`
 - Select proper **TDE Data Type** and **Save** this table
 - click **Export tables to TDE**
 `

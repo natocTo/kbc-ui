@@ -23,7 +23,7 @@ export default {
       'backdrop': false,
       'title': 'Create Bucket',
       'link': 'transformations',
-      'markdown': 'Before creating our transformation, we need to create a new Bucket which serves as folder for Transformations. You will benefit from buckets later in the process. Click on **+ New Transformation Bucket**.',
+      'markdown': 'Before creating our transformation, we need to create a new Bucket which serves as a folder for Transformations. You will benefit from buckets later in the process. Click on **+ New Transformation Bucket**.',
       'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -50,9 +50,11 @@ export default {
 - **Input Mapping** what tables will be used in the transformation.
 - **Output Mapping** what tables will be written to Storage as results.
 - **Queries** what will happen with the data in the transformation.
-
-
+<br>
+<br>
 - Click on **+ New Input** and select \`in.c-tutorial.cars\` as Source
+- Click on **+ New Output**, set Destination at \`out.c-snowflake.transformed\`
+- Click on **+ New Input** and select \`in.c-tutorial.population\` as Source
 - Click on **+ New Output**, set Destination at \`out.c-snowflake.transformed\`
 - Paste this code to **Queries** \`CREATE TABLE transformed AS
 SELECT cars.*, population.POPULATION, (population.POPULATION / cars.CARS) AS PERSON_PER_CAR
