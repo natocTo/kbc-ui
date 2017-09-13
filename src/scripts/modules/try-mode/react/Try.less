@@ -27,6 +27,14 @@
       overflow: auto !important;
       padding-right: @wizardWidthAside!important;
     }
+    &.try-mode-lesson-on{
+      .kbc-main-content {
+        margin-top: 50px !important;
+      }
+      .try-desk-container{
+        display: none;
+      }
+    }
   }
 
   &-desk {
@@ -52,10 +60,21 @@
       padding-top: 16px;
       line-height: 1.5;
     }
+
+
     a{
-      &:focus, &:active{
+      padding: 4px 8px;
+      transition: 0.03s all linear;
+      text-decoration: underline;
+
+      &:focus,
+      &:active{
         color: #fff;
         outline:none;
+      }
+      &:hover{
+        background: #50c4ee;
+        border-radius: 5px;
         text-decoration: none;
       }
     }
@@ -76,11 +95,11 @@
     }
     ul {
       list-style: none;
-      border-left: 1px solid rgba(255, 255, 255, 0.2);
-      padding-left: 20px;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      padding-right: 0px;
+      padding-left: 8px;
     }
     li {
-      //padding: 4px 8px;
       line-height: 1.5;
     }
     strong {

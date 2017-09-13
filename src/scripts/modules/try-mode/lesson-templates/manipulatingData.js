@@ -14,7 +14,7 @@ export default {
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
-      'markdown': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will merge the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will join the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img'
     }, {
@@ -41,7 +41,7 @@ export default {
       'id': 4,
       'position': 'aside',
       'backdrop': false,
-      'title': 'Set Mappings',
+      'title': 'Map data & set queries',
       'link': '',
       'markdown':
       'Now let’s specify '
@@ -79,7 +79,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'backdrop': false,
       'title': 'Check Jobs',
       'link': 'jobs',
-      'markdown': 'Here in **Jobs** you can see the status of your jobs. Our input tables were merged and the output table transformed was created. You can check the detail of Job if you want' +
+      'markdown': 'Here in **Jobs** you can see the status of your jobs. Our input tables were joined and the output table transformed was created. You can check the detail of Job if you want' +
       '. When you are ready, hit **Next step**.',
       'media': '',
       'mediaType': ''

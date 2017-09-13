@@ -21,20 +21,22 @@ module.exports = React.createClass({
     document.body.classList.add('try-mode');
     if (this.state.currentLesson !== undefined) {
       let wizardPosition = this.state.currentLesson.steps[this.state.wizard.step].position;
+      document.body.classList.add('try-mode-lesson-on');
+
       if (wizardPosition === 'center') {
         document.body.classList.add('try-mode-center');
       } else {
         document.body.classList.remove('try-mode-center');
       }
+    } else {
+      document.body.classList.remove('try-mode-lesson-on');
     }
   },
-
   resetLesson() {
     if (!this.state.wizard.showLessonModal || this.state.wizard.lessonNumber === 0) {
       return null;
     }
   },
-  
   render() {
     this.applyLayoutClasses();
     this.resetLesson();

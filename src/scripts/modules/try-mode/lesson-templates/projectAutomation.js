@@ -30,7 +30,7 @@ export default {
       'position': 'aside',
       'backdrop': false,
       'title': 'Orchestration Overview',
-      'markdown': 'We only to specify what tasks should be executed, in which order and when. We can also set up notifications that will be sent to us if something needs your attention. Start by click on **Configure Tasks**.',
+      'markdown': 'We only need to specify what tasks should be executed, in which order and when. We can also set up notifications that will be sent to us if something needs your attention. Start by click on **Configure Tasks**.',
       'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_EDIT_START},
       'media': '',
       'mediaType': ''
@@ -73,7 +73,7 @@ Then **Save** the task.
       'position': 'aside',
       'backdrop': false,
       'title': 'Configure Notifications',
-      'markdown': 'Lat step is to enter email address to receive notifications about your scheduled tasks.' +
+      'markdown': 'Last step is to enter email address to receive notifications about your scheduled tasks.' +
       `
 - Click on **Configure Notifications**
 - Click on **Edit Notifications**

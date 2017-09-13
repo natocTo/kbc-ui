@@ -64,22 +64,7 @@ export default React.createClass({
               <h2>Welcome to Keboola Connection</h2>
               <h1>Try Mode</h1>
               <div className="row">
-                <div className="col-xs-5">
-                  <p>
-                    Here you can learn everything you need to know about Keboola Connection before you actually start
-                    using
-                    it.
-                    <br/>
-                    <br/>
-                    The following lessons are designed to walk you through the basic steps of creating a project.
-                    <br/>
-                    <br/>
-                    Feel free to switch Try Mode off at any time. You can always bring it back by going to <a
-                      className="try-link" href={ApplicationStore.getProjectPageUrl('settings-users')}>Settings
-                    > Try Mode.</a>
-                  </p>
-                </div>
-                <div className="col-xs-5">
+                <div className="col-xs-4">
                   <ul>
                     {Object.keys(lessons).map((lesson, key) => {
                       return (
@@ -95,6 +80,22 @@ export default React.createClass({
                     })}
                   </ul>
                 </div>
+                <div className="col-xs-5">
+                  <p>
+                    Here you can learn everything you need to know about Keboola Connection before you actually start
+                    using
+                    it.
+                    <br/>
+                    <br/>
+                    The following lessons are designed to walk you through the basic steps of creating a project.
+                    <br/>
+                    <br/>
+                    Feel free to switch Try Mode off at any time. You can always bring it back by going to <a
+                      className="try-link" href={ApplicationStore.getProjectPageUrl('settings-users')}>Settings
+                    > Try Mode.</a>
+                  </p>
+                </div>
+
               </div>
             </div>
           </div>
