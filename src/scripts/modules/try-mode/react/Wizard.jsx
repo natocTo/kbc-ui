@@ -17,12 +17,28 @@ module.exports = React.createClass({
     };
   },
 
-  render() {
+  applyLayoutClasses() {
     document.body.classList.add('try-mode');
+    if (this.state.currentLesson !== undefined) {
+      let wizardPosition = this.state.currentLesson.steps[this.state.wizard.step].position;
+      if (wizardPosition === 'center') {
+        document.body.classList.add('try-mode-center');
+      } else {
+        document.body.classList.remove('try-mode-center');
+      }
+    }
+  },
 
+  resetLesson() {
     if (!this.state.wizard.showLessonModal || this.state.wizard.lessonNumber === 0) {
       return null;
     }
+  },
+  
+  render() {
+    this.applyLayoutClasses();
+    this.resetLesson();
+
     return (
       <WizardModal
         step={this.state.wizard.step}

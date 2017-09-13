@@ -106,7 +106,6 @@ export default React.createClass({
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
   },
-
   isFirstStep() {
     return this.getActiveStep() === 0;
   },
