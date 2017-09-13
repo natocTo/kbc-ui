@@ -33,7 +33,6 @@ export default {
 - Find **Tableau**. You can use the search feature to find it quickly.
 - Click on **More** and continue with **+ New Configuration**
 - Name the configuration and click on **Create Configuration**
-
 `,
       'mediaType': ''
     },
@@ -50,17 +49,13 @@ export default {
 - Select  \`in.c-tutrial.cars\`
 - Select proper **TDE Data Type** and **Save** this table
 - click **Export tables to TDE**
-
-`,
-      'isNavigationVisible': true
+`
     },
-
     {
       'id': 4,
       'position': 'center',
       'backdrop': true,
       'title': 'Run Extracion',
-      'isNavigationVisible': false,
       'markdown': 'The final step is to open the downloaded file in Tableau and create any reports we want. To see how to automate the whole process, continue to the next lesson - Project Automation. Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
       'media': 'tbl.png',
       'mediaType': 'img'
@@ -70,7 +65,6 @@ export default {
       'position': 'center',
       'backdrop': true,
       'title': 'Congratulations',
-      'isNavigationVisible': false,
       'link': 'home',
       'markdown': 'Congratulations! Lesson finished.',
       'media': 'keboola-finished.svg',

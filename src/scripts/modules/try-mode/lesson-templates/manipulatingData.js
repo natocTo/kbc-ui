@@ -14,7 +14,6 @@ export default {
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
-      'isNavigationVisible': true,
       'markdown': 'In this lesson, we are going to process the data we loaded into Storage in Lesson 2. Using a simple Transformation, we will merge the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img'
@@ -24,7 +23,6 @@ export default {
       'backdrop': false,
       'title': 'Create Bucket',
       'link': 'transformations',
-      'isNavigationVisible': true,
       'markdown': 'Before creating our transformation, we need to create a new Bucket which serves as folder for Transformations. You will benefit from buckets later in the process. Click on **+ New Transformation Bucket**.',
       'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
       'media': '',
@@ -35,7 +33,6 @@ export default {
       'backdrop': false,
       'title': 'Create Transformation',
       'link': '',
-      'isNavigationVisible': true,
       'markdown': 'Let’s add a new transformation into the new bucket by clicking on **+ New Transformation**. Select MySQL as the backend (the engine running the transformation script).',
       'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
       'media': '',
@@ -46,7 +43,6 @@ export default {
       'backdrop': false,
       'title': 'Set Mappings',
       'link': '',
-      'isNavigationVisible': true,
       'markdown':
       'Now let’s specify '
 
@@ -73,7 +69,6 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'backdrop': false,
       'title': 'Run Transformation',
       'link': '',
-      'isNavigationVisible': true,
       'markdown': 'Now when everything is ready, we can click on **Run transformation**. The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'media': '',
@@ -84,7 +79,6 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'backdrop': false,
       'title': 'Check Jobs',
       'link': 'jobs',
-      'isNavigationVisible': true,
       'markdown': 'Here in **Jobs** you can see the status of your jobs. Our input tables were merged and the output table transformed was created. You can check the detail of Job if you want' +
       '. When you are ready, hit **Next step**.',
       'media': '',
@@ -95,7 +89,6 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'backdrop': false,
       'title': 'Check Storage',
       'link': '/storage',
-      'isNavigationVisible': true,
       'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue to next lesson - Visualizing Results. Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow a hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
@@ -105,7 +98,6 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'position': 'center',
       'backdrop': true,
       'title': 'Congratulations',
-      'isNavigationVisible': false,
       'link': 'home',
       'markdown': 'Congratulations! Lesson finished.',
       'media': 'keboola-finished.svg',

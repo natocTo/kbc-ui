@@ -53,6 +53,13 @@
       padding-top: 16px;
       line-height: 1.5;
     }
+    a{
+      &:focus, &:active{
+        color: #fff;
+        outline:none;
+        text-decoration: none;
+      }
+    }
     h1 {
       font-size: 36px;
       line-height: 40px;
@@ -113,7 +120,8 @@
       color: #fff;
       line-height: 23px;
       &:hover {
-        text-decoration: none;
+        text-decoration: underline;
+        color: #fff;
       }
     }
     strong{
