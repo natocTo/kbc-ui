@@ -41,14 +41,11 @@ export default React.createClass({
                    <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
                  </span>
                 }
-                {!this.isFirstStep() &&
                  <div>
                    <div className="try-media">
                      {this.renderMedia()}
                    </div>
-
                  </div>
-                }
                 {this.isLastStep() &&
                  <span className="try-congratulations">
                    <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
@@ -56,16 +53,6 @@ export default React.createClass({
                 }
               </div>
             </div>
-            {this.isFirstStep() &&
-             <div className="row">
-
-               <div className="col-md-6">
-                 <div className="try-media">
-                   {this.renderMedia()}
-                 </div>
-               </div>
-             </div>
-            }
           </Modal.Body>
           <Modal.Footer>
             {this.renderButtonNext()}
