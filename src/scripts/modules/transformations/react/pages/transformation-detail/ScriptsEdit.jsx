@@ -8,9 +8,9 @@ require('./queries.less');
 export default React.createClass({
   propTypes: {
     script: PropTypes.string.isRequired,
-    transformationType: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    backend: PropTypes.string.isRequired
   },
 
   render() {
@@ -18,13 +18,13 @@ export default React.createClass({
       value: this.props.script,
       theme: 'solarized',
       lineNumbers: true,
-      mode: resolveHighlightMode('docker', this.props.transformationType),
+      mode: resolveHighlightMode('docker', this.props.backend),
       autofocus: true,
       lineWrapping: true,
       onChange: this.handleChange,
       readOnly: this.props.disabled
     };
-    if (this.props.transformationType === 'openrefine') {
+    if (this.props.backend === 'openrefine') {
       codeMirrorParams.lint = true;
       codeMirrorParams.gutters = ['CodeMirror-lint-markers'];
     }
@@ -34,9 +34,25 @@ export default React.createClass({
           <div className="edit form-group kbc-queries-editor">
             <CodeMirror {...codeMirrorParams} />
           </div>
+          <div className="small help-block">
+            {this.help()}
+          </div>
         </div>
       </div>
     );
+  },
+
+
+  help() {
+    if (this.props.backend === 'python') {
+      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/python/" target="_blank">using Python</a>.</span>);
+    }
+    if (this.props.backend === 'r') {
+      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/r/" target="_blank">using R</a>.</span>);
+    }
+    if (this.props.backend === 'openrefine') {
+      return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/openrefine/" target="_blank">using OpenRefine</a>.</span>);
+    }
   },
 
   handleChange(e) {

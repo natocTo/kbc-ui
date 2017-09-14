@@ -1,17 +1,10 @@
 import React, {PropTypes} from 'react';
-import Edit from './ScriptsEdit';
-import Clipboard from '../../../../../react/common/Clipboard';
-import SaveButtons from '../../../../../react/common/SaveButtons';
-
-/* global require */
-require('codemirror/mode/r/r');
-require('codemirror/mode/python/python');
+import Edit from './ProcessorsEdit';
+import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default React.createClass({
   propTypes: {
-    bucketId: PropTypes.string.isRequired,
-    transformation: PropTypes.object.isRequired,
-    scripts: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
     isEditingValid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
@@ -20,14 +13,19 @@ export default React.createClass({
     isChanged: PropTypes.bool.isRequired
   },
 
+  getValue() {
+    if (this.props.isChanged === false && (this.props.value === '' || this.props.value === '{}')) {
+      return JSON.stringify({before: [], after: []}, null, 2);
+    }
+    return this.props.value;
+  },
+
+
   render() {
     return (
       <div>
         <h2 style={{lineHeight: '32px'}}>
-          Scripts
-          <small>
-            <Clipboard text={this.props.scripts}/>
-          </small>
+          Processors
           {this.renderButtons()}
         </h2>
         {this.scripts()}
@@ -52,8 +50,7 @@ export default React.createClass({
   scripts() {
     return (
       <Edit
-        script={this.props.scripts}
-        backend={this.props.transformation.get('type')}
+        value={this.getValue()}
         disabled={this.props.isSaving}
         onChange={this.props.onEditChange}
         />

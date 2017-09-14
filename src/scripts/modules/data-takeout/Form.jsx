@@ -30,7 +30,7 @@ export default React.createClass({
             {this.regionOptions()}
           </Input>
         {this.input('S3 Bucket', 's3bucket', 'my-bucket')}
-        {this.input('S3 path', 's3path', 'Optional path in S3')}
+        {this.input('S3 Path', 's3path', 'Optional path in S3')}
         <Input type="checkbox"
            wrapperClassName="col-xs-offset-4 col-xs-8"
            label="Export project structure only"
@@ -85,13 +85,18 @@ export default React.createClass({
   regionOptions() {
     const regions = OrderedMap({
       'us-east-1': 'US Standard (N. Virginia)',
+      'us-east-2': 'US East (Ohio)',
       'us-west-2': 'US West (Oregon)',
       'us-west-1': 'US West (N. California)',
+      'ca-central-1': 'Canada (Central)',
       'eu-west-1': 'EU (Ireland)',
+      'eu-west-2': 'EU (London)',
       'eu-central-1': 'EU (Frankfurt)',
+      'ap-south-1': 'Asia Pacific (Mumbai)',
       'ap-southeast-1': 'Asia Pacific (Singapore)',
       'ap-southeast-2': 'Asia Pacific (Sydney)',
       'ap-northeast-1': 'Asia Pacific (Tokyo)',
+      'ap-northeast-2': 'Asia Pacific (Seoul)',
       'sa-east-1': 'South America (Sao Paulo)'
     });
     return regions.map((regionName, regionValue) => {

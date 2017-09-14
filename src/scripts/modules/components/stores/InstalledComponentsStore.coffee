@@ -17,6 +17,7 @@ _store = Map(
   configRows: Map() #componentId #configId #rowId
   configDataLoading: Map() #componentId #configId - configuration detail JSON
   configsDataLoading: Map() #componentId - configurations JSON
+  configsDataLoaded: Map() #componentId - configurations JSON
   configDataEditing: Map() #componentId #configId - configuration
   configDataEditingObject: Map() #componentId #configId - configuration
   configDataParametersEditing: Map() #componentId #configId - configuration
@@ -162,7 +163,7 @@ InstalledComponentsStore = StoreUtils.createStore
     _store.hasIn ['configData', componentId, configId]
 
   getIsConfigsDataLoaded: (componentId) ->
-    _store.hasIn ['configData', componentId]
+    _store.getIn ['configsDataLoaded', componentId], false
 
   getEditingConfigData: (componentId, configId, defaultValue) ->
     _store.getIn ['configDataEditing', componentId, configId], defaultValue
@@ -414,6 +415,7 @@ Dispatcher.register (payload) ->
       _store = _store.withMutations (store) ->
         store = store
           .deleteIn ['configsDataLoading', action.componentId]
+          .setIn ['configsDataLoaded', action.componentId], true
 
         i = 0
         while i < action.configData.length

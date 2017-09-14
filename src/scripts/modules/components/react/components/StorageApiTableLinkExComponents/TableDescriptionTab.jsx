@@ -13,7 +13,7 @@ export default React.createClass({
 
   render() {
     if (!this.props.tableExists) {
-      let msg = 'Table does not exist yet.';
+      let msg = 'Table does not exist.';
       if (this.props.isLoading) {
         msg = 'Loading...';
       }

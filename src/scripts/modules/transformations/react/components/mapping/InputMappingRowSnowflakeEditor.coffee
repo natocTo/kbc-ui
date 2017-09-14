@@ -4,6 +4,7 @@ Immutable = require('immutable')
 {Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
+SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 SnowflakeDataTypesContainer = React.createFactory(require("./input/SnowflakeDataTypesContainer"))
 
 module.exports = React.createClass
@@ -87,23 +88,6 @@ module.exports = React.createClass
     value = @props.value.set("datatypes", datatypes)
     @props.onChange(value)
 
-  _getTables: ->
-    props = @props
-    inOutTables = @props.tables.filter((table) ->
-      table.get("id").substr(0, 3) == "in." || table.get("id").substr(0, 4) == "out."
-    )
-    map = inOutTables.map((table) ->
-      {
-        label: table.get("id")
-        value: table.get("id")
-      }
-    )
-    map.toList().sort( (valA, valB) ->
-      return 1 if valA.label > valB.label
-      return -1 if valA.label < valB.label
-      return 0
-    ).toJS()
-
   _getColumns: ->
     if !@props.value.get("source")
       return []
@@ -154,13 +138,11 @@ module.exports = React.createClass
         React.DOM.div className: 'form-group',
           React.DOM.label className: 'col-xs-2 control-label', 'Source'
           React.DOM.div className: 'col-xs-10',
-            Select
-              name: 'source'
+            SapiTableSelector
               value: @props.value.get("source")
               disabled: @props.disabled
               placeholder: "Source table"
-              onChange: @_handleChangeSource
-              options: @_getTables()
+              onSelectTableFn: @_handleChangeSource
       React.DOM.div {className: "row col-md-12"},
         Input
           type: 'text'

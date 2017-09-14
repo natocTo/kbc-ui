@@ -99,9 +99,9 @@ TransformationsIndex = React.createClass
       filter = @state.filter
       component = @
       filtered = @state.buckets.filter (bucket) ->
-        fuzzy.match(filter, bucket.get('name').toString()) or
-          fuzzy.match(filter, bucket.get('id').toString()) or
-          fuzzy.match(filter, bucket.get('description').toString()) or
+        fuzzy.match(filter, bucket.get('name', '').toString()) or
+          fuzzy.match(filter, bucket.get('id', '').toString()) or
+          fuzzy.match(filter, bucket.get('description', '').toString()) or
           component._getFilteredTransformations(bucket.get('id')).count()
 
     filtered = filtered.sortBy((bucket) ->
@@ -114,8 +114,8 @@ TransformationsIndex = React.createClass
     if @state.filter && @state.filter != ''
       filter = @state.filter
       filtered = @state.transformationsInBuckets.getIn([bucketId], Immutable.Map()).filter((transformation) ->
-        fuzzy.match(filter, transformation.get('name').toString()) or
-          fuzzy.match(filter, transformation.get('description').toString()) or
+        fuzzy.match(filter, transformation.get('name', '').toString()) or
+          fuzzy.match(filter, transformation.get('description', '').toString()) or
           fuzzy.match(filter, transformation.get('fullId', '').toString()) or
           fuzzy.match(filter, transformation.get('id', '').toString())
       )
