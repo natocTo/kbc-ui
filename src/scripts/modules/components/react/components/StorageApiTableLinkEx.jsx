@@ -146,7 +146,7 @@ export default React.createClass({
 
     const table = this.state.table;
     if (!this.tableExists()) {
-      return 'Table does not exist yet.';
+      return 'Table does not exist.';
     }
     return (
       <span key="tooltipinfo">
