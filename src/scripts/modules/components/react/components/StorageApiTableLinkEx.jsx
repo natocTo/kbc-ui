@@ -148,16 +148,19 @@ export default React.createClass({
     if (!this.tableExists()) {
       return 'Table does not exist.';
     }
+    if (table.get('lastChangeDate') === null) {
+      return 'Table exists, but was never imported.';
+    }
     return (
       <span key="tooltipinfo">
         <div>
           {moment(table.get('lastChangeDate')).fromNow()}
         </div>
         <div>
-          {filesize(table.get('dataSizeBytes'))}
+          {filesize(table.get('dataSizeBytes', 'N/A'))}
         </div>
         <div>
-          {table.get('rowsCount')} rows
+          {table.get('rowsCount', 'N/A')} rows
         </div>
       </span>
     );
