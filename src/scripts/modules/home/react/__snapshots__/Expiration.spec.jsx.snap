@@ -4,11 +4,8 @@ exports[`<Expiration /> should render expiration warning when expiration is clos
   <div
     className="alert alert-warning">
     <h3>
-      <span
-        className="fa fa-exclamation-triangle" />
       This project will expire in 
       1 day
-      .
     </h3>
     <p>
       Please 
