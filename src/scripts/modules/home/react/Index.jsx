@@ -59,7 +59,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         {this.state.projectHasTryModeOn === 1 &&
-          <div className="kbc-main-content try-desk-container">
+          <div className="try-desk-container">
             <div className="try-desk">
               <h2>Welcome to Keboola Connection</h2>
               <h1>Try Mode</h1>

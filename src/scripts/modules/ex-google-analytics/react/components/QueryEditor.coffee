@@ -16,16 +16,17 @@ module.exports = React.createClass
     validation: React.PropTypes.object.isRequired
 
   render: ->
-    div {className: 'container-fluid kbc-main-content'},
-      form className: 'form-horizontal',
-        div className: 'row',
-          @_createInput 'Name', 'name'
-          @_parseUrlInput()
-          @_createArraySelect('Metrics', 'metrics')
-          @_createArraySelect('Dimensions', 'dimensions')
-          @_createInput 'Filters', 'filters'
-          @_createInput 'Segment', 'segment'
-          @_profilesSelect()
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        form className: 'form-horizontal',
+          div className: 'row',
+            @_createInput 'Name', 'name'
+            @_parseUrlInput()
+            @_createArraySelect('Metrics', 'metrics')
+            @_createArraySelect('Dimensions', 'dimensions')
+            @_createInput 'Filters', 'filters'
+            @_createInput 'Segment', 'segment'
+            @_profilesSelect()
 
   _parseUrlInput: ->
     plabel = span {},

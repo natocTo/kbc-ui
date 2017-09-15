@@ -86,18 +86,19 @@ module.exports = React.createClass
           key: component.get('id')
       , @).toArray()
 
-      div className: 'container-fluid kbc-main-content kbc-components-list',
-        React.createElement SearchRow,
-          className: 'row kbc-search-row'
-          onChange: @_handleFilterChange
-          query: @state.configurationFilter
-        if @state.installedComponentsFiltered.count()
-          rows
-        else
-          div className: 'kbc-header',
-            div className: 'kbc-title',
-              h2 null,
-                'No ' + @props.type + 's found.'
+      div className: 'container-fluid',
+        div className: 'kbc-main-content kbc-components-list',
+          React.createElement SearchRow,
+            className: 'row kbc-search-row'
+            onChange: @_handleFilterChange
+            query: @state.configurationFilter
+          if @state.installedComponentsFiltered.count()
+            rows
+          else
+            div className: 'kbc-header',
+              div className: 'kbc-title',
+                h2 null,
+                  'No ' + @props.type + 's found.'
 
     else
       React.createElement NewComponentSelection,

@@ -50,27 +50,28 @@ module.exports = React.createClass
     state
 
   render: ->
-    div className: "container-fluid kbc-main-content",
-      React.createElement FormHeader,
-        component: @state.component
-        withButtons: false
-      div className: "row",
-        div className: "col-md-6",
-          React.createElement AppUsageInfo,
-            component: @state.component
-        div className: "col-md-6",
-          React.createElement VendorInfo,
-            component: @state.component
-      if @_isDeprecated()
-        React.createElement MigrationRow,
-          componentId: @state.component.get('id')
-          replacementAppId: @state.component.getIn(['uiOptions', 'replacementApp'])
-      if (@state.component.get('longDescription'))
+    div className: "container-fluid",
+      div className: "kbc-main-content",
+        React.createElement FormHeader,
+          component: @state.component
+          withButtons: false
         div className: "row",
-          div className: "col-md-12",
-            React.createElement ComponentDescription,
+          div className: "col-md-6",
+            React.createElement AppUsageInfo,
               component: @state.component
-      @_renderConfigurations()
+          div className: "col-md-6",
+            React.createElement VendorInfo,
+              component: @state.component
+        if @_isDeprecated()
+          React.createElement MigrationRow,
+            componentId: @state.component.get('id')
+            replacementAppId: @state.component.getIn(['uiOptions', 'replacementApp'])
+        if (@state.component.get('longDescription'))
+          div className: "row",
+            div className: "col-md-12",
+              React.createElement ComponentDescription,
+                component: @state.component
+        @_renderConfigurations()
 
   _isDeprecated: ->
     return @state.component.get('flags').includes('deprecated')

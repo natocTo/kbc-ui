@@ -69,62 +69,63 @@ module.exports = React.createClass
 
   render: ->
     canEditTitle = @state.showIdentifier || !@state.table.getIn(['data', 'isExported'], true)
-    div className: 'container-fluid kbc-main-content',
-      div className: 'row kbc-header',
-        if @state.showIdentifier
+    div className: 'container-fluid',
+      div className: 'kbc-main-content',
+        div className: 'row kbc-header',
+          if @state.showIdentifier
+            p className: '',
+              strong className: 'col-xs-2', 'Identifier'
+              ' '
+              TableGdName
+                table: @state.table
+                configurationId: @state.configurationId
+                fieldName: 'identifier'
+                canEdit: !@state.table.getIn(['data', 'isExported'], true)
+                editTooltip: (if @state.table.getIn ['data', 'isExported']
+                  'Identifier cannot be changed. It is already exported to GoodData'
+                else
+                  'Edit GoodData identifier')
           p className: '',
-            strong className: 'col-xs-2', 'Identifier'
+            strong className: 'col-xs-2', 'Title'
             ' '
             TableGdName
               table: @state.table
               configurationId: @state.configurationId
-              fieldName: 'identifier'
-              canEdit: !@state.table.getIn(['data', 'isExported'], true)
-              editTooltip: (if @state.table.getIn ['data', 'isExported']
-                'Identifier cannot be changed. It is already exported to GoodData'
+              fieldName: 'title'
+              placeholder: 'Table Name'
+              canEdit: canEditTitle
+              editTooltip: (if !canEditTitle
+                'Title cannot be changed. It is already exported to GoodData'
               else
-                'Edit GoodData identifier')
-        p className: '',
-          strong className: 'col-xs-2', 'Title'
-          ' '
-          TableGdName
-            table: @state.table
-            configurationId: @state.configurationId
-            fieldName: 'title'
-            placeholder: 'Table Name'
-            canEdit: canEditTitle
-            editTooltip: (if !canEditTitle
-              'Title cannot be changed. It is already exported to GoodData'
-            else
-              'Edit title in GoodData')
-        p className: '',
-          strong
-            style: {'padding-top': '6px'}
-            className: 'col-xs-2'
-            'Project Upload'
-          ActivateTableExportButton
-            configId: @state.configurationId
-            table: @state.table
+                'Edit title in GoodData')
+          p className: '',
+            strong
+              style: {'padding-top': '6px'}
+              className: 'col-xs-2'
+              'Project Upload'
+            ActivateTableExportButton
+              configId: @state.configurationId
+              table: @state.table
 
-        div className: 'kbc-buttons',
-          EditButtons
-            isEditing: @state.isEditingColumns
-            isSaving: @state.isSavingColumns
-            isDisabled: @state.invalidColumns.count() > 0 or @_isAllColumnsIgnored()
-            onCancel: @_handleEditCancel
-            onSave: @_handleEditSave
-            onEditStart: @_handleEditStart
-            editLabel: 'Edit Columns'
+          div className: 'kbc-buttons',
+            EditButtons
+              isEditing: @state.isEditingColumns
+              isSaving: @state.isSavingColumns
+              isDisabled: @state.invalidColumns.count() > 0 or @_isAllColumnsIgnored()
+              onCancel: @_handleEditCancel
+              onSave: @_handleEditSave
+              onEditStart: @_handleEditStart
+              editLabel: 'Edit Columns'
 
-      ColumnsEditor
-        columns: @state.columns
-        invalidColumns: @state.invalidColumns
-        columnsReferences: @state.columnsReferences
-        referenceableTables: @state.referenceableTables
-        showIdentifier: @state.showIdentifier
-        isEditing: @state.isEditingColumns
-        isSaving: @state.isSavingColumns
-        onColumnChange: @_handleEditUpdate
-        configurationId: @state.configurationId
-        dataPreview: @state.dataPreview
-        isExported: @state.table.getIn(['data', 'isExported'], false)
+        ColumnsEditor
+          columns: @state.columns
+          invalidColumns: @state.invalidColumns
+          columnsReferences: @state.columnsReferences
+          referenceableTables: @state.referenceableTables
+          showIdentifier: @state.showIdentifier
+          isEditing: @state.isEditingColumns
+          isSaving: @state.isSavingColumns
+          onColumnChange: @_handleEditUpdate
+          configurationId: @state.configurationId
+          dataPreview: @state.dataPreview
+          isExported: @state.table.getIn(['data', 'isExported'], false)

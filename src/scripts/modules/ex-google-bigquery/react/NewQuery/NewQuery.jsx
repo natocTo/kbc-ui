@@ -42,18 +42,19 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container-fluid kbc-main-content">
-        <QueryEditor
-          onChange={this.state.actions.onUpdateNewQuery}
-          tables={this.state.tables}
-          showOutputTable={true}
-          configId={this.state.configId}
-          defaultOutputTable={this.state.defaultOutputTable}
-          componentId={COMPONENT_ID}
-          query={this.state.newQuery}
-          {...this.state.actions.prepareLocalState('NewQuery')}/>
-      </div>
-
+        <div className="container-fluid">
+          <div className="kbc-main-content">
+            <QueryEditor
+                onChange={this.state.actions.onUpdateNewQuery}
+                tables={this.state.tables}
+                showOutputTable={true}
+                configId={this.state.configId}
+                defaultOutputTable={this.state.defaultOutputTable}
+                componentId={COMPONENT_ID}
+                query={this.state.newQuery}
+                {...this.state.actions.prepareLocalState('NewQuery')}/>
+          </div>
+        </div>
     );
   }
 });

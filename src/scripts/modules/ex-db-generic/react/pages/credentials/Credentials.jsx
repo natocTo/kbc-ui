@@ -19,25 +19,27 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container-fluid kbc-main-content">
-        <TabbedArea defaultActiveKey="db" animation={false} id="credentialstab">
-          <TabPane eventKey="db" title="Database Credentials">
-            <CredentialsForm
-              isValidEditingCredentials={this.props.isValidEditingCredentials}
-              savedCredentials={this.props.savedCredentials}
-              credentials={this.props.credentials}
-              enabled={this.props.isEditing}
-              onChange={this.props.onChange}
-              componentId={this.props.componentId}
-              configId={this.props.configId}
-              credentialsTemplate={this.props.credentialsTemplate}
-              hasSshTunnel={this.props.hasSshTunnel}
-              actionsProvisioning={this.props.actionsProvisioning}
-            />
-          </TabPane>
-          {this.renderSSLForm()}
-        </TabbedArea>
-      </div>
+        <div className="container-fluid">
+          <div className="kbc-main-content">
+            <TabbedArea defaultActiveKey="db" animation={false} id="credentialstab">
+              <TabPane eventKey="db" title="Database Credentials">
+                <CredentialsForm
+                    isValidEditingCredentials={this.props.isValidEditingCredentials}
+                    savedCredentials={this.props.savedCredentials}
+                    credentials={this.props.credentials}
+                    enabled={this.props.isEditing}
+                    onChange={this.props.onChange}
+                    componentId={this.props.componentId}
+                    configId={this.props.configId}
+                    credentialsTemplate={this.props.credentialsTemplate}
+                    hasSshTunnel={this.props.hasSshTunnel}
+                    actionsProvisioning={this.props.actionsProvisioning}
+                />
+              </TabPane>
+              {this.renderSSLForm()}
+            </TabbedArea>
+          </div>
+        </div>
     );
   },
 
