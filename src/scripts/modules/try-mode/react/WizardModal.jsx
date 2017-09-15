@@ -14,7 +14,7 @@ export default React.createClass({
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
-    lesson: React.PropTypes.number.isRequired
+    lesson: React.PropTypes.object.isRequired
   },
 
   render: function() {

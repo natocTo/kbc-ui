@@ -19,7 +19,7 @@ module.exports = React.createClass({
 
   applyLayoutClasses() {
     document.body.classList.add('try-mode');
-    if (this.state.currentLesson !== undefined) {
+    if (typeof this.state.currentLesson !== 'undefined') {
       let wizardPosition = this.state.currentLesson.steps[this.state.wizard.step].position;
       document.body.classList.add('try-mode-lesson-on');
 
@@ -32,25 +32,24 @@ module.exports = React.createClass({
       document.body.classList.remove('try-mode-lesson-on');
     }
   },
-  resetLesson() {
-    if (!this.state.wizard.showLessonModal || this.state.wizard.lessonNumber === 0) {
-      return null;
-    }
-  },
+
   render() {
     this.applyLayoutClasses();
-    this.resetLesson();
 
-    return (
-      <WizardModal
-        step={this.state.wizard.step}
-        setStep={setStep}
-        show={this.state.wizard.showLessonModal}
-        onHide={hideWizardModalFn}
-        position="aside"
-        lesson={this.state.currentLesson}
-        backdrop={true}
-      />
-    );
+    if (this.state.wizard.lessonNumber === 0 | !this.state.wizard.showLessonModal) {
+      return null;
+    } else {
+      return (
+          <WizardModal
+              step={this.state.wizard.step}
+              setStep={setStep}
+              show={this.state.wizard.showLessonModal}
+              onHide={hideWizardModalFn}
+              position="aside"
+              lesson={this.state.currentLesson}
+              backdrop={true}
+          />
+      );
+    }
   }
 });

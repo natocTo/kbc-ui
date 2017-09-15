@@ -17,19 +17,19 @@
       margin-top: @statusBarHeight;
     }
     .kbc-main-content {
-      margin-top: @statusBarHeight + 15px;
+      margin-top: @statusBarHeight;
       min-height: 86vh;
     }
     .kbc-main-sidebar{
-      margin-top: @statusBarHeight + 15px;
+      margin-top: @statusBarHeight;
     }
-    &.modal-open:not(.try-mode-center) {
+    &.modal-open.try-mode-lesson-on:not(.try-mode-center) {
       overflow: auto !important;
       padding-right: @wizardWidthAside!important;
     }
     &.try-mode-lesson-on{
       .kbc-main-content {
-        margin-top: 50px !important;
+        margin-top: @statusBarHeight!important;
       }
       .try-desk-container{
         display: none;
@@ -307,3 +307,16 @@
     font-weight: 500;
   }
 }
+
+
+//writers/keboola.wr-db-snowflake/[id]/credentials fix
+.kbc-main .container-fluid form .row{
+  margin: 0;
+  padding: 22px;
+  border-bottom: 1px solid #e8e8ef;
+}
+
+
+
+
+
