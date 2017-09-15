@@ -8,14 +8,6 @@ export const ActionTypes = {
   TRY_WIZARD_SET_STEP: 'TRY_WIZARD_SET_STEP'
 };
 
-export const disableTryMode = () => {
-  Dispatcher.handleViewAction({
-    type: ActionTypes.DISABLE_TRY_MODE,
-    projectHasTryModeOn: 0
-  });
-  return false;
-};
-
 export const hideWizardModalFn = () => {
   Dispatcher.handleViewAction({
     type: ActionTypes.UPDATE_WIZARD_MODAL_STATE,
