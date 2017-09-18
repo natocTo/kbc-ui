@@ -56,28 +56,30 @@ export default function(componentId) {
       const isEditing = !!this.state.editingQuery;
       const editor = this.renderQueryEditor(isEditing);
       return (
-        <div className="container-fluid kbc-main-content">
-          {isEditing ? null :
-            <div className="col-md-3 kbc-main-nav">
-              <div className="kbc-container">
-                <QueryNav
-                  configurationId={this.state.configId}
-                  queries={this.state.store.queriesFiltered}
-                  filter={this.state.store.filter}
-                  setQueriesFilter={this.state.actions.setQueriesFilter}
-                  componentId={componentId}
-                />
+          <div className="container-fluid">
+            <div className="kbc-main-content">
+              {isEditing ? null :
+                  <div className="col-md-3 kbc-main-nav">
+                    <div className="kbc-container">
+                      <QueryNav
+                          configurationId={this.state.configId}
+                          queries={this.state.store.queriesFiltered}
+                          filter={this.state.store.filter}
+                          setQueriesFilter={this.state.actions.setQueriesFilter}
+                          componentId={componentId}
+                      />
 
-              </div>
+                    </div>
+                  </div>
+              }
+              {isEditing ?
+                  editor :
+                  <div className="col-md-9 kbc-main-content-with-nav">
+                    {editor}
+                  </div>
+              }
             </div>
-          }
-          {isEditing ?
-            editor :
-            <div className="col-md-9 kbc-main-content-with-nav">
-              {editor}
-            </div>
-          }
-        </div>
+          </div>
 
       );
     },

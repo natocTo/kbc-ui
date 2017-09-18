@@ -17,7 +17,7 @@ export default React.createClass({
         <span className="col-md-8">
           <h2>Transformations allow you to modify your data.</h2>
           <p>Transformations pick data from Storage, manipulate it and then store it back. They can be written in SQL (MySQL, Redshift, Snowflake), R, Python or OpenRefine.</p>
-          <p className="add-button"><NewTransformationBucketButton label="Add Transformation Bucket"/></p>
+          <p className="add-button"><NewTransformationBucketButton label="New Transformation Bucket"/></p>
           <p className="help"><small><strong>What is a transformation bucket?</strong><br />A transformation bucket is a container for related transformations. Once the bucket is created, you can start creating transformations inside it.</small></p>
         </span>
       </div>

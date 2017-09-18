@@ -62,20 +62,21 @@ module.exports = React.createClass
       when "gdrive" then destinationRow = @_renderGoogleDrive()
       when "dropbox" then destinationRow = @_renderDropbox()
 
-    div {className: 'container-fluid kbc-main-content'},
-      React.createElement SelectWriterModal,
-        isSaving: @state.isSaving
-        localState: @state.localState.get('writersModal', Map())
-        setLocalState: (key, value ) =>
-          @_updateLocalState(['writersModal'].concat(key), value)
-        onChangeWriterFn: (newTask) =>
-          params = @state.configData.get('parameters') or Map()
-          params = params.set('stageUploadTask', newTask)
-          params = params.set('uploadTasks', List())
-          @_saveConfigData(['parameters'], params).then( =>
-            @_updateLocalState(['writersModal', 'show'], false)
-          )
-      destinationRow
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        React.createElement SelectWriterModal,
+          isSaving: @state.isSaving
+          localState: @state.localState.get('writersModal', Map())
+          setLocalState: (key, value ) =>
+            @_updateLocalState(['writersModal'].concat(key), value)
+          onChangeWriterFn: (newTask) =>
+            params = @state.configData.get('parameters') or Map()
+            params = params.set('stageUploadTask', newTask)
+            params = params.set('uploadTasks', List())
+            @_saveConfigData(['parameters'], params).then( =>
+              @_updateLocalState(['writersModal', 'show'], false)
+            )
+        destinationRow
 
 
   _renderGoogleDrive: ->

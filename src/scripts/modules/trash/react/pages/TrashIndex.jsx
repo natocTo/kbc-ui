@@ -116,38 +116,40 @@ export default React.createClass({
     ];
 
     return (
-      <div className="container-fluid kbc-main-content kbc-components-list">
-        {this.renderTabs()}
-        <div className="kbc-trash-search clearfix">
-          <div className="col-md-7">
-            <SearchRow
-              className="row kbc-search-row"
-              query={this.state.filterName}
-              onChange={(query) => this.handleFilterChange(query, 'name')}
-            />
-          </div>
-          <div className="col-md-5">
-            <div className="col-md-12">
-              <div className="kbc-trash-controls">
-                <div className="kbc-trash-buttons">
-                  <TrashHeaderButtons />
-                </div>
-                <div className="kbc-trash-filter">
-                  <Select
-                    value={this.state.filterType}
-                    onChange={(selected) => {
-                      const query = selected !== null ? selected.value : '';
-                      this.handleFilterChange(query, 'type');
-                    }}
-                    options={typeFilterOptions}
-                    placeholder="All components"
-                  />
+      <div className="container-fluid">
+        <div className="kbc-main-content kbc-components-list">
+          {this.renderTabs()}
+          <div className="kbc-trash-search clearfix">
+            <div className="col-md-7">
+              <SearchRow
+                className="row kbc-search-row"
+                query={this.state.filterName}
+                onChange={(query) => this.handleFilterChange(query, 'name')}
+              />
+            </div>
+            <div className="col-md-5">
+              <div className="col-md-12">
+                <div className="kbc-trash-controls">
+                  <div className="kbc-trash-buttons">
+                    <TrashHeaderButtons />
+                  </div>
+                  <div className="kbc-trash-filter">
+                    <Select
+                      value={this.state.filterType}
+                      onChange={(selected) => {
+                        const query = selected !== null ? selected.value : '';
+                        this.handleFilterChange(query, 'type');
+                      }}
+                      options={typeFilterOptions}
+                      placeholder="All components"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          {this.renderRows()}
         </div>
-        {this.renderRows()}
       </div>
     );
   },

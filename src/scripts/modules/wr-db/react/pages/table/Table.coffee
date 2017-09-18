@@ -120,36 +120,37 @@ templateFn = (componentId) ->
     tableEditClassName = 'col-sm-12'
     if isRenderIncremental
       tableEditClassName = 'col-sm-4'
-    div className: 'container-fluid kbc-main-content',
-      @_renderFilterModal()
-      div className: 'row kbc-header',
-        @_renderTableEdit()
-        if isRenderIncremental
-          @_renderIncremetnalSetup()
-        if isRenderIncremental
-          @_renderTableFiltersRow()
+    div className: 'container-fluid',
+      div className: 'kbc-main-content',
+        @_renderFilterModal()
+        div className: 'row kbc-header',
+          @_renderTableEdit()
+          if isRenderIncremental
+            @_renderIncremetnalSetup()
+          if isRenderIncremental
+            @_renderTableFiltersRow()
 
-      ColumnsEditor
-        onToggleHideIgnored: (e) =>
-          path = ['hideIgnored', @state.tableId]
-          @_updateLocalState(path, e.target.checked)
-        dataTypes: @_getComponentDataTypes()
-        columns: @state.columns
-        renderRowFn: @_renderColumnRow
-        editingColumns: @state.editingColumns
-        isSaving: @state.isSavingColumns
-        editColumnFn: @_onEditColumn
-        columnsValidation: @state.columnsValidation
-        filterColumnsFn: @_hideIgnoredFilter
-        filterColumnFn: @_filterColumn
-        dataPreview: @state.dataPreview
-        editButtons: @_renderEditButtons()
-        setAllColumnsType: @_renderSetColumnsType()
-        onSetAllColumnsNull: (e) =>
-          value = if e.target.checked then '1' else '0'
-          @state.editingColumns.map (ec) =>
-            newColumn = ec.set 'null', value
-            @_onEditColumn(newColumn)
+        ColumnsEditor
+          onToggleHideIgnored: (e) =>
+            path = ['hideIgnored', @state.tableId]
+            @_updateLocalState(path, e.target.checked)
+          dataTypes: @_getComponentDataTypes()
+          columns: @state.columns
+          renderRowFn: @_renderColumnRow
+          editingColumns: @state.editingColumns
+          isSaving: @state.isSavingColumns
+          editColumnFn: @_onEditColumn
+          columnsValidation: @state.columnsValidation
+          filterColumnsFn: @_hideIgnoredFilter
+          filterColumnFn: @_filterColumn
+          dataPreview: @state.dataPreview
+          editButtons: @_renderEditButtons()
+          setAllColumnsType: @_renderSetColumnsType()
+          onSetAllColumnsNull: (e) =>
+            value = if e.target.checked then '1' else '0'
+            @state.editingColumns.map (ec) =>
+              newColumn = ec.set 'null', value
+              @_onEditColumn(newColumn)
 
 
   _setValidateColumn: (cname, isValid) ->

@@ -640,6 +640,7 @@ module.exports =
                     else
                       'Job'
                   ' has been scheduled'
+            sendId: "run-#{component.get('id')}"
         )
         job
 

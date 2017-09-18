@@ -9,12 +9,16 @@ ErrorPage = React.createFactory(require './../pages/ErrorPage')
 LoadingPage = React.createFactory(require './../pages/LoadingPage')
 ProjectSelect = React.createFactory(require('./project-select/ProjectSelect').default)
 PageTitle = React.createFactory(require './PageTitle')
+Wizard =  React.createFactory(require('../../modules/try-mode/react/Wizard'))
+WizardStore = require('../../modules/try-mode/stores/WizardStore').default
+DisableTryMode = require('../../modules/try-mode/stores/ActionCreators').disableTryMode
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')
 PoweredByKeboola = React.createFactory(require './PoweredByKeboola')
+classnames = require('classnames')
 
-{div} = React.DOM
+{div, a, i, p} = React.DOM
 
 require '../../../styles/app.less'
 
@@ -34,13 +38,22 @@ App = React.createClass
     xsrf: ApplicationStore.getXsrfToken()
     canCreateProject: ApplicationStore.getCanCreateProject()
     canManageApps: ApplicationStore.getKbcVars().get 'canManageApps'
+    projectHasTryModeOn: ApplicationStore.getKbcVars().get 'projectHasTryModeOn'
     homeUrl: ApplicationStore.getUrlTemplates().get 'home'
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
   render: ->
-    mainDivClassName = ''
-    if ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo')
-      mainDivClassName = 'snowflake'
-    div className: mainDivClassName,
+    div className: classnames(
+      snowflake: ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo')
+    ),
+      if @state.projectHasTryModeOn == 1
+        div className: 'try-status-bar',
+          p null,
+            'Try Mode'
+          p null,
+            ' — learn everything you need to know about Keboola Connection'
+          a href: ApplicationStore.getProjectPageUrl('settings-users'),
+            'Disable Try Mode \xa0',
+            i className: 'fa fa-times',
       PageTitle()
       Header
         homeUrl: @state.homeUrl
@@ -73,6 +86,7 @@ App = React.createClass
               LoadingPage()
             else
               RouteHandler()
-
+            if @state.projectHasTryModeOn == 1
+              Wizard()
 
 module.exports = App

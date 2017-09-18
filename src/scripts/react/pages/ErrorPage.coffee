@@ -14,11 +14,12 @@ ErrorPage = React.createClass
     error: RoutesStore.getError()
 
   render: ->
-    div className: 'container-fluid kbc-main-content',
-      Alert bsStyle: 'danger',
-        div null,
-          p null, @state.error?.getText()
-          if @state.error?.getExceptionId()
-            p null, 'Exception id: ' + @state.error?.getExceptionId()
+    div className: 'container-fluid',
+      div className: 'kbc-main-content',
+        Alert bsStyle: 'danger',
+          div null,
+            p null, @state.error?.getText()
+            if @state.error?.getExceptionId()
+              p null, 'Exception id: ' + @state.error?.getExceptionId()
 
 module.exports = ErrorPage

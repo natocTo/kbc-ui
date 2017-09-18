@@ -25,9 +25,10 @@ module.exports = React.createClass
     ExDbActionCreators.updateNewQuery @state.configId, newQuery
 
   render: ->
-    React.DOM.div className: 'container-fluid kbc-main-content',
-      QueryEditor
-        query: @state.newQuery
-        tables: @state.tables
-        onChange: @_handleQueryChange
-        configId: @state.configId
+    React.DOM.div className: 'container-fluid',
+      React.DOM.div className: 'kbc-main-content',
+        QueryEditor
+          query: @state.newQuery
+          tables: @state.tables
+          onChange: @_handleQueryChange
+          configId: @state.configId

@@ -18,36 +18,38 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container-fluid kbc-main-content">
-        <ul className="nav nav-tabs">
-          <li role="presentation">
-            <a href={this.projectPageUrl('settings-users')}>Users</a>
-          </li>
-          <li role="presentation">
-            <a href={this.projectPageUrl('settings')}>Settings</a>
-          </li>
-          <li role="presentation">
-            <Link to="settings-limits">Limits</Link>
-          </li>
-          <li role="presentation" className="active">
-            <Link to="settings-project-power">Project Power</Link>
-          </li>
-          <li role="presentation">
-            <Link to="settings-trash">Trash</Link>
-          </li>
-        </ul>
-        <div className="kbc-header">
-          <div className="row">
-            <div className="col-md-6">
-              <Graph/>
-              <ProjectPowerLimit/>
-            </div>
-            <div className="col-md-6">
-              <UsageByMonth />
+        <div className="container-fluid">
+          <div className="kbc-main-content">
+            <ul className="nav nav-tabs">
+              <li role="presentation">
+                <a href={this.projectPageUrl('settings-users')}>Users</a>
+              </li>
+              <li role="presentation">
+                <a href={this.projectPageUrl('settings')}>Settings</a>
+              </li>
+              <li role="presentation">
+                <Link to="settings-limits">Limits</Link>
+              </li>
+              <li role="presentation" className="active">
+                <Link to="settings-project-power">Project Power</Link>
+              </li>
+              <li role="presentation">
+                <Link to="settings-trash">Trash</Link>
+              </li>
+            </ul>
+            <div className="kbc-header">
+              <div className="row">
+                <div className="col-md-6">
+                  <Graph/>
+                  <ProjectPowerLimit/>
+                </div>
+                <div className="col-md-6">
+                  <UsageByMonth />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     );
   },
 

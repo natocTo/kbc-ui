@@ -29,13 +29,14 @@ module.exports = React.createClass
 
   render: ->
     if @state.isConfigLoaded and @state.config
-      div {className: 'container-fluid kbc-main-content'},
-        div {className: 'table kbc-table-border-vertical kbc-detail-table'},
-          div {className: 'tr'},
-            div {className: 'td'},
-              @_renderProfiles()
-            div {className: 'td'},
-              @_renderProjectProfiles()
+      div {className: 'container-fluid'},
+        div {className: 'kbc-main-content'},
+          div {className: 'table kbc-table-border-vertical kbc-detail-table'},
+            div {className: 'tr'},
+              div {className: 'td'},
+                @_renderProfiles()
+              div {className: 'td'},
+                @_renderProjectProfiles()
     else
       div {}, 'Loading ...'
 

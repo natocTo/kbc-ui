@@ -20,23 +20,24 @@ module.exports = React.createClass
     writer: goodDataWriterStore.getWriter configurationId
 
   render: ->
-    div className: 'container-fluid kbc-main-content',
-      div className: 'row',
-        p null,
-          'This graph represents the model defined in Keboola Connection.'
-          'To see the current model in GoodData, open the '
-          a
-            href: @_gdModelLink()
-          ,
-            'GoodData LDM Visualizer'
-        p className: 'well',
-          span className: 'label label-success',
-            'Dataset'
-          ' '
-          span className: 'label label-primary',
-            'Date Dimension'
-        React.createElement Graph,
-          configurationId: @state.configurationId
+    div className: 'container-fluid',
+      div className: 'kbc-main-content',
+        div className: 'row',
+          p null,
+            'This graph represents the model defined in Keboola Connection.'
+            'To see the current model in GoodData, open the '
+            a
+              href: @_gdModelLink()
+            ,
+              'GoodData LDM Visualizer'
+          p className: 'well',
+            span className: 'label label-success',
+              'Dataset'
+            ' '
+            span className: 'label label-primary',
+              'Date Dimension'
+          React.createElement Graph,
+            configurationId: @state.configurationId
 
 
   _gdModelLink: ->

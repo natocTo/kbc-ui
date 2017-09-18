@@ -88,25 +88,26 @@ module.exports = React.createClass
 
   render: ->
     isEditing = !!@state.localState.getIn(['editing', @state.tableId])
-    div className: 'container-fluid kbc-main-content',
-      @_renderFilterModal()
-      div className: 'row kbc-header',
-        div className: 'col-sm-2',
-          @_renderHideIngored()
-          if isEditing
-            @_renderSetColumnsType()
-          else
-            ' '
-        div className: 'col-sm-4', @_renderOutNameEditor(isEditing)
-        div className: 'col-sm-5', @_renderTableFiltersRow(isEditing)
-      React.createElement ColumnsTable,
-        table: @state.table
-        columnsTypes: @state.columnsTypes
-        dataPreview: @state.dataPreview
-        editingData: @state.localState.getIn(['editing', @state.tableId])
-        onChange: @_handleEditChange
-        isSaving: @state.isSaving
-        hideIgnored: !! @state.localState.getIn ['hideIgnored', @state.tableId]
+    div className: 'container-fluid',
+      div className: 'kbc-main-content',
+        @_renderFilterModal()
+        div className: 'row kbc-header',
+          div className: 'col-sm-2',
+            @_renderHideIngored()
+            if isEditing
+              @_renderSetColumnsType()
+            else
+              ' '
+          div className: 'col-sm-4', @_renderOutNameEditor(isEditing)
+          div className: 'col-sm-5', @_renderTableFiltersRow(isEditing)
+        React.createElement ColumnsTable,
+          table: @state.table
+          columnsTypes: @state.columnsTypes
+          dataPreview: @state.dataPreview
+          editingData: @state.localState.getIn(['editing', @state.tableId])
+          onChange: @_handleEditChange
+          isSaving: @state.isSaving
+          hideIgnored: !! @state.localState.getIn ['hideIgnored', @state.tableId]
 
   _renderTableFiltersRow: (isEditing) ->
     tlabel = 'Table data filter: '

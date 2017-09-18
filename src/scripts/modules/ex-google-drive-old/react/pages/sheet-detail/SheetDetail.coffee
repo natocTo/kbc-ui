@@ -32,58 +32,59 @@ module.exports = React.createClass
   render: ->
     #console.log @state.validation
     #console.log @state.sheet.toJS()
-    div {className: 'container-fluid kbc-main-content'},
-      form className: 'form-horizontal',
-        div className: 'row',
-          @_createInput 'Document Title', 'title', 'static'
-          @_createInput 'Sheet Title', 'sheetTitle', 'static'
-          @_createInput 'Document GoogleId', 'googleId', 'static'
-          @_createInput 'Sheet Id', 'sheetId', 'static'
-          @_createConfigInput(
-            'Output Table'
-            =>
-              @_parsedConfig()?.db?.table #readFn
-            (event, config) -> #setFn
-              if not config
-                config = {}
-              if not config.db
-                config.db = {}
-
-              config.db.table = event.target.value
-              config
-            'text'
-            'table'
-            true
-            => #readStaticFn
-              tableId = @_parsedConfig()?.db?.table
-              React.createElement SapiTableLinkEx,
-                tableId: tableId
-
-          )
-          @_createConfigInput(
-            'Header starts at row'
-            (=> @_parsedConfig()?.header?.rows) #readFn
-            (event, config) -> #setFn
-              if isFinite(event.target.value) and event.target.value != ""
-                newRows = parseInt event.target.value
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        form className: 'form-horizontal',
+          div className: 'row',
+            @_createInput 'Document Title', 'title', 'static'
+            @_createInput 'Sheet Title', 'sheetTitle', 'static'
+            @_createInput 'Document GoogleId', 'googleId', 'static'
+            @_createInput 'Sheet Id', 'sheetId', 'static'
+            @_createConfigInput(
+              'Output Table'
+              =>
+                @_parsedConfig()?.db?.table #readFn
+              (event, config) -> #setFn
                 if not config
                   config = {}
-                if not config.header
-                  config.header = {}
-                config.header.rows = newRows
-              return config
-            'number'
-            'header'
-          )
-          @_createConfigInput(
-            'Raw Config'
-            (=> @state.sheet.get 'config') #readFn
-            (event, config) ->
-              event.target.value
-            'textarea'
-            'config'
-            false
-          )
+                if not config.db
+                  config.db = {}
+
+                config.db.table = event.target.value
+                config
+              'text'
+              'table'
+              true
+              => #readStaticFn
+                tableId = @_parsedConfig()?.db?.table
+                React.createElement SapiTableLinkEx,
+                  tableId: tableId
+
+            )
+            @_createConfigInput(
+              'Header starts at row'
+              (=> @_parsedConfig()?.header?.rows) #readFn
+              (event, config) -> #setFn
+                if isFinite(event.target.value) and event.target.value != ""
+                  newRows = parseInt event.target.value
+                  if not config
+                    config = {}
+                  if not config.header
+                    config.header = {}
+                  config.header.rows = newRows
+                return config
+              'number'
+              'header'
+            )
+            @_createConfigInput(
+              'Raw Config'
+              (=> @state.sheet.get 'config') #readFn
+              (event, config) ->
+                event.target.value
+              'textarea'
+              'config'
+              false
+            )
 
 
 

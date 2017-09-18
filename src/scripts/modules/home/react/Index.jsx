@@ -10,6 +10,8 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 // import InstalledComponentsApi from '../../components/InstalledComponentsApi';
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import { showWizardModalFn } from '../../try-mode/stores/ActionCreators.js';
+import lessons from '../../try-mode/WizardLessons';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore)],
@@ -44,15 +46,63 @@ export default React.createClass({
       tokens: tokenStats,
       projectId: currentProject.get('id'),
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
-      expires: ApplicationStore.getCurrentProject().get('expires')
+      expires: ApplicationStore.getCurrentProject().get('expires'),
+      projectHasTryModeOn: ApplicationStore.getKbcVars().get('projectHasTryModeOn')
     };
+  },
+
+  openLessonModal(lessonNumber) {
+    showWizardModalFn(lessonNumber);
   },
 
   render() {
     return (
-      <div className="container-fluid kbc-main-content">
+      <div className="container-fluid">
+        {this.state.projectHasTryModeOn === 1 &&
+          <div className="try-desk-container">
+            <div className="try-desk">
+              <h2>Welcome to Keboola Connection</h2>
+              <h1>Try Mode</h1>
+              <div className="row">
+                <div className="col-xs-4">
+                  <ul>
+                    {Object.keys(lessons).map((lesson, key) => {
+                      return (
+                          <li>
+                            <a className="try-lesson-link" href="#" onClick={
+                      (e) => {
+                        e.preventDefault();
+                        this.openLessonModal(key + 1);
+                      }
+                  }>{key + 1}. Lesson - {lessons[key + 1].title}</a>
+                          </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="col-xs-5">
+                  <p>
+                    Here you can learn everything you need to know about Keboola Connection before you actually start
+                    using
+                    it.
+                    <br/>
+                    <br/>
+                    The following lessons are designed to walk you through the basic steps of creating a project.
+                    <br/>
+                    <br/>
+                    Feel free to switch Try Mode off at any time. You can always bring it back by going to <a
+                      className="try-link" href={ApplicationStore.getProjectPageUrl('settings-users')}>Settings
+                    > Try Mode.</a>
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        }
+        <div className="kbc-main-content">
         <Expiration expires={this.state.expires} />
-        <LimitsOverQuota limits={this.state.limitsOverQuota} />
+        <LimitsOverQuota limits={this.state.limitsOverQuota}/>
         <Deprecation components={this.state.installedComponents} />
         <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
           <div className="tbody">
@@ -70,6 +120,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
+      </div>
       </div>
     );
   }

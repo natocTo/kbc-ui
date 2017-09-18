@@ -36,7 +36,8 @@ module.exports = React.createClass
           profiles: @state.profiles
           validation: @state.validation
       else
-        div {className: 'container-fluid kbc-main-content'},
+        div {className: 'container-fluid'},
+        div {className: 'kbc-main-content'},
           form className: 'form-horizontal',
             div className: 'row',
               @_createStaticInput('Name', 'name')

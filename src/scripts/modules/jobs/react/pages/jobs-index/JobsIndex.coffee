@@ -27,13 +27,14 @@ module.exports = React.createClass
     ActionCreators.loadMoreJobs()
 
   render: ->
-    div {className: 'container-fluid kbc-main-content'},
-      QueryRow(onSearch: @_search, query: @state.query)
-      @_renderTable()
-      if @state.isLoadMore
-        div className: 'kbc-block-with-padding',
-          button onClick: @_loadMore, className: 'btn btn-default btn-large text-center',
-            'More..'
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        QueryRow(onSearch: @_search, query: @state.query)
+        @_renderTable()
+        if @state.isLoadMore
+          div className: 'kbc-block-with-padding',
+            button onClick: @_loadMore, className: 'btn btn-default btn-large text-center',
+              'More..'
 
   _renderTableHeader: ->
     div {className: 'thead' },

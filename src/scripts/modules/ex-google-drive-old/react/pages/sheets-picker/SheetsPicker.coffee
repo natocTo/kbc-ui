@@ -47,14 +47,15 @@ module.exports = React.createClass
   render: ->
     #console.log 'sheet picker files', @state.files.toJS()
     if @state.isConfigLoaded and @state.config
-      div {className: 'container-fluid kbc-main-content'},
-        div {className: 'table kbc-table-border-vertical kbc-detail-table'},
-          div {className: 'tr'},
-            div {className: 'td'},
-              @_renderPicker()
-              @_renderFilesPanel()
-            div {className: 'td'},
-              @_renderProjectConfigFiles()
+      div {className: 'container-fluid'},
+        div {className: 'kbc-main-content'},
+          div {className: 'table kbc-table-border-vertical kbc-detail-table'},
+            div {className: 'tr'},
+              div {className: 'td'},
+                @_renderPicker()
+                @_renderFilesPanel()
+              div {className: 'td'},
+                @_renderProjectConfigFiles()
     else
       div {}, 'Loading ...'
 

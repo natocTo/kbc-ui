@@ -16,7 +16,7 @@ module.exports =
       type - notification type, default is success
       id - notification id, used for duplicate messages filter
   ###
-  sendNotification: (notification) ->
+  sendNotification: (notification, sendId) ->
     timeout = 10000
     defaults =
       pause: false
@@ -34,6 +34,7 @@ module.exports =
     dispatcher.handleViewAction
       type: constants.ActionTypes.APPLICATION_SEND_NOTIFICATION
       notification: notification
+      sendId: sendId
 
     setTimeout @deleteNotification.bind(@, notification.id), timeout
 
