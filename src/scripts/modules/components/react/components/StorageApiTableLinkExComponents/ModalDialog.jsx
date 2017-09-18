@@ -75,7 +75,7 @@ export default React.createClass({
               onClick={this.props.reload}
             />
           </Modal.Title>
-          {this.renderPaginator()}
+          {/* this.renderPaginator() */}
         </Modal.Header>
         <Modal.Body>
           {modalBody}
@@ -108,14 +108,15 @@ export default React.createClass({
   },
 
   onKeyDown(e) {
-    const arrowRight = e.key === 'ArrowRight';
-    const arrowLeft = e.key === 'ArrowLeft';
-    if (arrowRight && this.getNextTable()) {
-      return this.props.onChangeTable(this.getNextTable());
-    }
-    if (arrowLeft && this.getPreviousTable()) {
-      return this.props.onChangeTable(this.getPreviousTable());
-    }
+    return e;
+    /* const arrowRight = e.key === 'ArrowRight';
+     * const arrowLeft = e.key === 'ArrowLeft';
+     * if (arrowRight && this.getNextTable()) {
+     *   return this.props.onChangeTable(this.getNextTable());
+     * }
+     * if (arrowLeft && this.getPreviousTable()) {
+     *   return this.props.onChangeTable(this.getPreviousTable());
+     * }*/
   },
 
   renderModalBody() {
