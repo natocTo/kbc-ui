@@ -23,6 +23,8 @@ HiddenComponents = require './modules/components/utils/hiddenComponents'
 RoutesStore = require './stores/RoutesStore'
 initializeData = require './initializeData'
 
+ErrorNotification = require('./react/common/ErrorNotification').default
+
 ###
   Bootstrap and start whole application
   appOptions:
@@ -60,9 +62,11 @@ startApp = (appOptions) ->
   # error thrown during application live not on route chage
   Promise.onPossiblyUnhandledRejection (e) ->
     error = Error.create(e)
-    notification = "#{error.getTitle()}. #{error.getText()}"
-    if error.getExceptionId()
-      notification += " Exception id: #{error.getExceptionId()}"
+
+    notification = React.createClass
+      render: ->
+        React.createElement ErrorNotification,
+          error: error
 
     ApplicationActionCreators.sendNotification
       message: notification

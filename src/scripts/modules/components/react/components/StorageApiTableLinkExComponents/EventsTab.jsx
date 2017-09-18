@@ -5,6 +5,7 @@ import string from 'underscore.string';
 import {Table} from 'react-bootstrap';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
+import EventDetail from '../../../../sapi-events/react/EventDetail';
 
 export default React.createClass({
 
@@ -14,6 +15,10 @@ export default React.createClass({
     events: PropTypes.object.isRequired,
     omitFetches: PropTypes.bool,
     omitExports: PropTypes.bool,
+    filterIOEvents: PropTypes.bool,
+    onShowEventDetail: PropTypes.func,
+    detailEventId: PropTypes.number,
+    onFilterIOEvents: PropTypes.func,
     onOmitFetchesFn: PropTypes.func,
     onOmitExportsFn: PropTypes.func
 
@@ -29,8 +34,79 @@ export default React.createClass({
         </EmptyState>
       );
     }
-    const events = this.props.events;
-    const rows = events.map( (e) => {
+    const rows = this.renderTableRows();
+    return (
+      <div>
+        <div>
+          <div className="row">
+            <div className="col-xs-3">
+              <div className="checkbox">
+                <label>
+                  <input
+                    disabled={this.props.filterIOEvents || this.props.detailEventId}
+                    checked={this.props.omitFetches}
+                    onClick={this.props.onOmitFetchesFn}
+                    type="checkbox"/>
+                  <span className={this.props.filterIOEvents ? 'text-muted' : ''}>
+                    Ignore table fetches
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div className="col-xs-3">
+              <div className="checkbox">
+                <label>
+                  <input
+                    disabled={this.props.filterIOEvents || this.props.detailEventId}
+                    checked={this.props.omitExports}
+                    onClick={this.props.onOmitExportsFn}
+                    type="checkbox"/>
+                  <span className={this.props.filterIOEvents ? 'text-muted' : ''}>
+                    Ignore table exports
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div className="col-xs-3">
+              <div className="checkbox">
+                <label>
+                  <input
+                    disabled={this.props.detailEventId}
+                    checked={this.props.filterIOEvents}
+                    onClick={this.props.onFilterIOEvents}
+                    type="checkbox"/> Import/Exports only
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        {this.props.detailEventId ? this.renderDetail()
+         :
+         <Table responsive className="table table-striped table-hover">
+           <thead className="thead">
+             <tr className="tr">
+               <th className="th">
+                 Created
+               </th>
+               <th className="th">
+                 Event
+               </th>
+               <th className="th">
+                 Creator
+               </th>
+             </tr>
+           </thead>
+           <tbody className="tbody">
+             {rows}
+           </tbody>
+         </Table>
+        }
+      </div>
+    );
+  },
+
+  renderTableRows() {
+    return this.props.events.map( (e) => {
       const event = e.get('event');
       let info = this.eventsTemplates[event];
       if (!info) {
@@ -45,16 +121,10 @@ export default React.createClass({
       info.message = string.replaceAll(info.message, this.props.tableId, '');
       const incremental = e.getIn(['params', 'incremental']) ? incElement : <span />;
       return (
-        <tr className={cl}>
-          <td className="td">
-            {e.get('id')}
-          </td>
+        <tr className={cl} onClick={() => this.setDetailEventId(e.get('id'))}>
           <td className="td">
             {date.format(e.get('created'))}
             <small> {agoTime} </small>
-          </td>
-          <td className="td">
-            {e.get('component')}
           </td>
           <td className="td">
             {info.message}
@@ -67,58 +137,32 @@ export default React.createClass({
       );
     }
     );
+  },
+
+  setDetailEventId(eventId) {
+    this.props.onShowEventDetail(eventId);
+  },
+
+  resetDetail() {
+    this.setDetailEventId(null);
+  },
+
+  renderDetail() {
+    const event = this.props.events.find(e => e.get('id') === this.props.detailEventId);
+    const backButton = (
+      <span role="button" className="kbc-sapi-table-link"
+        onClick={this.resetDetail}>
+        <i className="fa fa-chevron-left" />
+        {' '}
+        Back
+      </span>
+    );
 
     return (
       <div>
-        <div>
-          <div className="row">
-            <div className="col-xs-3">
-              <div className="checkbox">
-                <label>
-                  <input
-                      checked={this.props.omitFetches}
-                      onClick={this.props.onOmitFetchesFn}
-                      type="checkbox"/> Ignore table fetches
-                </label>
-              </div>
-            </div>
-            <div className="col-xs-3">
-              <div className="checkbox">
-                <label>
-                  <input
-                      checked={this.props.omitExports}
-                      onClick={this.props.onOmitExportsFn}
-                      type="checkbox"/> Ignore table exports
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <Table responsive className="table">
-          <thead className="thead">
-            <tr className="tr">
-              <th className="th">
-                Id
-              </th>
-              <th className="th">
-                Created
-              </th>
-              <th className="th">
-                Component
-              </th>
-              <th className="th">
-                Event
-              </th>
-              <th className="th">
-                Creator
-              </th>
-
-            </tr>
-          </thead>
-          <tbody className="tbody">
-            {rows}
-          </tbody>
-        </Table>
+        <EventDetail
+          event={event}
+          backButton={backButton} />
       </div>
     );
   },

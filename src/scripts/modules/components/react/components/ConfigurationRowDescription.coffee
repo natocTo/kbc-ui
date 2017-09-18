@@ -12,7 +12,7 @@ module.exports = React.createClass
     placeholder: React.PropTypes.string
 
   getDefaultProps: ->
-    placeholder: 'Describe configuration'
+    placeholder: 'Description'
 
   render: ->
     React.createElement ConfigurationRowEditField,

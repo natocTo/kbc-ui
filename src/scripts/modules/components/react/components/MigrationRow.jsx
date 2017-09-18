@@ -63,7 +63,7 @@ const WR_GOOGLE_DRIVE_DESCRIPTION = (
       <li>Depending on the type of files registered in your configuration, the configuration will be migrated either to new Google Drive Writer, Google Sheets Writer or both.</li>
       <li>If type of the file is 'sheet' and action is not 'create', the file will be migrated to Google Sheets Writer, otherwise to Google Drive Writer.</li>
       <li>The migration will also alter your orchestrations to use the new writers.</li>
-      <li>This component will continue to work until October 2017. Then, all your configurations will be migrated automatically.</li>
+      <li>This component will continue to work until December 2017. Then, all your configurations will be migrated automatically.</li>
       <li>The old configurations will remain intact for now. You can remove them after successful migration.</li>
     </ul>
   </p>
