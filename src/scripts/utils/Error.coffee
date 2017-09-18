@@ -45,13 +45,14 @@ createFromXhrError = (httpError) ->
 
   text = ''
   if httpError.response.body?.error && httpError.response.body.error != 'User error'
-    text += httpError.response.body.error
+    text = httpError.response.body.error
 
   if httpError.response.body?.message
-    text += httpError.response.body.message
+    title = text
+    text = httpError.response.body.message
 
   if !text
-    text = 'Application error. Please try reload the browser'
+    text = 'Application error. Please reload the browser.'
 
   error = new Error(title, text, httpError, httpError.response.body?.exceptionId)
 
