@@ -54,64 +54,66 @@ OrchestrationDetail = React.createClass
   render: ->
     div {className: 'container-fluid'},
       div {className: 'kbc-main-content'},
-        div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
-          div {className: 'kbc-container'},
-            SearchRow(onChange: @_handleFilterChange, query: @state.filter)
-            OrchestrationsNav
-              orchestrations: @state.filteredOrchestrations
-              activeOrchestrationId: @state.orchestration.get 'id'
-        div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
-          div className: 'table kbc-table-border-vertical kbc-detail-table',
-            div className: 'tr',
-              div className: 'td',
-                div className: 'row',
-                  span className: 'col-md-3', 'Schedule '
-                  strong className: 'col-md-9',
-                    CronRecord crontabRecord: @state.orchestration.get('crontabRecord')
-                    br null
-                    ScheduleModal
-                      crontabRecord: @state.orchestration.get 'crontabRecord'
-                      orchestrationId: @state.orchestration.get 'id'
-  
-                div className: 'row',
-                  span className: 'col-md-3', 'Assigned Token'
-                  strong className: 'col-md-9', @state.orchestration.getIn ['token', 'description']
-              div className: 'td',
-                div className: 'row',
-                  span className: 'col-md-3', 'Notifications '
-                  strong className: 'col-md-9',
-                    if @state.orchestration.get('notifications').count()
-                      span className: 'badge',
-                        @state.orchestration.get('notifications').count()
-                    else
-                      span null,
-                        'No notifications set yet'
-                    br null
-                    Link
-                      to: 'orchestrationNotifications'
-                      params:
+        div {className: 'row kbc-row-orchestration-detail'},
+          div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
+            div {className: 'kbc-container'},
+              SearchRow(onChange: @_handleFilterChange, query: @state.filter)
+              OrchestrationsNav
+                orchestrations: @state.filteredOrchestrations
+                activeOrchestrationId: @state.orchestration.get 'id'
+          div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
+            div className: 'table kbc-table-border-vertical kbc-detail-table',
+              div className: 'tr',
+                div className: 'td',
+                  div className: 'row',
+                    span className: 'col-md-3', 'Schedule '
+                    strong className: 'col-md-9',
+                      CronRecord crontabRecord: @state.orchestration.get('crontabRecord')
+                      br null
+                      ScheduleModal
+                        crontabRecord: @state.orchestration.get 'crontabRecord'
+                        orchestrationId: @state.orchestration.get 'id'
+
+                  div className: 'row',
+                    span className: 'col-md-3', 'Assigned Token'
+                    strong className: 'col-md-9', @state.orchestration.getIn ['token', 'description']
+                div className: 'td',
+                  div className: 'row',
+                    span className: 'col-md-3', 'Notifications '
+                    strong className: 'col-md-9',
+                      if @state.orchestration.get('notifications').count()
+                        span className: 'badge',
+                          @state.orchestration.get('notifications').count()
+                      else
+                        span null,
+                          'No notifications set yet'
+                      br null
+                      Link
+                        to: 'orchestrationNotifications'
+                        params:
+                          orchestrationId: @state.orchestration.get('id')
+                      ,
+                        ' '
+                        span className: 'fa fa-edit'
+                        ' Configure Notifications'
+                  div className: 'row',
+                    span className: 'col-md-3', 'Tasks '
+                    strong className: 'col-md-9',
+                      TasksSummary tasks: @state.tasks
+                      br null
+                      Link to: 'orchestrationTasks', params:
                         orchestrationId: @state.orchestration.get('id')
-                    ,
-                      ' '
-                      span className: 'fa fa-edit'
-                      ' Configure Notifications'
-                div className: 'row',
-                  span className: 'col-md-3', 'Tasks '
-                  strong className: 'col-md-9',
-                    TasksSummary tasks: @state.tasks
-                    br null
-                    Link to: 'orchestrationTasks', params:
-                      orchestrationId: @state.orchestration.get('id')
-                    ,
-                      ' '
-                      span className: 'fa fa-edit'
-                      ' Configure Tasks'
-          (JobsGraph(jobs: @state.graphJobs) if @state.graphJobs.size >= 2)
-          JobsTable(
-            jobs: @state.jobs
-            jobsLoading: @state.jobsLoading
-            onJobsReload: @_handleJobsReload
-          )
+                      ,
+                        ' '
+                        span className: 'fa fa-edit'
+                        ' Configure Tasks'
+            (JobsGraph(jobs: @state.graphJobs) if @state.graphJobs.size >= 2)
+            JobsTable(
+              jobs: @state.jobs
+              jobsLoading: @state.jobsLoading
+              onJobsReload: @_handleJobsReload
+            )
+
 
 
 module.exports = OrchestrationDetail
