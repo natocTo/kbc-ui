@@ -101,15 +101,16 @@ module.exports = React.createClass
                   'No ' + @props.type + 's found.'
 
     else
-      React.createElement NewComponentSelection,
-        className: 'container-fluid kbc-main-content'
-        components: @state.components
-        componentFilter: @state.componentFilter
-        componentType: @props.type
-      ,
-        div className: 'row',
-          React.DOM.h2 null, TEXTS['noComponents'][@props.type]
-          React.DOM.p null, TEXTS['installFirst'][@props.type]
+      div className: 'container-fluid',
+        React.createElement NewComponentSelection,
+          className: 'kbc-main-content'
+          components: @state.components
+          componentFilter: @state.componentFilter
+          componentType: @props.type
+        ,
+          div className: 'row',
+            React.DOM.h2 null, TEXTS['noComponents'][@props.type]
+            React.DOM.p null, TEXTS['installFirst'][@props.type]
 
   _handleFilterChange: (query) ->
     InstalledComponentsActionCreators.setInstalledComponentsConfigurationFilter(@props.type, query)
