@@ -24,14 +24,16 @@ export default React.createClass({
     }
 
     return (
-      <div className="row kbc-header kbc-expiration">
-        <div className="alert alert-warning">
-          <h3>
-            This project will expire in {this.days()}
-          </h3>
-          <p>Please <a onClick={contactSupport}>contact support</a> for project plan upgrade.</p>
+        <div className="kbc-overview-component">
+          <div className="row kbc-header kbc-expiration">
+            <div className="alert alert-warning">
+              <h3>
+                This project will expire in {this.days()}
+              </h3>
+              <p>Please <a onClick={contactSupport}>contact support</a> for project plan upgrade.</p>
+            </div>
+          </div>
         </div>
-      </div>
     );
   },
 
