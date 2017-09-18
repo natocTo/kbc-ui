@@ -1,5 +1,5 @@
 import React from 'react';
-import Immutable, {Map} from 'immutable';
+import Immutable, {List, Map} from 'immutable';
 import _ from 'underscore';
 import Promise from 'bluebird';
 import moment from 'moment';
@@ -18,6 +18,8 @@ import Tooltip from '../../../../react/common/Tooltip';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import EventsService from '../../../sapi-events/EventService';
 
+const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
+
 export default React.createClass({
 
   mixins: [createStoreMixin(tablesStore)],
@@ -25,11 +27,18 @@ export default React.createClass({
   propTypes: {
     tableId: React.PropTypes.string.isRequired,
     linkLabel: React.PropTypes.string,
+    moreTables: React.PropTypes.object,
     children: React.PropTypes.any
   },
 
+  getDefaultProps() {
+    return {
+      moreTables: List()
+    };
+  },
+
   getStateFromStores() {
-    return this.prepareStateFromProps(this.props);
+    return this.prepareStateFromProps({tableId: this.getTableId()});
   },
 
   componentWillReceiveProps(nextProps) {
@@ -41,15 +50,41 @@ export default React.createClass({
     const tables = tablesStore.getAll() || Map();
     const table = tables.get(props.tableId, Map());
     return {
+      tableId: props.tableId,
       table: table,
       isLoading: isLoading
     };
   },
 
+  changeTable(newTableId, dontLoadAll) {
+    let newState = _.clone(this.prepareStateFromProps({tableId: newTableId}));
+    const initDataState = {
+      detailEventId: null,
+      isCallingRunAnalysis: false,
+      profilerData: Map(),
+      loadingPreview: false,
+      loadingProfilerData: false,
+      dataPreview: Immutable.List(),
+      dataPreviewError: null,
+      events: Immutable.List()
+    };
+    newState = _.extend(newState, initDataState);
+    this.setState(newState, () => {
+      if (!dontLoadAll) {
+        this.resetTableEvents();
+        this.loadAll();
+      }
+    });
+  },
+
+  getTableId() {
+    return this.state ? this.state.tableId : this.props.tableId;
+  },
+
   getInitialState() {
-    const omitFetches = true, omitExports = false;
+    const omitFetches = true, omitExports = false, filterIOEvents = false;
     const es = EventsService.factory({limit: 10});
-    const eventQuery = this.prepareEventQuery(omitFetches, omitExports);
+    const eventQuery = this.prepareEventQuery({omitFetches, omitExports, filterIOEvents});
     es.setQuery(eventQuery);
 
     return ({
@@ -62,7 +97,9 @@ export default React.createClass({
       loadingProfilerData: false,
       omitFetches: omitFetches,
       omitExports: omitExports,
+      filterIOEvents: filterIOEvents,
       isCallingRunAnalysis: false,
+      detailEventId: null,
       profilerData: Map()
     });
   },
@@ -104,7 +141,7 @@ export default React.createClass({
       return;
     }
     this.setState({loadingProfilerData: true});
-    const tableId = this.props.tableId;
+    const tableId = this.getTableId();
     const component = this;
     fetchProfilerData(tableId).then( (result) =>{
       component.setState({
@@ -129,13 +166,13 @@ export default React.createClass({
   renderLink() {
     return (
       <Tooltip key="tooltip"
-                 tooltip={this.renderTooltip()}
-                 placement="top">
-           <span key="buttonlink" className="kbc-sapi-table-link"
-                 onClick={this.onShow}>
-                 {this.props.children || this.props.linkLabel || this.props.tableId}
-           </span>
-       </Tooltip>
+        tooltip={this.renderTooltip()}
+        placement="top">
+        <span key="buttonlink" className="kbc-sapi-table-link"
+          onClick={this.onShow}>
+          {this.props.children || this.props.linkLabel || this.props.tableId}
+        </span>
+      </Tooltip>
     );
   },
 
@@ -169,32 +206,38 @@ export default React.createClass({
   renderModal() {
     return (
       <TableLinkModalDialog
-         show={this.state.show}
-         tableId={this.props.tableId}
-         reload={this.reload}
-         tableExists={this.tableExists()}
-         omitFetches={this.state.omitFetches}
-         omitExports={this.state.omitExports}
-         onHideFn={this.onHide}
-         isLoading={this.isLoading()}
-         table={this.state.table}
-         dataPreview={this.state.dataPreview}
-         dataPreviewError={this.state.dataPreviewError}
-         onOmitExportsFn={this.onOmitExports}
-         onOmitFetchesFn={this.onOmitFetches}
-         events={this.state.events}
-         enhancedAnalysis={this.state.profilerData}
-         onRunAnalysis={this.onRunEnhancedAnalysis}
-         isCallingRunAnalysis={this.state.isCallingRunAnalysis}
-         loadingProfilerData={this.state.loadingProfilerData}
-         isRedshift={this.isRedshift()}
+        moreTables={this.props.moreTables.toArray()}
+        show={this.state.show}
+        tableId={this.getTableId()}
+        reload={this.reload}
+        tableExists={this.tableExists()}
+        omitFetches={this.state.omitFetches}
+        omitExports={this.state.omitExports}
+        onHideFn={this.onHide}
+        isLoading={this.isLoading()}
+        table={this.state.table}
+        dataPreview={this.state.dataPreview}
+        dataPreviewError={this.state.dataPreviewError}
+        onOmitExportsFn={this.onOmitExports}
+        onOmitFetchesFn={this.onOmitFetches}
+        events={this.state.events}
+        enhancedAnalysis={this.state.profilerData}
+        onRunAnalysis={this.onRunEnhancedAnalysis}
+        isCallingRunAnalysis={this.state.isCallingRunAnalysis}
+        loadingProfilerData={this.state.loadingProfilerData}
+        isRedshift={this.isRedshift()}
+        onChangeTable={this.changeTable}
+        filterIOEvents={this.state.filterIOEvents}
+        onFilterIOEvents={this.onFilterIOEvents}
+        onShowEventDetail={(eventId) => this.setState({detailEventId: eventId})}
+        detailEventId={this.state.detailEventId}
       />
     );
   },
 
   onRunEnhancedAnalysis() {
     this.setState({isCallingRunAnalysis: true});
-    startDataProfilerJob(this.props.tableId)
+    startDataProfilerJob(this.getTableId())
       .then( () => {
         this.findEnhancedJob().then(() => this.setState({isCallingRunAnalysis: false}));
       })
@@ -203,26 +246,49 @@ export default React.createClass({
 
   onOmitExports(e) {
     const checked = e.target.checked;
-    this.setState({omitExports: checked});
-    const q = this.prepareEventQuery(this.state.omitFetches, checked);
-    this.state.eventService.setQuery(q);
-    this.state.eventService.load();
+    this.setState({omitExports: checked}, () => {
+      const q = this.prepareEventQuery();
+      this.state.eventService.setQuery(q);
+      this.state.eventService.load();
+    });
   },
 
   onOmitFetches(e) {
     const checked = e.target.checked;
-    this.setState({omitFetches: checked});
-    const q = this.prepareEventQuery(checked, this.state.omitExports);
-    this.state.eventService.setQuery(q);
-    this.state.eventService.load();
+    this.setState({omitFetches: checked}, () => {
+      const q = this.prepareEventQuery();
+      this.state.eventService.setQuery(q);
+      this.state.eventService.load();
+    });
   },
 
-  prepareEventQuery(omitFetches, omitExports) {
-    const defs = [omitFetches, omitExports];
-    const omitsQuery = _.filter(['tableDetail', 'tableExported'], (val, idx) => defs[idx]
-    ).map((ev) => `NOT event:storage.${ev}`);
-    const objectIdQuery = `objectId:${this.props.tableId}`;
-    return _.isEmpty(omitsQuery) ? objectIdQuery : `(${omitsQuery.join(' OR ')} AND ${objectIdQuery})`;
+  onFilterIOEvents(e) {
+    const checked = e.target.checked;
+    this.setState({filterIOEvents: checked}, () => {
+      const q = this.prepareEventQuery();
+      this.state.eventService.setQuery(q);
+      this.state.eventService.load();
+    });
+  },
+
+  resetTableEvents() {
+    const q = this.prepareEventQuery();
+    this.stopEventService();
+    this.state.eventService.reset();
+    this.state.eventService.setQuery(q);
+  },
+
+  prepareEventQuery(initState) {
+    const state = initState || this.state;
+    const {omitExports, omitFetches, filterIOEvents} = state;
+    const omitFetchesEvent = omitFetches ? ['tableDataPreview', 'tableDetail'] : [];
+    const omitExportsEvent = omitExports ? ['tableExported'] : [];
+    let omitsQuery = omitFetchesEvent.concat(omitExportsEvent).map((ev) => `NOT event:storage.${ev}`);
+    if (filterIOEvents) {
+      omitsQuery =  IMPORT_EXPORT_EVENTS.map((ev) => `event:storage.${ev}`);
+    }
+    const objectIdQuery = `objectId:${this.getTableId()}`;
+    return _.isEmpty(omitsQuery) ? objectIdQuery : `((${omitsQuery.join(' OR ')}) AND ${objectIdQuery})`;
   },
 
   isLoading() {
@@ -231,6 +297,7 @@ export default React.createClass({
 
   onHide() {
     this.setState({show: false});
+    this.changeTable(this.props.tableId, true);
     this.stopPollingDataProfilerJob();
     this.stopEventService();
   },
@@ -286,29 +353,29 @@ export default React.createClass({
     });
     const component = this;
     return storageApi
-    .tableDataPreview(this.props.tableId, {limit: 10})
-    .then( (csv) => {
-      component.setState({
-        loadingPreview: false,
-        dataPreview: Immutable.fromJS(csv)
-      });
-    })
-    .catch((error) => {
-      let dataPreviewError = null;
-      if (error.response && error.response.body) {
-        if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
-          dataPreviewError = 'Data sample cannot be displayed. Too many columns.';
+      .tableDataPreview(this.getTableId(), {limit: 10})
+      .then( (csv) => {
+        component.setState({
+          loadingPreview: false,
+          dataPreview: Immutable.fromJS(csv)
+        });
+      })
+      .catch((error) => {
+        let dataPreviewError = null;
+        if (error.response && error.response.body) {
+          if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
+            dataPreviewError = 'Data sample cannot be displayed. Too many columns.';
+          } else {
+            dataPreviewError = error.response.body.message;
+          }
         } else {
-          dataPreviewError = error.response.body.message;
+          throw new Error(JSON.stringify(error));
         }
-      } else {
-        throw new Error(JSON.stringify(error));
-      }
-      component.setState({
-        loadingPreview: false,
-        dataPreviewError: dataPreviewError
+        component.setState({
+          loadingPreview: false,
+          dataPreviewError: dataPreviewError
+        });
       });
-    });
   },
 
   tableExists() {

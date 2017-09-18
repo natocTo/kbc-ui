@@ -19,12 +19,17 @@ module.exports = React.createClass
   mixins: [PureRendererMixin]
   props:
     event: React.PropTypes.object.isRequired
-    link: React.PropTypes.object.isRequired
+    link: React.PropTypes.object
+    backButton: React.PropTypes.object
+
   render: ->
     div null,
-      React.createElement Link, @props.link,
-        span className: 'fa fa-chevron-left', null
-        ' Back'
+      if @props.backButton
+        @props.backButton
+      else
+        React.createElement Link, @props.link,
+          span className: 'fa fa-chevron-left', null
+          ' Back'
       h2 null,
         "Event #{@props.event.get('id')}"
       div className: "#{@_eventClass()}",
