@@ -49,45 +49,46 @@ module.exports = React.createClass
     if @props.renderToForm
       return @_renderToForm()
 
-    div {className: 'container-fluid kbc-main-content'},
-      TabbedArea defaultActiveKey: @state.defaultActiveKey, animation: false,
-        if not @props.isExtLinkOnly
-          TabPane eventKey: 'instant', title: 'Instant Authorization',
-            form {className: 'form-horizontal', action: @_getOAuthUrl(), method: 'POST'},
-              div  className: 'row',
-                div className: 'well',
-                  @props.caption
-                @_createHiddenInput('token', @state.token)
-                @_createHiddenInput('account', @state.configId) if not @props.noConfig
-                @_createHiddenInput('referrer', @_getReferrer())
-                @_createHiddenInput('external', '1') if @props.noConfig
-                Button
-                  className: 'btn btn-primary'
-                  type: 'submit',
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        TabbedArea defaultActiveKey: @state.defaultActiveKey, animation: false,
+          if not @props.isExtLinkOnly
+            TabPane eventKey: 'instant', title: 'Instant Authorization',
+              form {className: 'form-horizontal', action: @_getOAuthUrl(), method: 'POST'},
+                div  className: 'row',
+                  div className: 'well',
                     @props.caption
-        if not @props.isInstantOnly
-          TabPane eventKey: 'external', title: 'External Authorization',
-            form {className: 'form-horizontal'},
-              div className: 'row',
-                div className: 'well',
-                  'Generated external link allows to authorize the Google account \
-                   without having an access to the KBC. The link is temporary valid and \
-                   expires 48 hours after the generation.'
-                @_renderExtLink() if @props.extLink
-              div className: 'row',
-                div className: 'kbc-buttons',
+                  @_createHiddenInput('token', @state.token)
+                  @_createHiddenInput('account', @state.configId) if not @props.noConfig
+                  @_createHiddenInput('referrer', @_getReferrer())
+                  @_createHiddenInput('external', '1') if @props.noConfig
                   Button
                     className: 'btn btn-primary'
-                    onClick: @_generateExternalLink
-                    disabled: @props.isGeneratingExtLink
-                    type: 'button',
-                      if @props.extLink
-                        'Regenerate External Link'
-                      else
-                        'Generate External Link'
-                  span null,
-                    ' '
-                    Loader() if @props.isGeneratingExtLink
+                    type: 'submit',
+                      @props.caption
+          if not @props.isInstantOnly
+            TabPane eventKey: 'external', title: 'External Authorization',
+              form {className: 'form-horizontal'},
+                div className: 'row',
+                  div className: 'well',
+                    'Generated external link allows to authorize the Google account \
+                     without having an access to the KBC. The link is temporary valid and \
+                     expires 48 hours after the generation.'
+                  @_renderExtLink() if @props.extLink
+                div className: 'row',
+                  div className: 'kbc-buttons',
+                    Button
+                      className: 'btn btn-primary'
+                      onClick: @_generateExternalLink
+                      disabled: @props.isGeneratingExtLink
+                      type: 'button',
+                        if @props.extLink
+                          'Regenerate External Link'
+                        else
+                          'Generate External Link'
+                    span null,
+                      ' '
+                      Loader() if @props.isGeneratingExtLink
 
 
 

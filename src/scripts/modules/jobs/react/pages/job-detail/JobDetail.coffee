@@ -92,12 +92,13 @@ module.exports = React.createClass
 
   render: ->
     job = @state.job
-    div {className: 'container-fluid kbc-main-content'},
-      @_renderGeneralInfoRow(job)
-      @_renderRunInfoRow(job)
-      @_renderErrorResultRow(job) if job.get('status') == 'error'
-      @_renderAccordion(job)
-      @_renderLogRow(job)
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        @_renderGeneralInfoRow(job)
+        @_renderRunInfoRow(job)
+        @_renderErrorResultRow(job) if job.get('status') == 'error'
+        @_renderAccordion(job)
+        @_renderLogRow(job)
 
   _renderErrorDetails: (job) ->
     exceptionId = job.getIn ['result', 'exceptionId']

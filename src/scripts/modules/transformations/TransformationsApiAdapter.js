@@ -44,9 +44,14 @@ var transformationsApi = {
 
   createTransformation: function(bucketId, data, changeDescription) {
     var form = {
-      name: data.name,
-      configuration: JSON.stringify(data)
+      name: data.name
     };
+    delete data.name;
+    if (data.description) {
+      form.description = data.description;
+      delete data.description;
+    }
+    form.configuration = JSON.stringify(data);
     return InstalledComponentsApi.createConfigurationRow('transformation', bucketId, form, changeDescription).then(function(response) {
       return parseTransformation(response);
     });

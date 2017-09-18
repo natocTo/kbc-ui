@@ -43,7 +43,7 @@ export default React.createClass({
           <div className="row kbc-header">
             <div className="kbc-title">
               <span className="kb-sapi-component-icon pull-left">
-                <img src="https://d3iz2gfan5zufq.cloudfront.net/images/cloud-services/cloudsearch32-1.png" />
+                <img src="https://assets-cdn.keboola.com/developer-portal/icons/keboola.ex-s3/32/20.png" />
               </span>
               <h2>AWS S3</h2>
               <p>Cloud storage for the Internet</p>

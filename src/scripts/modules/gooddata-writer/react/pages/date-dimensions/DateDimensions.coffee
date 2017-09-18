@@ -36,15 +36,17 @@ module.exports = React.createClass
     actionCreators.updateNewDateDimension(@state.configurationId, newDimension)
 
   render: ->
-    div className: 'container-fluid kbc-main-content',
-      div className: 'kbc-main-content-with-sidebar col-sm-8',
-        React.createElement DateDimensionsTable,
-          pid: @state.pid
-          dimensions: @state.dimensions
-          configurationId: @state.configurationId
-      div className: 'col-sm-4',
-        React.createElement NewDimensionForm,
-          isPending: @state.isCreatingNewDimension
-          dimension: @state.newDimension
-          onChange: @_handleNewDimensionUpdate
-          onSubmit: @_handleNewDimensionSave
+    div className: 'container-fluid',
+      div className: 'kbc-main-content',
+        div className: 'kbc-main-content-with-sidebar col-sm-8',
+          React.createElement DateDimensionsTable,
+            pid: @state.pid
+            dimensions: @state.dimensions
+            configurationId: @state.configurationId
+        div className: 'col-sm-4',
+          React.createElement NewDimensionForm,
+            isPending: @state.isCreatingNewDimension
+            dimension: @state.newDimension
+            onChange: @_handleNewDimensionUpdate
+            onSubmit: @_handleNewDimensionSave
+  

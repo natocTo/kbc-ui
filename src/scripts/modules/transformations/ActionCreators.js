@@ -1,8 +1,5 @@
 import dispatcher from '../../Dispatcher';
 import constants from './Constants';
-import React from 'react';
-import {Link} from 'react-router';
-import ConfigurationCopiedNotification from '../components/react/components/ConfigurationCopiedNotification';
 import transformationsApi from './TransformationsApiAdapter';
 import installedComponentsApi from '../components/InstalledComponentsApi';
 import TransformationBucketsStore from './stores/TransformationBucketsStore';
@@ -17,6 +14,10 @@ import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import StringUtils from '../../utils/string';
 import {debounce} from 'lodash';
 import {List} from 'immutable';
+import restoreTransformationBucketNotification
+  from './react/components/notifications/restoreTransformationBucketNotification';
+import deleteTransformationBucketNotification
+  from './react/components/notifications/deleteTransformationBucketNotification';
 
 const updateTransformationEditingFieldQueriesStringDebouncer = debounce(function(bucketId, transformationId, queriesString) {
   dispatcher.handleViewAction({
@@ -103,23 +104,7 @@ module.exports = {
       });
       InstalledComponentsActionCreators.loadComponentConfigsData('transformation');
       return ApplicationActionCreators.sendNotification({
-        message: React.createClass({
-          propTypes: {
-            onClick: React.PropTypes.func.isRequired
-          },
-          revertConfigRemove: function() {
-            actions.restoreTransformationBucket(bucket);
-            return this.props.onClick();
-          },
-          render: function() {
-            return React.DOM.span(null, 'Bucket ' + (bucket.get('name')) + ' was moved to ', React.createElement(Link, {
-              to: 'settings-trash',
-              onClick: this.props.onClick
-            }, 'Trash'), '. ', React.DOM.a({
-              onClick: this.revertConfigRemove
-            }, 'Revert'));
-          }
-        })
+        message: deleteTransformationBucketNotification(bucket, actions.restoreTransformationBucket)
       });
     }).catch(function(e) {
       dispatcher.handleViewAction({
@@ -147,22 +132,9 @@ module.exports = {
         type: constants.ActionTypes.DELETED_TRANSFORMATION_BUCKET_RESTORE_SUCCESS,
         bucketId: bucketId
       });
-      return InstalledComponentsActionCreators.loadComponentsForce().then(function() {
+      return InstalledComponentsActionCreators.loadComponentConfigsData('transformation').then(function() {
         return ApplicationActionCreators.sendNotification({
-          message: React.createClass({
-            propTypes: {
-              onClick: React.PropTypes.func.isRequired
-            },
-            render: function() {
-              return React.createElement(ConfigurationCopiedNotification, {
-                message: 'Bucket ' + (bucket.get('name')) + ' was ',
-                linkLabel: 'restored',
-                componentId: 'transformation',
-                configId: bucketId,
-                onClick: this.props.onClick
-              });
-            }
-          })
+          message: restoreTransformationBucketNotification(bucketId, bucket.get('name'))
         });
       });
     }).catch(function(e) {

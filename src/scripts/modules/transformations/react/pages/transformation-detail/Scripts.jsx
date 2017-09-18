@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import Edit from './ScriptsEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
-import {OverlayTrigger, Popover} from 'react-bootstrap';
 
 /* global require */
 require('codemirror/mode/r/r');
@@ -27,9 +26,6 @@ export default React.createClass({
         <h2 style={{lineHeight: '32px'}}>
           Scripts
           <small>
-            <OverlayTrigger trigger="click" rootClose placement="top" overlay={this.hint()}>
-              <i className="fa fa-fw fa-question-circle"/>
-            </OverlayTrigger>
             <Clipboard text={this.props.scripts}/>
           </small>
           {this.renderButtons()}
@@ -57,50 +53,10 @@ export default React.createClass({
     return (
       <Edit
         script={this.props.scripts}
-        transformationType={this.props.transformation.get('type')}
+        backend={this.props.transformation.get('type')}
         disabled={this.props.isSaving}
         onChange={this.props.onEditChange}
         />
     );
-  },
-
-  hint() {
-    switch (this.props.transformation.get('type')) {
-      case 'r':
-        return (
-          <Popover title="R" className="popover-wide" id="r-help">
-            <ul>
-              <li>Read on <a href="https://help.keboola.com/manipulation/transformations/r/">R limitations and best practices</a></li>
-              <li>All source tables are stored in <code>/data/in/tables</code>
-                (relative path <code>in/tables</code> , save all tables for output mapping to
-                <code>/data/out/tables</code> (relative path <code>out/tables</code>)
-              </li>
-            </ul>
-          </Popover>
-        );
-      case 'python':
-        return (
-          <Popover title="Python" className="popover-wide" id="python-help">
-            <ul>
-              <li>Read on <a href="https://help.keboola.com/manipulation/transformations/python/">Python limitations and best practices</a></li>
-              <li>All source tables are stored in <code>/data/in/tables</code>
-                (relative path <code>in/tables</code> , save all tables for output mapping to
-                <code>/data/out/tables</code> (relative path <code>out/tables</code>)
-              </li>
-            </ul>
-          </Popover>
-        );
-      case 'openrefine':
-        return (
-          <Popover title="OpenRefine" className="popover-wide" id="openrefine-help">
-            <ul>
-              <li>Read on <a href="https://help.keboola.com/manipulation/transformations/openrefine/">OpenRefine limitations and best practices</a></li>
-            </ul>
-          </Popover>
-        );
-      default:
-        return null;
-    }
   }
-
 });

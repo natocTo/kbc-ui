@@ -1,0 +1,322 @@
+/* ========== */
+/*  TRY MODE  */
+/* ========== */
+
+.try {
+  @TryColor1: #0099CE;
+  @TryColor2: #25B8EB;
+  @wizardWidth: 900px;
+  @wizardWidthAside: 320px;
+  @wizardHeight: 400px;
+  @statusBarHeight: 50px;
+  @verticalPadding: 8px;
+
+  &-mode {
+    .kbc-sidebar,
+    .kbc-navbar{
+      margin-top: @statusBarHeight;
+    }
+    .kbc-main-content {
+      margin-top: @statusBarHeight;
+      min-height: 86vh;
+    }
+    .kbc-main-sidebar{
+      margin-top: @statusBarHeight;
+    }
+    &.modal-open.try-mode-lesson-on:not(.try-mode-center) {
+      overflow: auto !important;
+      padding-right: @wizardWidthAside!important;
+    }
+    &.try-mode-lesson-on{
+      .kbc-main-content {
+        margin-top: @statusBarHeight!important;
+      }
+      .try-desk-container{
+        display: none;
+      }
+    }
+  }
+
+  &-desk {
+    background-image: url('../media/keboola-desk.svg');
+    background-color: @TryColor1;
+    background-position: right -30px top -20px;
+    background-repeat: no-repeat;
+    padding: 40px 50px;
+    color: #fff;
+    min-height: 410px;
+    border-radius: 5px;
+
+    &-container {
+      min-height: 0 !important;
+      margin-top: @statusBarHeight!important;
+
+      + .kbc-main-content{
+        margin-top: 17px;
+      }
+    }
+    p {
+      font-size: 14px;
+      padding-top: 16px;
+      line-height: 1.5;
+    }
+
+
+    a{
+      padding: 4px 8px;
+      transition: 0.03s all linear;
+      text-decoration: underline;
+
+      &:focus,
+      &:active{
+        color: #fff;
+        outline:none;
+      }
+      &:hover{
+        background: #50c4ee;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+    }
+    h1 {
+      font-size: 36px;
+      line-height: 40px;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 500;
+      margin-top: 0px;
+    }
+    h2 {
+      font-size: 36px;
+      line-height: 40px;
+      max-width: 80%;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 300;
+      margin-bottom: 0px;
+    }
+    ul {
+      list-style: none;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      padding-right: 0px;
+      padding-left: 8px;
+    }
+    li {
+      line-height: 1.5;
+    }
+    strong {
+      font-weight: bold;
+    }
+  }
+
+  &-status-bar {
+    z-index: 1001;
+    background-image: url('../media/keboola-top-blue-bar.svg');
+    background-color: @TryColor1;
+    background-position: -5px  -32px;
+    background-repeat: no-repeat;
+
+    position: fixed;
+    top: 0;
+    color: #fff;
+    display: block;
+    width: 100%;
+    height: @statusBarHeight;
+    padding: 12px 8px;
+    p {
+      float: left;
+      font-size: 19px;
+      line-height: 23px;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+      font-weight: 300;
+      &:first-of-type{
+        font-weight: 500;
+        margin-left: 110px;
+
+      }
+    }
+    a {
+      float: right;
+      color: #fff;
+      line-height: 23px;
+      &:hover {
+        text-decoration: underline;
+        color: #fff;
+      }
+    }
+    strong{
+      font-weight: 400;
+    }
+  }
+
+  &-wizard {
+    &.modal {
+      h3{
+        font-size: 16px;
+        font-family: "Gotham Rounded A", "Gotham Rounded B";
+        color: #7C8498;
+      }
+
+      .modal-content {
+        border: 0;
+      }
+      .modal-header {
+        padding: 40px 37px 20px;
+        color: @TryColor2;
+        border-bottom: 0;
+        font-family: "Gotham Rounded A", "Gotham Rounded B";
+        h1 {
+          font-size: 36px;
+          font-weight: 500;
+          margin-top: 0px;
+        }
+        h2 {
+          font-size: 36px;
+          font-weight: 300;
+          margin-bottom: 0;
+        }
+      }
+      .modal-title {
+        line-height: 1.4;
+      }
+      .modal-body {
+        padding: 0 40px 20px;
+        p {
+          margin-bottom: 20px;
+          color: #7C8498;
+          line-height: 1.5;
+        }
+        strong{
+          font-weight: bold;
+        }
+        li {
+          color: #7C8498;
+          line-height: 1.5;
+        }
+        .btn{
+          pointer-events: none;
+          
+          &-link{
+            color: #15c3ff;
+            padding-top: 0;
+            position: relative;
+            top: -1px;
+          }
+        }
+      }
+      .modal-dialog {
+        position: fixed;
+        right: 50%;
+        top: 355px;
+        transform: translate(50%, -50%);
+        width: @wizardWidth;
+        transition: all 200ms ease;
+      }
+
+      &.try-wizard-aside {
+        .try-media {
+          max-width:inherit;
+        }
+
+        position: static;
+        .modal-content{
+          border-radius: 5px 0px 0px 5px;
+        }
+        .modal-header {
+          border-bottom: 1px solid #e8e8ef;
+          padding: 15px;
+        }
+        .modal-body {
+          padding: 15px;
+          height: @wizardHeight;
+          overflow-y: auto;
+          p {
+            padding: @verticalPadding 0;
+            margin-bottom: 0;
+          }
+        }
+        .modal-dialog {
+          right: @wizardWidthAside/2 - 2;
+          width: @wizardWidthAside;
+          .col-md-6 {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &-navigation {
+    padding: @verticalPadding 0;
+    border: 0;
+    &-step {
+      padding: 0px;
+      padding-left: 8px;
+      line-height: 1.5!important;
+      border: 0;
+      font-size: 18px;
+      margin-left: 24px;
+      font-family: "Gotham Rounded A", "Gotham Rounded B";
+
+      &-passed {
+        &:before {
+          left: -16px;
+          position: absolute;
+          content: '\002714';
+          color: #98cf3c
+        }
+        span {
+          color: #ddd;
+        }
+      }
+      &-active span {
+        color: @TryColor2;
+        font-weight: bold;
+      }
+    }
+  }
+
+  &-media {
+    padding: @verticalPadding 0;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  &-lesson-link {
+    font-size: 18px;
+    line-height: 38px;
+    text-decoration: none;
+    color: #fff;
+    &:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    &-passed {
+      color: #8AE1FF
+    }
+  }
+
+  &-link {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  &-congratulations {
+    font-size: 24px;
+    color: #282d38;
+    text-align: center;
+    font-family: "Gotham Rounded A", "Gotham Rounded B";
+    font-weight: 500;
+  }
+}
+
+
+//writers/keboola.wr-db-snowflake/[id]/credentials fix
+.kbc-main .container-fluid form .row{
+  margin: 0;
+  padding: 22px;
+  border-bottom: 1px solid #e8e8ef;
+}
+
+
+
+
+

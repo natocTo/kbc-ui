@@ -84,34 +84,35 @@ OrchestrationTasks = React.createClass
 
 
   render: ->
-    div {className: 'container-fluid kbc-main-content'},
-      div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
-        div {className: 'kbc-container'},
-          SearchRow(onChange: @_handleFilterChange, query: @state.filter)
-          OrchestrationsNav
-            orchestrations: @state.filteredOrchestrations
-            activeOrchestrationId: @state.orchestration.get 'id'
-      div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
-        if @state.isEditing
-          div null,
-            TasksEditor
-              tasks: @state.tasks
-              isSaving: @state.isSaving
-              components: @state.components
-              onChange: @_handleTasksChange
-              localState: @state.localState.get('taskstable', Immutable.Map())
-              updateLocalState: (path, data) =>
-                @updateLocalState(['taskstable'].concat(path), data)
-        else
-          div null,
-            TasksTable
-              tasks: @state.tasks
-              orchestration: @state.orchestration
-              components: @state.components
-              onRun: @_handleTaskRun
-              localState: @state.localState.get('taskstable', Immutable.Map())
-              updateLocalState: (path, data) =>
-                @updateLocalState(['taskstable'].concat(path), data)
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
+          div {className: 'kbc-container'},
+            SearchRow(onChange: @_handleFilterChange, query: @state.filter)
+            OrchestrationsNav
+              orchestrations: @state.filteredOrchestrations
+              activeOrchestrationId: @state.orchestration.get 'id'
+        div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
+          if @state.isEditing
+            div null,
+              TasksEditor
+                tasks: @state.tasks
+                isSaving: @state.isSaving
+                components: @state.components
+                onChange: @_handleTasksChange
+                localState: @state.localState.get('taskstable', Immutable.Map())
+                updateLocalState: (path, data) =>
+                  @updateLocalState(['taskstable'].concat(path), data)
+          else
+            div null,
+              TasksTable
+                tasks: @state.tasks
+                orchestration: @state.orchestration
+                components: @state.components
+                onRun: @_handleTaskRun
+                localState: @state.localState.get('taskstable', Immutable.Map())
+                updateLocalState: (path, data) =>
+                  @updateLocalState(['taskstable'].concat(path), data)
 
 
   updateLocalState: (path, data) ->

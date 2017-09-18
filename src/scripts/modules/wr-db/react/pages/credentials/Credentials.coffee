@@ -103,34 +103,36 @@ templateFn = (componentId, driver, isProvisioning) ->
     if state in [States.SAVING_NEW_CREDS, States.CREATE_NEW_CREDS, States.INIT]
       isEditing = true
       credentials = @state.editingCredentials
-    div {className: 'container-fluid kbc-main-content'},
-      @renderMissingRedshiftModal()
-      @_renderCredentialsForm(credentials, isEditing)
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        @renderMissingRedshiftModal()
+        @_renderCredentialsForm(credentials, isEditing)
 
   renderWithProvisioning: ->
     credentials = @state.credentials
     state = @state.localState.get 'credentialsState'
-    div {className: 'container-fluid kbc-main-content'},
-      @renderMissingRedshiftModal()
-      switch state
-        when States.INIT
-          @_renderInit()
-        # when States.LOADING_PROV_READ
-        #   div className: 'well',
-        #     'Loading provisioning credentials '
-        #     React.createElement Loader
-        when States.PREPARING_PROV_WRITE
-          div className: 'well',
-            'Preparing provisioning credentials '
-            React.createElement Loader
-        # when States.SHOW_PROV_READ_CREDS
-        #   @_renderCredentialsForm(@_prepareProvReadCredentials(), false)
-        when States.SHOW_STORED_CREDS
-          @_renderCredentialsForm(@state.credentials, false)
-        when States.CREATE_NEW_CREDS
-          @_renderCredentialsForm(@state.editingCredentials, true)
-        when States.SAVING_NEW_CREDS
-          @_renderCredentialsForm(@state.editingCredentials, true)
+    div {className: 'container-fluid'},
+      div {className: 'kbc-main-content'},
+        @renderMissingRedshiftModal()
+        switch state
+          when States.INIT
+            @_renderInit()
+          # when States.LOADING_PROV_READ
+          #   div className: 'well',
+          #     'Loading provisioning credentials '
+          #     React.createElement Loader
+          when States.PREPARING_PROV_WRITE
+            div className: 'well',
+              'Preparing provisioning credentials '
+              React.createElement Loader
+          # when States.SHOW_PROV_READ_CREDS
+          #   @_renderCredentialsForm(@_prepareProvReadCredentials(), false)
+          when States.SHOW_STORED_CREDS
+            @_renderCredentialsForm(@state.credentials, false)
+          when States.CREATE_NEW_CREDS
+            @_renderCredentialsForm(@state.editingCredentials, true)
+          when States.SAVING_NEW_CREDS
+            @_renderCredentialsForm(@state.editingCredentials, true)
 
 
 

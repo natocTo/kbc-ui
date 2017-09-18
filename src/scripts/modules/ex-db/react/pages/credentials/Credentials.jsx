@@ -13,29 +13,31 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container-fluid kbc-main-content">
-        <TabbedArea defaultActiveKey="db" animation={false} id="odlexdbcredentialstab">
-          <TabPane eventKey="db" title="Database Credentials">
-            <CredentialsForm
-              credentials={this.props.credentials}
-              enabled={this.props.isEditing}
-              onChange={this.props.onChange}
-              />
-          </TabPane>
-          <TabPane eventKey="ssl" title="SSL">
-            <SSLForm
-              credentials={this.props.credentials}
-              enabled={this.props.isEditing}
-              onChange={this.props.onChange}
-              />
-          </TabPane>
-          <TabPane eventKey="fixedIp" title="Fixed IP">
-            <FixedIP
-              credentials={this.props.credentials}
-              />
-          </TabPane>
-        </TabbedArea>
-      </div>
+        <div className="container-fluid">
+          <div className="kbc-main-content">
+            <TabbedArea defaultActiveKey="db" animation={false} id="odlexdbcredentialstab">
+              <TabPane eventKey="db" title="Database Credentials">
+                <CredentialsForm
+                    credentials={this.props.credentials}
+                    enabled={this.props.isEditing}
+                    onChange={this.props.onChange}
+                />
+              </TabPane>
+              <TabPane eventKey="ssl" title="SSL">
+                <SSLForm
+                    credentials={this.props.credentials}
+                    enabled={this.props.isEditing}
+                    onChange={this.props.onChange}
+                />
+              </TabPane>
+              <TabPane eventKey="fixedIp" title="Fixed IP">
+                <FixedIP
+                    credentials={this.props.credentials}
+                />
+              </TabPane>
+            </TabbedArea>
+          </div>
+        </div>
     );
   }
 

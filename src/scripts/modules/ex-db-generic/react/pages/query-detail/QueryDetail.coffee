@@ -54,34 +54,36 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
       ExDbActionCreators.saveQueryEdit @state.configId, @state.query.get('id')
 
     render: ->
-      div className: 'container-fluid kbc-main-content',
-        div className: 'col-md-3 kbc-main-nav',
-          div className: 'kbc-container',
-            React.createElement QueryNav,
-              queries: @state.queriesFiltered
-              configurationId: @state.configId
-              filter: @state.queriesFilter
-              componentId: componentId
-              actionsProvisioning: actionsProvisioning
-        div className: 'col-md-9 kbc-main-content-with-nav',
-          div className: 'row kbc-header',
-            div className: 'kbc-buttons',
-              React.createElement EditButtons,
-                isEditing: @state.isEditing
-                isSaving: @state.isSaving
-                isDisabled: !@state.isValid
-                onCancel: @_handleCancel
-                onSave: @_handleSave
-                onEditStart: @_handleEditStart
-          if @state.isEditing
-            QueryEditor
-              query: @state.editingQuery
-              tables: @state.tables
-              onChange: @_handleQueryChange
-              configId: @state.configId
-              componentId: componentId
-              defaultOutputTable: @state.defaultOutputTable
-          else
-            QueryDetailStatic
-              query: @state.query
-              componentId: componentId
+      div className: 'container-fluid',
+        div className: 'kbc-main-content',
+          div className: 'col-md-3 kbc-main-nav',
+            div className: 'kbc-container',
+              React.createElement QueryNav,
+                queries: @state.queriesFiltered
+                configurationId: @state.configId
+                filter: @state.queriesFilter
+                componentId: componentId
+                actionsProvisioning: actionsProvisioning
+          div className: 'col-md-9 kbc-main-content-with-nav',
+            div className: 'row kbc-header',
+              div className: 'kbc-buttons',
+                React.createElement EditButtons,
+                  isEditing: @state.isEditing
+                  isSaving: @state.isSaving
+                  isDisabled: !@state.isValid
+                  onCancel: @_handleCancel
+                  onSave: @_handleSave
+                  onEditStart: @_handleEditStart
+            if @state.isEditing
+              QueryEditor
+                query: @state.editingQuery
+                tables: @state.tables
+                onChange: @_handleQueryChange
+                configId: @state.configId
+                componentId: componentId
+                defaultOutputTable: @state.defaultOutputTable
+            else
+              QueryDetailStatic
+                query: @state.query
+                componentId: componentId
+  

@@ -31,6 +31,7 @@ import contactSupport from '../../../../utils/contactSupport';
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
 import Immutable from 'immutable';
 import LatestVersions from '../components/SidebarVersionsWrapper';
+import Processors from '../components/Processors';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore, LatestJobsStore, StorageTablesStore, OauthStore, ComponentStore, VersionsStore)],
@@ -249,6 +250,7 @@ export default React.createClass({
                 </span>
               )}
               {this.runtimeConfiguration()}
+              {this.processorsConfiguration()}
             </div>
 
           </div>
@@ -340,6 +342,66 @@ export default React.createClass({
       return this.onEditRuntimeCancel();
     });
   },
+
+
+  processorsConfiguration() {
+    if (this.state.component.get('flags').includes('genericDockerUI-processors') || this.state.configData.has('processors')) {
+      var configValue = '';
+      if (this.state.configData.has('processors') && this.state.configData.get('processors') !== null && this.state.configData.get('processors') !== '') {
+        configValue = JSON.stringify(this.state.configData.get('processors'), null, 2);
+      }
+      return (
+        <Processors
+          value={this.state.localState.getIn(['processors', 'editing'], configValue)}
+          onEditCancel={this.onEditProcessorsCancel}
+          onEditChange={this.onEditProcessorsChange}
+          onEditSubmit={this.onEditProcessorsSubmit}
+          isSaving={this.state.localState.getIn(['processors', 'saving'], false)}
+          isChanged={this.state.localState.hasIn(['processors', 'editing'])}
+          isEditingValid={this.onEditProcessorsIsValid()}
+        />
+      );
+    }
+  },
+
+  onEditProcessorsIsValid() {
+    if (this.state.localState.getIn(['processors', 'editing'], '') === '') {
+      return true;
+    }
+    try {
+      JSON.parse(this.state.localState.getIn(['processors', 'editing'], ''));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  onEditProcessorsSubmit() {
+    const stringifiedConfig = this.state.localState.getIn(['processors', 'editing']);
+    var newConfigData = this.state.configData;
+    if (stringifiedConfig !== '') {
+      newConfigData = newConfigData.set('processors', Immutable.fromJS(JSON.parse(stringifiedConfig)));
+    } else {
+      newConfigData = newConfigData.delete('processors');
+    }
+    const saveFn = InstalledComponentsActionCreators.saveComponentConfigData;
+    const componentId = this.state.componentId;
+    const configId = this.state.config.get('id');
+    this.updateLocalState(['processors', 'saving'], true);
+    saveFn(componentId, configId, newConfigData, 'Update processors configuration').then( () => {
+      this.updateLocalState(['processors', 'saving'], false);
+      return this.onEditProcessorsCancel();
+    });
+  },
+
+  onEditProcessorsCancel() {
+    this.updateLocalState(['processors'], Map());
+  },
+
+  onEditProcessorsChange(newValue) {
+    this.updateLocalState(['processors', 'editing'], newValue);
+  },
+
 
   getConfigDataParameters() {
     if (this.state.isParametersEditing) {

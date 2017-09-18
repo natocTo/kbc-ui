@@ -11,8 +11,6 @@ import {Link} from 'react-router';
 
 import SelectedProfilesList from './SelectedProfilesList';
 
-const COMPONENT_ID = 'keboola.ex-google-analytics-v4';
-
 export default React.createClass({
   propTypes: {
     queries: PropTypes.object.isRequired,
@@ -21,12 +19,12 @@ export default React.createClass({
     updateLocalState: PropTypes.func.isRequired,
     prepareLocalState: PropTypes.func.isRequired,
     configId: PropTypes.string.isRequired,
+    componentId: PropTypes.string.isRequired,
     outputBucket: PropTypes.string.isRequired,
     deleteQueryFn: PropTypes.func.isRequired,
     isPendingFn: PropTypes.func.isRequired,
     toggleQueryEnabledFn: PropTypes.func.isRequired,
     getRunSingleQueryDataFn: PropTypes.func.isRequired
-
   },
 
   render() {
@@ -68,7 +66,7 @@ export default React.createClass({
 
     return (
       <Link
-        to={COMPONENT_ID + '-query-detail'}
+        to={this.props.componentId + '-query-detail'}
         params={{
           config: this.props.configId,
           queryId: query.get('id')
@@ -106,7 +104,7 @@ export default React.createClass({
           />
           <RunExtractionButton
             title="Run Extraction"
-            component={COMPONENT_ID}
+            component={this.props.componentId}
             runParams={ () => {
               return {
                 config: this.props.configId,

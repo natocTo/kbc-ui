@@ -8,8 +8,8 @@ export default React.createClass({
     queries: PropTypes.object.isRequired,
     configurationId: PropTypes.string.isRequired,
     filter: PropTypes.string.isRequired,
-    setQueriesFilter: PropTypes.func.isRequired
-
+    setQueriesFilter: PropTypes.func.isRequired,
+    componentId: PropTypes.string.isRequired
   },
   render() {
     return (
@@ -30,7 +30,8 @@ export default React.createClass({
       return this.props.queries.map((query) => {
         return React.createElement(NavRow, {
           query: query,
-          configurationId: this.props.configurationId
+          configurationId: this.props.configurationId,
+          componentId: this.props.componentId
         });
       });
     } else {

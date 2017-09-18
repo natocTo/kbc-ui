@@ -97,7 +97,8 @@ routes =
       createComponentRoute 'ex-google-drive', [exGdriveGoogleRoutes]
     ,
       createComponentRoute 'ex-google-analytics', [exGanalRoutes]
-      createComponentRoute 'keboola.ex-google-analytics-v4', [exGaV4Routes]
+      createComponentRoute 'keboola.ex-google-analytics-v4', [exGaV4Routes('keboola.ex-google-analytics-v4')]
+      createComponentRoute 'keboola.ex-google-analytics', [exGaV4Routes('keboola.ex-google-analytics')]
       createComponentRoute 'keboola.ex-facebook', [exFacebookRoutes('keboola.ex-facebook')]
       createComponentRoute 'keboola.ex-facebook-ads', [exFacebookRoutes('keboola.ex-facebook-ads')]
       createComponentRoute 'keboola.ex-google-drive', [exGdriveNewRoutes]

@@ -12,48 +12,50 @@ import versionsActions from '../components/VersionsActionCreators';
 import store from './storeProvisioning';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 
-const COMPONENT_ID = 'keboola.ex-google-analytics-v4';
+export default function(componentId) {
+  return {
+    name: componentId,
+    path: ':config',
+    isComponent: true,
+    defaultRouteHandler: Index(componentId),
 
-export default {
-  name: COMPONENT_ID,
-  path: ':config',
-  isComponent: true,
-  defaultRouteHandler: Index,
-  title: (routerState) => {
-    const configId = routerState.getIn(['params', 'config']);
-    return InstalledComponentsStore.getConfig(COMPONENT_ID, configId).get('name');
-  },
-  // headerButtonsHandler: HeaderButtons,
-  requireData: [
-    (params) => installedComponentsActions.loadComponentConfigData(COMPONENT_ID, params.config).then(() => {
-      return oauthUtils.loadCredentialsFromConfig(COMPONENT_ID, params.config);
-    }),
-    (params) => versionsActions.loadVersions(COMPONENT_ID, params.config),
-    () => storageActions.loadTables()
-  ],
-  poll: {
-    interval: 7,
-    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
-  },
-  childRoutes: [
-    oauthUtils.createRedirectRouteSimple(COMPONENT_ID),
-    {
-      name: COMPONENT_ID + '-query-detail',
-      path: 'query/:queryId',
-      handler: QueryDetail,
-      headerButtonsHandler: QueryDetailHeaderButtons,
-      title: (routerState) => {
-        const configId = routerState.getIn(['params', 'config']);
-        const queryId = routerState.getIn(['params', 'queryId']);
-        return store(configId).getConfigQuery(queryId).get('name');
-      }
+    title: (routerState) => {
+      const configId = routerState.getIn(['params', 'config']);
+      return InstalledComponentsStore.getConfig(componentId, configId).get('name');
     },
-    {
-      name: COMPONENT_ID + '-new-query',
-      path: 'new-query',
-      handler: NewQuery,
-      headerButtonsHandler: NewQueryHeaderButtons,
-      title: () => 'New Query'
-    }
-  ]
-};
+
+    requireData: [
+      (params) => installedComponentsActions.loadComponentConfigData(componentId, params.config).then(() => {
+        return oauthUtils.loadCredentialsFromConfig(componentId, params.config);
+      }),
+      (params) => versionsActions.loadVersions(componentId, params.config),
+      () => storageActions.loadTables()
+    ],
+    poll: {
+      interval: 7,
+      action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
+    },
+
+    childRoutes: [
+      oauthUtils.createRedirectRouteSimple(componentId),
+      {
+        name: componentId + '-query-detail',
+        path: 'query/:queryId',
+        handler: QueryDetail(componentId),
+        headerButtonsHandler: QueryDetailHeaderButtons(componentId),
+        title: (routerState) => {
+          const configId = routerState.getIn(['params', 'config']);
+          const queryId = routerState.getIn(['params', 'queryId']);
+          return store(configId, componentId).getConfigQuery(queryId).get('name');
+        }
+      },
+      {
+        name: componentId + '-new-query',
+        path: 'new-query',
+        handler: NewQuery(componentId),
+        headerButtonsHandler: NewQueryHeaderButtons(componentId),
+        title: () => 'New Query'
+      }
+    ]
+  };
+}

@@ -9,6 +9,10 @@ const re = new RegExp(regex, 'g');
 
 self.addEventListener('message', function(e) {
   var data = e.data;
+  if (data.queries === '') {
+    postMessage([]);
+    return;
+  }
   const matches = data.queries.match(re);
   const response = matches
     .filter((line) => line.trim() !== '')

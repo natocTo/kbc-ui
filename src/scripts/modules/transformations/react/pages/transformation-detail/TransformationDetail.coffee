@@ -154,16 +154,13 @@ module.exports = React.createClass
                 runParams: sandboxUtils.generateRunParameters(@state.transformation, @state.bucketId)
 
           if backend == 'redshift' or
-              backend == 'mysql' && transformationType == 'simple'
+              backend == 'mysql' && transformationType == 'simple' or
+              backend == 'snowflake'
             li {},
               SqlDepModal
                 backend: backend
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
-              ,
-                a {},
-                  span className: 'fa fa-sitemap fa-fw'
-                  ' SQLDep'
           li {},
             a {},
               React.createElement Confirm,

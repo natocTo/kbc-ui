@@ -30,7 +30,7 @@ SqlDepModal = React.createClass
     @setState
       showModal: true
 
-    if (@props.backend == 'redshift')
+    if (@props.backend == 'redshift' || @props.backend == 'snowflake')
       @setState
         isLoading: true
       component = @
@@ -45,10 +45,18 @@ SqlDepModal = React.createClass
           sqlDepUrl: response.url
       )
 
+  betaWarning: ->
+    if (@props.backend == 'snowflake')
+      span null,
+        ' '
+        span className: 'label label-info',
+          'BETA'
+
   render: ->
     a onClick: @handleOpenButtonClick,
       i className: 'fa fa-sitemap fa-fw'
       ' SQLDep'
+      @betaWarning()
       Modal
         show: @state.showModal
         onHide: @close
@@ -73,7 +81,7 @@ SqlDepModal = React.createClass
     @open()
 
   _renderBody: ->
-    if @props.backend == 'redshift'
+    if @props.backend == 'redshift' || @props.backend == 'snowflake'
       if @state.isLoading
         p null,
           Loader {}

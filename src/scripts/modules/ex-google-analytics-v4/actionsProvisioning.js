@@ -7,21 +7,13 @@ import callDockerAction from '../components/DockerActionsApi';
 import _ from 'underscore';
 import Promise from 'bluebird';
 
-const COMPONENT_ID = 'keboola.ex-google-analytics-v4';
-
-// PROPTYPES HELPER:
-/*
-  localState: PropTypes.object.isRequired,
-  updateLocalState: PropTypes.func.isRequired,
-  prepareLocalState: PropTypes.func.isRequired
-*/
-export default function(configId) {
-  const store = storeProvisioning(configId);
+export default function(configId, componentId) {
+  const store = storeProvisioning(configId, componentId);
 
   function updateLocalState(path, data) {
     const ls = store.getLocalState();
     const newLocalState = ls.setIn([].concat(path), data);
-    componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
+    componentsActions.updateLocalState(componentId, configId, newLocalState, path);
   }
 
   function saveConfigData(data, waitingPath, changeDescription) {
@@ -29,11 +21,11 @@ export default function(configId) {
     // check default output bucket and save default if non set
     const ob = dataToSave.getIn(['parameters', 'outputBucket']);
     if (!ob) {
-      dataToSave = dataToSave.setIn(['parameters', 'outputBucket'], common.getDefaultBucket(COMPONENT_ID, configId));
+      dataToSave = dataToSave.setIn(['parameters', 'outputBucket'], common.getDefaultBucket(componentId, configId));
     }
 
     updateLocalState(waitingPath, true);
-    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave, changeDescription)
+    return componentsActions.saveComponentConfigData(componentId, configId, dataToSave, changeDescription)
       .then(() => updateLocalState(waitingPath, false));
   }
 
@@ -177,7 +169,7 @@ export default function(configId) {
       };
 
       updateLocalState(path.concat('isLoading'), true);
-      return callDockerAction(COMPONENT_ID, 'sample', params)
+      return callDockerAction(componentId, 'sample', params)
         .then((result) => {
           if (result.status !== 'success') {
             throw result;
@@ -213,7 +205,7 @@ export default function(configId) {
         configData: data.toJS()
       };
       updateLocalState(path.concat('isLoading'), true);
-      return callDockerAction(COMPONENT_ID, 'segments', params)
+      return callDockerAction(componentId, 'segments', params)
         .then((result) => {
           if (result.status !== 'success') {
             throw result;

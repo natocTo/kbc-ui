@@ -108,7 +108,7 @@ EditArea = React.createFactory React.createClass
         ,
           'Save'
       span className: 'small help-block',
-        a href: 'https://blog.ghost.org/markdown/',
+        a href: 'https://blog.ghost.org/markdown/', target: '_blank',
           'Markdown'
         ' is supported'
 

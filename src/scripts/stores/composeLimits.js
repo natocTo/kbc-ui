@@ -119,7 +119,7 @@ export default function(limits, metrics) {
   return fromJS([
     {
       id: 'connection',
-      icon: 'https://d3iz2gfan5zufq.cloudfront.net/images/cloud-services/rcp-data-type-assistant-32-1.png',
+      icon: 'https://assets-cdn.keboola.com/developer-portal/icons/rcp-data-type-assistant/32/1.png',
       title: 'Keboola Connection',
       limits: prepareConnectionData(
         limits,
@@ -129,7 +129,7 @@ export default function(limits, metrics) {
     },
     {
       id: 'goodData',
-      icon: 'https://d3iz2gfan5zufq.cloudfront.net/images/cloud-services/gooddata32-2.png',
+      icon: 'https://assets-cdn.keboola.com/developer-portal/icons/gooddata-writer/32/1.png',
       title: 'GoodData',
       limits: prepareGoodDataData(
         limits,
