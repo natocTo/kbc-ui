@@ -63,16 +63,17 @@ module.exports = React.createClass
   render: ->
     div {className: 'container-fluid'},
       div {className: 'kbc-main-content'},
-        div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
-          div {className: 'kbc-container'},
-            SearchRow(onChange: @_handleFilterChange, query: @state.filter)
-            OrchestrationsNav
-              orchestrations: @state.filteredOrchestrations
-              activeOrchestrationId: @state.orchestration.get 'id'
-        div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
-          React.createElement Notifications,
-            notifications: @state.notifications
-            inputs: @state.inputs
-            isEditing: @state.isEditing
-            onNotificationsChange: @_handleNotificationsChange
-            onInputChange: @_handleInputChange
+        div {className: 'row kbc-row-orchestration-detail'},
+          div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
+            div {className: 'kbc-container'},
+              SearchRow(onChange: @_handleFilterChange, query: @state.filter)
+              OrchestrationsNav
+                orchestrations: @state.filteredOrchestrations
+                activeOrchestrationId: @state.orchestration.get 'id'
+          div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
+            React.createElement Notifications,
+              notifications: @state.notifications
+              inputs: @state.inputs
+              isEditing: @state.isEditing
+              onNotificationsChange: @_handleNotificationsChange
+              onInputChange: @_handleInputChange
