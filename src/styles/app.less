@@ -245,7 +245,41 @@ a .kbcComponentIcon-3rdParty-64px {
   }
 }
 
-
 .kbc-row-orchestration-detail{
   padding: 0!important;
+}
+
+.kbc-main .kbc-overview-component .kbc-header{
+  margin-top: 15px;
+}
+
+.kbc-main .kbc-header.kbc-limits,
+.kbc-main .kbc-header.kbc-expiration{
+  padding: 43px 60px !important
+}
+
+.kbc-main .kbc-overview-component{
+  .kbc-header{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+}
+.kbc-main .kbc-overview-component:first-of-type{
+  .kbc-header{
+    margin-top: 0;
+  }
+}
+
+.kbc-overview-component-container {
+  &+.kbc-main-content{
+    margin-top: 10px;
+  }
+}
+
+.try-mode.try-mode-lesson-on .kbc-overview-component-container{
+  margin-top: 50px !important;
+  &  + .kbc-main-content{
+    margin-top: 10px!important;
+  }
 }

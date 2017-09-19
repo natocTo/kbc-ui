@@ -17,21 +17,20 @@ export default React.createClass({
     }
 
     return (
-      <div className="row kbc-header kbc-limits">
-        <div className="alert alert-danger">
-          <h3>
-            <span className="fa fa-exclamation-triangle"/> Project is over quota!
-          </h3>
-          <ul>
-            {limits.map(this.limit)}
-          </ul>
-          <p>
-            <Link to="settings-limits">
-              Limits Settings
-            </Link>
-          </p>
+        <div className="kbc-overview-component">
+          <div className="row kbc-header kbc-limits">
+            <div className="alert alert-danger">
+              <h3>
+                Project is over quota
+              </h3>
+              <ul>
+                <Link to="settings-limits">
+                  {limits.map(this.limit)}
+                </Link>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
     );
   },
 

@@ -34,8 +34,8 @@ TransformationsIndex = React.createClass
     TransformationActionCreators.setTransformationBucketsFilter(query)
 
   render: ->
-    if (@state.buckets && @state.buckets.count() > 0)
-      div className: 'container-fluid',
+    div className: 'container-fluid',
+      if (@state.buckets && @state.buckets.count() > 0)
         div className: 'kbc-main-content',
           React.createElement SearchRow,
             className: 'row kbc-search-row'
@@ -54,8 +54,7 @@ TransformationsIndex = React.createClass
                 div className: 'kbc-title',
                   h2 null,
                     'No buckets or transformations found.'
-    else
-      div className: 'container-fluid',
+      else
         div className: 'kbc-main-content',
           React.createElement EmptyStateIndex
 
