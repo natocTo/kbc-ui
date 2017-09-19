@@ -105,7 +105,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    setTimeout(() => this.onShow());
+    setTimeout(() => storageActions.loadTables().then(this.onShow));
   },
 
   componentWilUnmount() {
