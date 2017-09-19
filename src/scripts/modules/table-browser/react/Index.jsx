@@ -106,7 +106,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    setTimeout(() => storageActions.loadTables());
+    setTimeout(() => this.onShow());
   },
 
   componentWilUnmount() {
@@ -317,15 +317,12 @@ export default React.createClass({
     this.findEnhancedJob();
   },
 
-  onShow(e) {
+  onShow() {
     if (this.state.isLoading) {
       storageApi.getTables().then(() => this.loadAll());
     } else {
       this.loadAll();
     }
-
-    e.stopPropagation();
-    e.preventDefault();
   },
 
   startEventService() {
