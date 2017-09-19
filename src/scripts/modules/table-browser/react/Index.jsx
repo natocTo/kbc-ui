@@ -16,7 +16,8 @@ import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './com
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { factory as EventsServiceFactory} from '../../sapi-events/EventsService';
 
-import RouterStore from '../../../stores/RoutesStore';
+import RoutesStore from '../../../stores/RoutesStore';
+import {PATH_PREFIX} from '../routes';
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
@@ -75,7 +76,7 @@ export default React.createClass({
   },
 
   getRouteTableId() {
-    return RouterStore.getCurrentRouteParam('tableId');
+    return RoutesStore.getCurrentRouteParam('tableId');
   },
 
   getTableId() {
@@ -293,11 +294,20 @@ export default React.createClass({
     return this.state.isLoading || this.state.loadingPreview || this.state.eventService.getIsLoading();
   },
 
+  redirectBack() {
+    const routerState = RoutesStore.getRouterState();
+    const currentPath = routerState.get('path') || '';
+    const parts = currentPath.split(`${PATH_PREFIX}/`);
+    const backPath = parts ? parts[0] : '/';
+    RoutesStore.getRouter().transitionTo(backPath || '/');
+  },
+
   onHide() {
     this.setState({show: false});
     this.changeTable(this.getRouteTableId(), true);
     this.stopPollingDataProfilerJob();
     this.stopEventService();
+    this.redirectBack();
   },
 
   reload() {

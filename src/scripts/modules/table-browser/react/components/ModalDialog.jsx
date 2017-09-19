@@ -63,10 +63,11 @@ export default React.createClass({
       <Modal.Dialog
         className="kbc-table-browser"
         bsSize="large"
-        onHide={this.props.onHideFn}
         onKeyDown={this.onKeyDown}
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
+          <button onClick={this.props.onHideFn}
+            type="button" className="close" data-dismiss="modal">&times;</button>
           <Modal.Title>
             {this.props.tableId}
             {tableLink}
