@@ -45,7 +45,7 @@ export default React.createClass({
                   <input
                     disabled={this.props.filterIOEvents || this.props.detailEventId}
                     checked={this.props.omitFetches}
-                    onClick={this.props.onOmitFetchesFn}
+                    onChange={this.props.onOmitFetchesFn}
                     type="checkbox"/>
                   <span className={this.props.filterIOEvents ? 'text-muted' : ''}>
                     Ignore table fetches
@@ -59,7 +59,7 @@ export default React.createClass({
                   <input
                     disabled={this.props.filterIOEvents || this.props.detailEventId}
                     checked={this.props.omitExports}
-                    onClick={this.props.onOmitExportsFn}
+                    onChange={this.props.onOmitExportsFn}
                     type="checkbox"/>
                   <span className={this.props.filterIOEvents ? 'text-muted' : ''}>
                     Ignore table exports
@@ -73,7 +73,7 @@ export default React.createClass({
                   <input
                     disabled={this.props.detailEventId}
                     checked={this.props.filterIOEvents}
-                    onClick={this.props.onFilterIOEvents}
+                    onChange={this.props.onFilterIOEvents}
                     type="checkbox"/> Import/Exports only
                 </label>
               </div>

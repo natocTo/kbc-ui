@@ -18,7 +18,7 @@ import './ModalDialog.less';
 export default React.createClass({
 
   propTypes: {
-    moreTables: React.PropTypes.object,
+    moreTables: React.PropTypes.array,
     tableId: PropTypes.string.isRequired,
     reload: PropTypes.func.isRequired,
     tableExists: PropTypes.bool.isRequired,

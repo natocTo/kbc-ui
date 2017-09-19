@@ -80,7 +80,7 @@ export default React.createClass({
   },
 
   getTableId() {
-    return this.state ? this.state.tableId : this.getRouteTableId();
+    return (this.state && this.state.tableId) ? this.state.tableId : this.getRouteTableId();
   },
 
   getInitialState() {
