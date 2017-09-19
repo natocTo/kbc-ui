@@ -91,7 +91,6 @@ export default React.createClass({
     return ({
       eventService: es,
       events: Immutable.List(),
-      show: false,
       dataPreview: Immutable.List(),
       dataPreviewError: null,
       loadingPreview: false,
@@ -207,7 +206,6 @@ export default React.createClass({
     return (
       <TableLinkModalDialog
         moreTables={this.props.moreTables.toArray()}
-        show={true}
         tableId={this.getTableId()}
         reload={this.reload}
         tableExists={this.tableExists()}

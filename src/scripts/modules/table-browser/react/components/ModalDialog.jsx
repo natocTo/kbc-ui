@@ -18,7 +18,6 @@ export default React.createClass({
 
   propTypes: {
     moreTables: React.PropTypes.object,
-    show: PropTypes.bool.isRequired,
     tableId: PropTypes.string.isRequired,
     reload: PropTypes.func.isRequired,
     tableExists: PropTypes.bool.isRequired,
@@ -60,9 +59,8 @@ export default React.createClass({
           </SapiTableLink>);
     }
     return (
-      <Modal
+      <Modal.Dialog
         bsSize="large"
-        show={this.props.show}
         onHide={this.props.onHideFn}
         onKeyDown={this.onKeyDown}
       >
@@ -80,7 +78,7 @@ export default React.createClass({
         <Modal.Body>
           {modalBody}
         </Modal.Body>
-      </Modal>
+      </Modal.Dialog>
     );
   },
 
