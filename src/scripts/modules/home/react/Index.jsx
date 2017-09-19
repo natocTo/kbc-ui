@@ -55,12 +55,27 @@ export default React.createClass({
     showWizardModalFn(lessonNumber);
   },
 
+  countOverviewComponent() {
+    let componentCount = 0;
+    componentCount += this.state.projectHasTryModeOn;
+    componentCount += this.state.limitsOverQuota.count();
+    componentCount += this.state.installedComponents.filter(function(component) {
+      return !!component.get('flags', []).contains('deprecated');
+    }).count();
+    if (typeof this.state.expires === 'undefined') {
+      componentCount += 1;
+    }
+    return componentCount;
+  },
+
   render() {
+    this.countOverviewComponent();
     return (
         <div className="container-fluid">
+          {this.countOverviewComponent() > 0  &&
           <div className="kbc-overview-component-container">
+            {this.state.projectHasTryModeOn === 1 &&
             <div className="kbc-overview-component">
-              {this.state.projectHasTryModeOn === 1 &&
               <div className="try-desk-container">
                 <div className="try-desk">
                   <h2>Welcome to Keboola Connection</h2>
@@ -100,14 +115,13 @@ export default React.createClass({
                   </div>
                 </div>
               </div>
-              }
             </div>
+            }
             <Expiration expires={this.state.expires}/>
             <LimitsOverQuota limits={this.state.limitsOverQuota}/>
             <Deprecation components={this.state.installedComponents}/>
-
           </div>
-
+          }
           <div className="kbc-main-content">
 
             <div className="table kbc-table-border-vertical kbc-layout-table kbc-overview">
@@ -133,7 +147,7 @@ export default React.createClass({
               </div>
             </div>
           </div>
-          </div>
+        </div>
     );
   }
 });
