@@ -12,6 +12,7 @@ import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
 import {Modal} from 'react-bootstrap';
 import {RefreshIcon} from 'kbc-react-components';
+import './ModalDialog.less';
 
 
 export default React.createClass({
@@ -60,6 +61,7 @@ export default React.createClass({
     }
     return (
       <Modal.Dialog
+        className="kbc-table-browser"
         bsSize="large"
         onHide={this.props.onHideFn}
         onKeyDown={this.onKeyDown}
