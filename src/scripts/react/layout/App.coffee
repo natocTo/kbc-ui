@@ -45,7 +45,7 @@ App = React.createClass
     div className: classnames(
       snowflake: ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo')
     ),
-      if @state.projectHasTryModeOn == "1"
+      if @state.projectHasTryModeOn == true
         div className: 'try-status-bar',
           p null,
             'Try Mode'
@@ -86,7 +86,7 @@ App = React.createClass
               LoadingPage()
             else
               RouteHandler()
-            if @state.projectHasTryModeOn == "1"
+            if @state.projectHasTryModeOn == true
               Wizard()
 
 module.exports = App
