@@ -130,17 +130,14 @@ export default React.createClass({
                   <div className="td">
                     <h2>Storage</h2>
                     <h3 style={ {fontSize: '42px'} }>{filesize(this.state.data.sizeBytes)}</h3>
-                    <h3 style={ {fontSize: '24px'} }>{string.numberFormat(this.state.data.rowsCount)}
-                      <small>Rows</small>
+                    <h3 style={ {fontSize: '24px'} }>{string.numberFormat(this.state.data.rowsCount)} <small>Rows</small>
                     </h3>
                   </div>
                   <div className="td">
                     <h2>Access</h2>
-                    <h3 style={ {fontSize: '42px'} }>{this.state.tokens.get('adminCount')}
-                      <small style={ {fontSize: '16px'} }>Users</small>
+                    <h3 style={ {fontSize: '42px'} }>{this.state.tokens.get('adminCount')} <small style={ {fontSize: '16px'} }>Users</small>
                     </h3>
-                    <h3 style={ {fontSize: '24px'} }>{this.state.tokens.get('totalCount') - this.state.tokens.get('adminCount')}
-                      <small>API Tokens</small>
+                    <h3 style={ {fontSize: '24px'} }>{this.state.tokens.get('totalCount') - this.state.tokens.get('adminCount')} <small>API Tokens</small>
                     </h3>
                   </div>
                 </div>
