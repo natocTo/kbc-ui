@@ -451,9 +451,8 @@ export default React.createClass({
         {this.RenderStaticInput('Correction', this.parameter(params.CORRECTION))}
         {this.RenderStaticInput('Diacritization', this.parameter(params.DIACRITIC))}
         {this.RenderStaticInput('Use beta', this.parameter(params.BETA), true)}
-
         {this.RenderStaticInput('Analysis tasks', this.renderStaticTasks())}
-        {this.RenderStaticInput(this.renderResultLabel(), this.renderOutput())}
+        {this.renderOutput()}
         {this.renderAdvancedSettings()}
       </div>
     );
@@ -489,16 +488,23 @@ export default React.createClass({
   renderOutput() {
     const bucketId = getDefaultBucket('out', componentId, this.state.configId);
     return (
-      <ul className="nav nav-stacked">
-        <li>
-        <SapiTableLinkEx
-          tableId={`${bucketId}.analysis-result-documents`}/>
-        </li>
-        <li>
-        <SapiTableLinkEx
-          tableId={`${bucketId}.analysis-result-entities`}/>
-        </li>
-      </ul>
+      <div className="form-group">
+        <label className="col-sm-3 control-label">
+          {this.renderResultLabel()}
+        </label>
+        <div className="col-sm-9 ">
+        <ul className="nav nav-stacked">
+          <li>
+            <SapiTableLinkEx
+              tableId={`${bucketId}.analysis-result-documents`}/>
+          </li>
+          <li>
+            <SapiTableLinkEx
+              tableId={`${bucketId}.analysis-result-entities`}/>
+          </li>
+        </ul>
+        </div>
+      </div>
     );
   },
 
