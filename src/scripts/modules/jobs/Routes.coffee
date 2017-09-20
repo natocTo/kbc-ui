@@ -8,6 +8,7 @@ JobDetailButtons = require './react/components/JobDetailButtons'
 JobsStore = require('./stores/JobsStore')
 Promise = require('bluebird')
 InstalledComponentsActionCreators = require('../components/InstalledComponentsActionCreators')
+{createTablesRoute} = require('../table-browser/routes')
 
 routes =
       name: 'jobs'
@@ -48,8 +49,7 @@ routes =
           jobId = routerState.getIn(['params', 'jobId'])
           job = JobsStore.get parseInt(jobId)
           job && !job.get('isFinished')
-
-        handler: JobDetail
+        defaultRouteHandler: JobDetail
         headerButtonsHandler: JobDetailButtons
         poll:
           interval: 2
@@ -62,6 +62,7 @@ routes =
           (params) ->
             JobsActionCreators.loadJobDetail(parseInt(params.jobId))
         ]
+        childRoutes: [ createTablesRoute('jobDetail')]
       ]
 
 module.exports = routes
