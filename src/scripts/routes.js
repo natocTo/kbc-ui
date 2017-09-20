@@ -2,7 +2,6 @@ import App from './react/layout/App';
 import ErrorPage from './react/pages/ErrorPage';
 import Home from './modules/home/react/Index';
 import DataTakeout from './modules/data-takeout/Index';
-import TryMode from './modules/try-mode/react/Index';
 import Limits from './modules/limits/Index';
 import billingRoutes from './modules/billing/routes';
 
@@ -34,11 +33,6 @@ export default {
       name: 'data-takeout',
       title: 'Data Takeout',
       defaultRouteHandler: DataTakeout
-    },
-    {
-      name: 'try-mode',
-      title: 'Try Mode',
-      defaultRouteHandler: TryMode
     },
     {
       name: 'settings-limits',
