@@ -4,6 +4,7 @@ import storageActions from '../components/StorageActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import * as oauthUtils from '../oauth-v2/OauthUtils';
+import {createTablesRoute} from '../table-browser/routes';
 
 const COMPONENT_ID = 'keboola.wr-google-sheets';
 
@@ -22,5 +23,6 @@ export default {
   poll: {
     interval: 5,
     action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
-  }
+  },
+  childRoutes: [ createTablesRoute(COMPONENT_ID)]
 };

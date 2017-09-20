@@ -19,6 +19,7 @@ RouterStore = require('../../stores/RoutesStore')
 componentId = 'tde-exporter'
 {fromJS} = require 'immutable'
 VersionsActionCreators = require '../components/VersionsActionCreators'
+{createTablesRoute} = require '../table-browser/routes'
 
 # return first non empty(aka authorized) writer account
 findNonEmptyAccount = (configData) ->
@@ -103,6 +104,8 @@ module.exports =
     InstalledComponentsStore.getConfig(componentId, configId).get('name')
 
   childRoutes: [
+    createTablesRoute(componentId)
+  ,
     #isComponent: true
     name: "tde-exporter-table"
     path: 'table/:tableId'

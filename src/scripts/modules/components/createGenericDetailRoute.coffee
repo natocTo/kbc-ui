@@ -16,6 +16,7 @@ JobsActionCreators = require '../jobs/ActionCreators'
 ComponentsActionCreators = require './ComponentsActionCreators'
 injectProps = require('./react/injectProps').default
 OauthUtils = require '../oauth-v2/OauthUtils'
+{createTablesRoute} = require '../table-browser/routes'
 
 module.exports = (componentType) ->
   # return
@@ -64,6 +65,7 @@ module.exports = (componentType) ->
       action: (params) ->
         JobsActionCreators.loadComponentConfigurationLatestJobs(params.component, params.config)
     childRoutes: [
+      createTablesRoute('generic-detail-' + componentType + '-config')
       createVersionsPageRoute(null, 'config', componentType + '-versions')
       OauthUtils.createRedirectRoute(
         'generic-' + componentType + '-oauth-redirect'

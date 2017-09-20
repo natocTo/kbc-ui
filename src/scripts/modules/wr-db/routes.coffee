@@ -9,6 +9,7 @@ CredentialsHeader = require './react/components/CredentialsHeaderButtons'
 storageActionCreators = require '../components/StorageActionCreators'
 JobsActionCreators = require '../jobs/ActionCreators'
 DockerProxyApi = require('./templates/dockerProxyApi').default
+{createTablesRoute} = require '../table-browser/routes'
 #driver = 'mysql'
 #componentId = 'wr-db'
 
@@ -43,6 +44,8 @@ createRoute = (componentId, driver, isProvisioning) ->
 
   ]
   childRoutes: [
+    createTablesRoute(componentId)
+  ,
     #isComponent: true
     name: "#{componentId}-table"
     path: 'table/:tableId'

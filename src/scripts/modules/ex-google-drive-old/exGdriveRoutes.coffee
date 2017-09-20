@@ -9,6 +9,7 @@ ExGdriveSheetHeaderButtons = require './react/components/SheetHeaderButtons'
 sheetsPicker = require './react/pages/sheets-picker/SheetsPicker'
 ExGdriveSheetSelectionHeader = require './react/components/SaveSelectedSheetsHeader'
 JobsActionCreators = require '../jobs/ActionCreators'
+{createTablesRoute} = require '../table-browser/routes'
 
 module.exports =
   name: 'ex-google-drive'
@@ -27,6 +28,8 @@ module.exports =
     configId = routerState.getIn ['params', 'config']
     IntalledComponentsStore.getConfig('ex-google-drive', configId).get 'name'
   childRoutes: [
+    createTablesRoute('ex-google-drive')
+  ,
     name: 'ex-google-drive-select-sheets'
     path: 'sheets'
     handler: sheetsPicker
@@ -42,7 +45,8 @@ module.exports =
     path: 'sheet/:fileId/:sheetId'
     title: ->
       'sheet'
-    handler: sheetDetail
+    defaultRouteHandler: sheetDetail
     headerButtonsHandler: ExGdriveSheetHeaderButtons
+    childRoutes: [ createTablesRoute('ex-google-drive-sheet')]
 
   ]

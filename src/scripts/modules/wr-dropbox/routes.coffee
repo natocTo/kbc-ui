@@ -10,6 +10,7 @@ RouterStore = require('../../stores/RoutesStore')
 ApplicationActionCreators = require('../../actions/ApplicationActionCreators')
 JobsActionCreators = require '../jobs/ActionCreators'
 VersionsActionCreators = require '../components/VersionsActionCreators'
+{createTablesRoute} = require '../table-browser/routes'
 
 module.exports = (componentId) ->
   name: componentId
@@ -31,6 +32,8 @@ module.exports = (componentId) ->
       JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
   defaultRouteHandler: IndexPage(componentId)
   childRoutes: [
+    createTablesRoute(componentId)
+  ,
     name: 'wr-dropbox-oauth-redirect' + componentId
     path: 'oauth-redirect'
     title: ''

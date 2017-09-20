@@ -4,6 +4,7 @@ import HeaderButtons from './react/HeaderButtons';
 import storageActions from '../components/StorageActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
+import {createTablesRoute} from '../table-browser/routes';
 
 const componentId = 'geneea.nlp-analysis-v2';
 
@@ -21,5 +22,6 @@ export default {
   poll: {
     interval: 5,
     action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
-  }
+  },
+  childRoutes: [ createTablesRoute(componentId)]
 };

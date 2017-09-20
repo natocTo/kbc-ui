@@ -20,6 +20,7 @@ TransformationNameEdit = require './react/components/TransformationNameEditField
 ApplicationsStore = require '../../stores/ApplicationStore'
 JobsActionCreators = require '../jobs/ActionCreators'
 injectProps = require('../components/react/injectProps').default
+{createTablesRoute} = require '../table-browser/routes'
 Immutable = require('immutable')
 
 routes =
@@ -87,6 +88,8 @@ routes =
               StorageActionCreators.loadBuckets()
           ]
           childRoutes: [
+            createTablesRoute('transformationDetail')
+          ,
             name: 'transformationDetailGraph'
             path: 'graph'
             title: (routerState) ->

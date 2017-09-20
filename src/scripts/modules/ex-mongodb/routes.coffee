@@ -20,7 +20,7 @@ ExDbQueryName = require '../ex-db-generic/react/components/QueryName'
 JobsActionCreators = require '../jobs/ActionCreators'
 StorageActionCreators = require('../components/StorageActionCreators')
 VersionsActionsCreators = require('../components/VersionsActionCreators')
-
+{createTablesRoute} = require '../table-browser/routes'
 storeProvisioning = require './storeProvisioning'
 
 credentialsTemplate = require '../ex-db-generic/templates/credentials'
@@ -45,6 +45,8 @@ module.exports = (componentId) ->
       JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
   defaultRouteHandler: ExDbIndex(componentId)
   childRoutes: [
+    createTablesRoute(componentId)
+  ,
     name: "ex-db-generic-#{componentId}-query"
     path: 'query/:query'
     title: (routerState) ->
@@ -60,13 +62,14 @@ module.exports = (componentId) ->
       ->
         StorageActionCreators.loadTables()
     ]
-    handler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning)
+    defaultRouteHandler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning)
     headerButtonsHandler: ExDbQueryHeaderButtons(
       componentId,
       actionsProvisioning,
       storeProvisioning,
       'Export'
     )
+    childRoutes: [ createTablesRoute("ex-db-generic-#{componentId}-query")]
   ,
     name: "ex-db-generic-#{componentId}-new-query"
     path: 'new-query'

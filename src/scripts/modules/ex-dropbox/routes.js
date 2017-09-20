@@ -6,6 +6,7 @@ import oauthActions from '../components/OAuthActionCreators';
 import RouterStore from '../../stores/RoutesStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
+import {createTablesRoute} from '../table-browser/routes';
 
 
 export default {
@@ -24,6 +25,7 @@ export default {
   defaultRouteHandler: Index,
 
   childRoutes: [
+    createTablesRoute('ex-dropbox'),
     {
       name: 'ex-dropbox-oauth-redirect',
       path: 'oauth-redirect',

@@ -11,6 +11,7 @@ import * as oauthUtils from '../oauth-v2/OauthUtils';
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import storageActions from '../components/StorageActionCreators';
+import {createTablesRoute} from '../table-browser/routes';
 
 const COMPONENT_ID = 'keboola.ex-google-drive';
 
@@ -36,6 +37,7 @@ export default {
     action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs(COMPONENT_ID, params.config)
   },
   childRoutes: [
+    createTablesRoute(COMPONENT_ID),
     oauthUtils.createRedirectRouteSimple(COMPONENT_ID)
     // {
     //   name: COMPONENT_ID + '-sheet-detail',

@@ -12,6 +12,7 @@ ModelPage = require './react/pages/model/Model'
 storageActionCreators = require '../components/StorageActionCreators'
 JobsActionCreators = require '../jobs/ActionCreators'
 VersionsActionCreators = require '../components/VersionsActionCreators'
+{createTablesRoute} = require '../table-browser/routes'
 
 module.exports =
   name: 'gooddata-writer'
@@ -38,6 +39,8 @@ module.exports =
     configId = routerState.getIn ['params', 'config']
     InstalledComponentsStore.getConfig('gooddata-writer', configId).get 'name'
   childRoutes: [
+    createTablesRoute('gooddata-writer')
+  ,
     name: 'gooddata-writer-table'
     path: 'table/:table'
     requireData: [
