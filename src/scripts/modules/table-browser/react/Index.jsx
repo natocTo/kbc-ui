@@ -297,7 +297,7 @@ export default React.createClass({
   redirectBack() {
     const routerState = RoutesStore.getRouterState();
     const currentPath = routerState.get('path') || '';
-    const parts = currentPath.split(`${PATH_PREFIX}/`);
+    const parts = currentPath.split(`/${PATH_PREFIX}/`);
     const backPath = parts ? parts[0] : '/';
     RoutesStore.getRouter().transitionTo(backPath || '/');
   },
