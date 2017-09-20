@@ -29,3 +29,8 @@ module.exports =
       description: 'Detect the emotions contained in the text. \
       Was the author happy (I loved it.), neutral (We went to London.) or unhappy (The lunch was not good at all.) \
       with their experience? You can detect sentiment of reviews, feedback or customer service inquiries.'
+
+    relations:
+      name: 'Relations',
+      description: 'Extract basic attributes of events and properties of things. \
+      For example: recommend(SUBJECT:I, OBJECT:scrambled eggs) or burnt(OBJECT:pizza)'
