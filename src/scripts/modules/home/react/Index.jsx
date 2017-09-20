@@ -57,7 +57,9 @@ export default React.createClass({
 
   countOverviewComponent() {
     let componentCount = 0;
-    componentCount += this.state.projectHasTryModeOn;
+    if (this.state.projectHasTryModeOn) {
+      componentCount++;
+    }
     componentCount += this.state.limitsOverQuota.count();
     componentCount += this.state.installedComponents.filter(function(component) {
       return !!component.get('flags', []).contains('deprecated');
@@ -69,12 +71,11 @@ export default React.createClass({
   },
 
   render() {
-    this.countOverviewComponent();
     return (
         <div className="container-fluid">
           {this.countOverviewComponent() > 0  &&
           <div className="kbc-overview-component-container">
-            {this.state.projectHasTryModeOn === 1 &&
+            {this.state.projectHasTryModeOn &&
             <div className="kbc-overview-component">
               <div className="try-desk-container">
                 <div className="try-desk">
