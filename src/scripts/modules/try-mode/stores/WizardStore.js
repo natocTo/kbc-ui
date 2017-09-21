@@ -3,6 +3,7 @@ import StoreUtils from '../../../utils/StoreUtils';
 import {ActionTypes} from './ActionCreators';
 import wizardLessons from '../WizardLessons';
 import RoutesStore from '../../../stores/RoutesStore';
+import ApplicationStore from '../../../stores/ApplicationStore';
 
 let store = {
   showLessonModal: false,
@@ -48,7 +49,11 @@ Dispatcher.register((payload) => {
     WizardStore.emitChange();
     const nextLink = WizardStore.getNextLink();
     if (nextLink) {
-      RoutesStore.getRouter().transitionTo(nextLink);
+      if (nextLink === 'storage') {
+        ApplicationStore.getProjectPageUrl(nextLink);
+      } else {
+        RoutesStore.getRouter().transitionTo(nextLink);
+      }
     }
     return null;
   }
