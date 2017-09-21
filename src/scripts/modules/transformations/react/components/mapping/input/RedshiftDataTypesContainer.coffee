@@ -71,47 +71,48 @@ module.exports = React.createClass
     SMALLINT:
       name: "SMALLINT",
       size: false,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "DELTA", "MOSTLY8"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "ZSTD", "DELTA", "MOSTLY8"]
     INTEGER:
       name: "INTEGER",
       size: false,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "DELTA", "DELTA32K", "MOSTLY8", "MOSTLY16"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "ZSTD", "DELTA", "DELTA32K", "MOSTLY8", "MOSTLY16"]
     BIGINT:
       name: "BIGINT",
       size: false,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "DELTA", "DELTA32K", "MOSTLY8", "MOSTLY16", "MOSTLY32"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "ZSTD", "DELTA", "DELTA32K", "MOSTLY8", "MOSTLY16",
+        "MOSTLY32"]
     DECIMAL:
       name: "DECIMAL",
       size: true,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "DELTA32K", "MOSTLY8", "MOSTLY16", "MOSTLY32"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "ZSTD", "DELTA32K", "MOSTLY8", "MOSTLY16", "MOSTLY32"]
     REAL:
       name: "REAL",
       size: false,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "ZSTD"]
     "DOUBLE PRECISION":
       name: "DOUBLE PRECISION",
       size: false,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "ZSTD"]
     "BOOLEAN":
       name: "BOOLEAN",
       size: false,
-      compression: ["RAW", "RUNLENGTH"]
+      compression: ["RAW", "RUNLENGTH", "ZSTD"]
     "CHAR":
       name: "CHAR",
       size: true,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "ZSTD"]
     "VARCHAR":
       name: "VARCHAR",
       size: true,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "TEXT255", "TEXT32K"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "LZO", "ZSTD", "TEXT255", "TEXT32K"]
     "DATE":
       name: "DATE",
       size: false,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "DELTA", "DELTA32K"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "DELTA", "DELTA32K", "ZSTD"]
     "TIMESTAMP":
       name: "TIMESTAMP",
       size: false,
-      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "DELTA", "DELTA32K"]
+      compression: ["RAW", "RUNLENGTH", "BYTEDICT", "DELTA", "DELTA32K", "ZSTD"]
 
   _getDatatypeOptions: ->
     _.keys(@_datatypesMap)
