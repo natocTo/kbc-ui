@@ -168,10 +168,6 @@
   }
 
   &-wizard {
-      //FIX OF TRANSLATE BLUR BUG IN CHROME
-      -webkit-font-smoothing: subpixel-antialiased;
-      -webkit-transform: translateZ(0) scale(1.0, 1.0);
-
     &.modal {
       h3{
         font-size: 16px;
@@ -237,6 +233,12 @@
         transition: all 200ms ease;
       }
 
+      &.try-wizard-center {
+        //FIX OF TRANSLATE BLUR BUG IN CHROME
+        -webkit-font-smoothing: subpixel-antialiased;
+        -webkit-transform: translateZ(0) scale(1.0, 1.0);
+
+      }
       &.try-wizard-aside {
         .try-media {
           max-width:inherit;
