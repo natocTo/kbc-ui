@@ -90,7 +90,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'position': 'aside',
       'backdrop': false,
       'title': 'Check Storage',
-      'link': '//storage',
+      'link': 'storage',
       'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue to next lesson - Visualizing Results. Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow a hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''

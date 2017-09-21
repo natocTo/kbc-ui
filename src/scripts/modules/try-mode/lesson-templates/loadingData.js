@@ -104,7 +104,7 @@ export default {
       'position': 'aside',
       'backdrop': false,
       'title': 'Stored Extraction',
-      'link': '//storage',
+      'link': 'storage',
       'markdown': '**Storage** let you see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. ' +
       'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow a hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.<br>Click on **Next step**.',
       'media': '',
