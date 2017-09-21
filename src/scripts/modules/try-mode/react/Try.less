@@ -61,23 +61,11 @@
       line-height: 1.5;
     }
 
-
-    a{
-      padding: 4px 8px;
-      transition: 0.03s all linear;
+    a {
+      color: #fff;
       text-decoration: underline;
-
-      &:focus,
-      &:active{
-        color: #fff;
-        outline:none;
-      }
-      &:hover{
-        background: #50c4ee;
-        border-radius: 5px;
-        text-decoration: none;
-      }
     }
+
     h1 {
       font-size: 36px;
       line-height: 40px;
@@ -101,6 +89,22 @@
     }
     li {
       line-height: 1.5;
+      a{
+        padding: 4px 8px;
+        transition: 0.03s all linear;
+        text-decoration: underline;
+
+        &:focus,
+        &:active{
+          color: #fff;
+          outline:none;
+        }
+        &:hover{
+          background: #50c4ee;
+          border-radius: 5px;
+          text-decoration: none;
+        }
+      }
     }
     strong {
       font-weight: bold;
