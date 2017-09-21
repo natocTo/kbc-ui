@@ -1,9 +1,10 @@
 import React from 'react';
 import {Modal, Button, ResponsiveEmbed} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
-import { hideWizardModalFn } from '../stores/ActionCreators.js';
+import { hideWizardModalFn, showWizardModalFn } from '../stores/ActionCreators.js';
 import TryModeImage from './TryModeImage';
 import Remarkable from 'react-remarkable';
+import lessons from '../../try-mode/WizardLessons';
 
 export default React.createClass({
   displayName: 'WizardModal',
@@ -33,12 +34,15 @@ export default React.createClass({
             )}
           </Modal.Header>
           <Modal.Body>
-            {this.isLastStep()}
             <div className="row">
               <div className="col-md-12">
-                {!this.isLastStep() &&
+                {this.getStepLayout() === 'content' &&
                  <span>
                    <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+                   {this.isLastStep() && !this.isLastLesson() &&
+                      this.renderNextLessonLink()
+                   }
+                   {this.isLastLesson()}
                  </span>
                 }
                  <div>
@@ -46,7 +50,7 @@ export default React.createClass({
                      {this.renderMedia()}
                    </div>
                  </div>
-                {this.isLastStep() &&
+                {this.getStepLayout() === 'congratulations' &&
                  <span className="try-congratulations">
                    <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
                  </span>
@@ -88,6 +92,9 @@ export default React.createClass({
   getStepPosition() {
     return this.getLessonSteps()[this.getActiveStep()].position;
   },
+  getStepLayout() {
+    return this.getLessonSteps()[this.getActiveStep()].layout;
+  },
   getStepMarkdown() {
     return this.getLessonSteps()[this.getActiveStep()].markdown;
   },
@@ -111,6 +118,13 @@ export default React.createClass({
   },
   isLastStep() {
     return this.getLessonSteps().length - 1 === this.getActiveStep();
+  },
+  isLastLesson() {
+    if (Object.keys(lessons).length === this.getLessonId()) {
+      return true;
+    } else {
+      return false;
+    }
   },
   getModalTitle() {
     return (<Modal.Title>{this.getLessonId() + '.' + this.getStepId() + ' ' + this.getStepTitle()}</Modal.Title>);
@@ -142,8 +156,6 @@ export default React.createClass({
     let buttonText = 'Next step';
     if (this.props.step === 0) {
       buttonText = 'Take lesson';
-    } else if (this.props.step === this.getStepsCount() - 2) {
-      buttonText = 'Finish';
     } else if (this.props.step === this.getStepsCount() - 1) {
       buttonText = 'Close';
     }
@@ -152,9 +164,26 @@ export default React.createClass({
     );
   },
 
+  renderNextLessonLink() {
+    return (
+        <p>
+          <span>Go to next lesson </span>
+          <a href="#" onClick={(e) => {
+            e.preventDefault();
+            this.gotoNextLesson();
+          }}
+          >
+            {this.getLessonId() + 1}. {lessons[this.getLessonId() + 1].title}
+          </a>
+        </p>
+    );
+  },
   closeLessonModal() {
     RoutesStore.getRouter().transitionTo('home');
     hideWizardModalFn();
+  },
+  openLessonModal(lessonNumber) {
+    showWizardModalFn(lessonNumber);
   },
   decreaseStep() {
     if (this.props.step > 0) {
@@ -171,6 +200,9 @@ export default React.createClass({
     } else {
       this.closeLessonModal();
     }
+  },
+  gotoNextLesson() {
+    this.closeLessonModal();
+    this.openLessonModal(this.getLessonId() + 1);
   }
-
 });

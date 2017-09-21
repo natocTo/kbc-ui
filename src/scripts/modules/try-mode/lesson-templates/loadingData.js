@@ -11,6 +11,7 @@ export default {
     {
       'id': 1,
       'position': 'center',
+      'layout': 'content',
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
@@ -20,6 +21,7 @@ export default {
     }, {
       'id': 2,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Create Extractor',
       'link': 'extractors',
@@ -37,6 +39,7 @@ export default {
     }, {
       'id': 3,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Setup Connection',
       'markdown': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection.'
@@ -54,6 +57,7 @@ export default {
     }, {
       'id': 4,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Create SQL Query',
       'markdown':
@@ -73,6 +77,7 @@ export default {
     {
       'id': 5,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Create second SQL Query',
       'markdown':
@@ -93,6 +98,7 @@ export default {
     {
       'id': 6,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Run Extracion',
       'markdown': 'Now let’s click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> to load the data from the two database tables into the new tables in **Storage**.',
@@ -101,24 +107,15 @@ export default {
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS}
     }, {
       'id': 7,
-      'position': 'aside',
+      'position': 'center',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Stored Extraction',
       'link': 'storage',
       'markdown': '**Storage** let you see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. ' +
-      'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow a hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.<br>Click on **Next step**.',
+      'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow a hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
-    },
-    {
-      'id': 8,
-      'position': 'center',
-      'backdrop': true,
-      'title': 'Congratulations',
-      'link': 'home',
-      'markdown': 'Congratulations! Lesson finished.',
-      'media': 'keboola-finished.svg',
-      'mediaType': 'img'
     }
   ]
 };
