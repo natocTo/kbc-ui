@@ -37,12 +37,6 @@
         display: none;
       }
     }
-    .dialog {
-      //FIX OF TRANSLATE BLUR BUG IN CHROME
-      -webkit-font-smoothing: subpixel-antialiased;
-      -webkit-transform: translateZ(0) scale(1.0, 1.0);
-    }
-
     //this should better be in Indigo-ui
     @media (max-height: 765px) {
       .kbc-nav-sidebar > li > a {
@@ -174,6 +168,10 @@
   }
 
   &-wizard {
+      //FIX OF TRANSLATE BLUR BUG IN CHROME
+      -webkit-font-smoothing: subpixel-antialiased;
+      -webkit-transform: translateZ(0) scale(1.0, 1.0);
+
     &.modal {
       h3{
         font-size: 16px;
