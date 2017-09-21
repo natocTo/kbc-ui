@@ -2,6 +2,8 @@
 /*  TRY MODE  */
 /* ========== */
 
+
+
 .try {
   @TryColor1: #0099CE;
   @TryColor2: #25B8EB;
@@ -34,6 +36,11 @@
       .try-desk-container{
         display: none;
       }
+    }
+    .dialog {
+      //FIX OF TRANSLATE BLUR BUG IN CHROME
+      -webkit-font-smoothing: subpixel-antialiased;
+      -webkit-transform: translateZ(0) scale(1.0, 1.0);
     }
   }
 
@@ -211,6 +218,8 @@
         right: 50%;
         top: 355px;
         transform: translate(50%, -50%);
+
+
         width: @wizardWidth;
         transition: all 200ms ease;
       }
