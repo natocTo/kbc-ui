@@ -112,7 +112,7 @@ export default React.createClass({
                       <br/>
                       <br/>
                       Feel free to switch Try Mode off at any time. You can always bring it back by going to <a
-                        className="try-link" href={ApplicationStore.getProjectPageUrl('settings-users')}>Settings
+                        className="try-link" href={ApplicationStore.getProjectPageUrl('settings')}>Settings
                       > Try Mode.</a>
                     </p>
                   </div>

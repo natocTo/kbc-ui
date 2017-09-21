@@ -10,6 +10,7 @@ export default {
     {
       'id': 1,
       'position': 'center',
+      'layout': 'content',
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
@@ -21,6 +22,7 @@ export default {
     {
       'id': 2,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Create Writer',
       'link': 'writers',
@@ -38,6 +40,7 @@ export default {
     },
     {
       'id': 3,
+      'layout': 'content',
       'position': 'aside',
       'backdrop': false,
       'title': 'Create Table',
@@ -53,21 +56,12 @@ export default {
     },
     {
       'id': 4,
+      'layout': 'content',
       'position': 'center',
       'backdrop': true,
       'title': 'Run Extracion',
       'markdown': 'The final step is to open the downloaded file in Tableau and create any reports we want. To see how to automate the whole process, continue to the next lesson - Project Automation. Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
       'media': 'tbl.png',
-      'mediaType': 'img'
-    },
-    {
-      'id': 5,
-      'position': 'center',
-      'backdrop': true,
-      'title': 'Congratulations',
-      'link': 'home',
-      'markdown': 'Congratulations! Lesson finished.',
-      'media': 'keboola-finished.svg',
       'mediaType': 'img'
     }
   ]

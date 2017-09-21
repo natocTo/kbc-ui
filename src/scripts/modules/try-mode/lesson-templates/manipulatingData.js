@@ -11,6 +11,7 @@ export default {
     {
       'id': 1,
       'position': 'center',
+      'layout': 'content',
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
@@ -20,6 +21,7 @@ export default {
     }, {
       'id': 2,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Create Bucket',
       'link': 'transformations',
@@ -30,6 +32,7 @@ export default {
     }, {
       'id': 3,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Create Transformation',
       'link': '',
@@ -40,6 +43,7 @@ export default {
     }, {
       'id': 4,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Map data & set queries',
       'link': '',
@@ -68,6 +72,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
     }, {
       'id': 5,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Run Transformation',
       'link': '',
@@ -78,6 +83,7 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
     }, {
       'id': 6,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Check Jobs',
       'link': 'jobs',
@@ -87,23 +93,14 @@ On cars.COUNTRY = population.COUNTRY\` and **Save** it.
       'mediaType': ''
     }, {
       'id': 7,
-      'position': 'aside',
+      'position': 'center',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Check Storage',
       'link': 'storage',
       'markdown': 'We can see what the final table looks like in this Data Sample in Storage. To see how to write the output data from Keboola Connection, continue to next lesson - Visualizing Results. Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow a hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
-    },
-    {
-      'id': 8,
-      'position': 'center',
-      'backdrop': true,
-      'title': 'Congratulations',
-      'link': 'home',
-      'markdown': 'Congratulations! Lesson finished.',
-      'media': 'keboola-finished.svg',
-      'mediaType': 'img'
     }
   ]
 };

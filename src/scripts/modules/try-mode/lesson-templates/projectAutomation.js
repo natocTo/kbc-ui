@@ -9,6 +9,7 @@ export default {
     {
       'id': 1,
       'position': 'center',
+      'layout': 'content',
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
@@ -18,6 +19,7 @@ export default {
     }, {
       'id': 2,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Create Orchestration',
       'link': 'orchestrations',
@@ -28,6 +30,7 @@ export default {
     }, {
       'id': 3,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Orchestration Overview',
       'markdown': 'We only need to specify what tasks should be executed, in which order and when. We can also set up notifications that will be sent to us if something needs your attention. Start by click on **Configure Tasks**.',
@@ -37,6 +40,7 @@ export default {
     }, {
       'id': 4,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Configure Task',
       'markdown': 'Let`s compose new task in desired order from previous lessons. Start adding tasks by clicking on green button **+ New task**. Configure the task in following order:'
@@ -55,6 +59,7 @@ Then **Save** the task.
     }, {
       'id': 5,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Schedule Orchestration',
       'markdown': 'Now let`s schedule our configured task. Select how often, which days and at what time we want the orchestration to run.' +
@@ -71,6 +76,7 @@ Then **Save** the task.
     }, {
       'id': 6,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Configure Notifications',
       'markdown': 'Last step is to enter email address to receive notifications about your scheduled tasks.' +
@@ -88,6 +94,7 @@ Then **Save** the task.
     }, {
       'id': 7,
       'position': 'center',
+      'layout': 'content',
       'backdrop': true,
       'title': 'Conclusion',
       'markdown': 'That`s it! From data extraction to data writing, we have set up the full pipeline. Any change to our Snowflake database tables will be automatically reflected in our Tableau results. Learn more about <a href="https://help.keboola.com/overview/#full-automation" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
@@ -97,10 +104,11 @@ Then **Save** the task.
     {
       'id': 8,
       'position': 'center',
+      'layout': 'congratulations',
       'backdrop': true,
       'title': 'Congratulations',
       'link': 'home',
-      'markdown': 'Congratulations! Lesson finished.',
+      'markdown': 'Congratulations! All Lessons finished.',
       'media': 'keboola-finished.svg',
       'mediaType': 'img'
     }

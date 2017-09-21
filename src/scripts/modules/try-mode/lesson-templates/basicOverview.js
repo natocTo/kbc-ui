@@ -5,6 +5,7 @@ export default {
     {
       'id': 1,
       'position': 'center',
+      'layout': 'content',
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
@@ -15,6 +16,7 @@ export default {
     {
       'id': 2,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Extract data',
       'link': 'extractors',
@@ -25,6 +27,7 @@ export default {
     {
       'id': 3,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Store data',
       'link': 'storage',
@@ -35,6 +38,7 @@ export default {
     {
       'id': 4,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Manipulate data',
       'link': 'transformations',
@@ -46,6 +50,7 @@ export default {
     {
       'id': 5,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Write results',
       'link': 'writers',
@@ -56,6 +61,7 @@ export default {
     {
       'id': 6,
       'position': 'aside',
+      'layout': 'content',
       'backdrop': false,
       'title': 'Automate',
       'link': 'orchestrations',
@@ -67,21 +73,12 @@ export default {
     {
       'id': 7,
       'position': 'center',
+      'layout': 'content',
       'backdrop': true,
       'title': 'Example Workflow',
       'link': 'home',
       'markdown': 'Having learned all the basics, let’s explore the individual steps a little more. In the following lessons, we will extract data from two database tables, merge them into one table, calculate some statistics, and visualize the results. Finally, we will set up the whole process to run automatically.',
       'media': 'kbc_scheme_light_blue.svg',
-      'mediaType': 'img'
-    },
-    {
-      'id': 8,
-      'position': 'center',
-      'backdrop': true,
-      'title': 'Congratulations',
-      'link': 'home',
-      'markdown': 'Congratulations! Lesson finished.',
-      'media': 'keboola-finished.svg',
       'mediaType': 'img'
     }
   ]

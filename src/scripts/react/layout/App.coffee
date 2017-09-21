@@ -51,7 +51,7 @@ App = React.createClass
             'Try Mode'
           p null,
             ' — learn everything you need to know about Keboola Connection'
-          a href: ApplicationStore.getProjectPageUrl('settings-users'),
+          a href: ApplicationStore.getProjectPageUrl('settings'),
             'Disable Try Mode \xa0',
             i className: 'fa fa-times',
       PageTitle()
