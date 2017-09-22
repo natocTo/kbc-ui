@@ -99,7 +99,7 @@ templateFn = (componentId, driver, isProvisioning) ->
             onClick: @_handleEditStart
           ,
             span className: 'fa fa-edit'
-            ' Edit'
+            ' Edit Credentials'
 
     if state in [States.CREATE_NEW_CREDS, States.SAVING_NEW_CREDS]
       return React.DOM.div null,
