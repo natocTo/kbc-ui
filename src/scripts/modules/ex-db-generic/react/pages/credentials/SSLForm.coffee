@@ -16,6 +16,8 @@ module.exports = React.createClass
     enabled: React.PropTypes.bool.isRequired
     onChange: React.PropTypes.func
     componentId: React.PropTypes.string.isRequired
+    configId: React.PropTypes.string.isRequired
+    isEditing: React.PropTypes.bool.isRequired
     actionsProvisioning: React.PropTypes.object.isRequired
 
   getDefaultProps: ->
@@ -52,6 +54,9 @@ module.exports = React.createClass
           React.createElement TestCredentials,
             testCredentialsFn: @testCredentials
             hasOffset: false
+            componentId: @props.componentId
+            configId: @props.configId
+            isEditing: @props.isEditing
 
   testCredentials: ->
     ExDbActionCreators = @props.actionsProvisioning.createActions(@props.componentId)

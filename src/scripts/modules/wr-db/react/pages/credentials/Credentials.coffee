@@ -218,6 +218,7 @@ templateFn = (componentId, driver, isProvisioning) ->
       isSaving: isSaving
       isProvisioning: !isEditing && isProvisioningProp
       componentId: componentId
+      configId: @state.configId
       driver: driver
       testCredentialsFn: (credentials) =>
         @state.v2Actions.testCredentials(credentials)
