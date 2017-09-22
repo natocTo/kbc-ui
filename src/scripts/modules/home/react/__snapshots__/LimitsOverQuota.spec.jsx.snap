@@ -8,12 +8,13 @@ exports[`<LimitsOverQuota /> should render limits 1`] = `
       <h3>
         Project is over quota
       </h3>
-      <ul>
-        <Link
-          activeClassName="active"
-          className=""
-          to="settings-limits">
-          <li>
+      <ul
+        className="list-unstyled">
+        <li>
+          <Link
+            activeClassName="active"
+            className=""
+            to="settings-limits">
             <strong>
               Section 1
                - 
@@ -21,8 +22,13 @@ exports[`<LimitsOverQuota /> should render limits 1`] = `
             </strong>
              
             (12.88 GB of 107.37 GB)
-          </li>
-          <li>
+          </Link>
+        </li>
+        <li>
+          <Link
+            activeClassName="active"
+            className=""
+            to="settings-limits">
             <strong>
               Section 2
                - 
@@ -30,8 +36,8 @@ exports[`<LimitsOverQuota /> should render limits 1`] = `
             </strong>
              
             (1,100 of 15,000)
-          </li>
-        </Link>
+          </Link>
+        </li>
       </ul>
     </div>
   </div>
@@ -39,3 +45,35 @@ exports[`<LimitsOverQuota /> should render limits 1`] = `
 `;
 
 exports[`<LimitsOverQuota /> should render nothing for no limits 1`] = `null`;
+
+exports[`<LimitsOverQuota /> should render one limit 1`] = `
+<div
+  className="kbc-overview-component">
+  <div
+    className="row kbc-header kbc-limits kbc-limits-one">
+    <div
+      className="alert alert-danger">
+      <h3>
+        Project is over quota
+      </h3>
+      <ul
+        className="list-unstyled">
+        <li>
+          <Link
+            activeClassName="active"
+            className=""
+            to="settings-limits">
+            <strong>
+              Section 1
+               - 
+              My Limit 1
+            </strong>
+             
+            (12.88 GB of 107.37 GB)
+          </Link>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

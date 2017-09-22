@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
+import classnames from 'classnames';
+
 import {bytesToGBFormatted, numericMetricFormatted} from '../../../utils/numbers';
 
 import './limits.less';
@@ -18,15 +20,18 @@ export default React.createClass({
 
     return (
         <div className="kbc-overview-component">
-          <div className="row kbc-header kbc-limits">
+          <div className={classnames(
+            'row',
+            'kbc-header',
+            'kbc-limits',
+            {'kbc-limits-one': limits.size === 1}
+          )}>
             <div className="alert alert-danger">
               <h3>
                 Project is over quota
               </h3>
-              <ul>
-                <Link to="settings-limits">
-                  {limits.map(this.limit)}
-                </Link>
+              <ul className="list-unstyled">
+                {limits.map(this.limit)}
               </ul>
             </div>
           </div>
@@ -45,7 +50,9 @@ export default React.createClass({
 
     return (
       <li key={index}>
-        <strong>{limit.get('section')} - {limit.get('name')}</strong> {values}
+        <Link to="settings-limits">
+          <strong>{limit.get('section')} - {limit.get('name')}</strong> {values}
+        </Link>
       </li>
     );
   }
