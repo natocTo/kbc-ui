@@ -34,6 +34,7 @@ export default React.createClass({
                     credentialsTemplate={this.props.credentialsTemplate}
                     hasSshTunnel={this.props.hasSshTunnel}
                     actionsProvisioning={this.props.actionsProvisioning}
+                    isEditing={this.props.isEditing}
                 />
               </TabPane>
               {this.renderSSLForm()}
@@ -52,7 +53,9 @@ export default React.createClass({
                 enabled={this.props.isEditing}
                 onChange={this.props.onChange}
                 componentId={this.props.componentId}
+                configId={this.props.configId}
                 actionsProvisioning={this.props.actionsProvisioning}
+                isEditing={this.props.isEditing}
                 />
           </TabPane>
       );

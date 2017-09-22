@@ -30,6 +30,7 @@ module.exports = React.createClass
     isSaving: React.PropTypes.bool
     isProvisioning: React.PropTypes.bool
     componentId: React.PropTypes.string
+    configId: React.PropTypes.string
     driver: React.PropTypes.string
     testCredentialsFn: React.PropTypes.func
 
@@ -90,6 +91,9 @@ module.exports = React.createClass
         testCredentialsFn: =>
           # creds = if @props.isProvisioning then @props.savedCredentials else @props.credentials
           @props.testCredentialsFn(@props.credentials)
+        componentId: @props.componentId,
+        configId: @props.configId,
+        isEditing: @props.isEditing,
 
   _renderSshTunnelRow: ->
     if not hasSshTunnel(@props.componentId) or @props.isProvisioning

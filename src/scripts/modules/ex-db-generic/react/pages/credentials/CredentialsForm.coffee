@@ -21,6 +21,7 @@ module.exports = React.createClass
     onChange: React.PropTypes.func
     componentId: React.PropTypes.string.isRequired
     configId: React.PropTypes.string.isRequired
+    isEditing: React.PropTypes.bool.isRequired
     credentialsTemplate: React.PropTypes.object.isRequired
     hasSshTunnel: React.PropTypes.func.isRequired
     actionsProvisioning: React.PropTypes.object.isRequired
@@ -42,8 +43,11 @@ module.exports = React.createClass
           onChange: (sshObject) =>
             @props.onChange(@props.credentials.set('ssh', sshObject))
       TestCredentialsButtonGroup
-        disabled: !this.props.isValidEditingCredentials
+        disabled: if this.props.enabled then !this.props.isValidEditingCredentials else false
         testCredentialsFn: @testCredentials
+        componentId: @props.componentId
+        configId: @props.configId
+        isEditing: @props.isEditing
 
   testCredentials: ->
     ExDbActionCreators = @props.actionsProvisioning.createActions(@props.componentId)

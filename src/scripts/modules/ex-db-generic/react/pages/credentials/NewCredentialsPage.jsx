@@ -24,6 +24,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
     render() {
       return (
         <Credentials
+          configId={this.state.configurationId}
           isValidEditingCredentials={this.state.isValidNewCredentials}
           savedCredentials={Map()}
           credentials={ this.state.credentials }
