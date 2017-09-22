@@ -203,13 +203,9 @@ export default React.createClass({
       bsSize: 'large'
     };
     return (
-      <div className="row">
-          <div className="col-md-12">
-              <div className="migration-row">
-                {this.renderInfoRow()}
-                {this.renderModal(dialogTitle, body, footer, dialogProps)}
-              </div>
-          </div>
+      <div className="migration-row">
+        {this.renderInfoRow()}
+        {this.renderModal(dialogTitle, body, footer, dialogProps)}
       </div>
     );
   },
