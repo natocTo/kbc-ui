@@ -88,6 +88,8 @@ module.exports = React.createClass
     span className: 'text-success',
       span className: 'fa fa-fw fa-check'
       ' Connected! '
+      if @props.isEditing
+        'Don\'t forget to save the credentials.'
 
   _testError: (result) ->
     span className: 'text-danger',
