@@ -56,7 +56,7 @@ module.exports = React.createClass
           if @state.isTesting
             span null,
               Loader()
-              ' Testing ...'
+              ' Connecting ...'
 
           if @state.result or @state.isError
             if @state.result.status in ['success', 'ok'] and not @state.isError
