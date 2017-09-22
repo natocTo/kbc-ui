@@ -203,9 +203,13 @@ export default React.createClass({
       bsSize: 'large'
     };
     return (
-      <div className="row kbc-header">
-        {this.renderInfoRow()}
-        {this.renderModal(dialogTitle, body, footer, dialogProps)}
+      <div className="row">
+          <div className="col-md-12">
+              <div className="migration-row">
+                {this.renderInfoRow()}
+                {this.renderModal(dialogTitle, body, footer, dialogProps)}
+              </div>
+          </div>
       </div>
     );
   },
@@ -215,7 +219,7 @@ export default React.createClass({
       <button
         onClick={this.showModal}
         disabled={this.state.isLoading}
-        type="sumbit" className="btn btn-success">
+        type="sumbit" className="btn btn-primary">
         Proceed to Migration
         {this.state.isLoading ? <Loader/> : null}
       </button>
@@ -234,16 +238,12 @@ export default React.createClass({
     return (
       <Alert bsStyle="warning">
         <span>
-          <h3 className="text-center">This component has been deprecated</h3>
-          <span>
+          <h3>This component has been deprecated</h3>
+          <div className="migration-row-content">
             {this.getInfo()}
-          </span>
-          <br/>
-          <br/>
+          </div>
         </span>
-        <div className="row component-empty-state text-center">
           {this.renderMigrationButton()}
-        </div>
       </Alert>
     );
   },
