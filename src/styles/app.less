@@ -286,15 +286,20 @@ a .kbcComponentIcon-3rdParty-64px {
 }
 
 .migration-row {
+  padding: 30px;
+  border: 2px solid #FFD452;
+  background-color: #FFF6DC;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
   .alert {
-    color: #282d38;
-    border: 2px solid #FFD452;
-    background-color: #FFF6DC;
     background-image: url('../scripts/modules/home/react/media/ic_error.svg');
-    background-position:calc(~"100% - 30px") 30px;
+    background-position: 100% 0;
     background-repeat: no-repeat;
-    margin-bottom: 10px;
-    padding: 30px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
   }
 
   h3 {
@@ -309,5 +314,6 @@ a .kbcComponentIcon-3rdParty-64px {
   &-content{
     margin-bottom: 30px;
     width: 80%;
+    color: #282d38;
   }
 }
