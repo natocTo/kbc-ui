@@ -1,9 +1,6 @@
 import React, {PropTypes} from 'react';
 import StringUtils from '../../../utils/string';
-// import {Link} from 'react-router';
-// import ComponentIndexLink from '../../../modules/components/react/components/ComponentIndexLink';
 import ComponentDetailLink from '../../../react/common/ComponentDetailLink';
-
 
 import './expiration.less';
 
@@ -34,17 +31,17 @@ export default React.createClass({
               </h3>
 
               <div className="row">
-                {grouped.map(function(components, type) {
+                {grouped.entrySeq().map(function([type, components]) {
                   return (
-                  <div className="col-md-6">
+                  <div className="col-md-6" key={type}>
                     <h4>
                       <span className={'kbc-' + type + '-icon'}/>
                         {StringUtils.capitalize(type)}s
                     </h4>
                     <ul>
-                    {components.map(function(component) {
+                    {components.entrySeq().map(function([index, component]) {
                       return (
-                        <li>
+                        <li key={index}>
                             <ComponentDetailLink
                             type={component.get('type')}
                             componentId={component.get('id')}
