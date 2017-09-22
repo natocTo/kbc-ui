@@ -50,7 +50,7 @@ exports[`<LimitsOverQuota /> should render one limit 1`] = `
 <div
   className="kbc-overview-component">
   <div
-    className="row kbc-header kbc-limits kbc-limits-one">
+    className="row kbc-header kbc-limits">
     <div
       className="alert alert-danger">
       <h3>

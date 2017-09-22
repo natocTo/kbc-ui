@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
-import classnames from 'classnames';
 
 import {bytesToGBFormatted, numericMetricFormatted} from '../../../utils/numbers';
 
@@ -20,12 +19,7 @@ export default React.createClass({
 
     return (
         <div className="kbc-overview-component">
-          <div className={classnames(
-            'row',
-            'kbc-header',
-            'kbc-limits',
-            {'kbc-limits-one': limits.size === 1}
-          )}>
+          <div className="row kbc-header kbc-limits">
             <div className="alert alert-danger">
               <h3>
                 Project is over quota
