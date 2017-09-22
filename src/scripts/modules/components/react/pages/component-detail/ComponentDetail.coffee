@@ -51,6 +51,10 @@ module.exports = React.createClass
 
   render: ->
     div className: "container-fluid",
+      if @_isDeprecated()
+        React.createElement MigrationRow,
+        componentId: @state.component.get('id')
+        replacementAppId: @state.component.getIn(['uiOptions', 'replacementApp'])
       div className: "kbc-main-content",
         React.createElement FormHeader,
           component: @state.component
@@ -62,10 +66,6 @@ module.exports = React.createClass
           div className: "col-md-6",
             React.createElement VendorInfo,
               component: @state.component
-        if @_isDeprecated()
-          React.createElement MigrationRow,
-            componentId: @state.component.get('id')
-            replacementAppId: @state.component.getIn(['uiOptions', 'replacementApp'])
         if (@state.component.get('longDescription'))
           div className: "row",
             div className: "col-md-12",

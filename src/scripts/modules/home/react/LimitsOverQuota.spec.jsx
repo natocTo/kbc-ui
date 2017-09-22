@@ -27,4 +27,18 @@ describe('<LimitsOverQuota />', function() {
 
     shallowSnapshot(<LimitsOverQuota limits={limits} />);
   });
+
+  it('should render one limit', function() {
+    const limits = Immutable.fromJS([
+      {
+        unit: 'bytes',
+        metricValue: 12884901888, // 12GB
+        limitValue: 107374182400,
+        section: 'Section 1',
+        name: 'My Limit 1'
+      }
+    ]);
+
+    shallowSnapshot(<LimitsOverQuota limits={limits} />);
+  });
 });

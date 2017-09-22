@@ -1,8 +1,6 @@
 .kbc-expiration {
   background-color: #FFF6DC;
-  background-image: url('media/ic_error_2.svg'), url('media/ic_error.svg'), url('media/ic_error_3.svg');
-  background-position: right top, right top, right 50px;
-  background-repeat: no-repeat;
+
 
   border: 2px solid #FFD452;
 
@@ -14,10 +12,10 @@
 
 
   h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 24px 0;
     font-size: 18px;
-    margin-bottom: 24px;
     color: #FF9D52;
+    font-weight: bold;
   }
 
   h4{
@@ -33,19 +31,26 @@
     padding-top: 4px;
   }
 
+  li{
+    line-height: 2;
+  }
+
   .alert {
     margin: 0;
-    margin-bottom: 0;
     padding: 0;
     border: 0;
     background-color: transparent;
-    color:#7C8498
+    background-image: url('media/ic_error.svg');
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    background-size: 75px 75px;
+    color:#7C8498;
   }
 
   a{
     color:#7C8498;
     &:hover{
-      color: #FF9D52;
+      color: #282D38;
     }
   }
 

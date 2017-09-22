@@ -255,10 +255,11 @@ a .kbcComponentIcon-3rdParty-64px {
 
 .kbc-main .kbc-header.kbc-limits,
 .kbc-main .kbc-header.kbc-expiration{
-  padding: 43px 60px !important
+  padding: 30px 30px !important
 }
 
 .kbc-main .kbc-overview-component{
+  min-height: 90px;
   .kbc-header{
     margin-top: 10px;
     margin-bottom: 10px;
@@ -281,5 +282,39 @@ a .kbcComponentIcon-3rdParty-64px {
   margin-top: 50px !important;
   &  + .kbc-main-content{
     margin-top: 10px!important;
+  }
+}
+
+.migration-row {
+  padding: 30px;
+  border: 2px solid #FFD452;
+  background-color: #FFF6DC;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+  .alert {
+    background-image: url('../scripts/modules/home/react/media/ic_error.svg');
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 75px 75px;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  h3 {
+    color: #FF9D52;
+    font-size: 18px;
+    line-height: 23px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-weight: bold;
+  }
+
+  &-content{
+    margin-bottom: 30px;
+    width: 80%;
+    color: #282d38;
   }
 }
