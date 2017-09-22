@@ -1,54 +1,57 @@
 .kbc-limits {
   background-color: #FEEDEF;
-  background-image: url('media/ic_warning.svg');
-  background-position: calc(~"100% - 28px") 30px;
-  background-repeat: no-repeat;
-
   border: 2px solid #F74D63;
-
   margin: 5px 0;
-
   border-radius: 5px;
   padding-top: 0!important;
   padding-bottom: 0!important;
 
-
   h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 20px 0;
     font-size: 18px;
-    margin-bottom: 20px;
     color: #f74d63;
     font-weight: bold;
   }
 
-  h6{
-
-  }
-
   ul {
-    margin-bottom: 10px;
-    list-style-type:none;
-    padding-left: 0;
-  }
-
-  li{
-    line-height: 2;
+    li {
+      line-height: 2;
+    }
   }
 
   .alert {
+    background-image: url('media/ic_warning.svg');
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    background-color: transparent;
     margin: 0;
-    margin-bottom: 0;
     padding: 0;
     border: 0;
-    background-color: transparent;
     color:#7C8498;
-    min-height: 90px;
   }
 
-  a{
+  a {
     color:#7C8498;
     &:hover{
-    color: #282D38;
+      color: #282D38;
+    }
   }
+
+  &.kbc-limits-one {
+    h3 {
+      display: inline-block;
+      margin-bottom: 0;
+      margin-right: 2em;
+    }
+
+    ul {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+
+    .alert {
+      background-size: auto 2em;
+    }
   }
+
 }
