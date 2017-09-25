@@ -75,9 +75,6 @@ module.exports = React.createClass
   _handleReset: ->
     @graph.reset()
 
-  _handleDownload: ->
-    @graph.download()
-
   handleResize: ->
     @graph.adjustCanvasWidth()
 
@@ -111,12 +108,6 @@ module.exports = React.createClass
           ,
             React.DOM.span className: 'fa fa-times'
             ' Reset'
-          Button
-            bsStyle: 'link'
-            onClick: @_handleDownload
-          ,
-            React.DOM.span className: 'fa fa-arrow-circle-o-down'
-            ' Download'
           React.DOM.select
             className: 'form-control pull-right'
             label: 'Direction'

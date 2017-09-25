@@ -36,10 +36,6 @@ class Graph
        <svg width="0" height="0" id="svgGraph" class="kb-graph"></svg>
      """
 
-    @canvasTemplate = """
-      <canvas id="canvasDownload" width="0" height="0"></canvas>
-    """
-
     wrapperElement.innerHTML = @svgTemplate
     @element = wrapperElement.childNodes[0]
 
@@ -172,42 +168,6 @@ class Graph
 
   adjustCanvasWidth: ->
     d3.select(@element).attr "width", @getCanvasWidth()
-
-  download: ->
-    config = {noLinks: true}
-    data = @getData(config)
-    if data
-      # create a new svg
-      svgElement = document.createElement 'div'
-      svgElement.innerHTML = @svgTemplate.replace('svgGraph', 'svgDownload')
-      document.body.appendChild svgElement
-      dimensions = @createSvg(d3.select("#svgDownload"), data, config)
-
-      svgElement = document.getElementById('svgDownload')
-      # detect height and width
-
-      d3.select(svgElement).attr "width", @dimensions.width * @zoom.scale + 10
-      d3.select(svgElement).attr "height", @dimensions.height * @zoom.scale + 10
-
-      # apply zoom
-      d3.select(svgElement).select("g").attr "transform", "translate(" + [5 , 5] + "), scale(" + @zoom.scale + ")"
-
-      #create canvas
-      canvasElement = document.createElement 'div'
-      canvasElement.innerHTML = @canvasTemplate
-      document.body.appendChild canvasElement
-
-      # conver canvast to img
-      xml = new XMLSerializer().serializeToString(svgElement)
-
-      canvg('canvasDownload', xml, { ignoreMouse: true, ignoreAnimation: true })
-      canvas = document.getElementById("canvasDownload")
-
-      image = canvas.toDataURL("image/png")
-      window.open image
-
-      svgElement.parentNode.removeChild(svgElement)
-      canvasElement.parentNode.removeChild(canvasElement)
 
   render: (centerNodeId) ->
     data = @getData()
