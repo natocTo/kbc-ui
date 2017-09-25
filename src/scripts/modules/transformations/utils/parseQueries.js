@@ -6,8 +6,10 @@ export default function(queries) {
     const worker = require('worker-loader?inline!./splitSqlQueriesWorker.js')();
     var success = false;
     worker.onmessage = function(e) {
-      success = true;
-      resolve(e.data);
+      if (e.data !== null) {
+        success = true;
+        resolve(e.data);
+      }
     };
     worker.postMessage({
       queries: queries

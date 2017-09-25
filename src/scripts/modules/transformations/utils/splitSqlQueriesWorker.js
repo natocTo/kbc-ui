@@ -12,6 +12,10 @@ self.addEventListener('message', function(e) {
     return;
   }
   const matches = data.queries.match(re);
+  if (matches === null) {
+    postMessage(null);
+    return;
+  }
   const response = matches
     .filter((line) => line.trim() !== '')
     .map((line) => line.trim());
