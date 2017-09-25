@@ -1,10 +1,11 @@
-const maxSqlExecutionTime = 2000;
 import Promise from 'bluebird';
 
+const maxSqlExecutionTime = 2000;
+
 export default function(queries) {
-  var promise = new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
     const worker = require('worker-loader?inline!./splitSqlQueriesWorker.js')();
-    var success = false;
+    let success = false;
     worker.onmessage = function(e) {
       if (e.data !== null) {
         success = true;
@@ -21,5 +22,4 @@ export default function(queries) {
       worker.terminate();
     }, maxSqlExecutionTime);
   });
-  return promise;
 }
