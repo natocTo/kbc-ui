@@ -16,7 +16,7 @@ import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './Sto
 import Tooltip from '../../../../react/common/Tooltip';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import EventsService from '../../../sapi-events/EventService';
+import {factory as eventsFactory} from '../../../sapi-events/EventsService';
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
@@ -83,7 +83,7 @@ export default React.createClass({
 
   getInitialState() {
     const omitFetches = true, omitExports = false, filterIOEvents = false;
-    const es = EventsService.factory({limit: 10});
+    const es = eventsFactory({limit: 10});
     const eventQuery = this.prepareEventQuery({omitFetches, omitExports, filterIOEvents});
     es.setQuery(eventQuery);
 

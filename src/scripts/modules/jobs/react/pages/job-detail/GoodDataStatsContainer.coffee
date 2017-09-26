@@ -1,5 +1,5 @@
 React = require 'react'
-EventsService = require('../../../../sapi-events/EventService').factory
+EventsService = require('../../../../sapi-events/EventsService').factory
 GoodDataStats = React.createFactory(require './GoodDataStats')
 _ = require 'underscore'
 Immutable = require 'immutable'

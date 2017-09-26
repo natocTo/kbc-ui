@@ -6,7 +6,7 @@ _ = require 'underscore'
 {Link} = require 'react-router'
 {div, span, p} = React.DOM
 
-EventService = require('../EventService')
+EventService = require('../EventsService')
 RoutesStore = require '../../../stores/RoutesStore'
 
 SearchRow = React.createFactory(require('../../../react/common/common').SearchRow)
@@ -35,6 +35,7 @@ Events = React.createClass
         isLoading: @_events.getIsLoading()
         isLoadingOlder: @_events.getIsLoadingOlder()
         hasMore: @_events.getHasMore()
+        errorMessage: @_events.getErrorMessage()
 
   getInitialState: ->
     events: Immutable.List()
@@ -100,6 +101,9 @@ Events = React.createClass
                 ' Back'
               p null,
                 "Event #{@props.currentEventId} not found."
+        else if @state.errorMessage
+          div className: 'alert alert-danger',
+            @state.errorMessage
         else if @state.events.count()
           div null,
             (EventsTable

@@ -9,7 +9,7 @@ InstalledComponentsStore = require '../../../../components/stores/InstalledCompo
 PureRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 {fromJS} = require 'immutable'
 
-Events = React.createFactory(require '../../../../sapi-events/react/Events')
+Events = React.createFactory(require('../../../../sapi-events/react/Events'))
 ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
 Duration = React.createFactory(require('../../../../../react/common/Duration'))
