@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import CodeMirror from 'react-code-mirror';
-import { StickyContainer, Sticky } from 'react-sticky';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import Immutable from 'immutable';
 
@@ -33,34 +32,22 @@ export default React.createClass({
     };
   },
 
-  stickyStyle() {
-    return {
-      top: '80px',
-      zIndex: 5
-    };
-  },
-
   render() {
     return (
-      <StickyContainer>
-        <div className="edit kbc-configuration-editor">
-          <div className="text-right">
-            <Sticky stickyClassName="kbc-sticky-buttons-active" className="kbc-sticky-buttons" topOffset={-87} stickyStyle={this.stickyStyle()}>
-              <ConfirmButtons
-                isSaving={this.props.isSaving}
-                onSave={this.handleSave}
-                onCancel={this.props.onCancel}
-                placement="right"
-                saveLabel={this.props.saveLabel}
-                isDisabled={!this.props.isValid}
-                />
-            </Sticky>
-          </div>
-          {this.renderJSONSchemaEditor()}
-          {this.renderCodeMirror()}
-
+      <div className="edit kbc-configuration-editor">
+        <div className="text-right">
+          <ConfirmButtons
+            isSaving={this.props.isSaving}
+            onSave={this.handleSave}
+            onCancel={this.props.onCancel}
+            placement="right"
+            saveLabel={this.props.saveLabel}
+            isDisabled={!this.props.isValid}
+            />
         </div>
-      </StickyContainer>
+        {this.renderJSONSchemaEditor()}
+        {this.renderCodeMirror()}
+      </div>
     );
   },
 
