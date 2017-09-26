@@ -1,13 +1,15 @@
 React = require 'react'
 _ = require 'underscore'
 #DropboxModal = React.createFactory require './DropboxModal'
-{form, label, input, button, strong, div, h2, span, h4, section, p, ul, li} = React.DOM
-{FormControls} = require './../../../../../react/common/KbcBootstrap'
+{form, label, input, button, strong, div, h2, span, h4, section, p, ul, li, i} = React.DOM
 Button = React.createFactory(require('react-bootstrap').Button)
 {Map} = require 'immutable'
 Confirm = require('../../../../../react/common/Confirm').default
 TableauServerCredentialsModal = React.createFactory require './TableauServerCredentialsModal'
 
+FormGroup = React.createFactory(require('react-bootstrap').FormGroup)
+FormControlStatic = React.createFactory(require('react-bootstrap').FormControl.Static)
+ControlLabel = React.createFactory(require('react-bootstrap').ControlLabel)
 
 module.exports = React.createClass
   displayName: 'TableauServerRow'
@@ -24,31 +26,39 @@ module.exports = React.createClass
   render: ->
     div className: 'row',
       form {className: 'form form-horizontal'},
-        @_renderFormElement('Destination', @props.renderComponent())
-        @_renderFormElement(null , @_renderCredentialsSetup())
+
+        FormGroup null,
+          ControlLabel className: 'col-sm-2',
+            'Destination'
+          FormControlStatic
+            className: 'col-sm-10'
+            componentClass: 'div',
+              @props.renderComponent()
+
+        FormGroup null,
+          ControlLabel className: 'col-sm-2',
+            'Credentials'
+          FormControlStatic
+            className: 'col-sm-10'
+            componentClass: 'div',
+              @_renderAuthorized()
+              @_renderCredentialsSetup()
 
         if @_isAuthorized()
-          @_renderFormElement(null, @props.renderEnableUpload(@_accountName()))
-
-
-  _renderFormElement: (label, content) ->
-    cl = 'col-xs-10'
-    if not label
-      cl = 'col-xs-offset-2 col-xs-10'
-    React.createElement FormControls.Static,
-      labelClassName: if label then 'col-xs-2'
-      wrapperClassName: cl
-      label: label
-    ,
-      content
+          FormGroup null,
+            ControlLabel className: 'col-sm-2',
+              'Instand upload'
+            FormControlStatic
+              className: 'col-sm-10'
+              componentClass: 'div',
+                @props.renderEnableUpload(@_accountName())
 
   _renderCredentialsSetup: ->
     div null,
-      @_renderAuthorized()
       if !@_isAuthorized()
-        @_renderAuthorizeButton('Setup credentials to Tableau Server')
+        @_renderAuthorizeButton('setup')
       if @_isAuthorized()
-        @_renderAuthorizeButton('Edit Credentials')
+        @_renderAuthorizeButton('edit')
       if @_isAuthorized()
         React.createElement Confirm,
           title: 'Delete Credentials'
@@ -60,7 +70,7 @@ module.exports = React.createClass
           Button
             bsStyle: 'link'
           ,
-            span className: 'kbc-icon-cup fa-fw'
+            i className: 'fa fa-trash'
             ' Disconnect Destination'
 
 
@@ -72,23 +82,28 @@ module.exports = React.createClass
 
   _renderAuthorized: ->
     if @_isAuthorized()
-      div null,
+      p null,
         'Authorized for '
         strong null,
           @_accountName()
     else
-      div null,
+      p null,
         'No Credentials.'
 
   _renderAuthorizeButton: (caption) ->
     Button
-      bsStyle: 'link'
-      style: {'padding-left': 0}
+      bsStyle: 'success'
       onClick: =>
         @props.updateLocalStateFn(['tableauServerModal', 'show'], true)
     ,
-      span className: 'fa fa-fw fa-user'
-      ' ' + caption
+      if caption == 'setup'
+        span null,
+          i className: 'fa fa-user'
+          ' Setup credentials'
+      else
+        span null,
+          i className: 'fa fa-pencil'
+          ' Edit credentials'
       TableauServerCredentialsModal
         configId: @props.configId
         localState: @props.localState.get('tableauServerModal', Map())

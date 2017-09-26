@@ -2,12 +2,14 @@ React = require 'react'
 _ = require 'underscore'
 GdriveModal = React.createFactory require './AuthorizeGdriveModal'
 {i, form, button, strong, div, h2, span, h4, section, p} = React.DOM
-{FormControls} = require './../../../../../react/common/KbcBootstrap'
 Button = React.createFactory(require('react-bootstrap').Button)
 {Map} = require 'immutable'
 Picker = require('../../../../google-utils/react/GooglePicker').default
 ViewTemplates = require('../../../../google-utils/react/PickerViewTemplates').default
-Loader = React.createFactory(require('kbc-react-components').Loader)
+
+FormGroup = React.createFactory(require('react-bootstrap').FormGroup)
+FormControlStatic = React.createFactory(require('react-bootstrap').FormControl.Static)
+ControlLabel = React.createFactory(require('react-bootstrap').ControlLabel)
 
 Confirm = require('../../../../../react/common/Confirm').default
 
@@ -26,25 +28,34 @@ module.exports = React.createClass
   render: ->
     div {className: 'row'},
       form {className: 'form form-horizontal'},
-        @_renderFormElement('Destination', @props.renderComponent())
-        @_renderFormElement(null , @_renderAuthorizedInfo())
-        if @_isAuthorized()
-          @_renderFormElement(null, @props.renderEnableUpload(@_accountName()))
+        FormGroup null,
+          ControlLabel className: 'col-sm-2',
+            'Destination'
+          FormControlStatic
+            className: 'col-sm-10'
+            componentClass: 'div',
+              @props.renderComponent()
 
-  _renderFormElement: (label, content) ->
-    cl = 'col-xs-10'
-    if not label
-      cl = 'col-xs-offset-2 col-xs-10'
-    React.createElement FormControls.Static,
-      labelClassName: if label then 'col-xs-2'
-      wrapperClassName: cl
-      label: label
-    ,
-      content
+        FormGroup null,
+          ControlLabel className: 'col-sm-2',
+            'Authorization status'
+          FormControlStatic
+            className: 'col-sm-10'
+            componentClass: 'div',
+              @_renderAuthorization()
+              @_renderAuthorizedInfo()
+
+        if @_isAuthorized()
+          FormGroup null,
+            ControlLabel className: 'col-sm-2',
+              'Instant upload'
+            FormControlStatic
+              className: 'col-sm-10'
+              componentClass: 'div',
+                @props.renderEnableUpload(@_accountName())
 
   _renderAuthorizedInfo: ->
     return div null,
-      @_renderAuthorization()
       if !@_isAuthorized()
         div null,
           @_renderAuthorizeButton()
@@ -59,12 +70,11 @@ module.exports = React.createClass
             buttonLabel: 'Reset'
             onConfirm: =>
               @props.resetUploadTask()
-              #@props.setConfigDataFn(['parameters', 'gdrive'], null)
           ,
             Button
               bsStyle: 'link'
             ,
-              span className: 'kbc-icon-cup fa-fw'
+              span className: 'fa fa-trash'
               ' Reset Authorization'
 
   _accountName: ->
@@ -73,29 +83,27 @@ module.exports = React.createClass
   _renderAuthorization: ->
     if @_isAuthorized()
       div null,
-        div null,
+        p null,
           'Authorized for '
           strong null,
             @_accountName()
-        div null,
-          'Folder '
+        p null,
+          'Folder: '
           strong null,
             @props.account.get('targetFolderName') || '/'
     else
-      span null,
+      p null,
         'Not Authorized.'
-
 
   _renderAuthorizeButton: ->
     div null,
       Button
-        bsStyle: 'link'
-        style: {'padding-left': 0}
+        bsStyle: 'success'
         onClick: =>
           @props.updateLocalStateFn(['gdrivemodal', 'show'], true)
       ,
-        i className: 'fa fa-fw fa-google'
-        'Authorize'
+        i className: 'fa fa-google'
+        ' Authorize'
       GdriveModal
         configId: @props.configId
         localState: @props.localState.get('gdrivemodal', Map())

@@ -25,7 +25,7 @@ DropboxRow = React.createFactory require './DropboxRow'
 GdriveRow = React.createFactory require './GdriveRow'
 TableauServerRow = React.createFactory require './TableauServerRow'
 
-{button, strong, div, h2, span, h4, section, p} = React.DOM
+{button, strong, div, h2, span, h4, section, p, i} = React.DOM
 
 componentId = 'tde-exporter'
 module.exports = React.createClass
@@ -157,14 +157,15 @@ module.exports = React.createClass
     return span {className: ''},
       ComponentIcon {component: component, size: '32'}
       ' '
-      span null,
+      span style: {paddingRight: '1em'},
         component.get('name')
       ' '
       button
         type: 'button'
-        className: 'btn btn-success btn-sm'
-        onClick: @_showWritersModal
-        'Change'
+        className: 'btn btn-success'
+        onClick: @_showWritersModal,
+          i className: 'fa fa-cog'
+          ' Change'
 
   _showWritersModal: ->
     @_updateLocalState(['writersModal', 'show'], true)
