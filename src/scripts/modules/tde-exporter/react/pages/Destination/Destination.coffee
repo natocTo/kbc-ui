@@ -172,7 +172,7 @@ module.exports = React.createClass
 
   _hasUploadTask: (taskName) ->
     tasks = @state.configData.getIn(['parameters', 'uploadTasks'], List())
-    return tasks.find( (t) -> t == taskName)
+    return tasks.find( (t) -> t == taskName)?
 
   _toggleImmediateUpload: (taskName, isActive) ->
     tasks = @state.configData.getIn(['parameters', 'uploadTasks'], List())
