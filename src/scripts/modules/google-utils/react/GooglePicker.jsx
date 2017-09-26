@@ -53,7 +53,7 @@ export default React.createClass({
   mixins: [createStoreMixin(GapiStore)],
   propTypes: {
     dialogTitle: React.PropTypes.string.isRequired,
-    buttonLabel: React.PropTypes.string.isRequired,
+    buttonLabel: React.PropTypes.node.isRequired,
     onPickedFn: React.PropTypes.func.isRequired,
     views: React.PropTypes.array,
     viewGroups: React.PropTypes.array,
