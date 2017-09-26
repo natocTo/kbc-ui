@@ -116,6 +116,7 @@ module.exports = React.createClass
             openOutputMappings: @state.openOutputMappings
             showDetails: @_showDetails()
             isEditingValid: @state.isTransformationEditingValid
+            isQueriesProcessing: @state.pendingActions.has 'queries-processing'
             highlightQueryNumber: @state.highlightQueryNumber
       div className: 'col-md-3 kbc-main-sidebar',
         ul className: 'nav nav-stacked',

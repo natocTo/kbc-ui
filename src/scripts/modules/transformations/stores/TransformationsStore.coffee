@@ -121,20 +121,6 @@ TransformationsStore = StoreUtils.createStore
     transformation = @getTransformation(bucketId, transformationId)
     if (!transformation)
       return
-    if ['redshift', 'mysql', 'snowflake'].indexOf(transformation.get('backend')) >= 0
-      queriesString = _store.getIn([
-          'editingTransformationsFields'
-          bucketId
-          transformationId
-          'queriesString'
-        ], '')
-      splitQueries = _store.getIn([
-          'editingTransformationsFields'
-          bucketId
-          transformationId
-          'splitQueries'
-        ], List())
-      return queriesString.replace(/[\t\n ]/g, '') == splitQueries.toJS().join('').replace(/[\t\n ]/g, '')
     if transformation.get('backend') == "docker" && transformation.get('type') == "openrefine"
       scriptsString = _store.getIn([
           'editingTransformationsFields'
@@ -315,15 +301,17 @@ Dispatcher.register (payload) ->
       TransformationsStore.emitChange()
 
     when Constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES
+      _store = _store.setIn ['pendingActions', action.bucketId, action.transformationId, 'queries-processing'], true
       _store = _store.setIn [
         'editingTransformationsFields'
         action.bucketId
         action.transformationId
         'splitQueries'
-      ], List()
+      ], Immutable.fromJS([action.queriesString])
       TransformationsStore.emitChange()
 
     when Constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_SUCCESS
+      _store = _store.deleteIn ['pendingActions', action.bucketId, action.transformationId, 'queries-processing']
       _store = _store.setIn [
         'editingTransformationsFields'
         action.bucketId
@@ -333,16 +321,8 @@ Dispatcher.register (payload) ->
       TransformationsStore.emitChange()
 
     when Constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_ERROR
-      _store = _store.setIn [
-        'editingTransformationsFields'
-        action.bucketId
-        action.transformationId
-        'splitQueries'
-      ], List()
+      _store = _store.deleteIn ['pendingActions', action.bucketId, action.transformationId, 'queries-processing']
       TransformationsStore.emitChange()
-
-
-
 
     when Constants.ActionTypes.TRANSFORMATION_BUCKET_DELETE_SUCCESS
       _store = _store.withMutations (store) ->
