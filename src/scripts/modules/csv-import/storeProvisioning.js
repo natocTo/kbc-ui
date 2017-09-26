@@ -38,7 +38,7 @@ function isUploaderFileInvalidFormat(localState) {
     return false;
   }
   const suffix = fileName.substring(fileName.lastIndexOf('.'));
-  return (['.csv', '.gz'].indexOf(suffix) === -1);
+  return (['.csv', '.gz', '.tsv'].indexOf(suffix) === -1);
 }
 
 export default function(configId) {

@@ -32,13 +32,13 @@ export default React.createClass({
     return (
       <div className="form-group">
         <div className="col-xs-8 col-xs-offset-4">
-          <p className="form-control-static">
+          <div className="form-control-static">
             {this.props.uploadingMessage}
             <ProgressBar
               active
               now={this.props.uploadingProgress}
             />
-          </p>
+          </div>
         </div>
       </div>
     );
@@ -48,7 +48,9 @@ export default React.createClass({
     if (this.props.isFileInvalidFormat) {
       return (
         <div className="help-block">
-          <small>Only <code>.csv</code> and <code>.gz</code> (gzipped CSV) files are supported.</small>
+          <small>
+            Only <code>.csv</code>, <code>.tsv</code> and <code>.gz</code> (gzipped CSV or TSV) files are supported.
+          </small>
         </div>
       );
     }
