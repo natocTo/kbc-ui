@@ -54,6 +54,7 @@ module.exports = React.createClass
     transformation: React.PropTypes.object.isRequired
     editingFields: React.PropTypes.object.isRequired
     isEditingValid: React.PropTypes.bool.isRequired
+    isQueriesProcessing: React.PropTypes.bool.isRequired
     transformations: React.PropTypes.object.isRequired
     pendingActions: React.PropTypes.object.isRequired
     tables: React.PropTypes.object.isRequired
@@ -358,7 +359,7 @@ module.exports = React.createClass
         isSaving: @props.pendingActions.has('save-queries')
         queries: @props.editingFields.get('queriesString', @props.transformation.get('queriesString'))
         splitQueries: @props.editingFields.get('splitQueries', @props.transformation.get('queries'))
-        isEditingValid: @props.isEditingValid
+        isQueriesProcessing: @props.isQueriesProcessing
         isChanged: @props.editingFields.get('queriesChanged', false)
         highlightQueryNumber: @props.highlightQueryNumber
         onEditCancel: =>

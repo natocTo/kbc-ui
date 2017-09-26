@@ -15,8 +15,8 @@ export default React.createClass({
     transformation: PropTypes.object.isRequired,
     queries: PropTypes.string.isRequired,
     splitQueries: PropTypes.object.isRequired,
-    isEditingValid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    isQueriesProcessing: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
@@ -45,7 +45,7 @@ export default React.createClass({
       <span className="pull-right">
         <SaveButtons
           isSaving={this.props.isSaving}
-          disabled={!this.props.isEditingValid}
+          disabled={this.props.isQueriesProcessing}
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
