@@ -1,5 +1,5 @@
 React = require 'react'
-EventsService = require('../../../../sapi-events/EventsService').factory
+EventsServiceFactory = require('../../../../sapi-events/EventsService').factory
 GoodDataStats = React.createFactory(require './GoodDataStats')
 _ = require 'underscore'
 Immutable = require 'immutable'
@@ -8,7 +8,7 @@ module.exports = React.createClass
   displayName: "GoodDataStatsContainer"
 
   getInitialState: ->
-    es = EventsService({runId: @props.job.get('runId')})
+    es = EventsServiceFactory({runId: @props.job.get('runId')})
     es.setQuery('type:success OR type:error')
     es.setLimit(100)
     eventService: es
