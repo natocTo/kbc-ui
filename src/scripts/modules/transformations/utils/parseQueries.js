@@ -9,6 +9,7 @@ export default function(queries) {
     worker.onmessage = function(e) {
       if (e.data === null) {
         reject(); // immediately
+        return;
       }
       success = true;
       resolve(e.data);
