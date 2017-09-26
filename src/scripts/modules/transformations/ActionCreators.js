@@ -20,6 +20,11 @@ import deleteTransformationBucketNotification
   from './react/components/notifications/deleteTransformationBucketNotification';
 
 const updateTransformationEditingFieldQueriesStringDebouncer = debounce(function(bucketId, transformationId, queriesString) {
+  dispatcher.handleViewAction({
+    type: constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_START,
+    bucketId: bucketId,
+    transformationId: transformationId
+  });
   return parseQueries(queriesString).then(function(splitQueries) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.TRANSFORMATION_UPDATE_PARSE_QUERIES_SUCCESS,
