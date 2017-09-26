@@ -32,13 +32,13 @@ export default React.createClass({
     return (
       <div className="form-group">
         <div className="col-xs-8 col-xs-offset-4">
-          <p className="form-control-static">
+          <div className="form-control-static">
             {this.props.uploadingMessage}
             <ProgressBar
               active
               now={this.props.uploadingProgress}
             />
-          </p>
+          </div>
         </div>
       </div>
     );
