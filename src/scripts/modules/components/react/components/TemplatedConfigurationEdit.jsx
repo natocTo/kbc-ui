@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import { StickyContainer, Sticky } from 'react-sticky';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import TemplateSelector from './ConfigurationTemplateSelector';
 import CodeMirror from 'react-code-mirror';
@@ -9,7 +8,6 @@ import CodeMirror from 'react-code-mirror';
 require('./configuration-json.less');
 require('codemirror/addon/lint/lint');
 require('../../../../utils/codemirror/json-lint');
-
 
 export default React.createClass({
 
@@ -58,65 +56,53 @@ export default React.createClass({
     );
   },
 
-  stickyStyle() {
-    return {
-      top: '80px',
-      zIndex: 5
-    };
-  },
-
   render() {
     return (
       <div className="kbc-templated-configuration-edit">
-        <StickyContainer>
-          <div className="edit kbc-configuration-editor">
-            <Sticky stickyClassName="kbc-sticky-buttons-active" topOffset={-87} stickyStyle={this.stickyStyle()}>
-              <div className="text-right">
-                <ConfirmButtons
-                  isSaving={this.props.isSaving}
-                  onSave={this.handleSave}
-                  onCancel={this.props.onCancel}
-                  placement="right"
-                  saveLabel={this.props.saveLabel}
-                  isDisabled={!this.props.isValid}
-                  />
-              </div>
-
-            </Sticky>
-            {this.props.isEditingString ? (
-              <span>
-                <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
-                <p>JSON configuration uses <a href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</a> format.</p>
-                <CodeMirror
-                  ref="string"
-                  value={this.props.editingString}
-                  theme="solarized"
-                  lineNumbers={true}
-                  mode="application/json"
-                  lineWrapping={true}
-                  autofocus={true}
-                  onChange={this.handleStringChange}
-                  readOnly={this.props.isSaving ? 'nocursor' : false}
-                  lint={true}
-                  gutters={['CodeMirror-lint-markers']}
-                  placeholder="{}"
-                  />
+        <div className="edit kbc-configuration-editor">
+            <div className="text-right">
+              <ConfirmButtons
+                isSaving={this.props.isSaving}
+                onSave={this.handleSave}
+                onCancel={this.props.onCancel}
+                placement="right"
+                saveLabel={this.props.saveLabel}
+                isDisabled={!this.props.isValid}
+                />
+            </div>
+          {this.props.isEditingString ? (
+            <span>
+              <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
+              <p>JSON configuration uses <a href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</a> format.</p>
+              <CodeMirror
+                ref="string"
+                value={this.props.editingString}
+                theme="solarized"
+                lineNumbers={true}
+                mode="application/json"
+                lineWrapping={true}
+                autofocus={true}
+                onChange={this.handleStringChange}
+                readOnly={this.props.isSaving ? 'nocursor' : false}
+                lint={true}
+                gutters={['CodeMirror-lint-markers']}
+                placeholder="{}"
+                />
+            </span>
+          ) : (
+            <span>
+              <p className="kbc-template-editor-toggle"><a onClick={this.switchToJsonEditor}><small>Switch to JSON editor</small></a></p>
+              {this.renderJSONSchemaEditor()}
+              <h3>Template</h3>
+              <TemplateSelector
+                templates={this.props.templates}
+                value={this.props.editingTemplate}
+                onChange={this.handleTemplateChange}
+                readOnly={this.props.isSaving}
+                />
               </span>
-            ) : (
-              <span>
-                <p className="kbc-template-editor-toggle"><a onClick={this.switchToJsonEditor}><small>Switch to JSON editor</small></a></p>
-                {this.renderJSONSchemaEditor()}
-                <h3>Template</h3>
-                <TemplateSelector
-                  templates={this.props.templates}
-                  value={this.props.editingTemplate}
-                  onChange={this.handleTemplateChange}
-                  readOnly={this.props.isSaving}
-                  />
-                </span>
-            )}
-          </div>
-        </StickyContainer>
+          )}
+        </div>
       </div>
     );
   },
