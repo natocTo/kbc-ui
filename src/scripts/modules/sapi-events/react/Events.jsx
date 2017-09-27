@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import PureRendererMixin from '../../../react/mixins/ImmutableRendererMixin';
 import _ from 'underscore';
 import {Link} from 'react-router';
-import EventService from '../EventsService';
+import {factory as eventsFactory} from '../EventsService';
 import RoutesStore from '../../../stores/RoutesStore';
 import {SearchRow} from '../../../react/common/common';
 import EventsTable from './EventsTable';
@@ -81,7 +81,7 @@ export default React.createClass({
   },
 
   _createEventsService(params) {
-    this._events =  EventService.factory(params);
+    this._events = eventsFactory(params);
     return this._events.addChangeListener(this._handleChange);
   },
 
@@ -125,7 +125,7 @@ export default React.createClass({
           <span className="fa fa-chevron-left"/> Back
         </Link>
         <p>
-          Event {this.props.currentEventId} not found.
+          Event {this.state.currentEventId} not found.
         </p>
       </div>
     );

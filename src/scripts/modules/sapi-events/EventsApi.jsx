@@ -6,7 +6,7 @@ const createUrl = path => `${ApplicationStore.getSapiUrl()}/v2/storage/${path}`;
 
 const createRequest = (method, path) =>
   request(method, createUrl(path))
-    .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString())
+    .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString());
 
 export default {
   listEvents(params) {
@@ -22,4 +22,4 @@ export default {
       .promise()
       .then(response => response.body);
   }
-}
+};

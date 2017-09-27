@@ -104,7 +104,7 @@ class EventsService {
     this._emitChange();
     return this._listEvents({
       limit: 10,
-      sinceId: __guard__(this.getEvents().first(), x => x.get('id'))
+      sinceId: this.getEvents().first() ? this.getEvents().first().get('id') : null
     })
       .then(this._prependEvents.bind(this))
       .catch(this._onError.bind(this));
@@ -220,8 +220,4 @@ export { EventsService };
 
 export function factory(params) {
   return new EventsService(api, params);
-}
-
-function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
 }

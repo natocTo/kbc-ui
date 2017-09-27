@@ -24,7 +24,7 @@ export default React.createClass({
               Created
             </div>
             <div className="th">
-              Event {this.props.isLoading ? React.createElement(Loader) : undefined}
+              Event {this.props.isLoading ? React.createElement(Loader) : null}
             </div>
           </div>
         </div>
