@@ -39,7 +39,10 @@ module.exports = React.createClass
 
   _handleChangeSource: (value) ->
     # use only table name from the table identifier
-    destination = value.substr(value.lastIndexOf(".") + 1) + ".csv"
+    if value
+      destination = value.substr(value.lastIndexOf(".") + 1) + ".csv"
+    else
+      destination = ''
     if (@props.definition.has('destination'))
       destination = @props.definition.get('destination')
     immutable = @props.value.withMutations (mapping) ->
