@@ -49,7 +49,10 @@ module.exports = React.createClass
 
   _handleChangeSource: (value) ->
     # use only table name from the table identifier
-    destination = value.substr(value.lastIndexOf(".") + 1)
+    if value
+      destination = value.substr(value.lastIndexOf(".") + 1)
+    else
+      destination = ''
     immutable = @props.value.withMutations (mapping) ->
       mapping = mapping.set("source", value)
       mapping = mapping.set("destination", destination)
