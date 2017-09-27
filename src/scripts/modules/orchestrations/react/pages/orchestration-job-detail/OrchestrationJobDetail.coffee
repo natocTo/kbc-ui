@@ -16,7 +16,7 @@ mergeTasksWithConfigurations = require('../../../mergeTasksWithConfigruations').
 # components
 JobsNav = React.createFactory(require './JobsNav')
 JobOverview = React.createFactory(require './Overview')
-Events = React.createFactory(require '../../../../sapi-events/react/Events')
+Events =  React.createFactory(require('../../../../sapi-events/react/Events').default)
 
 TabbedArea = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabbedArea)
 TabPane = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabPane)

@@ -1,0 +1,25 @@
+import request from '../../utils/request';
+import ApplicationStore from '../../stores/ApplicationStore';
+
+
+const createUrl = path => `${ApplicationStore.getSapiUrl()}/v2/storage/${path}`;
+
+const createRequest = (method, path) =>
+  request(method, createUrl(path))
+    .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString());
+
+export default {
+  listEvents(params) {
+    return createRequest('GET', 'events')
+      .query(params)
+      .timeout(4000)
+      .promise()
+      .then(response => response.body);
+  },
+
+  getEvent(id) {
+    return createRequest('GET', `events/${id}`)
+      .promise()
+      .then(response => response.body);
+  }
+};
