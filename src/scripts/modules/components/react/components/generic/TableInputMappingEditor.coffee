@@ -46,7 +46,10 @@ module.exports = React.createClass
     # use only table name from the table identifier
     immutable = @props.value.withMutations (mapping) ->
       mapping = mapping.set("source", value)
-      destination = value.substr(value.lastIndexOf(".") + 1) + ".csv"
+      if value
+        destination = value.substr(value.lastIndexOf(".") + 1) + ".csv"
+      else
+        destination = ''
       mapping = mapping.set("destination", destination)
       mapping = mapping.set("where_column", "")
       mapping = mapping.set("where_values", Immutable.List())
