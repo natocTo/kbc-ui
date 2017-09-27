@@ -71,16 +71,26 @@ class EventsService {
       return;
     }
 
+    if (this.getIsLoadingEvent(intId)) {
+      return;
+    }
+
     this._loadingEvents = this._loadingEvents.set(intId, true);
     return this.api
       .getEvent(intId)
-      .then(event => {
-        this._loadingEvents = this._loadingEvents.delete(intId);
-        return this._appendEvents([event]);
-      })
-      .catch(() => {
-        this._loadingEvents = this._loadingEvents.delete(intId);
-      });
+      .then(this._loadEventSuccess.bind(this))
+      .catch(this._loadEventError.bind(this, intId));
+  }
+
+  _loadEventSuccess(event) {
+    this._loadingEvents = this._loadingEvents.delete(event.id);
+    this._appendEvents([event]);
+    this._emitChange();
+  }
+
+  _loadEventError(eventId) {
+    this._loadingEvents = this._loadingEvents.delete(eventId);
+    this._emitChange();
   }
 
   load() {
@@ -120,7 +130,6 @@ class EventsService {
     }).then(this._appendEvents.bind(this))
       .catch(this._onError.bind(this));
   }
-
 
   _onError(error) {
     this._loadingOlder = false;

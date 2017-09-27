@@ -20,9 +20,6 @@ export default React.createClass({
 
   _handleChange() {
     const currentEventId = RoutesStore.getRouterState().getIn(['query', 'eventId']);
-    if (currentEventId) {
-      this._events.loadEvent(currentEventId);
-    }
 
     if (this.isMounted()) {
       return this.setState({
