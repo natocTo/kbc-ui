@@ -11,7 +11,7 @@ RoutesStore = require '../../../stores/RoutesStore'
 
 SearchRow = React.createFactory(require('../../../react/common/common').SearchRow)
 EventsTable = React.createFactory(require('./EventsTable').default)
-EventDetail = React.createFactory(require './EventDetail')
+EventDetail = React.createFactory(require('./EventDetail').default)
 console.log 'table', EventsTable
 
 Events = React.createClass
