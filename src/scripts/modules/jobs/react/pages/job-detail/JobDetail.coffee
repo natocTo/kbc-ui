@@ -245,20 +245,10 @@ module.exports = React.createClass
               renderDate(job.get('startTime'))
           div {className: 'row'},
             span {className: 'col-md-3'},
-              'Initialized'
-            strong className: 'col-md-9',
-              job.getIn(['token', 'description'])
-          div {className: 'row'},
-            span {className: 'col-md-3'},
               'RunId'
             strong {className: 'col-md-9'},
               JobRunId {runId: job.get('runId')}
         div {className: 'td'},
-          div {className: 'row'},
-            span {className: 'col-md-3'},
-              'Command'
-            strong {className: 'col-md-9'},
-              span {className: 'label label-info'},job.get('command')
           div className: 'row',
             span className: 'col-md-3', 'Status '
             span className: 'col-md-9', JobStatusLabel status: job.get('status')
@@ -266,7 +256,7 @@ module.exports = React.createClass
             span className: 'col-md-3', 'End '
             strong className: 'col-md-9', renderDate(job.get('endTime'))
           div className: 'row',
-            span className: 'col-md-3', 'Token '
+            span className: 'col-md-3', 'Creator '
             strong className: 'col-md-9', job.getIn(['token', 'description'])
           div {className: 'row'},
             span {className: 'col-md-3'},
