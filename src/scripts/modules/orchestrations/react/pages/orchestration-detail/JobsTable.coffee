@@ -36,9 +36,8 @@ JobsTable = React.createClass(
         (tr {},
           (th {}, "ID"),
           (th {}, "Status"),
-          (th {}, "Created time"),
-          (th {}, "Initialized"),
-          (th {}, "Creator"),
+          (th {}, "Created At"),
+          (th {}, "Created By"),
           (th {}, "Duration"),
           (th {className: 'text-right kbc-last-column-header'},
             RefreshIcon(
