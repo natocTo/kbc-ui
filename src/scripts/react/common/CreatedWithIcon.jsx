@@ -12,7 +12,8 @@ export default React.createClass({
   render: function() {
     return (
       <span title={date.format(this.props.createdTime)}>
-           <i className="fa fa-fw fa-calendar" />
+        <i className="fa fa-fw fa-calendar" />
+        {' '}
         {moment(this.props.createdTime).fromNow()}
       </span>
     );
