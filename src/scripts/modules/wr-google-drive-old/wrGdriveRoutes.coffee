@@ -4,6 +4,7 @@ authorizePage = require './react/pages/authorize/Authorize'
 InstalledComponentsStore = require '../components/stores/InstalledComponentsStore'
 JobsActionCreators = require '../jobs/ActionCreators'
 storageActionCreators = require '../components/StorageActionCreators'
+{createTablesRoute} = require '../table-browser/routes'
 
 module.exports =
   name: 'wr-google-drive'
@@ -26,6 +27,8 @@ module.exports =
         storageActionCreators.loadTables()
     ]
   childRoutes: [
+    createTablesRoute('wr-google-drive')
+  ,
     name: 'wr-google-drive-authorize'
     path: 'authorize'
     handler: authorizePage
