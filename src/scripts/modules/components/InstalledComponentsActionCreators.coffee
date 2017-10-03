@@ -12,6 +12,7 @@ constants = require './Constants'
 componentRunner = require './ComponentRunner'
 InstalledComponentsStore = require './stores/InstalledComponentsStore'
 installedComponentsApi = require './InstalledComponentsApi'
+ApplicationStore = require '../../stores/ApplicationStore'
 RoutesStore = require '../../stores/RoutesStore'
 ComponentsStore = require './stores/ComponentsStore'
 VersionActionCreators = require '../components/VersionsActionCreators'
@@ -27,22 +28,28 @@ storeEncodedConfig = (componentId, configId, dataToSave, changeDescription) ->
   component = InstalledComponentsStore.getComponent(componentId)
 
   if component.get('flags').includes('encrypt')
-    dataToSave = {
-      configuration: JSON.stringify(
+    dataToSave =
+      JSON.stringify(
         removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave))
       )
-    }
+    projectId = ApplicationStore.getCurrentProject().get('id')
+    installedComponentsApi
+    .encryptConfiguration(componentId, projectId, dataToSave)
+    .then((encryptedResponse) ->
+      dataToSave = {
+        configuration: JSON.stringify(encryptedResponse.body),
+        changeDescription: changeDescription
+      }
+      installedComponentsApi.updateComponentConfiguration(
+        componentId, configId, dataToSave
+      )
+    )
   else
     dataToSave = {
       configuration: JSON.stringify(dataToSave)
+      changeDescription: changeDescription
     }
 
-  if changeDescription
-    dataToSave.changeDescription = changeDescription
-  if component.get('flags').includes('encrypt')
-    installedComponentsApi
-    .updateComponentConfigurationEncrypted(component.get('uri'), componentId, configId, dataToSave, changeDescription)
-  else
     installedComponentsApi
     .updateComponentConfiguration(componentId, configId, dataToSave, changeDescription)
 
