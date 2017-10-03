@@ -16,30 +16,25 @@ JobDetailOverview = React.createClass
         div className: 'tr',
           div className: 'td',
             div className: 'row',
-              span className: 'col-md-3', 'Created '
-              strong className: 'col-md-9', date.format(@props.job.get('createdTime'))
+              span className: 'col-md-4', 'Created At '
+              strong className: 'col-md-8', date.format(@props.job.get('createdTime'))
             div className: 'row',
-              span className: 'col-md-3', 'Start '
-              strong className: 'col-md-9', @_getValidStartTime()
-            div className: 'row',
-              span className: 'col-md-3', 'Initialized '
-              strong
-                className: 'col-md-9',
-                "#{@props.job.get('initializedBy')} (#{@props.job.getIn(['initiatorToken', 'description'])})"
+              span className: 'col-md-4', 'Start '
+              strong className: 'col-md-8', @_getValidStartTime()
           div className: 'td',
             div className: 'row',
-              span className: 'col-md-3', 'Status '
-              span className: 'col-md-9', JobStatusLabel status: @props.job.get('status')
+              span className: 'col-md-4', 'Status '
+              span className: 'col-md-8', JobStatusLabel status: @props.job.get('status')
             div className: 'row',
-              span className: 'col-md-3', 'End '
-              strong className: 'col-md-9',
+              span className: 'col-md-4', 'End '
+              strong className: 'col-md-8',
                 if @props.job.get('endTime')
                   date.format(@props.job.get('endTime'))
                 else
                   'N/A'
             div className: 'row',
-              span className: 'col-md-3', 'Token '
-              strong className: 'col-md-9', @props.job.getIn(['token', 'description'])
+              span className: 'col-md-4', 'Created By '
+              strong className: 'col-md-8', @props.job.getIn(['initiatorToken', 'description'])
 
       h2 null,
         'Tasks',

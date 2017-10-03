@@ -36,9 +36,6 @@ export default React.createClass({
           { this.jobConfiguration() }
         </div>
         <div className="td">
-          {this.props.job.get('command')}
-        </div>
-        <div className="td">
           {this.props.job.getIn(['token', 'description'])}
         </div>
         <div className="td">
