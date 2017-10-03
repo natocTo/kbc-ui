@@ -40,15 +40,17 @@ module.exports = React.createClass
     div {className: 'thead' },
       div className: 'tr',
         span {className: 'th'},
+          strong null, 'ID'
+        span {className: 'th'},
           strong null, 'Status'
         span {className: 'th'},
           strong null, 'Component'
         span {className: 'th'},
           strong null, 'Configuration'
         span {className: 'th'},
-          strong null, 'Creator'
+          strong null, 'Created By'
         span {className: 'th'},
-          strong null, 'Created'
+          strong null, 'Created At'
         span {className: 'th'},
           strong null, 'Duration'
 

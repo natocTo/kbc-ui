@@ -235,7 +235,7 @@ module.exports = React.createClass
               configurationLink
           div {className: 'row'},
             span {className: 'col-md-3'},
-              'Created'
+              'Created At'
             strong {className: 'col-md-9'},
               date.format(job.get('createdTime'))
           div {className: 'row'},
@@ -253,11 +253,11 @@ module.exports = React.createClass
             span className: 'col-md-3', 'Status '
             span className: 'col-md-9', JobStatusLabel status: job.get('status')
           div className: 'row',
+            span className: 'col-md-3', 'Created By '
+            strong className: 'col-md-9', job.getIn(['token', 'description'])
+          div className: 'row',
             span className: 'col-md-3', 'End '
             strong className: 'col-md-9', renderDate(job.get('endTime'))
-          div className: 'row',
-            span className: 'col-md-3', 'Creator '
-            strong className: 'col-md-9', job.getIn(['token', 'description'])
           div {className: 'row'},
             span {className: 'col-md-3'},
               'Duration'

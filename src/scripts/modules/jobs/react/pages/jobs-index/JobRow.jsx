@@ -24,6 +24,9 @@ export default React.createClass({
     return (
       <Link className="tr" to="jobDetail" params={this.linkParams()} query={this.linkQuery()}>
         <div className="td">
+          {this.props.job.get('id')}
+        </div>
+        <div className="td">
           <JobStatusLabel status={this.props.job.get('status')}/>
         </div>
         <div className="td">

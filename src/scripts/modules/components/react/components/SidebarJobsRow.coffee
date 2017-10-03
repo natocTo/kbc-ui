@@ -28,6 +28,9 @@ JobNavRow = React.createClass
           JobStatusCircle status: @props.job.get('status')
         span className: 'td',
           div null,
+            strong null,
+              @props.job.get('id')
+          div null,
             @props.job.getIn ['token', 'description']
           div null,
             small className: 'pull-left',
