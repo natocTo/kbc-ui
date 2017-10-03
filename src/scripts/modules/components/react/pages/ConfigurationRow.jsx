@@ -6,6 +6,7 @@ import DeleteButton from '../../../../react/common/DeleteButton';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import {isObsoleteComponent} from '../../../../modules/trash/utils';
+import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -32,6 +33,10 @@ export default React.createClass({
         <span className="td text-right kbc-component-buttons">
           <span className="kbc-component-author">
             Created by <strong>{this.props.config.getIn(['creatorToken', 'description'])}</strong>
+            {' '}
+            <CreatedWithIcon
+              createdTime={this.props.config.get('created')}
+            />
           </span>
           <DeleteButton
             tooltip="Move to Trash"
