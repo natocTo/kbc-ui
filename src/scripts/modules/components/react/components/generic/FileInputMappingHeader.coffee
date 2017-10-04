@@ -28,7 +28,7 @@ module.exports = React.createClass(
       span {className: 'tbody'},
         span {className: 'tr'},
           span {className: 'td col-xs-3'},
-            if @props.value.get('tags').count()
+            if @props.value.get('tags') and @props.value.get('tags').count()
               @props.value.get('tags').map((tag) ->
                 span
                   className: "label kbc-label-rounded-small label-default"
