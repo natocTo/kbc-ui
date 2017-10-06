@@ -55,6 +55,7 @@ Just run:
    * If you want to enhance component behaviour or inject some data consider using [High Order Components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750) It allows great composability using  functions.
 
 ## UX Guidelines
+
  * Try to reuse components from [KBC Bootstrap](http://kbc-bootstrap-jakub-devel.keboola.com/examples/)
  * Provide instant feedback for all actions.
  * Provide confirmation and explanation for possibly destructive actions (delete configuration, run job)
@@ -87,6 +88,7 @@ Some [story](https://hackernoon.com/testing-react-components-with-jest-and-enzym
 ## HOW TO
 
 ### Add assets
+
 Whole application is bundled by Webpack, not just js and coffee script files but also stylesheets (less, css), media and image files.
 Assets should be loaded by `require` or `import` function.
 
