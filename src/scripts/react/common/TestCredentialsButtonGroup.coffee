@@ -52,6 +52,27 @@ module.exports = React.createClass
   render: ->
     div className: 'form-group',
       div className: classnames('col-xs-4', 'col-xs-offset-4': @props.hasOffset),
+        div className: 'TestCredentialsButtonGroup-buttons',
+          Button
+            bsStyle: 'primary'
+            disabled: @state.isTesting || @props.disabled
+            onClick: @_startTesting
+            ,
+            'Test Credentials'
+          span className: null, ' '
+
+          Link
+            to: @props.componentId
+            params:
+              config: @props.configId
+          ,
+              Button
+                bsStyle: 'success'
+                disabled: @state.isTesting
+              ,
+                'Go back to list of tables'
+              ' '
+
         div className: 'TestCredentialsButtonGroup-result',
           if @state.isTesting
             span null,
@@ -63,26 +84,6 @@ module.exports = React.createClass
               @_testSuccess @state.result
             else
               @_testError @state.result
-
-        Button
-          bsStyle: 'primary'
-          disabled: @state.isTesting || @props.disabled
-          onClick: @_startTesting
-          ,
-          'Test Credentials'
-        span className: null, ' '
-
-        Link
-          to: @props.componentId
-          params:
-            config: @props.configId
-        ,
-            Button
-              bsStyle: 'success'
-              disabled: @state.isTesting
-            ,
-              'Go back to list of tables'
-            ' '
 
   _testSuccess: (result) ->
     span className: 'text-success',
