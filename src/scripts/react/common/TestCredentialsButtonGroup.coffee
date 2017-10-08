@@ -52,18 +52,6 @@ module.exports = React.createClass
   render: ->
     div className: 'form-group',
       div className: classnames('col-xs-4', 'col-xs-offset-4': @props.hasOffset),
-        div className: 'TestCredentialsButtonGroup-result',
-          if @state.isTesting
-            span null,
-              Loader()
-              ' Connecting ...'
-
-          if @state.result or @state.isError
-            if @state.result.status in ['success', 'ok'] and not @state.isError
-              @_testSuccess @state.result
-            else
-              @_testError @state.result
-
         Button
           bsStyle: 'primary'
           disabled: @state.isTesting || @props.disabled
@@ -83,6 +71,18 @@ module.exports = React.createClass
             ,
               'Go back to list of tables'
             ' '
+
+        div className: 'TestCredentialsButtonGroup-result',
+          if @state.isTesting
+            span null,
+              Loader()
+              ' Connecting ...'
+
+          if @state.result or @state.isError
+            if @state.result.status in ['success', 'ok'] and not @state.isError
+              @_testSuccess @state.result
+            else
+              @_testError @state.result
 
   _testSuccess: (result) ->
     span className: 'text-success',
