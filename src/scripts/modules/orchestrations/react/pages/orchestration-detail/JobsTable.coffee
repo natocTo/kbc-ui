@@ -34,10 +34,9 @@ JobsTable = React.createClass(
     jobsTable = (table {className: 'table table-striped table-hover kb-table-jobs kbc-cursor-pointer'},
       (thead {},
         (tr {},
-          (th {}, "ID"),
-          (th {}, "Status"),
-          (th {}, "Created At"),
           (th {}, "Created By"),
+          (th {}, "Created At"),
+          (th {}, "Status"),
           (th {}, "Duration"),
           (th {className: 'text-right kbc-last-column-header'},
             RefreshIcon(
