@@ -24,12 +24,6 @@ export default React.createClass({
     return (
       <Link className="tr" to="jobDetail" params={this.linkParams()} query={this.linkQuery()}>
         <div className="td">
-          {this.props.job.get('id')}
-        </div>
-        <div className="td">
-          <JobStatusLabel status={this.props.job.get('status')}/>
-        </div>
-        <div className="td">
           <ComponentIcon component={component} size="32"/> <ComponentName component={component}/>
         </div>
         <div className="td">
@@ -40,6 +34,9 @@ export default React.createClass({
         </div>
         <div className="td">
           {date.format(this.props.job.get('createdTime'))}
+        </div>
+        <div className="td">
+          <JobStatusLabel status={this.props.job.get('status')}/>
         </div>
         <div className="td">
           <Duration startTime={this.props.job.get('startTime')} endTime={this.props.job.get('endTime')}/>

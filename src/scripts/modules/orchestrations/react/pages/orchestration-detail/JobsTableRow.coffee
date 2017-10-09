@@ -46,10 +46,9 @@ JobRow = React.createClass(
     )
 
     (tr {onClick: @jobDetail},
-      (td {}, @props.job.get('id')),
-      (td {}, JobStatusLabel({status: @props.job.get('status')})),
-      (td {}, date.format(@props.job.get('createdTime'))),
       (td {}, @props.job.getIn(['initiatorToken', 'description'])),
+      (td {}, date.format(@props.job.get('createdTime'))),
+      (td {}, JobStatusLabel({status: @props.job.get('status')})),
       (td {}, (Duration
         startTime: @props.job.get('startTime')
         endTime: @props.job.get('endTime')

@@ -35,7 +35,7 @@ JobNavRow = React.createClass
           if @props.job.get('initializedBy') == 'manually'
             em title: @props.job.getIn(['initiatorToken', 'description']), 'manually'
           strong null,
-            @props.job.get('id')
+            @props.job.getIn(['initiatorToken', 'description'])
           span null,
             if @props.job.get('startTime')
               DurationWithIcon startTime: @props.job.get('startTime'), endTime: @props.job.get('endTime')
