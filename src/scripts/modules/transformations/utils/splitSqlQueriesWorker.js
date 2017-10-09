@@ -3,7 +3,6 @@
  * http://stackoverflow.com/questions/4747808/split-mysql-queries-in-array-each-queries-separated-by/5610067#5610067
  */
 const regex = /\s*((?:'[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"|\/\*[^*]*\*+(?:[^*\/][^*]*\*+)*\/|#.*|--.*|[^"';#])+(?:;|$))/g;
-const re = new RegExp(regex, 'g');
 
 self.addEventListener('message', function(e) {
   const data = e.data;
@@ -11,7 +10,7 @@ self.addEventListener('message', function(e) {
     postMessage([]);
     return;
   }
-  const matches = data.queries.match(re);
+  const matches = data.queries.match(regex);
   if (matches === null) {
     postMessage(null);
     return;
