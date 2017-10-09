@@ -40,7 +40,7 @@ export default React.createClass({
   render() {
     return (
       <Modal show={this.props.show}
-        bsSize={this.props.backend === 'docker' ? 'medium' : 'large'}
+        bsSize={this.props.backend === 'docker' ? null : 'large'}
         onHide={this.onHide} enforceFocus={false}>
         <Modal.Header closeButton={true}>
           <Modal.Title>Create sandbox</Modal.Title>
