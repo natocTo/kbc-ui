@@ -107,7 +107,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <button className="btn btn-primary" onClick={this.openModal}>
+        <button className="btn btn-success" onClick={this.openModal}>
           <i className="kbc-icon-plus"/>New File Output
         </button>
       );
