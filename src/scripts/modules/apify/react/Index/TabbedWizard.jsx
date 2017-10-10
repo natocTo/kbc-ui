@@ -132,7 +132,7 @@ export default React.createClass({
           <div className="col-xs-8">
             {editor}
             <div className="help-text">
-              Optional crawler settings JSON object which overrides default crawler settings for current run
+              Optional <a href="https://www.apify.com/docs#crawlers" target="_blank">crawler settings</a> JSON object which overrides default crawler settings for current run.
             </div>
           </div>
         </div>
