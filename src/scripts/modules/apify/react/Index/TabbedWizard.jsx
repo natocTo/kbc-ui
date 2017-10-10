@@ -151,8 +151,8 @@ export default React.createClass({
   },
 
   renderTokenForm() {
-    const userHelp = <span>User ID from your <a href="https://www.apifier.com/account" target="_blank">account page</a>.</span>;
-    const tokenHelp = <span>API token from your <a href="https://www.apifier.com/account" target="_blank">account page</a>.</span>;
+    const userHelp = <span>User ID from your <a href="https://my.apify.com/account#/integrations" target="_blank">account page</a>.</span>;
+    const tokenHelp = <span>API token from your <a href="https://my.apify.com/account#/integrations" target="_blank">account page</a>.</span>;
     return (
       <div className="row form-horizontal clearfix">
         {this.renderInput('User ID', 'userId', userHelp, 'Enter User ID')}
