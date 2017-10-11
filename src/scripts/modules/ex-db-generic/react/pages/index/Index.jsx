@@ -200,29 +200,22 @@ export default function(componentId) {
               sourceTablesLoading={this.state.localState.getIn(loadingSourceTablesPath)}
               sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
             />
-            {this.state.hasCredentials ? (
-              <div style={{padding: '22px'}}>
-                {this.state.queries.count() > 0 ? (
-                  <div>
-                    <div className="row">
-                      <div className="col-sm-9">
-                        <SearchRow
-                          onChange={this.handleFilterChange}
-                          query={this.state.queriesFilter}
-                        />
-                      </div>
-                      <div className="col-sm-3">
-                        <div className="text-right" style={{marginTop: '16px'}}>
-                          {this.renderNewQueryLink()}
-                        </div>
-                      </div>
-                    </div>
+            {this.state.hasCredentials && this.state.queries.count() > 0 ? (
+              <div className="row">
+                <div className="col-sm-9" style={{padding: '0px'}}>
+                  <SearchRow
+                    onChange={this.handleFilterChange}
+                    query={this.state.queriesFilter}
+                  />
+                </div>
+                <div className="col-sm-3">
+                  <div className="text-right" style={{marginTop: '16px'}}>
+                    {this.renderNewQueryLink()}
                   </div>
-                ) : null
-                }
-                {this.renderQueriesMain()}
+                </div>
               </div>
-            ) : this.renderCredentialsSetup()}
+            ) : null}
+            {this.state.hasCredentials ? this.renderQueriesMain() : this.renderCredentialsSetup()}
           </div>
           <div className="col-md-3 kbc-main-sidebar">
             <div className="kbc-buttons kbc-text-light">
