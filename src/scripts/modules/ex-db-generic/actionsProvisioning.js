@@ -1,5 +1,6 @@
 import * as storeProvisioning from './storeProvisioning';
 import {List, fromJS} from 'immutable';
+import RoutesStore from '../../stores/RoutesStore';
 
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
@@ -146,7 +147,10 @@ export function createActions(componentId) {
       credentials = updateProtectedProperties(credentials, store.getCredentials());
       const newConfigData = store.configData.setIn(['parameters', 'db'], credentials);
       const diffMsg = 'Update credentials';
-      return saveConfigData(configId, newConfigData, ['isSavingCredentials'], diffMsg).then(() => this.cancelCredentialsEdit(configId));
+      return saveConfigData(configId, newConfigData, ['isSavingCredentials'], diffMsg).then(() => {
+        this.cancelCredentialsEdit(configId);
+        RoutesStore.getRouter().transitionTo(componentId, {config: configId});
+      });
     },
 
     testCredentials(configId, credentials) {
