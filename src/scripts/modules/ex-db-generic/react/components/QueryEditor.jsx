@@ -282,8 +282,7 @@ export default React.createClass({
               disabled={this.props.disabled}
               label="Destination"
               help="Where the table will be imported.
-                    If the table or bucket does not exist, it will be created.
-                    If left empty, the default value will be used"
+                    If the table or bucket does not exist, it will be created."
               onEdit={this.onDestinationEdit}
               editing={this.props.destinationEditing}
             />
