@@ -46,15 +46,17 @@ export default React.createClass({
             navQuery = this.props.editingQueries.get(query.get('id'));
             isEditing = true;
           }
-          return (
-            <NavRow
-              key={navQuery.get('id')}
-              query={navQuery}
-              configurationId={this.props.configurationId}
-              componentId={this.props.componentId}
-              isEditing={isEditing}
-            />
-          );
+          if (this.props.queries.filter((q) => q.get('id') === query.get('id')).count() === 0) {
+            return (
+              <NavRow
+                key={navQuery.get('id')}
+                query={navQuery}
+                configurationId={this.props.configurationId}
+                componentId={this.props.componentId}
+                isEditing={isEditing}
+              />
+            );
+          }
         }, this).toArray();
       }
       var olnavrows = this.props.queries.map(function(query) {
