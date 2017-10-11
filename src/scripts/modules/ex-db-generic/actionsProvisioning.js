@@ -92,7 +92,11 @@ export function createActions(componentId) {
     if (!matchedTable) {
       return [];
     }
-    return matchedTable.get('columns').filter((column) => column.get('primaryKey') === true);
+    if (matchedTable.get('columns')) {
+      return matchedTable.get('columns').filter((column) => column.get('primaryKey') === true);
+    } else {
+      return [];
+    }
   }
 
   return {
