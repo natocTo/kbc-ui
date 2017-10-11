@@ -193,7 +193,7 @@ export default React.createClass({
     return (
       <p className="form-control-static">
         {parameters.get('settingsLink') ?
-         <a target="_blank" href={parameters.get('settingsLink')}>
+         <a target="_blank" rel="noopener noreferrer" href={parameters.get('settingsLink')}>
            {cname}
          </a>
          : <span> {cname} </span>

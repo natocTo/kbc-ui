@@ -132,7 +132,7 @@ export default React.createClass({
           <div className="col-xs-8">
             {editor}
             <div className="help-text">
-              Optional <a href="https://www.apify.com/docs#crawlers" target="_blank">crawler settings</a> JSON object which overrides default crawler settings for current run.
+              Optional <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">crawler settings</a> JSON object which overrides default crawler settings for current run.
             </div>
           </div>
         </div>
@@ -151,8 +151,8 @@ export default React.createClass({
   },
 
   renderTokenForm() {
-    const userHelp = <span>User ID from your <a href="https://my.apify.com/account#/integrations" target="_blank">account page</a>.</span>;
-    const tokenHelp = <span>API token from your <a href="https://my.apify.com/account#/integrations" target="_blank">account page</a>.</span>;
+    const userHelp = <span>User ID from your <a href="https://my.apify.com/account#/integrations" target="_blank" rel="noopener noreferrer">account page</a>.</span>;
+    const tokenHelp = <span>API token from your <a href="https://my.apify.com/account#/integrations" target="_blank" rel="noopener noreferrer">account page</a>.</span>;
     return (
       <div className="row form-horizontal clearfix">
         {this.renderInput('User ID', 'userId', userHelp, 'Enter User ID')}
