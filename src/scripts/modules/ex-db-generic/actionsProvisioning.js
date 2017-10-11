@@ -22,6 +22,22 @@ export function loadSourceTables(componentId, configId) {
   }
 }
 
+export function componentSupportsSimpleSetup(componentId) {
+  const supportedComponents = [
+    'keboola.ex-db-mysql',
+    'keboola.ex-db-redshift',
+    'keboola.ex-db-snowflake',
+    'keboola.ex-db-mssql',
+    'keboola.ex-db-oracle',
+    'keboola.ex-db-db2',
+    'keboola.ex-db-pgsql'
+  ];
+  if (supportedComponents.indexOf(componentId) > -1) {
+    return true;
+  }
+  return false;
+}
+
 export function createActions(componentId) {
   function resetProtectedProperties(credentials) {
     const props = List(getProtectedProperties(componentId));
@@ -142,19 +158,7 @@ export function createActions(componentId) {
     // Credentials actions end
 
     componentSupportsSimpleSetup() {
-      const supportedComponents = [
-        'keboola.ex-db-mysql',
-        'keboola.ex-db-redshift',
-        'keboola.ex-db-snowflake',
-        'keboola.ex-db-mssql',
-        'keboola.ex-db-oracle',
-        'keboola.ex-db-db2',
-        'keboola.ex-db-pgsql'
-      ];
-      if (supportedComponents.indexOf(componentId) > -1) {
-        return true;
-      }
-      return false;
+      return componentSupportsSimpleSetup(componentId);
     },
 
     setQueriesFilter(configId, query) {
@@ -270,7 +274,7 @@ export function createActions(componentId) {
     quickstart(configId, tableList) {
       const store = getStore(configId);
       let queries = tableList.map(function(table) {
-        let query = store.generateNewQuery(null, this.componentSupportsSimpleSetup());
+        let query = store.generateNewQuery(null, componentSupportsSimpleSetup(componentId));
         query = query.set('table', table);
         query = query.set('name', table.get('tableName'));
         const pkCols = getPKColumsFromSourceTable(table, store.getSourceTables(configId));
@@ -282,7 +286,7 @@ export function createActions(componentId) {
         }
         query = query.set('outputTable', store.getDefaultOutputTableId(table.get('tableName')));
         return query;
-      }, this);
+      });
       const diffMsg = 'Quickstart config creation';
       const newData = store.configData.setIn(['parameters', 'tables'], queries);
       saveConfigData(configId, newData, ['quickstartSaving'], diffMsg).then(() => {
