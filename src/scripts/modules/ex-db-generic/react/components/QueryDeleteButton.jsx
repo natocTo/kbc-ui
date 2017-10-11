@@ -24,7 +24,9 @@ export default React.createClass({
     };
   },
 
-  deleteQuery() {
+  deleteQuery(e) {
+    e.preventDefault();
+    e.stopPropagation();
     this.transitionTo(this.props.componentId, {config: this.props.configurationId});
     const ExDbActionCreators = this.props.actionsProvisioning.createActions(this.props.componentId);
     setTimeout(
