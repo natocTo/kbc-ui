@@ -199,6 +199,8 @@ export function createActions(componentId) {
 
     deleteQuery(configId, qid) {
       const store = getStore(configId);
+      removeFromLocalState(configId, ['newQueries', qid]);
+      removeFromLocalState(configId, ['editingQueries', qid]);
       const newQueries = store.getQueries().filter((q) => q.get('id') !== qid);
       const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       const diffMsg = 'Delete query ' + store.getQueryName(qid);
