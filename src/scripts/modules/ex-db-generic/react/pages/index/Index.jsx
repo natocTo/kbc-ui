@@ -136,7 +136,7 @@ export default function(componentId) {
             </div>
           );
         }
-      } else if (actionsCreators.componentSupportsSimpleSetup() && this.state.hasCredentials) {
+      } else if (actionsProvisioning.componentSupportsSimpleSetup(componentId) && this.state.hasCredentials) {
         return (
           <div className="row component-empty-state text-center">
             <div className="col-md-12">

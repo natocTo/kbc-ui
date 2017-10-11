@@ -50,7 +50,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         sourceTables: ExDbStore.getSourceTables(),
         queriesFilter: ExDbStore.getQueriesFilter(),
         queriesFiltered: ExDbStore.getQueriesFiltered(),
-        componentSupportsSimpleSetup: ExDbActionCreators.componentSupportsSimpleSetup(),
+        componentSupportsSimpleSetup: actionsProvisioning.componentSupportsSimpleSetup(),
         queryNameExists: ExDbStore.queryNameExists(editingQuery),
         localState: ExDbStore.getLocalState()
       };

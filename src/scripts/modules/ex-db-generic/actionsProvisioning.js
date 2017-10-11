@@ -16,7 +16,7 @@ export function loadConfiguration(componentId, configId) {
 
 export function loadSourceTables(componentId, configId) {
   const actions = createActions(componentId);
-  if (actions.componentSupportsSimpleSetup() && !actions.sourceTablesLoaded(configId)) {
+  if (componentSupportsSimpleSetup(componentId) && !actions.sourceTablesLoaded(configId)) {
     createActions(componentId).updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
     return createActions(componentId).getSourceTables(configId);
   }
@@ -157,10 +157,6 @@ export function createActions(componentId) {
     },
     // Credentials actions end
 
-    componentSupportsSimpleSetup() {
-      return componentSupportsSimpleSetup(componentId);
-    },
-
     setQueriesFilter(configId, query) {
       updateLocalState(configId, 'queriesFilter', query);
     },
@@ -191,7 +187,7 @@ export function createActions(componentId) {
 
     createQuery(configId) {
       const store = getStore(configId);
-      let newQuery = this.checkTableName(store.generateNewQuery(null, this.componentSupportsSimpleSetup()), store);
+      let newQuery = this.checkTableName(store.generateNewQuery(null, componentSupportsSimpleSetup(componentId)), store);
       updateLocalState(configId, ['newQueries', newQuery.get('id')], newQuery);
       this.changeQueryEdit(configId, newQuery);
       return newQuery;
@@ -216,7 +212,7 @@ export function createActions(componentId) {
       removeFromLocalState(configId, ['isDestinationEditing', queryId]);
       const store = getStore(configId);
       if (store.isNewQuery(queryId)) {
-        const newQuery = store.generateNewQuery(queryId, this.componentSupportsSimpleSetup());
+        const newQuery = store.generateNewQuery(queryId, componentSupportsSimpleSetup(componentId));
         updateLocalState(configId, ['newQueries', queryId], newQuery);
         updateLocalState(configId, ['editingQueries', queryId], newQuery);
       } else {
