@@ -70,11 +70,15 @@ export function createActions(componentId) {
     },
 
     cancelCredentialsEdit(configId) {
-      updateLocalState(configId, 'editingCredentials', null);
+      updateLocalState(configId, ['isChangedCredentials'], null);
+      updateLocalState(configId, ['editingCredentials'], null);
     },
 
     updateEditingCredentials(configId, newCredentials) {
       updateLocalState(configId, 'editingCredentials', newCredentials);
+      if (!localState(configId).get('isChangedCredentials', false)) {
+        updateLocalState(configId, ['isChangedCredentials'], true);
+      }
     },
 
     resetNewQuery(configId) {
