@@ -148,6 +148,10 @@ export function createStore(componentId, configId) {
       return data.localState.getIn(['newQueries']);
     },
 
+    getNewQueriesIdsList() {
+      return data.localState.getIn(['newQueriesIdsList'], List([]));
+    },
+
     isEditingQuery(queryId) {
       return !!data.localState.getIn(['editingQueries', queryId]);
     },
