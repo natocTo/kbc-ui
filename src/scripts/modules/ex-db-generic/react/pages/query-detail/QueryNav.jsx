@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
+
 import SearchRow from '../../../../../react/common/SearchRow';
 import NavRow from './QueryNavRow';
 import CreateQueryElement from '../../components/CreateQueryElement';
@@ -9,6 +10,7 @@ export default React.createClass({
     navQuery: PropTypes.object.isRequired,
     editingQueries: PropTypes.object.isRequired,
     newQueries: PropTypes.object.isRequired,
+    newQueriesIdsList: PropTypes.object.isRequired,
     configurationId: PropTypes.string.isRequired,
     filter: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
@@ -18,10 +20,7 @@ export default React.createClass({
   render() {
     return (
       <div className="kbc-container">
-        <SearchRow
-          query={this.props.filter}
-          onChange={this.handleFilterChange}
-          />
+        <SearchRow query={this.props.filter} onChange={this.handleFilterChange} />
         <div className="list-group">
           <CreateQueryElement
             isNav={true}
@@ -29,64 +28,71 @@ export default React.createClass({
             actionsProvisioning={this.props.actionsProvisioning}
             componentId={this.props.componentId}
           />
-          {this.rows()}
+          {this.props.queries.count() > 0 ? (
+            this.rows()
+          ) : (
+            <div className="list-group-item">No queries found.</div>
+          )}
         </div>
       </div>
     );
   },
 
   rows() {
-    if (this.props.queries.count() > 0) {
-      var navrows = [];
-      if (this.props.newQueries) {
-        navrows = this.props.newQueries.map(function(query) {
-          let isEditing = false;
-          let navQuery = query;
-          if (this.props.editingQueries && this.props.editingQueries.has(query.get('id'))) {
-            navQuery = this.props.editingQueries.get(query.get('id'));
-            isEditing = true;
-          }
-          if (this.props.queries.filter((q) => q.get('id') === query.get('id')).count() === 0) {
-            return (
-              <NavRow
-                key={navQuery.get('id')}
-                query={navQuery}
-                configurationId={this.props.configurationId}
-                componentId={this.props.componentId}
-                isEditing={isEditing}
-              />
-            );
-          }
-        }, this).toArray();
-      }
-      var olnavrows = this.props.queries.map(function(query) {
-        let navQuery = query;
-        let isEditing = false;
-        if (this.props.editingQueries && this.props.editingQueries.has(query.get('id'))) {
-          navQuery = this.props.editingQueries.get(query.get('id'));
-          isEditing = true;
-        } else if (this.props.newQueries && this.props.newQueries.has(query.get('id'))) {
-          navQuery = this.props.newQueries.get(query.get('id'));
-          isEditing = true;
+    const { newQueriesIdsList, queries, editingQueries } = this.props;
+
+    const originalQueryIds = queries.map(query => {
+      return query.get('id');
+    });
+
+    // filter only new queries and sort them by those added latest (like "desc by time")
+    const sidebarNewQueries = editingQueries
+      .filter(query => {
+        return originalQueryIds.indexOf(query.get('id')) === -1;
+      })
+      .sort((valueA, valueB) => {
+        if (
+          newQueriesIdsList.indexOf(valueA.get('id')) < newQueriesIdsList.indexOf(valueB.get('id'))
+        ) {
+          return -1;
+        } else if (
+          newQueriesIdsList.indexOf(valueA.get('id')) > newQueriesIdsList.indexOf(valueB.get('id'))
+        ) {
+          return 1;
+        } else {
+          return 0;
         }
-        return (
-          <NavRow
-            key={navQuery.get('id')}
-            query={navQuery}
-            configurationId={this.props.configurationId}
-            componentId={this.props.componentId}
-            isEditing={isEditing}
-          />
-        );
-      }, this).toArray();
-      return navrows.concat(olnavrows);
-    } else {
+      })
+      .map(query => {
+        return {
+          isEditing: true, // we're always editing new query
+          value: query
+        };
+      })
+      .toArray();
+
+    // map original queries and replace those which are edited
+    const sidebarOriginalQueries = queries
+      .map(query => {
+        const isEditing = editingQueries.keySeq().indexOf(query.get('id')) > -1;
+        return {
+          isEditing: isEditing,
+          value: isEditing ? editingQueries.get(query.get('id')) : query
+        };
+      })
+      .toArray();
+
+    return sidebarNewQueries.concat(sidebarOriginalQueries).map(query => {
       return (
-        <div className="list-group-item">
-          No queries found.
-        </div>
+        <NavRow
+          key={query.value.get('id')}
+          query={query.value}
+          configurationId={this.props.configurationId}
+          componentId={this.props.componentId}
+          isEditing={query.isEditing}
+        />
       );
-    }
+    });
   },
 
   handleFilterChange(newQuery) {

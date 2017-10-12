@@ -44,6 +44,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         editingQuery: editingQuery,
         editingQueries: ExDbStore.getEditingQueries(),
         newQueries: ExDbStore.getNewQueries(),
+        newQueriesIdsList: ExDbStore.getNewQueriesIdsList(),
         isSaving: ExDbStore.isSavingQuery(queryId),
         isValid: ExDbStore.isEditingQueryValid(queryId) && !ExDbStore.queryNameExists(editingQuery),
         tables: StorageTablesStore.getAll(),
@@ -105,6 +106,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
                   navQuery={this.state.editingQuery || Map()}
                   editingQueries={this.state.editingQueries || List()}
                   newQueries={this.state.newQueries || List()}
+                  newQueriesIdsList={this.state.newQueriesIdsList}
                   configurationId={this.state.configId}
                   filter={this.state.queriesFilter}
                   componentId={componentId}
