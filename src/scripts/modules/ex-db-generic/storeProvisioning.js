@@ -185,7 +185,7 @@ export function createStore(componentId, configId) {
     },
 
     getDefaultOutputTableId(name) {
-      if (name === '') {
+      if (!name || name === '') {
         return '';
       }
       const qname = string.sanitizeKbcTableIdString(name);

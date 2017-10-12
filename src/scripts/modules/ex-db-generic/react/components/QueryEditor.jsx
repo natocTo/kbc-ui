@@ -161,10 +161,10 @@ export default React.createClass({
     const oldDefaultOutputTable = this.props.getDefaultOutputTable(oldTableName);
     const defaultOutputTable = this.props.getDefaultOutputTable(newValue.tableName);
     const newOutputTable = (currentOutputTable && currentOutputTable !== oldDefaultOutputTable) ? currentOutputTable : defaultOutputTable;
-    const primaryKeys = this.getPksOnSourceTableChange(newValue);
+    const primaryKeys = (newValue === '') ? [] : this.getPksOnSourceTableChange(newValue);
     return this.props.onChange(
       this.props.query
-        .set('table', Immutable.fromJS(newValue))
+        .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
         .set('name', newName)
         .set('primaryKey', primaryKeys)
         .set('incremental', !!primaryKeys)
