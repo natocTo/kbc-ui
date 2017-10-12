@@ -37,6 +37,13 @@ export default React.createClass({
     };
   },
 
+  getInitialState() {
+    return {
+      simplePk: (this.props.query.get('advancedMode')) ? [] : this.props.query.get('primaryKey'),
+      advancedPk: (this.props.query.get('advancedMode')) ? this.props.query.get('primaryKey') : []
+    };
+  },
+
   isExistingTable() {
     const destinationTable = this.props.query.get('outputTable');
     if (!destinationTable || destinationTable === '') {
@@ -205,7 +212,7 @@ export default React.createClass({
   },
 
   getQuery() {
-    return this.props.query.get('query');
+    return this.props.query.get('query') || '';
   },
 
   getTableValue() {
