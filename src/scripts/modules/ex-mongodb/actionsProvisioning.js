@@ -2,6 +2,7 @@ import * as storeProvisioning from './storeProvisioning';
 import {Map, List} from 'immutable';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
+import RoutesStore from '../../stores/RoutesStore';
 
 import getDefaultPort from '../ex-db-generic/templates/defaultPorts';
 import {getProtectedProperties} from '../ex-db-generic/templates/credentials';
@@ -115,7 +116,10 @@ export function createActions(componentId) {
       let newCredentials = store.getNewCredentials();
       newCredentials = updateProtectedProperties(newCredentials, store.getCredentials());
       const newData = store.configData.setIn(['parameters', 'db'], newCredentials);
-      return saveConfigData(configId, newData, ['isSavingCredentials']).then(() => this.resetNewCredentials(configId));
+      return saveConfigData(configId, newData, ['isSavingCredentials']).then(() => {
+        this.resetNewCredentials(configId);
+        RoutesStore.getRouter().transitionTo(componentId, {config: configId});
+      });
     },
 
     prepareQueryToSave(query) {
@@ -151,7 +155,10 @@ export function createActions(componentId) {
       credentials = updateProtectedProperties(credentials, store.getCredentials());
       const newConfigData = store.configData.setIn(['parameters', 'db'], credentials);
       return saveConfigData(configId, newConfigData, 'isSavingCredentials')
-        .then(() => this.cancelCredentialsEdit(configId));
+        .then(() => {
+          this.cancelCredentialsEdit(configId);
+          RoutesStore.getRouter().transitionTo(componentId, {config: configId});
+        });
     },
 
     deleteQuery(configId, qid) {

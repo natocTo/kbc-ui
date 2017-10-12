@@ -138,7 +138,10 @@ export function createActions(componentId) {
       newCredentials = updateProtectedProperties(newCredentials, store.getCredentials());
       const newData = store.configData.setIn(['parameters', 'db'], newCredentials);
       const diffMsg = 'Save new credentials';
-      return saveConfigData(configId, newData, ['isSavingCredentials'], diffMsg).then(() => this.resetNewCredentials(configId));
+      return saveConfigData(configId, newData, ['isSavingCredentials'], diffMsg).then(() => {
+        this.resetNewCredentials(configId);
+        RoutesStore.getRouter().transitionTo(componentId, {config: configId});
+      });
     },
 
     saveCredentialsEdit(configId) {
