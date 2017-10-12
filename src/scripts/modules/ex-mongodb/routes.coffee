@@ -21,7 +21,7 @@ VersionsActionsCreators = require('../components/VersionsActionCreators')
 {createTablesRoute} = require '../table-browser/routes'
 storeProvisioning = require './storeProvisioning'
 
-credentialsTemplate = require('../ex-db-generic/templates/credentials').default
+credentialsTemplate = require('../ex-db-generic/templates/credentials')
 hasSshTunnel = require('../ex-db-generic/templates/hasSshTunnel').default
 
 module.exports = (componentId) ->
