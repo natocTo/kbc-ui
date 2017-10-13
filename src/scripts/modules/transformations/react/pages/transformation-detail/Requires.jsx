@@ -31,7 +31,7 @@ export default React.createClass({
         </h2>
         <div className="form-group">
           <Select
-            name="packages"
+            name="requires"
             value={this.props.requires.toArray()}
             options={this.getSelectOptions(this.props.transformations, this.props.transformation)}
             multi={true}
@@ -51,8 +51,15 @@ export default React.createClass({
   },
 
   getSelectOptions: function(transformations, currentTransformation) {
-    return _.sortBy(_.map(_.filter(transformations.toArray(), function(transformation) {
-      return parseInt(transformation.get('phase'), 10) === parseInt(currentTransformation.get('phase'), 10) && transformation.get('backend') === currentTransformation.get('backend') && transformation.get('id') !== currentTransformation.get('id');
+    var options = _.sortBy(_.map(_.filter(transformations.toArray(), function(transformation) {
+      return (
+        (
+          parseInt(transformation.get('phase'), 10) === parseInt(currentTransformation.get('phase'), 10)
+          && transformation.get('backend') === currentTransformation.get('backend')
+          && transformation.get('id') !== currentTransformation.get('id')
+        )
+        || currentTransformation.get('requires').contains(transformation.get('id'))
+      );
     }), function(transformation) {
       return {
         label: transformation.get('name'),
@@ -61,6 +68,24 @@ export default React.createClass({
     }), function(option) {
       return option.label.toLowerCase();
     });
+
+    // identify deleted required transformations
+    var missing = _.filter(currentTransformation.get('requires').toArray(), function(possiblyMissingTransformationId) {
+      if (_.find(options, function(option) {
+        return option.value === possiblyMissingTransformationId;
+      })) {
+        return false;
+      }
+      return true;
+    });
+    // add them to options
+    for (var i = 0; i < missing.length; i++) {
+      options.push({
+        label: missing[i],
+        value: missing[i]
+      });
+    }
+    return options;
   },
 
   handleValueChange(newArray) {
