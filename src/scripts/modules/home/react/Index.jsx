@@ -64,7 +64,7 @@ export default React.createClass({
     componentCount += this.state.installedComponents.filter(function(component) {
       return !!component.get('flags', []).contains('deprecated');
     }).count();
-    if (typeof this.state.expires === 'undefined') {
+    if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
     }
     return componentCount;
