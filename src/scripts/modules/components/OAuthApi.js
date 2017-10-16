@@ -2,7 +2,7 @@ import request from '../../utils/request';
 import ApplicationStore from '../../stores/ApplicationStore';
 
 var createUrl = function(path) {
-  var baseUrl = 'https://syrup.keboola.com/oauth';
+  const baseUrl = 'https://syrup.keboola.com/oauth';
   return baseUrl + '/' + path;
 };
 
@@ -23,4 +23,3 @@ module.exports = {
     });
   }
 };
-

@@ -112,9 +112,9 @@ export default React.createClass({
           <input
             className="form-control"
             type="text"
-            name="clientId"
-            defaultValue={this.state.clientId}
-            onChange={this.makeSetStatePropertyFn('clientId')}
+            name="appKey"
+            defaultValue={this.state.appKey}
+            onChange={this.makeSetStatePropertyFn('appKey')}
           />
           <p className="help-block">
             Your app Client ID (optional)
@@ -129,9 +129,9 @@ export default React.createClass({
           <input
             className="form-control"
             type="text"
-            name="clientSecret"
-            defaultValue={this.state.clientSecret}
-            onChange={this.makeSetStatePropertyFn('clientSecret')}
+            name="appSecret"
+            defaultValue={this.state.appSecret}
+            onChange={this.makeSetStatePropertyFn('appSecret')}
           />
           <p className="help-block">
             Your app Client Secret (optional)
