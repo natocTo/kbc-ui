@@ -86,7 +86,7 @@ module.exports = React.createClass
 
   _renderOAuthV2Writer: (componentId) ->
     parameters = @state.configData.get 'parameters'
-    credentialsId = parameters.get(componentId)
+    credentialsId = parameters.getIn([componentId, 'id'])
     oauthCredentials = credentialsId && OAuthStore.getCredentials(componentId, credentialsId)
     isAuthorized = uploadUtils.isOauthV2Authorized(parameters, componentId)
     OauthV2WriterRow
@@ -237,7 +237,7 @@ module.exports = React.createClass
 
   _resetUploadTask: (taskName) ->
     params = @state.configData.getIn(['parameters'], Map())
-    params = params.set(taskName, null)
+    params = params.delete(taskName)
     params = params.set('uploadTasks', List())
-    params = params.set('stageUploadTask', null)
+    params = params.delete('stageUploadTask')
     @_saveConfigData(['parameters'], params)

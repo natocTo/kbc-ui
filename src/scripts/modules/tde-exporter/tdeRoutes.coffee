@@ -39,7 +39,7 @@ registerOAuthV2Route = (writerComponentId) ->
         router = RouterStore.getRouter()
         oauth2Actions.loadCredentials(writerComponentId, credentialsId).then ->
           saveFn = installedComponentsActions.saveComponentConfigData
-          newConfig = configuration.setIn ['parameters', writerComponentId], credentialsId
+          newConfig = configuration.setIn ['parameters', writerComponentId, 'id'], credentialsId
           saveFn(componentId, params.config, newConfig).then ->
             notification = "Account succesfully authorized."
             ApplicationActionCreators.sendNotification
@@ -156,7 +156,7 @@ module.exports =
           configData = InstalledComponentsStore.getConfigData(componentId, params.config)
           parameters = configData.get('parameters', Map())
           Promise.props(OAUTH_V2_WRITERS.map((cid) ->
-            credentialsId = parameters.get(cid)
+            credentialsId = parameters.getIn([cid, 'id'])
             !!credentialsId && oauth2Actions.loadCredentials(cid, credentialsId)
           ))
     ]
