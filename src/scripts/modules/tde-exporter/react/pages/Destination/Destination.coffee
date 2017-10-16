@@ -86,16 +86,19 @@ module.exports = React.createClass
 
   _renderOAuthV2Writer: (componentId) ->
     parameters = @state.configData.get 'parameters'
-    credentialsId = parameters.getIn([componentId, 'id'])
+    componentData = parameters.get(componentId, Map())
+    credentialsId = componentData.get('id')
     oauthCredentials = credentialsId && OAuthStore.getCredentials(componentId, credentialsId)
     isAuthorized = uploadUtils.isOauthV2Authorized(parameters, componentId)
     OauthV2WriterRow
+      componentData: componentData
       configId: @state.configId
       localState: @state.localState
-      updateLocalStateFn: @_updateLocalState
+      updateLocalState: @_updateLocalState
       componentId: componentId
       isAuthorized: isAuthorized
       oauthCredentials: oauthCredentials
+      setConfigDataFn: @_saveConfigData
       renderComponent: =>
         @_renderComponentCol(componentId)
       renderEnableUpload: (name) =>
