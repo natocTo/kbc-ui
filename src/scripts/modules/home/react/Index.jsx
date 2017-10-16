@@ -67,8 +67,6 @@ export default React.createClass({
     if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
     }
-    console.log('componentCount', componentCount);
-    console.log('this.state.expires', this.state.expires);
     return componentCount;
   },
 
