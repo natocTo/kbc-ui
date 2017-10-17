@@ -1,7 +1,5 @@
 import React, {PropTypes} from 'react';
-const CUSTOM_PROPS = {
-  'keboola.ex-zendesk': ['subdomain']
-};
+
 export default React.createClass({
 
   propTypes: {
@@ -24,12 +22,7 @@ export default React.createClass({
   },
 
   isValid() {
-    const checkProps = CUSTOM_PROPS[this.props.componentId] || [];
-    let isCustomValid = true;
-    for (let prop of checkProps) {
-      isCustomValid = isCustomValid && !!prop;
-    }
-    return !!this.state.authorizedFor && isCustomValid;
+    return !!this.state.authorizedFor;
   },
 
   makeSetStatePropertyFn(prop) {
@@ -65,41 +58,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <div className="row">
-          {this.renderCustomFields()}
-        </div>
       </div>
     );
-  },
-
-  renderCustomFields() {
-    if (this.props.componentId === 'keboola.ex-zendesk') {
-      return this.renderZendeskFields();
-    }
-    return null;
-  },
-
-  renderZendeskFields() {
-    return [
-      <div className="form-group">
-        <label className="control-label col-xs-2">
-          Domain
-        </label>
-        <div className="col-xs-10">
-          <input
-            className="form-control"
-            type="text"
-            name="zendeskSubdomain"
-            defaultValue={this.state.subdomain}
-            onChange={this.makeSetStatePropertyFn('subdomain')}
-          />
-          <p className="help-block">
-            Zendes Subdomain, e.g. keboola
-          </p>
-        </div>
-      </div>,
-      <input type="hidden" name="userData"
-        value={JSON.stringify({subdomain: this.state.subdomain})}/>
-    ];
   }
 });
