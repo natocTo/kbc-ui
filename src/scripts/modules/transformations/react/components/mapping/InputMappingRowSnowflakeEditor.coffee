@@ -6,6 +6,7 @@ Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 SnowflakeDataTypesContainer = React.createFactory(require("./input/SnowflakeDataTypesContainer"))
+ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
 
 module.exports = React.createClass
   displayName: 'InputMappingRowRedshiftEditor'
@@ -56,6 +57,12 @@ module.exports = React.createClass
 
   _handleChangeDays: (e) ->
     value = @props.value.set("days", parseInt(e.target.value))
+    @props.onChange(value)
+
+  _handleChangeChangedSince: (value) ->
+    if @props.value.has("days")
+      value = @props.value.delete("days")
+    value = @props.value.set("changedSince", value)
     @props.onChange(value)
 
   _handleChangeColumns: (newValue) ->
@@ -193,6 +200,15 @@ module.exports = React.createClass
           onChange: @_handleChangeDays
           labelClassName: 'col-xs-2'
           wrapperClassName: 'col-xs-4'
+      if @state.showDetails
+        React.DOM.div {className: "row col-md-12"},
+          React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
+            React.DOM.div className: 'col-xs-10',
+              ChangedSinceInput
+                value: @props.value.get("changedSince", "")
+                disabled: @props.disabled || !@props.value.get("source")
+                onChange: @_handleChangeChangedSince
       if @state.showDetails
         React.DOM.div {className: "row col-md-12"},
           React.DOM.div className: 'form-group form-group-sm',
