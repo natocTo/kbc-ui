@@ -44,26 +44,30 @@ export default React.createClass({
 
   render() {
     return (
-      <div style={{padding: '1.5em 1.5em 0'}}>
-        <div className="form-group">
-          <label className="control-label col-xs-2">
-            Description
-          </label>
-          <div className="col-xs-10">
-            <input
-              className="form-control"
-              type="text"
-              name="authorizedFor"
-              defaultValue={this.state.authorizedFor}
-              onChange={this.makeSetStatePropertyFn('authorizedFor')}
-              autoFocus={true}
-            />
-            <p className="help-block">
-              Describe this authorization, e.g. by the account name.
-            </p>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="form-group">
+            <label className="control-label col-xs-2">
+              Description
+            </label>
+            <div className="col-xs-10">
+              <input
+                className="form-control"
+                type="text"
+                name="authorizedFor"
+                defaultValue={this.state.authorizedFor}
+                onChange={this.makeSetStatePropertyFn('authorizedFor')}
+                autoFocus={true}
+              />
+              <p className="help-block">
+                Describe this authorization, e.g. by the account name.
+              </p>
+            </div>
           </div>
         </div>
-        {this.renderCustomFields()}
+        <div className="row">
+          {this.renderCustomFields()}
+        </div>
       </div>
     );
   },
@@ -71,9 +75,6 @@ export default React.createClass({
   renderCustomFields() {
     if (this.props.componentId === 'keboola.ex-zendesk') {
       return this.renderZendeskFields();
-    }
-    if (this.props.componentId === 'keboola.ex-google-analytics-v4') {
-      return this.renderCredentialsFields();
     }
     return null;
   },
@@ -99,45 +100,6 @@ export default React.createClass({
       </div>,
       <input type="hidden" name="userData"
         value={JSON.stringify({subdomain: this.state.subdomain})}/>
-    ];
-  },
-
-  renderCredentialsFields() {
-    return [
-      <div className="form-group">
-        <label className="control-label col-xs-2">
-          Client ID
-        </label>
-        <div className="col-xs-10">
-          <input
-            className="form-control"
-            type="text"
-            name="appKey"
-            defaultValue={this.state.appKey}
-            onChange={this.makeSetStatePropertyFn('appKey')}
-          />
-          <p className="help-block">
-            Your app Client ID (optional)
-          </p>
-        </div>
-      </div>,
-      <div className="form-group">
-        <label className="control-label col-xs-2">
-          Client Secret
-        </label>
-        <div className="col-xs-10">
-          <input
-            className="form-control"
-            type="text"
-            name="appSecret"
-            defaultValue={this.state.appSecret}
-            onChange={this.makeSetStatePropertyFn('appSecret')}
-          />
-          <p className="help-block">
-            Your app Client Secret (optional)
-          </p>
-        </div>
-      </div>
     ];
   }
 });

@@ -4,6 +4,7 @@ import {TabbedArea, TabPane} from './../../../react/common/KbcBootstrap';
 import Clipboard from '../../../react/common/Clipboard';
 import AuthorizationForm from './AuthorizationForm';
 import DirectTokenInsertFields from './DirectTokenInsertFields';
+import CustomAuthorizationFields from './CustomAuthorizationFields';
 import * as oauthUtils from '../OauthUtils';
 import {Loader} from 'kbc-react-components';
 import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
@@ -11,6 +12,8 @@ import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
 import './AuthorizationModal.less';
 
 const DIRECT_TOKEN_COMPONENTS = ['keboola.ex-facebook', 'keboola.ex-facebook-ads'];
+
+const CUSTOM_AUTHORIZATION_COMPONENTS = ['keboola.ex-google-analytics-v4'];
 
 export default React.createClass({
   propTypes: {
@@ -67,6 +70,12 @@ export default React.createClass({
                   </TabPane>
                  : null
                 }
+                {CUSTOM_AUTHORIZATION_COMPONENTS.includes(this.props.componentId) ?
+                  <TabPane key="custom" eventKey="custom" title="Custom Authorization">
+                    {this.renderCustom()}
+                  </TabPane>
+                  : null
+                }
               </TabbedArea>
             </Modal.Body>
             <Modal.Footer>
@@ -79,7 +88,7 @@ export default React.createClass({
   },
 
   renderFooterButtons() {
-    if (this.state.activeTab === 'general') return this.renderInstantButtons();
+    if (this.state.activeTab === 'general' || this.state.activeTab === 'custom') return this.renderInstantButtons();
     if (this.state.activeTab === 'external') return this.renderExternalButtons();
     if (this.state.activeTab === 'direct') return this.renderDirectButtons();
   },
@@ -98,11 +107,13 @@ export default React.createClass({
       : null
     );
     return (
-      <div style={{padding: '1.5em'}}>
-        <p>
-          To authorize an account from a non-Keboola Connection user, generate a link to the external authorization app and send it to the user you want to have the authorized account for. The generated link is valid for <strong>48</strong> hours and will not be stored anywhere.
-        </p>
-        {externalLink}
+      <div className="container-fluid">
+        <div className="row">
+          <p>
+            To authorize an account from a non-Keboola Connection user, generate a link to the external authorization app and send it to the user you want to have the authorized account for. The generated link is valid for <strong>48</strong> hours and will not be stored anywhere.
+          </p>
+          {externalLink}
+        </div>
       </div>
     );
   },
@@ -214,6 +225,15 @@ export default React.createClass({
           {(this.state.externalLink ? 'Regenerate Link' : 'Generate Link')}
         </Button>
       </ButtonToolbar>
+    );
+  },
+
+  renderCustom() {
+    return (
+      <CustomAuthorizationFields
+        componentId={this.props.componentId}
+        setFormValidFn={(newValue) => this.setState({isFormValid: newValue})}
+      />
     );
   },
 
