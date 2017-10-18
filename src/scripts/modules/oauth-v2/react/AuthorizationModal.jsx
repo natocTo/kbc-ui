@@ -15,6 +15,8 @@ const DIRECT_TOKEN_COMPONENTS = ['keboola.ex-facebook', 'keboola.ex-facebook-ads
 
 const CUSTOM_AUTHORIZATION_COMPONENTS = ['keboola.ex-google-analytics-v4'];
 
+const COMPONENT_LIMITS_INFO = {'keboola.ex-google-analytics-v4': 'Number of requests will be limited to 2000 API calls per day. Use Custom Authorization with your own credentials to obtain full access to the API.'};
+
 export default React.createClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
@@ -29,10 +31,11 @@ export default React.createClass({
   getInitialState() {
     return {
       direct: {},
-      isFormValid: false,
+      custom: {},
+      instant: {},
       externalLink: '',
       generatingLink: false,
-      activeTab: 'general'
+      activeTab: 'instant'
     };
   },
 
@@ -50,13 +53,14 @@ export default React.createClass({
               Authorize
             </Modal.Title>
           </Modal.Header>
+          <Modal.Body>
           <AuthorizationForm
             returnUrlSuffix={this.props.returnUrlSuffix}
             componentId={this.props.componentId}
             id={this.props.id}>
-            <Modal.Body>
+
               <TabbedArea id="authorizationrowtabs" activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}>
-                <TabPane eventKey="general" title="Instant authorization">
+                <TabPane eventKey="instant" title="Instant authorization">
                   {this.renderInstant()}
                 </TabPane>
                 {this.props.allowExternalAuthorization &&
@@ -77,20 +81,28 @@ export default React.createClass({
                   : null
                 }
               </TabbedArea>
-            </Modal.Body>
             <Modal.Footer>
               {this.renderFooterButtons()}
             </Modal.Footer>
           </AuthorizationForm>
+          </Modal.Body>
         </Modal>
       </div>
     );
   },
 
+  getLimitsInfo() {
+    if (COMPONENT_LIMITS_INFO.hasOwnProperty(this.props.componentId)) {
+      return COMPONENT_LIMITS_INFO[this.props.componentId];
+    }
+    return null;
+  },
+
   renderFooterButtons() {
-    if (this.state.activeTab === 'general' || this.state.activeTab === 'custom') return this.renderInstantButtons();
+    if (this.state.activeTab === 'instant') return this.renderInstantButtons();
     if (this.state.activeTab === 'external') return this.renderExternalButtons();
     if (this.state.activeTab === 'direct') return this.renderDirectButtons();
+    if (this.state.activeTab === 'custom') return this.renderCustomButtons();
   },
 
   renderExternal() {
@@ -108,6 +120,14 @@ export default React.createClass({
     );
     return (
       <div className="container-fluid">
+        {!!this.getLimitsInfo() ?
+          <div className="row">
+            <div className="col-md-12">
+              <div className="alert alert-warning">{this.getLimitsInfo()}</div>
+            </div>
+          </div>
+          : null
+        }
         <div className="row">
           <p>
             To authorize an account from a non-Keboola Connection user, generate a link to the external authorization app and send it to the user you want to have the authorized account for. The generated link is valid for <strong>48</strong> hours and will not be stored anywhere.
@@ -125,6 +145,25 @@ export default React.createClass({
       .then((link) => {
         this.setState({generatingLink: false, externalLink: link});
       });
+  },
+
+  renderExternalButtons() {
+    return (
+      <ButtonToolbar>
+        {(this.state.generatingLink ? <Loader /> : null)}
+        <Button
+          bsStyle="link"
+          onClick={this.props.onHideFn}>Cancel
+        </Button>
+        <Button
+          type="button"
+          disabled={this.state.generatingLink}
+          bsStyle="success"
+          onClick={this.onGetExternalLink}>
+          {(this.state.externalLink ? 'Regenerate Link' : 'Generate Link')}
+        </Button>
+      </ButtonToolbar>
+    );
   },
 
   onSaveDirectToken() {
@@ -186,8 +225,10 @@ export default React.createClass({
   renderInstant() {
     return (
       <InstantAuthorizationFields
+        authorizedFor={this.state.instant.authorizedFor}
         componentId={this.props.componentId}
-        setFormValidFn={(newValue) => this.setState({isFormValid: newValue})}
+        onChangeFn={this.setInstantState}
+        infoText={this.getLimitsInfo()}
       />
     );
   },
@@ -202,39 +243,59 @@ export default React.createClass({
         <Button
           bsStyle="success"
           type="submit"
-          disabled={!this.state.isFormValid}
+          disabled={!this.state.instant.authorizedFor}
         ><span>Authorize</span>
         </Button>
       </ButtonToolbar>
     );
   },
 
-  renderExternalButtons() {
+  setInstantState(prop, value) {
+    const {instant} = this.state;
+    instant[prop] = value;
+    this.setState({'instant': instant});
+  },
+
+  renderCustom() {
+    const {custom} = this.state;
+    return (
+      <CustomAuthorizationFields
+        appKey={custom.appKey}
+        appSecret={custom.appSecret}
+        authorizedFor={custom.authorizedFor}
+        componentId={this.props.componentId}
+        onChangeFn={this.setCustomState}
+        disabled={this.state.activeTab !== 'custom'}
+      />
+    );
+  },
+
+  renderCustomButtons() {
     return (
       <ButtonToolbar>
-        {(this.state.generatingLink ? <Loader /> : null)}
         <Button
           bsStyle="link"
           onClick={this.props.onHideFn}>Cancel
         </Button>
         <Button
-          type="button"
-          disabled={this.state.generatingLink}
           bsStyle="success"
-          onClick={this.onGetExternalLink}>
-          {(this.state.externalLink ? 'Regenerate Link' : 'Generate Link')}
+          type="submit"
+          disabled={!this.isCustomFormValid()}
+        ><span>Authorize</span>
         </Button>
       </ButtonToolbar>
     );
   },
 
-  renderCustom() {
-    return (
-      <CustomAuthorizationFields
-        componentId={this.props.componentId}
-        setFormValidFn={(newValue) => this.setState({isFormValid: newValue})}
-      />
-    );
+  setCustomState(prop, value) {
+    const {custom} = this.state;
+    custom[prop] = value;
+    this.setState({'custom': custom});
+  },
+
+  isCustomFormValid() {
+    const {custom} = this.state;
+    return !!custom.appKey && !!custom.authorizedFor && !!custom.appSecret;
   },
 
   goToTab(tab) {
@@ -242,5 +303,4 @@ export default React.createClass({
       activeTab: tab
     });
   }
-
 });

@@ -3,41 +3,23 @@ import React, {PropTypes} from 'react';
 export default React.createClass({
 
   propTypes: {
+    authorizedFor: PropTypes.string,
     componentId: PropTypes.string.isRequired,
-    setFormValidFn: PropTypes.func
-  },
-
-  getInitialState() {
-    return {
-      authorizedFor: ''
-    };
-  },
-
-  componentDidMount() {
-    this.revalidateForm();
-  },
-
-  revalidateForm() {
-    this.props.setFormValidFn(this.isValid());
-  },
-
-  isValid() {
-    return !!this.state.authorizedFor;
-  },
-
-  makeSetStatePropertyFn(prop) {
-    return (e) => {
-      const val = e.target.value;
-      let result = {};
-      result[prop] = val;
-      this.setState(result);
-      this.revalidateForm();
-    };
+    onChangeFn: PropTypes.func,
+    infoText: PropTypes.string
   },
 
   render() {
     return (
       <div className="container-fluid">
+        {!!this.props.infoText ?
+          <div className="row">
+            <div className="col-md-12">
+              <div className="alert alert-warning">{this.props.infoText}</div>
+            </div>
+          </div>
+          : null
+        }
         <div className="row">
           <div className="form-group">
             <label className="control-label col-xs-2">
@@ -48,8 +30,8 @@ export default React.createClass({
                 className="form-control"
                 type="text"
                 name="authorizedFor"
-                defaultValue={this.state.authorizedFor}
-                onChange={this.makeSetStatePropertyFn('authorizedFor')}
+                defaultValue={this.props.authorizedFor}
+                onChange={(e) => this.props.onChangeFn('authorizedFor', e.target.value)}
                 autoFocus={true}
               />
               <p className="help-block">
