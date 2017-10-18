@@ -51,6 +51,7 @@ module.exports = React.createClass
     savingData: InstalledComponentsStore.getSavingConfigData(componentId, configId)
 
   render: ->
+    parameters = @state.configData.get('parameters') or Map()
     destinationRow =
       React.createElement ComponentEmptyState, null,
         p null, 'Upload destination is not chosen'
@@ -72,6 +73,7 @@ module.exports = React.createClass
       div {className: 'kbc-main-content'},
         React.createElement SelectWriterModal,
           isSaving: @state.isSaving
+          initValue: parameters.get('stageUploadTask')
           localState: @state.localState.get('writersModal', Map())
           setLocalState: (key, value ) =>
             @_updateLocalState(['writersModal'].concat(key), value)

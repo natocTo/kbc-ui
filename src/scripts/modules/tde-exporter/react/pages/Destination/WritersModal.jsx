@@ -11,11 +11,18 @@ export default React.createClass({
     localState: PropTypes.object.isRequired,
     setLocalState: PropTypes.func,
     onChangeWriterFn: PropTypes.func,
+    initValue: PropTypes.string,
     isSaving: PropTypes.bool
   },
 
   getInitialState() {
-    return {task: 'tableauServer'};
+    return {task: this.props.initValue || 'tableauServer'};
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.isSaving) {
+      this.setState({task: nextProps.initValue || 'tableauServer'});
+    }
   },
 
   render() {
