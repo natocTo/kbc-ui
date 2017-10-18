@@ -6,7 +6,6 @@ import {Check, Loader, RefreshIcon} from 'kbc-react-components';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
 import SapiTableLink from './StorageApiTableLink';
-import ApplicationStore from '../../../../stores/ApplicationStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
@@ -31,7 +30,6 @@ const PERMANENT_MIGRATION_COMPONENTS = [
 ];
 
 const MIGRATION_COMPONENT_ID = 'keboola.config-migration-tool';
-const MIGRATION_ALLOWED_FEATURE = 'components-migration';
 
 const componentNameMap = Map({
   'ex-gooddata': 'keboola.ex-gooddata',
@@ -139,9 +137,8 @@ export default React.createClass({
 
   canMigrate() {
     const isPermanent = PERMANENT_MIGRATION_COMPONENTS.indexOf(this.props.componentId) >= 0;
-    const hasAdminMigrationFeature = ApplicationStore.hasCurrentAdminFeature(MIGRATION_ALLOWED_FEATURE);
     const hasReplacementApp = this.props.replacementAppId;
-    return isPermanent || hasAdminMigrationFeature || hasReplacementApp;
+    return isPermanent || hasReplacementApp;
   },
 
   renderTabTitle(title, helptext) {
