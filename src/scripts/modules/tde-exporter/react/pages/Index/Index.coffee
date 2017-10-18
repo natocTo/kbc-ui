@@ -168,7 +168,7 @@ module.exports = React.createClass
     show = !!@state.localState?.getIn(['newTable','show'])
     return React.createElement AddNewTableModal,
       show: show
-      selectedTableId: @state.localState?.getIn(['newTable', 'id'])
+      selectedTableId: @state.localState.getIn(['newTable', 'id'], '')
       configuredTables: @state.configData.getIn(['parameters', 'typedefs'])
       configId: @state.configId
       onHideFn: =>

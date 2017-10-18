@@ -8,12 +8,12 @@ module.exports = React.createClass
   displayName: 'AddNewTableModal'
 
   propTypes:
-    show: React.PropTypes.bool
-    onHideFn: React.PropTypes.func
+    show: React.PropTypes.bool.isRequired
+    onHideFn: React.PropTypes.func.isRequired
     selectedTableId: React.PropTypes.string
-    onSetTableIdFn: React.PropTypes.func
+    onSetTableIdFn: React.PropTypes.func.isRequired
     configuredTables: React.PropTypes.object
-    onSaveFn: React.PropTypes.func
+    onSaveFn: React.PropTypes.func.isRequired
 
   render: ->
     React.createElement Modal,
@@ -24,6 +24,7 @@ module.exports = React.createClass
         React.createElement  ModalTitle, null, 'Add Table'
       React.createElement ModalBody, null,
         React.createElement SapiTableSelector,
+          placeholder: 'Source table'
           value: @props.selectedTableId
           onSelectTableFn: @props.onSetTableIdFn
           excludeTableFn: (tableId) =>
