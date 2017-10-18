@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../../../../../react/common/KbcBootstrap';
+import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import {Button, Modal} from 'react-bootstrap';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import {Loader} from 'kbc-react-components';
@@ -41,18 +41,23 @@ export default React.createClass({
   renderBody() {
     return (
       <div className="form form-horizontal">
-        <p>Choose the destination writer type:</p>
-        <Input
-            type="select"
-            wrapperClassName="col-sm-10"
-            value={this.state.task}
-            onChange={(e) => {
-              this.setState({task: e.target.value});
-            }
-            } >
-          {this.generateOption('wr-tableau-server', 'tableauServer')}
-          {OAUTH_V2_WRITERS.map(c => this.generateOption(c, c))}
-        </Input>
+        <FormGroup>
+          <ControlLabel className="col-sm-3">
+            Destination Type
+          </ControlLabel>
+          <div className="col-sm-9">
+            <FormControl
+              componentClass="select"
+              value={this.state.task}
+              onChange={(e) => {
+                this.setState({task: e.target.value});
+              }
+              } >
+              {this.generateOption('wr-tableau-server', 'tableauServer')}
+              {OAUTH_V2_WRITERS.map(c => this.generateOption(c, c))}
+            </FormControl>
+          </div>
+        </FormGroup>
       </div>
     );
   },
