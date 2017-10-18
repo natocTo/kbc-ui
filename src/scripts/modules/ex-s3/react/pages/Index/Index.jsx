@@ -119,13 +119,13 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="kbc-header kbc-header-without-row-fix">
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
             <ComponentDescription
               componentId={COMPONENT_ID}
               configId={this.state.configId}
             />
           </div>
-          <div className="kbc-header kbc-header-without-row-fix">
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
             {this.renderButtons()}
             {this.renderSettings()}
           </div>
