@@ -49,17 +49,17 @@ export default React.createClass({
     return (
       <div className="form form-horizontal">
         <FormGroup>
-          <ControlLabel className="col-sm-3">
+          <ControlLabel className="col-sm-4">
             Destination Type
           </ControlLabel>
-          <div className="col-sm-9">
+          <div className="col-sm-8">
             <FormControl
               componentClass="select"
               value={this.state.task}
               onChange={(e) => {
                 this.setState({task: e.target.value});
-              }
-              } >
+              }}
+            >
               {this.generateOption('wr-tableau-server', 'tableauServer')}
               {OAUTH_V2_WRITERS.map(c => this.generateOption(c, c))}
             </FormControl>
