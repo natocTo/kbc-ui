@@ -222,7 +222,7 @@ module.exports = React.createClass
       if isActive
         isSaving = !hasTask
       else
-        isSaving = hasTask
+        isSaving = !!hasTask
 
     helpText = "All TDE files will be uploaded to #{accountName} immediately after export."
     if not isActive
