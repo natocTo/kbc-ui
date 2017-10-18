@@ -63,19 +63,20 @@ module.exports = React.createClass
 
   _renderMainContent: ->
     div {className: 'col-md-9 kbc-main-content'},
-      div className: 'row kbc-header',
-        div className: 'col-sm-8',
-          ComponentDescription
-            componentId: componentId
-            configId: @state.configId
-        if not @_isEmptyConfig()
-          div className: 'col-sm-4 kbc-buttons',
+      div className: 'kbc-inner-content-padding-fix with-bottom-border',
+        ComponentDescription
+          componentId: componentId
+          configId: @state.configId
+
+      if not @_isEmptyConfig()
+        div className: 'kbc-inner-content-padding-fix text-right',
+          div className: 'kbc-buttons',
             @_addNewTableButton()
             @_renderAddNewTable()
       if not @_isEmptyConfig()
         @_renderTables()
       else
-        div className: 'row component-empty-state text-center',
+        div className: 'kbc-inner-content-padding-fix with-bottom-border text-center',
           div null,
             p null, 'No tables configured.'
             @_addNewTableButton()
