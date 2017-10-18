@@ -19,7 +19,7 @@ class OauthV2WriterRow extends Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="kbc-inner-content-padding-fix">
         <form className="form form-horizontal">
           <FormGroup>
             <ControlLabel className="col-sm-2">
