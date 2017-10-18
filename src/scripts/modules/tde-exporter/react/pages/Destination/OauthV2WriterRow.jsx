@@ -60,7 +60,7 @@ class OauthV2WriterRow extends Component {
                Instant Upload
              </ControlLabel>
              <FormControlStatic className="col-sm-10" componentClass="div">
-               {this.props.renderEnableUpload('<todo name>')}
+               {this.props.renderEnableUpload(this.props.oauthCredentials.get('authorizedFor'))}
              </FormControlStatic>
            </FormGroup>
          </form>
