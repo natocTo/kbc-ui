@@ -16,7 +16,7 @@ export default React.createClass({
     allowExternalAuthorization: PropTypes.bool,
     className: PropTypes.string.isRequired,
     isResetingCredentials: PropTypes.bool,
-    innerComponent: PropTypes.object,
+    innerComponent: PropTypes.any,
     returnUrlSuffix: PropTypes.string,
     showHeader: PropTypes.bool
   },

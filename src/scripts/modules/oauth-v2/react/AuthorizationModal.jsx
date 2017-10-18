@@ -17,7 +17,7 @@ export default React.createClass({
     componentId: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,
-    allowExternalAuthorization: PropTypes.object,
+    allowExternalAuthorization: PropTypes.bool,
     returnUrlSuffix: PropTypes.string,
     show: PropTypes.bool,
     onHideFn: PropTypes.func

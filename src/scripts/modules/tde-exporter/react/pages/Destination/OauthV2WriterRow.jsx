@@ -161,10 +161,10 @@ class OauthV2WriterRow extends Component {
   }
 }
 OauthV2WriterRow.propTypes = {
-  configId: PropTypes.object.isRequired,
+  configId: PropTypes.string.isRequired,
   componentData: PropTypes.object.isRequired,
   oauthCredentials: PropTypes.object,
-  componentId: PropTypes.object.isRequired,
+  componentId: PropTypes.string.isRequired,
   localState: PropTypes.object.isRequired,
   updateLocalState: PropTypes.func,
   setConfigDataFn: PropTypes.func,
