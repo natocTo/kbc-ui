@@ -2,7 +2,6 @@
 React = require 'react'
 Router = require 'react-router'
 
-Link = React.createFactory(Router.Link)
 Duration = React.createFactory(require '../../../../../react/common/Duration')
 JobStatusLabel = React.createFactory(require('../../../../../react/common/JobStatusLabel').default)
 date = require '../../../../../utils/date'
@@ -31,20 +30,6 @@ JobRow = React.createClass(
     this.props.onJobCancel(@props.job)
 
   render: ->
-    actionButtons = []
-    actionButtons.push(Link
-      key: 'detail'
-      to: 'orchestrationJob'
-      params:
-        orchestrationId: @getParams().orchestrationId
-        jobId: @props.job.get('id')
-      className: 'btn kbc-btn-link-icon'
-      onClick: (e) ->
-        e.stopPropagation()
-    ,
-      span className: 'fa fa-bars'
-    )
-
     (tr {onClick: @jobDetail},
       (td {}, @props.job.getIn(['initiatorToken', 'description'])),
       (td {}, date.format(@props.job.get('createdTime'))),
@@ -53,7 +38,7 @@ JobRow = React.createClass(
         startTime: @props.job.get('startTime')
         endTime: @props.job.get('endTime')
       )),
-      (td {}, (div {className: 'pull-right'}, actionButtons))
+      (td null)
     )
 )
 
