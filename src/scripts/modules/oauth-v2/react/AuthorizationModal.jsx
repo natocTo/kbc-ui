@@ -41,53 +41,58 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="static-modal">
-        <Modal
-          className="kbc-authorization-modal"
-          show={this.props.show}
-          onHide={this.props.onHideFn}
-          enforceFocus={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>
-              Authorize
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-          <AuthorizationForm
-            returnUrlSuffix={this.props.returnUrlSuffix}
-            componentId={this.props.componentId}
-            id={this.props.id}>
+      <Modal
+        className="kbc-authorization-modal"
+        show={this.props.show}
+        onHide={this.props.onHideFn}
+        enforceFocus={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Authorize
+          </Modal.Title>
+        </Modal.Header>
 
-              <TabbedArea id="authorizationrowtabs" activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}>
-                <TabPane eventKey="instant" title="Instant authorization">
-                  {this.renderInstant()}
+        <AuthorizationForm
+          returnUrlSuffix={this.props.returnUrlSuffix}
+          componentId={this.props.componentId}
+          id={this.props.id}
+        >
+          <Modal.Body>
+            <TabbedArea
+              id="authorizationrowtabs"
+              activeKey={this.state.activeTab}
+              onSelect={this.goToTab}
+              animation={false}
+              className="kbc-wrapper-tabs-margin-fix"
+            >
+              <TabPane eventKey="instant" title="Instant authorization">
+                {this.renderInstant()}
+              </TabPane>
+              {this.props.allowExternalAuthorization &&
+                <TabPane eventKey="external" title="External authorization">
+                  {this.renderExternal()}
                 </TabPane>
-                {this.props.allowExternalAuthorization &&
-                  <TabPane eventKey="external" title="External authorization">
-                    {this.renderExternal()}
-                  </TabPane>
-                }
-                {DIRECT_TOKEN_COMPONENTS.includes(this.props.componentId) ?
-                  <TabPane key="direct" eventKey="direct" title="Direct token insert">
-                    {this.renderDirectTokenInsert()}
-                  </TabPane>
-                 : null
-                }
-                {CUSTOM_AUTHORIZATION_COMPONENTS.includes(this.props.componentId) ?
-                  <TabPane key="custom" eventKey="custom" title="Custom Authorization">
-                    {this.renderCustom()}
-                  </TabPane>
-                  : null
-                }
-              </TabbedArea>
-            <Modal.Footer>
-              {this.renderFooterButtons()}
-            </Modal.Footer>
-          </AuthorizationForm>
+              }
+              {DIRECT_TOKEN_COMPONENTS.includes(this.props.componentId) ?
+                <TabPane key="direct" eventKey="direct" title="Direct token insert">
+                  {this.renderDirectTokenInsert()}
+                </TabPane>
+               : null
+              }
+              {CUSTOM_AUTHORIZATION_COMPONENTS.includes(this.props.componentId) ?
+                <TabPane key="custom" eventKey="custom" title="Custom authorization">
+                  {this.renderCustom()}
+                </TabPane>
+                : null
+              }
+            </TabbedArea>
           </Modal.Body>
-        </Modal>
-      </div>
+          <Modal.Footer>
+            {this.renderFooterButtons()}
+          </Modal.Footer>
+        </AuthorizationForm>
+      </Modal>
     );
   },
 
@@ -119,21 +124,14 @@ export default React.createClass({
       : null
     );
     return (
-      <div className="container-fluid">
-        {!!this.getLimitsInfo() ?
-          <div className="row">
-            <div className="col-md-12">
-              <div className="alert alert-warning">{this.getLimitsInfo()}</div>
-            </div>
-          </div>
-          : null
-        }
-        <div className="row">
-          <p>
-            To authorize an account from a non-Keboola Connection user, generate a link to the external authorization app and send it to the user you want to have the authorized account for. The generated link is valid for <strong>48</strong> hours and will not be stored anywhere.
-          </p>
-          {externalLink}
-        </div>
+      <div>
+        {!!this.getLimitsInfo() && (
+          <div className="alert alert-warning">{this.getLimitsInfo()}</div>
+        )}
+        <p>
+          To authorize an account from a non-Keboola Connection user, generate a link to the external authorization app and send it to the user you want to have the authorized account for. The generated link is valid for <strong>48</strong> hours and will not be stored anywhere.
+        </p>
+        {externalLink}
       </div>
     );
   },

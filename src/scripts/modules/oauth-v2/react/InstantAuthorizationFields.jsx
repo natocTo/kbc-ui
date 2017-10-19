@@ -11,31 +11,26 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container-fluid">
-        {!!this.props.infoText ?
-          <div className="row">
-            <div className="alert alert-warning">{this.props.infoText}</div>
-          </div>
-          : null
-        }
-        <div className="row">
-          <div className="form-group">
-            <label className="control-label col-xs-2">
-              Description
-            </label>
-            <div className="col-xs-10">
-              <input
-                className="form-control"
-                type="text"
-                name="authorizedFor"
-                defaultValue={this.props.authorizedFor}
-                onChange={(e) => this.props.onChangeFn('authorizedFor', e.target.value)}
-                autoFocus={true}
-              />
-              <p className="help-block">
-                Describe this authorization, e.g. by the account name.
-              </p>
-            </div>
+      <div>
+        {!!this.props.infoText && (
+          <div className="alert alert-warning">{this.props.infoText}</div>
+        )}
+        <div className="form-group">
+          <label className="control-label col-sm-3">
+            Description
+          </label>
+          <div className="col-sm-9">
+            <input
+              className="form-control"
+              type="text"
+              name="authorizedFor"
+              defaultValue={this.props.authorizedFor}
+              onChange={(e) => this.props.onChangeFn('authorizedFor', e.target.value)}
+              autoFocus={true}
+            />
+            <p className="help-block">
+              Describe this authorization, e.g. by the account name.
+            </p>
           </div>
         </div>
       </div>

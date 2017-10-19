@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import ApplicationStore from '../../../stores/ApplicationStore';
+
 export default React.createClass({
 
   propTypes: {
@@ -8,12 +9,6 @@ export default React.createClass({
     id: PropTypes.string.isRequired,
     children: PropTypes.any,
     returnUrlSuffix: PropTypes.string
-  },
-
-  getDefaultProps() {
-    return {
-
-    };
   },
 
   render() {
@@ -25,7 +20,8 @@ export default React.createClass({
       <form
         method="POST"
         action={actionUrl}
-        className="form form-horizontal">
+        className="form form-horizontal"
+      >
         {this.renderHiddenInput('token', token)}
         {this.renderHiddenInput('id', this.props.id)}
         {this.renderHiddenInput('returnUrl', returnUrl)}
