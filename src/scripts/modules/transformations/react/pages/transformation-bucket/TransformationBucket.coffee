@@ -31,12 +31,16 @@ TransformationBucket = React.createClass
 
   getStateFromStores: ->
     bucketId = RoutesStore.getCurrentRouteParam 'config'
+    latestVersions = VersionsStore.getVersions('transformation', bucketId)
+    latestVersionId = latestVersions.map((v) -> v.get('version')).max()
+
     bucketId: bucketId
     transformations: TransformationsStore.getTransformations(bucketId)
     bucket: TransformationBucketsStore.get(bucketId)
     pendingActions: TransformationsStore.getPendingActions(bucketId)
     latestJobs: LatestJobsStore.getJobs('transformation', bucketId),
-    latestVersions: VersionsStore.getVersions('transformation', bucketId),
+    latestVersions: latestVersions
+    latestVersionId: latestVersionId
 
   componentWillReceiveProps: ->
     @setState(@getStateFromStores())
@@ -95,6 +99,7 @@ TransformationBucket = React.createClass
       span {className: 'tbody'},
         @_getSortedTransformations().map((transformation) ->
           TransformationRow
+            latestVersionId: @state.latestVersionId
             transformation: transformation
             bucket: @state.bucket
             pendingActions: @state.pendingActions.get transformation.get('id'), Immutable.Map()
