@@ -63,22 +63,28 @@ export default function(componentId) {
             {...this.state.actions.prepareLocalState('ProfilesManagerModal')}
           />
           <div className="col-md-9 kbc-main-content">
-            <div className="row kbc-header">
-              <div className="col-sm-10">
-                <ComponentDescription
-                  componentId={componentId}
-                  configId={this.state.configId}
-                />
-              </div>
-              <div className="col-sm-2 kbc-buttons">
-                {this.hasQueries() ? this.renderAddQueryLink() : null}
-              </div>
+
+            <div className="kbc-inner-content-padding-fix with-bottom-border">
+              <ComponentDescription
+                componentId={componentId}
+                configId={this.state.configId}
+              />
             </div>
-            <div className="row">
-              {this.renderAuthorizedInfo('col-xs-5')}
-              {this.renderProfiles('col-xs-7')}
+            <div className="kbc-inner-content-padding-fix with-bottom-border">
+              <AuthorizationRow
+                id={this.state.oauthCredentialsId}
+                configId={this.state.configId}
+                componentId={componentId}
+                credentials={this.state.oauthCredentials}
+                isResetingCredentials={false}
+                onResetCredentials={this.deleteCredentials}
+                showHeader={false}
+              />
             </div>
-            {(this.hasQueries() > 0)
+
+            {this.renderProfiles()}
+
+            {this.hasQueries()
               ? this.renderQueriesTable()
               : this.renderEmptyQueries()
             }
@@ -106,6 +112,7 @@ export default function(componentId) {
                   <a
                     onClick={this.showProfilesModal}>
                     <i className="fa fa-fw fa-globe" />
+                    {' '}
                     Setup Profiles
                   </a>
                 </li>
@@ -146,7 +153,7 @@ export default function(componentId) {
     },
 
     hasQueries() {
-      return this.state.store.queries && this.state.store.queries.count();
+      return this.state.store.queries && this.state.store.queries.count() > 0;
     },
 
     invalidToRun() {
@@ -165,29 +172,14 @@ export default function(componentId) {
       return false;
     },
 
-    renderAuthorizedInfo(clName) {
-      return (
-        <AuthorizationRow
-          className={this.isAuthorized() || this.hasProfiles() ? clName : 'col-xs-12'}
-          id={this.state.oauthCredentialsId}
-          configId={this.state.configId}
-          componentId={componentId}
-          credentials={this.state.oauthCredentials}
-          isResetingCredentials={false}
-          onResetCredentials={this.deleteCredentials}
-          showHeader={false}
-        />
-      );
-    },
-
-    renderProfiles(clName) {
+    renderProfiles() {
       const showThreshold = 2;
       const {profiles} = this.state.store;
       const showMoreCount = profiles.count() - showThreshold;
 
       if (this.isAuthorized() || this.hasProfiles()) {
         return (
-          <div className={clName}>
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
             <div className="form-group form-group-sm">
               <label> Registered Profiles </label>
               {this.hasProfiles() ?
@@ -208,7 +200,7 @@ export default function(componentId) {
                 :
                 <EmptyState>
                   <p> No profiles selected </p>
-                  <button type="button" className="btn btn-success btn-sm"
+                  <button type="button" className="btn btn-success"
                           onClick={this.showProfilesModal}>
                     Select Profiles
                   </button>
@@ -224,7 +216,10 @@ export default function(componentId) {
 
     renderQueriesTable() {
       return (
-        <div className="row">
+        <div>
+          <div className="kbc-inner-content-padding-fix text-right">
+            {this.renderAddQueryLink()}
+          </div>
           <QueriesTable
             outputBucket={this.state.store.outputBucket}
             deleteQueryFn={this.state.actions.deleteQuery}
