@@ -11,17 +11,16 @@ export default React.createClass({
     localState: PropTypes.object.isRequired,
     setLocalState: PropTypes.func,
     onChangeWriterFn: PropTypes.func,
-    initValue: PropTypes.string,
     isSaving: PropTypes.bool
   },
 
   getInitialState() {
-    return {task: this.props.initValue || 'tableauServer'};
+    return {task: ''};
   },
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.isSaving) {
-      this.setState({task: nextProps.initValue || 'tableauServer'});
+      this.setState({task: ''});
     }
   },
 
@@ -38,7 +37,7 @@ export default React.createClass({
           {this.props.isSaving ? <Loader/> : null}
           <Button bsStyle="link" onClick={this.close}>Close</Button>
           <Button bsStyle="primary"
-                  disabled={this.props.isSaving}
+                  disabled={this.props.isSaving || this.state.task === ''}
                   onClick={() => this.props.onChangeWriterFn(this.state.task)}>Change</Button>
         </Modal.Footer>
       </Modal>
@@ -60,6 +59,9 @@ export default React.createClass({
                 this.setState({task: e.target.value});
               }}
             >
+              <option key="0" value="" disabled={true}>
+                Please Select...
+              </option>
               {this.generateOption('wr-tableau-server', 'tableauServer')}
               {OAUTH_V2_WRITERS.map(c => this.generateOption(c, c))}
             </FormControl>
