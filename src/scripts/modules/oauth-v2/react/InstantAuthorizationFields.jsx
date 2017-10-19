@@ -14,9 +14,7 @@ export default React.createClass({
       <div className="container-fluid">
         {!!this.props.infoText ?
           <div className="row">
-            <div className="col-md-12">
-              <div className="alert alert-warning">{this.props.infoText}</div>
-            </div>
+            <div className="alert alert-warning">{this.props.infoText}</div>
           </div>
           : null
         }

@@ -18,7 +18,7 @@ module.exports = {
   },
 
   deleteCredentials: function(componentId, configId) {
-    createRequest('DELETE', 'credentials/' + componentId + '/' + configId).promise().then(function(response) {
+    return createRequest('DELETE', 'credentials/' + componentId + '/' + configId).promise().then(function(response) {
       return response.body;
     });
   }

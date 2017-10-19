@@ -14,7 +14,7 @@ module.exports = {
   },
 
   loadCredentialsForce: function(componentId, configId) {
-    oauthApi.getCredentials(componentId, configId).then(function(result) {
+    return oauthApi.getCredentials(componentId, configId).then(function(result) {
       dispatcher.handleViewAction({
         type: Constants.ActionTypes.OAUTH_LOAD_CREDENTIALS_SUCCESS,
         componentId: componentId,
@@ -37,7 +37,7 @@ module.exports = {
       componentId: componentId,
       configId: configId
     });
-    oauthApi.deleteCredentials(componentId, configId).then(function(result) {
+    return oauthApi.deleteCredentials(componentId, configId).then(function(result) {
       dispatcher.handleViewAction({
         type: Constants.ActionTypes.OAUTH_DELETE_CREDENTIALS_SUCCESS,
         componentId: componentId,
