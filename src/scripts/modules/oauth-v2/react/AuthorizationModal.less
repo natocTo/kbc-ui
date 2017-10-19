@@ -1,12 +1,15 @@
 
 .kbc-authorization-modal {
-
-  .modal-body {
-    padding: 15px 0;
+  .tab-pane > div > {
+    // WTF fix
+    * {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    // Revert "WTF fix" on form-group
+    .form-group {
+      margin-left: -15px;
+      margin-right: -15px;
+    }
   }
-
-  .nav-tabs {
-    padding-left: 15px;
-  }
-
 }
