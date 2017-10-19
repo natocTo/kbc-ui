@@ -115,7 +115,7 @@ module.exports = React.createClass
         if header
           div className: 'thead', key: 'table-header',
             header
-        div {className: 'tbody', style: {'word-break': 'break-word'}},
+        div {className: 'tbody', style: {'wordBreak': 'break-word'}},
           childs
 
   _renderDefaultHeaderRow: ->

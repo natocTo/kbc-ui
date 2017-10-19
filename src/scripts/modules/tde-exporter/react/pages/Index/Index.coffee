@@ -147,6 +147,7 @@ module.exports = React.createClass
     tableId = table.get 'id'
     tdeFileName = tdeCommon.getTdeFileName(@state.configData, tableId)
     React.createElement TableRow,
+      key: tableId
       table: table
       configId: @state.configId
       tdeFile: @_getLastTdeFile(tdeFileName)
