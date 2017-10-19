@@ -429,11 +429,11 @@ module.exports = {
     });
   },
 
-  createRStudioSandboxCredentials: function(data) {
+  createRStudioSandboxCredentials: function(data, isTransformation) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_CREATE_JOB
     });
-    return provisioningApi.createCredentialsAsync('docker', 'rstudio', data).then(function(response) {
+    return provisioningApi.createCredentialsAsync('docker', 'rstudio', data, isTransformation).then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_CREATE_JOB_SUCCESS,
         touch: response.touch,
@@ -524,11 +524,11 @@ module.exports = {
     });
   },
 
-  createJupyterSandboxCredentials: function(data) {
+  createJupyterSandboxCredentials: function(data, isTransformation) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_CREATE_JOB
     });
-    return provisioningApi.createCredentialsAsync('docker', 'jupyter', data).then(function(response) {
+    return provisioningApi.createCredentialsAsync('docker', 'jupyter', data, isTransformation).then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.CREDENTIALS_JUPYTER_SANDBOX_CREATE_JOB_SUCCESS,
         touch: response.touch,
