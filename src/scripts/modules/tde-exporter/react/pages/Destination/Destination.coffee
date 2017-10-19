@@ -90,7 +90,7 @@ module.exports = React.createClass
     componentData = parameters.get(componentId, Map())
     credentialsId = componentData.get('id')
     oauthCredentials = credentialsId && OAuthStore.getCredentials(componentId, credentialsId)
-    isAuthorized = uploadUtils.isOauthV2Authorized(parameters, componentId)
+    isAuthorized = uploadUtils.isOauthV2Authorized(parameters, componentId) && oauthCredentials
     OauthV2WriterRow
       componentData: componentData
       configId: @state.configId
