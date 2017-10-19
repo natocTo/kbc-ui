@@ -63,19 +63,20 @@ module.exports = React.createClass
 
   _renderMainContent: ->
     div {className: 'col-md-9 kbc-main-content'},
-      div className: 'row kbc-header',
-        div className: 'col-sm-8',
-          ComponentDescription
-            componentId: componentId
-            configId: @state.configId
-        if not @_isEmptyConfig()
-          div className: 'col-sm-4 kbc-buttons',
+      div className: 'kbc-inner-content-padding-fix with-bottom-border',
+        ComponentDescription
+          componentId: componentId
+          configId: @state.configId
+
+      if not @_isEmptyConfig()
+        div className: 'kbc-inner-content-padding-fix text-right',
+          div className: 'kbc-buttons',
             @_addNewTableButton()
             @_renderAddNewTable()
       if not @_isEmptyConfig()
         @_renderTables()
       else
-        div className: 'row component-empty-state text-center',
+        div className: 'kbc-inner-content-padding-fix with-bottom-border text-center',
           div null,
             p null, 'No tables configured.'
             @_addNewTableButton()
@@ -146,6 +147,7 @@ module.exports = React.createClass
     tableId = table.get 'id'
     tdeFileName = tdeCommon.getTdeFileName(@state.configData, tableId)
     React.createElement TableRow,
+      key: tableId
       table: table
       configId: @state.configId
       tdeFile: @_getLastTdeFile(tdeFileName)
@@ -168,7 +170,7 @@ module.exports = React.createClass
     show = !!@state.localState?.getIn(['newTable','show'])
     return React.createElement AddNewTableModal,
       show: show
-      selectedTableId: @state.localState?.getIn(['newTable', 'id'])
+      selectedTableId: @state.localState.getIn(['newTable', 'id'], '')
       configuredTables: @state.configData.getIn(['parameters', 'typedefs'])
       configId: @state.configId
       onHideFn: =>

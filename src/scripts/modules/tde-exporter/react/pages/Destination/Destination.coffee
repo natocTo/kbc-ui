@@ -14,9 +14,11 @@ SelectWriterModal = require('./WritersModal').default
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
 
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+OAuthStore = require '../../../../oauth-v2/Store'
 
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 ApplicationActionCreators = require '../../../../../actions/ApplicationActionCreators'
+{OAUTH_V2_WRITERS} = require '../../../tdeCommon'
 
 RoutesStore = require '../../../../../stores/RoutesStore'
 {List, Map, fromJS} = require 'immutable'
@@ -24,14 +26,16 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 DropboxRow = React.createFactory require './DropboxRow'
 GdriveRow = React.createFactory require './GdriveRow'
 TableauServerRow = React.createFactory require './TableauServerRow'
+OauthV2WriterRow = React.createFactory(require('./OauthV2WriterRow').default)
 
 {button, strong, div, h2, span, h4, section, p, i} = React.DOM
 
 componentId = 'tde-exporter'
+
 module.exports = React.createClass
   displayName: 'TDEDestination'
 
-  mixins: [createStoreMixin(InstalledComponentsStore)]
+  mixins: [createStoreMixin(InstalledComponentsStore, OAuthStore)]
 
   getStateFromStores: ->
     configId = RoutesStore.getCurrentRouteParam('config')
@@ -47,6 +51,7 @@ module.exports = React.createClass
     savingData: InstalledComponentsStore.getSavingConfigData(componentId, configId)
 
   render: ->
+    parameters = @state.configData.get('parameters') or Map()
     destinationRow =
       React.createElement ComponentEmptyState, null,
         p null, 'Upload destination is not chosen'
@@ -61,6 +66,8 @@ module.exports = React.createClass
       when "tableauServer" then destinationRow = @_renderTableauServer()
       when "gdrive" then destinationRow = @_renderGoogleDrive()
       when "dropbox" then destinationRow = @_renderDropbox()
+    if task in OAUTH_V2_WRITERS
+      destinationRow = @_renderOAuthV2Writer(task)
 
     div {className: 'container-fluid'},
       div {className: 'kbc-main-content'},
@@ -78,6 +85,27 @@ module.exports = React.createClass
             )
         destinationRow
 
+  _renderOAuthV2Writer: (componentId) ->
+    parameters = @state.configData.get 'parameters'
+    componentData = parameters.get(componentId, Map())
+    credentialsId = componentData.get('id')
+    oauthCredentials = credentialsId && OAuthStore.getCredentials(componentId, credentialsId)
+    isAuthorized = uploadUtils.isOauthV2Authorized(parameters, componentId)
+    OauthV2WriterRow
+      componentData: componentData
+      configId: @state.configId
+      localState: @state.localState
+      updateLocalState: @_updateLocalState
+      componentId: componentId
+      isAuthorized: isAuthorized
+      oauthCredentials: oauthCredentials
+      setConfigDataFn: @_saveConfigData
+      renderComponent: =>
+        @_renderComponentCol(componentId)
+      renderEnableUpload: (name) =>
+        @_renderEnableUploadCol(componentId, isAuthorized, name)
+      resetUploadTask: =>
+        @_resetUploadTask(componentId)
 
   _renderGoogleDrive: ->
     parameters = @state.configData.get 'parameters'
@@ -193,7 +221,7 @@ module.exports = React.createClass
       if isActive
         isSaving = !hasTask
       else
-        isSaving = hasTask
+        isSaving = !!hasTask
 
     helpText = "All TDE files will be uploaded to #{accountName} immediately after export."
     if not isActive
@@ -213,7 +241,7 @@ module.exports = React.createClass
 
   _resetUploadTask: (taskName) ->
     params = @state.configData.getIn(['parameters'], Map())
-    params = params.set(taskName, null)
+    params = params.delete(taskName)
     params = params.set('uploadTasks', List())
-    params = params.set('stageUploadTask', null)
+    params = params.delete('stageUploadTask')
     @_saveConfigData(['parameters'], params)
