@@ -65,14 +65,17 @@ const ProvisioningApi = {
       });
   },
 
-  createCredentialsAsync: function(backend, credentialsType, data) {
+  createCredentialsAsync: function(backend, credentialsType, data, isTransformation) {
     var requestData = data;
     if (!requestData) {
       requestData = {};
     }
-    requestData.type = credentialsType;
+    const pathSuffix = isTransformation ? '/transformation' : '';
+    if (!isTransformation) {
+      requestData.type = credentialsType;
+    }
     const sapiToken = ApplicationStore.getSapiTokenString();
-    return createRequest('POST', 'async/' + backend)
+    return createRequest('POST', 'async/' + backend + pathSuffix)
       .send(requestData)
       .promise()
       .then(function(response) {
