@@ -1,10 +1,10 @@
 import React from 'react';
 import date from '../../../utils/date';
-import { filesize } from '../../../utils/utils';
 import PureRendererMixin from '../../../react/mixins/ImmutableRendererMixin';
 import {Link} from 'react-router';
 import {NewLineToBr} from 'kbc-react-components';
 import {Tree} from 'kbc-react-components';
+import FileLink  from './FileLink';
 
 const classMap = {
   error: 'alert alert-danger',
@@ -103,9 +103,7 @@ export default React.createClass({
         <ul>
           {this.props.event.get('attachments').map(attachment =>
             <li>
-              <a href={attachment.get('url')}>
-                {attachment.get('name')} ({filesize(attachment.get('sizeBytes'))})
-              </a>
+              <FileLink file={attachment} />
             </li>
           ).toArray()}
         </ul>
