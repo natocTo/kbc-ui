@@ -25,7 +25,7 @@ export default React.createClass({
         </Modal.Header>
         <Modal.Body>
           <p>File <strong>{this.props.file.get('name')} ({filesize(this.props.file.get('sizeBytes'))})</strong> is sliced into multiple chunks.</p>
-          <p>All chunks will be packed into <code>ZIP</code> file, and when the export is finished, you will be given link to download the file.</p>
+          <p>All chunks will be packed into <code>ZIP</code> file, you will be given link to download the file.</p>
         </Modal.Body>
         <Modal.Footer>
           {this.renderStatusBar()}
