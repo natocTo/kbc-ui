@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from './Modal';
-import { filesize } from '../../../utils/utils';
 import jobsApi from '../../jobs/JobsApi';
 import storageApi from '../../components/StorageApi';
 import actionCreators from '../../components/InstalledComponentsActionCreators';
@@ -10,7 +9,8 @@ const SLICED_FILES_DOWNLOADER_COMPONENT = 'keboola.sliced-files-downloader';
 
 export default React.createClass({
   propTypes: {
-    file: React.PropTypes.object
+    file: React.PropTypes.object,
+    children: React.PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -28,7 +28,7 @@ export default React.createClass({
     const {file} = this.props;
     return (
       <a onClick={this.openModal}>
-        {file.get('name')} ({filesize(file.get('sizeBytes'))})
+        {this.props.children}
         <Modal
           file={file}
           createdFile={this.state.createdFile}

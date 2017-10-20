@@ -16,7 +16,9 @@ export default React.createClass({
 
   renderSlicedFileDownloadModalTrigger(file) {
     return (
-      <ModalHandler file={file}/>
+      <ModalHandler file={file}>
+        {file.get('name')} ({filesize(file.get('sizeBytes'))})
+      </ModalHandler>
     );
   },
 
