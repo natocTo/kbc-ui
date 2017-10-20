@@ -11,6 +11,10 @@ export default function(mapping) {
     return true;
   }
 
+  if (mapping.get('changed_since')) {
+    return true;
+  }
+
   if (mapping.has('where_values') && mapping.get('where_values').size > 0) {
     return true;
   }
