@@ -28,6 +28,10 @@ function mysql(mapping) {
     return true;
   }
 
+  if (mapping.get('changedSince')) {
+    return true;
+  }
+
   if (mapping.has('whereValues') && mapping.get('whereValues').size > 0) {
     return true;
   }
@@ -49,6 +53,10 @@ function redshift(mapping) {
   }
 
   if (mapping.get('days') > 0) {
+    return true;
+  }
+
+  if (mapping.get('changedSince')) {
     return true;
   }
 
@@ -90,6 +98,10 @@ function snowflake(mapping) {
   }
 
   if (mapping.get('days') > 0) {
+    return true;
+  }
+
+  if (mapping.get('changedSince')) {
     return true;
   }
 
