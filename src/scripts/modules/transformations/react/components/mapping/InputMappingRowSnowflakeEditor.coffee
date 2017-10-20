@@ -56,8 +56,9 @@ module.exports = React.createClass
     @props.onChange(value)
 
   _handleChangeChangedSince: (changedSince) ->
+    value = @props.value
     if @props.value.has("days")
-      value = @props.value.delete("days")
+      value = value.delete("days")
     value = value.set("changedSince", changedSince)
     @props.onChange(value)
 
