@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
-import DaysFilterInput from './DaysFilterInput';
+import ChangedSinceInput from './ChangedSinceFilterInput';
 import DataFilterRow from './DataFilterRow';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 
@@ -50,7 +50,7 @@ export default React.createClass({
 
         <Modal.Body>
           <div className="form-horizontal clearfix">
-            <DaysFilterInput
+            <ChangedSinceInput
               mapping={this.props.value}
               disabled={false}
               onChange={this.onChangeMapping}
