@@ -85,7 +85,7 @@ export default React.createClass({
 
   getSelectOptions() {
     const props = this.props;
-    var selectOptions = this.selectOptions;
+    let selectOptions = this.selectOptions;
     if (this.props.value && selectOptions.filter(function(item) {
       return item.value === props.value;
     }).length === 0) {

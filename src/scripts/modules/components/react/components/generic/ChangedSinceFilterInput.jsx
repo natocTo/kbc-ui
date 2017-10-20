@@ -41,7 +41,7 @@ export default React.createClass({
   },
 
   handleChangeChangedSince(changedSince) {
-    var value = this.props.mapping;
+    let value = this.props.mapping;
     if (value.has('days')) {
       value = value.delete('days');
     }
