@@ -2,7 +2,9 @@ import React from 'react';
 import Modal from './Modal';
 import { filesize } from '../../../utils/utils';
 import jobsApi from '../../jobs/JobsApi';
+import storageApi from '../../components/StorageApi';
 import actionCreators from '../../components/InstalledComponentsActionCreators';
+import {fromJS} from 'immutable';
 
 const SLICED_FILES_DOWNLOADER_COMPONENT = 'keboola.sliced-files-downloader';
 
@@ -15,10 +17,10 @@ export default React.createClass({
     return {
       isModalOpen: false,
       isRunning: false,
+      createdFile: null,
       jobId: null,
       progress: null,
-      progressStatus: null,
-      isCreated: false
+      progressStatus: null
     };
   },
 
@@ -29,6 +31,7 @@ export default React.createClass({
         {file.get('name')} ({filesize(file.get('sizeBytes'))})
         <Modal
           file={file}
+          createdFile={this.state.createdFile}
           isModalOpen={this.state.isModalOpen}
           onModalHide={this.closeModal}
           isRunning={this.state.isRunning}
@@ -78,19 +81,18 @@ export default React.createClass({
     if (job.isFinished) {
       if (job.status === 'success') {
         this.setState({
-          isRunning: false,
-          progress: 'Package was successfully loaded.',
-          progressStatus: 'success',
-          jobId: null,
-          isCreated: true
+          isRunning: true,
+          jobId: job.id,
+          progress: 'Package was successfully created.',
+          progressStatus: 'success'
         });
+        this.fetchCreatedFile(job);
       } else {
         this.setState({
           isRunning: false,
-          progress: 'Package create finished with an error.',
-          progressStatus: 'danger',
           jobId: job.id,
-          isCreated: true
+          progress: 'Package create finished with an error.',
+          progressStatus: 'danger'
         });
       }
     } else {
@@ -100,6 +102,25 @@ export default React.createClass({
       });
       setTimeout(this.checkJobStatus, 5000);
     }
+  },
+
+  fetchCreatedFile(job) {
+    storageApi.getFiles({
+      runId: job.runId
+    }).then(this.handleFilesReceive).catch(() => {
+      this.setState({
+        isRunning: false,
+        progress: 'File fetch finished with an error.',
+        progressStatus: 'danger'
+      });
+    });
+  },
+
+  handleFilesReceive(files) {
+    this.setState({
+      isRunning: false,
+      createdFile: fromJS(files[0])
+    });
   },
 
   checkJobStatus() {

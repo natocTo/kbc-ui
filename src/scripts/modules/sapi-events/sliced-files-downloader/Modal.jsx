@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal} from 'react-bootstrap';
+import {Modal, Button} from 'react-bootstrap';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 
 export default React.createClass({
@@ -8,6 +8,7 @@ export default React.createClass({
     onModalHide: React.PropTypes.func,
     onPrepareStart: React.PropTypes.func,
     file: React.PropTypes.object,
+    createdFile: React.PropTypes.object,
     isRunning: React.PropTypes.bool,
     progress: React.PropTypes.string,
     progressStatus: React.PropTypes.string
@@ -27,20 +28,34 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           {this.renderStatusBar()}
-          <ConfirmButtons
-            onCancel={this.props.onModalHide}
-            onSave={this.props.onPrepareStart}
-            saveLabel={'Prepare Package'}
-            cancelLabel={'Close'}
-            isSaving={this.props.isRunning}
-          />
+          {this.props.createdFile ?
+            <div className="kbc-buttons">
+              <Button
+                bsStyle="link"
+                onClick={this.props.onModalHide}>
+                Close
+              </Button>
+              <a href={this.props.createdFile.get('url')} target="_blank" className="btn btn-success">
+                Download
+              </a>
+            </div>
+            :
+            <ConfirmButtons
+              onCancel={this.props.onModalHide}
+              onSave={this.props.onPrepareStart}
+              saveLabel={'Prepare Package'}
+              cancelLabel={'Close'}
+              isSaving={this.props.isRunning}
+            />
+          }
+
         </Modal.Footer>
       </Modal>
     );
   },
 
   renderStatusBar() {
-    if (!this.props.isRunning && this.props.progressStatus !== 'danger') {
+    if (!this.props.progress) {
       return null;
     }
     return (
