@@ -86,7 +86,7 @@ export default React.createClass({
       progressStatus: null
     });
     const createCredentialsAction = this.isPythonTransformation() ? provisioningActions.createJupyterSandboxCredentials : provisioningActions.createRStudioSandboxCredentials;
-    const createSandboxPromise = createCredentialsAction(this.props.runParams.toJS(), true);
+    const createSandboxPromise = createCredentialsAction(this.props.runParams.toJS(), {source: 'transformation'});
     return createSandboxPromise.then(() =>
       this.setState({
         isRunning: false,
