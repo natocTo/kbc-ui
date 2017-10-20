@@ -79,7 +79,6 @@ module.exports = React.createClass
     value = value.set("changedSince", changedSince)
     @props.onChange(value)
 
-
   _handleChangeColumns: (newValue) ->
     component = @
     immutable = @props.value.withMutations (mapping) ->
