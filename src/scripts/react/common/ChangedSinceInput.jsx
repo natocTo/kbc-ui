@@ -24,10 +24,6 @@ export default React.createClass({
       'value': '-45 minutes'
     },
     {
-      'label': '45 minutes',
-      'value': '-45 minutes'
-    },
-    {
       'label': '1 hour',
       'value': '-1 hours'
     },
