@@ -1,5 +1,6 @@
 import React from 'react';
 import { filesize } from '../../../utils/utils';
+import ModalHandler from '../sliced-files-downloader/ModalHandler';
 
 export default React.createClass({
   propTypes: {
@@ -15,7 +16,7 @@ export default React.createClass({
 
   renderSlicedFileDownloadModalTrigger(file) {
     return (
-      <span>todo {file.get('id')}</span>
+      <ModalHandler file={file}/>
     );
   },
 
