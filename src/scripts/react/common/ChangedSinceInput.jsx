@@ -2,49 +2,80 @@
    ChangedSinceInput
  */
 import React from 'react';
-import {Input} from './KbcBootstrap';
 import Select from 'react-select';
 
 export default React.createClass({
 
   selectOptions: [
     {
-      'label': 'minutes',
-      'value': 'minutes'
+      'label': '10 minutes',
+      'value': '-10 minutes'
     },
     {
-      'label': 'hours',
-      'value': 'hours'
+      'label': '15 minutes',
+      'value': '-15 minutes'
     },
     {
-      'label': 'days',
-      'value': 'days'
+      'label': '30 minutes',
+      'value': '-30 minutes'
+    },
+    {
+      'label': '45 minutes',
+      'value': '-45 minutes'
+    },
+    {
+      'label': '45 minutes',
+      'value': '-45 minutes'
+    },
+    {
+      'label': '1 hour',
+      'value': '-1 hours'
+    },
+    {
+      'label': '2 hours',
+      'value': '-2 hours'
+    },
+    {
+      'label': '4 hours',
+      'value': '-4 hours'
+    },
+    {
+      'label': '6 hours',
+      'value': '-6 hours'
+    },
+    {
+      'label': '12 hours',
+      'value': '-12 hours'
+    },
+    {
+      'label': '18 hours',
+      'value': '-18 hours'
+    },
+    {
+      'label': '1 day',
+      'value': '-1 days'
+    },
+    {
+      'label': '2 days',
+      'value': '-2 days'
+    },
+    {
+      'label': '3 days',
+      'value': '-3 days'
+    },
+    {
+      'label': '7 days',
+      'value': '-7 days'
+    },
+    {
+      'label': '15 days',
+      'value': '-15 days'
+    },
+    {
+      'label': '30 days',
+      'value': '-30 days'
     }
   ],
-
-  getInitialState() {
-    return {
-      rawInput: '',
-      number: 0,
-      dimension: 'days',
-      display: 'selector'
-    };
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if (this.isParsable(nextProps.value)) {
-      this.setState({
-        display: 'selector',
-        number: this.getNumber(nextProps.value),
-        dimension: this.getDimension(nextProps.dimension)
-      });
-    } else {
-      this.setState({
-        display: 'input',
-        rawInput: nextProps.value
-      });
-    }
-  },
 
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
@@ -52,94 +83,38 @@ export default React.createClass({
     disabled: React.PropTypes.bool.isRequired
   },
 
-  onChangeRawInput(e) {
-    this.setState({
-      rawInput: e.target.value
-    });
-    this.props.onChange(e.target.value);
-  },
-
-  onChangeNumberInput(value) {
-    this.setState({
-      number: value
-    });
-    this.props.onChange(this.constructValue());
-  },
-
-  onChangeDimensionSelector() {
-    this.props.onChange(this.constructValue());
-  },
-
-  constructValue() {
-    if (parseInt(this.state.number, 10) === 0) {
-      return '';
+  getSelectOptions() {
+    const props = this.props;
+    var selectOptions = this.selectOptions;
+    if (this.props.value && selectOptions.filter(function(item) {
+      return item.value === props.value;
+    }).length === 0) {
+      selectOptions.push({
+        label: this.props.value.replace('-', ''),
+        value: this.props.value
+      });
     }
-    return '-' + this.state.number + ' ' + this.state.dimension;
+    return selectOptions;
   },
 
-  isParsable(string) {
-    const processed = '-' + this.getNumber(string) + ' ' + this.getDimension(string);
-    if (processed === string && ['minutes', 'hours', 'days'].includes(this.getDimension(string))) {
-      return true;
+  onChange(value) {
+    if (!value) {
+      this.props.onChange(null);
     }
-    return false;
-  },
-
-  getNumber(string) {
-    return Math.abs(parseInt(string.split(' ')[0], 10));
-  },
-
-  getDimension(string) {
-    return string.split(' ')[1];
+    this.props.onChange(value.value);
   },
 
   render() {
-    if (this.state.display === 'selector') {
-      return this.renderSelector();
-    } else {
-      return this.renderRawInput();
-    }
-  },
-
-  renderRawInput() {
     return (
       <div>
-        <span className="col-xs-4">
-          <Input
-            value={this.props.value}
-            disabled={this.props.disabled}
-            onChange={this.onChangeRawInput}
-            ref="raw"
-          />
-        </span>
-      </div>
-    );
-  },
-
-  renderSelector() {
-    return (
-      <div>
-        <span className="col-xs-2">
-          <Input
-            value={this.getNumber(this.props.value)}
-            disabled={this.props.disabled}
-            onChange={this.onChangeNumberInput}
-            ref="number"
-            type="number"
-            placeholder="0"
-          />
-        </span>
-        <span className="col-xs-2">
-          <Select
-            value={this.getDimension(this.props.value)}
-            disabled={this.props.disabled}
-            onChange={this.onChangeDimensionSelector}
-            options={this.selectOptions}
-            ref="selector"
-          />
-        </span>
+        <Select
+          placeholder="Select period..."
+          value={this.props.value}
+          disabled={this.props.disabled}
+          onChange={this.onChange}
+          options={this.getSelectOptions()}
+        />
       </div>
     );
   }
-
 });
