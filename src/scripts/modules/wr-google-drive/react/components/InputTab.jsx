@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {Input} from '../../../../react/common/KbcBootstrap';
 import Select from '../../../../react/common/Select';
 import {List} from 'immutable';
-import DaysFilterInput from '../../../components/react/components/generic/DaysFilterInput';
+import ChangedSinceFilterInput from '../../../components/react/components/generic/ChangedSinceFilterInput';
 import DataFilterRow from '../../../components/react/components/generic/DataFilterRow';
 import ColumnsSelectRow from '../../../components/react/components/generic/ColumnsSelectRow';
 
@@ -57,7 +57,7 @@ export default React.createClass({
           </div>
         </div>
         {this.renderColumnFilter()}
-        {this.renderDaysFilter()}
+        {this.renderChangedSinceFilter()}
         {this.renderDataFilter()}
       </div>
     );
@@ -79,11 +79,11 @@ export default React.createClass({
     return null;
   },
 
-  renderDaysFilter() {
+  renderChangedSinceFilter() {
     if (this.state.showDetails) {
       return (
         <div className="row">
-          <DaysFilterInput
+          <ChangedSinceFilterInput
             mapping={this.props.mapping}
             disabled={this.props.disabled}
             onChange={this.props.onChange}
