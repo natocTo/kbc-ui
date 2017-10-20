@@ -11,6 +11,7 @@ TransformationBucketsStore  = require('../../../stores/TransformationBucketsStor
 StorageTablesStore  = require('../../../../components/stores/StorageTablesStore')
 StorageBucketsStore  = require('../../../../components/stores/StorageBucketsStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
+VersionsStore = require('../../../../components/stores/VersionsStore')
 TransformationsActionCreators = require '../../../ActionCreators'
 RunComponentButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
@@ -28,7 +29,8 @@ module.exports = React.createClass
   displayName: 'TransformationDetail'
 
   mixins: [
-    createStoreMixin(TransformationsStore, TransformationBucketsStore, StorageTablesStore, StorageBucketsStore),
+    createStoreMixin(TransformationsStore,
+    TransformationBucketsStore, StorageTablesStore, StorageBucketsStore, VersionsStore),
     Router.Navigation, Router.State
   ]
 
@@ -38,6 +40,8 @@ module.exports = React.createClass
   getStateFromStores: ->
     bucketId = RoutesStore.getCurrentRouteParam 'config'
     transformationId = RoutesStore.getCurrentRouteParam 'row'
+    versions = VersionsStore.getVersions('transformation', bucketId)
+    latestVersionId = versions.map((v) -> v.get('version')).max()
     if RoutesStore.getRouter().getCurrentQuery().highlightQueryNumber
       highlightQueryNumber = parseInt(RoutesStore.getRouter().getCurrentQuery().highlightQueryNumber)
     bucket: TransformationBucketsStore.get(bucketId)
@@ -55,6 +59,7 @@ module.exports = React.createClass
       bucketId, transformationId
     )
     highlightQueryNumber: highlightQueryNumber
+    latestVersionId: latestVersionId
 
   getInitialState: ->
     sandboxModalOpen: false
@@ -100,6 +105,8 @@ module.exports = React.createClass
   render: ->
     backend = @state.transformation.get('backend')
     transformationType = @state.transformation.get('type')
+    bucketId = @state.bucketId
+    latestVersionId = @state.latestVersionId
     div className: 'container-fluid',
       div className: 'col-md-9 kbc-main-content',
           TransformationDetailStatic
@@ -152,7 +159,7 @@ module.exports = React.createClass
               React.createElement CreateSandboxButton,
                 backend: backend,
                 transformationType: transformationType,
-                runParams: sandboxUtils.generateRunParameters(@state.transformation, @state.bucketId)
+                runParams: sandboxUtils.generateRunParameters(@state.transformation, bucketId, latestVersionId)
 
           if backend == 'redshift' or
               backend == 'mysql' && transformationType == 'simple' or

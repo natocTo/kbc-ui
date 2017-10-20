@@ -20,6 +20,7 @@ TransformationRow = React.createClass(
   mixins: [ImmutableRenderMixin]
   propTypes:
     transformation: React.PropTypes.object
+    latestVersionId: React.PropTypes.number
     bucket: React.PropTypes.object
     pendingActions: React.PropTypes.object
     hideButtons: React.PropTypes.bool
@@ -43,7 +44,8 @@ TransformationRow = React.createClass(
         transformationType: @props.transformation.get('type')
         backend: @props.transformation.get('backend')
         mode: "button"
-        runParams: sandboxUtils.generateRunParameters(@props.transformation, @props.bucket.get('id'))
+        runParams: sandboxUtils.generateRunParameters(@props.transformation,
+        @props.bucket.get('id'), @props.latestVersionId)
     )
 
     buttons.push(RunComponentButton(
