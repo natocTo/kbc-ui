@@ -20,7 +20,7 @@ export default React.createClass({
     return (
       <div className="form-group form-group-sm">
         <label className={'control-label ' + this.props.labelClassName}>
-          Changed since
+          Changed in last
         </label>
         <div className={this.props.wrapperClassName}>
           <ChangedSinceInput
