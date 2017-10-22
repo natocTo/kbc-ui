@@ -61,6 +61,12 @@ export default React.createClass({
         || currentTransformation.get('requires').contains(transformation.get('id'))
       );
     }), function(transformation) {
+      if (parseInt(transformation.get('phase'), 10) !== parseInt(currentTransformation.get('phase'), 10)) {
+        return {
+          label: transformation.get('name') + ' (phase mismatch)',
+          value: transformation.get('id')
+        };
+      }
       return {
         label: transformation.get('name'),
         value: transformation.get('id')
@@ -79,13 +85,12 @@ export default React.createClass({
       return true;
     });
     // add them to options
-    for (var i = 0; i < missing.length; i++) {
-      options.push({
-        label: missing[i],
-        value: missing[i]
-      });
-    }
-    return options;
+    return options.concat(missing.map(function(missingItem) {
+      return {
+        label: missingItem + ' (deleted)',
+        value: missingItem
+      };
+    }));
   },
 
   handleValueChange(newArray) {
