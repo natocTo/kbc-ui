@@ -51,7 +51,7 @@ export default React.createClass({
   },
 
   getSelectOptions: function(transformations, currentTransformation) {
-    var options = _.sortBy(_.map(_.filter(transformations.toArray(), function(transformation) {
+    let options = _.sortBy(_.map(_.filter(transformations.toArray(), function(transformation) {
       return (
         (
           parseInt(transformation.get('phase'), 10) === parseInt(currentTransformation.get('phase'), 10)
@@ -70,7 +70,7 @@ export default React.createClass({
     });
 
     // identify deleted required transformations
-    var missing = _.filter(currentTransformation.get('requires').toArray(), function(possiblyMissingTransformationId) {
+    const missing = _.filter(currentTransformation.get('requires').toArray(), function(possiblyMissingTransformationId) {
       if (_.find(options, function(option) {
         return option.value === possiblyMissingTransformationId;
       })) {
