@@ -116,6 +116,7 @@ module.exports = React.createClass
     )
 
   _renderRequires: ->
+    props = @props
     span {},
       React.createElement Requires,
         transformation: @props.transformation
@@ -145,7 +146,10 @@ module.exports = React.createClass
                   params: {row: dependent.get("id"), config: @props.bucket.get('id')}
                 ,
                   span {className: 'label kbc-label-rounded-small label-default'},
-                    dependent.get("name")
+                    if dependent.get("phase", 1) != props.transformation.get("phase", 1)
+                      dependent.get("name") + " (phase mismatch)"
+                    else
+                      dependent.get("name")
               , @).toArray()
           span
             className: 'help-block'
