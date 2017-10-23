@@ -134,10 +134,11 @@ module.exports = React.createClass
           h2
             style:
               lineHeight: '32px'
+            key: 'requires-title'
           ,
             'Dependent transformations'
         ,
-          span {},
+          span key: 'requires-dependents',
             div {},
               @_getDependentTransformations().map((dependent) ->
                 Link
@@ -153,6 +154,7 @@ module.exports = React.createClass
               , @).toArray()
           span
             className: 'help-block'
+            key: 'requires-help'
           ,
             'These transformations are dependent on the current transformation.'
 
