@@ -9,8 +9,8 @@ const SLICED_FILES_DOWNLOADER_COMPONENT = 'keboola.sliced-files-downloader';
 
 export default React.createClass({
   propTypes: {
-    file: React.PropTypes.object,
-    children: React.PropTypes.object.isRequired
+    file: React.PropTypes.object.isRequired,
+    children: React.PropTypes.element.isRequired
   },
 
   getInitialState() {
@@ -25,10 +25,10 @@ export default React.createClass({
   },
 
   render() {
-    const {file} = this.props;
+    const {file, children} = this.props;
     return (
       <a onClick={this.openModal}>
-        {this.props.children}
+        {children}
         <Modal
           file={file}
           createdFile={this.state.createdFile}

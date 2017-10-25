@@ -5,12 +5,12 @@ import { filesize } from '../../../utils/utils';
 
 export default React.createClass({
   propTypes: {
-    isModalOpen: React.PropTypes.bool,
-    onModalHide: React.PropTypes.func,
-    onPrepareStart: React.PropTypes.func,
-    file: React.PropTypes.object,
+    isModalOpen: React.PropTypes.bool.isRequired,
+    onModalHide: React.PropTypes.func.isRequired,
+    onPrepareStart: React.PropTypes.func.isRequired,
+    file: React.PropTypes.object.isRequired,
     createdFile: React.PropTypes.object,
-    isRunning: React.PropTypes.bool,
+    isRunning: React.PropTypes.bool.isRequired,
     progress: React.PropTypes.string,
     progressStatus: React.PropTypes.string
   },
