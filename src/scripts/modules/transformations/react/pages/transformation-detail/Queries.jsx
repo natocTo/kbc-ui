@@ -26,9 +26,9 @@ export default React.createClass({
 
   getQueries() {
     if (this.props.isChanged === false && this.props.queries === '') {
-      const comment = '-- This is a sample query. ' +
-        '\n-- Adjust accordingly to your input mapping, output mapping ' +
-        '\n-- and desired functionality.\n\n';
+      const comment = '-- This is a sample query.\n' +
+        '-- Adjust accordingly to your input mapping, output mapping\n' +
+        '-- and desired functionality.\n\n';
       if (this.props.transformation.get('backend') === 'mysql') {
         return comment + 'CREATE VIEW `out_table` AS SELECT * FROM `in_table`;';
       }
