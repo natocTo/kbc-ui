@@ -24,6 +24,7 @@ module.exports = React.createClass
         React.createElement  ModalTitle, null, 'Add Table'
       React.createElement ModalBody, null,
         React.createElement SapiTableSelector,
+          autoFocus: true
           placeholder: 'Source table'
           value: @props.selectedTableId
           onSelectTableFn: @props.onSetTableIdFn

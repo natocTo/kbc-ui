@@ -95,6 +95,7 @@ module.exports = React.createClass
           React.DOM.div className: 'col-xs-10',
             SelectCreatable
               name: 'tags'
+              autofocus: true
               value: @_getTags()
               disabled: @props.disabled
               placeholder: "Add tags"

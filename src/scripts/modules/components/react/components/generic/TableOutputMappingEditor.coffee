@@ -119,6 +119,7 @@ module.exports = React.createClass
               onChange: @_handleChangeSource
               labelClassName: 'col-xs-2'
               wrapperClassName: 'col-xs-10'
+              autoFocus: true
               help: React.DOM.span {},
                 "File will be uploaded from"
                 React.DOM.code {}, "/data/out/tables/" + @props.value.get("source", "")
