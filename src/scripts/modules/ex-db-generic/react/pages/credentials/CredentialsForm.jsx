@@ -10,12 +10,12 @@ import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 const StaticText = FormControls.Static;
 
 export default React.createClass({
-  displayName: 'ExDbCredentialsForm',
   propTypes: {
     savedCredentials: React.PropTypes.object.isRequired,
     credentials: React.PropTypes.object.isRequired,
     enabled: React.PropTypes.bool.isRequired,
     isValidEditingCredentials: React.PropTypes.bool.isRequired,
+    isEditing: React.PropTypes.bool.isRequired,
     onChange: React.PropTypes.func,
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
@@ -73,6 +73,7 @@ export default React.createClass({
 
     return (
           <Input
+            key={propName}
             label={this.renderProtectedLabel(labelValue, !!savedValue)}
             type="password"
             labelClassName="col-xs-4"
@@ -90,6 +91,7 @@ export default React.createClass({
       } else {
         return (
           <Input
+            key={propName}
             label={labelValue}
             type={type}
             labelClassName="col-xs-4"
@@ -101,6 +103,7 @@ export default React.createClass({
     } else if (isProtected) {
       return (
         <StaticText
+          key={propName}
           label={labelValue}
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8">
@@ -112,6 +115,7 @@ export default React.createClass({
     } else {
       return (
         <StaticText
+          key={propName}
           label={labelValue}
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8">
@@ -145,6 +149,7 @@ export default React.createClass({
   },
 
   render() {
+    const { componentId, configId, enabled, isValidEditingCredentials, isEditing } = this.props;
     return (
       <form className="form-horizontal">
         <div className="row">
@@ -152,10 +157,10 @@ export default React.createClass({
         </div>
         {this.renderSshRow()}
         <TestCredentialsButtonGroup
-          componentId={this.props.componentId}
-          configId={this.props.configId}
-
-          disabled={(this.props.enabled) ? !this.props.isValidEditingCredentials : false}
+          componentId={componentId}
+          configId={configId}
+          isEditing={isEditing}
+          disabled={enabled ? !isValidEditingCredentials : false}
           testCredentialsFn={this.testCredentials}
         />
       </form>
