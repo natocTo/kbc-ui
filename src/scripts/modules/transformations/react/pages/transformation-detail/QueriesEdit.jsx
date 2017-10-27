@@ -51,7 +51,7 @@ export default React.createClass({
               autofocus={true}
               onChange={this.handleChange}
               readOnly={this.props.disabled ? 'nocursor' : false}
-              placeholder="CREATE VIEW transformed AS SELECT id FROM source;"
+              placeholder="-- SQL goes here..."
               />
           </div>
           <div className="small help-block">
