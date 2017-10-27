@@ -42,7 +42,6 @@ export default React.createClass({
     );
   },
 
-
   help() {
     if (this.props.backend === 'python') {
       return (<span>Learn more about <a href="https://help.keboola.com/manipulation/transformations/python/" target="_blank">using Python</a>.</span>);
