@@ -163,19 +163,6 @@ export default React.createClass({
     );
   },
 
-/*   renderLink() {
-    return (
-      <Tooltip key="tooltip"
-        tooltip={this.renderTooltip()}
-        placement="top">
-        <span key="buttonlink" className="kbc-sapi-table-link"
-          onClick={this.onShow}>
-          {this.props.children || this.props.linkLabel || this.props.tableId}
-        </span>
-      </Tooltip>
-    );
-  }, */
-
   renderTooltip() {
     if (this.state.isLoading) {
       return 'Loading';
