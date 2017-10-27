@@ -172,7 +172,7 @@ export default React.createClass({
     return this.props.onChange(
       this.props.query
         .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
-        .set('name', newName)
+        .set('name', newName ? newName : '')
         .set('primaryKey', primaryKeys)
         .set('incremental', !!primaryKeys)
         .set('outputTable', newOutputTable)
