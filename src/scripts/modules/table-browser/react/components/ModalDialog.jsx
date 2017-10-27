@@ -109,7 +109,9 @@ export default React.createClass({
   },
 
   onKeyDown(e) {
-    return e;
+    if (e.key === 'Escape') {
+      this.props.onHideFn();
+    }
     /* const arrowRight = e.key === 'ArrowRight';
      * const arrowLeft = e.key === 'ArrowLeft';
      * if (arrowRight && this.getNextTable()) {
