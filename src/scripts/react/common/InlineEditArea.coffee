@@ -28,9 +28,10 @@ StaticArea = React.createFactory React.createClass
           [
             Tooltip
               tooltip: @props.editTooltip
+              key: @props.editTooltip
               placement: 'top'
             ,
-              div className: 'text-right',
+              div className: 'text-right' ,
                 button
                   className: 'btn btn-link'
                   onClick: @props.onEditStart
@@ -39,7 +40,7 @@ StaticArea = React.createFactory React.createClass
                   ' '
                   @props.placeholder
 
-            div null,
+            div key: 'markdown-div',
               Markdown
                 source: @props.text
                 escapeHtml: true

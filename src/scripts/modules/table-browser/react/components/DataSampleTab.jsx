@@ -31,20 +31,20 @@ export default React.createClass({
       );
     }
 
-    const header = dataPreview.first().map( (c) => {
+    const header = dataPreview.first().map( (c, idx) => {
       return (
-        <th>
+        <th key={idx}>
           {c}
         </th>
       );
     }).toArray();
-    const rows = dataPreview.rest().map( (row) => {
-      const cols = row.map( (c) => {
-        return (<td> {c} </td>);
+    const rows = dataPreview.rest().map( (row, ridx) => {
+      const cols = row.map( (c, cidx) => {
+        return (<td key={cidx}> {c} </td>);
       });
 
       return (
-        <tr>
+        <tr key={ridx}>
           {cols}
         </tr>);
     });
