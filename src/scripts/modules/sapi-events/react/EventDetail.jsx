@@ -101,8 +101,8 @@ export default React.createClass({
       <div>
         <h3>Attachments</h3>
         <ul>
-          {this.props.event.get('attachments').map(attachment =>
-            <li>
+          {this.props.event.get('attachments').map((attachment, idx) =>
+            <li key={idx}>
               <FileLink file={attachment} />
             </li>
           ).toArray()}
