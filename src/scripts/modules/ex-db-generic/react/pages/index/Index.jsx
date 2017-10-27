@@ -197,7 +197,7 @@ export default function(componentId) {
             <SourceTablesError
               componentId={componentId}
               configId={this.state.configId}
-              sourceTablesLoading={this.state.localState.getIn(loadingSourceTablesPath)}
+              sourceTablesLoading={this.state.localState.getIn(loadingSourceTablesPath, false)}
               sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
             />
             {this.state.hasCredentials && this.state.queries.count() > 0 ? (
