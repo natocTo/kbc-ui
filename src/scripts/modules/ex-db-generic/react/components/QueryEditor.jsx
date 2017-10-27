@@ -114,11 +114,10 @@ export default React.createClass({
 
   handleNameChange(event) {
     const currentOutputTable = this.props.query.get('outputTable');
-    const oldDefaultTableValue = this.props.getDefaultOutputTable(this.props.query.get('name'));
     return this.props.onChange(
       this.props.query
         .set('name', event.target.value)
-        .set('outputTable', (currentOutputTable && currentOutputTable !== oldDefaultTableValue) ? currentOutputTable : this.props.getDefaultOutputTable(event.target.name))
+        .set('outputTable', !currentOutputTable ? this.props.getDefaultOutputTable(event.target.name) : currentOutputTable)
     );
   },
 
@@ -164,10 +163,6 @@ export default React.createClass({
     const currentName = this.props.query.get('name');
     const oldTableName = this.props.query.getIn(['table', 'tableName'], '');
     const newName = (currentName && currentName !== oldTableName) ? currentName : newValue.tableName;
-    const currentOutputTable = this.props.query.get('outputTable');
-    const oldDefaultOutputTable = this.props.getDefaultOutputTable(oldTableName);
-    const defaultOutputTable = this.props.getDefaultOutputTable(newValue.tableName);
-    const newOutputTable = (currentOutputTable && currentOutputTable !== oldDefaultOutputTable) ? currentOutputTable : defaultOutputTable;
     const primaryKeys = (newValue === '') ? [] : this.getPksOnSourceTableChange(newValue);
     return this.props.onChange(
       this.props.query
@@ -175,7 +170,6 @@ export default React.createClass({
         .set('name', newName ? newName : '')
         .set('primaryKey', primaryKeys)
         .set('incremental', !!primaryKeys)
-        .set('outputTable', newOutputTable)
     );
   },
 
