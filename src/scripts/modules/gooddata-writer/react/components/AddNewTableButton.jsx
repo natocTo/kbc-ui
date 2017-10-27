@@ -71,7 +71,9 @@ export default React.createClass({
           value={this.props.localState.get('value')}
           allowedBuckets={['out', 'in']}
           excludeTableFn={this.isTableConfigured}
-          placeholder="out.c-main.data" />
+          placeholder="out.c-main.data"
+          autoFocus
+      />
     );
     return (
       <div className="form form-horizontal">

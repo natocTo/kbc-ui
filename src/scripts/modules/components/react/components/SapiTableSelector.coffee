@@ -17,12 +17,14 @@ module.exports = React.createClass
     excludeTableFn: React.PropTypes.func
     allowedBuckets: React.PropTypes.array
     disabled: React.PropTypes.bool
+    autoFocus: React.PropTypes.bool
 
   getDefaultProps: ->
     excludeTableFn: (tableId) ->
       return false
     allowedBuckets: ['in','out']
     disabled: false
+    autoFocus: false
 
   getStateFromStores: ->
     isTablesLoading = storageTablesStore.getIsLoading()
@@ -44,6 +46,7 @@ module.exports = React.createClass
       disabled: @props.disabled
       name: 'source'
       clearable: false
+      autofocus: @props.autoFocus
       value: @props.value
       isLoading: @state.isTablesLoading
       placeholder: @props.placeholder

@@ -37,7 +37,9 @@ export default React.createClass({
               allowedBuckets={this.props.allowedBuckets}
               onSelectTableFn={this.props.onSetTableIdFn}
               excludeTableFn={ (tableId) => !!this.props.configuredTables.get(tableId)}
-              value={this.props.selectedTableId} />
+              value={this.props.selectedTableId}
+              autoFocus
+          />
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons

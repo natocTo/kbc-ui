@@ -204,6 +204,7 @@ module.exports = React.createClass
               disabled: @props.disabled
               placeholder: "Source table"
               onSelectTableFn: @_handleChangeSource
+              autoFocus: true
             if @state.showDetails
               React.DOM.div className: 'checkbox',
                 React.DOM.label null,

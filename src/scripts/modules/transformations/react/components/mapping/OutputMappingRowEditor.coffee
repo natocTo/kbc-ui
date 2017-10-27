@@ -117,6 +117,7 @@ module.exports = React.createClass
                 type: 'text'
                 name: 'source'
                 label: 'File'
+                autoFocus: true
                 value: @props.value.get("source")
                 disabled: @props.disabled
                 placeholder: "File name"
@@ -131,6 +132,7 @@ module.exports = React.createClass
                 type: 'text'
                 name: 'source'
                 label: 'Source'
+                autoFocus: true
                 value: @props.value.get("source")
                 disabled: @props.disabled
                 placeholder: "Source table in transformation DB"

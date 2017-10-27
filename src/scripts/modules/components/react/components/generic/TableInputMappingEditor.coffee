@@ -89,6 +89,7 @@ module.exports = React.createClass
               disabled: @props.disabled
               placeholder: "Source table"
               onSelectTableFn: @_handleChangeSource
+              autoFocus: true
       if (!@props.definition.has('destination'))
         React.DOM.div {className: "row col-md-12"},
           Input
