@@ -215,7 +215,9 @@ export default React.createClass({
 
   backendOptions() {
     var options = [];
-    options.push({value: 'mysql', label: 'MySQL'});
+    if (ApplicationStore.hasCurrentAdminFeature('transformation-mysql')) {
+      options.push({value: 'mysql', label: 'MySQL'});
+    }
     if (ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false)) {
       options.push({value: 'redshift', label: 'Redshift'});
     }

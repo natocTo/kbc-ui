@@ -13,7 +13,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-12 kbc-main-content">
-          <MySqlSandbox />
+          {ApplicationStore.hasCurrentProjectFeature('transformation-mysql') ? (<MySqlSandbox />) : null}
           {ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false) ? (<RedshiftSandbox />) : null}
           {ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false) ? (<SnowflakeSandbox />) : null}
           <RStudioSandbox />
