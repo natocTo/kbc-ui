@@ -28,11 +28,7 @@ export default React.createClass({
             actionsProvisioning={this.props.actionsProvisioning}
             componentId={this.props.componentId}
           />
-          {this.props.queries.count() > 0 ? (
-            this.rows()
-          ) : (
-            <div className="list-group-item">No queries found.</div>
-          )}
+          {this.rows()}
         </div>
       </div>
     );
