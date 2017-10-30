@@ -5,7 +5,7 @@ export default function(componentId, configId, versionId) {
   return function() {
     var reloadCallback = function(component, config) {
       var promises = [];
-      if (componentId === 'transformations') {
+      if (componentId === 'transformation') {
         promises.push(InstalledComponentsActionCreators.loadComponentConfigsData(component));
       }
       promises.push(InstalledComponentsActionCreators.loadComponentConfigData(component, config));
