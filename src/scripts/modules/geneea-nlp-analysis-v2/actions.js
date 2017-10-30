@@ -102,7 +102,8 @@ export function isValid(configId) {
     if (editingValue && param === ANALYSIS) {
       editingValue = editingValue.toJS();
     }
-    return memo || _.isEmpty(editingValue);
+    const isEmpty = List.isList(editingValue) ? editingValue.count() === 0 : _.isEmpty(editingValue);
+    return memo || isEmpty;
   }, false);
   let isAdvancedValid = true;
   try {
