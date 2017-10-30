@@ -240,7 +240,7 @@ export default React.createClass({
       <AdvancedSettings
         isEditing={!!this.state.editing}
         data={data}
-        isSaving={this.state.isSaving}
+        isSaving={!!this.state.isSaving}
         onChange={this.updateEditingValue.bind(this, params.ADVANCED)}
       />
     );
@@ -329,7 +329,7 @@ export default React.createClass({
       };
       const info = analysisTypes[value];
       return (
-        <div className="checkbox">
+        <div className="checkbox" key={value}>
           <label>
             <input
              type="checkbox"
@@ -398,7 +398,6 @@ export default React.createClass({
     return (
       <Select
         key={prop}
-        name={prop}
         clearable={false}
         value={this.getEditingValue(prop)}
         onChange= {({value}) => this.updateEditingValue(prop, value)}
@@ -413,7 +412,6 @@ export default React.createClass({
         multi={isMulti}
         clearable={false}
         key={column}
-        name={column}
         value={value ? value.toJS() : ''}
         onChange={(newValue) => {
           this.updateEditingValue(
@@ -513,7 +511,7 @@ export default React.createClass({
     let renderedTasks = tasks.map((task, idx) => {
       const info = analysisTypes[task];
       return (
-        <Tooltip tooltip={info.description} placement="top">
+        <Tooltip key={info.name} tooltip={info.description} placement="top">
           <span>
             {idx === 0 ? '' : ', '}
             {info.name}
@@ -566,6 +564,7 @@ export default React.createClass({
     }
     return table.get('columns').map( (column) => {
       return {
+        'key': column,
         'label': column,
         'value': column
       };
