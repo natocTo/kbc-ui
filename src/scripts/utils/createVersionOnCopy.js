@@ -3,8 +3,11 @@ import InstalledComponentsActionCreators from '../modules/components/InstalledCo
 
 export default function(componentId, configId, version, name) {
   return function() {
-    var reloadCallback = function() {
+    var reloadCallback = function(component) {
       var promises = [];
+      if (componentId === 'transformation') {
+        promises.push(InstalledComponentsActionCreators.loadComponentConfigsData(component));
+      }
       promises.push(InstalledComponentsActionCreators.loadComponentsForce());
       return promises;
     };
