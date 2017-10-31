@@ -203,6 +203,7 @@
       }
       .modal-body {
         padding: 0 40px 20px;
+        overflow: hidden; // animation fix
         p {
           margin-bottom: 20px;
           color: #7C8498;
@@ -342,6 +343,35 @@
   padding: 22px;
   border-bottom: 1px solid #e8e8ef;
 }
+
+.example{
+  overflow: hidden;
+}
+
+.example-enter {
+  position: absolute;
+  opacity: 0.01;
+  transform: translateX(-320px);
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: all 1000ms ease-in;
+  transform: translateX(0);
+
+}
+
+.example-leave {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transform: translateX(320px);
+  transition: all 1000ms ease-in;
+}
+
 
 
 

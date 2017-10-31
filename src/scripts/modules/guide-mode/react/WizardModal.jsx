@@ -4,6 +4,7 @@ import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default React.createClass({
   displayName: 'WizardModal',
@@ -18,6 +19,7 @@ export default React.createClass({
   },
 
   render: function() {
+    let currentBody = this.getModalBody();
     return (
       <div>
         <Modal
@@ -33,32 +35,46 @@ export default React.createClass({
             )}
           </Modal.Header>
           <Modal.Body>
-            {this.isLastStep()}
-            <div className="row">
-              <div className="col-md-12">
-                {!this.isLastStep() &&
-                 <span>
-                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-                 </span>
+            <ReactCSSTransitionGroup
+                transitionName="example"
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1000}
+            >
+                {
+                    currentBody
                 }
-                 <div>
-                   <div className="guide-media">
-                     {this.renderMedia()}
-                   </div>
-                 </div>
-                {this.isLastStep() &&
-                 <span className="guide-congratulations">
-                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-                 </span>
-                }
-              </div>
-            </div>
+            </ReactCSSTransitionGroup>
           </Modal.Body>
           <Modal.Footer>
-            {this.renderButtonNext()}
+              {this.renderButtonPrev()}
+              {this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
       </div>
+    );
+  },
+
+  getModalBody() {
+    return (
+    <div key={this.props.step} className="row">
+      <div className="col-md-12">
+          {!this.isLastStep() &&
+          <span>
+                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+                 </span>
+          }
+        <div>
+          <div className="guide-media">
+              {this.renderMedia()}
+          </div>
+        </div>
+          {this.isLastStep() &&
+          <span className="guide-congratulations">
+                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+                 </span>
+          }
+      </div>
+    </div>
     );
   },
   getActiveStep() {
@@ -138,6 +154,18 @@ export default React.createClass({
   getNextStepDispatchAction() {
     return this.getLessonSteps()[this.getActiveStep()].nextStepDispatchAction;
   },
+  renderButtonPrev() {
+    let buttonText = 'Prev step';
+    if (this.props.step === 0) {
+      buttonText = 'Close';
+    }
+    if (this.props.step !== this.getStepsCount() - 1) {
+      return (
+        <Button onClick={() => this.handleStep('prev')} bsStyle="link">{buttonText}</Button>
+      );
+    }
+    return '';
+  },
   renderButtonNext() {
     let buttonText = 'Next step';
     if (this.props.step === 0) {
@@ -148,13 +176,20 @@ export default React.createClass({
       buttonText = 'Close';
     }
     return (
-      <Button onClick={this.increaseStep} bsStyle="primary">{buttonText}</Button>
+      <Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>
     );
   },
 
   closeLessonModal() {
     RoutesStore.getRouter().transitionTo('home');
     hideWizardModalFn();
+  },
+  handleStep(direction) {
+    if (direction === 'next') {
+      this.increaseStep();
+    } else if (direction === 'prev') {
+      this.decreaseStep();
+    }
   },
   decreaseStep() {
     if (this.props.step > 0) {
