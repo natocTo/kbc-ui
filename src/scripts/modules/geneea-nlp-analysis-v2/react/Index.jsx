@@ -500,6 +500,10 @@ export default React.createClass({
             <SapiTableLinkEx
               tableId={`${bucketId}.analysis-result-entities`}/>
           </li>
+          <li>
+            <SapiTableLinkEx
+              tableId={`${bucketId}.analysis-result-relations`}/>
+          </li>
         </ul>
         </div>
       </div>
