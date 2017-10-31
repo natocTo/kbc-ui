@@ -5,7 +5,7 @@ import { setStep, hideWizardModalFn } from '../stores/ActionCreators';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import './Guide.less';
 
-module.exports = React.createClass({
+export default React.createClass({
   displayName: 'Wizard',
 
   mixins: [createStoreMixin(WizardStore)],
