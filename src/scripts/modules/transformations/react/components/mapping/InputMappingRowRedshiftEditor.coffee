@@ -6,8 +6,7 @@ Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 RedshiftDataTypesContainer = React.createFactory(require("./input/RedshiftDataTypesContainer"))
-
-ApplicationStore = require('../../../../../stores/ApplicationStore')
+ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
 
 module.exports = React.createClass
   displayName: 'InputMappingRowRedshiftEditor'
@@ -73,8 +72,11 @@ module.exports = React.createClass
     value = @props.value.set("optional", e.target.checked)
     @props.onChange(value)
 
-  _handleChangeDays: (e) ->
-    value = @props.value.set("days", parseInt(e.target.value))
+  _handleChangeChangedSince: (changedSince) ->
+    value = @props.value
+    if @props.value.has("days")
+      value = value.delete("days")
+    value = value.set("changedSince", changedSince)
     @props.onChange(value)
 
   _handleChangeColumns: (newValue) ->
@@ -252,18 +254,17 @@ module.exports = React.createClass
               ,
                 React.DOM.small {}, "Import only specified columns"
       if @state.showDetails
-        Input
-          bsSize: 'small'
-          type: 'number'
-          label: 'Days'
-          value: @props.value.get("days")
-          disabled: @props.disabled
-          placeholder: 0
-          help: React.DOM.small {},
-            "Data updated in the given period"
-          onChange: @_handleChangeDays
-          labelClassName: 'col-xs-2'
-          wrapperClassName: 'col-xs-4'
+        React.DOM.div {className: "row col-md-12"},
+          React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
+            React.DOM.div className: 'col-xs-10',
+              ChangedSinceInput
+                value: @props.value.get(
+                  "changedSince",
+                  if (@props.value.get("days") > 0) then "-" + @props.value.get("days") + " days" else null
+                )
+                disabled: @props.disabled || !@props.value.get("source")
+                onChange: @_handleChangeChangedSince
       if @state.showDetails
         React.DOM.div {className: "row col-md-12"},
           React.DOM.div className: 'form-group form-group-sm',

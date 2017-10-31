@@ -29,8 +29,19 @@ module.exports = React.createClass
                 return '[space character]'
               return value
             ).join(', ')
-      if @props.value.get('days', 0) != 0 && @props.value.get('where_column') && @props.value.get('where_column')
+      if (@props.value.get('days', 0) != 0 || @props.value.get('changed_since')) &&
+          @props.value.get('where_column') && @props.value.get('where_column')
         ' and '
+
+      if @props.value.get('changed_since')
+        span {},
+          if @props.value.get('where_column') && @props.value.get('where_values')
+            'changed in last '
+          else
+            'Changed in last '
+          @props.value.get('changed_since').replace('-', '')
+
+
       if @props.value.get('days', 0) != 0
         span {},
           if @props.value.get('where_column')
@@ -39,5 +50,6 @@ module.exports = React.createClass
             'Changed in last '
           @props.value.get('days', 0)
           ' days'
-      if @props.value.get('days', 0) == 0 && !@props.value.get('where_column')
+
+      if @props.value.get('days', 0) == 0 && !@props.value.get('changed_since') && !@props.value.get('where_column')
         'N/A'

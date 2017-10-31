@@ -4,9 +4,8 @@ _ = require('underscore')
 Immutable = require('immutable')
 {Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
-Select = React.createFactory require('../../../../../react/common/Select').default
 SapiTableSelector = React.createFactory(require('../SapiTableSelector'))
-DaysFilterInput = require('./DaysFilterInput').default
+ChangedSinceFilterInput = require('./ChangedSinceFilterInput').default
 DataFilterRow = require('./DataFilterRow').default
 
 module.exports = React.createClass
@@ -120,10 +119,11 @@ module.exports = React.createClass
           allTables: @props.tables
 
       if @state.showDetails
-        React.createElement DaysFilterInput,
+        React.createElement ChangedSinceFilterInput,
           mapping: @props.value
           disabled: @props.disabled
           onChange: @props.onChange
+
       if @state.showDetails
         React.createElement DataFilterRow,
           value: @props.value
