@@ -16,19 +16,66 @@ function prepareDataForCreate(data) {
 
   switch (data.get('backend')) {
     case 'mysql':
-      newData = newData.set('backend', 'mysql').set('type', 'simple');
+      newData = newData.set('backend', 'mysql')
+        .set('type', 'simple')
+        .set('queries', [
+          '-- This is a sample query.\n' +
+          '-- Adjust accordingly to your input mapping, output mapping\n' +
+          '-- and desired functionality.',
+          'CREATE VIEW `out_table` AS SELECT * FROM `in_table`;'
+        ]);
       break;
     case 'redshift':
-      newData = newData.set('backend', 'redshift').set('type', 'simple');
+      newData = newData.set('backend', 'redshift')
+        .set('type', 'simple')
+        .set('queries', [
+          '-- This is a sample query.\n' +
+          '-- Adjust accordingly to your input mapping, output mapping\n' +
+          '-- and desired functionality.',
+          'CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
+        ]);
       break;
     case 'snowflake':
-      newData = newData.set('backend', 'snowflake').set('type', 'simple');
+      newData = newData.set('backend', 'snowflake')
+        .set('type', 'simple')
+        .set('queries', [
+          '-- This is a sample query.\n' +
+          '-- Adjust accordingly to your input mapping, output mapping\n' +
+          '-- and desired functionality.',
+          'CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
+        ]);
       break;
     case 'r':
-      newData = newData.set('backend', 'docker').set('type', 'r');
+      newData = newData.set('backend', 'docker')
+        .set('type', 'r')
+        .set('queries', [
+          '# This is a sample script.\n' +
+          '# Adjust accordingly to your input mapping, output mapping\n' +
+          '# and desired functionality.\n\n' +
+          'input_data <- read.csv(file = "in/tables/input.csv");\n' +
+          'result <- input_data\n' +
+          'write.csv(result, file = "out/tables/output.csv", row.names = FALSE)'
+        ]);
       break;
     case 'python':
-      newData = newData.set('backend', 'docker').set('type', 'python');
+      newData = newData.set('backend', 'docker')
+        .set('type', 'python')
+        .set('queries', [
+          '# This is a sample script.\n' +
+          '# Adjust accordingly to your input mapping, output mapping\n' +
+          '# and desired functionality.\n\n' +
+          'import csv\n' +
+          '\n' +
+          'with open(\'in/tables/input.csv\', mode=\'rt\', encoding=\'utf-8\') as in_file, open(\'out/tables/output.csv\', mode=\'wt\', encoding=\'utf-8\') as out_file:\n' +
+          '    lazy_lines = (line.replace(\'\\0\', \'\') for line in in_file)\n' +
+          '    reader = csv.DictReader(lazy_lines, lineterminator=\'\\n\')\n' +
+          '    writer = csv.DictWriter(out_file, fieldnames=reader.fieldnames, lineterminator=\'\\n\')\n' +
+          '    writer.writeheader()\n' +
+          '\n' +
+          '    for row in reader:\n' +
+          '        # do something and write row\n' +
+          '        writer.writerow(row)'
+        ]);
       break;
     case 'openrefine':
       newData = newData.set('backend', 'docker').set('type', 'openrefine');

@@ -24,22 +24,6 @@ export default React.createClass({
     highlightQueryNumber: PropTypes.number
   },
 
-  getQueries() {
-    if (this.props.isChanged === false && this.props.queries === '') {
-      const comment = '-- This is a sample query.\n' +
-        '-- Adjust accordingly to your input mapping, output mapping\n' +
-        '-- and desired functionality.\n\n';
-      if (this.props.transformation.get('backend') === 'mysql') {
-        return comment + 'CREATE VIEW `out_table` AS SELECT * FROM `in_table`;';
-      }
-      if (this.props.transformation.get('backend') === 'redshift') {
-        return comment + 'CREATE TABLE "out_table" AS SELECT * FROM "in_table";';
-      }
-      return comment + 'CREATE TABLE "out_table" AS SELECT * FROM "in_table";';
-    }
-    return this.props.queries;
-  },
-
   render() {
     return (
       <div>
@@ -73,7 +57,7 @@ export default React.createClass({
   queries() {
     return (
       <Edit
-        queries={this.getQueries()}
+        queries={this.props.queries}
         splitQueries={this.props.splitQueries}
         backend={this.props.transformation.get('backend')}
         disabled={this.props.isSaving}

@@ -20,39 +20,6 @@ export default React.createClass({
     isChanged: PropTypes.bool.isRequired
   },
 
-  getScripts() {
-    if (this.props.isChanged === false && this.props.scripts === '') {
-      if (this.props.transformation.get('type') === 'r') {
-        return '# This is a sample script.\n' +
-          '# Adjust accordingly to your input mapping, output mapping\n' +
-          '# and desired functionality.\n\n' +
-          'input_data <- read.csv(file = "in/tables/input.csv");\n' +
-          'result <- input_data\n' +
-          'write.csv(result, file = "out/tables/output.csv", row.names = FALSE)';
-      }
-      if (this.props.transformation.get('type') === 'python') {
-        return '# This is a sample script.\n' +
-          '# Adjust accordingly to your input mapping, output mapping\n' +
-          '# and desired functionality.\n\n' +
-          'import csv\n' +
-          '\n' +
-          'with open(\'in/tables/input.csv\', mode=\'rt\', encoding=\'utf-8\') as in_file, open(\'out/tables/output.csv\', mode=\'wt\', encoding=\'utf-8\') as out_file:\n' +
-          '    lazy_lines = (line.replace(\'\\0\', \'\') for line in in_file)\n' +
-          '    reader = csv.DictReader(lazy_lines, lineterminator=\'\\n\')\n' +
-          '    writer = csv.DictWriter(out_file, fieldnames=reader.fieldnames, lineterminator=\'\\n\')\n' +
-          '    writer.writeheader()\n' +
-          '\n' +
-          '    for row in reader:\n' +
-          '        # do something and write row\n' +
-          '        writer.writerow(row)';
-      }
-      if (this.props.transformation.get('type') === 'openrefine') {
-        return JSON.stringify([], null, 2);
-      }
-    }
-    return this.props.scripts;
-  },
-
   render() {
     return (
       <div>
@@ -85,7 +52,7 @@ export default React.createClass({
   scripts() {
     return (
       <Edit
-        script={this.getScripts()}
+        script={this.props.scripts}
         backend={this.props.transformation.get('type')}
         disabled={this.props.isSaving}
         onChange={this.props.onEditChange}
