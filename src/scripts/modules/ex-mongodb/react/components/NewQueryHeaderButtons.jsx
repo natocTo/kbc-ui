@@ -46,7 +46,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           >Cancel</button>
           <button
             className="btn btn-success"
-            onClick={this.handleCreate()}
+            onClick={this.handleCreate}
             disabled={this.state.isSaving || !this.state.isValid}
           >Create Query</button>
         </div>
