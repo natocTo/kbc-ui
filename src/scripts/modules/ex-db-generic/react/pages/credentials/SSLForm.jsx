@@ -43,7 +43,7 @@ export default React.createClass({
   },
 
   createEnableSSLCheckbox(propName) {
-    if (!this.isSSLEnabled()) {
+    if (this.props.enabled) {
       return (
         <div className="form-group">
           <Input
@@ -119,9 +119,9 @@ export default React.createClass({
     if (this.isSSLEnabled()) {
       sslPortion = (
         <div className="row">
-          {this.createInput('SSL Client Certificate (client-cert.pem)', 'cert')};
-          {this.createInput('SSL Client Key (client-key.pem)', 'key')};
-          {this.createInput('SSL CA Certificate (ca-cert.pem)', 'ca')};
+          {this.createInput('SSL Client Certificate (client-cert.pem)', 'cert')}
+          {this.createInput('SSL Client Key (client-key.pem)', 'key')}
+          {this.createInput('SSL CA Certificate (ca-cert.pem)', 'ca')}
           {this.createInput(
             'SSL Cipher',
             'cipher',
