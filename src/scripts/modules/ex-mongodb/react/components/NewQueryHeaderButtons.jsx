@@ -30,7 +30,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
 
     handleCreate() {
       return ExDbActionCreators.createQuery(this.state.currentConfigId)
-        .then(function() {
+        .then(() => {
           return this.transitionTo(componentId, {config: this.state.currentConfigId});
         });
     },
