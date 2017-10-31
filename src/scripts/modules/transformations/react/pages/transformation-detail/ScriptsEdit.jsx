@@ -27,6 +27,13 @@ export default React.createClass({
     if (this.props.backend === 'openrefine') {
       codeMirrorParams.lint = true;
       codeMirrorParams.gutters = ['CodeMirror-lint-markers'];
+      codeMirrorParams.placeholder = '# Your OpenRefine JSON config goes here...';
+    }
+    if (this.props.backend === 'python') {
+      codeMirrorParams.placeholder = '# Your Python script goes here...';
+    }
+    if (this.props.backend === 'r') {
+      codeMirrorParams.placeholder = '# Your R script goes here...';
     }
     return (
       <div className="kbc-queries-edit">
