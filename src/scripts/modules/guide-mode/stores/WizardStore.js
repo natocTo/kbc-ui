@@ -5,9 +5,9 @@ import wizardLessons from '../WizardLessons';
 import RoutesStore from '../../../stores/RoutesStore';
 
 let store = {
-  showLessonModal: true,
-  lessonNumber: 1,
-  step: 1
+  showLessonModal: false,
+  lessonNumber: 0,
+  step: 0
 };
 
 const containsAction = (dispatchedAction, action) => {
