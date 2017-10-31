@@ -3,7 +3,7 @@ import WizardModal from './WizardModal';
 import WizardStore from '../stores/WizardStore';
 import { setStep, hideWizardModalFn } from '../stores/ActionCreators';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import './Try.less';
+import './Guide.less';
 
 module.exports = React.createClass({
   displayName: 'Wizard',
@@ -18,18 +18,18 @@ module.exports = React.createClass({
   },
 
   applyLayoutClasses() {
-    document.body.classList.add('try-mode');
+    document.body.classList.add('guide-mode');
     if (typeof this.state.currentLesson !== 'undefined') {
       let wizardPosition = this.state.currentLesson.steps[this.state.wizard.step].position;
-      document.body.classList.add('try-mode-lesson-on');
+      document.body.classList.add('guide-mode-lesson-on');
 
       if (wizardPosition === 'center') {
-        document.body.classList.add('try-mode-center');
+        document.body.classList.add('guide-mode-center');
       } else {
-        document.body.classList.remove('try-mode-center');
+        document.body.classList.remove('guide-mode-center');
       }
     } else {
-      document.body.classList.remove('try-mode-lesson-on');
+      document.body.classList.remove('guide-mode-lesson-on');
     }
   },
 
@@ -40,15 +40,15 @@ module.exports = React.createClass({
       return null;
     } else {
       return (
-          <WizardModal
-              step={this.state.wizard.step}
-              setStep={setStep}
-              show={this.state.wizard.showLessonModal}
-              onHide={hideWizardModalFn}
-              position="aside"
-              lesson={this.state.currentLesson}
-              backdrop={true}
-          />
+        <WizardModal
+          step={this.state.wizard.step}
+          setStep={setStep}
+          show={this.state.wizard.showLessonModal}
+          onHide={hideWizardModalFn}
+          position="aside"
+          lesson={this.state.currentLesson}
+          backdrop={true}
+        />
       );
     }
   }
