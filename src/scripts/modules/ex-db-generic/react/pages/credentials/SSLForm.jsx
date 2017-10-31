@@ -143,6 +143,7 @@ export default React.createClass({
             The MySQL database extractor supports secure (encrypted) connections
             between MySQL clients and the server using SSL.
             Provide a set of SSL certificates to configure the secure connection. Read more on
+            {' '}
             <a href={helpUrl}>How to Configure MySQL server - DB Admin's article.</a>
           </div>
         </div>
