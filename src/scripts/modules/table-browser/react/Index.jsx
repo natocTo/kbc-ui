@@ -272,8 +272,6 @@ export default React.createClass({
   },
 
   onHide() {
-    // this.setState({show: false});
-    this.changeTable(this.getRouteTableId(), true);
     this.stopPollingDataProfilerJob();
     this.stopEventService();
     this.redirectBack();
