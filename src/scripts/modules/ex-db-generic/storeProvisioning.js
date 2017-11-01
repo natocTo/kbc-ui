@@ -76,7 +76,7 @@ export function createStore(componentId, configId) {
         }
         return memo && !_.isEmpty(value);
       }, true);
-      const hasKeys = ssh.getIn(['keys', 'public']) && ssh.getIn(['keys', '#private']);
+      const hasKeys = ssh.hasIn(['keys', 'public']) && ssh.hasIn(['keys', '#private']);
       let sshValid = true;
       if (hasSSH && ssh.get('enabled')) {
         sshValid = hasKeys && isValidSSH;
