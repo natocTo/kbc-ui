@@ -25,18 +25,6 @@ export default React.createClass({
 
   mixins: [createStoreMixin(tablesStore, tableBrowserStore)],
 
-  /*
-     propTypes: {
-     moreTables: React.PropTypes.object
-     },
-
-     getDefaultProps() {
-     return {
-     moreTables: List()
-     };
-     },
-   */
-
   getStateFromStores() {
     const tableId  = tableBrowserStore.getCurrentTableId();
     const localState = tableBrowserStore.getLocalState(tableId);
@@ -52,7 +40,6 @@ export default React.createClass({
       isLoading: isLoading,
       localState: localState
     };
-    // return this.prepareStateFromProps({tableId: this.getTableId()});
   },
 
   getLocalState(path) {
@@ -255,7 +242,6 @@ export default React.createClass({
       omitFetches: this.getLocalState('omitFetches'),
       filterIOEvents: this.getLocalState('filterIOEvents')
     };
-    // const options = initState || currentState;
     return utils.createventQueryString(options, this.getTableId());
   },
 
