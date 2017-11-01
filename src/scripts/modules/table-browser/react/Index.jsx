@@ -1,5 +1,5 @@
 import React from 'react';
-import Immutable, {List, Map} from 'immutable';
+import Immutable, {List, Map, fromJS} from 'immutable';
 import _ from 'underscore';
 import Promise from 'bluebird';
 import moment from 'moment';
@@ -18,7 +18,8 @@ import { factory as EventsServiceFactory} from '../../sapi-events/EventsService'
 
 import RoutesStore from '../../../stores/RoutesStore';
 import {PATH_PREFIX} from '../routes';
-import tableBrowserStore from './store';
+import tableBrowserStore from '../store';
+import tableBrowserActions from '../actions';
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
@@ -26,17 +27,17 @@ export default React.createClass({
 
   mixins: [createStoreMixin(tablesStore, tableBrowserStore)],
 
-/*
-  propTypes: {
-    moreTables: React.PropTypes.object
-  },
+  /*
+     propTypes: {
+     moreTables: React.PropTypes.object
+     },
 
-  getDefaultProps() {
-    return {
-      moreTables: List()
-    };
-  },
-*/
+     getDefaultProps() {
+     return {
+     moreTables: List()
+     };
+     },
+   */
 
   getStateFromStores() {
     const tableId  = tableBrowserStore.getCurrentTableId();
@@ -60,11 +61,19 @@ export default React.createClass({
     this.state.localState.getIn([].concat(path));
   },
 
- /*
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.prepareStateFromProps(nextProps));
+  setLocalState(newStateObject) {
+    const keysToUpdate = Object.keys(newStateObject);
+    const newLocalState = keysToUpdate.reduce((memo, key) => memo.set(key, newStateObject[key]),
+      this.state.localState
+    );
+    tableBrowserActions.setLocalState(this.state.tableId, newLocalState);
   },
-*/
+
+  /*
+     componentWillReceiveProps(nextProps) {
+     this.setState(this.prepareStateFromProps(nextProps));
+     },
+
 
   prepareStateFromProps(props) {
     const isLoading = tablesStore.getIsLoading();
@@ -76,10 +85,10 @@ export default React.createClass({
       isLoading: isLoading
     };
   },
+*/
 
   changeTable(newTableId, dontLoadAll) {
-    let newState = _.clone(this.prepareStateFromProps({tableId: newTableId}));
-    const initDataState = {
+    const initLocalState = fromJS({
       detailEventId: null,
       isCallingRunAnalysis: false,
       profilerData: Map(),
@@ -88,14 +97,12 @@ export default React.createClass({
       dataPreview: Immutable.List(),
       dataPreviewError: null,
       events: Immutable.List()
-    };
-    newState = _.extend(newState, initDataState);
-    this.setState(newState, () => {
-      if (!dontLoadAll) {
-        this.resetTableEvents();
-        this.loadAll();
-      }
     });
+    tableBrowserActions.setCurrentTableId(newTableId, initLocalState);
+    if (!dontLoadAll) {
+      this.resetTableEvents();
+      this.loadAll();
+    }
   },
 
   getTableId() {
@@ -141,7 +148,7 @@ export default React.createClass({
   },
 
   getDataProfilerJobResult() {
-    const jobId = this.state.profilerData.getIn(['runningJob', 'id']);
+    const jobId = this.getLocalState(['profilerData', 'runningJob', 'id']);
     getDataProfilerJob(jobId).then( (runningJob) => {
       if (runningJob.isFinished) {
         this.stopPollingDataProfilerJob();
@@ -161,7 +168,7 @@ export default React.createClass({
     if (!this.isRedshift()) {
       return;
     }
-    this.setState({loadingProfilerData: true});
+    this.setLocalState({loadingProfilerData: true});
     const tableId = this.getTableId();
     const component = this;
     fetchProfilerData(tableId).then( (result) =>{
@@ -217,75 +224,81 @@ export default React.createClass({
         tableId={this.getTableId()}
         reload={this.reload}
         tableExists={this.tableExists()}
-        omitFetches={this.state.omitFetches}
-        omitExports={this.state.omitExports}
+        omitFetches={this.getLocalState('omitFetches')}
+        omitExports={this.getLocalState('omitExports')}
         onHideFn={this.onHide}
         isLoading={this.isLoading()}
         table={this.state.table}
-        dataPreview={this.state.dataPreview}
-        dataPreviewError={this.state.dataPreviewError}
+        dataPreview={this.getLocalState('dataPreview')}
+        dataPreviewError={this.getLocalState('dataPreviewError')}
         onOmitExportsFn={this.onOmitExports}
         onOmitFetchesFn={this.onOmitFetches}
-        events={this.state.events}
-        enhancedAnalysis={this.state.profilerData}
+        events={this.getLocalState('events')}
+        enhancedAnalysis={this.getLocalState('profilerData')}
         onRunAnalysis={this.onRunEnhancedAnalysis}
-        isCallingRunAnalysis={this.state.isCallingRunAnalysis}
-        loadingProfilerData={this.state.loadingProfilerData}
+        isCallingRunAnalysis={this.getLocalState('isCallingRunAnalysis')}
+        loadingProfilerData={this.getLocalState('loadingProfilerData')}
         isRedshift={this.isRedshift()}
         onChangeTable={this.changeTable}
-        filterIOEvents={this.state.filterIOEvents}
+        filterIOEvents={this.getLocalState('filterIOEvents')}
         onFilterIOEvents={this.onFilterIOEvents}
-        onShowEventDetail={(eventId) => this.setState({detailEventId: eventId})}
-        detailEventId={this.state.detailEventId}
+        onShowEventDetail={(eventId) => this.setLocalState({detailEventId: eventId})}
+        detailEventId={this.getLocalState('detailEventId')}
       />
     );
   },
 
   onRunEnhancedAnalysis() {
-    this.setState({isCallingRunAnalysis: true});
+    this.setLocalState({isCallingRunAnalysis: true});
     startDataProfilerJob(this.getTableId())
       .then( () => {
-        this.findEnhancedJob().then(() => this.setState({isCallingRunAnalysis: false}));
+        this.findEnhancedJob().then(() => this.setLocalState({isCallingRunAnalysis: false}));
       })
-      .catch(() => this.setState({isCallingRunAnalysis: false}));
+      .catch(() => this.setLocalState({isCallingRunAnalysis: false}));
   },
 
   onOmitExports(e) {
     const checked = e.target.checked;
-    this.setState({omitExports: checked}, () => {
+    this.setLocalState({omitExports: checked}, () => {
       const q = this.prepareEventQuery();
-      this.state.eventService.setQuery(q);
-      this.state.eventService.load();
+      this.getLocalState('eventService').setQuery(q);
+      this.getLocalState('eventService').load();
     });
   },
 
   onOmitFetches(e) {
     const checked = e.target.checked;
-    this.setState({omitFetches: checked}, () => {
+    this.setLocalState({omitFetches: checked}, () => {
       const q = this.prepareEventQuery();
-      this.state.eventService.setQuery(q);
-      this.state.eventService.load();
+      this.getLocalState('eventService').setQuery(q);
+      this.getLocalState('eventService').load();
     });
   },
 
   onFilterIOEvents(e) {
     const checked = e.target.checked;
-    this.setState({filterIOEvents: checked}, () => {
+    this.setLocalState({filterIOEvents: checked}, () => {
       const q = this.prepareEventQuery();
-      this.state.eventService.setQuery(q);
-      this.state.eventService.load();
+      this.getLocalState('eventService').setQuery(q);
+      this.getLocalState('eventService').load();
     });
   },
 
   resetTableEvents() {
     const q = this.prepareEventQuery();
     this.stopEventService();
-    this.state.eventService.reset();
-    this.state.eventService.setQuery(q);
+    this.getLocalState('eventService').reset();
+    this.getLocalState('eventService').setQuery(q);
   },
 
-  prepareEventQuery(initState) {
-    const state = initState || this.state;
+  prepareEventQuery(initState, initTableId) {
+    const tableId = initTableId || this.getTableId();
+    const currentState = {
+      omitExports: this.getLocalState('omitExports'),
+      omitFetches: this.getLocalState('omitFetches'),
+      filterIOEvents: this.getLocalState('filterIOEvents')
+    };
+    const state = initState || currentState;
     const {omitExports, omitFetches, filterIOEvents} = state;
     const omitFetchesEvent = omitFetches ? ['tableDataPreview', 'tableDetail'] : [];
     const omitExportsEvent = omitExports ? ['tableExported'] : [];
@@ -293,12 +306,12 @@ export default React.createClass({
     if (filterIOEvents) {
       omitsQuery =  IMPORT_EXPORT_EVENTS.map((ev) => `event:storage.${ev}`);
     }
-    const objectIdQuery = `objectId:${this.getTableId()}`;
+    const objectIdQuery = `objectId:${tableId}`;
     return _.isEmpty(omitsQuery) ? objectIdQuery : `((${omitsQuery.join(' OR ')}) AND ${objectIdQuery})`;
   },
 
   isLoading() {
-    return this.state.isLoading || this.state.loadingPreview || this.state.eventService.getIsLoading();
+    return this.state.isLoading || this.getLocalState('loadingPreview') || this.getLocalState('eventService').getIsLoading();
   },
 
   redirectBack() {
@@ -310,7 +323,7 @@ export default React.createClass({
   },
 
   onHide() {
-    this.setState({show: false});
+    // this.setState({show: false});
     this.changeTable(this.getRouteTableId(), true);
     this.stopPollingDataProfilerJob();
     this.stopEventService();
@@ -321,7 +334,7 @@ export default React.createClass({
     Promise.props( {
       'loadAllTablesFore': storageActions.loadTablesForce().then(() => this.findEnhancedJob()),
       'exportData': this.exportDataSample(),
-      'loadEvents': this.state.eventService.load()
+      'loadEvents': this.getLocalState('eventService').load()
     });
   },
 
@@ -341,18 +354,18 @@ export default React.createClass({
   },
 
   startEventService() {
-    this.state.eventService.addChangeListener(this.handleEventsChange);
-    this.state.eventService.load();
+    this.getLocalState('eventService').addChangeListener(this.handleEventsChange);
+    this.getLocalState('eventService').load();
   },
 
   stopEventService() {
-    this.state.eventService.stopAutoReload();
-    this.state.eventService.removeChangeListener(this.handleEventsChange);
+    this.getLocalState('eventService').stopAutoReload();
+    this.getLocalState('eventService').removeChangeListener(this.handleEventsChange);
   },
 
   handleEventsChange() {
-    const events = this.state.eventService.getEvents();
-    this.setState({events: events});
+    const events = this.getLocalState('eventService').getEvents();
+    this.setLocalState({events: events});
   },
 
   exportDataSample() {
@@ -360,7 +373,7 @@ export default React.createClass({
       return false;
     }
 
-    this.setState({
+    this.setLocalState({
       loadingPreview: true
     });
     const component = this;
