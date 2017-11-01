@@ -217,7 +217,15 @@ export function createActions(componentId) {
 
     prepareSingleQueryRunData(configId, query) {
       const store = getStore(configId);
-      const runData = store.configData.setIn(['parameters', 'tables'], List().push(query));
+      let runQuery = query;
+      if (runQuery.get('advancedMode')) {
+        runQuery = runQuery.delete('table');
+        runQuery = runQuery.delete('columns');
+      } else {
+        runQuery = runQuery.delete('query');
+      }
+      runQuery = runQuery.delete('advancedMode');
+      const runData = store.configData.setIn(['parameters', 'tables'], List().push(runQuery));
       return runData;
     },
 
