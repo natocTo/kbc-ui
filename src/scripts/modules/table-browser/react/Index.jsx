@@ -329,7 +329,7 @@ export default React.createClass({
     return storageApi
       .tableDataPreview(this.getTableId(), {limit: 10})
       .then( (csv) => {
-        component.setState({
+        component.setLocalState({
           loadingPreview: false,
           dataPreview: Immutable.fromJS(csv)
         });
@@ -345,7 +345,7 @@ export default React.createClass({
         } else {
           throw new Error(JSON.stringify(error));
         }
-        component.setState({
+        component.setLocalState({
           loadingPreview: false,
           dataPreviewError: dataPreviewError
         });
