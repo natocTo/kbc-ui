@@ -95,7 +95,7 @@ export default React.createClass({
 
   onChange(value) {
     if (!value) {
-      this.props.onChange(null);
+      this.props.onChange('');
     } else {
       this.props.onChange(value.value);
     }
