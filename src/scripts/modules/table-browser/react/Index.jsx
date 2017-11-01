@@ -18,13 +18,15 @@ import { factory as EventsServiceFactory} from '../../sapi-events/EventsService'
 
 import RoutesStore from '../../../stores/RoutesStore';
 import {PATH_PREFIX} from '../routes';
+import tableBrowserStore from './store';
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(tablesStore)],
+  mixins: [createStoreMixin(tablesStore, tableBrowserStore)],
 
+/*
   propTypes: {
     moreTables: React.PropTypes.object
   },
@@ -34,14 +36,35 @@ export default React.createClass({
       moreTables: List()
     };
   },
+*/
 
   getStateFromStores() {
-    return this.prepareStateFromProps({tableId: this.getTableId()});
+    const tableId  = tableBrowserStore.getCurrentTableId();
+    const localState = tableBrowserStore.getLocalState(tableId);
+
+    const isLoading = tablesStore.getIsLoading();
+    const tables = tablesStore.getAll() || Map();
+    const table = tables.get(tableId, Map());
+
+    return {
+      moreTables: List(), // context tables TBA
+      tableId: tableId,
+      table: table,
+      isLoading: isLoading,
+      localState: localState
+    };
+    // return this.prepareStateFromProps({tableId: this.getTableId()});
   },
 
+  getLocalState(path) {
+    this.state.localState.getIn([].concat(path));
+  },
+
+ /*
   componentWillReceiveProps(nextProps) {
     this.setState(this.prepareStateFromProps(nextProps));
   },
+*/
 
   prepareStateFromProps(props) {
     const isLoading = tablesStore.getIsLoading();
