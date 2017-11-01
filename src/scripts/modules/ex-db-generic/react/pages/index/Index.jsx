@@ -129,7 +129,7 @@ export default function(componentId) {
               <div className="tfoot">
                 <div className="tr">
                   <div className="td">
-                    No queries found
+                    No tables found
                   </div>
                 </div>
               </div>
@@ -140,7 +140,7 @@ export default function(componentId) {
         return (
           <div className="row component-empty-state text-center">
             <div className="col-md-12">
-              <p>There are no queries configured yet.</p>
+              <p>There are no tables configured yet.</p>
               <Quickstart
                 componentId={componentId}
                 configId={this.state.configId}
@@ -161,7 +161,7 @@ export default function(componentId) {
       } else if (this.state.hasCredentials) {
         return (
           <div className="row component-empty-state text-center">
-            <p>There are no queries configured yet.</p>
+            <p>There are no tables configured yet.</p>
             {this.renderNewQueryLink()}
           </div>
         );
@@ -233,7 +233,7 @@ export default function(componentId) {
                   component={componentId}
                   mode="link"
                   disabled={!this.state.hasEnabledQueries}
-                  disabledReason="There are no queries to be executed"
+                  disabledReason="There are no tables configured"
                   runParams={function() { return { config: configurationId }; }}
                 >
                   You are about to run the extraction

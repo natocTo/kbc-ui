@@ -40,7 +40,7 @@ export default React.createClass({
           className="btn btn-success"
           onClick={this.createQuery}
         >
-          <i className="kbc-icon-plus"/> New Query
+          <i className="kbc-icon-plus"/> New Table
         </button>
       );
     }
