@@ -89,7 +89,7 @@ InputMappingDetail = React.createClass(
               @props.inputMapping.get('whereColumn'))
             ' and '
 
-          if @props.inputMapping.get('changedSince', 0) != 0
+          if @props.inputMapping.get('changedSince')
             span {},
               if @props.inputMapping.get('whereColumn') && @props.inputMapping.get('whereValues')
                 'changed in last '
