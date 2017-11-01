@@ -14,14 +14,12 @@ import TableLinkModalDialog from './components/ModalDialog';
 import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './components/DataProfilerUtils';
 
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import { factory as EventsServiceFactory} from '../../sapi-events/EventsService';
 
 import RoutesStore from '../../../stores/RoutesStore';
 import {PATH_PREFIX} from '../routes';
 import tableBrowserStore from '../store';
 import tableBrowserActions from '../actions';
-
-const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
+import utils from '../utils';
 
 export default React.createClass({
 
@@ -58,7 +56,7 @@ export default React.createClass({
   },
 
   getLocalState(path) {
-    this.state.localState.getIn([].concat(path));
+    return this.state.localState.getIn([].concat(path));
   },
 
   setLocalState(newStateObject) {
@@ -68,24 +66,6 @@ export default React.createClass({
     );
     tableBrowserActions.setLocalState(this.state.tableId, newLocalState);
   },
-
-  /*
-     componentWillReceiveProps(nextProps) {
-     this.setState(this.prepareStateFromProps(nextProps));
-     },
-
-
-  prepareStateFromProps(props) {
-    const isLoading = tablesStore.getIsLoading();
-    const tables = tablesStore.getAll() || Map();
-    const table = tables.get(props.tableId, Map());
-    return {
-      tableId: props.tableId,
-      table: table,
-      isLoading: isLoading
-    };
-  },
-*/
 
   changeTable(newTableId, dontLoadAll) {
     const initLocalState = fromJS({
@@ -108,28 +88,6 @@ export default React.createClass({
   getTableId() {
     // return (this.state && this.state.tableId) ? this.state.tableId : this.getRouteTableId();
     return this.state.tableId;
-  },
-
-  getInitialState() {
-    const omitFetches = true, omitExports = false, filterIOEvents = false;
-    const es = EventsServiceFactory({limit: 10});
-    const eventQuery = this.prepareEventQuery({omitFetches, omitExports, filterIOEvents});
-    es.setQuery(eventQuery);
-
-    return ({
-      eventService: es,
-      events: Immutable.List(),
-      dataPreview: Immutable.List(),
-      dataPreviewError: null,
-      loadingPreview: false,
-      loadingProfilerData: false,
-      omitFetches: omitFetches,
-      omitExports: omitExports,
-      filterIOEvents: filterIOEvents,
-      isCallingRunAnalysis: false,
-      detailEventId: null,
-      profilerData: Map()
-    });
   },
 
   componentDidMount() {
@@ -291,23 +249,14 @@ export default React.createClass({
     this.getLocalState('eventService').setQuery(q);
   },
 
-  prepareEventQuery(initState, initTableId) {
-    const tableId = initTableId || this.getTableId();
-    const currentState = {
+  prepareEventQuery() {
+    const options = {
       omitExports: this.getLocalState('omitExports'),
       omitFetches: this.getLocalState('omitFetches'),
       filterIOEvents: this.getLocalState('filterIOEvents')
     };
-    const state = initState || currentState;
-    const {omitExports, omitFetches, filterIOEvents} = state;
-    const omitFetchesEvent = omitFetches ? ['tableDataPreview', 'tableDetail'] : [];
-    const omitExportsEvent = omitExports ? ['tableExported'] : [];
-    let omitsQuery = omitFetchesEvent.concat(omitExportsEvent).map((ev) => `NOT event:storage.${ev}`);
-    if (filterIOEvents) {
-      omitsQuery =  IMPORT_EXPORT_EVENTS.map((ev) => `event:storage.${ev}`);
-    }
-    const objectIdQuery = `objectId:${tableId}`;
-    return _.isEmpty(omitsQuery) ? objectIdQuery : `((${omitsQuery.join(' OR ')}) AND ${objectIdQuery})`;
+    // const options = initState || currentState;
+    return utils.createventQueryString(options, this.getTableId());
   },
 
   isLoading() {

@@ -1,11 +1,15 @@
 import Index from './react/Index';
-// import RoutesStore from '../../../stores/RoutesStore';
+import {initLocalState} from './utils';
 import tableBrowserActions from './actions';
+import storageActions from '../components/StorageActionCreators';
+
 export const PATH_PREFIX = 'tables';
 
 const requireDataFn = (routerState) => {
-  const tableId = routerState.getIn(['params', 'tableId']);
-  tableBrowserActions.setCurrentTableId(tableId);
+  const tableId = routerState.tableId;
+  return storageActions.loadTables().then( () =>
+    tableBrowserActions.setCurrentTableId(tableId, initLocalState())
+  );
 };
 
 
