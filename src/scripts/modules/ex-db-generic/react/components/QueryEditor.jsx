@@ -154,10 +154,17 @@ export default React.createClass({
 
   getPksOnSourceTableChange(newValue) {
     const pkCols = this.props.getPKColumns(Immutable.fromJS(newValue), this.props.sourceTables);
-    return pkCols.map((column) => {
+    let sourctTablePks = pkCols.map((column) => {
       return column.get('name');
     }).toJS();
+
+    let destinationTablePks = (this.isExistingTable())
+      ? this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey')
+      : [];
+
+    return (destinationTablePks.length > 0) ? destinationTablePks : sourctTablePks;
   },
+
 
   handleSourceTableChange(newValue) {
     const currentName = this.props.query.get('name');
