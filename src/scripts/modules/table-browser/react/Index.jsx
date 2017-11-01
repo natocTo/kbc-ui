@@ -98,12 +98,9 @@ export default React.createClass({
     });
   },
 
-  getRouteTableId() {
-    return RoutesStore.getCurrentRouteParam('tableId');
-  },
-
   getTableId() {
-    return (this.state && this.state.tableId) ? this.state.tableId : this.getRouteTableId();
+    // return (this.state && this.state.tableId) ? this.state.tableId : this.getRouteTableId();
+    return this.state.tableId;
   },
 
   getInitialState() {
@@ -216,7 +213,7 @@ export default React.createClass({
   renderModal() {
     return (
       <TableLinkModalDialog
-        moreTables={this.props.moreTables.toArray()}
+        moreTables={this.state.moreTables.toArray()}
         tableId={this.getTableId()}
         reload={this.reload}
         tableExists={this.tableExists()}
@@ -331,7 +328,7 @@ export default React.createClass({
   loadAll() {
     this.exportDataSample();
     this.startEventService();
-    this.setState({show: true});
+    // this.setState({show: true});
     this.findEnhancedJob();
   },
 
