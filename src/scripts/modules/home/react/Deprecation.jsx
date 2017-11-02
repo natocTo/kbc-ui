@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import StringUtils from '../../../utils/string';
 import ComponentDetailLink from '../../../react/common/ComponentDetailLink';
+import { List } from 'immutable';
 
 import './expiration.less';
 
@@ -11,7 +12,7 @@ export default React.createClass({
 
   render() {
     const deprecatedComponents = this.props.components.filter(function(component) {
-      return !!component.get('flags', []).contains('deprecated');
+      return !!component.get('flags', List()).contains('deprecated');
     });
 
     if (deprecatedComponents.isEmpty()) {

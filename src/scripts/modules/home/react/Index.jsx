@@ -12,6 +12,7 @@ import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../try-mode/stores/ActionCreators.js';
 import lessons from '../../try-mode/WizardLessons';
+import { List } from 'immutable';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentStore)],
@@ -62,7 +63,7 @@ export default React.createClass({
     }
     componentCount += this.state.limitsOverQuota.count();
     componentCount += this.state.installedComponents.filter(function(component) {
-      return !!component.get('flags', []).contains('deprecated');
+      return !!component.get('flags', List()).contains('deprecated');
     }).count();
     if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
