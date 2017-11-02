@@ -1,5 +1,5 @@
-import Dispatcher from '../../Dispatcher';
-import StoreUtils from '../../utils/StoreUtils';
+import Dispatcher from '../../../Dispatcher';
+import StoreUtils from '../../../utils/StoreUtils';
 import {Map} from 'immutable';
 import keyMirror from 'fbjs/lib/keyMirror';
 

@@ -1,6 +1,6 @@
 import Index from './react/Index';
 import {initLocalState} from './utils';
-import tableBrowserActions from './actions';
+import tableBrowserActions from './flux/actions';
 import storageActions from '../components/StorageActionCreators';
 
 export const PATH_PREFIX = 'tables';

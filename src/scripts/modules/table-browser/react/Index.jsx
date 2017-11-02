@@ -17,8 +17,8 @@ import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
 import RoutesStore from '../../../stores/RoutesStore';
 import {PATH_PREFIX} from '../routes';
-import tableBrowserStore from '../store';
-import tableBrowserActions from '../actions';
+import tableBrowserStore from '../flux/store';
+import tableBrowserActions from '../flux/actions';
 import utils from '../utils';
 
 export default React.createClass({

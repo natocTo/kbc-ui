@@ -1,5 +1,5 @@
 import {ActionTypes} from './store';
-import dispatcher from '../../Dispatcher';
+import dispatcher from '../../../Dispatcher';
 function setLocalState(tableId, localState) {
   dispatcher.handleViewAction({
     type: ActionTypes.TABLEBROWSER_SET_LOCALSTATE,
