@@ -1,17 +1,17 @@
 import React from 'react';
 import Immutable, {List, Map, fromJS} from 'immutable';
-import _ from 'underscore';
+// import _ from 'underscore';
 import Promise from 'bluebird';
 import moment from 'moment';
 import filesize from 'filesize';
-import later from 'later';
+// import later from 'later';
 
 import storageActions from '../../components/StorageActionCreators';
 import storageApi from '../../components/StorageApi';
 import tablesStore from '../../components/stores/StorageTablesStore';
 
 import TableLinkModalDialog from './components/ModalDialog';
-import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './components/DataProfilerUtils';
+// import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './components/DataProfilerUtils';
 
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
@@ -20,6 +20,8 @@ import {PATH_PREFIX} from '../routes';
 import tableBrowserStore from '../flux/store';
 import tableBrowserActions from '../flux/actions';
 import utils from '../utils';
+import createActionsProvisioning from '../actionsProvisioning';
+import createStoreProvisioning from '../storeProvisioning';
 
 export default React.createClass({
 
@@ -38,7 +40,9 @@ export default React.createClass({
       tableId: tableId,
       table: table,
       isLoading: isLoading,
-      localState: localState
+      actions: createActionsProvisioning(tableId),
+      localState: localState,
+      store: createStoreProvisioning(tableId)
     };
   },
 
@@ -77,14 +81,19 @@ export default React.createClass({
     return this.state.tableId;
   },
 
+  /*
   componentDidMount() {
     setTimeout(() => storageActions.loadTables().then(this.onShow));
   },
+  */
+
 
   componentWilUnmount() {
-    this.stopEventService();
-    this.stopPollingDataProfilerJob();
+    this.state.actions.stopEventService();
+    this.state.actions.stopPollingDataProfilerJob();
   },
+
+  /*
 
   pollDataProfilerJob() {
     const schedule = later.parse.recur().every(5).second();
@@ -126,7 +135,7 @@ export default React.createClass({
       }
     });
   },
-
+*/
   render() {
     return (
       <span key="mainspan">
@@ -180,7 +189,7 @@ export default React.createClass({
         onOmitFetchesFn={this.onOmitFetches}
         events={this.getLocalState('events')}
         enhancedAnalysis={this.getLocalState('profilerData')}
-        onRunAnalysis={this.onRunEnhancedAnalysis}
+        onRunAnalysis={this.state.actions.onRunEnhancedAnalysis}
         isCallingRunAnalysis={this.getLocalState('isCallingRunAnalysis')}
         loadingProfilerData={this.getLocalState('loadingProfilerData')}
         isRedshift={this.isRedshift()}
@@ -193,6 +202,7 @@ export default React.createClass({
     );
   },
 
+  /*
   onRunEnhancedAnalysis() {
     this.setLocalState({isCallingRunAnalysis: true});
     startDataProfilerJob(this.getTableId())
@@ -201,6 +211,7 @@ export default React.createClass({
       })
       .catch(() => this.setLocalState({isCallingRunAnalysis: false}));
   },
+  */
 
   onOmitExports(e) {
     const checked = e.target.checked;
@@ -259,7 +270,7 @@ export default React.createClass({
 
   onHide() {
     this.stopPollingDataProfilerJob();
-    this.stopEventService();
+    this.state.actions.stopEventService();
     this.redirectBack();
   },
 
@@ -272,10 +283,10 @@ export default React.createClass({
   },
 
   loadAll() {
-    this.exportDataSample();
-    this.startEventService();
+    this.state.actions.exportDataSample();
+    this.state.actions.startEventService();
     // this.setState({show: true});
-    this.findEnhancedJob();
+    this.state.actions.findEnhancedJob();
   },
 
   onShow() {
@@ -286,7 +297,7 @@ export default React.createClass({
     }
   },
 
-  startEventService() {
+/*   startEventService() {
     this.getLocalState('eventService').addChangeListener(this.handleEventsChange);
     this.getLocalState('eventService').load();
   },
@@ -300,7 +311,9 @@ export default React.createClass({
     const events = this.getLocalState('eventService').getEvents();
     this.setLocalState({events: events});
   },
+*/
 
+/*
   exportDataSample() {
     if (!this.tableExists()) {
       return false;
@@ -334,10 +347,11 @@ export default React.createClass({
           dataPreviewError: dataPreviewError
         });
       });
-  },
+  },*/
 
   tableExists() {
-    return !_.isEmpty(this.state.table.toJS());
+    // return !_.isEmpty(this.state.table.toJS());
+    return this.state.store.tableExists();
   },
 
   isRedshift() {
