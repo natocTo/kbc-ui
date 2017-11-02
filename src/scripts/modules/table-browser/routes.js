@@ -2,13 +2,16 @@ import Index from './react/Index';
 import {initLocalState} from './utils';
 import tableBrowserActions from './flux/actions';
 import storageActions from '../components/StorageActionCreators';
+import createActionsProvisioning from './actionsProvisioning';
 
 export const PATH_PREFIX = 'tables';
 
 const requireDataFn = (routerState) => {
   const tableId = routerState.tableId;
-  return storageActions.loadTables().then( () =>
-    tableBrowserActions.setCurrentTableId(tableId, initLocalState())
+  return storageActions.loadTables().then( () => {
+    tableBrowserActions.setCurrentTableId(tableId, initLocalState(tableId));
+    createActionsProvisioning(tableId).loadAll();
+  }
   );
 };
 
