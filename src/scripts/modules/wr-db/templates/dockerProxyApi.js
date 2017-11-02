@@ -122,7 +122,12 @@ export default function(componentId) {
           const tables = data.getIn(tablesPath, List())
                 .map((t) => {
                   if (t.get('source') === tableId) {
-                    return t.merge(mapping);
+                    let merged = t.merge(mapping);
+                    // if mapping has both changed_since and days, delete days property, #1247
+                    if (merged.has('days') && merged.has('changed_since')) {
+                      return merged.delete('days');
+                    }
+                    return merged;
                   } else {
                     return t;
                   }
