@@ -171,7 +171,7 @@
   &-wizard {
     //FIX OF TRANSLATE BLUR BUG IN CHROME
     -webkit-font-smoothing: subpixel-antialiased;
-    -webkit-transform: translateZ(0) scale(1.0, 1.0);
+    -webkit-transform: translateZ(1) scale(1.0, 1.0);
     &.modal {
       h3{
         font-size: 16px;
@@ -218,7 +218,7 @@
         }
         .btn{
           pointer-events: none;
-          
+
           &-link{
             color: #15c3ff;
             padding-top: 0;
@@ -239,12 +239,10 @@
       }
 
       &.guide-wizard-aside {
+        position: static;
         .guide-media {
           max-width:inherit;
         }
-
-        //position: static;
-        //z-index: -1;
         .modal-content{
           border-radius: 5px 0px 0px 5px;
         }
