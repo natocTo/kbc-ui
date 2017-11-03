@@ -18,6 +18,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import {factory as eventsFactory} from '../../../sapi-events/EventsService';
 import RoutesStore from '../../../../stores/RoutesStore';
+import hiddenComponents from '../../utils/hiddenComponents';
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
@@ -312,13 +313,14 @@ export default React.createClass({
   },
 
   loadAll() {
+    if (hiddenComponents.hasCurrentUserDevelPreview()) return this.redirectToTablePage();
     this.exportDataSample();
     this.startEventService();
     this.findEnhancedJob();
-    this.redrectToTablePage();
+    this.setState({show: true});
   },
 
-  redrectToTablePage() {
+  redirectToTablePage() {
     const path = RoutesStore.getRouterState().get('pathname');
     const tablePagePath = `${path}/tables/${this.props.tableId}`;
     const router = RoutesStore.getRouter();
