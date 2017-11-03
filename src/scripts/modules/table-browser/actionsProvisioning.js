@@ -47,7 +47,6 @@ export default function(tableId) {
   };
 
   const exportDataSample = () => {
-    if (!getStore().tableExists()) return false;
     const onSucceed = (csv) =>
     setLocalState({
       loadingPreview: false,

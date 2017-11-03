@@ -44,7 +44,6 @@ export default React.createClass({
     this.state.actions.stopPollingDataProfilerJob();
   },
 
-
   render() {
     return (
       <span key="mainspan">
