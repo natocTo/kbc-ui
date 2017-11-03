@@ -16,11 +16,13 @@ export default function(tableId) {
   const tables = tablesStore.getAll() || Map();
   const table = tables.get(tableId, Map());
   const tableExists = () => !_.isEmpty(table.toJS());
+  const eventService = getLocalState('eventService');
   return {
     getLocalState: getLocalState,
-    eventService: getLocalState('eventService'),
+    eventService: eventService,
     table: table,
     isLoading: isLoading,
+    isLoadingAll: () => isLoading || getLocalState('loadingPreview') || eventService.getIsLoading(),
     tableExists: tableExists,
     isRedshift: () => tableExists() && table.getIn(['bucket', 'backend']) === 'redshift'
   };
