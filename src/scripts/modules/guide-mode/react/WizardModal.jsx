@@ -6,7 +6,7 @@ import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 // import ApplicationStore from '../../../stores/ApplicationStore';
-
+//
 export default React.createClass({
   displayName: 'WizardModal',
   propTypes: {
@@ -20,6 +20,9 @@ export default React.createClass({
   },
 
   render: function() {
+    // if (this.getNextStepLink() === 'storage') {
+    //   console.log('STORAGE');
+    // }
     return (
       <div>
         <Modal
@@ -117,6 +120,9 @@ export default React.createClass({
   getStepLink() {
     return this.getLessonSteps()[this.getActiveStep()].link;
   },
+  getNextStepLink() {
+    return this.getLessonSteps()[this.getActiveStep() + 1].link;
+  },
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
   },
@@ -173,9 +179,18 @@ export default React.createClass({
     } else if (this.props.step === this.getStepsCount() - 1) {
       buttonText = 'Close';
     }
-    return (
-      <Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>
-    );
+
+    if (this.getNextStepLink() === 'storage') {
+      return (
+        <a href="http://localhost:3000/index-storage.html"
+          // href={ApplicationStore.getProjectPageUrl('storage')}
+          className="btn btn-primary">
+          {buttonText}
+        </a>
+      );
+    } else {
+      return (<Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>);
+    }
   },
 
   closeLessonModal() {
