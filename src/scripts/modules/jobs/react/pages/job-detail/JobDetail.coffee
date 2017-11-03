@@ -124,8 +124,7 @@ module.exports = React.createClass
             configId: @state.configuration.get 'id'
             rowId: job.getIn(['result', 'context', 'rowId']).toString()
           ,
-            span null,
-                job.getIn(['result', 'context', 'rowName'])
+            job.getIn(['result', 'context', 'rowName'])
           ' has failed'
         )
       parts.push(
