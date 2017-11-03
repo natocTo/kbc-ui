@@ -52,7 +52,7 @@ export default React.createClass({
               <div className="row">
                 {deprecatedTransformationsInBuckets.map(function(bucket, indexBucket) {
                   return (
-                  <div className="col-md-4" key={indexBucket}>
+                  <div className="col-md-6" key={indexBucket}>
                     <h4>
                       <span className={'kbc-transformation-icon'}/>
                         {TransformationBucketsStore.get(indexBucket).get('name', indexBucket)}
