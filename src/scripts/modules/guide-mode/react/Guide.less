@@ -173,7 +173,7 @@
     -webkit-font-smoothing: subpixel-antialiased;
     -webkit-transform: translateZ(1) scale(1.0, 1.0);
     &.modal {
-      h3{
+      h3 {
         font-size: 16px;
         font-family: "Gotham Rounded A", "Gotham Rounded B";
         color: #7C8498;
@@ -209,17 +209,17 @@
           color: #7C8498;
           line-height: 1.5;
         }
-        strong{
+        strong {
           font-weight: bold;
         }
         li {
           color: #7C8498;
           line-height: 1.5;
         }
-        .btn{
+        .btn {
           pointer-events: none;
 
-          &-link{
+          &-link {
             color: #15c3ff;
             padding-top: 0;
             position: relative;
@@ -233,7 +233,6 @@
         top: 355px;
         transform: translate(50%, -50%);
 
-
         width: @wizardWidth;
         transition: all 200ms ease;
       }
@@ -241,9 +240,9 @@
       &.guide-wizard-aside {
         position: static;
         .guide-media {
-          max-width:inherit;
+          max-width: inherit;
         }
-        .modal-content{
+        .modal-content {
           border-radius: 5px 0px 0px 5px;
         }
         .modal-header {
@@ -265,6 +264,21 @@
           .col-md-6 {
             width: 100%;
           }
+        }
+      }
+    }
+
+    &-animated {
+      &-enter {
+        position: absolute;
+        &-active {
+          animation: list-enter 200ms ease-in;
+        }
+      }
+
+      &-leave {
+        &-active {
+          animation: list-leave 200ms ease-in;
         }
       }
     }
@@ -342,20 +356,7 @@
   border-bottom: 1px solid #e8e8ef;
 }
 
-.example-enter {
-  position: absolute;
-}
 
-.example-enter.example-enter-active {
-  animation: list-enter 200ms ease-in;
-}
-
-.example-leave {
-}
-
-.example-leave.example-leave-active {
-  animation: list-leave 200ms ease-in;
-}
 
 @keyframes list-enter {
   0% {

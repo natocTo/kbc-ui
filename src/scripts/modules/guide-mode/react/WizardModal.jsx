@@ -5,6 +5,7 @@ import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+// import ApplicationStore from '../../../stores/ApplicationStore';
 
 export default React.createClass({
   displayName: 'WizardModal',
@@ -15,7 +16,7 @@ export default React.createClass({
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
-    lesson: React.PropTypes.object.isRequired,
+    lesson: React.PropTypes.object.isRequired
   },
 
   render: function() {
@@ -35,7 +36,7 @@ export default React.createClass({
           </Modal.Header>
           <Modal.Body>
             <ReactCSSTransitionGroup
-                transitionName="example"
+                transitionName="guide-wizard-animated"
                 transitionEnterTimeout={200}
                 transitionLeaveTimeout={200}
             >
