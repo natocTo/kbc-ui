@@ -3,9 +3,12 @@ import tableBrowserActions from './flux/actions';
 // import storageActions from '../components/StorageActionCreators';
 import storageApi from '../components/StorageApi';
 import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './react/components/DataProfilerUtils';
-import {fromJS} from 'immutable';
+import {fromJS, List, Map} from 'immutable';
+import { factory as EventsServiceFactory} from '../sapi-events/EventsService';
 import later from 'later';
-import {createEventQueryString} from './utils';
+import _ from 'underscore';
+
+const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
 function runExportDataSample(tableId, onSucceed, onFail) {
   return storageApi
@@ -126,6 +129,18 @@ export default function(tableId) {
     getEventService().removeChangeListener(handleEventsChange);
   };
 
+  const createEventQueryString = (options) => {
+    const {omitExports, omitFetches, filterIOEvents} = options;
+    const omitFetchesEvent = omitFetches ? ['tableDataPreview', 'tableDetail'] : [];
+    const omitExportsEvent = omitExports ? ['tableExported'] : [];
+    let omitsQuery = omitFetchesEvent.concat(omitExportsEvent).map((ev) => `NOT event:storage.${ev}`);
+    if (filterIOEvents) {
+      omitsQuery =  IMPORT_EXPORT_EVENTS.map((ev) => `event:storage.${ev}`);
+    }
+    const objectIdQuery = `objectId:${tableId}`;
+    return _.isEmpty(omitsQuery) ? objectIdQuery : `((${omitsQuery.join(' OR ')}) AND ${objectIdQuery})`;
+  };
+
   const prepareEventQuery = () => {
     const options = {
       omitExports: getLocalState('omitExports'),
@@ -167,6 +182,28 @@ export default function(tableId) {
       exportDataSample();
       startEventService();
       findEnhancedJob();
+    },
+
+    initLocalState: () => {
+      const omitFetches = true, omitExports = false, filterIOEvents = false;
+      const es = EventsServiceFactory({limit: 10});
+      const options = {omitFetches, omitExports, filterIOEvents};
+      const eventQuery = createEventQueryString(options, tableId);
+      es.setQuery(eventQuery);
+      return Map({
+        eventService: es,
+        events: List(),
+        dataPreview: List(),
+        dataPreviewError: null,
+        loadingPreview: false,
+        loadingProfilerData: false,
+        omitFetches: omitFetches,
+        omitExports: omitExports,
+        filterIOEvents: filterIOEvents,
+        isCallingRunAnalysis: false,
+        detailEventId: null,
+        profilerData: Map()
+      });
     }
   };
 }
