@@ -147,7 +147,7 @@ export default function(tableId) {
       omitFetches: getLocalState('omitFetches'),
       filterIOEvents: getLocalState('filterIOEvents')
     };
-    return createEventQueryString(options, tableId);
+    return createEventQueryString(options);
   };
 
   const setEventsFilter = (filterName) => {
@@ -167,6 +167,7 @@ export default function(tableId) {
   };
 
   return {
+    setLocalState: setLocalState,
     startEventService: startEventService,
     stopEventService: stopEventService,
     resetTableEvents: resetTableEvents,
@@ -185,10 +186,9 @@ export default function(tableId) {
     },
 
     initLocalState: () => {
-      const omitFetches = true, omitExports = false, filterIOEvents = false;
       const es = EventsServiceFactory({limit: 10});
-      const options = {omitFetches, omitExports, filterIOEvents};
-      const eventQuery = createEventQueryString(options, tableId);
+      const eventOptions = {omitFetches: true, omitExports: false, filterIOEvents: false};
+      const eventQuery = createEventQueryString(eventOptions);
       es.setQuery(eventQuery);
       return Map({
         eventService: es,
@@ -197,9 +197,9 @@ export default function(tableId) {
         dataPreviewError: null,
         loadingPreview: false,
         loadingProfilerData: false,
-        omitFetches: omitFetches,
-        omitExports: omitExports,
-        filterIOEvents: filterIOEvents,
+        omitFetches: eventOptions.omitFetches,
+        omitExports: eventOptions.omitExports,
+        filterIOEvents: eventOptions.filterIOEvents,
         isCallingRunAnalysis: false,
         detailEventId: null,
         profilerData: Map()

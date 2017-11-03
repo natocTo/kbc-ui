@@ -23,8 +23,6 @@ export default React.createClass({
 
   getStateFromStores() {
     const tableId  = tableBrowserStore.getCurrentTableId();
-    const localState = tableBrowserStore.getLocalState(tableId);
-
     const tables = tablesStore.getAll() || Map();
     const table = tables.get(tableId, Map());
 
@@ -33,21 +31,12 @@ export default React.createClass({
       tableId: tableId,
       table: table,
       actions: createActionsProvisioning(tableId),
-      localState: localState,
       store: createStoreProvisioning(tableId)
     };
   },
 
   getLocalState(path) {
-    return this.state.localState.getIn([].concat(path));
-  },
-
-  setLocalState(newStateObject) {
-    const keysToUpdate = Object.keys(newStateObject);
-    const newLocalState = keysToUpdate.reduce((memo, key) => memo.set(key, newStateObject[key]),
-      this.state.localState
-    );
-    tableBrowserActions.setLocalState(this.state.tableId, newLocalState);
+    return this.state.store.getLocalState(path);
   },
 
   componentWilUnmount() {
@@ -89,7 +78,7 @@ export default React.createClass({
         onChangeTable={this.changeTable}
         filterIOEvents={this.getLocalState('filterIOEvents')}
         onFilterIOEvents={this.state.actions.setEventsFilter('filterIOEvents')}
-        onShowEventDetail={(eventId) => this.setLocalState({detailEventId: eventId})}
+        onShowEventDetail={(eventId) => this.state.actions.setLocalState({detailEventId: eventId})}
         detailEventId={this.getLocalState('detailEventId')}
       />
     );
