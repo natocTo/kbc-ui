@@ -1,6 +1,6 @@
 import React from 'react';
-import EnhancedAnalysisDataType from './EnhancedAnalysis/DataType';
-import EnhancedAnalysisUniqueness from './EnhancedAnalysis/Uniqueness';
+import EnhancedAnalysisDataType from './DataType';
+import EnhancedAnalysisUniqueness from './Uniqueness';
 
 export default {
   'data_type': EnhancedAnalysisDataType,

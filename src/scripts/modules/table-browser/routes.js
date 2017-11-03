@@ -7,8 +7,8 @@ export const PATH_PREFIX = 'tables';
 
 const requireDataFn = (routerState) => {
   const tableId = routerState.tableId;
-  const actions = createActionsProvisioning(tableId);
   return storageActions.loadTables().then( () => {
+    const actions = createActionsProvisioning(tableId);
     tableBrowserActions.setCurrentTableId(tableId, actions.initLocalState(tableId));
     actions.loadAll();
   }

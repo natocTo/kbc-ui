@@ -1,11 +1,11 @@
 import _ from 'underscore';
 import Promise from 'bluebird';
 
-import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
+import InstalledComponentsActionCreators from '../../../../components/InstalledComponentsActionCreators';
 
-import storageApi from '../../../components/StorageApi';
-import jobsApi from '../../../jobs/JobsApi';
-import string from '../../../../utils/string';
+import storageApi from '../../../../components/StorageApi';
+import jobsApi from '../../../../jobs/JobsApi';
+import string from '../../../../../utils/string';
 
 const dataProfilerBucketPrefix = 'in.c-lg-rcp-data-profiler_';
 

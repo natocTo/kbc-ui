@@ -2,7 +2,7 @@ import storeProvisioning from './storeProvisioning';
 import tableBrowserActions from './flux/actions';
 // import storageActions from '../components/StorageActionCreators';
 import storageApi from '../components/StorageApi';
-import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './react/components/DataProfilerUtils';
+import {startDataProfilerJob, getDataProfilerJob, fetchProfilerData} from './react/components/EnhancedAnalysis/DataProfilerUtils';
 import {fromJS, List, Map} from 'immutable';
 import { factory as EventsServiceFactory} from '../sapi-events/EventsService';
 import later from 'later';
@@ -45,12 +45,27 @@ export default function(tableId) {
     );
     tableBrowserActions.setLocalState(tableId, newLocalState);
   };
-  const handleEventsChange = () => {
-    const events = getEventService().getEvents();
-    setLocalState({events: events});
+
+  const exportDataSample = () => {
+    if (!getStore().tableExists()) return false;
+    const onSucceed = (csv) =>
+    setLocalState({
+      loadingPreview: false,
+      dataPreview: fromJS(csv)
+    });
+
+    const onFail = (dataPreviewError) => setLocalState({
+      loadingPreview: false,
+      dataPreviewError: dataPreviewError
+    });
+
+    setLocalState({
+      loadingPreview: true
+    });
+    return runExportDataSample(tableId, onSucceed, onFail);
   };
 
-
+  // ----START-- redhift tables enhanced lg analysis functions-------
   const findEnhancedJob = () => {
     // do the enhanced analysis only for redshift tables
     if (!getStore().isRedshift()) {
@@ -99,24 +114,12 @@ export default function(tableId) {
     })
     .catch(() => setLocalState({isCallingRunAnalysis: false}));
   };
+ // ----END-- redhift tables enhanced lg analysis functions-------
 
-  const exportDataSample = () => {
-    if (!getStore().tableExists()) return false;
-    const onSucceed = (csv) =>
-    setLocalState({
-      loadingPreview: false,
-      dataPreview: fromJS(csv)
-    });
-
-    const onFail = (dataPreviewError) => setLocalState({
-      loadingPreview: false,
-      dataPreviewError: dataPreviewError
-    });
-
-    setLocalState({
-      loadingPreview: true
-    });
-    return runExportDataSample(tableId, onSucceed, onFail);
+  // Events service provisioning
+  const handleEventsChange = () => {
+    const events = getEventService().getEvents();
+    setLocalState({events: events});
   };
 
   const startEventService = () => {

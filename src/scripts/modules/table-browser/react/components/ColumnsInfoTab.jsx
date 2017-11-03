@@ -5,8 +5,8 @@ import EmptyState from '../../../components/react/components/ComponentEmptyState
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
 import Tooltip from '../../../../react/common/Tooltip';
-import enhancedColumnsTemplate from './EnhancedComlumnsTemplate';
-import EnhancedAnalysisRunControl from './EnhancedAnalysisRunControl';
+import enhancedColumnsTemplate from './EnhancedAnalysis/EnhancedComlumnsTemplate';
+import EnhancedAnalysisRunControl from './EnhancedAnalysis/EnhancedAnalysisRunControl';
 import {Table} from 'react-bootstrap';
 
 
