@@ -12,6 +12,7 @@ export default {
       'id': 1,
       'position': 'center',
       'backdrop': true,
+      'isNavigationVisible': false,
       'title': 'Introduction',
       'link': 'home',
       'markdown': 'As promised in Lesson 1, we are going to build a simple workflow analyzing data about car ownership stored two database tables. In this lesson, we will configure an Extractor that will access the prepared tables in a sample database. We will take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
@@ -21,6 +22,7 @@ export default {
       'id': 2,
       'position': 'aside',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Create Extractor',
       'link': 'extractors',
       'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
@@ -38,6 +40,7 @@ export default {
       'id': 3,
       'position': 'aside',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Setup Connection',
       'markdown': 'After naming our new configuration of the extractor let’s configure it. Start by setting up the database connection.'
                 + `
@@ -55,6 +58,7 @@ export default {
       'id': 4,
       'position': 'aside',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Create SQL Query',
       'markdown':
       'Each database query needs to have a name and an SQL command. The new **output table** that will be created in **Storage** has to be named here too. Let’s create the first query for extracting data about cars and save it.'
@@ -74,6 +78,7 @@ export default {
       'id': 5,
       'position': 'aside',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Create second SQL Query',
       'markdown':
       'Similarly, we create a query to extract info about population.'
@@ -94,6 +99,7 @@ export default {
       'id': 6,
       'position': 'aside',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Run Extracion',
       'markdown': 'Now let’s click on ** <i class="fa fa-play"></i> Run Extraction** to load the data from the two database tables into the new tables in **Storage**.',
       'media': '',
@@ -114,6 +120,7 @@ export default {
       'id': 8,
       'position': 'center',
       'backdrop': true,
+      'isNavigationVisible': true,
       'title': 'Congratulations',
       'link': 'home',
       'markdown': 'Congratulations! Lesson finished.',

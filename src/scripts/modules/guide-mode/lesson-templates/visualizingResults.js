@@ -11,9 +11,8 @@ export default {
       'id': 1,
       'position': 'center',
       'backdrop': true,
-      'title': 'Introduction',
-      'link': 'home',
       'isNavigationVisible': true,
+      'link': 'home',
       'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. In this lesson, we are going to generate a Tableau Data Extract and load it manually into Tableau Desktop for visualization using yet another Keboola Connection component – a Writer. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-wri.svg',
       'mediaType': 'img'
@@ -22,10 +21,10 @@ export default {
       'id': 2,
       'position': 'aside',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Create Writer',
       'link': 'writers',
       'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'tde-exporter'},
-      'isNavigationVisible': true,
       'media': '',
       'markdown': 'Let’s say we have Tableau Desktop installed. Now we need to find the Tableau writer in the Writers section.'
                 + `
@@ -40,6 +39,7 @@ export default {
       'id': 3,
       'position': 'aside',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Create Table',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'markdown':
@@ -55,6 +55,7 @@ export default {
       'id': 4,
       'position': 'center',
       'backdrop': true,
+      'isNavigationVisible': true,
       'title': 'Run Extracion',
       'markdown': 'The final step is to open the downloaded file in Tableau and create any reports we want. To see how to automate the whole process, continue to the next lesson - Project Automation. Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
       'media': 'tbl.png',
@@ -64,6 +65,7 @@ export default {
       'id': 5,
       'position': 'center',
       'backdrop': true,
+      'isNavigationVisible': true,
       'title': 'Congratulations',
       'link': 'home',
       'markdown': 'Congratulations! Lesson finished.',

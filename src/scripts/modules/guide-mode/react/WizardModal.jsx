@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Button, ResponsiveEmbed} from 'react-bootstrap';
+import {Modal, Button, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
@@ -74,6 +74,9 @@ export default React.createClass({
             <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
           </span>
           }
+          {this.isNavigationVisible() &&
+            this.renderNavigation()
+          }
       </div>
     </div>
     );
@@ -132,6 +135,9 @@ export default React.createClass({
   isLastStep() {
     return this.getLessonSteps().length - 1 === this.getActiveStep();
   },
+  isNavigationVisible() {
+    return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
+  },
   getModalTitle() {
     return (<Modal.Title>{this.getLessonId() + '.' + this.getStepId() + ' ' + this.getStepTitle()}</Modal.Title>);
   },
@@ -157,6 +163,16 @@ export default React.createClass({
   },
   getNextStepDispatchAction() {
     return this.getLessonSteps()[this.getActiveStep()].nextStepDispatchAction;
+  },
+  getStepState(step) {
+    let stepState = 'guide-navigation-step-passed';
+    if (this.getActiveStep() < step.id - 1) {
+      stepState = '';
+    }
+    if (this.getActiveStep() === step.id - 1) {
+      stepState = 'guide-navigation-step-active';
+    }
+    return stepState;
   },
   renderButtonPrev() {
     let buttonText = 'Prev step';
@@ -192,7 +208,26 @@ export default React.createClass({
       return (<Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>);
     }
   },
-
+  renderNavigation() {
+    return (
+      <ListGroup className="guide-navigation">
+        {
+          this.getLessonSteps().filter((step) => {
+            return step.id < this.getStepsCount();
+          }, this).map((step) => {
+            if (this.isNavigationVisible()) {
+              return (
+                <ListGroupItem className={this.getStepState(step) + ' guide-navigation-step'}>
+                  <span>
+                    {this.getLessonId()}.{step.id}. {step.title}
+                  </span>
+                </ListGroupItem>
+              );
+            }
+          })}
+      </ListGroup>
+    );
+  },
   closeLessonModal() {
     RoutesStore.getRouter().transitionTo('home');
     hideWizardModalFn();
