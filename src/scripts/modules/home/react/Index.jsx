@@ -71,6 +71,18 @@ export default React.createClass({
     return componentCount;
   },
 
+  isLessonOpen(key) {
+    if (localStorage.getItem('maxLesson') === null) {
+      localStorage.setItem('maxLesson', 0);
+    }
+    const maxLesson = (typeof localStorage.getItem('maxLesson') === 'undefined') ? 0 : localStorage.getItem('maxLesson');
+    if (key <= maxLesson) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+
   render() {
     return (
       <div className="container-fluid">
@@ -89,7 +101,7 @@ export default React.createClass({
                         return (
                           <li key={key}>
                             <a
-                              className="guide-lesson-link"
+                              className={'guide-lesson-link' + (this.isLessonOpen(key) ? ' guide-lesson-link-locked' : '') }
                               href="#" onClick={(e) => {
                                 e.preventDefault();
                                 this.openLessonModal(key + 1);

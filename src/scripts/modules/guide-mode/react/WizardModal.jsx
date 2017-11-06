@@ -132,6 +132,12 @@ export default React.createClass({
   resetMaxStep() {
     localStorage.setItem('maxStep', 0);
   },
+  getMaxLesson() {
+    return (parseInt(localStorage.getItem('maxLesson'), 10));
+  },
+  setMaxLesson() {
+    localStorage.setItem('maxLesson', this.props.step);
+  },
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
   },
@@ -241,6 +247,9 @@ export default React.createClass({
   handleStep(direction) {
     if (direction === 'next') {
       this.increaseStep();
+      if (this.isLastStep()) {
+        this.setMaxLesson(this.getLessonId());
+      }
     } else if (direction === 'prev') {
       this.decreaseStep();
     }

@@ -74,7 +74,7 @@ export default {
       'id': 7,
       'position': 'center',
       'backdrop': true,
-      'isNavigationVisible': true,
+      'isNavigationVisible': false,
       'title': 'Example Workflow',
       'link': 'home',
       'markdown': 'Having learned all the basics, let’s explore the individual steps a little more. In the following lessons, we will extract data from two database tables, merge them into one table, calculate some statistics, and visualize the results. Finally, we will set up the whole process to run automatically.',
