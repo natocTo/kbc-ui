@@ -20,9 +20,6 @@ export default React.createClass({
   },
 
   render: function() {
-    // if (this.getNextStepLink() === 'storage') {
-    //   console.log('STORAGE');
-    // }
     return (
       <div>
         <Modal
@@ -126,6 +123,15 @@ export default React.createClass({
   getNextStepLink() {
     return this.getLessonSteps()[this.getActiveStep() + 1].link;
   },
+  getMaxStep() {
+    return (parseInt(localStorage.getItem('maxStep'), 10) + 1);
+  },
+  setMaxStep() {
+    localStorage.setItem('maxStep', this.props.step);
+  },
+  resetMaxStep() {
+    localStorage.setItem('maxStep', 0);
+  },
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
   },
@@ -165,12 +171,12 @@ export default React.createClass({
     return this.getLessonSteps()[this.getActiveStep()].nextStepDispatchAction;
   },
   getStepState(step) {
-    let stepState = 'guide-navigation-step-passed';
-    if (this.getActiveStep() < step.id - 1) {
-      stepState = '';
+    let stepState = '';
+    if (step.id - 1 < this.getMaxStep()) {
+      stepState = 'guide-navigation-step-passed';
     }
     if (this.getActiveStep() === step.id - 1) {
-      stepState = 'guide-navigation-step-active';
+      stepState += ' guide-navigation-step-active';
     }
     return stepState;
   },
@@ -250,9 +256,13 @@ export default React.createClass({
   increaseStep() {
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
+      if (this.getMaxStep() < nextStep) {
+        this.setMaxStep();
+      }
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
+      this.resetMaxStep();
     }
   }
 

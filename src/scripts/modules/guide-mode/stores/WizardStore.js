@@ -6,8 +6,8 @@ import RoutesStore from '../../../stores/RoutesStore';
 
 let store = {
   showLessonModal: true,
-  lessonNumber: 1,
-  step: 1
+  lessonNumber: 0,
+  step: 0
 };
 
 const containsAction = (dispatchedAction, action) => {

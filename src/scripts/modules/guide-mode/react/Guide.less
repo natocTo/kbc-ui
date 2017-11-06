@@ -297,20 +297,22 @@
       font-family: "Gotham Rounded A", "Gotham Rounded B";
 
       &-passed {
-        &:before {
-          left: -16px;
-          position: absolute;
-          content: '\002714';
-          color: #98cf3c
-        }
+
         span {
           color: #ddd;
         }
       }
-      &-active span {
+      &-active{
+        &:before {
+          left: -16px;
+          position: absolute;
+          content: '\0025B6';
+          color: @GuideColor2
+        }
+        span {
         color: @GuideColor2;
-        font-weight: 400;
-      }
+      }}
+
     }
   }
 
