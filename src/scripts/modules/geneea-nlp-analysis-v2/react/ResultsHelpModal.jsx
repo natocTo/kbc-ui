@@ -59,17 +59,9 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row">
-            <div className="form form-horizontal">
-              <div className="form-group">
-                <div className="col-sm-offset-1 col-sm-11">
-                  <Markdown
-                    source={content}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <Markdown
+            source={content}
+          />
         </Modal.Body>
 
       </Modal>
