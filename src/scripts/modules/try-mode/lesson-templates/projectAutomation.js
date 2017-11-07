@@ -96,7 +96,7 @@ Then click **Save** in the upper right corner.
       'layout': 'content',
       'backdrop': true,
       'title': 'Conclusion',
-      'markdown': 'That`s it! From data extraction to data writing, we have set up the full pipeline. Any change to our Snowflake database tables will be automatically reflected in our Tableau results. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#full-automation" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
+      'markdown': 'That`s it! From data extraction to data writing, we have set up the full pipeline. Any change to our Snowflake database tables will be automatically reflected in our Tableau results. <br/><br/> Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
     },
@@ -107,7 +107,7 @@ Then click **Save** in the upper right corner.
       'backdrop': true,
       'title': 'Congratulations',
       'link': 'home',
-      'markdown': 'Congratulations! All Lessons finished.',
+      'markdown': 'Congratulations! All lessons are finished.',
       'media': 'keboola-finished.svg',
       'mediaType': 'img'
     }
