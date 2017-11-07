@@ -6,7 +6,7 @@ require('../../../utils/codemirror/json-lint');
 
 export default React.createClass({
   propTypes: {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     isSaving: PropTypes.bool,
     isEditing: PropTypes.bool

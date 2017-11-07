@@ -29,8 +29,8 @@ export default React.createClass({
     return (
       <EditButtons
         editLabel="Setup"
-        isEditing={this.state.editing}
-        isSaving={this.state.isSaving}
+        isEditing={!!this.state.editing}
+        isSaving={!!this.state.isSaving}
         isDisabled={!actions.isValid(this.state.configId)}
         onCancel={ () => actions.cancel(this.state.configId)}
         onSave={ () => actions.save(this.state.configId)}
