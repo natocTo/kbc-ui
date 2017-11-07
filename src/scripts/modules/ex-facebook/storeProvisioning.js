@@ -7,8 +7,8 @@ import OauthStore from '../oauth-v2/Store';
 export const storeMixins = [InstalledComponentStore, OauthStore];
 
 const DEFAULT_VERSIONS_MAP = {
-  'keboola.ex-facebook-ads': 'v2.9',
-  'keboola.ex-facebook': 'v2.8'
+  'keboola.ex-facebook-ads': 'v2.10',
+  'keboola.ex-facebook': 'v2.9'
 };
 
 const DEFAULT_BACKEND_VERSION = 'v2.8';
