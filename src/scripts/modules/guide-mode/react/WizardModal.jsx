@@ -123,20 +123,20 @@ export default React.createClass({
   getNextStepLink() {
     return this.getLessonSteps()[this.getActiveStep() + 1].link;
   },
-  getMaxStep() {
-    return (parseInt(localStorage.getItem('maxStep'), 10) + 1);
+  getAchievedStep() {
+    return (parseInt(localStorage.getItem('achievedStep'), 10) + 1);
   },
-  setMaxStep() {
-    localStorage.setItem('maxStep', this.props.step);
+  setAchievedStep() {
+    localStorage.setItem('achievedStep', this.props.step);
   },
-  resetMaxStep() {
-    localStorage.setItem('maxStep', 0);
+  resetAchievedStep() {
+    localStorage.setItem('achievedStep', 0);
   },
-  getMaxLesson() {
-    return (parseInt(localStorage.getItem('maxLesson'), 10));
+  getAchievedLesson() {
+    return (parseInt(localStorage.getItem('achievedLesson'), 10));
   },
-  setMaxLesson() {
-    localStorage.setItem('maxLesson', this.props.step);
+  setAchievedLesson() {
+    localStorage.setItem('achievedLesson', this.getLessonId());
   },
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
@@ -178,7 +178,7 @@ export default React.createClass({
   },
   getStepState(step) {
     let stepState = '';
-    if (step.id - 1 < this.getMaxStep()) {
+    if (step.id - 1 < this.getAchievedStep()) {
       stepState = 'guide-navigation-step-passed';
     }
     if (this.getActiveStep() === step.id - 1) {
@@ -208,7 +208,7 @@ export default React.createClass({
       buttonText = 'Close';
     }
 
-    if (this.getNextStepLink() === 'storage') {
+    if (this.getStepLink() === 'storage') {
       return (
         <a href="http://localhost:3000/index-storage.html"
           // href={ApplicationStore.getProjectPageUrl('storage')}
@@ -247,9 +247,6 @@ export default React.createClass({
   handleStep(direction) {
     if (direction === 'next') {
       this.increaseStep();
-      if (this.isLastStep()) {
-        this.setMaxLesson(this.getLessonId());
-      }
     } else if (direction === 'prev') {
       this.decreaseStep();
     }
@@ -265,13 +262,14 @@ export default React.createClass({
   increaseStep() {
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
-      if (this.getMaxStep() < nextStep) {
-        this.setMaxStep();
+      if (this.getAchievedStep() < nextStep) {
+        this.setAchievedStep();
       }
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
-      this.resetMaxStep();
+      this.setAchievedLesson(this.getLessonId());
+      this.resetAchievedStep();
     }
   }
 
