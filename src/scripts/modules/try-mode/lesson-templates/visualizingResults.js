@@ -52,7 +52,7 @@ export default {
 - Select  \`out.c-snowflake.transformed\` as the Source table you want to add to Tableau.
 - Specify a data type for each of the table's columns under **TDE Data Type** (COUNTRY/string, CARS/number, POPULATION/number, PERSON_PER_CAR/decimal) 
 - **Save** the configuration.
-- Click **Export tables to TDE** to run the writer. A Tableau Desktop Extract file will be created. In a real project, you would be able to save the file to your computer and find it in Storage.   
+- Click **Export tables to TDE** to run the writer. A Tableau Desktop Extract file will be created. In a real project, you would find the file in Storage under the tab **Files**. By clicking the from where you could download it to your computer.   
 `
     },
     {
