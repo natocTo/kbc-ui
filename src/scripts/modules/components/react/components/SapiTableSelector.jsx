@@ -90,18 +90,17 @@ export default  React.createClass({
     return this.state.tables.find((t) => tableId === t.get('id'));
   },
 
-  filterOption(op, filter) {
-    if (!filter) return true;
-    const compareFn = (groupName, tableLabel) => fuzzy.match(filter, `${groupName} ${tableLabel}`);  // what.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
-    if (op.isParent) {
-      return op.childrenOptions.find(t => compareFn(op.groupName, t.tableLabel));
-    } else {
-      return compareFn(op.groupName, op.tableLabel);
-    }
-  },
+  /* afilterOption(op, filter) {
+   *   if (!filter) return true;
+   *   const compareFn = (groupName, tableLabel) => fuzzy.match(filter, `${groupName} ${tableLabel}`);  // what.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+   *   if (op.isParent) {
+   *     return op.childrenOptions.find(t => compareFn(op.groupName, t.tableLabel));
+   *   } else {
+   *     return compareFn(op.groupName, op.tableLabel);
+   *   }
+   * },*/
 
   extractFilterValue(op) {
-    if (!op.component) return op.isParent ? op.groupName : op.tableLabel;
     if (op.isParent) return op.groupName;
     return `${op.groupName} ${op.tableLabel}`;
   },
