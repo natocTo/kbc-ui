@@ -26,10 +26,14 @@ export default React.createClass({
   },
 
   getProjectPageUrlHref(path) {
+    if (process.env.NODE_ENV === 'production') {
+      return this.props.projectBaseUrl + '/' + path;
+    }
+    // development
     if (path === 'storage') {
-      return 'http://localhost:3000/index-storage.html';
+      return '/index-storage.html';
     } else {
-      return 'http://localhost:3000/?token=TOKEN#/' + path;
+      return '/?token=TOKEN#/' + path;
     }
   },
 
