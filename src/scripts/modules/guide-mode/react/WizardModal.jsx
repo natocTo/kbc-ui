@@ -7,6 +7,11 @@ import Remarkable from 'react-remarkable';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 // import ApplicationStore from '../../../stores/ApplicationStore';
 //
+
+const redirectTo = (pathname) => {
+  window.location.assign(window.location.origin + pathname);
+};
+
 export default React.createClass({
   displayName: 'WizardModal',
   propTypes: {
