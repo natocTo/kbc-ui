@@ -21,7 +21,8 @@ export default React.createClass({
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
-    lesson: React.PropTypes.object.isRequired
+    lesson: React.PropTypes.object.isRequired,
+    projectBaseUrl: React.PropTypes.string.isRequired
   },
 
   getProjectPageUrlHref(path) {

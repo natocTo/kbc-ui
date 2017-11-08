@@ -8,6 +8,10 @@ import './Guide.less';
 export default React.createClass({
   displayName: 'Wizard',
 
+  propTypes: {
+    projectBaseUrl: React.PropTypes.string.isRequired
+  },
+
   mixins: [createStoreMixin(WizardStore)],
 
   getStateFromStores() {
@@ -41,6 +45,7 @@ export default React.createClass({
     } else {
       return (
         <WizardModal
+          projectBaseUrl={this.props.projectBaseUrl}
           step={this.state.wizard.step}
           setStep={setStep}
           show={this.state.wizard.showLessonModal}

@@ -41,6 +41,7 @@ App = React.createClass
     projectHasGuideModeOn: ApplicationStore.getKbcVars().get 'projectHasGuideModeOn'
     homeUrl: ApplicationStore.getUrlTemplates().get 'home'
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
+    projectBaseUrl: ApplicationStore.getProjectBaseUrl()
   render: ->
     div className: classnames(
       snowflake: ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo')
@@ -87,6 +88,7 @@ App = React.createClass
             else
               RouteHandler()
             if @state.projectHasGuideModeOn == true
-              Wizard()
+              Wizard
+                projectBaseUrl: @state.projectBaseUrl
 
 module.exports = App
