@@ -273,6 +273,7 @@ export default React.createClass({
   },
   closeLessonModal() {
     RoutesStore.getRouter().transitionTo('home');
+    this.resetAchievedStep();
     hideWizardModalFn();
   },
   handleStep(direction) {
