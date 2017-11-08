@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, Button, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
-import { hideWizardModalFn, getAchievedStep } from '../stores/ActionCreators.js';
+import { hideWizardModalFn, getAchievedStep, setAchievedLesson } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -266,7 +266,7 @@ export default React.createClass({
   },
   closeLessonModal() {
     RoutesStore.getRouter().transitionTo('home');
-    this.resetAchievedStep();
+    // this.resetAchievedStep();
     hideWizardModalFn();
   },
   handleStep(direction) {
@@ -293,6 +293,7 @@ export default React.createClass({
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
+      setAchievedLesson(this.getLessonId());
       // this.setAchievedLesson(this.getLessonId());
     }
   }

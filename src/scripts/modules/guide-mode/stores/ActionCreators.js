@@ -1,7 +1,8 @@
 import Dispatcher from '../../../Dispatcher';
-import { getStateFromLocalStorage } from './WizardStore';
+import { getStateFromLocalStorage, setStateToLocalStorage } from './WizardStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import wizardLessons from '../WizardLessons';
+import objectAssign from 'object-assign';
 
 export const ActionTypes = {
   UPDATE_WIZARD_MODAL_STATE: 'UPDATE_WIZARD_MODAL_STATE',
@@ -20,6 +21,14 @@ const getStepLink = (stepIndex) => {
 };
 export const getAchievedLesson = () => {
   return getStateFromLocalStorage().achievedLesson;
+};
+export const setAchievedLesson = (currentLessonId) => {
+  const localStorageState = getStateFromLocalStorage();
+  setStateToLocalStorage(
+    objectAssign(localStorageState, {
+      achievedLesson: Math.max(currentLessonId, localStorageState.achievedLesson)
+    })
+  );
 };
 export const getAchievedStep = () => {
   return getStateFromLocalStorage().achievedStep;
