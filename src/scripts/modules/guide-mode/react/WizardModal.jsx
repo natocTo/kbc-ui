@@ -44,8 +44,8 @@ export default React.createClass({
             </ReactCSSTransitionGroup>
           </Modal.Body>
           <Modal.Footer>
-              {this.renderButtonPrev()}
-              {this.renderButtonNext()}
+            {this.hasPreviousStep() && this.renderButtonPrev()}
+            {this.hasNextStep() && this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
       </div>
