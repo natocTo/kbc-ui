@@ -10,7 +10,7 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 // import InstalledComponentsApi from '../../components/InstalledComponentsApi';
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
+import { showWizardModalFn, getAchievedLesson } from '../../guide-mode/stores/ActionCreators.js';
 import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 
@@ -76,13 +76,13 @@ export default React.createClass({
         return (
           <li key={key}>
             <a
-              className={'guide-lesson-link' + (!this.isLessonOpen(key) ? ' guide-lesson-link-locked' : '')}
+              className={'guide-lesson-link' + (getAchievedLesson() < key ? ' guide-lesson-link-locked' : '')}
               href="#" onClick={(e) => {
                 e.preventDefault();
                 this.openLessonModal(key + 1);
               }}
             >
-              {key + 1}. Lesson - {lessons[key + 1].title} {!this.isLessonOpen(key) &&
+              Lesson {key + 1} - {lessons[key + 1].title} {getAchievedLesson() < key &&
             <i className="fa fa-lock"/>}
             </a>
           </li>
@@ -90,18 +90,7 @@ export default React.createClass({
       })
     );
   },
-  isLessonOpen(key) {
-    if (localStorage.getItem('achievedLesson') === null) {
-      localStorage.setItem('achievedLesson', 0);
-      localStorage.setItem('achievedStep', 0);
-    }
-    const achievedLesson = (typeof localStorage.getItem('achievedLesson') === 'undefined') ? 0 : localStorage.getItem('achievedLesson');
-    if (key <= achievedLesson) {
-      return true;
-    } else {
-      return false;
-    }
-  },
+
 
   render() {
     return (

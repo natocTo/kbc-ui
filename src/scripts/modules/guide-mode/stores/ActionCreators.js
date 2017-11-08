@@ -18,7 +18,12 @@ const getCurrentStepIndex = () => {
 const getStepLink = (stepIndex) => {
   return wizardLessons[getCurrentLessonNumber()].steps[stepIndex].link;
 };
-
+export const getAchievedLesson = () => {
+  return getStateFromLocalStorage().achievedLesson;
+};
+export const getAchievedStep = () => {
+  return getStateFromLocalStorage().achievedStep;
+};
 export const hideWizardModalFn = () => {
   Dispatcher.handleViewAction({
     type: ActionTypes.UPDATE_WIZARD_MODAL_STATE,

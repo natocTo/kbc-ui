@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, Button, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
-import { hideWizardModalFn } from '../stores/ActionCreators.js';
+import { hideWizardModalFn, getAchievedStep } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -52,8 +52,8 @@ export default React.createClass({
             </ReactCSSTransitionGroup>
           </Modal.Body>
           <Modal.Footer>
-            {this.hasPreviousStep() && this.renderButtonPrev()}
-            {this.hasNextStep() && this.renderButtonNext()}
+            {this.renderButtonPrev()}
+            {this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
       </div>
@@ -135,25 +135,16 @@ export default React.createClass({
     return this.getLessonSteps()[this.getActiveStep()].link;
   },
   getPreviousStepLink() {
+    if (!this.hasPreviousStep()) {
+      return this.getLessonSteps()[this.getActiveStep()].link;
+    }
     return this.getLessonSteps()[this.getActiveStep() - 1].link;
   },
   getNextStepLink() {
+    if (!this.hasNextStep()) {
+      return this.getLessonSteps()[this.getActiveStep()].link;
+    }
     return this.getLessonSteps()[this.getActiveStep() + 1].link;
-  },
-  getAchievedStep() {
-    return (parseInt(localStorage.getItem('achievedStep'), 10) + 1);
-  },
-  setAchievedStep() {
-    localStorage.setItem('achievedStep', this.props.step);
-  },
-  resetAchievedStep() {
-    localStorage.setItem('achievedStep', 0);
-  },
-  getAchievedLesson() {
-    return (parseInt(localStorage.getItem('achievedLesson'), 10));
-  },
-  setAchievedLesson() {
-    localStorage.setItem('achievedLesson', this.getLessonId());
   },
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
@@ -195,7 +186,7 @@ export default React.createClass({
   },
   getStepState(step) {
     let stepState = '';
-    if (step.id - 1 < this.getAchievedStep()) {
+    if (step.id - 1 < getAchievedStep() + 1) {
       stepState = 'guide-navigation-step-passed';
     }
     if (this.getActiveStep() === step.id - 1) {
@@ -206,7 +197,9 @@ export default React.createClass({
   renderButtonPrev() {
     const { step } = this.props.step;
     const buttonText = step === 0 ? 'Close' : 'Prev step';
-
+    if (!this.hasPreviousStep()) {
+      return '';
+    }
     if (this.getStepLink() === 'storage' || this.getPreviousStepLink() === 'storage') {
       // redirect through window.location.href between applications
       return (
@@ -294,14 +287,13 @@ export default React.createClass({
   increaseStep() {
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
-      if (this.getAchievedStep() < nextStep) {
-        this.setAchievedStep();
-      }
+      // if (this.getAchievedStep() < nextStep) {
+      //   this.setAchievedStep();
+      // }
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
-      this.setAchievedLesson(this.getLessonId());
-      this.resetAchievedStep();
+      // this.setAchievedLesson(this.getLessonId());
     }
   }
 
