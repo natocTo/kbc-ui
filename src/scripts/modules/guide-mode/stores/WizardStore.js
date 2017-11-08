@@ -9,9 +9,11 @@ import RoutesStore from '../../../stores/RoutesStore';
 const LOCAL_STORAGE_KEY = 'kbc-ui-guide-mode';
 
 const store = {
-  showLessonModal: true,
+  showLessonModal: false,
   lessonNumber: 0,
-  step: 0
+  step: 0,
+  achievedStep: 0,
+  achievedLesson: 0
 };
 
 export const getStateFromLocalStorage = () => {
@@ -27,6 +29,14 @@ const containsAction = (dispatchedAction, action) => {
   return Object.keys(action).reduce(
     (memo, key) => memo && dispatchedAction[key] && dispatchedAction[key] === action[key]
     , true);
+};
+
+const getMaxLesson = (currentLessonId) => {
+  return Math.max(currentLessonId, getStateFromLocalStorage().lessonNumber);
+};
+
+const getMaxStep = (currentStepId) => {
+  return Math.max(currentStepId, getStateFromLocalStorage().step);
 };
 
 const WizardStore = StoreUtils.createStore({
@@ -82,7 +92,10 @@ Dispatcher.register((payload) => {
     case ActionTypes.GUIDE_WIZARD_SET_STEP: {
       const localStorageState = getStateFromLocalStorage();
       setStateToLocalStorage(
-        objectAssign(localStorageState, {step: action.step})
+        objectAssign(localStorageState, {
+          step: action.step,
+          achievedStep: getMaxStep(action.showLessonModal ? localStorageState.step : 0)
+        })
       );
       return WizardStore.emitChange();
     }
@@ -91,7 +104,8 @@ Dispatcher.register((payload) => {
       setStateToLocalStorage({
         showLessonModal: action.showLessonModal,
         lessonNumber: action.lessonNumber,
-        step: action.showLessonModal ? localStorageState.step : 0
+        step: action.showLessonModal ? localStorageState.step : 0,
+        achievedLesson: getMaxLesson(action.lessonNumber)
       });
       return WizardStore.emitChange();
     }
