@@ -1,11 +1,22 @@
 import Dispatcher from '../../../Dispatcher';
-import WizardStore from './WizardStore';
+import { getStateFromLocalStorage } from './WizardStore';
 import RoutesStore from '../../../stores/RoutesStore';
+import wizardLessons from '../WizardLessons';
 
 export const ActionTypes = {
   UPDATE_WIZARD_MODAL_STATE: 'UPDATE_WIZARD_MODAL_STATE',
   DISABLE_GUIDE_MODE: 'DISABLE_GUIDE_MODE',
   GUIDE_WIZARD_SET_STEP: 'GUIDE_WIZARD_SET_STEP'
+};
+
+const getCurrentLessonNumber = () => {
+  return getStateFromLocalStorage().lessonNumber;
+};
+const getCurrentStepIndex = () => {
+  return getStateFromLocalStorage().step;
+};
+const getStepLink = (stepIndex) => {
+  return wizardLessons[getCurrentLessonNumber()].steps[stepIndex].link;
 };
 
 export const hideWizardModalFn = () => {
@@ -17,12 +28,16 @@ export const hideWizardModalFn = () => {
 };
 
 export const setStep = (newStep) => {
+  const nextLink = getStepLink(newStep);
+  const currentLink = getStepLink(getCurrentStepIndex());
+
   Dispatcher.handleViewAction({
     type: ActionTypes.GUIDE_WIZARD_SET_STEP,
     step: newStep
   });
-  const nextLink = WizardStore.getNextLink();
-  if (nextLink) {
+
+  // use router.transitionTo only in kbc-ui app
+  if (nextLink !== 'storage' && currentLink !== 'storage') {
     return RoutesStore.getRouter().transitionTo(nextLink);
   }
 };
