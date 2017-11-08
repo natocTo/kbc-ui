@@ -19,6 +19,14 @@ export default React.createClass({
     lesson: React.PropTypes.object.isRequired
   },
 
+  getProjectPageUrlHref(path) {
+    if (path === 'storage') {
+      return 'http://localhost:3000/index-storage.html';
+    } else {
+      return 'http://localhost:3000/?token=TOKEN#/' + path;
+    }
+  },
+
   render: function() {
     return (
       <div>
