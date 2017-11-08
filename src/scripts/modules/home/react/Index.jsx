@@ -70,16 +70,36 @@ export default React.createClass({
     }
     return componentCount;
   },
-
+  renderLessonList() {
+    return (
+      Object.keys(lessons).map((lesson, key) => {
+        return (
+          <li key={key}>
+            <a
+              className={'guide-lesson-link' + (!this.isLessonOpen(key) ? ' guide-lesson-link-locked' : '')}
+              href="#" onClick={(e) => {
+                e.preventDefault();
+                this.openLessonModal(key + 1);
+              }}
+            >
+              {key + 1}. Lesson - {lessons[key + 1].title} {!this.isLessonOpen(key) &&
+            <i className="fa fa-lock"/>}
+            </a>
+          </li>
+        );
+      })
+    );
+  },
   isLessonOpen(key) {
-    if (localStorage.getItem('maxLesson') === null) {
-      localStorage.setItem('maxLesson', 0);
+    if (localStorage.getItem('achievedLesson') === null) {
+      localStorage.setItem('achievedLesson', 0);
+      localStorage.setItem('achievedStep', 0);
     }
-    const maxLesson = (typeof localStorage.getItem('maxLesson') === 'undefined') ? 0 : localStorage.getItem('maxLesson');
-    if (key <= maxLesson) {
-      return false;
-    } else {
+    const achievedLesson = (typeof localStorage.getItem('achievedLesson') === 'undefined') ? 0 : localStorage.getItem('achievedLesson');
+    if (key <= achievedLesson) {
       return true;
+    } else {
+      return false;
     }
   },
 
@@ -97,21 +117,7 @@ export default React.createClass({
                 <div className="row">
                   <div className="col-xs-4">
                     <ul>
-                      {Object.keys(lessons).map((lesson, key) => {
-                        return (
-                          <li key={key}>
-                            <a
-                              className={'guide-lesson-link' + (this.isLessonOpen(key) ? ' guide-lesson-link-locked' : '') }
-                              href="#" onClick={(e) => {
-                                e.preventDefault();
-                                this.openLessonModal(key + 1);
-                              }}
-                            >
-                              Lesson {key + 1} - {lessons[key + 1].title}
-                            </a>
-                          </li>
-                        );
-                      })}
+                        {this.renderLessonList()}
                     </ul>
                   </div>
                   <div className="col-xs-5">
