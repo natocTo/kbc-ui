@@ -207,12 +207,11 @@ export default React.createClass({
       return '';
     }
     if (this.getStepLink() === 'storage' || this.getPreviousStepLink() === 'storage') {
-      // redirect through window.location.href between applications
       return (
         <button
           onClick={() => {
             this.handleStep('prev');
-            window.location.href = this.getProjectPageUrlHref(this.getPreviousStepLink());
+            redirectTo(this.getProjectPageUrlHref(this.getPreviousStepLink()));
           }}
           className="btn btn-link">
           {buttonText}
@@ -234,12 +233,11 @@ export default React.createClass({
     }
 
     if (this.getStepLink() === 'storage' || this.getNextStepLink() === 'storage') {
-      // redirect through window.location.href between applications
       return (
         <button
           onClick={() => {
             this.handleStep('next');
-            window.location.href = this.getProjectPageUrlHref(this.getNextStepLink());
+            redirectTo(this.getProjectPageUrlHref(this.getNextStepLink()));
           }}
           className="btn btn-primary">
           {buttonText}
