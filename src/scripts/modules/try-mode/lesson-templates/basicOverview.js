@@ -9,7 +9,7 @@ export default {
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
-      'markdown': 'As a powerful and safe environment for working with data, Keboola Connection consists of many interconnected components. It helps you extract data from various sources, manipulate and enrich the data, write the results to visualizing tools of your choice, etc. In addition, the whole process can be fully automated.',
+      'markdown': 'This lesson gives you a basic overview of the Keboola Connection environment. Its interconnected components help you extract data from various sources, manipulate and enrich the data, write the results to visualizing tools of your choice, etc. In addition, the whole process can be fully automated.',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     },
@@ -20,7 +20,7 @@ export default {
       'backdrop': false,
       'title': 'Extract data',
       'link': 'extractors',
-      'markdown': 'Every project in Keboola Connection starts with loading data. It is done with **Extractors** – components for importing data from your own computer, your company’s internal databases, and external sources, such as Facebook or YouTube.',
+      'markdown': 'Every project in Keboola Connection starts by loading data. It is done with **Extractors** &ndash; components for importing data from your company’s internal databases, external sources, such as Facebook or YouTube, and from your own computer.',
       'media': 'https://www.youtube.com/embed/g-VBfkV4xfc',
       'mediaType': 'video'
     },
@@ -31,7 +31,7 @@ export default {
       'backdrop': false,
       'title': 'Store data',
       'link': 'storage',
-      'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage** where they can be accessed at any time. To make it easier for you to find what you’re looking for, the data tables are organized into buckets.',
+      'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage** where they can be accessed at any time. To find what you need quickly, the data tables are organized into buckets.',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     },
@@ -42,7 +42,7 @@ export default {
       'backdrop': false,
       'title': 'Manipulate data',
       'link': 'transformations',
-      'markdown': 'Now it’s time to mix, clean and work with the extracted data. In **Transformations**, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. You can also select ready-to-use Applications created by Keboola or third parties.',
+      'markdown': 'Now it’s time to mix, clean and work with the extracted data. In **Transformations**, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. <br/><br/> Apart from Transformations, ready-to-use **Applications** created by Keboola or third parties are also available.',
       'media': '',
       'mediaType': ''
 
@@ -77,7 +77,7 @@ export default {
       'backdrop': true,
       'title': 'Example Workflow',
       'link': 'home',
-      'markdown': 'Having learned all the basics, let’s explore the individual steps a little more. In the following lessons, we will extract data from two database tables, merge them into one table, calculate some statistics, and visualize the results. Finally, we will set up the whole process to run automatically.',
+      'markdown': 'Having learned all the basics, you can explore the individual steps in more detail in the following lessons. <br/><br/> After extracting data from two database tables, merging them into one table, and calculating some statistics, you will visualize the results, and, finally, set up the whole process to run automatically. See our example workflow below.',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     }

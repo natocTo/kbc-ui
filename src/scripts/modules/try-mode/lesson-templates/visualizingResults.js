@@ -15,7 +15,7 @@ export default {
       'title': 'Introduction',
       'link': 'home',
       'isNavigationVisible': true,
-      'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. In this lesson, we are going to generate a Tableau Data Extract and load it manually into Tableau Desktop for visualization using yet another Keboola Connection component – a Writer. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. <br/><br/> In this lesson, you are going to take the table you created in your transformation in Lesson 3 and generate a Tableau Data Extract (TDE). You will then load it manually into Tableau Desktop for visualization using yet another Keboola Connection component – a Writer. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-wri.svg',
       'mediaType': 'img'
     },
@@ -29,12 +29,12 @@ export default {
       'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'tde-exporter'},
       'isNavigationVisible': true,
       'media': '',
-      'markdown': 'Let’s say we have Tableau Desktop installed. Now we need to find the Tableau writer in the Writers section.'
+      'markdown': 'Let’s say you have Tableau Desktop installed. Now you need to find the writer Tableau in the **Writers** section.'
                 + `
-- Click on **+ New Writer**
-- Find **Tableau**. You can use the search feature to find it quickly.
-- Click on **More** and continue with **+ New Configuration**
-- Name the configuration and click on **Create Configuration**
+- Click on **+ New Writer**.
+- Find **Tableau**. You can use the search feature to find it faster.
+- Click on **More** and continue with **+ New Configuration**.
+- Name the configuration, e.g., *My writer* and click on **Create Configuration**.
 `,
       'mediaType': ''
     },
@@ -46,12 +46,13 @@ export default {
       'title': 'Create Table',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'markdown':
-      'Then let’s add the table we want to send to Tableau. For each of its columns we also need to specify whether it contains text or a number.'
+      'Now add the table you want to send to Tableau. For each of its columns you also need to specify whether it contains text or a number.'
       + `
-- Click on **+ New Table**
-- Select  \`in.c-tutorial.cars\`
-- Select proper **TDE Data Type** and **Save** this table
-- click **Export tables to TDE**
+- Click on **+ New Table**.
+- Select  \`out.c-snowflake.transformed\` as the Source table you want to add to Tableau.
+- Specify a data type for each of the table's columns under **TDE Data Type** (COUNTRY/string, CARS/number, POPULATION/number, PERSON_PER_CAR/decimal) 
+- **Save** the configuration.
+- Click **Export tables to TDE** to run the writer. A Tableau Desktop Extract file will be created. In a real project, you would find the file in Storage under the tab **Files**. By clicking the from where you could download it to your computer.   
 `
     },
     {
@@ -60,7 +61,7 @@ export default {
       'position': 'center',
       'backdrop': true,
       'title': 'Run Extracion',
-      'markdown': 'The final step is to open the downloaded file in Tableau and create any reports we want. To see how to automate the whole process, continue to the next lesson - Project Automation. Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
+      'markdown': 'For the purposes of the Guide Mode, let’say you have downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. The graph below is one of many reports you can create. <br/><br/> To see how to automate the whole process, continue to the next lesson – Project Automation. <br/><br/> Learn more about <a href="https://help.keboola.com/writers/" target="_blank">Writers</a>, or follow a hands-on tutorial on writing data in our <a href="https://help.keboola.com/tutorial/write/" target="_blank">user documentation</a>.',
       'media': 'tbl.png',
       'mediaType': 'img'
     }

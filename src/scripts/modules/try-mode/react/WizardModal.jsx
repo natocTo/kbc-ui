@@ -167,13 +167,13 @@ export default React.createClass({
   renderNextLessonLink() {
     return (
         <p>
-          <span>Go to next lesson </span>
+          <span>Go to Lesson </span>
           <a href="#" onClick={(e) => {
             e.preventDefault();
             this.gotoNextLesson();
           }}
           >
-            {this.getLessonId() + 1}. {lessons[this.getLessonId() + 1].title}
+            {this.getLessonId() + 1} &ndash; {lessons[this.getLessonId() + 1].title}
           </a>
         </p>
     );

@@ -81,7 +81,7 @@ export default React.createClass({
             <div className="try-desk-container">
               <div className="try-desk">
                 <h2>Welcome to Keboola Connection</h2>
-                <h1>Try Mode</h1>
+                <h1>Guide Mode</h1>
                 <div className="row">
                   <div className="col-xs-4">
                     <ul>
@@ -95,7 +95,7 @@ export default React.createClass({
                                 this.openLessonModal(key + 1);
                               }}
                             >
-                              {key + 1}. Lesson - {lessons[key + 1].title}
+                              Lesson {key + 1} - {lessons[key + 1].title}
                             </a>
                           </li>
                         );
@@ -104,17 +104,15 @@ export default React.createClass({
                   </div>
                   <div className="col-xs-5">
                     <p>
-                      Here you can learn everything you need to know about Keboola Connection before you actually start
-                      using
-                      it.
+                      Learn all you need to know about Keboola Connection &ndash; our powerful and safe environment for working with data.
                       <br/>
                       <br/>
-                      The following lessons are designed to walk you through the basic steps of creating a project.
+                      The following lessons will walk you through the basic steps of creating a project: from loading and manipulating data to visualizing the results and automating the whole process.
                       <br/>
                       <br/>
-                      Feel free to switch Try Mode off at any time. You can always bring it back by going to <a
+                      Feel free to switch the Guide Mode off at any time. If needed, bring it back by going to <a
                         className="try-link" href={ApplicationStore.getProjectPageUrl('settings')}>Settings
-                      > Try Mode.</a>
+                      > Guide Mode.</a>
                     </p>
                   </div>
                 </div>
