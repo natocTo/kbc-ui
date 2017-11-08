@@ -78,6 +78,12 @@ export default React.createClass({
     </div>
     );
   },
+  hasNextStep() {
+    return this.props.step + 1 < this.getStepsCount();
+  },
+  hasPreviousStep() {
+    return this.props.step > 0;
+  },
   getActiveStep() {
     return this.props.step;
   },
@@ -119,6 +125,9 @@ export default React.createClass({
   },
   getStepLink() {
     return this.getLessonSteps()[this.getActiveStep()].link;
+  },
+  getPreviousStepLink() {
+    return this.getLessonSteps()[this.getActiveStep() - 1].link;
   },
   getNextStepLink() {
     return this.getLessonSteps()[this.getActiveStep() + 1].link;
