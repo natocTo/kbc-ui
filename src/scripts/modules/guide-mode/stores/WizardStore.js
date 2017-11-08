@@ -1,13 +1,26 @@
+import objectAssign from 'object-assign';
+
 import Dispatcher from '../../../Dispatcher';
 import StoreUtils from '../../../utils/StoreUtils';
-import {ActionTypes} from './ActionCreators';
+import { ActionTypes } from './ActionCreators';
 import wizardLessons from '../WizardLessons';
 import RoutesStore from '../../../stores/RoutesStore';
 
-let store = {
+const LOCAL_STORAGE_KEY = 'kbc-ui-guide-mode';
+
+const store = {
   showLessonModal: true,
   lessonNumber: 0,
   step: 0
+};
+
+export const getStateFromLocalStorage = () => {
+  const value = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+  return value ? JSON.parse(value) : store;
+};
+
+const setStateToLocalStorage = (value) => {
+  window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
 };
 
 const containsAction = (dispatchedAction, action) => {
@@ -17,14 +30,21 @@ const containsAction = (dispatchedAction, action) => {
 };
 
 const WizardStore = StoreUtils.createStore({
-  getState: () => store,
-  getCurrentLesson: () => wizardLessons[store.lessonNumber],
+  getState: () => {
+    return getStateFromLocalStorage();
+  },
+  getCurrentLesson: () => {
+    return wizardLessons[getStateFromLocalStorage().lessonNumber];
+  },
   getNextLink: () => {
-    const lesson = wizardLessons[store.lessonNumber];
-    const nextStep = lesson ? lesson.steps[store.step] || {} : {};
+    const localStorageState = getStateFromLocalStorage();
+    const lesson = wizardLessons[localStorageState.lessonNumber];
+    const nextStep = lesson ? lesson.steps[localStorageState.step] || {} : {};
     const nextLink = nextStep.link;
     const matchLink = nextStep.matchLink;
-    if (nextLink) return nextLink;
+    if (nextLink) {
+      return nextLink;
+    }
     if (matchLink) {
       const router = RoutesStore.getRouter();
       const path = router.getCurrentPath();
@@ -34,9 +54,11 @@ const WizardStore = StoreUtils.createStore({
     }
     return null;
   },
+
   getCurrentStep: () => {
-    const lesson = wizardLessons[store.lessonNumber];
-    return lesson ? lesson.steps[store.step] || {} : {};
+    const localStorageState = getStateFromLocalStorage();
+    const lesson = wizardLessons[localStorageState.lessonNumber];
+    return lesson ? lesson.steps[localStorageState.step] || {} : {};
   }
 });
 
@@ -44,7 +66,10 @@ Dispatcher.register((payload) => {
   let action = payload.action;
   const  nextStepDispatchAction = WizardStore.getCurrentStep().nextStepDispatchAction;
   if (nextStepDispatchAction && containsAction(action, nextStepDispatchAction)) {
-    store.step = store.step + 1;
+    const localStorageState = getStateFromLocalStorage();
+    setStateToLocalStorage(
+      objectAssign(localStorageState, {step: localStorageState.step + 1})
+    );
     WizardStore.emitChange();
     const nextLink = WizardStore.getNextLink();
     if (nextLink) {
@@ -54,16 +79,22 @@ Dispatcher.register((payload) => {
   }
 
   switch (action.type) {
-    case ActionTypes.GUIDE_WIZARD_SET_STEP:
-      store.step = action.step;
+    case ActionTypes.GUIDE_WIZARD_SET_STEP: {
+      const localStorageState = getStateFromLocalStorage();
+      setStateToLocalStorage(
+        objectAssign(localStorageState, {step: action.step})
+      );
       return WizardStore.emitChange();
-    case ActionTypes.UPDATE_WIZARD_MODAL_STATE:
-      store = {
+    }
+    case ActionTypes.UPDATE_WIZARD_MODAL_STATE: {
+      const localStorageState = getStateFromLocalStorage();
+      setStateToLocalStorage({
         showLessonModal: action.showLessonModal,
         lessonNumber: action.lessonNumber,
-        step: action.showLessonModal ? store.step : 0
-      };
+        step: action.showLessonModal ? localStorageState.step : 0
+      });
       return WizardStore.emitChange();
+    }
     default:
   }
 });
