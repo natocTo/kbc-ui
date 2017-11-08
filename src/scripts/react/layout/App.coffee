@@ -50,7 +50,7 @@ App = React.createClass
           p null,
             'Guide Mode'
           p null,
-            ' — learn everything you need to know about Keboola Connection'
+            '&nbsp;— learn everything you need to know about Keboola Connection'
           a href: ApplicationStore.getProjectPageUrl('settings'),
             'Disable Guide Mode \xa0',
             i className: 'fa fa-times',

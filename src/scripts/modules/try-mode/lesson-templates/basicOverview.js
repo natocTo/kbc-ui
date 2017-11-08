@@ -65,7 +65,7 @@ export default {
       'backdrop': false,
       'title': 'Automate',
       'link': 'orchestrations',
-      'markdown': 'If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. **Orchestrations** allow you to specify at what time or how often your tasks should be executed and in what order.',
+      'markdown': 'If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. <br/><br/> **Orchestrations** allow you to specify at what time or how often your tasks should be executed and in what order.',
       'media': '',
       'mediaType': ''
 
@@ -77,7 +77,7 @@ export default {
       'backdrop': true,
       'title': 'Example Workflow',
       'link': 'home',
-      'markdown': 'Having learned all the basics, you can explore the individual steps in more detail in the following lessons. <br/><br/> After extracting data from two database tables, merging them into one table, and calculating some statistics, you will visualize the results, and, finally, set up the whole process to run automatically. See our example workflow below.',
+      'markdown': 'Having learned all the basics, you can explore the individual steps in more detail in the following lessons. <br/><br/> After extracting data from two database tables, merging them into one table, and calculating some statistics, you will visualize the results. Finally, you will set up the whole process to run automatically. See our example workflow below.',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     }
