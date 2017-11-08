@@ -123,6 +123,7 @@ export default function(configId) {
       var fileId = response.id;
       // one retry, 10 minutes timeout
       const awsParams = {
+        signatureVersion: 'v4',
         maxRetries: 1,
         httpOptions: {
           timeout: 10 * 60 * 1000
