@@ -204,16 +204,25 @@ export default React.createClass({
     return stepState;
   },
   renderButtonPrev() {
-    let buttonText = 'Prev step';
-    if (this.props.step === 0) {
-      buttonText = 'Close';
-    }
-    if (this.props.step !== this.getStepsCount() - 1) {
+    const { step } = this.props.step;
+    const buttonText = step === 0 ? 'Close' : 'Prev step';
+
+    if (this.getStepLink() === 'storage' || this.getPreviousStepLink() === 'storage') {
+      // redirect through window.location.href between applications
       return (
-        <Button onClick={() => this.handleStep('prev')} bsStyle="link">{buttonText}</Button>
+        <button
+          onClick={() => {
+            this.handleStep('prev');
+            window.location.href = this.getProjectPageUrlHref(this.getPreviousStepLink());
+          }}
+          className="btn btn-link">
+          {buttonText}
+        </button>
       );
     }
-    return '';
+    return (
+      <Button onClick={() => this.handleStep('prev')} bsStyle="link">{buttonText}</Button>
+    );
   },
   renderButtonNext() {
     let buttonText = 'Next step';
@@ -225,17 +234,22 @@ export default React.createClass({
       buttonText = 'Close';
     }
 
-    if (this.getStepLink() === 'storage') {
+    if (this.getStepLink() === 'storage' || this.getNextStepLink() === 'storage') {
+      // redirect through window.location.href between applications
       return (
-        <a href="http://localhost:3000/index-storage.html"
-          // href={ApplicationStore.getProjectPageUrl('storage')}
+        <button
+          onClick={() => {
+            this.handleStep('next');
+            window.location.href = this.getProjectPageUrlHref(this.getNextStepLink());
+          }}
           className="btn btn-primary">
           {buttonText}
-        </a>
+        </button>
       );
-    } else {
-      return (<Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>);
     }
+    return (
+      <Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>
+    );
   },
   renderNavigation() {
     return (
