@@ -40,7 +40,7 @@ export default React.createClass({
   render() {
     this.applyLayoutClasses();
 
-    if (this.state.wizard.lessonNumber === 0 | !this.state.wizard.showLessonModal) {
+    if (this.state.wizard.lessonNumber === 0 || !this.state.wizard.showLessonModal) {
       return null;
     } else {
       return (
