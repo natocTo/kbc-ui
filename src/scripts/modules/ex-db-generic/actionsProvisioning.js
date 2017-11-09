@@ -215,10 +215,10 @@ export function createActions(componentId) {
       return saveConfigData(configId, newData, ['pending', qid, 'deleteQuery'], diffMsg);
     },
 
-    prepareSingleQueryRunData(configId, query) {
+    prepareSingleQueryRunData(configId, query, source) {
       const store = getStore(configId);
       let runQuery = query;
-      if (store.isEditingQuery(runQuery.get('id'))) {
+      if (source === 'detail') {
         if (runQuery.get('advancedMode')) {
           runQuery = runQuery.delete('table');
           runQuery = runQuery.delete('columns');
