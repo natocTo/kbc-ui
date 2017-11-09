@@ -265,20 +265,19 @@
             width: 100%;
           }
         }
-      }
-    }
+        .guide-wizard-animated {
+          &-enter {
+            position: absolute;
+            &-active {
+              animation: list-enter 200ms ease-in;
+            }
+          }
 
-    &-animated {
-      &-enter {
-        position: absolute;
-        &-active {
-          animation: list-enter 200ms ease-in;
-        }
-      }
-
-      &-leave {
-        &-active {
-          animation: list-leave 200ms ease-in;
+          &-leave {
+            &-active {
+              animation: list-leave 200ms ease-in;
+            }
+          }
         }
       }
     }
