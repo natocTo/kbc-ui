@@ -203,7 +203,6 @@
       }
       .modal-body {
         padding: 0 40px 20px;
-        overflow: hidden; // animation fix
         p {
           margin-bottom: 20px;
           color: #7C8498;
@@ -264,20 +263,6 @@
           width: @wizardWidthAside;
           .col-md-6 {
             width: 100%;
-          }
-        }
-        .guide-wizard-animated {
-          &-enter {
-            position: absolute;
-            &-active {
-              animation: list-enter 200ms ease-in;
-            }
-          }
-
-          &-leave {
-            &-active {
-              animation: list-leave 200ms ease-in;
-            }
           }
         }
       }

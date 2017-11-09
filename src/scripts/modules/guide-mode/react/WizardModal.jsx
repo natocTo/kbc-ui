@@ -4,7 +4,6 @@ import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn, getAchievedStep, setAchievedLesson } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 // import ApplicationStore from '../../../stores/ApplicationStore';
 //
 
@@ -53,13 +52,26 @@ export default React.createClass({
             )}
           </Modal.Header>
           <Modal.Body>
-            <ReactCSSTransitionGroup
-                transitionName="guide-wizard-animated"
-                transitionEnterTimeout={200}
-                transitionLeaveTimeout={200}
-            >
-                {this.getModalBody()}
-            </ReactCSSTransitionGroup>
+            <div className="row">
+              <div className="col-md-12">
+                {!this.isLastStep() &&
+                <span>
+                  <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+                </span>
+                }
+              <div>
+                <div className="guide-media">
+                {this.renderMedia()}
+                </div>
+              </div>
+                {this.isLastStep() &&
+                <span className="guide-congratulations">
+                    <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+                </span>
+                }
+                {this.isNavigationVisible() && this.renderNavigation()}
+              </div>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             {this.renderButtonPrev()}
@@ -67,33 +79,6 @@ export default React.createClass({
           </Modal.Footer>
         </Modal>
       </div>
-    );
-  },
-
-  getModalBody() {
-    return (
-    <div key={this.props.step} className="row">
-      <div className="col-md-12">
-          {!this.isLastStep() &&
-          <span>
-            <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-          </span>
-          }
-        <div>
-          <div className="guide-media">
-            {this.renderMedia()}
-          </div>
-        </div>
-          {this.isLastStep() &&
-          <span className="guide-congratulations">
-            <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-          </span>
-          }
-          {this.isNavigationVisible() &&
-            this.renderNavigation()
-          }
-      </div>
-    </div>
     );
   },
   hasNextStep() {
