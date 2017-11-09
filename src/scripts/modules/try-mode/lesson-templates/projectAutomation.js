@@ -33,7 +33,7 @@ export default {
       'layout': 'content',
       'backdrop': false,
       'title': 'Orchestration Overview',
-      'markdown': 'The orchestrator configuration process consists of three separate parts in which you will create the desired sequence of the tasks to be executed, set the desired schedule, and select error and warning notifications. <br/><br/>. Start by clicking on <span class="btn btn-success btn-xs">Configure Tasks</span> to select and order the tasks.',
+      'markdown': 'The orchestrator configuration process consists of three separate parts in which you will create the desired sequence of the tasks to be executed, set the desired schedule, and select error and warning notifications. <br/><br/> Start by clicking on <span class="btn btn-success btn-xs">Configure Tasks</span> to select and order the tasks.',
       'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_EDIT_START},
       'media': '',
       'mediaType': ''
