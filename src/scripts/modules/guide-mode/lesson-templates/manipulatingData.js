@@ -15,7 +15,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Introduction',
       'link': '/',
-      'markdown': 'In this lesson, you will process the data loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img'
     }, {
@@ -58,10 +58,10 @@ export default {
 <br>
 - Click on **+ New Input** and select \`in.c-tutorial.cars\` as the Source table from the drop down menu. Accept the suggested Destination. It is the name of the selected table inside the transformation. Press **Create Input**.
 - Repeat the steps for the second table. Click on **+ New Input** and select \`in.c-tutorial.population\` as the Source table.
-- Then click on **+ New Output** and enter *Transformed* as the Source table. This table does not exist yet. It will be created in the transformation. 
+- Then click on **New Output** and enter *Transformed* as the Source table. This table does not exist yet. It will be created in the transformation. 
 - Set Destination to \`out.c-snowflake.transformed\`. This is the name the new table *Transformed* will have when put in Storage. Press **Create output**.
-- To create your output table, paste the following code to **Queries** \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and **Save** it.
-- Click on **Next Step**.
+- To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and **Save** it.
+- Click on **Next step**.
 
 `,
       'media': '',
@@ -95,7 +95,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Check Storage',
       'link': 'storage',
-      'markdown': 'You can see what the final table looks like in this Data Sample in Storage. <br/><br/> To see how to write the output data from Keboola Connection, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow a hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
+      'markdown': 'You can see what the final table looks like in a Data Sample in Storage. <br/><br/> To see how to write the output data from Keboola Connection, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
     },

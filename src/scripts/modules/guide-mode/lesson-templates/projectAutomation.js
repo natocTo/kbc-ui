@@ -13,7 +13,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Introduction',
       'link': '/',
-      'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically. <br/><br/> In this lesson, you will specify at what time or how often the tasks you configured in the previous lessons should be executed and in what order. In addition, you will set up notifications to receive in case something goes wrong and requires you attention. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically. <br/><br/> In this lesson, you will specify at what time or how often the tasks you configured in the previous lessons should be executed and in what order. In addition, you will set up notifications that will be sent to you in case something goes wrong and requires you attention. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     }, {
@@ -33,7 +33,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Orchestration Overview',
-      'markdown': 'The orchestrator configuration process consists of three separate parts in which you will create the desired sequence of the tasks to be executed, set the desired schedule, and select error and warning notifications. <br/><br/>. Start by clicking on **Configure Tasks** to select and order the tasks.',
+      'markdown': 'The orchestrator configuration process consists of three separate parts in which you will create the desired sequence of the tasks to be executed, set the desired schedule, and select error and warning notifications. <br/><br/> Start by clicking on **Configure Tasks** to select and order the tasks.',
       'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_EDIT_START},
       'media': '',
       'mediaType': ''
@@ -43,7 +43,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Configure Task',
-      'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on the green button **+ New task**.'
+      'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on the green button **+ New Task**.'
                 + `
 - Step 1: After clicking **+ New task**, select your Snowflake Extractor.
 - Step 2: Click **+ New task** again. Then click on the little Back icon on the right and select you transformation from the list.
@@ -82,7 +82,7 @@ Then click **Save** in the upper right corner.
       `
 - Click on **Configure Notifications**.
 - Click on **Edit Notifications** in the upper right corner.
-- Add your email address for all three notification types and click **+** button. It moves the address to the subscriber field above. You can add as many recipients as you want.
+- Add your email address for all three notification types and click the **+** button. It moves the address to the subscriber field above. You can add as many recipients as you want.
 - Click on **Save**.
 
 `,
@@ -96,7 +96,7 @@ Then click **Save** in the upper right corner.
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Conclusion',
-      'markdown': 'That`s it! From data extraction to data writing, we have set up the full pipeline. Any change to our Snowflake database tables will be automatically reflected in our Tableau results. <br/><br/> Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow a hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>.',
+      'markdown': 'And that`s it! From data extraction to data writing, you have set up the full pipeline. Any change to your Snowflake database tables will be automatically reflected in your Tableau results. <br/><br/> Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow the hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>. <br/><br/> Remember that no matter what problems you encounter while working with Keboola Connection, we will be more than happy to help you via our **Support**. There is <a href="https://help.keboola.com/" target="_blank">user documentation</a> written for you as well, covering every component of Keboola Connection. <br/><br/> If you wish to disable the Guide Mode, go to **Users & Settings**, the tab **Settings**.',
       'media': '',
       'mediaType': ''
     },
@@ -107,7 +107,7 @@ Then click **Save** in the upper right corner.
       'isNavigationVisible': false,
       'title': 'Congratulations',
       'link': '/',
-      'markdown': 'Congratulations! All lessons are finished.',
+      'markdown': 'Congratulations! You have completed all lessons.',
       'media': 'keboola-finished.svg',
       'mediaType': 'img'
     }
