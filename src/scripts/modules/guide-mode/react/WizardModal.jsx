@@ -297,6 +297,8 @@ export default React.createClass({
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
+    }
+    if (this.props.step === this.getStepsCount() - 2) {
       setAchievedLesson(this.getLessonId());
     }
   }
