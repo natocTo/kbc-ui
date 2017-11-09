@@ -32,7 +32,7 @@ const containsAction = (dispatchedAction, action) => {
 };
 
 const getMaxStep = (currentStepId) => {
-  return Math.max(currentStepId, getStateFromLocalStorage().step);
+  return Math.max(currentStepId, getStateFromLocalStorage().achievedStep);
 };
 
 const WizardStore = StoreUtils.createStore({
@@ -87,13 +87,11 @@ Dispatcher.register((payload) => {
   switch (action.type) {
     case ActionTypes.GUIDE_WIZARD_SET_STEP: {
       const localStorageState = getStateFromLocalStorage();
-
-
       setStateToLocalStorage(
         objectAssign(localStorageState, {
           step: action.step,
-          achievedStep: getMaxStep(action.showLessonModal ? localStorageState.step : 0),
-          achievedLesson: action.achievedLesson
+          achievedStep: getMaxStep(action.step),
+          achievedLesson: getStateFromLocalStorage().achievedLesson
         })
       );
       return WizardStore.emitChange();
@@ -104,7 +102,7 @@ Dispatcher.register((payload) => {
         showLessonModal: action.showLessonModal,
         lessonNumber: action.lessonNumber,
         step: action.showLessonModal ? localStorageState.step : 0,
-        achievedLesson: action.achievedLesson ? localStorageState.achievedLesson : 0
+        achievedLesson: localStorageState.achievedLesson
       });
       return WizardStore.emitChange();
     }
