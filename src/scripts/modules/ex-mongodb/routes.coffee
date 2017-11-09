@@ -5,17 +5,15 @@ actionsProvisioning = require './actionsProvisioning'
 ExDbIndex = require './react/pages/index/Index'
 
 ExDbCredentialsPage = require('../ex-db-generic/react/pages/credentials/CredentialsPage').default
-ExDbNewCredentialsPage = require('../ex-db-generic/react/pages/credentials/NewCredentialsPage').default
 
 ExDbQueryDetail = require './react/pages/query-detail/QueryDetail'
 ExDbNewQuery = require './react/pages/new-query/NewQuery'
 
-ExDbNewQueryHeaderButtons = require '../ex-db-generic/react/components/NewQueryHeaderButtons'
+ExDbNewQueryHeaderButtons = require('./react/components/NewQueryHeaderButtons').default
 ExDbQueryHeaderButtons = require('../ex-db-generic/react/components/QueryActionButtons').default
-ExDbCredentialsHeaderButtons = require '../ex-db-generic/react/components/CredentialsHeaderButtons'
-ExDbNewCredentialsHeaderButtons = require('../ex-db-generic/react/components/NewCredentialsHeaderButtons').default
+ExDbCredentialsHeaderButtons = require('../ex-db-generic/react/components/CredentialsHeaderButtons').default
 
-ExDbQueryName = require '../ex-db-generic/react/components/QueryName'
+ExDbQueryName = require('../ex-db-generic/react/components/QueryName').default
 
 JobsActionCreators = require '../jobs/ActionCreators'
 StorageActionCreators = require('../components/StorageActionCreators')
@@ -23,7 +21,7 @@ VersionsActionsCreators = require('../components/VersionsActionCreators')
 {createTablesRoute} = require '../table-browser/routes'
 storeProvisioning = require './storeProvisioning'
 
-credentialsTemplate = require '../ex-db-generic/templates/credentials'
+credentialsTemplate = require('../ex-db-generic/templates/credentials')
 hasSshTunnel = require('../ex-db-generic/templates/hasSshTunnel').default
 
 module.exports = (componentId) ->
@@ -90,13 +88,4 @@ module.exports = (componentId) ->
       componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, hasSshTunnel
     )
     headerButtonsHandler: ExDbCredentialsHeaderButtons(componentId, actionsProvisioning, storeProvisioning)
-  ,
-    name: "ex-db-generic-#{componentId}-new-credentials"
-    path: 'new-credentials'
-    title: ->
-      'New Credentials'
-    handler: ExDbNewCredentialsPage(
-      componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, hasSshTunnel
-    )
-    headerButtonsHandler: ExDbNewCredentialsHeaderButtons(componentId, actionsProvisioning, storeProvisioning)
   ]

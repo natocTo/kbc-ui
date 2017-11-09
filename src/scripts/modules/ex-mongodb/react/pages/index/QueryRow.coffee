@@ -3,7 +3,7 @@ ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMix
 
 Link = React.createFactory(require('react-router').Link)
 Check = React.createFactory(require('kbc-react-components').Check)
-QueryDeleteButton = React.createFactory(require('../../../../ex-db-generic/react/components/QueryDeleteButton'))
+QueryDeleteButton = React.createFactory(require('../../../../ex-db-generic/react/components/QueryDeleteButton').default)
 RunExtractionButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 SapiTableLinkEx = require('../../../../components/react/components/StorageApiTableLinkEx').default
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)

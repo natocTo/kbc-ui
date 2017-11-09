@@ -43,7 +43,7 @@ export default function(
             componentId={componentId}
             query={this.state.query}
             configurationId={this.state.configId}
-            isPending={this.state.pendingActions.get('deleteQuery')}
+            isPending={!!this.state.pendingActions.get('deleteQuery')}
             tooltipPlacement="bottom"
             actionsProvisioning={actionsProvisioning}
             entityName={entityName}
@@ -63,7 +63,7 @@ export default function(
             config={this.state.configId}
             tooltipPlacement="bottom"
           >
-          You are about to run an extraction.
+            You are about to run an extraction.
           </RunExtractionButton>
         </div>
       );
@@ -72,7 +72,7 @@ export default function(
     runParams() {
       return {
         config: this.state.configId,
-        configData: actionCreators.prepareSingleQueryRunData(this.state.configId, this.state.query)
+        configData: actionCreators.prepareSingleQueryRunData(this.state.configId, this.state.query, 'detail')
       };
     },
 

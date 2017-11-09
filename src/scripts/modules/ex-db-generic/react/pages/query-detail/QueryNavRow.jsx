@@ -5,7 +5,8 @@ export default React.createClass({
   propTypes: {
     query: PropTypes.object.isRequired,
     configurationId: PropTypes.string.isRequired,
-    componentId: PropTypes.string.isRequired
+    componentId: PropTypes.string.isRequired,
+    isEditing: PropTypes.bool.isRequired
   },
   render() {
     return (
@@ -14,9 +15,26 @@ export default React.createClass({
         to={`ex-db-generic-${this.props.componentId}-query`}
         params={this.linkParams()}
         >
-        <strong>{this.props.query.get('name')}</strong>
+        {(this.props.isEditing) ? (
+            <strong>
+              {this.renderName()} *
+            </strong>
+          ) : (
+            <span>
+              {this.renderName()}
+            </span>
+          )
+        }
       </Link>
     );
+  },
+
+  renderName() {
+    if (this.props.query.get('name') === '') {
+      return <span className="text-muted">[Untitled]</span>;
+    } else {
+      return this.props.query.get('name');
+    }
   },
 
   linkParams() {

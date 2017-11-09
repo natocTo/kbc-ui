@@ -105,7 +105,7 @@ export default React.createClass({
           type="button"
           disabled={this.state.isGenerating}
           onClick={this.generateKeys}
-          style={{'padding-left': 0}}
+          style={{'paddingLeft': 0}}
           className="btn btn-link">
           {publicKey ? 'Regenerate' : 'Generate'}
         </button>

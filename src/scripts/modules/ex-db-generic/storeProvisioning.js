@@ -1,13 +1,17 @@
 import store from '../components/stores/InstalledComponentsStore';
 import {List, Map, fromJS} from 'immutable';
 import fuzzy from 'fuzzy';
-import templateFields from './templates/credentials';
+import * as templateFields from './templates/credentials';
 import hasSshTunnel from './templates/hasSshTunnel';
 import _ from 'underscore';
 import string from '../../utils/string';
 import getDefaultPort from './templates/defaultPorts';
 
 const defaultSshPort = 22;
+
+export const sourceTablesPath = ['sourceTables', 'data'];
+export const sourceTablesErrorPath = ['sourceTables', 'error'];
+export const loadingSourceTablesPath = ['sourceTables', 'loading'];
 
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
@@ -30,18 +34,13 @@ function generateId(existingIds) {
 function isValidQuery(query) {
   const nameValid = query.get('name', '').trim().length > 0;
   const queryValid = query.get('query', '').trim().length > 0;
-  return nameValid && queryValid;
-}
-
-export function getLocalState(componentId, configId) {
-  return fetch(componentId, configId).localState;
+  const tableValid = (query.get('table')) ? query.get('table').get('tableName', '').trim().length > 0 : false;
+  return nameValid && (queryValid || tableValid);
 }
 
 export const componentsStore = store;
 export function createStore(componentId, configId) {
   const data = fetch(componentId, configId);
-
-
   return {
     hasValidCredentials(credentials) {
       const configCredentials = this.getCredentials();
@@ -77,7 +76,7 @@ export function createStore(componentId, configId) {
         }
         return memo && !_.isEmpty(value);
       }, true);
-      const hasKeys = ssh.getIn(['keys', 'public']) && ssh.getIn(['keys', '#private']);
+      const hasKeys = ssh.hasIn(['keys', 'public']) && ssh.hasIn(['keys', '#private']);
       let sshValid = true;
       if (hasSSH && ssh.get('enabled')) {
         sshValid = hasKeys && isValidSSH;
@@ -85,19 +84,9 @@ export function createStore(componentId, configId) {
       return validGeneralCreds && sshValid;
     },
 
-    // -------- LOCAL STATE manipulation -----------------
-    getDefaultOutputTableId(query) {
-      if (!query) {return ''; }
-      const qname = string.sanitizeKbcTableIdString(query.get('name', ''));
-      const bucketName = string.sanitizeKbcTableIdString(componentId);
-      return `in.c-${bucketName}.${qname}`;
-    },
-    getQueriesPendingActions() {
-      return data.localState.getIn(['pending'], Map());
-    },
-
-    getQueriesFilter() {
-      return data.localState.get('queriesFilter', '');
+    // Credentials -- start --
+    getCredentials() {
+      return data.parameters.get('db', Map());
     },
 
     isEditingCredentials() {
@@ -110,15 +99,6 @@ export function createStore(componentId, configId) {
 
     getEditingCredentials() {
       return data.localState.get('editingCredentials');
-    },
-
-    isSavingNewQuery() {
-      return data.localState.getIn(['newQueries', 'isSaving']);
-    },
-
-    isValidNewQuery() {
-      const query = this.getNewQuery();
-      return isValidQuery(query);
     },
 
     getNewCredentials() {
@@ -137,18 +117,39 @@ export function createStore(componentId, configId) {
         return defaultNewCredentials;
       }
     },
+    // Credentials -- end --
 
-    getNewQuery() {
+    generateNewQuery(queryId = null, simpleSupport = true) {
       const ids = this.getQueries().map((q) => q.get('id')).toJS();
-      const defaultNewQuery = fromJS({
+      let defaultQuery = {
         enabled: true,
+        name: '',
         incremental: false,
         outputTable: '',
+        table: '',
+        columns: [],
         primaryKey: [],
-        query: '',
-        id: generateId(ids)
-      });
-      return data.localState.getIn(['newQueries', 'query'], defaultNewQuery);
+        id: (queryId) ? queryId : generateId(ids)
+      };
+      if (!simpleSupport) {
+        defaultQuery.advancedMode = true;
+        defaultQuery.query = '';
+      }
+      const defaultNewQuery = fromJS(defaultQuery);
+      data.localState.setIn(['newQueries', defaultNewQuery.get('id')], defaultNewQuery);
+      return defaultNewQuery;
+    },
+
+    getNewQuery(queryId) {
+      return data.localState.getIn(['newQueries', queryId]);
+    },
+
+    getNewQueries() {
+      return data.localState.getIn(['newQueries']);
+    },
+
+    getNewQueriesIdsList() {
+      return data.localState.getIn(['newQueriesIdsList'], List([]));
     },
 
     isEditingQuery(queryId) {
@@ -159,8 +160,16 @@ export function createStore(componentId, configId) {
       return data.localState.getIn(['editingQueries', queryId]);
     },
 
-    isSavingQuery() {
-      return data.localState.get('savingQueries');
+    getEditingQueries() {
+      return data.localState.getIn(['editingQueries']);
+    },
+
+    isSavingQuery(queryId) {
+      return !!data.localState.getIn(['isSaving', queryId]);
+    },
+
+    isNewQuery(queryID) {
+      return !!data.localState.getIn(['newQueries', queryID]);
     },
 
     isEditingQueryValid(queryId) {
@@ -170,6 +179,28 @@ export function createStore(componentId, configId) {
       }
       return isValidQuery(query);
     },
+
+    queryNameExists(query) {
+      return !!this.getQueries().find((q) => q.get('name') === query.get('name') && q.get('id') !== query.get('id'));
+    },
+
+    getDefaultOutputTableId(name) {
+      if (!name || name === '') {
+        return '';
+      }
+      const qname = string.sanitizeKbcTableIdString(name);
+      const bucketName = string.sanitizeKbcTableIdString(componentId);
+      return `in.c-${bucketName}.${qname}`;
+    },
+
+    getQueriesPendingActions() {
+      return data.localState.getIn(['pending'], Map());
+    },
+
+    getQueriesFilter() {
+      return data.localState.get('queriesFilter', '');
+    },
+
     // -------- CONFIGDATA manipulation -----------------
     configData: data.config,
 
@@ -191,17 +222,39 @@ export function createStore(componentId, configId) {
       }).sortBy((query) => query.get('name').toLowerCase());
     },
 
-    getCredentials() {
-      return data.parameters.get('db', Map());
-    },
-
     getConfigQuery(qid) {
-      return this.getQueries().find((q) => q.get('id') === qid );
+      if (this.isEditingQuery(qid)) {
+        return this.getEditingQuery(qid);
+      } else if (this.isNewQuery(qid)) {
+        return this.getNewQuery(qid);
+      }
+      let query = this.getQueries().find((q) => q.get('id') === qid ) || this.generateNewQuery(qid);
+      if (query.has('query')) {
+        query = query.set('advancedMode', true);
+      } else {
+        query = query.set('advancedMode', false);
+      }
+      return query;
     },
 
     getQueryName(qid) {
       return this.getConfigQuery(qid).get('name');
-    }
+    },
 
+    getSourceTables() {
+      return data.localState.getIn(sourceTablesPath);
+    },
+
+    getSourceTablesLoading() {
+      return !!data.localState.getIn(loadingSourceTablesPath);
+    },
+
+    getQuickstartTables() {
+      return data.localState.getIn(['quickstart', 'tables']);
+    },
+
+    getLocalState() {
+      return fetch(componentId, configId).localState;
+    }
   };
 }

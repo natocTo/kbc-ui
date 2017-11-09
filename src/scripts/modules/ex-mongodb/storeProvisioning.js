@@ -1,7 +1,7 @@
 import store from '../components/stores/InstalledComponentsStore';
 import {List, Map, fromJS} from 'immutable';
 import fuzzy from 'fuzzy';
-import templateFields from '../ex-db-generic/templates/credentials';
+import * as templateFields from '../ex-db-generic/templates/credentials';
 import hasSshTunnel from '../ex-db-generic/templates/hasSshTunnel';
 import _ from 'underscore';
 import string from '../../utils/string';
@@ -61,6 +61,7 @@ export function getLocalState(componentId, configId) {
 }
 
 export const componentsStore = store;
+
 export function createStore(componentId, configId) {
   const data = fetch(componentId, configId);
 
@@ -227,6 +228,10 @@ export function createStore(componentId, configId) {
 
     getConfigQuery(qid) {
       return this.getQueries().find((q) => q.get('id') === qid );
+    },
+
+    getLocalState() {
+      return fetch(componentId, configId).localState;
     }
 
   };
