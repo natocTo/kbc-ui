@@ -218,13 +218,15 @@ export function createActions(componentId) {
     prepareSingleQueryRunData(configId, query) {
       const store = getStore(configId);
       let runQuery = query;
-      if (runQuery.get('advancedMode')) {
-        runQuery = runQuery.delete('table');
-        runQuery = runQuery.delete('columns');
-      } else {
-        runQuery = runQuery.delete('query');
+      if (store.isEditingQuery(runQuery.get('id'))) {
+        if (runQuery.get('advancedMode')) {
+          runQuery = runQuery.delete('table');
+          runQuery = runQuery.delete('columns');
+        } else {
+          runQuery = runQuery.delete('query');
+        }
+        runQuery = runQuery.delete('advancedMode');
       }
-      runQuery = runQuery.delete('advancedMode');
       const runData = store.configData.setIn(['parameters', 'tables'], List().push(runQuery));
       return runData;
     },
