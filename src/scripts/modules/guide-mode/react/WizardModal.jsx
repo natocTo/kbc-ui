@@ -274,7 +274,6 @@ export default React.createClass({
   },
   closeLessonModal() {
     RoutesStore.getRouter().transitionTo('home');
-    // this.resetAchievedStep();
     hideWizardModalFn();
   },
   handleStep(direction) {
@@ -295,14 +294,10 @@ export default React.createClass({
   increaseStep() {
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
-      // if (this.getAchievedStep() < nextStep) {
-      //   this.setAchievedStep();
-      // }
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
       setAchievedLesson(this.getLessonId());
-      // this.setAchievedLesson(this.getLessonId());
     }
   }
 
