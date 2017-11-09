@@ -42,7 +42,7 @@ export default {
       'layout': 'content',
       'backdrop': false,
       'title': 'Setup Connection',
-      'markdown': 'Now you will configure the new extractor. First you need to provide a password and other credentials to access the source database where the data is stored.'
+      'markdown': 'Now you will configure the new extractor. First you need to provide a password and other credentials to access the source database where the data about cars and population is stored.'
                 + `
 - Click on <span class="btn btn-success btn-xs">Setup Database Credentials</span> on the right.
 - Set Host to \`kebooladev.snowflakecomputing.com\`.
@@ -61,7 +61,7 @@ export default {
       'backdrop': false,
       'title': 'Create SQL Query',
       'markdown':
-      'Now it’s time to actually extract the data. You need to write two SQL queries, one for each table. Every database query needs to have a name, an SQL command specifying what to extract from the database, and a new **output table** where the data will be written in **Storage**. <br/><br/> Start by creating the first query for extracting data about cars.'
+      'Now it’s time to actually extract the data. You need to write two SQL queries, one for each table. Every database query needs to have a name, an SQL command specifying what to extract from the database, and a new **output table** where the data will be written in **Storage**. <br/><br/> Start by creating the first query for extracting data about the number of cars in different countries.'
       + `
 - Click on <span class="btn btn-success btn-xs">+ New Query</span>.
 - Name the query \`cars\`.
@@ -81,7 +81,7 @@ export default {
       'backdrop': false,
       'title': 'Create Second SQL Query',
       'markdown':
-      'Similarly, create a query to extract info about population.'
+      'Similarly, create a query to extract info about the countries’ population.'
       + `
 - Click on <span class="btn btn-success btn-xs">+ New Query</span>.
 - Name the query \`population\`.
@@ -101,7 +101,7 @@ export default {
       'layout': 'content',
       'backdrop': false,
       'title': 'Run Extraction',
-      'markdown': 'Now click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> to load the data from the two external database tables into the new tables in your project. You will find them in **Storage**.',
+      'markdown': 'Now click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right to load the data from the two external database tables into the new tables in your project. You will find them in **Storage**.',
       'media': '',
       'mediaType': '',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS}
