@@ -1,5 +1,4 @@
-import {Map} from 'immutable';
-import Immutable from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
@@ -165,7 +164,7 @@ export default function(configId) {
             const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
 
             const createBucketMetadata = function() {
-              const bucketMetadata = Immutable.fromJS({
+              const bucketMetadata = fromJS({
                 'KBC.createdBy.component.id': COMPONENT_ID,
                 'KBC.createdBy.configuration.id': configId
               });
@@ -173,7 +172,7 @@ export default function(configId) {
             };
 
             const createTableMetadata = function() {
-              const tableMetadata = Immutable.fromJS({
+              const tableMetadata = fromJS({
                 'KBC.createdBy.component.id': COMPONENT_ID,
                 'KBC.createdBy.configuration.id': configId
               });
@@ -181,7 +180,7 @@ export default function(configId) {
             };
 
             const updateTableMetadata = function() {
-              const tableMetadata = Immutable.fromJS({
+              const tableMetadata = fromJS({
                 'KBC.lastUpdatedBy.component.id': COMPONENT_ID,
                 'KBC.lastUpdatedBy.configuration.id': configId
               });
