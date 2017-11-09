@@ -95,7 +95,7 @@ export default {
       'backdrop': false,
       'title': 'Check Storage',
       'link': 'storage',
-      'markdown': 'You can see what the final table looks like in a Data Sample in Storage. <br/><br/> To see how to write the output data from Keboola Connection, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow a hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
+      'markdown': 'You can see what the final table looks like in a Data Sample in Storage. <br/><br/> To see how to write the output data from Keboola Connection, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
     }
