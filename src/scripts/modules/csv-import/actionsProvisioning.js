@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
@@ -163,6 +163,30 @@ export default function(configId) {
             const bucketId = tableId.substr(0, tableId.lastIndexOf('.'));
             const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
 
+            const createBucketMetadata = function() {
+              const bucketMetadata = fromJS({
+                'KBC.createdBy.component.id': COMPONENT_ID,
+                'KBC.createdBy.configuration.id': configId
+              });
+              return storageApi.saveBucketMetadata(bucketId, bucketMetadata, 'system');
+            };
+
+            const createTableMetadata = function() {
+              const tableMetadata = fromJS({
+                'KBC.createdBy.component.id': COMPONENT_ID,
+                'KBC.createdBy.configuration.id': configId
+              });
+              return storageApi.saveTableMetadata(tableId, tableMetadata, 'system');
+            };
+
+            const updateTableMetadata = function() {
+              const tableMetadata = fromJS({
+                'KBC.lastUpdatedBy.component.id': COMPONENT_ID,
+                'KBC.lastUpdatedBy.configuration.id': configId
+              });
+              return storageApi.saveTableMetadata(tableId, tableMetadata, 'system');
+            };
+
             const createTable = function() {
               updateLocalState(['uploadingMessage'], 'Creating table ' + tableId);
               updateLocalState(['uploadingProgress'], 75);
@@ -180,7 +204,9 @@ export default function(configId) {
                 createTableParams.enclosure = store.settings.get('enclosure');
               }
 
-              storageApiActions.createTable(bucketId, createTableParams).then(function() {
+              storageApiActions.createTable(bucketId, createTableParams)
+              .then(function() {
+                createTableMetadata();
                 resetUploadState();
                 resetForm();
                 resultSuccess('CSV file successfully imported.');
@@ -201,6 +227,7 @@ export default function(configId) {
                 stage: bucketId.substr(0, bucketId.lastIndexOf('.'))
               };
               storageApiActions.createBucket(createBucketParams)
+                .then(createBucketMetadata)
                 .then(createTable)
                 .catch(function(e) {
                   resetUploadState();
@@ -219,6 +246,7 @@ export default function(configId) {
               updateLocalState(['uploadingMessage'], 'Loading into table ' + tableId);
               updateLocalState(['uploadingProgress'], 90);
               storageApiActions.loadTable(tableId, loadTableParams).then(function() {
+                updateTableMetadata();
                 resetUploadState();
                 resetForm();
                 resultSuccess('CSV file successfully imported.');

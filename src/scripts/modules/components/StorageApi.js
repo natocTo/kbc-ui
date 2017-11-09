@@ -127,24 +127,24 @@ var storageApi = {
     });
   },
 
-  saveBucketMetadata: function(bucketId, data) {
-    var payload = this.prepareMetadataPayload(data);
+  saveBucketMetadata: function(bucketId, data, provider) {
+    var payload = this.prepareMetadataPayload(data, provider);
     return createRequest('POST', 'buckets/' + bucketId + '/metadata').type('form').send(payload).promise()
     .then(function(response) {
       return response.body;
     });
   },
 
-  saveTableMetadata: function(tableId, data) {
-    var payload = this.prepareMetadataPayload(data);
+  saveTableMetadata: function(tableId, data, provider) {
+    var payload = this.prepareMetadataPayload(data, provider);
     return createRequest('POST', 'tables/' + tableId + '/metadata').type('form').send(payload).promise()
     .then(function(response) {
       return response.body;
     });
   },
 
-  saveColumnMetadata: function(columnId, data) {
-    var payload = this.prepareMetadataPayload(data);
+  saveColumnMetadata: function(columnId, data, provider) {
+    var payload = this.prepareMetadataPayload(data, provider);
     return createRequest('POST', 'columns/' + columnId + '/metadata').type('form').send(payload).promise()
     .then(function(response) {
       return response.body;
@@ -173,7 +173,7 @@ var storageApi = {
     }
   },
 
-  prepareMetadataPayload: function(data) {
+  prepareMetadataPayload: function(data, provider = 'user') {
     var metadata = [];
     data.map(function(v, k) {
       metadata = metadata.concat({
@@ -182,7 +182,7 @@ var storageApi = {
       });
     });
     return {
-      provider: 'user',
+      provider: provider,
       metadata: metadata
     };
   }
