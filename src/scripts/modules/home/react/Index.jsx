@@ -107,7 +107,7 @@ export default React.createClass({
                       Learn all you need to know about Keboola Connection &ndash; our powerful and safe environment for working with data.
                       <br/>
                       <br/>
-                      The following lessons will walk you through the basic steps of creating a project: from loading and manipulating data to visualizing the results and automating the whole process.
+                      These lessons will walk you through the basic steps of creating a project: from loading and manipulating data to visualizing the results and automating the whole process.
                       <br/>
                       <br/>
                       Feel free to switch the Guide Mode off at any time. If needed, bring it back by going to <a
