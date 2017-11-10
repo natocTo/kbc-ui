@@ -36,7 +36,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Transformation',
       'link': '/',
-      'markdown': 'Now add a new transformation into the new bucket by clicking on **+ New Transformation**. Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
+      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
       'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -56,12 +56,12 @@ export default {
 - **Queries** &ndash; what will happen with the data in the transformation
 <br>
 <br>
-- Click on **+ New Input** and select \`in.c-tutorial.cars\` as the Source table from the drop down menu. Accept the suggested Destination. It is the name of the selected table inside the transformation. Press **Create Input**.
-- Repeat the steps for the second table. Click on **+ New Input** and select \`in.c-tutorial.population\` as the Source table.
-- Then click on **New Output** and enter *Transformed* as the Source table. This table does not exist yet. It will be created in the transformation. 
-- Set Destination to \`out.c-snowflake.transformed\`. This is the name the new table *Transformed* will have when put in Storage. Press **Create output**.
-- To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and **Save** it.
-- Click on **Next step**.
+- Click on <span class="btn btn-success btn-xs">+ New Input</span> and select \`in.c-tutorial.cars\` as the Source table from the drop down menu. Accept the suggested Destination. It is the name of the selected table inside the transformation. Press <span class="btn btn-success btn-xs">Create Input</span>.
+- Repeat the steps for the second table. Click on <span class="btn btn-success btn-xs">+ New Input</span> and select \`in.c-tutorial.population\` as the Source table.
+- Then click on <span class="btn btn-success btn-xs">New Output</span> and enter *Transformed* as the Source table. This table does not exist yet. It will be created in the transformation. 
+- Set Destination to \`out.c-snowflake.transformed\`. This is the name the new table *Transformed* will have when put in Storage. Press <span class="btn btn-success btn-xs">Create output</span>.
+- To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and <span class="btn btn-success btn-xs">Save</span> it.
+- Click on <span class="btn btn-success btn-xs">Next step</span>.
 
 `,
       'media': '',
@@ -73,7 +73,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Run Transformation',
       'link': '/',
-      'markdown': 'Now when everything is ready, you can click on **Run transformation**. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
+      'markdown': 'Now when everything is ready, you can click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run transformation</span>. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -85,7 +85,7 @@ export default {
       'title': 'Check Jobs',
       'link': 'jobs',
       'markdown': 'You can see the status of your jobs in the section **Jobs**. Your input tables were joined and the output table *Transformed* was created. You can check the details of each job here too.' +
-      '<br/><br/> When you are ready, hit **Next step**.',
+      '<br/><br/> When you are ready, hit <span class="btn btn-success btn-xs">Next step</span>.',
       'media': '',
       'mediaType': ''
     }, {
