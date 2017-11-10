@@ -3,7 +3,6 @@ import WizardModal from './WizardModal';
 import WizardStore from '../stores/WizardStore';
 import { setStep, hideWizardModalFn } from '../stores/ActionCreators';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import './Guide.less';
 
 export default React.createClass({
   displayName: 'Wizard',
