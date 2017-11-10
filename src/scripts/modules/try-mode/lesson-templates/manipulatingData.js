@@ -36,7 +36,7 @@ export default {
       'backdrop': false,
       'title': 'Create Transformation',
       'link': '',
-      'markdown': 'Now add a new transformation into the new bucket by clicking on **+ New Transformation**. Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
+      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
       'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -73,7 +73,7 @@ export default {
       'backdrop': false,
       'title': 'Run Transformation',
       'link': '',
-      'markdown': 'Now when everything is ready, you can click on **Run transformation**. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
+      'markdown': 'Now when everything is ready, you can click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run transformation</span>. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -85,7 +85,7 @@ export default {
       'title': 'Check Jobs',
       'link': 'jobs',
       'markdown': 'You can see the status of your jobs in the section **Jobs**. Your input tables were joined and the output table *Transformed* was created. You can check the details of each job here too.' +
-      '<br/><br/> When you are ready, hit **Next step**.',
+      '<br/><br/> When you are ready, hit <span class="btn btn-success btn-xs">Next step</span>.',
       'media': '',
       'mediaType': ''
     }, {

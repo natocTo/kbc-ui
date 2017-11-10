@@ -13,7 +13,7 @@ export default {
       'backdrop': true,
       'title': 'Introduction',
       'link': 'home',
-      'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically. <br/><br/> In this lesson, you will specify at what time or how often the tasks you configured in the previous lessons should be executed and in what order. In addition, you will set up notifications that will be sent to you in case something goes wrong and requires you attention. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically. <br/><br/> In this lesson, you will specify at what time or how often the tasks you configured in the previous lessons should be executed, and in what order. In addition, you will set up notifications that will be sent to you in case something goes wrong and requires your attention. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     }, {
@@ -24,7 +24,7 @@ export default {
       'title': 'Create Orchestration',
       'link': 'orchestrations',
       'nextStepDispatchAction': {type: ORCHESTRATION_CREATE_SUCCESS},
-      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-xs">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., My orchestration.',
+      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-xs">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., *My orchestration*.',
       'media': '',
       'mediaType': ''
     }, {
@@ -33,7 +33,7 @@ export default {
       'layout': 'content',
       'backdrop': false,
       'title': 'Orchestration Overview',
-      'markdown': 'The orchestrator configuration process consists of three separate parts in which you will create the desired sequence of the tasks to be executed, set the desired schedule, and select error and warning notifications. <br/><br/> Start by clicking on <span class="btn btn-success btn-xs">Configure Tasks</span> to select and order the tasks.',
+      'markdown': 'The orchestrator configuration consists of three separate parts in which you will create the desired **sequence** of the tasks you wish to execute. You will set your execution **schedule**, and select **notifications** you want to be sent to you in case of errors, delays, etc. <br/><br/> Start by clicking on <span class="btn btn-success btn-xs">Configure Tasks</span> to select and order the tasks.',
       'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_EDIT_START},
       'media': '',
       'mediaType': ''
@@ -45,8 +45,8 @@ export default {
       'title': 'Configure Task',
       'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on the green button <span class="btn btn-success btn-xs">+ New Task</span>.'
                 + `
-- Step 1: After clicking <span class="btn btn-success btn-xs">+ New task</span>, select your Snowflake Extractor.
-- Step 2: Click <span class="btn btn-success btn-xs">+ New task</span> again. Then click on the little Back icon on the right and select you transformation from the list.
+- Step 1: After clicking <span class="btn btn-success btn-xs">+ New task</span>, select your Snowflake extractor.
+- Step 2: Click <span class="btn btn-success btn-xs">+ New task</span> again. Then click on the little Back icon on the right, and select your transformation from the list.
 - Step 3: Click <span class="btn btn-success btn-xs">+ New task</span>, then return to the list of your configurations one more time, and select your Tableau Writer.
 <br>
 
@@ -81,8 +81,8 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
       'markdown': 'Finally, to receive email notifications about errors, warnings and processing delays, enter the email address where you want notifications about your scheduled tasks to be sent.' +
       `
 - Click on <span class="btn btn-success btn-xs">Configure Notifications</span>.
-- Click on <span class="btn btn-success btn-xs">Edit Notifications</span> in the upper right corner.
-- Add your email address for all three notification types and click the **+** button. It moves the address to the subscriber field above. You can add as many recipients as you want.
+- Then click on <span class="btn btn-success btn-xs">Edit Notifications</span> in the upper right corner.
+- Add your email address for all three notification types and click the <span class="btn btn-success btn-xs"> + </span> button. It moves the address to the subscriber field above. You can add as many recipients as you want.
 - Click on <span class="btn btn-success btn-xs">Save</span>.
 
 `,

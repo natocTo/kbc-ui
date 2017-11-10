@@ -29,7 +29,7 @@ export default {
       'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'tde-exporter'},
       'isNavigationVisible': true,
       'media': '',
-      'markdown': 'Let’s say you have Tableau Desktop installed. Now you need to find the writer Tableau in the **Writers** section.'
+      'markdown': 'Let’s say you have Tableau Desktop installed on your computer. Now you need to find the writer Tableau in the **Writers** section.'
                 + `
 - Click on <span class="btn btn-success btn-xs">+ New Writer</span>.
 - Find **Tableau**. You can use the search feature to find it faster.
@@ -63,8 +63,8 @@ A Tableau Desktop Extract file will be created. In a real project, you would fin
       'layout': 'content',
       'position': 'center',
       'backdrop': true,
-      'title': 'Run Extracion',
-      'markdown': 'For the purposes of the Guide Mode, let’say you have downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. The graph below is one of many reports you can create. <br/><br/> To see how to automate the whole process, continue to the next lesson – Project Automation. <br/><br/> Learn more about <a href="https://help.keboola.com/writers/" target="_blank">Writers</a>, or follow the hands-on tutorial on writing data in our <a href="https://help.keboola.com/tutorial/write/" target="_blank">user documentation</a>.',
+      'title': 'Run Extraction',
+      'markdown': 'For the purposes of the Guide Mode, let’s say you have downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. The graph below is one of many reports you can create. <br/><br/> To see how to automate the whole process, continue to the next lesson – Project Automation. <br/><br/> Learn more about <a href="https://help.keboola.com/writers/" target="_blank">Writers</a>, or follow the hands-on tutorial on writing data in our <a href="https://help.keboola.com/tutorial/write/" target="_blank">user documentation</a>.',
       'media': 'tbl.png',
       'mediaType': 'img'
     }
