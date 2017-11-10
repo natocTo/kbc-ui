@@ -8,7 +8,7 @@ TableNameEdit = React.createFactory require './TableNameEdit'
 ColumnsEditor = React.createFactory require './ColumnsEditor'
 ColumnRow = require './ColumnRow'
 DataTypes = require '../../../templates/dataTypes'
-
+{Check, Loader} = require 'kbc-react-components'
 
 storageApi = require '../../../../components/StorageApi'
 
@@ -28,6 +28,7 @@ FilterTableModal = require('../../../../components/react/components/generic/Tabl
 #InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
 PrimaryKeyModal = React.createFactory(require('./PrimaryKeyModal').default)
 IsDockerBasedFn = require('../../../templates/dockerProxyApi').default
+IncrementalSetupModal = React.createFactory(require('./IncrementalSetupModal').default)
 
 defaultDataTypes =
 ['INT','BIGINT',
@@ -176,19 +177,43 @@ templateFn = (componentId) ->
     primaryKey = exportInfo.get('primaryKey', List())
     editingPkPath = @state.v2Actions.editingPkPath
     editingPk = v2State.getIn(editingPkPath)
+    showIncrementalSetupPath = ['IncrementalSetup', 'show']
+    tableMapping = @state.v2Actions.getTableMapping(@state.tableId)
     span null,
       p null,
         strong className: 'col-sm-3',
-          'Incremental'
-        React.createElement ActivateDeactivateButton,
-          isActive: isIncremental
-          activateTooltip: 'Set incremental'
-          deactivateTooltip: 'reset incremental'
-          isPending: @state.v2State.get('saving')
-          buttonStyle: {'paddingTop': '0', 'paddingBottom': '0'}
-          buttonDisabled: !!@state.editingColumns
-          onChange: =>
-            @setV2TableInfo(exportInfo.set('incremental', !isIncremental))
+          'Incremental Load'
+        ' '
+        button
+          className: 'btn btn-link'
+          style: {'paddingTop': 0, 'paddingBottom': 0}
+          disabled: !!@state.editingColumns
+          onClick: =>
+            @state.v2Actions.updateV2State(showIncrementalSetupPath, true)
+          if isIncremental then 'Enabled' else 'Disabled'
+          ' '
+          span className: 'kbc-icon-pencil'
+        IncrementalSetupModal
+          isSaving: @state.v2State.get('savingIncremental')
+          show: v2State.getIn(showIncrementalSetupPath)
+          onHide: => @state.v2Actions.updateV2State(showIncrementalSetupPath)
+          currentPK: primaryKey.join(',')
+          currentMapping: tableMapping
+          columns: @state.columns.map (c) ->
+            c.get('dbName')
+          isIncremental: isIncremental
+          onSave: (isIncremental, primaryKey, newMapping) =>
+            @state.v2Actions.updateV2State('savingIncremental', true)
+            finishSaving =  => @state.v2Actions.updateV2State('savingIncremental', false)
+            newExportInfo = exportInfo.set('primaryKey', primaryKey).set('incremental', isIncremental)
+            @setV2TableInfo(newExportInfo).then =>
+              if newMapping != tableMapping
+                @state.v2Actions.setTableMapping(newMapping).then(finishSaving)
+              else
+                finishSaving()
+
+
+
       p null,
         strong className: 'col-sm-3',
           'Primary Key'
