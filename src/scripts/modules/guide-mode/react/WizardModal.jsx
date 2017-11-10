@@ -15,11 +15,10 @@ export default React.createClass({
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
-    lesson: React.PropTypes.object.isRequired
+    lesson: React.PropTypes.object.isRequired,
   },
 
   render: function() {
-    let currentBody = this.getModalBody();
     return (
       <div>
         <Modal
@@ -37,12 +36,10 @@ export default React.createClass({
           <Modal.Body>
             <ReactCSSTransitionGroup
                 transitionName="example"
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}
+                transitionEnterTimeout={200}
+                transitionLeaveTimeout={200}
             >
-                {
-                    currentBody
-                }
+                {this.getModalBody()}
             </ReactCSSTransitionGroup>
           </Modal.Body>
           <Modal.Footer>
@@ -60,18 +57,18 @@ export default React.createClass({
       <div className="col-md-12">
           {!this.isLastStep() &&
           <span>
-                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-                 </span>
+            <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+          </span>
           }
         <div>
           <div className="guide-media">
-              {this.renderMedia()}
+            {this.renderMedia()}
           </div>
         </div>
           {this.isLastStep() &&
           <span className="guide-congratulations">
-                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-                 </span>
+            <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+          </span>
           }
       </div>
     </div>
