@@ -243,10 +243,10 @@ export default React.createClass({
         {
           this.getLessonSteps().filter((step) => {
             return step.id < this.getStepsCount();
-          }, this).map((step) => {
+          }, this).map((step, index) => {
             if (this.isNavigationVisible()) {
               return (
-                <ListGroupItem className={this.getStepState(step) + ' guide-navigation-step'}>
+                <ListGroupItem key={index} className={this.getStepState(step) + ' guide-navigation-step'}>
                   <span>
                     {this.getLessonId()}.{step.id}. {step.title}
                   </span>
