@@ -176,7 +176,6 @@ export default React.createClass({
         .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
         .set('name', newName ? newName : '')
         .set('primaryKey', primaryKeys)
-        .set('incremental', !!primaryKeys)
     );
   },
 
