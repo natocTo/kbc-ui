@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 
-// import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {fromJS} from 'immutable';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
@@ -15,7 +14,6 @@ export default React.createClass({
     currentPK: PropTypes.object.isRequired,
     currentMapping: PropTypes.string,
     isIncremental: PropTypes.bool,
-    // tableConfig: PropTypes.object.isRequired,
     onSave: React.PropTypes.func.isRequired,
     onHide: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
@@ -57,21 +55,29 @@ export default React.createClass({
               label="Enable Incremental Load"
               checked={this.state.isIncremental}
               onChange={(e) => this.setState({isIncremental: e.target.checked})}
+              help="With incremental load enabled, writer will append rows to the destiantion table and/or updates existing rows identified by primary key if specified."
             />
-            <div className="form-group form-group-sm">
-              <label htmlFor="title" className="col-sm-3 control-label">
-                Primary Key
-              </label>
-              <div className="col-sm-9">
-                {this.renderPKSelector()}
+            <span>
+              <div className="form-group form-group-sm">
+                <label htmlFor="title" className="col-sm-3 control-label">
+                  Destination Table Primary Key
+                </label>
+                <div className="col-sm-9">
+                  {this.renderPKSelector()}
+                  <span className="help-block">
+                    Helps to identify the identical rows.
+                  </span>
+                </div>
               </div>
-            </div>
-            <ChangedSinceInput
-              labelClassName="col-sm-3"
-              wrapperClassName="col-sm-9"
-              onChange={(value) => this.setState({mapping: value})}
-              mapping={this.state.mapping}
-            />
+              <ChangedSinceInput
+                labelClassName="col-sm-3"
+                wrapperClassName="col-sm-9"
+                onChange={(value) => this.setState({mapping: value})}
+                label="Source table data changed in last"
+                mapping={this.state.mapping}
+                helpBlock="Filter and only send the source data changed within the specified period. Mostly helpful when the data are being updated on a regular basis."
+              />
+            </span>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -112,9 +118,6 @@ export default React.createClass({
   },
 
   closeModal() {
-    /* this.setState({
-     *   primarykey: null
-     * });*/
     this.props.onHide();
   },
 
