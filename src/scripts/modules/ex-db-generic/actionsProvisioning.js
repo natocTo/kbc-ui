@@ -302,7 +302,6 @@ export function createActions(componentId) {
           query = query.set('primaryKey', pkCols.map((column) => {
             return column.get('name');
           }).toJS());
-          query = query.set('incremental', true);
         }
         query = query.set('outputTable', store.getDefaultOutputTableId(table.get('tableName')));
         return query;
