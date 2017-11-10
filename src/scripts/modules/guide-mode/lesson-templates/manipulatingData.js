@@ -11,18 +11,18 @@ export default {
     {
       'id': 1,
       'position': 'center',
-      'layout': 'content',
       'backdrop': true,
+      'isNavigationVisible': false,
       'title': 'Introduction',
-      'link': 'home',
+      'link': '/',
       'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img'
     }, {
       'id': 2,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Create Bucket',
       'link': 'transformations',
       'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on **+ New Transformation Bucket** and name it, e.g., *My transformation bucket*.',
@@ -32,10 +32,10 @@ export default {
     }, {
       'id': 3,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Create Transformation',
-      'link': '',
+      'link': '/',
       'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
       'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
       'media': '',
@@ -43,10 +43,10 @@ export default {
     }, {
       'id': 4,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Map Data & Set Queries',
-      'link': '',
+      'link': '/',
       'markdown':
       'Now let’s specify the following: '
 
@@ -69,10 +69,10 @@ export default {
     }, {
       'id': 5,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Run Transformation',
-      'link': '',
+      'link': '/',
       'markdown': 'Now when everything is ready, you can click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run transformation</span>. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'media': '',
@@ -80,8 +80,8 @@ export default {
     }, {
       'id': 6,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Check Jobs',
       'link': 'jobs',
       'markdown': 'You can see the status of your jobs in the section **Jobs**. Your input tables were joined and the output table *Transformed* was created. You can check the details of each job here too.' +
@@ -90,14 +90,25 @@ export default {
       'mediaType': ''
     }, {
       'id': 7,
-      'position': 'center',
-      'layout': 'content',
+      'position': 'aside',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Check Storage',
       'link': 'storage',
       'markdown': 'You can see what the final table looks like in a Data Sample in Storage. <br/><br/> To see how to write the output data from Keboola Connection, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
+    },
+    {
+      'id': 8,
+      'position': 'center',
+      'backdrop': true,
+      'isNavigationVisible': false,
+      'title': 'Congratulations',
+      'link': '/',
+      'markdown': 'Congratulations! Lesson finished.',
+      'media': 'keboola-finished.svg',
+      'mediaType': 'img'
     }
   ]
 };

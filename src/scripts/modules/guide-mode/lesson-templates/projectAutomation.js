@@ -9,18 +9,18 @@ export default {
     {
       'id': 1,
       'position': 'center',
-      'layout': 'content',
       'backdrop': true,
+      'isNavigationVisible': false,
       'title': 'Introduction',
-      'link': 'home',
+      'link': '/',
       'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically. <br/><br/> In this lesson, you will specify at what time or how often the tasks you configured in the previous lessons should be executed, and in what order. In addition, you will set up notifications that will be sent to you in case something goes wrong and requires your attention. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     }, {
       'id': 2,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Create Orchestration',
       'link': 'orchestrations',
       'nextStepDispatchAction': {type: ORCHESTRATION_CREATE_SUCCESS},
@@ -30,8 +30,8 @@ export default {
     }, {
       'id': 3,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Orchestration Overview',
       'markdown': 'The orchestrator configuration consists of three separate parts in which you will create the desired **sequence** of the tasks you wish to execute. You will set your execution **schedule**, and select **notifications** you want to be sent to you in case of errors, delays, etc. <br/><br/> Start by clicking on <span class="btn btn-success btn-xs">Configure Tasks</span> to select and order the tasks.',
       'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_EDIT_START},
@@ -40,8 +40,8 @@ export default {
     }, {
       'id': 4,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Configure Task',
       'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on the green button <span class="btn btn-success btn-xs">+ New Task</span>.'
                 + `
@@ -59,8 +59,8 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
     }, {
       'id': 5,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Schedule Orchestration',
       'markdown': 'Now click on <span class="btn btn-success btn-xs">Edit schedule</span> to choose how often, on what days and at what time you want the configured tasks to run.' +
       `
@@ -75,8 +75,8 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
     }, {
       'id': 6,
       'position': 'aside',
-      'layout': 'content',
       'backdrop': false,
+      'isNavigationVisible': true,
       'title': 'Configure Notifications',
       'markdown': 'Finally, to receive email notifications about errors, warnings and processing delays, enter the email address where you want notifications about your scheduled tasks to be sent.' +
       `
@@ -93,8 +93,8 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
     }, {
       'id': 7,
       'position': 'center',
-      'layout': 'content',
       'backdrop': true,
+      'isNavigationVisible': false,
       'title': 'Conclusion',
       'markdown': 'And that`s it! From data extraction to data writing, you have set up the full pipeline. Any change to your Snowflake database tables will be automatically reflected in your Tableau results. <br/><br/> Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow the hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>. <br/><br/> Remember that no matter what problems you encounter while working with Keboola Connection, we will be more than happy to help you via our **Support**. There is <a href="https://help.keboola.com/" target="_blank">user documentation</a> written for you as well, covering every component of Keboola Connection. <br/><br/> If you wish to disable the Guide Mode, go to **Users & Settings**, the tab **Settings**.',
       'media': '',
@@ -103,10 +103,10 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
     {
       'id': 8,
       'position': 'center',
-      'layout': 'congratulations',
       'backdrop': true,
+      'isNavigationVisible': false,
       'title': 'Congratulations',
-      'link': 'home',
+      'link': '/',
       'markdown': 'Congratulations! You have completed all lessons.',
       'media': 'keboola-finished.svg',
       'mediaType': 'img'

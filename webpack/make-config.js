@@ -52,7 +52,12 @@ module.exports = function (options) {
             './node_modules/intl/locale-data/jsonp/en.js',
             options.entry
           ],
-          parts: ['./src/scripts/parts']
+          parts: [
+            'webpack-dev-server/client?http://0.0.0.0:3000',
+            'webpack/hot/only-dev-server',
+            './src/styles/kbc.less',
+            './src/scripts/parts'
+          ]
         };
     } else {
         entry = {

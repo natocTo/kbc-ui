@@ -9,9 +9,9 @@ ErrorPage = React.createFactory(require './../pages/ErrorPage')
 LoadingPage = React.createFactory(require './../pages/LoadingPage')
 ProjectSelect = React.createFactory(require('./project-select/ProjectSelect').default)
 PageTitle = React.createFactory(require './PageTitle')
-Wizard =  React.createFactory(require('../../modules/try-mode/react/Wizard'))
-WizardStore = require('../../modules/try-mode/stores/WizardStore').default
-DisableTryMode = require('../../modules/try-mode/stores/ActionCreators').disableTryMode
+Wizard =  React.createFactory(require('../../modules/guide-mode/react/Wizard').default)
+WizardStore = require('../../modules/guide-mode/stores/WizardStore').default
+DisableGuideMode = require('../../modules/guide-mode/stores/ActionCreators').disableGuideMode
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')
@@ -38,15 +38,16 @@ App = React.createClass
     xsrf: ApplicationStore.getXsrfToken()
     canCreateProject: ApplicationStore.getCanCreateProject()
     canManageApps: ApplicationStore.getKbcVars().get 'canManageApps'
-    projectHasTryModeOn: ApplicationStore.getKbcVars().get 'projectHasTryModeOn'
+    projectHasGuideModeOn: ApplicationStore.getKbcVars().get 'projectHasGuideModeOn'
     homeUrl: ApplicationStore.getUrlTemplates().get 'home'
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
+    projectBaseUrl: ApplicationStore.getProjectBaseUrl()
   render: ->
     div className: classnames(
       snowflake: ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo')
     ),
-      if @state.projectHasTryModeOn == true
-        div className: 'try-status-bar',
+      if @state.projectHasGuideModeOn == true
+        div className: 'guide-status-bar',
           p null,
             'Guide Mode'
           p null,
@@ -86,7 +87,8 @@ App = React.createClass
               LoadingPage()
             else
               RouteHandler()
-            if @state.projectHasTryModeOn == true
-              Wizard()
+            if @state.projectHasGuideModeOn == true
+              Wizard
+                projectBaseUrl: @state.projectBaseUrl
 
 module.exports = App

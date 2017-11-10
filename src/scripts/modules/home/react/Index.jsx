@@ -10,8 +10,8 @@ import componentsActions from '../../components/InstalledComponentsActionCreator
 // import InstalledComponentsApi from '../../components/InstalledComponentsApi';
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import { showWizardModalFn } from '../../try-mode/stores/ActionCreators.js';
-import lessons from '../../try-mode/WizardLessons';
+import { showWizardModalFn, getAchievedLesson } from '../../guide-mode/stores/ActionCreators.js';
+import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 
 export default React.createClass({
@@ -48,7 +48,7 @@ export default React.createClass({
       projectId: currentProject.get('id'),
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
       expires: ApplicationStore.getCurrentProject().get('expires'),
-      projectHasTryModeOn: ApplicationStore.getKbcVars().get('projectHasTryModeOn')
+      projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn')
     };
   },
 
@@ -58,7 +58,7 @@ export default React.createClass({
 
   countOverviewComponent() {
     let componentCount = 0;
-    if (this.state.projectHasTryModeOn) {
+    if (this.state.projectHasGuideModeOn) {
       componentCount++;
     }
     componentCount += this.state.limitsOverQuota.count();
@@ -70,36 +70,43 @@ export default React.createClass({
     }
     return componentCount;
   },
+  renderLessonList() {
+    return (
+      Object.keys(lessons).map((lesson, key) => {
+        return (
+          <li key={key}>
+            <a
+              className={'guide-lesson-link' + (getAchievedLesson() < key ? ' guide-lesson-link-locked' : '')}
+              href="#" onClick={(e) => {
+                e.preventDefault();
+                this.openLessonModal(key + 1);
+              }}
+            >
+              Lesson {key + 1} - {lessons[key + 1].title} {getAchievedLesson() < key &&
+            <i className="fa fa-lock"/>}
+            </a>
+          </li>
+        );
+      })
+    );
+  },
+
 
   render() {
     return (
       <div className="container-fluid">
         {this.countOverviewComponent() > 0  &&
         <div className="kbc-overview-component-container">
-          {this.state.projectHasTryModeOn &&
+          {this.state.projectHasGuideModeOn &&
           <div className="kbc-overview-component">
-            <div className="try-desk-container">
-              <div className="try-desk">
+            <div className="guide-desk-container">
+              <div className="guide-desk">
                 <h2>Welcome to Keboola Connection</h2>
                 <h1>Guide Mode</h1>
                 <div className="row">
                   <div className="col-xs-4">
                     <ul>
-                      {Object.keys(lessons).map((lesson, key) => {
-                        return (
-                          <li key={key}>
-                            <a
-                              className="try-lesson-link"
-                              href="#" onClick={(e) => {
-                                e.preventDefault();
-                                this.openLessonModal(key + 1);
-                              }}
-                            >
-                              Lesson {key + 1} - {lessons[key + 1].title}
-                            </a>
-                          </li>
-                        );
-                      })}
+                        {this.renderLessonList()}
                     </ul>
                   </div>
                   <div className="col-xs-5">
@@ -111,7 +118,7 @@ export default React.createClass({
                       <br/>
                       <br/>
                       Feel free to switch the Guide Mode off at any time. If needed, bring it back by going to <a
-                        className="try-link" href={ApplicationStore.getProjectPageUrl('settings')}>Settings
+                        className="guide-link" href={ApplicationStore.getProjectPageUrl('settings')}>Settings
                       > Guide Mode.</a>
                     </p>
                   </div>

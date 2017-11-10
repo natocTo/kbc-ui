@@ -1,12 +1,12 @@
 /* ========== */
-/*  TRY MODE  */
+/*  GUIDE MODE  */
 /* ========== */
 
 
 
-.try {
-  @TryColor1: #0099CE;
-  @TryColor2: #25B8EB;
+.guide {
+  @GuideColor1: #0099CE;
+  @GuideColor2: #25B8EB;
   @wizardWidth: 900px;
   @wizardWidthAside: 320px;
   @wizardHeight: 400px;
@@ -25,18 +25,19 @@
     .kbc-main-sidebar{
       margin-top: @statusBarHeight;
     }
-    &.modal-open.try-mode-lesson-on:not(.try-mode-center) {
+    &.modal-open.guide-mode-lesson-on:not(.guide-mode-center) {
       overflow: auto !important;
       padding-right: @wizardWidthAside!important;
     }
-    &.try-mode-lesson-on{
+    &.guide-mode-lesson-on{
       .kbc-main-content {
         margin-top: @statusBarHeight!important;
       }
-      .try-desk-container{
+      .guide-desk-container{
         display: none;
       }
     }
+
     //this should better be in Indigo-ui
     @media (max-height: 765px) {
       .kbc-nav-sidebar > li > a {
@@ -55,7 +56,7 @@
 
   &-desk {
     background-image: url('../media/keboola-desk.svg');
-    background-color: @TryColor1;
+    background-color: @GuideColor1;
     background-position: right -30px top -20px;
     background-repeat: no-repeat;
     padding: 40px 50px;
@@ -130,7 +131,7 @@
   &-status-bar {
     z-index: 1001;
     background-image: url('../media/keboola-top-blue-bar.svg');
-    background-color: @TryColor1;
+    background-color: @GuideColor1;
     background-position: -5px  -32px;
     background-repeat: no-repeat;
 
@@ -168,8 +169,11 @@
   }
 
   &-wizard {
+    //FIX OF TRANSLATE BLUR BUG IN CHROME
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-transform: translateZ(0) scale(1.0, 1.0);
     &.modal {
-      h3{
+      h3 {
         font-size: 16px;
         font-family: "Gotham Rounded A", "Gotham Rounded B";
         color: #7C8498;
@@ -180,7 +184,7 @@
       }
       .modal-header {
         padding: 40px 37px 20px;
-        color: @TryColor2;
+        color: @GuideColor2;
         border-bottom: 0;
         font-family: "Gotham Rounded A", "Gotham Rounded B";
         h1 {
@@ -204,17 +208,17 @@
           color: #7C8498;
           line-height: 1.5;
         }
-        strong{
+        strong {
           font-weight: bold;
         }
         li {
           color: #7C8498;
           line-height: 1.5;
         }
-        .btn{
+        .btn {
           pointer-events: none;
-          
-          &-link{
+
+          &-link {
             color: #15c3ff;
             padding-top: 0;
             position: relative;
@@ -228,24 +232,17 @@
         top: 355px;
         transform: translate(50%, -50%);
 
-
         width: @wizardWidth;
         transition: all 200ms ease;
       }
 
-      &.try-wizard-center {
-        //FIX OF TRANSLATE BLUR BUG IN CHROME
-        -webkit-font-smoothing: subpixel-antialiased;
-        -webkit-transform: translateZ(0) scale(1.0, 1.0);
-
-      }
-      &.try-wizard-aside {
-        .try-media {
-          max-width:inherit;
-        }
-
+      &.guide-wizard-aside {
         position: static;
-        .modal-content{
+        -webkit-transform: none;
+        .guide-media {
+          max-width: inherit;
+        }
+        .modal-content {
           border-radius: 5px 0px 0px 5px;
         }
         .modal-header {
@@ -285,20 +282,22 @@
       font-family: "Gotham Rounded A", "Gotham Rounded B";
 
       &-passed {
-        &:before {
-          left: -16px;
-          position: absolute;
-          content: '\002714';
-          color: #98cf3c
-        }
+
         span {
           color: #ddd;
         }
       }
-      &-active span {
-        color: @TryColor2;
-        font-weight: bold;
-      }
+      &-active{
+        &:before {
+          left: -16px;
+          position: absolute;
+          content: '\0025B6';
+          color: @GuideColor2
+        }
+        span {
+        color: @GuideColor2;
+      }}
+
     }
   }
 
@@ -313,12 +312,17 @@
     line-height: 38px;
     text-decoration: none;
     color: #fff;
+
     &:hover {
       color: #fff;
       text-decoration: underline;
     }
-    &-passed {
-      color: #8AE1FF
+    &-locked {
+      opacity: 0.5;
+      pointer-events: none;
+      &:hover {
+        cursor: not-allowed;
+      }
     }
   }
 
@@ -346,5 +350,24 @@
 
 
 
+@keyframes list-enter {
+  0% {
+    opacity: 0.01;
+    transform: translate3D(-320px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3D(0, 0, 0);
+  }
+}
 
-
+@keyframes list-leave {
+  0% {
+    opacity: 1;
+    transform: translate3D(0, 0, 0);
+  }
+  100% {
+    opacity: 0.01;
+    transform: translate3D(320px, 0, 0);
+  }
+}

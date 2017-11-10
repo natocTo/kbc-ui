@@ -1,0 +1,291 @@
+import React from 'react';
+import {Modal, Button, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
+import RoutesStore from '../../../stores/RoutesStore';
+import { hideWizardModalFn, getAchievedStep, setAchievedLesson } from '../stores/ActionCreators.js';
+import GuideModeImage from './GuideModeImage';
+import Remarkable from 'react-remarkable';
+// import ApplicationStore from '../../../stores/ApplicationStore';
+//
+
+const redirectTo = (pathname) => {
+  window.location.assign(window.location.origin + pathname);
+};
+
+export default React.createClass({
+  displayName: 'WizardModal',
+  propTypes: {
+    onHide: React.PropTypes.func.isRequired,
+    setStep: React.PropTypes.func.isRequired,
+    show: React.PropTypes.bool.isRequired,
+    backdrop: React.PropTypes.bool.isRequired,
+    position: React.PropTypes.string.isRequired,
+    step: React.PropTypes.number.isRequired,
+    lesson: React.PropTypes.object.isRequired,
+    projectBaseUrl: React.PropTypes.string.isRequired
+  },
+
+  getProjectPageUrlHref(path) {
+    if (process.env.NODE_ENV === 'production') {
+      return this.props.projectBaseUrl + '/' + path;
+    }
+    // development
+    if (path === 'storage') {
+      return '/index-storage.html';
+    } else {
+      return '/?token=TOKEN#/' + path;
+    }
+  },
+
+  render: function() {
+    return (
+      <div>
+        <Modal
+          enforceFocus={false}
+          show={this.props.show} onHide={this.closeLessonModal} backdrop={this.isStepBackdrop()} bsSize="large"
+          className={'guide-wizard guide-wizard-' + this.getStepPosition()}>
+
+          <Modal.Header closeButton>
+            { this.getStepPosition() === 'center' ? (
+                this.getModalTitleExtended()
+            ) : (
+                this.getModalTitle()
+            )}
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row">
+              <div className="col-md-12">
+                {!this.isLastStep() &&
+                <span>
+                  <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+                </span>
+                }
+              <div>
+                <div className="guide-media">
+                {this.renderMedia()}
+                </div>
+              </div>
+                {this.isLastStep() &&
+                <span className="guide-congratulations">
+                    <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+                </span>
+                }
+                {this.isNavigationVisible() && this.renderNavigation()}
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            {this.renderButtonPrev()}
+            {this.renderButtonNext()}
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
+  },
+  hasNextStep() {
+    return this.props.step + 1 < this.getStepsCount();
+  },
+  hasPreviousStep() {
+    return this.props.step > 0;
+  },
+  getActiveStep() {
+    return this.props.step;
+  },
+  getLesson() {
+    return this.props.lesson;
+  },
+  getLessonSteps() {
+    return this.getLesson().steps;
+  },
+  getLessonId() {
+    return this.getLesson().id;
+  },
+  getLessonTitle() {
+    return this.getLesson().title;
+  },
+  getStepsCount() {
+    return this.getLessonSteps().length;
+  },
+  getCurrentStep() {
+    return this.getLessonSteps()[this.getActiveStep()];
+  },
+  getStepId() {
+    return this.getLessonSteps()[this.getActiveStep()].id;
+  },
+  getStepPosition() {
+    return this.getLessonSteps()[this.getActiveStep()].position;
+  },
+  getStepMarkdown() {
+    return this.getLessonSteps()[this.getActiveStep()].markdown;
+  },
+  getStepTitle() {
+    return this.getLessonSteps()[this.getActiveStep()].title;
+  },
+  getStepMedia() {
+    return this.getLessonSteps()[this.getActiveStep()].media;
+  },
+  getStepMediaType() {
+    return this.getLessonSteps()[this.getActiveStep()].mediaType;
+  },
+  getStepLink() {
+    return this.getLessonSteps()[this.getActiveStep()].link;
+  },
+  getPreviousStepLink() {
+    if (!this.hasPreviousStep()) {
+      return this.getLessonSteps()[this.getActiveStep()].link;
+    }
+    return this.getLessonSteps()[this.getActiveStep() - 1].link;
+  },
+  getNextStepLink() {
+    if (!this.hasNextStep()) {
+      return this.getLessonSteps()[this.getActiveStep()].link;
+    }
+    return this.getLessonSteps()[this.getActiveStep() + 1].link;
+  },
+  isStepBackdrop() {
+    return this.getLessonSteps()[this.getActiveStep()].backdrop;
+  },
+  isFirstStep() {
+    return this.getActiveStep() === 0;
+  },
+  isLastStep() {
+    return this.getLessonSteps().length - 1 === this.getActiveStep();
+  },
+  isNavigationVisible() {
+    return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;
+  },
+  getModalTitle() {
+    return (<Modal.Title>{this.getLessonId() + '.' + this.getStepId() + ' ' + this.getStepTitle()}</Modal.Title>);
+  },
+  getModalTitleExtended() {
+    return (<div><h2>Lesson  {this.getLessonId()}</h2><h1>{this.getLessonTitle()}</h1></div>);
+  },
+  renderMedia() {
+    if (this.getStepMediaType() === 'img') {
+      return this.getImageLink();
+    } else if (this.getStepMediaType() === 'video') {
+      return this.getVideoEmbed();
+    }
+  },
+  getImageLink() {
+    return <GuideModeImage imgageName={this.getStepMedia()}/>;
+  },
+  getVideoEmbed() {
+    return (
+      <ResponsiveEmbed a16by9>
+        <iframe width="100%" height="100%" src={this.getStepMedia()} allowFullScreen />
+      </ResponsiveEmbed>
+    );
+  },
+  getNextStepDispatchAction() {
+    return this.getLessonSteps()[this.getActiveStep()].nextStepDispatchAction;
+  },
+  getStepState(step) {
+    let stepState = '';
+    if (step.id - 1 < getAchievedStep() + 1) {
+      stepState = 'guide-navigation-step-passed';
+    }
+    if (this.getActiveStep() === step.id - 1) {
+      stepState += ' guide-navigation-step-active';
+    }
+    return stepState;
+  },
+  renderButtonPrev() {
+    const { step } = this.props.step;
+    const buttonText = step === 0 ? 'Close' : 'Prev step';
+    if (!this.hasPreviousStep()) {
+      return '';
+    }
+    if (this.getStepLink() === 'storage' || this.getPreviousStepLink() === 'storage') {
+      return (
+        <button
+          onClick={() => {
+            this.handleStep('prev');
+            redirectTo(this.getProjectPageUrlHref(this.getPreviousStepLink()));
+          }}
+          className="btn btn-link">
+          {buttonText}
+        </button>
+      );
+    }
+    return (
+      <Button onClick={() => this.handleStep('prev')} bsStyle="link">{buttonText}</Button>
+    );
+  },
+  renderButtonNext() {
+    let buttonText = 'Next step';
+    if (this.props.step === 0) {
+      buttonText = 'Take lesson';
+    } else if (this.props.step === this.getStepsCount() - 2) {
+      buttonText = 'Finish';
+    } else if (this.props.step === this.getStepsCount() - 1) {
+      buttonText = 'Close';
+    }
+
+    if (this.getStepLink() === 'storage' || this.getNextStepLink() === 'storage') {
+      return (
+        <button
+          onClick={() => {
+            this.handleStep('next');
+            redirectTo(this.getProjectPageUrlHref(this.getNextStepLink()));
+          }}
+          className="btn btn-primary">
+          {buttonText}
+        </button>
+      );
+    }
+    return (
+      <Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>
+    );
+  },
+  renderNavigation() {
+    return (
+      <ListGroup className="guide-navigation">
+        {
+          this.getLessonSteps().filter((step) => {
+            return step.id < this.getStepsCount();
+          }, this).map((step, index) => {
+            if (this.isNavigationVisible()) {
+              return (
+                <ListGroupItem key={index} className={this.getStepState(step) + ' guide-navigation-step'}>
+                  <span>
+                    {this.getLessonId()}.{step.id}. {step.title}
+                  </span>
+                </ListGroupItem>
+              );
+            }
+          })}
+      </ListGroup>
+    );
+  },
+  closeLessonModal() {
+    RoutesStore.getRouter().transitionTo('home');
+    hideWizardModalFn();
+  },
+  handleStep(direction) {
+    if (direction === 'next') {
+      this.increaseStep();
+    } else if (direction === 'prev') {
+      this.decreaseStep();
+    }
+  },
+  decreaseStep() {
+    if (this.props.step > 0) {
+      const nextStep = this.props.step - 1;
+      this.props.setStep(nextStep);
+    } else {
+      this.closeLessonModal();
+    }
+  },
+  increaseStep() {
+    if (this.props.step < this.getStepsCount() - 1) {
+      const nextStep = this.props.step + 1;
+      this.props.setStep(nextStep);
+    } else {
+      this.closeLessonModal();
+    }
+    if (this.props.step === this.getStepsCount() - 2) {
+      setAchievedLesson(this.getLessonId());
+    }
+  }
+
+});
