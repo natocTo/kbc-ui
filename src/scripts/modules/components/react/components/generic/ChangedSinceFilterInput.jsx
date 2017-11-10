@@ -6,13 +6,16 @@ export default React.createClass({
     disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     labelClassName: PropTypes.string,
-    wrapperClassName: PropTypes.string
+    wrapperClassName: PropTypes.string,
+    helpBlock: PropTypes.string,
+    label: PropTypes.string
   },
 
   getDefaultProps() {
     return {
       labelClassName: 'col-xs-2',
-      wrapperClassName: 'col-xs-10'
+      wrapperClassName: 'col-xs-10',
+      label: 'Changed in last'
     };
   },
 
@@ -20,7 +23,7 @@ export default React.createClass({
     return (
       <div className="form-group form-group-sm">
         <label className={'control-label ' + this.props.labelClassName}>
-          Changed in last
+          {this.props.label}
         </label>
         <div className={this.props.wrapperClassName}>
           <ChangedSinceInput
@@ -28,6 +31,7 @@ export default React.createClass({
             disabled={this.props.disabled}
             onChange={this.handleChangeChangedSince}
           />
+          <span className="help-block">{this.props.helpBlock}</span>
         </div>
       </div>
     );
