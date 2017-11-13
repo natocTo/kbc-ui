@@ -130,6 +130,8 @@ templateFn = (componentId) ->
             @_renderIncremetnalSetup()
           if isRenderIncremental
             @_renderTableFiltersRow()
+          if isRenderIncremental
+            @_renderPrimaryKey()
 
         ColumnsEditor
           onToggleHideIgnored: (e) =>
@@ -175,14 +177,12 @@ templateFn = (componentId) ->
     v2State = @state.v2State
     isIncremental = exportInfo.get('incremental')
     primaryKey = exportInfo.get('primaryKey', List())
-    editingPkPath = @state.v2Actions.editingPkPath
-    editingPk = v2State.getIn(editingPkPath)
     showIncrementalSetupPath = ['IncrementalSetup', 'show']
     tableMapping = @state.v2Actions.getTableMapping(@state.tableId)
     span null,
       p null,
         strong className: 'col-sm-3',
-          'Incremental Load'
+          'Load Type'
         ' '
         button
           className: 'btn btn-link'
@@ -190,7 +190,7 @@ templateFn = (componentId) ->
           disabled: !!@state.editingColumns
           onClick: =>
             @state.v2Actions.updateV2State(showIncrementalSetupPath, true)
-          if isIncremental then 'Enabled' else 'Disabled'
+          if isIncremental then 'Incremental Load' else 'Full Load'
           ' '
           span className: 'kbc-icon-pencil'
         IncrementalSetupModal
@@ -212,32 +212,36 @@ templateFn = (componentId) ->
               else
                 finishSaving()
 
-
-
-      p null,
-        strong className: 'col-sm-3',
-          'Primary Key'
+  _renderPrimaryKey: ->
+    v2State = @state.v2State
+    exportInfo = @state.v2ConfigTable
+    primaryKey = exportInfo.get('primaryKey', List())
+    editingPkPath = @state.v2Actions.editingPkPath
+    editingPk = v2State.getIn(editingPkPath)
+    p null,
+      strong className: 'col-sm-3',
+        'Primary Key'
+      ' '
+      button
+        className: 'btn btn-link'
+        style: {'paddingTop': 0, 'paddingBottom': 0}
+        disabled: !!@state.editingColumns
+        onClick: =>
+          @state.v2Actions.updateV2State(editingPkPath, primaryKey)
+        primaryKey.join(', ') or 'N/A'
         ' '
-        button
-          className: 'btn btn-link'
-          style: {'paddingTop': 0, 'paddingBottom': 0}
-          disabled: !!@state.editingColumns
-          onClick: =>
-            @state.v2Actions.updateV2State(editingPkPath, primaryKey)
-          primaryKey.join(', ') or 'N/A'
-          ' '
-          span className: 'kbc-icon-pencil'
-        PrimaryKeyModal
-          tableConfig: @state.tableConfig
-          columns: @state.columns.map (c) ->
-            c.get('dbName')
-          show: !!editingPk
-          currentValue: primaryKey.join(',')
-          isSaving: @state.v2State.get('saving')
-          onHide: =>
-            @state.v2Actions.updateV2State(editingPkPath, null)
-          onSave: (newPk) =>
-            @setV2TableInfo(exportInfo.set('primaryKey', newPk))
+        span className: 'kbc-icon-pencil'
+      PrimaryKeyModal
+        tableConfig: @state.tableConfig
+        columns: @state.columns.map (c) ->
+          c.get('dbName')
+        show: !!editingPk
+        currentValue: primaryKey.join(',')
+        isSaving: @state.v2State.get('saving')
+        onHide: =>
+          @state.v2Actions.updateV2State(editingPkPath, null)
+        onSave: (newPk) =>
+          @setV2TableInfo(exportInfo.set('primaryKey', newPk))
 
   _onEditColumn: (newColumn) ->
     cname = newColumn.get('name')
