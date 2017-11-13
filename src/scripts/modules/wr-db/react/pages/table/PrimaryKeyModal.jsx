@@ -39,7 +39,7 @@ export default React.createClass({
   },
 
   render() {
-    let formDivClass = 'form-group';
+    let formDivClass = 'form-group form-group-sm';
     return (
       <Modal
         show={this.props.show}
@@ -47,7 +47,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {`Specify primary key of target table ${this.props.tableConfig.get('dbName')}`}
+            {`Primary key of destination table ${this.props.tableConfig.get('dbName')}`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
