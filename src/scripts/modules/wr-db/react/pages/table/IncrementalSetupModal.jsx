@@ -5,8 +5,6 @@ import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../components/react/components/generic/ChangedSinceFilterInput';
-import {Input} from '../../../../../react/common/KbcBootstrap';
-
 
 export default React.createClass({
   propTypes: {
@@ -45,39 +43,57 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            Setup Incremental Load
+            Load Settings
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="form form-horizontal">
-            <Input type="checkbox"
-              wrapperClassName="col-sm-offset-3 col-sm-9"
-              label="Enable Incremental Load"
-              checked={this.state.isIncremental}
-              onChange={(e) => this.setState({isIncremental: e.target.checked})}
-              help="With incremental load enabled, writer will append rows to the destiantion table and/or updates existing rows identified by primary key if specified."
-            />
-            <span>
-              <div className="form-group form-group-sm">
-                <label htmlFor="title" className="col-sm-3 control-label">
-                  Destination Table Primary Key
-                </label>
-                <div className="col-sm-9">
-                  {this.renderPKSelector()}
-                  <span className="help-block">
-                    Helps to identify the identical rows.
-                  </span>
+            <div className="form-group form-group-sm">
+              <label className="control-label col-sm-3">
+                Load Type
+              </label>
+              <div className="col-sm-9">
+                <div className="radio radio-sm">
+                  <label>
+                    <input
+                      type="radio"
+                      label="Full Load"
+                      checked={!this.state.isIncremental}
+                      onChange={() => this.setState({isIncremental: false})}
+                    />
+                    <span>Full Load</span>
+                  </label>
                 </div>
+                <span className="help-block">
+                  Load rows and replace them with all existing rows in the destination table.
+                </span>
+
+                <div className="radio radio-sm">
+                  <label>
+                    <input
+                      type="radio"
+                      label="Incremental Load"
+                      checked={this.state.isIncremental}
+                      onChange={() => this.setState({isIncremental: true})}
+                    />
+                    <span>Incremental Load</span>
+                  </label>
+                </div>
+                <span className="help-block">
+                  Load rows and append them to the destination table and/or update identical rows identified by primary key if specified.
+                </span>
               </div>
-              <ChangedSinceInput
-                labelClassName="col-sm-3"
-                wrapperClassName="col-sm-9"
-                onChange={(value) => this.setState({mapping: value})}
-                label="Source table data changed in last"
-                mapping={this.state.mapping}
-                helpBlock="Filter and only send the source data changed within the specified period. Mostly helpful when the data are being updated on a regular basis."
-              />
-            </span>
+            </div>
+
+            <ChangedSinceInput
+              label="Data changed in last"
+              labelClassName="col-sm-3"
+              wrapperClassName="col-sm-9"
+              onChange={(value) => this.setState({mapping: value})}
+              mapping={this.state.mapping}
+              helpBlock="When specified, only rows changed or created up until the selected period will be loaded."
+            />
+            {this.renderPKSelector()}
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -95,16 +111,29 @@ export default React.createClass({
 
   renderPKSelector() {
     return (
-      <Select
-        placeholder="select from database column names"
-        clearable={false}
-        key="primary key select"
-        name="pkelector"
-        multi={true}
-        value={this.state.primarykey}
-        onChange= {(newValue) => this.setState({primarykey: newValue.map(v => v.value).join(',')})}
-        options= {this.getColumns()}
-      />);
+
+      <div className="form-group form-group-sm">
+        <label htmlFor="title" className="col-sm-3 control-label">
+          Destination Table Primary Key
+        </label>
+        <div className="col-sm-9">
+          <Select
+            placeholder="select from database column names"
+            clearable={false}
+            key="primary key select"
+            name="pkelector"
+            multi={true}
+            value={this.state.primarykey}
+            onChange= {(newValue) => this.setState({primarykey: newValue.map(v => v.value).join(',')})}
+            options= {this.getColumns()}
+          />
+          <span className="help-block">
+            Used to identify the identical rows.
+          </span>
+        </div>
+      </div>
+
+    );
   },
 
   getColumns() {
