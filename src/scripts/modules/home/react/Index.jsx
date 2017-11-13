@@ -6,6 +6,7 @@ import LimitsOverQuota from './LimitsOverQuota';
 import Expiration from './Expiration';
 // import ComponentStore from '../../components/stores/ComponentsStore';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
+import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 // import InstalledComponentsApi from '../../components/InstalledComponentsApi';
 import Deprecation from './Deprecation';
@@ -15,16 +16,20 @@ import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentStore)],
+  mixins: [createStoreMixin(InstalledComponentStore, TransformationsStore)],
 
   getStateFromStores() {
     return {
-      installedComponents: InstalledComponentStore.getAll()
+      installedComponents: InstalledComponentStore.getAll(),
+      transformations: TransformationsStore.getAllTransformations()
     };
   },
 
   componentDidMount() {
     componentsActions.loadComponents();
+    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
+      componentsActions.loadComponentConfigsData('transformation');
+    }
   },
 
   getInitialState() {
@@ -65,6 +70,13 @@ export default React.createClass({
     componentCount += this.state.installedComponents.filter(function(component) {
       return !!component.get('flags', List()).contains('deprecated');
     }).count();
+    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
+      componentCount += this.state.transformations.filter(function(bucket) {
+        return bucket.filter(function(transformation) {
+          return transformation.get('backend') === 'mysql';
+        }).count() > 0;
+      }).count();
+    }
     if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
     }
@@ -129,7 +141,7 @@ export default React.createClass({
           }
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-          <Deprecation components={this.state.installedComponents}/>
+          <Deprecation components={this.state.installedComponents} transformations={this.state.transformations}/>
         </div>
         }
         <div className="kbc-main-content">

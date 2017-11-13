@@ -9,7 +9,7 @@ module.exports = React.createClass({
     rowId: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     query: React.PropTypes.object,
-    children: React.PropTypes.element.isRequired
+    children: React.PropTypes.string.isRequired
   },
 
   render: function() {

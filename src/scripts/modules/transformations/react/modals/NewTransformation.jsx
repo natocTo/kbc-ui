@@ -215,12 +215,12 @@ export default React.createClass({
 
   backendOptions() {
     var options = [];
-    options.push({value: 'mysql', label: 'MySQL'});
+    options.push({value: 'snowflake', label: 'Snowflake'});
+    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
+      options.push({value: 'mysql', label: 'MySQL'});
+    }
     if (ApplicationStore.getSapiToken().getIn(['owner', 'hasRedshift'], false)) {
       options.push({value: 'redshift', label: 'Redshift'});
-    }
-    if (ApplicationStore.getSapiToken().getIn(['owner', 'hasSnowflake'], false)) {
-      options.push({value: 'snowflake', label: 'Snowflake'});
     }
     options.push({value: 'r', label: 'R'});
     options.push({value: 'python', label: 'Python'});
