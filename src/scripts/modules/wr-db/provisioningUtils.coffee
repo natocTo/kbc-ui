@@ -1,5 +1,5 @@
-StorageService = require '../components/StorageActionCreators'
-SapiStorage = require '../components/stores/StorageTokensStore'
+StorageService = require('../tokens/actionCreators').default
+SapiStorage = require('../tokens/StorageTokensStore').default
 Promise = require 'bluebird'
 wrDbProvStore = require '../provisioning/stores/WrDbCredentialsStore'
 provisioningActions = require '../provisioning/ActionCreators'
