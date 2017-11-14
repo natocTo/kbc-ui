@@ -1,8 +1,10 @@
 import Index from './react/Index';
+import tokensActions from './actionCreators';
 
 
-export default     {
+export default {
   name: 'tokens',
   title: 'Tokens',
-  defaultRouteHandler: Index
+  defaultRouteHandler: Index,
+  requireData: () => tokensActions.loadTokens()
 };
