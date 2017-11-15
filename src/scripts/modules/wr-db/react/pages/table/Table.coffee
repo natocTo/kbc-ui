@@ -24,9 +24,6 @@ InstalledComponentsActions = require '../../../../components/InstalledComponents
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactivateButton').default
 FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
-FilterTableModal = require('../../../../components/react/components/generic/TableFiltersOnlyModal').default
-#InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
-PrimaryKeyModal = React.createFactory(require('./PrimaryKeyModal').default)
 IsDockerBasedFn = require('../../../templates/dockerProxyApi').default
 IncrementalSetupModal = React.createFactory(require('./IncrementalSetupModal').default)
 
@@ -123,7 +120,6 @@ templateFn = (componentId) ->
       tableEditClassName = 'col-sm-4'
     div className: 'container-fluid',
       div className: 'kbc-main-content',
-        @_renderFilterModal()
         div className: 'row kbc-header',
           @_renderTableEdit()
           if isRenderIncremental
@@ -171,6 +167,8 @@ templateFn = (componentId) ->
       valid = false
     @_setValidateColumn(column.get('name'), valid)
 
+  showIncrementalSetupModal: ->
+    @state.v2Actions.updateV2State(['IncrementalSetup', 'show'], true)
 
   _renderIncremetnalSetup: ->
     exportInfo = @state.v2ConfigTable
@@ -188,8 +186,7 @@ templateFn = (componentId) ->
           className: 'btn btn-link'
           style: {'paddingTop': 0, 'paddingBottom': 0}
           disabled: !!@state.editingColumns
-          onClick: =>
-            @state.v2Actions.updateV2State(showIncrementalSetupPath, true)
+          onClick: @showIncrementalSetupModal
           if isIncremental then 'Incremental Load' else 'Full Load'
           ' '
           span className: 'kbc-icon-pencil'
@@ -217,8 +214,6 @@ templateFn = (componentId) ->
     v2State = @state.v2State
     exportInfo = @state.v2ConfigTable
     primaryKey = exportInfo.get('primaryKey', List())
-    editingPkPath = @state.v2Actions.editingPkPath
-    editingPk = v2State.getIn(editingPkPath)
     p null,
       strong className: 'col-sm-3',
         'Primary Key'
@@ -227,22 +222,10 @@ templateFn = (componentId) ->
         className: 'btn btn-link'
         style: {'paddingTop': 0, 'paddingBottom': 0}
         disabled: !!@state.editingColumns
-        onClick: =>
-          @state.v2Actions.updateV2State(editingPkPath, primaryKey)
+        onClick: @showIncrementalSetupModal
         primaryKey.join(', ') or 'N/A'
         ' '
         span className: 'kbc-icon-pencil'
-      PrimaryKeyModal
-        tableConfig: @state.tableConfig
-        columns: @state.columns.map (c) ->
-          c.get('dbName')
-        show: !!editingPk
-        currentValue: primaryKey.join(',')
-        isSaving: @state.v2State.get('saving')
-        onHide: =>
-          @state.v2Actions.updateV2State(editingPkPath, null)
-        onSave: (newPk) =>
-          @setV2TableInfo(exportInfo.set('primaryKey', newPk))
 
   _onEditColumn: (newColumn) ->
     cname = newColumn.get('name')
@@ -358,34 +341,12 @@ templateFn = (componentId) ->
         className: 'btn btn-link'
         style: {'paddingTop': 0, 'paddingBottom': 0}
         disabled: !!@state.editingColumns
-        onClick: =>
-          @state.v2Actions.updateV2State(@state.v2Actions.editingFilterPath, tableMapping)
-          @state.v2Actions.updateV2State(['filterModal', 'show'], true)
-
+        onClick: @showIncrementalSetupModal
         React.createElement FiltersDescription,
           value: tableMapping
           rootClassName: ''
         ' '
         span className: 'kbc-icon-pencil'
-
-  _renderFilterModal: ->
-    v2Actions = @state.v2Actions
-    v2State = @state.v2State
-    editingFilter = v2State.getIn(v2Actions.editingFilterPath)
-    React.createElement FilterTableModal,
-      value: editingFilter
-      allTables: @state.allTables
-      show: v2State.getIn(['filterModal', 'show'], false)
-      onResetAndHide: =>
-        @state.v2Actions.updateV2State(['filterModal', 'show'], false)
-      onOk: =>
-        v2Actions.setTableMapping(v2State.getIn(v2Actions.editingFilterPath))
-          .then( => @state.v2Actions.updateV2State(['filterModal', 'show'], false))
-      onSetMapping: (newMapping) ->
-        v2Actions.updateV2State(v2Actions.editingFilterPath, newMapping)
-      isSaving: @state.v2State.get('saving')
-      saveStyle: 'success'
-      setLabel: 'Save'
 
   _renderEditButtons: ->
     isValid = @state.columnsValidation?.reduce((memo, value) ->
