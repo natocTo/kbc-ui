@@ -5,10 +5,12 @@ import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../components/react/components/generic/ChangedSinceFilterInput';
+import DataFilterRow from '../../../../components/react/components/generic/DataFilterRow';
 
 export default React.createClass({
   propTypes: {
     columns: PropTypes.object.isRequired,
+    allTables: PropTypes.object.isRequired,
     currentPK: PropTypes.object.isRequired,
     currentMapping: PropTypes.string,
     isIncremental: PropTypes.bool,
@@ -93,6 +95,15 @@ export default React.createClass({
               onChange={(value) => this.setState({mapping: value})}
               mapping={this.state.mapping}
               helpBlock="When specified, only rows changed or created up until the selected period will be loaded."
+            />
+            <DataFilterRow
+              value={this.state.mapping}
+              disabled={false}
+              allTables={this.props.allTables}
+              onChange={(value) => this.setState({mapping: value})}
+              groupClassName="form-group"
+              labelClassName="col-xs-3 control-label"
+              whereColumnClassName="col-xs-3"
             />
             {this.renderPKSelector()}
           </div>

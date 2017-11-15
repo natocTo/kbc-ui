@@ -202,6 +202,7 @@ templateFn = (componentId) ->
           columns: @state.columns.map (c) ->
             c.get('dbName')
           isIncremental: isIncremental
+          allTables: @state.allTables
           onSave: (isIncremental, primaryKey, newMapping) =>
             @state.v2Actions.updateV2State('savingIncremental', true)
             finishSaving =  => @state.v2Actions.updateV2State('savingIncremental', false)
