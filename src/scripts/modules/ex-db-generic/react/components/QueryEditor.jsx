@@ -238,7 +238,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row">
+      <div className="kbc-inner-content-padding-fix">
         <div className="form-horizontal">
           <SourceTablesError
             componentId={this.props.componentId}
@@ -306,16 +306,14 @@ export default React.createClass({
                 />
                 Incremental Load
               </label>
-              <span className="help-block">
+              <div className="help-block">
                 If incremental load is turned on, the table will be updated instead of rewritten.
                 Tables with primary keys will update rows, tables without primary keys will append rows.
-              </span>
+              </div>
             </div>
           </div>
           {this.renderQueryToggle()}
-          <div className="form-group">
-            {this.renderQueryEditor()}
-          </div>
+          {this.renderQueryEditor()}
         </div>
       </div>
     );
@@ -349,19 +347,17 @@ export default React.createClass({
     if (this.props.query.get('advancedMode')) {
       return (
         <div>
-          <label className="col-md-12 control-label">SQL Query</label>
+          <label className="control-label">SQL Query</label>
           {this.renderQueryHelpBlock()}
-          <div className="col-md-12">
-            <CodeEditor
-              readOnly={false}
-              placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
-              value={this.getQuery()}
-              mode={editorMode(this.props.componentId)}
-              onChange={this.handleQueryChange}
-              disabled={this.props.disabled}
-              style={{ width: '100%' }}
-            />
-          </div>
+          <CodeEditor
+            readOnly={false}
+            placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
+            value={this.getQuery()}
+            mode={editorMode(this.props.componentId)}
+            onChange={this.handleQueryChange}
+            disabled={this.props.disabled}
+            style={{ width: '100%' }}
+          />
         </div>
       );
     }
@@ -424,19 +420,15 @@ export default React.createClass({
   renderQueryHelpBlock() {
     if (this.props.componentId === 'keboola.ex-db-oracle') {
       return (
-        <div className="col-md-12">
-          <div className="help-block">
-            Please do not put semicolons at the end of the query.
-          </div>
+        <div className="help-block">
+          Please do not put semicolons at the end of the query.
         </div>
       );
     } else if (this.props.componentId === 'keboola.ex-db-mysql' && !this.props.credentialsHasDatabase) {
       return (
-        <div className="col-md-12">
-          <div className="help-block">
-            <i className="fa fa-exclamation-triangle"/> This connection does not have a database specified so please be sure to prefix table names with the schema
-            <br/>(ex: `schemaName`.`tableName`)
-          </div>
+        <div className="help-block">
+          <i className="fa fa-exclamation-triangle"/> This connection does not have a database specified so please be sure to prefix table names with the schema
+          <br/>(ex: `schemaName`.`tableName`)
         </div>
       );
     }
