@@ -434,7 +434,7 @@ export default React.createClass({
       return (
         <div className="col-md-12">
           <div className="help-block">
-            This connection does not have a database specified so please be sure to prefix table names with the schema
+            <i className="fa fa-exclamation-triangle"/> This connection does not have a database specified so please be sure to prefix table names with the schema
             <br/>(ex: `schemaName`.`tableName`)
           </div>
         </div>
