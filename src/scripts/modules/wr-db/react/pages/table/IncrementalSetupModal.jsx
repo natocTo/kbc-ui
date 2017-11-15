@@ -40,6 +40,7 @@ export default React.createClass({
   render() {
     return (
       <Modal
+        bsSize="large"
         show={this.props.show}
         onHide={this.props.onHide}
       >
@@ -50,12 +51,12 @@ export default React.createClass({
         </Modal.Header>
         <Modal.Body>
           <div className="form form-horizontal">
-            <div className="form-group form-group-sm">
+            <div className="form-group form-group-">
               <label className="control-label col-sm-3">
                 Load Type
               </label>
               <div className="col-sm-9">
-                <div className="radio radio-sm">
+                <div className="radio">
                   <label>
                     <input
                       type="radio"
@@ -70,7 +71,7 @@ export default React.createClass({
                   Load rows and replace them with all existing rows in the destination table.
                 </span>
 
-                <div className="radio radio-sm">
+                <div className="radio">
                   <label>
                     <input
                       type="radio"
@@ -92,6 +93,7 @@ export default React.createClass({
               label="Data changed in last"
               labelClassName="col-sm-3"
               wrapperClassName="col-sm-9"
+              groupClassName="form-group"
               onChange={(value) => this.setState({mapping: value})}
               mapping={this.state.mapping}
               helpBlock="When specified, only rows changed or created up until the selected period will be loaded."
@@ -124,9 +126,9 @@ export default React.createClass({
   renderPKSelector() {
     return (
 
-      <div className="form-group form-group-sm">
+      <div className="form-group form-group">
         <label htmlFor="title" className="col-sm-3 control-label">
-          Destination Table Primary Key
+          Destination Table <div>Primary Key</div>
         </label>
         <div className="col-sm-9">
           <Select
