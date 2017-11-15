@@ -51,7 +51,7 @@ module.exports = React.createClass
 
   render: ->
     div className: 'form-group',
-      div className: classnames('col-xs-4', 'col-xs-offset-4': @props.hasOffset),
+      div className: classnames('col-xs-8 col-xs-offset-4': @props.hasOffset),
         div null,
           Button
             bsStyle: 'primary'
