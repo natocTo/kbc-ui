@@ -8,14 +8,25 @@ export default React.createClass({
     value: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
-    allTables: PropTypes.object.isRequired
+    allTables: PropTypes.object.isRequired,
+    groupClassName: PropTypes.string,
+    labelClassName: PropTypes.string,
+    whereColumnClassName: PropTypes.string
+  },
+
+  getDefaultProps() {
+    return ({
+      groupClassName: 'form-group form-group-sm',
+      labelClassName: 'col-xs-2 control-label',
+      whereColumnClassName: 'col-xs-4'
+    });
   },
 
   render() {
     return (
-      <div className="form-group form-group-sm">
-        <label className="col-xs-2 control-label">Data filter</label>
-        <div className="col-xs-4">
+      <div className={this.props.groupClassName}>
+        <label className={this.props.labelClassName}>Data filter</label>
+        <div className={this.props.whereColumnClassName}>
           <Select
             name="where_column"
             value={this.props.value.get('where_column')}
