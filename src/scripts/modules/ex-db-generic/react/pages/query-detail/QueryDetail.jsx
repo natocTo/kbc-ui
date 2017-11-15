@@ -38,6 +38,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
       const ExDbStore = storeProvisioning.createStore(componentId, configId);
       const query = ExDbStore.getConfigQuery(queryId);
       const editingQuery = (ExDbStore.isEditingQuery(queryId)) ? ExDbStore.getEditingQuery(queryId) : query;
+      const credentials = ExDbStore.getCredentials(componentId, configId);
       return {
         configId: configId,
         queryId: queryId,
@@ -53,7 +54,8 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         queriesFiltered: ExDbStore.getQueriesFiltered(),
         componentSupportsSimpleSetup: actionsProvisioning.componentSupportsSimpleSetup(componentId),
         queryNameExists: ExDbStore.queryNameExists(editingQuery),
-        localState: ExDbStore.getLocalState()
+        localState: ExDbStore.getLocalState(),
+        credentialsHasDatabase: !!credentials.get('database')
       };
     },
 
@@ -91,6 +93,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           onDestinationEdit={ExDbActionCreators.destinationEdit}
           getPKColumns={ExDbActionCreators.getPKColumnsFromSourceTable}
           queryNameExists={this.state.queryNameExists}
+          credentialsHasDatabase={this.state.credentialsHasDatabase}
         />
       );
     },

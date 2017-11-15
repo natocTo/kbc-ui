@@ -42,7 +42,18 @@ const snowflakeFields = [
   ['Warehouse', 'warehouse', 'text', false, false]
 ];
 
+// same as default, but database is optional
+const mysqlFields = [
+  ['Host Name', 'host', 'text', false, true],
+  ['Port', 'port', 'number', false, true],
+  ['Username', 'user', 'text', false, true],
+  ['Password', '#password', 'password', true, true],
+  ['Database', 'database', 'text', false, false]
+];
+
+
 const COMPONENTS_FIELDS = {
+  'keboola.ex-db-mysql': mysqlFields,
   'keboola.ex-db-pgsql': defaultFields,
   'keboola.ex-db-redshift': defaultFields,
   'keboola.ex-db-db2': defaultFields,
