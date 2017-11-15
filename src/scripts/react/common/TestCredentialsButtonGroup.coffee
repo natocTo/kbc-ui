@@ -51,8 +51,8 @@ module.exports = React.createClass
 
   render: ->
     div className: 'form-group',
-      div className: classnames('col-xs-4', 'col-xs-offset-4': @props.hasOffset),
-        div className: 'TestCredentialsButtonGroup-buttons',
+      div className: classnames('col-xs-8 col-xs-offset-4': @props.hasOffset),
+        div null,
           Button
             bsStyle: 'primary'
             disabled: @state.isTesting || @props.disabled
@@ -60,18 +60,6 @@ module.exports = React.createClass
             ,
             'Test Credentials'
           span className: null, ' '
-
-          Link
-            to: @props.componentId
-            params:
-              config: @props.configId
-          ,
-              Button
-                bsStyle: 'success'
-                disabled: @state.isTesting
-              ,
-                'Go back to list of tables'
-              ' '
 
         div className: 'TestCredentialsButtonGroup-result',
           if @state.isTesting
