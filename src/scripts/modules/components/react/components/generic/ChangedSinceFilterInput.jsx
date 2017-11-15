@@ -8,20 +8,22 @@ export default React.createClass({
     labelClassName: PropTypes.string,
     wrapperClassName: PropTypes.string,
     helpBlock: PropTypes.string,
-    label: PropTypes.string
+    label: PropTypes.string,
+    groupClassName: PropTypes.string
   },
 
   getDefaultProps() {
     return {
       labelClassName: 'col-xs-2',
       wrapperClassName: 'col-xs-10',
-      label: 'Changed in last'
+      label: 'Changed in last',
+      groupClassName: 'form-group form-group-sm'
     };
   },
 
   render() {
     return (
-      <div className="form-group form-group-sm">
+      <div className={this.props.groupClassName}>
         <label className={'control-label ' + this.props.labelClassName}>
           {this.props.label}
         </label>
