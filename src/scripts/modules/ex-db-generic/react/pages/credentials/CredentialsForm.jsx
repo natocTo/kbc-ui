@@ -152,10 +152,10 @@ export default React.createClass({
     const { componentId, configId, enabled, isValidEditingCredentials, isEditing } = this.props;
     return (
       <form className="form-horizontal">
-        <div className="row">
+        <div className="kbc-inner-content-padding-fix">
           {this.renderFields()}
+          {this.renderSshRow()}
         </div>
-        {this.renderSshRow()}
         <TestCredentialsButtonGroup
           componentId={componentId}
           configId={configId}

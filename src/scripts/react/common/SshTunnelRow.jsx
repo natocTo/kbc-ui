@@ -25,7 +25,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row">
+      <div>
         {this.renderEnableCheckbox()}
         {this.isEnabled() ?
          <span>

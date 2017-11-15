@@ -7,6 +7,8 @@ Link = React.createFactory(require('react-router').Link)
 
 {small, div, span} = React.DOM
 
+require('./TestCredentialsButtonGroup.less')
+
 module.exports = React.createClass
   displayName: 'TestCredentialsButtonGroup'
   propTypes:
@@ -49,18 +51,17 @@ module.exports = React.createClass
 
   render: ->
     div className: 'form-group',
-      div className: classnames('col-xs-8', 'col-xs-offset-4': @props.hasOffset),
-
-        div className: 'TestCredentialsButtonGroup-buttons',
+      div className: classnames('col-xs-4', 'col-xs-offset-4': @props.hasOffset),
+        div null,
           Button
             bsStyle: 'primary'
             disabled: @state.isTesting || @props.disabled
             onClick: @_startTesting
             ,
             'Test Credentials'
-
           span className: null, ' '
 
+        div className: 'TestCredentialsButtonGroup-result',
           if @state.isTesting
             span null,
               Loader()
