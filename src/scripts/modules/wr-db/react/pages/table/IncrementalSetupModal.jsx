@@ -11,8 +11,8 @@ export default React.createClass({
   propTypes: {
     columns: PropTypes.object.isRequired,
     allTables: PropTypes.object.isRequired,
-    currentPK: PropTypes.object.isRequired,
-    currentMapping: PropTypes.string,
+    currentPK: PropTypes.string.isRequired,
+    currentMapping: PropTypes.object,
     isIncremental: PropTypes.bool,
     onSave: React.PropTypes.func.isRequired,
     onHide: React.PropTypes.func.isRequired,
