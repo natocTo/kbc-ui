@@ -191,9 +191,9 @@ templateFn = (componentId) ->
           ' '
           span className: 'kbc-icon-pencil'
         IncrementalSetupModal
-          isSaving: @state.v2State.get('savingIncremental')
-          show: v2State.getIn(showIncrementalSetupPath)
-          onHide: => @state.v2Actions.updateV2State(showIncrementalSetupPath)
+          isSaving: @state.v2State.get('savingIncremental', false)
+          show: v2State.getIn(showIncrementalSetupPath, false)
+          onHide: => @state.v2Actions.updateV2State(showIncrementalSetupPath, false)
           currentPK: primaryKey.join(',')
           currentMapping: tableMapping
           columns: @state.columns.map (c) ->
