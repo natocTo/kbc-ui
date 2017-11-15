@@ -22,7 +22,7 @@ export default React.createClass({
 
   getStateFromProps(props) {
     return {
-      primarykey: props.currentPK,
+      primaryKey: props.currentPK,
       mapping: props.currentMapping,
       isIncremental: props.isIncremental
     };
@@ -137,8 +137,8 @@ export default React.createClass({
             key="primary key select"
             name="pkelector"
             multi={true}
-            value={this.state.primarykey}
-            onChange= {(newValue) => this.setState({primarykey: newValue.map(v => v.value).join(',')})}
+            value={this.state.primaryKey}
+            onChange= {(newValue) => this.setState({primaryKey: newValue.map(v => v.value).join(',')})}
             options= {this.getColumns()}
           />
           <span className="help-block">
@@ -166,7 +166,7 @@ export default React.createClass({
 
   handleSave() {
     let pkToSave = [];
-    pkToSave = this.state.primarykey ? this.state.primarykey.split(',') : [];
+    pkToSave = this.state.primaryKey ? this.state.primaryKey.split(',') : [];
     this.props.onSave(this.state.isIncremental, fromJS(pkToSave), this.state.mapping).then(() =>
       this.closeModal()
     );

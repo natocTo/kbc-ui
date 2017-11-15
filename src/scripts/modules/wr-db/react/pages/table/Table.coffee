@@ -123,7 +123,7 @@ templateFn = (componentId) ->
         div className: 'row kbc-header',
           @_renderTableEdit()
           if isRenderIncremental
-            @_renderIncremetnalSetup()
+            @_renderIncrementalSetup()
           if isRenderIncremental
             @_renderTableFiltersRow()
           if isRenderIncremental
@@ -170,7 +170,7 @@ templateFn = (componentId) ->
   showIncrementalSetupModal: ->
     @state.v2Actions.updateV2State(['IncrementalSetup', 'show'], true)
 
-  _renderIncremetnalSetup: ->
+  _renderIncrementalSetup: ->
     exportInfo = @state.v2ConfigTable
     v2State = @state.v2State
     isIncremental = exportInfo.get('incremental')
