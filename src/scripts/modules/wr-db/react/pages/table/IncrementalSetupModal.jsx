@@ -86,6 +86,7 @@ export default React.createClass({
             </div>
 
             <ChangedSinceInput
+              disabled={false}
               label="Data changed in last"
               labelClassName="col-sm-3"
               wrapperClassName="col-sm-9"
