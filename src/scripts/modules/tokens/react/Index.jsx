@@ -4,6 +4,7 @@ import ApplicationStore from '../../../stores/ApplicationStore';
 import TokensStore from '../StorageTokensStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import TokensTable from './TokensTable';
+import TokensActions from '../actionCreators';
 // import {Map} from 'immutable';
 
 
@@ -15,7 +16,8 @@ export default React.createClass({
     const currentAdmin = ApplicationStore.getCurrentAdmin();
     return {
       tokens: tokens,
-      currentAdmin
+      currentAdmin,
+      isDeletingTokenFn: TokensStore.isDeletingToken
     };
   },
 
@@ -29,6 +31,8 @@ export default React.createClass({
               <div className="row">
                 <div className="col-md-12">
                   <TokensTable
+                    isDeletingFn={t => this.state.isDeletingTokenFn(t.get('id'))}
+                    onDeleteFn={TokensActions.deleteToken}
                     currentAdmin={this.state.currentAdmin}
                     tokens={this.state.tokens}
                   />

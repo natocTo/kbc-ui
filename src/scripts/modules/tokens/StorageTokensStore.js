@@ -16,7 +16,8 @@ let _store = Map({
 const StorageTokensStore = StoreUtils.createStore({
   getAll: () => _store.get('tokens'),
   getIsLoading: () => _store.get('isLoading'),
-  getIsLoaded: () =>  _store.get('isLoaded')
+  getIsLoaded: () =>  _store.get('isLoaded'),
+  isDeletingToken: (tokenId) => _store.getIn(['deletingTokens', tokenId], false)
 });
 
 

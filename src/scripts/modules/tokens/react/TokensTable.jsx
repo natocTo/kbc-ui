@@ -4,12 +4,16 @@ import {List} from 'immutable';
 import {Check} from 'kbc-react-components';
 import moment from 'moment';
 import Tooltip from '../../../react/common/Tooltip';
+import Confirm from '../../../react/common/Confirm';
+import {Loader} from 'kbc-react-components';
 
 export default React.createClass({
 
   propTypes: {
     tokens: PropTypes.object.isRequired,
-    currentAdmin: PropTypes.object.isRequired
+    currentAdmin: PropTypes.object.isRequired,
+    onDeleteFn: PropTypes.func.isRequired,
+    isDeletingFn: PropTypes.func.isRequired
   },
 
   render() {
@@ -104,6 +108,27 @@ export default React.createClass({
     return null;
   },
 
+  renderTokenDelete(token) {
+    if (this.props.isDeletingFn(token)) {
+      return <span className="btn btn-link"><Loader/></span>;
+    }
+    const tokenDesc = `${token.get('description')}(${token.get('id')})`;
+    return (
+      <Confirm
+        title="Delete Token"
+        text={`Do you really want to delete token ${tokenDesc}?`}
+        buttonLabel="Delete"
+        onConfirm={() => this.props.onDeleteFn(token)}
+      >
+        <Tooltip placement="top" tooltip="Delete token">
+          <button className="btn btn-link">
+            <i className="kbc-icon-cup" />
+          </button>
+        </Tooltip>
+      </Confirm>
+    );
+  },
+
   renderTableRow(token) {
     return (
       <tr key={token.get('id')}>
@@ -134,7 +159,7 @@ export default React.createClass({
           <ul>
             <li> edit token</li>
             <li> token detail</li>
-            <li> delete token</li>
+            <li> {this.renderTokenDelete(token)}</li>
             <li> refresh token</li>
             <li> share/send token</li>
             <li> copy to cliboard/show</li>
