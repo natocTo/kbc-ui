@@ -15,7 +15,6 @@ DisableGuideMode = require('../../modules/guide-mode/stores/ActionCreators').dis
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)
 UserLinks = React.createFactory(require './UserLinks')
-PoweredByKeboola = React.createFactory(require './PoweredByKeboola')
 classnames = require('classnames')
 
 {div, a, i, p} = React.DOM
@@ -44,9 +43,7 @@ App = React.createClass
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
     projectBaseUrl: ApplicationStore.getProjectBaseUrl()
   render: ->
-    div className: classnames(
-      snowflake: ApplicationStore.hasCurrentProjectFeature('ui-snowflake-demo')
-    ),
+    div null,
       if @state.projectHasGuideModeOn == true
         div className: 'guide-status-bar',
           p null,
@@ -80,7 +77,6 @@ App = React.createClass
                 canManageApps: @state.canManageApps
                 dropup: true
               UserLinks()
-              PoweredByKeboola()
           div className: 'col-xs-9 col-xs-offset-3 kbc-main',
             if @props.isError
               ErrorPage()
