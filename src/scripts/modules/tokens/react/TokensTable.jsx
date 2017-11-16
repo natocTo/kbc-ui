@@ -8,7 +8,8 @@ import Tooltip from '../../../react/common/Tooltip';
 export default React.createClass({
 
   propTypes: {
-    tokens: PropTypes.object.isRequired
+    tokens: PropTypes.object.isRequired,
+    currentAdmin: PropTypes.object.isRequired
   },
 
   render() {
@@ -91,6 +92,18 @@ export default React.createClass({
     return moment(date).format('YYYY-MM-DD HH:mm:ss');
   },
 
+  renderYoursLabel(token) {
+    const adminId = token.getIn(['admin', 'id']);
+    if (adminId && adminId === this.props.currentAdmin.get('id')) {
+      return (
+        <div className="label kbc-label-rounded-small label-primary">
+          Yours
+        </div>
+      );
+    }
+    return null;
+  },
+
   renderTableRow(token) {
     return (
       <tr key={token.get('id')}>
@@ -99,6 +112,8 @@ export default React.createClass({
         </td>
         <td>
           {token.get('description')}
+          {' '}
+          {this.renderYoursLabel(token)}
         </td>
         <td>
           {this.formatDate(token.get('created'))}

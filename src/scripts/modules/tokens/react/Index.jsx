@@ -12,8 +12,10 @@ export default React.createClass({
 
   getStateFromStores() {
     const tokens = TokensStore.getAll();
+    const currentAdmin = ApplicationStore.getCurrentAdmin();
     return {
-      tokens: tokens
+      tokens: tokens,
+      currentAdmin
     };
   },
 
@@ -27,6 +29,7 @@ export default React.createClass({
               <div className="row">
                 <div className="col-md-12">
                   <TokensTable
+                    currentAdmin={this.state.currentAdmin}
                     tokens={this.state.tokens}
                   />
                 </div>
