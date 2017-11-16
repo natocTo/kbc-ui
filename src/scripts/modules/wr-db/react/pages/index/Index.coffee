@@ -136,19 +136,21 @@ templateFn = (componentId) ->
       if componentId not in wontMigrateComponents
         React.createElement MigrationRow,
           componentId: componentId
-      div className: 'row',
-        div className: 'col-sm-8',
-          ComponentDescription
-            componentId: componentId
-            configId: @state.configId
-        div className: 'col-sm-4 kbc-buttons text-right',
-          if @_hasConfigTables()
-            @_renderAddNewTable()
+      div className: 'kbc-inner-content-padding-fix with-bottom-border',
+        ComponentDescription
+          componentId: componentId
+          configId: @state.configId
+
       if @_hasValidCredentials() and @_hasConfigTables()
-        React.createElement SearchRow,
-          className: 'row kbc-search-row'
-          onChange: @_handleSearchQueryChange
-          query: @state.localState.get('searchQuery') or ''
+        div className: 'kbc-inner-content-padding-fix with-bottom-border',
+          React.createElement SearchRow,
+            onChange: @_handleSearchQueryChange
+            query: @state.localState.get('searchQuery') or ''
+
+      if @_hasConfigTables()
+        div className: 'kbc-inner-content-padding-fix text-right',
+          @_renderAddNewTable()
+
       if @_hasValidCredentials() and @_hasConfigTables()
         TablesByBucketsPanel
           renderTableRowFn: (table) =>

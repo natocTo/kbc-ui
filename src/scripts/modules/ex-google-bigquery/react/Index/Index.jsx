@@ -76,22 +76,20 @@ export default React.createClass({
         />
 
         <div className="col-md-9 kbc-main-content">
-          <div className="row kbc-header">
-            <div className="col-sm-8">
-              <ComponentDescription
-                componentId={COMPONENT_ID}
-                configId={this.state.configId}
-              />
-            </div>
-            <div className="col-sm-4 kbc-buttons">
-              {this.hasQueries() ? this.renderAddQueryLink() : null}
-            </div>
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <ComponentDescription
+              componentId={COMPONENT_ID}
+              configId={this.state.configId}
+            />
           </div>
-          <div className="row">
-            {this.renderAuthorizedInfo('col-xs-5')}
-            {this.renderProjects('col-xs-7')}
-          </div>
+          {this.renderAuthorizedInfo()}
+          {this.renderProjects()}
           {this.renderSarchForm()}
+          {this.hasQueries() && (
+            <div className="kbc-inner-content-padding-fix text-right">
+              {this.renderAddQueryLink()}
+            </div>
+          )}
           {this.renderQueryTable()}
           {this.renderEmptyQueries()}
         </div>
@@ -141,7 +139,7 @@ export default React.createClass({
   },
 
   hasQueries() {
-    return this.state.store.queries && this.state.store.queries.count();
+    return this.state.store.queries && this.state.store.queries.count() > 0;
   },
 
   hasProject() {
@@ -233,53 +231,56 @@ export default React.createClass({
     );
   },
 
-  renderProjects(clName) {
+  renderProjects() {
     if (this.isAuthorized()/* || this.hasProfiles()*/) {
       return (
-        <div className={clName}>
-          <div className="form-group form-group-sm">
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <div className="form-group">
             <label> Google configuration </label>
             {this.hasProject() ?
              this.renderProjectInfo()
              :
              <EmptyState>
                <p> No configuration found </p>
-               <button type="button" className="btn btn-success btn-sm"
-                 onClick={this.showProjectsModal}>
+               <button type="button" className="btn btn-success"
+                 onClick={this.showProjectsModal}
+               >
                  Configure
                </button>
              </EmptyState>
             }
           </div>
         </div>
-
       );
     }
     return null;
   },
 
-  renderAuthorizedInfo(clName) {
+  renderAuthorizedInfo() {
     return (
-      <AuthorizationRow
-        className={this.isAuthorized() ? clName : 'col-xs-12'}
-        id={this.state.oauthCredentialsId}
-        configId={this.state.configId}
-        componentId={COMPONENT_ID}
-        credentials={this.state.oauthCredentials}
-        isResetingCredentials={false}
-        onResetCredentials={this.deleteCredentials}
-        showHeader={false}
-      />
+      <div className="kbc-inner-content-padding-fix with-bottom-border">
+        <AuthorizationRow
+          id={this.state.oauthCredentialsId}
+          configId={this.state.configId}
+          componentId={COMPONENT_ID}
+          credentials={this.state.oauthCredentials}
+          isResetingCredentials={false}
+          onResetCredentials={this.deleteCredentials}
+          showHeader={false}
+        />
+      </div>
     );
   },
 
   renderSarchForm() {
     if (this.hasQueries() > 0) {
       return (
-        <SearchRow
-          className="row kbc-search-row"
-          onChange={this.handleFilterChange}
-          query={this.state.queriesFilter} />
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <SearchRow
+            onChange={this.handleFilterChange}
+            query={this.state.queriesFilter}
+          />
+        </div>
       );
     }
     return null;

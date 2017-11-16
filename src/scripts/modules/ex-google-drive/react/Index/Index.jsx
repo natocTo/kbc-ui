@@ -59,20 +59,18 @@ export default React.createClass({
         {this.renderSheetsManagerModal()}
         {this.renderEditTableModal()}
         <div className="col-md-9 kbc-main-content">
-          <div className="row kbc-header">
-            <div className="col-sm-10">
-              <ComponentDescription
-                componentId={COMPONENT_ID}
-                configId={this.state.configId}
-              />
-            </div>
-            <div className="col-sm-2 kbc-buttons">
-              {this.hasSheets() && this.isAuthorized() ? this.renderAddSheetLink() : null}
-            </div>
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <ComponentDescription
+              componentId={COMPONENT_ID}
+              configId={this.state.configId}
+            />
           </div>
-          <div className="row">
-            {this.renderAuthorizedInfo('col-xs-10')}
-          </div>
+          {this.renderAuthorizedInfo()}
+          {this.hasSheets() && this.isAuthorized() && (
+            <div className="kbc-inner-content-padding-fix text-right">
+              {this.renderAddSheetLink()}
+            </div>
+          )}
           {(this.hasSheets() > 0)
            ? this.renderSheetsTable()
            : this.renderEmptySheets()
@@ -124,7 +122,7 @@ export default React.createClass({
   },
 
   hasSheets() {
-    return this.state.store.sheets && this.state.store.sheets.count();
+    return this.state.store.sheets && this.state.store.sheets.count() > 0;
   },
 
   invalidToRun() {
@@ -139,37 +137,36 @@ export default React.createClass({
     return false;
   },
 
-  renderAuthorizedInfo(clName) {
+  renderAuthorizedInfo() {
     return (
-      <AuthorizationRow
-        className={this.isAuthorized() ? clName : 'col-xs-12'}
-        id={this.state.oauthCredentialsId}
-        configId={this.state.configId}
-        componentId={COMPONENT_ID}
-        credentials={this.state.oauthCredentials}
-        isResetingCredentials={false}
-        onResetCredentials={this.deleteCredentials}
-        showHeader={false}
-      />
+      <div className="kbc-inner-content-padding-fix with-bottom-border">
+        <AuthorizationRow
+          id={this.state.oauthCredentialsId}
+          configId={this.state.configId}
+          componentId={COMPONENT_ID}
+          credentials={this.state.oauthCredentials}
+          isResetingCredentials={false}
+          onResetCredentials={this.deleteCredentials}
+          showHeader={false}
+        />
+      </div>
     );
   },
 
   renderSheetsTable() {
     return (
-      <div className="row">
-        <SheetsTable
-          outputBucket={this.state.store.outputBucket}
-          deleteSheetFn={this.state.actions.deleteSheet}
-          toggleSheetEnabledFn={this.state.actions.toggleSheetEnabled}
-          getRunSingleSheetDataFn={this.state.store.getRunSingleSheetData}
-          isPendingFn={this.state.store.isPending}
-          sheets={this.state.store.sheets}
-          allProfiles={this.state.store.profiles}
-          configId={this.state.configId}
-          onStartEdit={this.showEditTableModal}
-          {...this.state.actions.prepareLocalState('SheetsTable')}
-        />
-      </div>
+      <SheetsTable
+        outputBucket={this.state.store.outputBucket}
+        deleteSheetFn={this.state.actions.deleteSheet}
+        toggleSheetEnabledFn={this.state.actions.toggleSheetEnabled}
+        getRunSingleSheetDataFn={this.state.store.getRunSingleSheetData}
+        isPendingFn={this.state.store.isPending}
+        sheets={this.state.store.sheets}
+        allProfiles={this.state.store.profiles}
+        configId={this.state.configId}
+        onStartEdit={this.showEditTableModal}
+        {...this.state.actions.prepareLocalState('SheetsTable')}
+      />
     );
   },
 

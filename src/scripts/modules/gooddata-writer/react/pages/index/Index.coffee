@@ -77,14 +77,10 @@ module.exports = React.createClass
     # console.log writer?.toJS()
     div className: 'container-fluid',
       div className: 'col-md-9 kbc-main-content',
-        div className: 'row',
-          div className: 'col-sm-8',
-            React.createElement ComponentDescription,
-              componentId: 'gooddata-writer'
-              configId: writer.get 'id'
-          if @state.tablesByBucket.count()
-            div className: 'col-sm-4 kbc-buttons text-right',
-              @_renderAddNewTable()
+        div className: 'kbc-inner-content-padding-fix with-bottom-border',
+          React.createElement ComponentDescription,
+            componentId: 'gooddata-writer'
+            configId: writer.get 'id'
 
         if writer.get('info')
           div className: 'row',
@@ -99,12 +95,15 @@ module.exports = React.createClass
             ,
               'No GoodData project assigned with this configuration.'
         if @state.tablesByBucket.count()
-          React.createElement SearchRow,
-            className: 'row kbc-search-row'
-            onChange: @_handleFilterChange
-            query: @state.filter
+          div className: 'kbc-inner-content-padding-fix with-bottom-border',
+            React.createElement SearchRow,
+              onChange: @_handleFilterChange
+              query: @state.filter
         if @state.tablesByBucket.count()
-          @_renderTablesByBucketsPanel()
+          div null,
+            div className: 'kbc-inner-content-padding-fix text-right',
+              @_renderAddNewTable()
+            @_renderTablesByBucketsPanel()
         else
           @_renderNotFound()
 
