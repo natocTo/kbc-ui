@@ -4,8 +4,9 @@ ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMix
 
 QueryRow = React.createFactory(require './QueryRow')
 LinkToBucket = React.createFactory require('./../../components/LinkToBucket').default
+Link = React.createFactory(require('react-router').Link)
 
-{span, div, a, strong, p} = React.DOM
+{span, div, i, strong, p} = React.DOM
 
 module.exports = React.createClass
   displayName: 'QueryTable'
@@ -28,11 +29,20 @@ module.exports = React.createClass
 
     div null,
 
-      div className: 'kbc-header',
+      div className: 'kbc-inner-content-padding-fix',
+        div className: 'text-right',
+          Link
+            to: "ex-db-generic-#{@props.componentId}-new-query"
+            params:
+              config: @props.configurationId
+            className: 'btn btn-success'
+          ,
+            i className: 'kbc-icon-plus'
+            'New Export'
         p null,
           'Output bucket: '
           LinkToBucket
-            configurationId: this.props.configurationId
+            configurationId: @props.configurationId
 
       div className: 'table table-striped table-hover',
         div className: 'thead', key: 'table-header',
