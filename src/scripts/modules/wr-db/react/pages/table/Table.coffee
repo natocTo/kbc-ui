@@ -8,7 +8,7 @@ TableNameEdit = React.createFactory require './TableNameEdit'
 ColumnsEditor = React.createFactory require './ColumnsEditor'
 ColumnRow = require './ColumnRow'
 DataTypes = require '../../../templates/dataTypes'
-
+{Check, Loader} = require 'kbc-react-components'
 
 storageApi = require '../../../../components/StorageApi'
 
@@ -24,10 +24,8 @@ InstalledComponentsActions = require '../../../../components/InstalledComponents
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactivateButton').default
 FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
-FilterTableModal = require('../../../../components/react/components/generic/TableFiltersOnlyModal').default
-#InlineEditText = React.createFactory(require '../../../../../react/common/InlineEditTextInput')
-PrimaryKeyModal = React.createFactory(require('./PrimaryKeyModal').default)
 IsDockerBasedFn = require('../../../templates/dockerProxyApi').default
+IncrementalSetupModal = React.createFactory(require('./IncrementalSetupModal').default)
 
 defaultDataTypes =
 ['INT','BIGINT',
@@ -122,13 +120,14 @@ templateFn = (componentId) ->
       tableEditClassName = 'col-sm-4'
     div className: 'container-fluid',
       div className: 'kbc-main-content',
-        @_renderFilterModal()
         div className: 'row kbc-header',
           @_renderTableEdit()
           if isRenderIncremental
-            @_renderIncremetnalSetup()
+            @_renderIncrementalSetup()
           if isRenderIncremental
             @_renderTableFiltersRow()
+          if isRenderIncremental
+            @_renderPrimaryKey()
 
         ColumnsEditor
           onToggleHideIgnored: (e) =>
@@ -168,51 +167,65 @@ templateFn = (componentId) ->
       valid = false
     @_setValidateColumn(column.get('name'), valid)
 
+  showIncrementalSetupModal: ->
+    @state.v2Actions.updateV2State(['IncrementalSetup', 'show'], true)
 
-  _renderIncremetnalSetup: ->
+  _renderIncrementalSetup: ->
     exportInfo = @state.v2ConfigTable
     v2State = @state.v2State
     isIncremental = exportInfo.get('incremental')
     primaryKey = exportInfo.get('primaryKey', List())
-    editingPkPath = @state.v2Actions.editingPkPath
-    editingPk = v2State.getIn(editingPkPath)
+    showIncrementalSetupPath = ['IncrementalSetup', 'show']
+    tableMapping = @state.v2Actions.getTableMapping(@state.tableId)
     span null,
       p null,
         strong className: 'col-sm-3',
-          'Incremental'
-        React.createElement ActivateDeactivateButton,
-          isActive: isIncremental
-          activateTooltip: 'Set incremental'
-          deactivateTooltip: 'reset incremental'
-          isPending: @state.v2State.get('saving')
-          buttonStyle: {'paddingTop': '0', 'paddingBottom': '0'}
-          buttonDisabled: !!@state.editingColumns
-          onChange: =>
-            @setV2TableInfo(exportInfo.set('incremental', !isIncremental))
-      p null,
-        strong className: 'col-sm-3',
-          'Primary Key'
+          'Load Type'
         ' '
         button
           className: 'btn btn-link'
           style: {'paddingTop': 0, 'paddingBottom': 0}
           disabled: !!@state.editingColumns
-          onClick: =>
-            @state.v2Actions.updateV2State(editingPkPath, primaryKey)
-          primaryKey.join(', ') or 'N/A'
+          onClick: @showIncrementalSetupModal
+          if isIncremental then 'Incremental Load' else 'Full Load'
           ' '
           span className: 'kbc-icon-pencil'
-        PrimaryKeyModal
-          tableConfig: @state.tableConfig
+        IncrementalSetupModal
+          isSaving: @state.v2State.get('savingIncremental', false)
+          show: v2State.getIn(showIncrementalSetupPath, false)
+          onHide: => @state.v2Actions.updateV2State(showIncrementalSetupPath, false)
+          currentPK: primaryKey.join(',')
+          currentMapping: tableMapping
           columns: @state.columns.map (c) ->
             c.get('dbName')
-          show: !!editingPk
-          currentValue: primaryKey.join(',')
-          isSaving: @state.v2State.get('saving')
-          onHide: =>
-            @state.v2Actions.updateV2State(editingPkPath, null)
-          onSave: (newPk) =>
-            @setV2TableInfo(exportInfo.set('primaryKey', newPk))
+          isIncremental: isIncremental
+          allTables: @state.allTables
+          onSave: (isIncremental, primaryKey, newMapping) =>
+            @state.v2Actions.updateV2State('savingIncremental', true)
+            finishSaving =  => @state.v2Actions.updateV2State('savingIncremental', false)
+            newExportInfo = exportInfo.set('primaryKey', primaryKey).set('incremental', isIncremental)
+            @setV2TableInfo(newExportInfo).then =>
+              if newMapping != tableMapping
+                @state.v2Actions.setTableMapping(newMapping).then(finishSaving)
+              else
+                finishSaving()
+
+  _renderPrimaryKey: ->
+    v2State = @state.v2State
+    exportInfo = @state.v2ConfigTable
+    primaryKey = exportInfo.get('primaryKey', List())
+    p null,
+      strong className: 'col-sm-3',
+        'Primary Key'
+      ' '
+      button
+        className: 'btn btn-link'
+        style: {'paddingTop': 0, 'paddingBottom': 0}
+        disabled: !!@state.editingColumns
+        onClick: @showIncrementalSetupModal
+        primaryKey.join(', ') or 'N/A'
+        ' '
+        span className: 'kbc-icon-pencil'
 
   _onEditColumn: (newColumn) ->
     cname = newColumn.get('name')
@@ -328,34 +341,12 @@ templateFn = (componentId) ->
         className: 'btn btn-link'
         style: {'paddingTop': 0, 'paddingBottom': 0}
         disabled: !!@state.editingColumns
-        onClick: =>
-          @state.v2Actions.updateV2State(@state.v2Actions.editingFilterPath, tableMapping)
-          @state.v2Actions.updateV2State(['filterModal', 'show'], true)
-
+        onClick: @showIncrementalSetupModal
         React.createElement FiltersDescription,
           value: tableMapping
           rootClassName: ''
         ' '
         span className: 'kbc-icon-pencil'
-
-  _renderFilterModal: ->
-    v2Actions = @state.v2Actions
-    v2State = @state.v2State
-    editingFilter = v2State.getIn(v2Actions.editingFilterPath)
-    React.createElement FilterTableModal,
-      value: editingFilter
-      allTables: @state.allTables
-      show: v2State.getIn(['filterModal', 'show'], false)
-      onResetAndHide: =>
-        @state.v2Actions.updateV2State(['filterModal', 'show'], false)
-      onOk: =>
-        v2Actions.setTableMapping(v2State.getIn(v2Actions.editingFilterPath))
-          .then( => @state.v2Actions.updateV2State(['filterModal', 'show'], false))
-      onSetMapping: (newMapping) ->
-        v2Actions.updateV2State(v2Actions.editingFilterPath, newMapping)
-      isSaving: @state.v2State.get('saving')
-      saveStyle: 'success'
-      setLabel: 'Save'
 
   _renderEditButtons: ->
     isValid = @state.columnsValidation?.reduce((memo, value) ->
