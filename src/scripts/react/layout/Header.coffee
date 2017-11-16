@@ -11,7 +11,6 @@ RoutePendingIndicator = React.createFactory(require './RoutePendingIndicator')
 ComponentIcon = React.createFactory(require('../common/ComponentIcon').default)
 ComponentNameEdit = React.createFactory(require '../../modules/components/react/components/ComponentName')
 NotificationsAccess = require('../../react/common/NotificationsAccess').default
-ApplicationStore = require '../../stores/ApplicationStore'
 
 {div, nav, span, a, h1} = React.DOM
 
