@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import {Table} from 'react-bootstrap';
 import {List} from 'immutable';
 import {Check} from 'kbc-react-components';
-
+import moment from 'moment';
+import Tooltip from '../../../react/common/Tooltip';
 
 export default React.createClass({
 
@@ -76,6 +77,19 @@ export default React.createClass({
     return `${accessCnt} bucket(s)`;
   },
 
+  renderExpired(token) {
+    const expires = token.get('expires');
+    if (!expires) return 'never';
+    return (
+      <Tooltip placement="top" tooltip={this.formatDate(expires)}>
+        <span>{moment(expires).fromNow()}</span>
+      </Tooltip>
+    );
+  },
+
+  formatDate(date) {
+    return moment(date).format('YYYY-MM-DD HH:mm:ss');
+  },
 
   renderTableRow(token) {
     return (
@@ -87,10 +101,10 @@ export default React.createClass({
           {token.get('description')}
         </td>
         <td>
-          {token.get('created')}
+          {this.formatDate(token.get('created'))}
         </td>
         <td>
-          {token.get('expires') || 'never'}
+          {this.renderExpired(token)}
         </td>
         <td>
           <Check isChecked={token.get('canReadAllFileUploads')} />
