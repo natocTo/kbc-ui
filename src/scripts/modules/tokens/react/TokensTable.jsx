@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Table} from 'react-bootstrap';
 import {List} from 'immutable';
+import {Check} from 'kbc-react-components';
 
 
 export default React.createClass({
@@ -47,6 +48,34 @@ export default React.createClass({
     );
   },
 
+  renderComponentsAccess(token) {
+    const allAccess = token.get('canManageBuckets');
+    const accessCnt = token.get('componentAccess', List()).count();
+    if (allAccess) {
+      return 'All components';
+    }
+
+    if (accessCnt === 0) {
+      return 'No component';
+    }
+
+    return `${accessCnt} component(s)`;
+  },
+
+  renderBucketsAceess(token) {
+    const allAccess = token.get('canManageBuckets');
+    const accessCnt = token.get('bucketPermissions', List()).count();
+    if (allAccess) {
+      return 'All buckets';
+    }
+
+    if (accessCnt === 0) {
+      return 'No bucket';
+    }
+
+    return `${accessCnt} bucket(s)`;
+  },
+
 
   renderTableRow(token) {
     return (
@@ -64,13 +93,13 @@ export default React.createClass({
           {token.get('expires') || 'never'}
         </td>
         <td>
-          {token.get('canReadAllFileUploads') ? 'yes' : 'no'}
+          <Check isChecked={token.get('canReadAllFileUploads')} />
         </td>
         <td>
-          {token.get('componentAccess', List()).count()}
+          {this.renderComponentsAccess(token)}
         </td>
         <td>
-          {token.get('bucketPermissions').count()}
+          {this.renderBucketsAceess(token)}
         </td>
         <td>
           <ul>
