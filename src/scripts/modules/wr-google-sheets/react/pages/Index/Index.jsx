@@ -56,31 +56,32 @@ export default function(COMPONENT_ID) {
         <div className="container-fluid">
           {this.renderTableModal()}
           <div className="col-md-9 kbc-main-content">
-            <div className="row kbc-header">
-              <div className={this.isAuthorized() ? 'col-sm-8' : 'col-sm-12'}>
-                <ComponentDescription
-                  componentId={COMPONENT_ID}
-                  configId={this.state.configId}
-                />
-              </div>
-              {
-                (this.isAuthorized() &&  this.hasTables()) ?
-                  <div className="col-sm-4 kbc-buttons">
-                    <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
-                      <i className="kbc-icon-plus"/>
-                      New Sheet
-                    </Button>
-                  </div>
-                  : null
-              }
+            <div className="kbc-inner-content-padding-fix with-bottom-border">
+              <ComponentDescription
+                componentId={COMPONENT_ID}
+                configId={this.state.configId}
+              />
             </div>
-            <div className="row kbc-header">
-              {this.renderAuthorizedInfo('col-sm-12')}
+            <div className="kbc-inner-content-padding-fix with-bottom-border">
+              {this.renderAuthorizedInfo()}
             </div>
             {this.renderSearchRow()}
             {
               this.hasTables() ?
-                this.renderSheetsList()
+
+                (
+                  <div>
+                    {this.isAuthorized() && (
+                      <div className="kbc-inner-content-padding-fix text-right">
+                        <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
+                          <i className="kbc-icon-plus"/>
+                          New Sheet
+                        </Button>
+                      </div>
+                    )}
+                    {this.renderSheetsList()}
+                  </div>
+                )
                 :
                 this.renderEmptyItems()
             }
@@ -124,11 +125,12 @@ export default function(COMPONENT_ID) {
     renderSearchRow() {
       if (this.hasTables()) {
         return (
-          <SearchRow
-            className="row kbc-search-row"
-            onChange={this.handleSearchQueryChange}
-            query={this.state.localState.get('searchQuery', '')}
-          />
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <SearchRow
+              onChange={this.handleSearchQueryChange}
+              query={this.state.localState.get('searchQuery', '')}
+            />
+          </div>
         );
       }
       return null;
@@ -168,10 +170,9 @@ export default function(COMPONENT_ID) {
       );
     },
 
-    renderAuthorizedInfo(clName) {
+    renderAuthorizedInfo() {
       return (
         <AuthorizationRow
-          className={this.isAuthorized() ? clName : 'col-xs-12'}
           id={this.state.oauthCredentialsId}
           configId={this.state.configId}
           componentId={COMPONENT_ID}
