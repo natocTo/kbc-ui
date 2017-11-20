@@ -166,6 +166,32 @@ export default React.createClass({
     return (destinationTablePks.length > 0) ? destinationTablePks : sourctTablePks;
   },
 
+  primaryKeyHelp() {
+    if (!this.isExistingTable()) {
+      return null;
+    } else {
+      let destinationPKs = this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey');
+      if (this.props.query.get('primaryKey') === destinationPKs) {
+        return (
+          <div className="help-block">The output table already exists so the primary key cannot be changed here.</div>
+        );
+      } else {
+        return (
+          <div className="help-block">
+          <span className="text-danger">
+            The existing output table primary key is different than that saved here.
+            <span className="kbc-icon-pencil" onClick={
+              this.handlePrimaryKeyChange.bind(
+                this,
+                destinationPKs
+              )
+            }/>
+          </span>
+          </div>
+        );
+      }
+    }
+  },
 
   handleSourceTableChange(newValue) {
     const currentName = this.props.query.get('name');
@@ -264,6 +290,7 @@ export default React.createClass({
                 options={this.primaryKeyOptions()}
                 promptTextCreator={(label) => (label) ? 'Add column "' + label + '" as primary key' : ''}
               />
+              {this.primaryKeyHelp()}
             </div>
           </div>
           <div className={(this.props.queryNameExists) ? 'form-group has-error' : 'form-group'}>
