@@ -56,6 +56,7 @@ export default function(
             isPending={this.state.pendingActions.get('enabled')}
             onChange={this.handleActiveChange}
             tooltipPlacement="bottom"
+            buttonDisabled={this.state.isEditingQuery}
           />
           <RunExtractionButton
             title="Run Extraction"
