@@ -34,6 +34,8 @@ import {sourceTablesErrorPath} from '../../../storeProvisioning';
 import Quickstart from '../../components/Quickstart';
 import SourceTablesError from '../../components/SourceTablesError';
 
+import {RefreshIcon} from 'kbc-react-components';
+
 export default function(componentId) {
   const actionsCreators = actionsProvisioning.createActions(componentId);
   return React.createClass({
@@ -86,6 +88,11 @@ export default function(componentId) {
 
     handleFilterChange(query) {
       return actionsCreators.setQueriesFilter(this.state.configId, query);
+    },
+
+    handleRefreshSourceTables() {
+      // force reload
+      return actionsProvisioning.loadSourceTables(componentId, this.state.configId, true);
     },
 
     renderNewQueryLink() {
@@ -153,7 +160,11 @@ export default function(componentId) {
               />
               <div className="help-block">
                 Select the tables you'd like to import to autogenerate your configuration.
-                You can edit them later at any time.
+                You can edit them later at any time.  <br/>
+                Not seeing your newest tables?  Reload  <RefreshIcon
+                  isLoading={this.state.localState.getIn(loadingSourceTablesPath)}
+                  onClick={this.handleRefreshSourceTables}
+                />  the tables list
               </div>
             </div>
           </div>

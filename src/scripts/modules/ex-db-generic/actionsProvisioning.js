@@ -15,9 +15,9 @@ export function loadConfiguration(componentId, configId) {
   return componentsActions.loadComponentConfigData(componentId, configId);
 }
 
-export function loadSourceTables(componentId, configId) {
+export function loadSourceTables(componentId, configId, forceLoad = false) {
   const actions = createActions(componentId);
-  if (componentSupportsSimpleSetup(componentId) && !actions.sourceTablesLoaded(configId)) {
+  if (componentSupportsSimpleSetup(componentId) && (!actions.sourceTablesLoaded(configId) || forceLoad)) {
     createActions(componentId).updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
     return createActions(componentId).getSourceTables(configId);
   }
