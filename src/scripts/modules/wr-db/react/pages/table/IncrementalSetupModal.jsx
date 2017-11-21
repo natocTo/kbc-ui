@@ -68,7 +68,7 @@ export default React.createClass({
                   </label>
                 </div>
                 <span className="help-block">
-                  Load rows and replace them with all existing rows in the destination table.
+                  Replace all existing rows in the destination table.
                 </span>
 
                 <div className="radio">
@@ -83,7 +83,7 @@ export default React.createClass({
                   </label>
                 </div>
                 <span className="help-block">
-                  Load rows and append them to the destination table and/or update identical rows identified by primary key if specified.
+                  Append rows to the destination table.  If a primary key is specified, updates will be applied to rows with matching primary key column values.
                 </span>
               </div>
             </div>
@@ -96,7 +96,7 @@ export default React.createClass({
               groupClassName="form-group"
               onChange={(value) => this.setState({mapping: value})}
               mapping={this.state.mapping}
-              helpBlock="When specified, only rows changed or created up until the selected period will be loaded."
+              helpBlock="When specified, only rows changed or created within the selected time period will be loaded."
             />
             <DataFilterRow
               value={this.state.mapping}
@@ -142,7 +142,7 @@ export default React.createClass({
             options= {this.getColumns()}
           />
           <span className="help-block">
-            Used to identify the identical rows.
+            Used to determine matching rows for updates in incremental loads.
           </span>
         </div>
       </div>
