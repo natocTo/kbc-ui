@@ -20,6 +20,7 @@ export default React.createClass({
   },
 
   render() {
+    const {token} = this.props;
     return (
       <Modal
         show={this.props.show}
@@ -27,13 +28,13 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            Refresh Token
+            Refresh Token {token.get('description')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {this.state.newToken ?
            this.renderRefreshed()
-           : <p> You are about to refresh token. </p>
+           : <p> You are about to refresh token {token.get('description')}({token.get('id')}) </p>
           }
         </Modal.Body>
         <Modal.Footer>

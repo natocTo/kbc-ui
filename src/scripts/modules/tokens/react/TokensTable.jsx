@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Table} from 'react-bootstrap';
-import {List} from 'immutable';
+import {List, Map} from 'immutable';
 import {Check} from 'kbc-react-components';
 import moment from 'moment';
 import Tooltip from '../../../react/common/Tooltip';
@@ -138,15 +138,15 @@ export default React.createClass({
   },
 
   renderTokenRefreshModal() {
-    const token = this.props.localState.get('refreshToken', null);
+    const token = this.props.localState.get('refreshToken', Map());
     const isRefreshing = token && this.props.isRefreshingFn(token);
     return (
       <RefreshTokenModal
         token={token}
-        show={!!token}
-        onHideFn={() => this.updateLocalState('refreshToken', null)}
+        show={!!token.get('id')}
+        onHideFn={() => this.updateLocalState('refreshToken', Map())}
         onRefreshFn={() => this.props.onRefreshFn(token)}
-        isRefreshing={isRefreshing}
+        isRefreshing={!!isRefreshing}
       />
     );
   },
