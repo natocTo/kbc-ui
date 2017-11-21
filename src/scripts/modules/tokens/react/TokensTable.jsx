@@ -29,9 +29,6 @@ export default React.createClass({
           <thead>
             <tr>
               <th>
-                id
-              </th>
-              <th>
                 Name
               </th>
               <th>
@@ -169,9 +166,6 @@ export default React.createClass({
   renderTableRow(token) {
     return (
       <tr key={token.get('id')}>
-        <td>
-          {token.get('id')}
-        </td>
         <td>
           {token.get('description')}
           {' '}
