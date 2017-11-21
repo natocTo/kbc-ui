@@ -10,18 +10,23 @@ let _store = Map({
   tokens: List(),
   isLoaded: false,
   isLoading: false,
-  deletingTokens: Map()
+  deletingTokens: Map(),
+  refreshingTokens: Map(),
+  localState: Map()
 });
 
 const StorageTokensStore = StoreUtils.createStore({
   getAll: () => _store.get('tokens'),
   getIsLoading: () => _store.get('isLoading'),
   getIsLoaded: () =>  _store.get('isLoaded'),
-  isDeletingToken: (tokenId) => _store.getIn(['deletingTokens', tokenId], false)
+  isDeletingToken: (tokenId) => _store.getIn(['deletingTokens', tokenId], false),
+  isRefreshingToken: (tokenId) => _store.getIn(['refreshingTokens', tokenId], false),
+  localState: () => _store.get('localState')
 });
 
 
 Dispatcher.register( (payload) => {
+  let newTokens = null;
   const action = payload.action;
   switch (action.type) {
     case ActionTypes.STORAGE_TOKEN_CREATE_SUCCESS:
@@ -46,7 +51,7 @@ Dispatcher.register( (payload) => {
       break;
     case ActionTypes.STORAGE_TOKEN_DELETE_SUCCESS:
       _store = _store.setIn(['deletingTokens', action.tokenId], false);
-      const newTokens = _store.get('tokens').filter(function(t) {
+      newTokens = _store.get('tokens').filter(function(t) {
         return t.get('id') !== action.tokenId;
       });
       _store = _store.set('tokens', newTokens);
@@ -54,6 +59,26 @@ Dispatcher.register( (payload) => {
       break;
     case ActionTypes.STORAGE_TOKENS_LOAD_ERROR:
       _store = _store.set('isLoading', false);
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_REFRESH:
+      _store = _store.setIn(['refreshingTokens', action.tokenId], true);
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_REFRESH_SUCCESS:
+      _store = _store.setIn(['refreshingTokens', action.tokenId], false);
+      newTokens = _store.get('tokens').filter(function(t) {
+        return t.get('id') === action.tokenId ? action.newToken : t;
+      });
+      _store = _store.set('tokens', newTokens);
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_UPDATE_LOCALSTATE:
+      _store = _store.set('localState', action.localState);
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_API_ERROR:
+      _store = _store.set('error', action.error);
       StorageTokensStore.emitChange();
       break;
     default:

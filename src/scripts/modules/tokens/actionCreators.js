@@ -3,11 +3,19 @@ import StorageTokensStore from './StorageTokensStore';
 import storageApi from '../components/StorageApi';
 import dispatcher from '../../Dispatcher';
 import constants from './constants';
+import {fromJS} from 'immutable';
 
 const ActionTypes = constants.ActionTypes;
 
 
 export default {
+  updateLocalState(newLocalState) {
+    dispatcher.handleViewAction({
+      type: ActionTypes.STORAGE_TOKEN_UPDATE_LOCALSTATE,
+      localState: newLocalState
+    });
+  },
+
   deleteToken(tokenObject) {
     const tokenId = tokenObject.get('id');
     dispatcher.handleViewAction({
@@ -19,6 +27,23 @@ export default {
         type: ActionTypes.STORAGE_TOKEN_DELETE_SUCCESS,
         tokenId: tokenId
       });
+    });
+  },
+
+  refreshToken(tokenObject) {
+    const tokenId = tokenObject.get('id');
+    dispatcher.handleViewAction({
+      type: ActionTypes.STORAGE_TOKEN_REFRESH,
+      tokenId: tokenId
+    });
+    return storageApi.refreshToken(tokenId).then((newToken) => {
+      const newTokenMap = fromJS(newToken);
+      dispatcher.handleViewAction({
+        type: ActionTypes.STORAGE_TOKEN_REFRESH_SUCCESS,
+        tokenId: tokenId,
+        newToken: newTokenMap
+      });
+      return newTokenMap;
     });
   },
 
