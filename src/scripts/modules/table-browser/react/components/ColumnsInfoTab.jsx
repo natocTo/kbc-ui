@@ -5,8 +5,8 @@ import EmptyState from '../../../components/react/components/ComponentEmptyState
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
 import Tooltip from '../../../../react/common/Tooltip';
-import enhancedColumnsTemplate from './EnhancedComlumnsTemplate';
-import EnhancedAnalysisRunControl from './EnhancedAnalysisRunControl';
+import enhancedColumnsTemplate from './EnhancedAnalysis/EnhancedComlumnsTemplate';
+import EnhancedAnalysisRunControl from './EnhancedAnalysis/EnhancedAnalysisRunControl';
 import {Table} from 'react-bootstrap';
 
 
@@ -47,10 +47,10 @@ export default React.createClass({
 
     const headerRow = this.renderHeaderRow();
 
-    const columnsRows = columns.map((c) => {
+    const columnsRows = columns.map((c, idx) => {
       const values = this.getColumnValues(c);
       let result = values.filter((val) => val !== '').join(', ');
-      return this.renderBodyRow(c, this.renderNameColumnCell(c), result);
+      return this.renderBodyRow(c, this.renderNameColumnCell(c), result, idx);
     });
 
     return (
@@ -98,9 +98,9 @@ export default React.createClass({
       return simpleHeader;
     }
 
-    const enhancedHeader = this.getEnahncedHeader().filter(h => !h.skip).map((header) => {
+    const enhancedHeader = this.getEnahncedHeader().filter(h => !h.skip).map((header, idx) => {
       return (
-        <th>
+        <th key={idx}>
           {header.label}
           <Tooltip
             tooltip={header.desc}
@@ -159,8 +159,8 @@ export default React.createClass({
   },
 
 
-  renderBodyRow(columnName, columnNameCell, value) {
-    let enhancedCells = [];
+  renderBodyRow(columnName, columnNameCell, value, idx) {
+    let enhancedCells = null;
     if (this.props.isRedshift) {
       if (this.hasEnhancedData()) {
         const varNameIndex = this.props.enhancedAnalysis.get('data').first().indexOf('var_name');
@@ -186,13 +186,13 @@ export default React.createClass({
           return h;
         });
 
-        enhancedCells = header.filter(h => !h.skip).map(h => {
+        enhancedCells = header.filter(h => !h.skip).map((h, hidx) => {
           let cellValue = h.value;
           if (h.formatFn) {
             cellValue = h.formatFn(cellValue, rowValuesMap);
           }
           return (
-            <td>
+            <td key={hidx}>
               {cellValue}
             </td>
           );
@@ -210,7 +210,7 @@ export default React.createClass({
     }
 
     return (
-      <tr>
+      <tr key={idx}>
         <td>
           {columnNameCell}
         </td>
