@@ -15,9 +15,16 @@ export function loadConfiguration(componentId, configId) {
   return componentsActions.loadComponentConfigData(componentId, configId);
 }
 
-export function loadSourceTables(componentId, configId, forceLoad = false) {
+export function loadSourceTables(componentId, configId) {
   const actions = createActions(componentId);
-  if (componentSupportsSimpleSetup(componentId) && (!actions.sourceTablesLoaded(configId) || forceLoad)) {
+  if (componentSupportsSimpleSetup(componentId) && !actions.sourceTablesLoaded(configId)) {
+    createActions(componentId).updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
+    return createActions(componentId).getSourceTables(configId);
+  }
+}
+
+export function reloadSourceTables(componentId, configId) {
+  if (componentSupportsSimpleSetup(componentId)) {
     createActions(componentId).updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
     return createActions(componentId).getSourceTables(configId);
   }

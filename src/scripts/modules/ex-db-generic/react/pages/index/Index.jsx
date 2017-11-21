@@ -89,8 +89,7 @@ export default function(componentId) {
     },
 
     handleRefreshSourceTables() {
-      // force reload
-      return actionsProvisioning.loadSourceTables(componentId, this.state.configId, true);
+      return actionsProvisioning.reloadSourceTables(componentId, this.state.configId);
     },
 
     renderNewQueryLink() {
