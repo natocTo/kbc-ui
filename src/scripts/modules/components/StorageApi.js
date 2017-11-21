@@ -57,6 +57,12 @@ var storageApi = {
     });
   },
 
+  refreshToken: function(tokenId) {
+    return createRequest('POST', 'tokens/' + tokenId + '/refresh').promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getTokens: function() {
     return createRequest('GET', 'tokens').promise().then(function(response) {
       return response.body;
