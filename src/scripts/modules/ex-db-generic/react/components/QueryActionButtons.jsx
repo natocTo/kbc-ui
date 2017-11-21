@@ -28,7 +28,8 @@ export default function(
         configId: configId,
         queryId: queryId,
         query: query,
-        pendingActions: ExDbStore.getQueriesPendingActions().get(query.get('id'), Map())
+        pendingActions: ExDbStore.getQueriesPendingActions().get(query.get('id'), Map()),
+        isEditingQuery: ExDbStore.isEditingQuery(queryId)
       };
     },
 
@@ -55,6 +56,7 @@ export default function(
             isPending={this.state.pendingActions.get('enabled')}
             onChange={this.handleActiveChange}
             tooltipPlacement="bottom"
+            buttonDisabled={this.state.isEditingQuery}
           />
           <RunExtractionButton
             title="Run Extraction"
@@ -62,6 +64,7 @@ export default function(
             runParams={this.runParams}
             config={this.state.configId}
             tooltipPlacement="bottom"
+            disabled={this.state.isEditingQuery}
           >
             You are about to run an extraction.
           </RunExtractionButton>
