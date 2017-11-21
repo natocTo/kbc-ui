@@ -21,6 +21,7 @@ exFacebookRoutes = require('../ex-facebook/routes.js').default
 exGdriveNewRoutes = require('../ex-google-drive/routes').default
 csvImportRoutes = require('../csv-import/routes').default
 exS3Routes = require('../ex-s3/routes').default
+exAwsS3Routes = require('../ex-aws-s3/routes').default
 goodDataWriterRoutes = require '../gooddata-writer/routes'
 dropoxExtractorRoutes = require('../ex-dropbox/routes').default
 dropoxExtractorRoutesV2 = require('../ex-dropbox-v2/routes').default
@@ -125,6 +126,8 @@ routes =
       createComponentRoute 'keboola.csv-import', [csvImportRoutes]
       createComponentRoute 'keboola.ex-s3', [exS3Routes]
       createComponentRoute 'apify.apify', [exApifyRoutes]
+      createComponentRoute 'keboola.ex-aws-s3', [exAwsS3Routes]
+
     ,
       createComponentRoute 'keboola.ex-pigeon', [pigeonExtractorRoutes]
     ,
