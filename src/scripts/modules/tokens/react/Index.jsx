@@ -5,7 +5,7 @@ import TokensStore from '../StorageTokensStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import TokensTable from './TokensTable';
 import TokensActions from '../actionCreators';
-// import {Map} from 'immutable';
+import {Map} from 'immutable';
 
 
 export default React.createClass({
@@ -17,7 +17,9 @@ export default React.createClass({
     return {
       tokens: tokens,
       currentAdmin,
-      isDeletingTokenFn: TokensStore.isDeletingToken
+      isDeletingTokenFn: TokensStore.isDeletingToken,
+      isRefreshingTokenFn: TokensStore.isRefreshingToken,
+      localState: TokensStore.localState()
     };
   },
 
@@ -31,8 +33,12 @@ export default React.createClass({
               <div className="row">
                 <div className="col-md-12">
                   <TokensTable
+                    localState={this.state.localState.get('TokensTable', Map())}
+                    updateLocalState={(newState) => this.updateLocalState('TokensTable', newState)}
                     isDeletingFn={t => this.state.isDeletingTokenFn(t.get('id'))}
                     onDeleteFn={TokensActions.deleteToken}
+                    onRefreshFn={TokensActions.refreshToken}
+                    isRefreshingFn={t => this.state.isRefreshingTokenFn(t.get('id'))}
                     currentAdmin={this.state.currentAdmin}
                     tokens={this.state.tokens}
                   />
@@ -43,6 +49,10 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  updateLocalState(key, newValue) {
+    TokensActions.updateLocalState(this.state.localState.set(key, newValue));
   },
 
   renderTabs() {

@@ -6,6 +6,7 @@ import moment from 'moment';
 import Tooltip from '../../../react/common/Tooltip';
 import Confirm from '../../../react/common/Confirm';
 import {Loader} from 'kbc-react-components';
+import RefreshTokenModal from './RefreshTokenModal';
 
 export default React.createClass({
 
@@ -13,44 +14,51 @@ export default React.createClass({
     tokens: PropTypes.object.isRequired,
     currentAdmin: PropTypes.object.isRequired,
     onDeleteFn: PropTypes.func.isRequired,
-    isDeletingFn: PropTypes.func.isRequired
+    isDeletingFn: PropTypes.func.isRequired,
+    localState: PropTypes.object.isRequired,
+    updateLocalState: PropTypes.func.isRequired,
+    onRefreshFn: PropTypes.func.isRequired,
+    isRefreshingFn: PropTypes.func.isRequired
   },
 
   render() {
     return (
-      <Table responsive className="table table-striped">
-        <thead>
-          <tr>
-            <th>
-              id
-            </th>
-            <th>
-              Name
-            </th>
-            <th>
-              Created
-            </th>
-            <th>
-              Expires
-            </th>
-            <th>
-              Can Read All files
-            </th>
-            <th>
-              Component Access
-            </th>
-            <th>
-              Buckets Permissions
-            </th>
-            <th>
-              <button className="btn btn-success"> Create Token </button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.tokens.map(this.renderTableRow).toArray()}
-        </tbody>
-      </Table>
+      <span>
+        {this.renderTokenRefreshModal()}
+        <Table responsive className="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                id
+              </th>
+              <th>
+                Name
+              </th>
+              <th>
+                Created
+              </th>
+              <th>
+                Expires
+              </th>
+              <th>
+                Can Read All files
+              </th>
+              <th>
+                Component Access
+              </th>
+              <th>
+                Buckets Permissions
+              </th>
+              <th>
+                <button className="btn btn-success"> Create Token </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.tokens.map(this.renderTableRow).toArray()}
+          </tbody>
+        </Table>
+      </span>
     );
   },
 
@@ -129,6 +137,35 @@ export default React.createClass({
     );
   },
 
+  renderTokenRefreshModal() {
+    const token = this.props.localState.get('refreshToken', null);
+    const isRefreshing = token && this.props.isRefreshingFn(token);
+    return (
+      <RefreshTokenModal
+        token={token}
+        show={!!token}
+        onHideFn={() => this.updateLocalState('refreshToken', null)}
+        onRefreshFn={() => this.props.onRefreshFn(token)}
+        isRefreshing={isRefreshing}
+      />
+    );
+  },
+
+  renderTokenRefreshButton(token) {
+    return (
+      <button
+        onClick={() => this.updateLocalState('refreshToken', token)}
+        className="btn btn-link">
+        Refresh token
+      </button>
+    );
+  },
+
+  updateLocalState(path, newValue) {
+    const newls = this.props.localState.setIn([].concat(path), newValue);
+    this.props.updateLocalState(newls);
+  },
+
   renderTableRow(token) {
     return (
       <tr key={token.get('id')}>
@@ -160,7 +197,7 @@ export default React.createClass({
             <li> edit token</li>
             <li> token detail</li>
             <li> {this.renderTokenDelete(token)}</li>
-            <li> refresh token</li>
+            <li> {this.renderTokenRefreshButton(token)}</li>
             <li> share/send token</li>
             <li> copy to cliboard/show</li>
           </ul>
