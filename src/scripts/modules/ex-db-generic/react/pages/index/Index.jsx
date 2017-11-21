@@ -88,6 +88,10 @@ export default function(componentId) {
       return actionsCreators.setQueriesFilter(this.state.configId, query);
     },
 
+    handleRefreshSourceTables() {
+      return actionsProvisioning.reloadSourceTables(componentId, this.state.configId);
+    },
+
     renderNewQueryLink() {
       return (
         <CreateQueryElement
@@ -153,7 +157,19 @@ export default function(componentId) {
               />
               <div className="help-block">
                 Select the tables you'd like to import to autogenerate your configuration.
-                You can edit them later at any time.
+                You can edit them later at any time.  <br/>
+                Not seeing your newest tables?
+                {' '}
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.handleRefreshSourceTables();
+                  }}
+                >
+                  Reload
+                </a>
+                {' '}
+                the tables list.
               </div>
             </div>
           </div>

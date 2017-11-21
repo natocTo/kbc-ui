@@ -23,6 +23,13 @@ export function loadSourceTables(componentId, configId) {
   }
 }
 
+export function reloadSourceTables(componentId, configId) {
+  if (componentSupportsSimpleSetup(componentId)) {
+    createActions(componentId).updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
+    return createActions(componentId).getSourceTables(configId);
+  }
+}
+
 export function componentSupportsSimpleSetup(componentId) {
   const supportedComponents = [
     'keboola.ex-db-mysql',
