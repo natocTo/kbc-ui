@@ -166,6 +166,34 @@ export default React.createClass({
     return (destinationTablePks.length > 0) ? destinationTablePks : sourctTablePks;
   },
 
+  primaryKeyHelp() {
+    const { tables, query } = this.props;
+    const destinationPKs = tables.get(query.get('outputTable')).get('primaryKey');
+    if (Immutable.is(query.get('primaryKey'), destinationPKs)) {
+      return (
+        <div className="help-block">
+          The output table already exists so the primary key cannot be changed here.
+        </div>
+      );
+    } else {
+      return (
+        <div className="help-block">
+          <span className="text-warning">
+            The existing output table primary key is different than that saved here.
+          </span>
+          {' '}
+          <a
+            onClick={(e) => {
+              e.preventDefault();
+              this.handlePrimaryKeyChange(destinationPKs);
+            }}
+          >
+            Set primary key from output table.
+          </a>
+        </div>
+      );
+    }
+  },
 
   handleSourceTableChange(newValue) {
     const currentName = this.props.query.get('name');
@@ -264,6 +292,7 @@ export default React.createClass({
                 options={this.primaryKeyOptions()}
                 promptTextCreator={(label) => (label) ? 'Add column "' + label + '" as primary key' : ''}
               />
+              {this.isExistingTable() && this.primaryKeyHelp()}
             </div>
           </div>
           <div className={(this.props.queryNameExists) ? 'form-group has-error' : 'form-group'}>
