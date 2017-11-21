@@ -167,23 +167,29 @@ export default React.createClass({
   },
 
   primaryKeyHelp() {
-    const destinationPKs = this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey');
-    if (Immutable.is(this.props.query.get('primaryKey'), destinationPKs)) {
+    const { tables, query } = this.props;
+    const destinationPKs = tables.get(query.get('outputTable')).get('primaryKey');
+    if (Immutable.is(query.get('primaryKey'), destinationPKs)) {
       return (
-        <div className="help-block">The output table already exists so the primary key cannot be changed here.</div>
+        <div className="help-block">
+          The output table already exists so the primary key cannot be changed here.
+        </div>
       );
     } else {
       return (
         <div className="help-block">
-        <span className="text-danger">
-          The existing output table primary key is different than that saved here.
-          <span className="kbc-icon-pencil" onClick={
-            this.handlePrimaryKeyChange.bind(
-              this,
-              destinationPKs
-            )
-          }/>
-        </span>
+          <span className="text-warning">
+            The existing output table primary key is different than that saved here.
+          </span>
+          {' '}
+          <a
+            onClick={(e) => {
+              e.preventDefault();
+              this.handlePrimaryKeyChange(destinationPKs);
+            }}
+          >
+            Set primary key from output table.
+          </a>
         </div>
       );
     }
