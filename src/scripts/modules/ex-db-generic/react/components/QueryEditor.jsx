@@ -167,8 +167,8 @@ export default React.createClass({
   },
 
   primaryKeyHelp() {
-    let destinationPKs = this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey');
-    if (this.props.query.get('primaryKey') === destinationPKs) {
+    const destinationPKs = this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey');
+    if (Immutable.is(this.props.query.get('primaryKey'), destinationPKs)) {
       return (
         <div className="help-block">The output table already exists so the primary key cannot be changed here.</div>
       );
