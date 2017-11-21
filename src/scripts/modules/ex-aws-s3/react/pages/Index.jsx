@@ -15,6 +15,10 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import {Link} from 'react-router';
 
+// local components
+import CreateRowButton from '../components/CreateRowButton';
+
+
 // css
 import './Index.less';
 
@@ -49,6 +53,12 @@ export default React.createClass({
               <li>Add rows button</li>
               <li>Link to documentation</li>
             </ul>
+            <p>
+              Rows
+            </p>
+            <div className="text-center">
+              <CreateRowButton/>
+            </div>
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
