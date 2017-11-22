@@ -14,7 +14,7 @@ export default {
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Introduction',
-      'link': '/',
+      'link': 'app',
       'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img'

@@ -12,7 +12,7 @@ export default {
       'position': 'center',
       'backdrop': true,
       'title': 'Introduction',
-      'link': '/',
+      'link': 'app',
       'isNavigationVisible': false,
       'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. <br/><br/> In this lesson, you are going to take the table you created in your transformation in Lesson 3 and generate a Tableau Data Extract (TDE) file. You will then load the file manually into Tableau Desktop for visualization using yet another Keboola Connection component – Writer. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-wri.svg',
