@@ -109,7 +109,8 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
       'link': '/',
       'markdown': 'Congratulations! You have completed all lessons.',
       'media': 'keboola-finished.svg',
-      'mediaType': 'img'
+      'mediaType': 'img',
+      'congratulations': true
     }
   ]
 };
