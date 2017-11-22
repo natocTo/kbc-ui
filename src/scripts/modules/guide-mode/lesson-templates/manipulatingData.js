@@ -25,7 +25,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Bucket',
       'link': 'transformations',
-      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on **+ New Transformation Bucket** and name it, e.g., *My transformation bucket*.',
+      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-xs">+ New Transformation Bucket</span> and name it, e.g., *My transformation bucket*. Then click <span class="btn btn-success btn-xs">Create Bucket</span>.',
       'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
@@ -58,8 +58,8 @@ export default {
 <br>
 - Click on <span class="btn btn-success btn-xs">+ New Input</span> and select \`in.c-tutorial.cars\` as the Source table from the drop down menu. Accept the suggested Destination. It is the name of the selected table inside the transformation. Press <span class="btn btn-success btn-xs">Create Input</span>.
 - Repeat the steps for the second table. Click on <span class="btn btn-success btn-xs">+ New Input</span> and select \`in.c-tutorial.population\` as the Source table.
-- Then click on <span class="btn btn-success btn-xs">New Output</span> and enter *Transformed* as the Source table. This table does not exist yet. It will be created in the transformation. 
-- Set Destination to \`out.c-snowflake.transformed\`. This is the name the new table *Transformed* will have when put in Storage. Press <span class="btn btn-success btn-xs">Create output</span>.
+- Then click on <span class="btn btn-success btn-xs">+ New Output</span> and enter *Transformed* as the Source table. This table does not exist yet. It will be created in the transformation. 
+- Set Destination to \`out.c-snowflake.transformed\`. This is the name the new table *Transformed* will have when put in Storage. Press <span class="btn btn-success btn-xs">Create Output</span>.
 - To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and <span class="btn btn-success btn-xs">Save</span> it.
 - Click on <span class="btn btn-success btn-xs">Next step</span>.
 
