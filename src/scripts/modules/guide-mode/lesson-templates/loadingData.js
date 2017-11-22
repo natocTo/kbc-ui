@@ -58,7 +58,7 @@ export default {
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
-      'title': 'Create SQL Query',
+      'title': 'Select Tables',
       'markdown':
       'Once you have access to the database, it’s time to actually extract the data about the number of cars in different countries.'
       + `
@@ -77,7 +77,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Extraction',
-      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. To run it, click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right to load the data from the two external database tables into the new tables in your project. Be patient. I takes a while to finish.',
+      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To run the extraction and create the tables, click <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right. The data from your selected external database tables will be loaded into the new tables in your project. <br/><br/> Be patient. It takes a while to finish.',
       'media': '',
       'mediaType': '',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS}
@@ -88,7 +88,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Stored Extraction',
       'link': 'storage',
-      'markdown': 'If you open your **Storage**, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. ' +
+      'markdown': 'If you open your **Storage** and click the bucket **in.c-keboola-ex-db-snowflake**, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. Feel free to click on the table names to see more details, including a data sample. ' +
       '<br/><br/> To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
