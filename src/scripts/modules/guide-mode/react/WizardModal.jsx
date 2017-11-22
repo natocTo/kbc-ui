@@ -54,7 +54,7 @@ export default React.createClass({
           <Modal.Body>
             <div className="row">
               <div className="col-md-12">
-                {!this.isLastStep() &&
+                {!this.isCongratulations() &&
                 <span>
                   <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
                 </span>
@@ -64,7 +64,7 @@ export default React.createClass({
                 {this.renderMedia()}
                 </div>
               </div>
-                {this.isLastStep() &&
+                {this.isCongratulations() &&
                 <span className="guide-congratulations">
                     <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
                 </span>
@@ -148,7 +148,10 @@ export default React.createClass({
     return this.getActiveStep() === 0;
   },
   isLastStep() {
-    return this.getLessonSteps().length - 1 === this.getActiveStep();
+    return this.getStepsCount() - 1 === this.getActiveStep();
+  },
+  isCongratulations() {
+    return typeof this.getLessonSteps()[this.getActiveStep()].congratulations === 'undefined' ? false : true;
   },
   isNavigationVisible() {
     return this.getLessonSteps()[this.getActiveStep()].isNavigationVisible;

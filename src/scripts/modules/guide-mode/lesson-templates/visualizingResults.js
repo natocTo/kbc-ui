@@ -65,17 +65,6 @@ A Tableau Desktop Extract file will be created. In a real project, you would fin
       'markdown': 'For the purposes of the Guide Mode, let’s say you have downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. The graph below is one of many reports you can create. <br/><br/> To see how to automate the whole process, continue to the next lesson – Project Automation. <br/><br/> Learn more about <a href="https://help.keboola.com/writers/" target="_blank">Writers</a>, or follow the hands-on tutorial on writing data in our <a href="https://help.keboola.com/tutorial/write/" target="_blank">user documentation</a>.',
       'media': 'tbl.png',
       'mediaType': 'img'
-    },
-    {
-      'id': 5,
-      'position': 'center',
-      'backdrop': true,
-      'isNavigationVisible': false,
-      'title': 'Congratulations',
-      'link': '/',
-      'markdown': 'Congratulations! Lesson finished.',
-      'media': 'keboola-finished.svg',
-      'mediaType': 'img'
     }
   ]
 };

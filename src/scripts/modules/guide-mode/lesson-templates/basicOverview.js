@@ -80,17 +80,6 @@ export default {
       'markdown': 'Having learned all the basics, you can explore the individual steps in more detail in the lessons that follow. <br/><br/> After extracting data from two database tables, merging them into one table, and calculating some statistics, you will visualize the results. Finally, you will set up the whole process to run automatically. See our example workflow below.',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
-    },
-    {
-      'id': 8,
-      'position': 'center',
-      'backdrop': true,
-      'isNavigationVisible': false,
-      'title': 'Congratulations',
-      'link': '/',
-      'markdown': 'Congratulations! Lesson finished.',
-      'media': 'keboola-finished.svg',
-      'mediaType': 'img'
     }
   ]
 };
