@@ -13,6 +13,7 @@ export default React.createClass({
 
   propTypes: {
     tokens: PropTypes.object.isRequired,
+    allBuckets: PropTypes.object.isRequired,
     currentAdmin: PropTypes.object.isRequired,
     onDeleteFn: PropTypes.func.isRequired,
     isDeletingFn: PropTypes.func.isRequired,
@@ -170,6 +171,7 @@ export default React.createClass({
     const isCreate = !token.get('id');
     return (
       <ManageTokenModal
+        allBuckets={this.props.allBuckets}
         token={token}
         isCreate={isCreate}
         show={show}

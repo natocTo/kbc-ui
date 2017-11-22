@@ -6,10 +6,10 @@ import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import TokensTable from './TokensTable';
 import TokensActions from '../actionCreators';
 import {Map} from 'immutable';
-
+import BucketsStore from '../../components/stores/StorageBucketsStore';
 
 export default React.createClass({
-  mixins: [createStoreMixin(TokensStore)],
+  mixins: [createStoreMixin(TokensStore, BucketsStore)],
 
   getStateFromStores() {
     const tokens = TokensStore.getAll();
@@ -19,7 +19,8 @@ export default React.createClass({
       currentAdmin,
       isDeletingTokenFn: TokensStore.isDeletingToken,
       isRefreshingTokenFn: TokensStore.isRefreshingToken,
-      localState: TokensStore.localState()
+      localState: TokensStore.localState(),
+      allBuckets: BucketsStore.getAll()
     };
   },
 
@@ -41,6 +42,7 @@ export default React.createClass({
                     isRefreshingFn={t => this.state.isRefreshingTokenFn(t.get('id'))}
                     currentAdmin={this.state.currentAdmin}
                     tokens={this.state.tokens}
+                    allBuckets={this.state.allBuckets}
                   />
                 </div>
               </div>
