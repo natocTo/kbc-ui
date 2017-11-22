@@ -104,7 +104,6 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Congratulations',
-      'link': '/',
       'markdown': 'Congratulations! You have completed all lessons.',
       'media': 'keboola-finished.svg',
       'mediaType': 'img',
