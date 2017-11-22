@@ -39,7 +39,7 @@ export default React.createClass({
       );
       return {label: componentId, value: componentId, componentRender};
     });
-    return options;
+    return options.toArray();
   },
 
   optionRenderer(op) {

@@ -3,8 +3,10 @@ import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import ExpiresInEdit from './ExpiresInEdit';
 import ComponentsStore from '../../components/stores/ComponentsStore';
+
 import ComponentsSelector from './ComponentsSelector';
-import {List} from 'immutable';
+import BucketPermissionsManager from './BucketPermissionsManager';
+import {List, Map} from 'immutable';
 
 export default React.createClass({
 
@@ -14,7 +16,8 @@ export default React.createClass({
     onSaveFn: PropTypes.func.isRequired,
     isSaving: PropTypes.bool.isRequired,
     isCreate: PropTypes.bool.isRequired,
-    token: PropTypes.object.isRequired
+    token: PropTypes.object.isRequired,
+    allBuckets: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -81,7 +84,12 @@ export default React.createClass({
             )}
             {isCustomAccess && this.renderFormGroup(
                'Buckets Custom Access',
-               'TODO'
+               <BucketPermissionsManager
+                 bucketPermissions={this.state.dirtyToken.get('bucketPermissions', Map())}
+                 onChange={(permissions) => this.updateDirtyToken('bucketPermissions', permissions)}
+                 allBuckets={this.props.allBuckets}
+                 wrapperClassName="col-sm-9"
+               />
             )}
 
           </div>
