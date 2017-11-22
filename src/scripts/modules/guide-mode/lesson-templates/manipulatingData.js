@@ -36,7 +36,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Transformation',
       'link': 'transformations',
-      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
+      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. <br/><br/> Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
       'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
