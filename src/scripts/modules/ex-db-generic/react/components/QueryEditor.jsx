@@ -38,13 +38,6 @@ export default React.createClass({
     };
   },
 
-  getInitialState() {
-    return {
-      simplePk: (this.props.query.get('advancedMode')) ? [] : this.props.query.get('primaryKey'),
-      advancedPk: (this.props.query.get('advancedMode')) ? this.props.query.get('primaryKey') : []
-    };
-  },
-
   isExistingTable() {
     const destinationTable = this.props.query.get('outputTable');
     if (!destinationTable || destinationTable === '') {
@@ -54,23 +47,8 @@ export default React.createClass({
   },
 
   handleToggleUseQueryEditor(e) {
-    let pk = [];
-    if (e.target.checked) {
-      this.setState({
-        simplePk: this.props.query.get('primaryKey')
-      });
-      pk = this.state.advancedPk || [];
-    } else {
-      this.setState({
-        advancedPk: this.props.query.get('primaryKey')
-      });
-      pk = this.state.simplePk || [];
-    }
-
     let immutable = this.props.query.withMutations(function(mapping) {
-      let query = mapping.set('advancedMode', e.target.checked);
-      query = query.set('primaryKey', pk);
-      return query;
+      return mapping.set('advancedMode', e.target.checked);
     }, e);
     return this.props.onChange(immutable);
   },
@@ -97,11 +75,6 @@ export default React.createClass({
   },
 
   handlePrimaryKeyChange(newValue) {
-    if (!this.props.query.get('advancedMode')) {
-      this.setState({
-        simplePk: newValue
-      });
-    }
     return this.props.onChange(this.props.query.set('primaryKey', newValue));
   },
 
