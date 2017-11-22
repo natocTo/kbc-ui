@@ -7,6 +7,7 @@ import Tooltip from '../../../react/common/Tooltip';
 import Confirm from '../../../react/common/Confirm';
 import {Loader} from 'kbc-react-components';
 import RefreshTokenModal from './RefreshTokenModal';
+import ManageTokenModal from './ManageTokenModal';
 
 export default React.createClass({
 
@@ -25,6 +26,7 @@ export default React.createClass({
     return (
       <span>
         {this.renderTokenRefreshModal()}
+        {this.renderManageTokenModal()}
         <Table responsive className="table table-striped">
           <thead>
             <tr>
@@ -134,6 +136,17 @@ export default React.createClass({
     );
   },
 
+  renderTokenRefreshButton(token) {
+    return (
+      <button
+        onClick={() => this.updateLocalState('refreshToken', token)}
+        className="btn btn-link">
+        Refresh token
+      </button>
+    );
+  },
+
+
   renderTokenRefreshModal() {
     const token = this.props.localState.get('refreshToken', Map());
     const isRefreshing = token && this.props.isRefreshingFn(token);
@@ -148,12 +161,33 @@ export default React.createClass({
     );
   },
 
-  renderTokenRefreshButton(token) {
+  renderManageTokenModal() {
+    const manageData = this.props.localState.get('manageToken', Map());
+    const show = manageData.get('show', false);
+    const token = manageData.get('token', Map());
+    const isCreate = !token.get('id');
+    return (
+      <ManageTokenModal
+        token={token}
+        isCreate={isCreate}
+        show={show}
+        onHideFn={() => this.updateLocalState(['manageToken', 'show'], false)}
+        onSaveFn={(newToken) => newToken /* TODO */}
+        isSaving={false}
+      />
+    );
+  },
+
+  renderEditTokenButton(token) {
+    const manageData = Map({
+      token: token,
+      show: true
+    });
     return (
       <button
-        onClick={() => this.updateLocalState('refreshToken', token)}
+        onClick={() => this.updateLocalState('manageToken', manageData)}
         className="btn btn-link">
-        Refresh token
+        Edit token
       </button>
     );
   },
@@ -188,7 +222,7 @@ export default React.createClass({
         </td>
         <td>
           <ul>
-            <li> edit token</li>
+            <li> {this.renderEditTokenButton(token)}</li>
             <li> token detail</li>
             <li> {this.renderTokenDelete(token)}</li>
             <li> {this.renderTokenRefreshButton(token)}</li>
