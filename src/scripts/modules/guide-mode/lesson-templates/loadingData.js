@@ -26,10 +26,10 @@ export default {
       'title': 'Create Extractor',
       'link': 'extractors',
       'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
-      'markdown': 'Because the two data tables are stored in a Snowflake database, you’ll be using the Snowflake extractor. By configuring it, you’ll specify what data to bring from the external database to your project and how.'
+      'markdown': 'Because both data tables are stored in a Snowflake database, you’ll be using the Snowflake extractor. By configuring it, you’ll specify what data to bring from the external database to your project and how.'
                 + `
-- Click on <span class="btn btn-success btn-xs">+ New Extractor</span> in the upper right corner.
 - Find **Snowflake**. You can use the search feature to find it quickly.
+- If you already have another extractor configured, click on <span class="btn btn-success btn-xs">+ New Extractor</span> in the upper right corner. Then find **Snowflake**.
 - Click on <span class="btn btn-success btn-xs">More</span> and continue with <span class="btn btn-success btn-xs">+ New Configuration</span>.
 - Name the configuration, e.g., *My database extractor*, and click on <span class="btn btn-success btn-xs">Create Configuration</span>.
 
@@ -42,14 +42,14 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Setup Connection',
-      'markdown': 'Now you will configure the new extractor. First you need to provide a password and other credentials to access the source database where the data about cars and population is stored.'
+      'markdown': 'To access the source database where the data about cars and population is stored, provide a password and other credentials.'
                 + `
-- Click on <span class="btn btn-success btn-xs">Setup Database Credentials</span> on the right.
-- Set Host to \`kebooladev.snowflakecomputing.com\`.
-- Set Port to \`443\`.
-- Set Username, Password, Database and Schema to \`HELP_TUTORIAL\`.
-- Set Warehouse to \`DEV\`.
-- Save the credentials by clicking on <span class="btn btn-success btn-xs">Save</span> in the upper right corner.
+- Click on <span class="btn btn-success btn-xs">Setup Database Credentials</span>.
+- Set Host to \`kebooladev.snowflakecomputing.com\`
+- Set Port to \`443\`
+- Set Username, Password, Database and Schema to \`HELP_TUTORIAL\`
+- Set Warehouse to \`DEV\`
+- You can test the credentials. Make sure to save them by clicking on <span class="btn btn-success btn-xs">Save</span> in the upper right corner.
 `,
       'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
       'media': '',
@@ -61,52 +61,29 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create SQL Query',
       'markdown':
-      'Now it’s time to actually extract the data. You need to write two SQL queries, one for each table. Every database query needs to have a name, an SQL command specifying what to extract from the database, and a new **output table** where the data will be written in **Storage**. <br/><br/> Start by creating the first query for extracting data about the number of cars in different countries.'
+      'Once you have access to the database, it’s time to actually extract the data about the number of cars in different countries.'
       + `
-- Click on <span class="btn btn-success btn-xs">+ New Query</span>.
-- Name the query \`cars\`.
-- Set the **Output table** to \`in.c-tutorial.cars\`.
-- Paste this simple query below: \`SELECT * FROM cars;\` 
-- Click on <span class="btn btn-success btn-xs">Create Query</span>.
+- Select the tables CARS and POPULATION from the drop-down list on the left.
+- Click <span class="btn btn-success btn-xs">Create</span>. Your extractor will be automatically configured.
 
 `,
       'media': '',
       'mediaType': '',
       'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'}
     },
+
     {
       'id': 5,
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
-      'title': 'Create Second SQL Query',
-      'markdown':
-      'Similarly, create a query to extract info about the countries’ population.'
-      + `
-- Click on <span class="btn btn-success btn-xs">+ New Query</span>.
-- Name the query \`population\`.
-- Set **Output table** to \`in.c-tutorial.population\`.
-- Paste this simple query below: \`SELECT * FROM population;\` 
-- Click on <span class="btn btn-success btn-xs">Create Query</span>.
-
-`,
-      'media': '',
-      'mediaType': '',
-      'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'}
-    },
-
-    {
-      'id': 6,
-      'position': 'aside',
-      'backdrop': false,
-      'isNavigationVisible': true,
       'title': 'Run Extraction',
-      'markdown': 'Now click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right to load the data from the two external database tables into the new tables in your project. You will find them in **Storage**.',
+      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. To run it, click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right to load the data from the two external database tables into the new tables in your project. Be patient. I takes a while to finish.',
       'media': '',
       'mediaType': '',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS}
     }, {
-      'id': 7,
+      'id': 6,
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
@@ -118,7 +95,7 @@ export default {
       'mediaType': ''
     },
     {
-      'id': 8,
+      'id': 7,
       'position': 'center',
       'backdrop': true,
       'isNavigationVisible': false,
