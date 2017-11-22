@@ -49,7 +49,9 @@ export default React.createClass({
                 Buckets Permissions
               </th>
               <th>
-                <button className="btn btn-success"> Create Token </button>
+                <button
+                  onClick={() => this.updateLocalState(['manageToken', 'show'], true)}
+                  className="btn btn-success"> Create Token </button>
               </th>
             </tr>
           </thead>
