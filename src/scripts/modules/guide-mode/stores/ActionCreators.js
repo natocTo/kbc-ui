@@ -19,6 +19,9 @@ const getCurrentStepIndex = () => {
 const getStepLink = (stepIndex) => {
   return wizardLessons[getCurrentLessonNumber()].steps[stepIndex].link;
 };
+const getNextStepDispatchLink = (stepIndex) => {
+  return wizardLessons[getCurrentLessonNumber()].steps[stepIndex].nextStepDispatchAction;
+};
 export const getAchievedLesson = () => {
   return getStateFromLocalStorage().achievedLesson;
 };
@@ -44,6 +47,10 @@ export const hideWizardModalFn = () => {
 export const setStep = (newStep) => {
   const nextLink = getStepLink(newStep);
   const currentLink = getStepLink(getCurrentStepIndex());
+  const nextStepDispatchLink = getNextStepDispatchLink(getCurrentStepIndex());
+  const isStorageLink = () => {
+    return nextLink !== 'storage' && currentLink !== 'storage' && typeof nextStepDispatchLink === 'undefined';
+  };
 
   Dispatcher.handleViewAction({
     type: ActionTypes.GUIDE_WIZARD_SET_STEP,
@@ -51,7 +58,7 @@ export const setStep = (newStep) => {
   });
 
   // use router.transitionTo only in kbc-ui app
-  if (nextLink !== 'storage' && currentLink !== 'storage') {
+  if (isStorageLink()) {
     return RoutesStore.getRouter().transitionTo(nextLink);
   }
 };

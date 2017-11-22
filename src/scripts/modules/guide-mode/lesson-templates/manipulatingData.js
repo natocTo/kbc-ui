@@ -35,7 +35,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Transformation',
-      'link': '/',
+      'link': 'transformations',
       'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
       'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
       'media': '',
@@ -46,7 +46,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Map Data & Set Queries',
-      'link': '/',
+      'link': 'transformations',
       'markdown':
       'Now let’s specify the following: '
 
@@ -72,7 +72,6 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Transformation',
-      'link': '/',
       'markdown': 'Now when everything is ready, you can click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run transformation</span>. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
       'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'media': '',

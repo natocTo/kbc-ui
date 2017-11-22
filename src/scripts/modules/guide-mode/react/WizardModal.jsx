@@ -258,7 +258,11 @@ export default React.createClass({
     );
   },
   closeLessonModal() {
-    RoutesStore.getRouter().transitionTo('home');
+    if (this.getStepLink() === 'storage') {
+      redirectTo(this.getProjectPageUrlHref(''));
+    } else {
+      RoutesStore.getRouter().transitionTo('home');
+    }
     hideWizardModalFn();
   },
   handleStep(direction) {

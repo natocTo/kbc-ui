@@ -94,9 +94,9 @@ export default React.createClass({
                 this.openLessonModal(key + 1);
               }}
             >
-              Lesson {key + 1} - {lessons[key + 1].title} {getAchievedLesson() < key &&
-            <i className="fa fa-lock"/>}
+              Lesson {key + 1} - {lessons[key + 1].title}
             </a>
+            {getAchievedLesson() < key && <i className="guide-lock fa fa-lock"/>}
           </li>
         );
       })
