@@ -2,6 +2,9 @@ import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import ExpiresInEdit from './ExpiresInEdit';
+import ComponentsStore from '../../components/stores/ComponentsStore';
+import ComponentsSelector from './ComponentsSelector';
+import {List} from 'immutable';
 
 export default React.createClass({
 
@@ -31,8 +34,10 @@ export default React.createClass({
   },
 
   render() {
+    const isCustomAccess = !this.state.dirtyToken.get('canManageBuckets', false);
     return (
       <Modal
+        bsSize="large"
         show={this.props.show}
         onHide={this.handleClose}
       >
@@ -59,6 +64,24 @@ export default React.createClass({
             {this.renderFormGroup(
                'File Uploads Access',
                this.renderFileUploadsAccessInput()
+            )}
+            {this.renderFormGroup(
+               'Buckets&Components Access',
+               this.renderBucketsAndComponentsAccessInput()
+            )}
+            {isCustomAccess && this.renderFormGroup(
+               'Components Custom Access',
+               <div className="col-sm-9">
+                 <ComponentsSelector
+                   onChange={(components) => this.updateDirtyToken('componentAccess', components)}
+                   selectedComponents={this.state.dirtyToken.get('componentAccess', List())}
+                   allComponents={ComponentsStore.getAll()}
+                 />
+               </div>
+            )}
+            {isCustomAccess && this.renderFormGroup(
+               'Buckets Custom Access',
+               'TODO'
             )}
 
           </div>
@@ -89,7 +112,6 @@ export default React.createClass({
           <label>
             <input
               type="radio"
-              label="Full Access"
               checked={isFullAccess}
               onChange={() => this.updateDirtyToken('canReadAllFileUploads', true)}
             />
@@ -103,7 +125,6 @@ export default React.createClass({
           <label>
             <input
               type="radio"
-              label="Restricted"
               checked={!isFullAccess}
               onChange={() => this.updateDirtyToken('canReadAllFileUploads', false)}
             />
@@ -112,6 +133,40 @@ export default React.createClass({
         </div>
         <span className="help-block">
           Only files uploaded by the token are accessible
+        </span>
+      </div>
+    );
+  },
+
+  renderBucketsAndComponentsAccessInput() {
+    const canManageBuckets = this.state.dirtyToken.get('canManageBuckets', false);
+    return (
+      <div className="col-sm-9">
+        <div className="radio">
+          <label>
+            <input
+              type="radio"
+              checked={canManageBuckets}
+              onChange={() => this.updateDirtyToken('canManageBuckets', true)}
+            />
+            <span>Full Access</span>
+          </label>
+        </div>
+        <span className="help-block">
+          Allow full access to all buckets and components including buckets created in future
+        </span>
+        <div className="radio">
+          <label>
+            <input
+              type="radio"
+              checked={!canManageBuckets}
+              onChange={() => this.updateDirtyToken('canManageBuckets', false)}
+            />
+            <span>Custom Access</span>
+          </label>
+        </div>
+        <span className="help-block">
+          Only specified components and buckets will be accessible.
         </span>
       </div>
     );
@@ -134,9 +189,7 @@ export default React.createClass({
         <label className="control-label col-sm-3">
           {labelComponent}
         </label>
-        <div className="col-sm-9">
-          {controlComponent}
-        </div>
+        {controlComponent}
       </div>
     );
   },
