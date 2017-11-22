@@ -25,8 +25,12 @@ export default React.createClass({
   },
 
   getProjectPageUrlHref(path) {
+    let delimiter = '/';
     if (process.env.NODE_ENV === 'production') {
-      return this.props.projectBaseUrl + '/' + path;
+      if (path === '') {
+        delimiter = '';
+      }
+      return this.props.projectBaseUrl + delimiter + path;
     }
     // development
     if (path === 'storage') {
