@@ -38,13 +38,6 @@ export default React.createClass({
     };
   },
 
-  getInitialState() {
-    return {
-      simplePk: (this.props.query.get('advancedMode')) ? [] : this.props.query.get('primaryKey'),
-      advancedPk: (this.props.query.get('advancedMode')) ? this.props.query.get('primaryKey') : []
-    };
-  },
-
   isExistingTable() {
     const destinationTable = this.props.query.get('outputTable');
     if (!destinationTable || destinationTable === '') {
@@ -54,23 +47,8 @@ export default React.createClass({
   },
 
   handleToggleUseQueryEditor(e) {
-    let pk = [];
-    if (e.target.checked) {
-      this.setState({
-        simplePk: this.props.query.get('primaryKey')
-      });
-      pk = this.state.advancedPk || [];
-    } else {
-      this.setState({
-        advancedPk: this.props.query.get('primaryKey')
-      });
-      pk = this.state.simplePk || [];
-    }
-
     let immutable = this.props.query.withMutations(function(mapping) {
-      let query = mapping.set('advancedMode', e.target.checked);
-      query = query.set('primaryKey', pk);
-      return query;
+      return mapping.set('advancedMode', e.target.checked);
     }, e);
     return this.props.onChange(immutable);
   },
@@ -97,11 +75,6 @@ export default React.createClass({
   },
 
   handlePrimaryKeyChange(newValue) {
-    if (!this.props.query.get('advancedMode')) {
-      this.setState({
-        simplePk: newValue
-      });
-    }
     return this.props.onChange(this.props.query.set('primaryKey', newValue));
   },
 
@@ -161,9 +134,9 @@ export default React.createClass({
 
     let destinationTablePks = (this.isExistingTable())
       ? this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey')
-      : [];
+      : Immutable.List();
 
-    return (destinationTablePks.length > 0) ? destinationTablePks : sourctTablePks;
+    return (destinationTablePks.count() > 0) ? destinationTablePks : sourctTablePks;
   },
 
   primaryKeyHelp() {
@@ -199,7 +172,7 @@ export default React.createClass({
     const currentName = this.props.query.get('name');
     const oldTableName = this.props.query.getIn(['table', 'tableName'], '');
     const newName = (currentName && currentName !== oldTableName) ? currentName : newValue.tableName;
-    const primaryKeys = (newValue === '') ? [] : this.getPksOnSourceTableChange(newValue);
+    const primaryKeys = (newValue === '') ? Immutable.List() : this.getPksOnSourceTableChange(newValue);
     return this.props.onChange(
       this.props.query
         .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
