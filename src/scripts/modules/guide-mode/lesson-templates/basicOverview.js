@@ -10,7 +10,7 @@ export default {
       'title': 'Introduction',
       'link': '/',
       'markdown': 'This lesson gives you a basic overview of the Keboola Connection environment. Its interconnected components help you extract data from various sources, manipulate and enrich the data, write the results to visualizing tools of your choice, etc. In addition, the whole process can be fully automated.',
-      'media': 'kbc_scheme_light_blue.svg',
+      'media': 'kbc_scheme_light_blue-gen.svg',
       'mediaType': 'img'
     },
     {
