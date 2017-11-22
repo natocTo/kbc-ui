@@ -29,7 +29,6 @@ export default {
       'markdown': 'Because both data tables are stored in a Snowflake database, you’ll be using the Snowflake extractor. By configuring it, you’ll specify what data to bring from the external database to your project and how.'
                 + `
 - Find **Snowflake**. You can use the search feature to find it quickly.
-- If you already have another extractor configured, click on <span class="btn btn-success btn-xs">+ New Extractor</span> in the upper right corner. Then find **Snowflake**.
 - Click on <span class="btn btn-success btn-xs">More</span> and continue with <span class="btn btn-success btn-xs">+ New Configuration</span>.
 - Name the configuration, e.g., *My database extractor*, and click on <span class="btn btn-success btn-xs">Create Configuration</span>.
 
