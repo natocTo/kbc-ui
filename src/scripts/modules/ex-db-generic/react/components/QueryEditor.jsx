@@ -134,9 +134,9 @@ export default React.createClass({
 
     let destinationTablePks = (this.isExistingTable())
       ? this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey')
-      : [];
+      : Immutable.List();
 
-    return (destinationTablePks.length > 0) ? destinationTablePks : sourctTablePks;
+    return (destinationTablePks.count() > 0) ? destinationTablePks : sourctTablePks;
   },
 
   primaryKeyHelp() {
@@ -172,7 +172,7 @@ export default React.createClass({
     const currentName = this.props.query.get('name');
     const oldTableName = this.props.query.getIn(['table', 'tableName'], '');
     const newName = (currentName && currentName !== oldTableName) ? currentName : newValue.tableName;
-    const primaryKeys = (newValue === '') ? [] : this.getPksOnSourceTableChange(newValue);
+    const primaryKeys = (newValue === '') ? Immutable.List() : this.getPksOnSourceTableChange(newValue);
     return this.props.onChange(
       this.props.query
         .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
