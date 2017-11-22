@@ -54,8 +54,11 @@ export default React.createClass({
                <ExpiresInEdit
                  value={this.state.dirtyToken.get('expiresIn', null)}
                  onChange={(value) => this.updateDirtyToken('expiresIn', value)}
-                 wrapperClassName="col-sm-9"
                />
+            )}
+            {this.renderFormGroup(
+               'File Uploads Access',
+               this.renderFileUploadsAccessInput()
             )}
 
           </div>
@@ -66,7 +69,7 @@ export default React.createClass({
             onSave={this.handleSave}
             onCancel={this.handleClose}
             placement="right"
-            saveLabel="Save"
+            saveLabel={this.props.isCreate ? 'Create' : 'Update'}
           />
         </Modal.Footer>
       </Modal>
@@ -76,6 +79,42 @@ export default React.createClass({
   updateDirtyToken(key, value) {
     const {dirtyToken} = this.state;
     this.setState({dirtyToken: dirtyToken.set(key, value)});
+  },
+
+  renderFileUploadsAccessInput() {
+    const isFullAccess = this.state.dirtyToken.get('canReadAllFileUploads', false);
+    return (
+      <div className="col-sm-9">
+        <div className="radio">
+          <label>
+            <input
+              type="radio"
+              label="Full Access"
+              checked={isFullAccess}
+              onChange={() => this.updateDirtyToken('canReadAllFileUploads', true)}
+            />
+            <span>Full Access</span>
+          </label>
+        </div>
+        <span className="help-block">
+          Allow access to all file uploads
+        </span>
+        <div className="radio">
+          <label>
+            <input
+              type="radio"
+              label="Restricted"
+              checked={!isFullAccess}
+              onChange={() => this.updateDirtyToken('canReadAllFileUploads', false)}
+            />
+            <span>Restricted Access</span>
+          </label>
+        </div>
+        <span className="help-block">
+          Only files uploaded by the token are accessible
+        </span>
+      </div>
+    );
   },
 
   renderDescriptionInput() {

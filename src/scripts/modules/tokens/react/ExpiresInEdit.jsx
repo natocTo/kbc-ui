@@ -7,8 +7,7 @@ export default React.createClass({
 
   propTypes: {
     value: PropTypes.number,
-    onChange: PropTypes.func.isRequired,
-    wrapperClassName: PropTypes.string
+    onChange: PropTypes.func.isRequired
   },
 
   selectOptions: [
