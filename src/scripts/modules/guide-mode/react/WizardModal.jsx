@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
-import { hideWizardModalFn, getAchievedStep, setAchievedLesson } from '../stores/ActionCreators.js';
+import { hideWizardModalFn, getAchievedStep } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
 // import ApplicationStore from '../../../stores/ApplicationStore';
@@ -286,9 +286,6 @@ export default React.createClass({
     }
   },
   increaseStep() {
-    if (this.props.step === this.getStepsCount() - 2) {
-      setAchievedLesson(this.getLessonId());
-    }
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
       this.props.setStep(nextStep);

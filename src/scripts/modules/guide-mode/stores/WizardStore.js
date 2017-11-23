@@ -34,6 +34,15 @@ const getMaxStep = (currentStepId) => {
   return Math.max(currentStepId, getStateFromLocalStorage().achievedStep);
 };
 
+const getAchievedLesson = (isWizardOpen) => {
+  const localStorageState = getStateFromLocalStorage();
+  if ((Object.keys(wizardLessons).length >= localStorageState.lessonNumber) && localStorageState.lessonNumber > 0 && !isWizardOpen && localStorageState.step + 1 === wizardLessons[localStorageState.lessonNumber].steps.length) {
+    return localStorageState.lessonNumber;
+  } else {
+    return localStorageState.achievedLesson;
+  }
+};
+
 const WizardStore = StoreUtils.createStore({
   getState: () => {
     return getStateFromLocalStorage();
@@ -72,7 +81,8 @@ Dispatcher.register((payload) => {
           showLessonModal: action.showLessonModal,
           lessonNumber: action.lessonNumber,
           step: action.showLessonModal ? localStorageState.step : 0,
-          achievedStep: action.showLessonModal ? localStorageState.step : 0
+          achievedStep: action.showLessonModal ? localStorageState.step : 0,
+          achievedLesson: getAchievedLesson(action.showLessonModal)
         }));
         WizardStore.emitChange();
         break;
