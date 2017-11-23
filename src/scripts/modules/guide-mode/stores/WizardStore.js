@@ -9,6 +9,7 @@ import { ActionTypes as componentsActionTypes } from '../../components/Constants
 import { ActionTypes as jobActionTypes } from '../../jobs/Constants';
 import { ActionTypes as transformationsActionTypes } from '../../transformations/Constants';
 import { ActionTypes as orchestrationsActionTypes } from '../../orchestrations/Constants';
+import ApplicationStore from '../../../stores/ApplicationStore';
 
 const LOCAL_STORAGE_KEY = 'kbc-ui-guide-mode';
 
@@ -51,6 +52,7 @@ const WizardStore = StoreUtils.createStore({
 Dispatcher.register((payload) => {
   const action = payload.action;
   const localStorageState = getStateFromLocalStorage();
+  if (!ApplicationStore.getKbcVars().get('projectHasGuideModeOn')) return;
 
   const saveAndEmit = (stepId) => {
     setStateToLocalStorage(
