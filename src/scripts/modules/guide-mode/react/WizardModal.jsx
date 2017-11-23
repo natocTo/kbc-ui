@@ -91,6 +91,12 @@ export default React.createClass({
   hasPreviousStep() {
     return this.props.step > 0;
   },
+  hasNextStepLink() {
+    return this.props.lesson.steps[this.props.step + 1].hasOwnProperty('link');
+  },
+  hasPreviousStepLink() {
+    return this.props.lesson.steps[this.props.step - 1].hasOwnProperty('link');
+  },
   getActiveStep() {
     return this.props.step;
   },
