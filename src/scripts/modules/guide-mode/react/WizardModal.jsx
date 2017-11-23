@@ -221,7 +221,19 @@ export default React.createClass({
       );
     }
     return (
-      <Button onClick={() => this.handleStep('prev')} bsStyle="link">{buttonText}</Button>
+      <Button
+        onClick={() => {
+          this.handleStep('prev');
+          if (this.hasPreviousStep() && this.hasPreviousStepLink()) {
+            RoutesStore
+              .getRouter()
+              .transitionTo(this.props.lesson.steps[this.props.step - 1].link);
+          }
+        }}
+        bsStyle="link"
+      >
+        {buttonText}
+      </Button>
     );
   },
   renderButtonNext() {
@@ -247,7 +259,19 @@ export default React.createClass({
       );
     }
     return (
-      <Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>
+      <Button
+        onClick={() => {
+          this.handleStep('next');
+          if (this.hasNextStep() && this.hasNextStepLink()) {
+            RoutesStore
+              .getRouter()
+              .transitionTo(this.props.lesson.steps[this.props.step + 1].link);
+          }
+        }}
+        bsStyle="primary"
+      >
+        {buttonText}
+      </Button>
     );
   },
   renderNavigation() {
