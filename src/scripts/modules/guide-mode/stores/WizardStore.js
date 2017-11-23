@@ -52,10 +52,17 @@ const WizardStore = StoreUtils.createStore({
   }
 });
 
+const shouldHandleActions = () => {
+  return ApplicationStore.getKbcVars().get('projectHasGuideModeOn') && WizardStore.hasLessonOn();
+};
+
 Dispatcher.register((payload) => {
+  if (!shouldHandleActions()) {
+    return;
+  }
+
   const action = payload.action;
   const localStorageState = getStateFromLocalStorage();
-  if (!ApplicationStore.getKbcVars().get('projectHasGuideModeOn')) return;
 
   const saveAndEmit = (stepId) => {
     setStateToLocalStorage(
