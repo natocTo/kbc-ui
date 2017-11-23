@@ -78,7 +78,7 @@ export default React.createClass({
             </div>
           </Modal.Body>
           <Modal.Footer>
-            {this.renderButtonPrev()}
+            {this.hasPreviousStep() && this.renderButtonPrev()}
             {this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
@@ -205,9 +205,7 @@ export default React.createClass({
   renderButtonPrev() {
     const { step } = this.props.step;
     const buttonText = step === 0 ? 'Close' : 'Prev step';
-    if (!this.hasPreviousStep()) {
-      return '';
-    }
+
     if (this.getStepLink() === 'storage' || this.getPreviousStepLink() === 'storage') {
       return (
         <button
