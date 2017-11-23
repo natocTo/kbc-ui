@@ -175,7 +175,7 @@ export default React.createClass({
         token={token}
         isCreate={isCreate}
         show={show}
-        onHideFn={() => this.updateLocalState(['manageToken', 'show'], false)}
+        onHideFn={() => this.updateLocalState(['manageToken'], Map())}
         onSaveFn={(newToken) => newToken /* TODO */}
         isSaving={false}
       />

@@ -15,6 +15,7 @@ export default React.createClass({
   render() {
     return (
       <Select
+        placeholder="Select component..."
         multi={true}
         value={this.props.selectedComponents.toArray()}
         onChange={this.handleSelect}
