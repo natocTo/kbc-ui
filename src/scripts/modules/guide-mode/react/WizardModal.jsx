@@ -247,7 +247,7 @@ export default React.createClass({
       <ListGroup className="guide-navigation">
         {
           this.getLessonSteps().filter((step) => {
-            return step.id < this.getStepsCount();
+            return step.id <= this.getStepsCount();
           }, this).map((step, index) => {
             if (this.isNavigationVisible()) {
               return (
