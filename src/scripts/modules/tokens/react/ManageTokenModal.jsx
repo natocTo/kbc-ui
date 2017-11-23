@@ -154,6 +154,7 @@ export default React.createClass({
           <label>
             <input
               type="radio"
+              disabled={!this.props.isCreate}
               checked={canManageBuckets}
               onChange={() => this.updateDirtyToken('canManageBuckets', true)}
             />
@@ -166,6 +167,7 @@ export default React.createClass({
         <div className="radio">
           <label>
             <input
+              disabled={!this.props.isCreate}
               type="radio"
               checked={!canManageBuckets}
               onChange={() => this.updateDirtyToken('canManageBuckets', false)}
