@@ -296,7 +296,7 @@ export default React.createClass({
     if (this.getStepLink() === 'storage') {
       redirectTo(this.getProjectPageUrlHref(''));
     } else {
-      RoutesStore.getRouter().transitionTo('home');
+      RoutesStore.getRouter().transitionTo('app');
     }
     hideWizardModalFn();
   },
