@@ -20,7 +20,7 @@ export default React.createClass({
     });
   },
 
-  permissionOptions: [{label: 'read', value: 'read'}, {label: 'write', value: 'write'}],
+  permissionOptions: [{label: 'read', value: 'read'}, {label: 'write', value: 'write'}, {label: 'manage', value: 'manage', disabled: true}],
 
   render() {
     return (
@@ -88,7 +88,7 @@ export default React.createClass({
                   <td>
                     <div className="row">
                       <span className="col-sm-8">{bucketId}</span>
-                      <span className="col-sm-2">
+                      <span className="col-sm-3">
                         <Select
                           value={permission}
                           onChange={({value}) => this.updatePermission(bucketId, value)}
@@ -97,10 +97,10 @@ export default React.createClass({
                           options={this.permissionOptions}
                         />
                       </span>
-                      <span className="col-sm-2">
+                      <span className="col-sm-1 pull-right">
                         <button
                           onClick={() => this.removeBucket(bucketId)}
-                          className="btn btn-link">
+                          className="btn btn-link ">
                           <i className="kbc-icon-cup" />
                         </button>
                       </span>
