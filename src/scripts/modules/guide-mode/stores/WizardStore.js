@@ -52,27 +52,13 @@ const WizardStore = StoreUtils.createStore({
   }
 });
 
-const shouldHandleActions = () => {
-  return ApplicationStore.getKbcVars().get('projectHasGuideModeOn') && WizardStore.hasLessonOn();
-};
-
 Dispatcher.register((payload) => {
-  if (!shouldHandleActions()) {
+  if (!ApplicationStore.getKbcVars().get('projectHasGuideModeOn')) {
     return;
   }
 
   const action = payload.action;
   const localStorageState = getStateFromLocalStorage();
-
-  const saveAndEmit = (stepId) => {
-    setStateToLocalStorage(
-      objectAssign(localStorageState, {
-        step: stepId - 1, // step index
-        achievedStep: stepId - 1 // step index
-      })
-    );
-    WizardStore.emitChange();
-  };
 
   switch (action.type) {
     case ActionTypes.GUIDE_WIZARD_SET_STEP:
@@ -92,6 +78,24 @@ Dispatcher.register((payload) => {
       }));
       WizardStore.emitChange();
       break;
+    default:
+  }
+
+  if (!WizardStore.hasLessonOn()) {
+    return;
+  }
+
+  const saveAndEmit = (stepId) => {
+    setStateToLocalStorage(
+      objectAssign(localStorageState, {
+        step: stepId - 1, // step index
+        achievedStep: stepId - 1 // step index
+      })
+    );
+    WizardStore.emitChange();
+  };
+
+  switch (action.type) {
     case componentsActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS:
       if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 2 && action.componentId === 'keboola.ex-db-snowflake') {
         saveAndEmit(2);
