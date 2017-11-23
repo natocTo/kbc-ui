@@ -48,19 +48,21 @@ export default React.createClass({
           onChange={this.handleSelectChange}
         />
         {this.state.selectValue === CUSTOM_VALUE &&
-         <span className="col-sm-5">
-           <input
-             type="number"
-             min="1"
-             value={this.props.value / 3600}
-             onChange={(e) => this.props.onChange(e.target.value * 3600)}
-             className="form-control"
-           />
-           <span className="help-block">
-             specified in hours
-           </span>
+         <span className="col-sm-3">
+           <div className="input-group">
+             <input
+               type="number"
+               min="1"
+               value={this.props.value / 3600}
+               onChange={(e) => this.props.onChange(e.target.value * 3600)}
+               className="form-control"
+             />
+             <span className="input-group-addon">
+               hours
+             </span>
+           </div>
          </span>
-         }
+        }
       </div>
     );
   },
