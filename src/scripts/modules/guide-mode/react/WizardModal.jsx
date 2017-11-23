@@ -288,14 +288,14 @@ export default React.createClass({
     }
   },
   increaseStep() {
+    if (this.props.step === this.getStepsCount() - 2) {
+      setAchievedLesson(this.getLessonId());
+    }
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
-    }
-    if (this.props.step === this.getStepsCount() - 2) {
-      setAchievedLesson(this.getLessonId());
     }
   }
 

@@ -73,11 +73,11 @@ Dispatcher.register((payload) => {
       WizardStore.emitChange();
       break;
     case ActionTypes.UPDATE_WIZARD_MODAL_STATE:
-      setStateToLocalStorage({
+      setStateToLocalStorage(objectAssign(localStorageState, {
         showLessonModal: action.showLessonModal,
         lessonNumber: action.lessonNumber,
         step: action.showLessonModal ? localStorageState.step : 0
-      });
+      }));
       WizardStore.emitChange();
       break;
     case componentsActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS:
