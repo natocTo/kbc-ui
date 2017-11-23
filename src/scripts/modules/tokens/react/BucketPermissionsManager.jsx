@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import Select from 'react-select';
 // import {fromJS} from 'immutable';
 // import {ListGroupItem, ListGroup} from 'react-bootstrap';
-// import {Table, Panel} from 'react-bootstrap';
+import {Table, Panel} from 'react-bootstrap';
 
 export default React.createClass({
 
@@ -77,31 +77,42 @@ export default React.createClass({
       );
     }
     return (
-      <span>
-        {this.props.bucketPermissions.map((permission, bucketId) =>
-          <div className="row" key={bucketId} style={{paddingBottom: '8px'}}>
-            <div className="col-sm-12">
-              <span className="col-sm-8">{bucketId}</span>
-              <span className="col-sm-2">
-                <Select
-                  value={permission}
-                  onChange={({value}) => this.updatePermission(bucketId, value)}
-                  clearable={false}
-                  searchable={false}
-                  options={this.permissionOptions}
-                />
-              </span>
-              <span className="col-sm-2">
-                <button
-                  onClick={() => this.removeBucket(bucketId)}
-                  className="btn btn-link">
-                  <i className="kbc-icon-cup" />
-                </button>
-              </span>
-            </div>
-          </div>
-        ).toArray()
-        }
+      <span className="col-sm-12">
+        <Panel
+          header="Buckets Permissions"
+          collapsible={true} defaultExpanded={true}>
+          <Table fill className="table">
+            <tbody>
+              {this.props.bucketPermissions.map((permission, bucketId) =>
+                <tr aclassName="col-sm-12">
+                  <td>
+                    <div className="row">
+                      <span className="col-sm-8">{bucketId}</span>
+                      <span className="col-sm-2">
+                        <Select
+                          value={permission}
+                          onChange={({value}) => this.updatePermission(bucketId, value)}
+                          clearable={false}
+                          searchable={false}
+                          options={this.permissionOptions}
+                        />
+                      </span>
+                      <span className="col-sm-2">
+                        <button
+                          onClick={() => this.removeBucket(bucketId)}
+                          className="btn btn-link">
+                          <i className="kbc-icon-cup" />
+                        </button>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+              ).toArray()
+              }
+            </tbody>
+          </Table>
+        </Panel>
       </span>
     );
   },
