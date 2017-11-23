@@ -88,7 +88,7 @@ export default {
       'backdrop': true,
       'isNavigationVisible': true,
       'title': 'Lesson 2 Finished',
-      'link': 'app',
+      'link': '',
       'markdown': 'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''
