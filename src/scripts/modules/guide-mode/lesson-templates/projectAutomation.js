@@ -1,7 +1,3 @@
-import OrchestrationsConstants from '../../orchestrations/Constants';
-
-const {ORCHESTRATION_CREATE_SUCCESS, ORCHESTRATION_TASKS_EDIT_START, ORCHESTRATION_TASKS_SAVE_SUCCESS, ORCHESTRATION_LOAD_SUCCESS, ORCHESTRATION_FIELD_SAVE_SUCCESS} = OrchestrationsConstants.ActionTypes;
-
 export default {
   'id': 5,
   'title': 'Project Automation',
@@ -21,7 +17,6 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Orchestration',
       'link': 'orchestrations',
-      'nextStepDispatchAction': {type: ORCHESTRATION_CREATE_SUCCESS},
       'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-xs">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., *My orchestration*.',
       'media': '',
       'mediaType': ''
@@ -32,7 +27,6 @@ export default {
       'isNavigationVisible': true,
       'title': 'Orchestration Overview',
       'markdown': 'The orchestrator configuration consists of three separate parts in which you will create the desired **sequence** of the tasks you wish to execute. You will set your execution **schedule**, and select **notifications** you want to be sent to you in case of errors, delays, etc. <br/><br/> Start by clicking on <span class="btn btn-success btn-xs">Configure Tasks</span> to select and order the tasks.',
-      'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_EDIT_START},
       'media': '',
       'mediaType': ''
     }, {
@@ -51,7 +45,6 @@ export default {
 Then click <span class="btn btn-success btn-xs">Save</span> in the upper right corner.
 
 `,
-      'nextStepDispatchAction': {type: ORCHESTRATION_TASKS_SAVE_SUCCESS},
       'media': '',
       'mediaType': ''
     }, {
@@ -66,8 +59,6 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
 - Click on <span class="btn btn-success btn-xs">Save</span>.
       
       `,
-      'nextStepDispatchAction': {type: ORCHESTRATION_LOAD_SUCCESS},
-      'matchLink': '/orchestrations/\\d+',
       'media': '',
       'mediaType': ''
     }, {
@@ -84,8 +75,6 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
 - Click on <span class="btn btn-success btn-xs">Save</span>.
 
 `,
-      'nextStepDispatchAction': {type: ORCHESTRATION_FIELD_SAVE_SUCCESS},
-      'matchLink': '/orchestrations/\\d+',
       'media': '',
       'mediaType': ''
     }, {

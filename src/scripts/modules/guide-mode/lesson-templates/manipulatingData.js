@@ -1,9 +1,3 @@
-import JobsConstants from '../../jobs/Constants';
-import TransformationsConstants from '../../transformations/Constants';
-
-const {JOB_LOAD_SUCCESS} = JobsConstants.ActionTypes;
-const {TRANSFORMATION_BUCKET_CREATE_SUCCESS, TRANSFORMATION_CREATE_SUCCESS} = TransformationsConstants.ActionTypes;
-
 export default {
   'id': 3,
   'title': 'Manipulating Data',
@@ -26,7 +20,6 @@ export default {
       'title': 'Create Bucket',
       'link': 'transformations',
       'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-xs">+ New Transformation Bucket</span> and name it, e.g., *My transformation bucket*. Then click <span class="btn btn-success btn-xs">Create Bucket</span>.',
-      'nextStepDispatchAction': {type: TRANSFORMATION_BUCKET_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
     }, {
@@ -37,7 +30,6 @@ export default {
       'title': 'Create Transformation',
       'link': 'transformations',
       'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. <br/><br/> Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
-      'nextStepDispatchAction': {type: TRANSFORMATION_CREATE_SUCCESS},
       'media': '',
       'mediaType': ''
     }, {
@@ -73,7 +65,6 @@ export default {
       'isNavigationVisible': true,
       'title': 'Run Transformation',
       'markdown': 'Now when everything is ready, you can click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run transformation</span>. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
-      'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'media': '',
       'mediaType': ''
     }, {
@@ -103,7 +94,7 @@ export default {
       'backdrop': true,
       'isNavigationVisible': true,
       'title': 'Lesson 3 Finished',
-      'link': 'app',
+      'link': '',
       'markdown': 'To see how to write the output data from Keboola Connection, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''

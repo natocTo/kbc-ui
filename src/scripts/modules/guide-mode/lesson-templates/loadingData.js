@@ -1,9 +1,3 @@
-import ComponentsConstants from '../../components/Constants';
-import JobsConstants from '../../jobs/Constants';
-
-const {INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS} = ComponentsConstants.ActionTypes;
-const {JOB_LOAD_SUCCESS} = JobsConstants.ActionTypes;
-
 export default {
   'id': 2,
   'title': 'Loading Data',
@@ -25,7 +19,6 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Extractor',
       'link': 'extractors',
-      'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
       'markdown': 'Because both data tables are stored in a Snowflake database, you’ll be using the Snowflake extractor. By configuring it, you’ll specify what data to bring from the external database to your project and how.'
                 + `
 - Find **Snowflake**. You can use the search feature to find it quickly.
@@ -50,7 +43,6 @@ export default {
 - Set Warehouse to \`DEV\`
 - You can test the credentials. Make sure to save them by clicking on <span class="btn btn-success btn-xs">Save</span> in the upper right corner.
 `,
-      'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'},
       'media': '',
       'mediaType': ''
     }, {
@@ -67,8 +59,7 @@ export default {
 
 `,
       'media': '',
-      'mediaType': '',
-      'nextStepDispatchAction': {type: INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS, componentId: 'keboola.ex-db-snowflake'}
+      'mediaType': ''
     },
 
     {
@@ -79,8 +70,8 @@ export default {
       'title': 'Run Extraction',
       'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To run the extraction and create the tables, click <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right. The data from your selected external database tables will be loaded into the new tables in your project. <br/><br/> Be patient. It takes a while to finish.',
       'media': '',
-      'mediaType': '',
-      'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS}
+      'link': 'extractors',
+      'mediaType': ''
     }, {
       'id': 6,
       'position': 'aside',
@@ -97,7 +88,7 @@ export default {
       'backdrop': true,
       'isNavigationVisible': true,
       'title': 'Lesson 2 Finished',
-      'link': 'app',
+      'link': '',
       'markdown': 'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
       'mediaType': ''

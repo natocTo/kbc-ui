@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Button, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
+import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn, getAchievedStep, setAchievedLesson } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
@@ -78,7 +78,7 @@ export default React.createClass({
             </div>
           </Modal.Body>
           <Modal.Footer>
-            {this.renderButtonPrev()}
+            {this.hasPreviousStep() && this.renderButtonPrev()}
             {this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
@@ -90,6 +90,12 @@ export default React.createClass({
   },
   hasPreviousStep() {
     return this.props.step > 0;
+  },
+  hasNextStepLink() {
+    return this.props.lesson.steps[this.props.step + 1].hasOwnProperty('link');
+  },
+  hasPreviousStepLink() {
+    return this.props.lesson.steps[this.props.step - 1].hasOwnProperty('link');
   },
   getActiveStep() {
     return this.props.step;
@@ -132,18 +138,6 @@ export default React.createClass({
   },
   getStepLink() {
     return this.getLessonSteps()[this.getActiveStep()].link;
-  },
-  getPreviousStepLink() {
-    if (!this.hasPreviousStep()) {
-      return this.getLessonSteps()[this.getActiveStep()].link;
-    }
-    return this.getLessonSteps()[this.getActiveStep() - 1].link;
-  },
-  getNextStepLink() {
-    if (!this.hasNextStep()) {
-      return this.getLessonSteps()[this.getActiveStep()].link;
-    }
-    return this.getLessonSteps()[this.getActiveStep() + 1].link;
   },
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
@@ -199,23 +193,24 @@ export default React.createClass({
   renderButtonPrev() {
     const { step } = this.props.step;
     const buttonText = step === 0 ? 'Close' : 'Prev step';
-    if (!this.hasPreviousStep()) {
-      return '';
-    }
-    if (this.getStepLink() === 'storage' || this.getPreviousStepLink() === 'storage') {
-      return (
-        <button
-          onClick={() => {
-            this.handleStep('prev');
-            redirectTo(this.getProjectPageUrlHref(this.getPreviousStepLink()));
-          }}
-          className="btn btn-link">
-          {buttonText}
-        </button>
-      );
-    }
+
     return (
-      <Button onClick={() => this.handleStep('prev')} bsStyle="link">{buttonText}</Button>
+      <button
+        onClick={() => {
+          this.handleStep('prev');
+          if (this.hasPreviousStep() && this.hasPreviousStepLink()) {
+            const previousStepLink = this.props.lesson.steps[this.props.step - 1].link;
+            if (this.getStepLink() === 'storage' || previousStepLink === 'storage') {
+              redirectTo(this.getProjectPageUrlHref(previousStepLink));
+            } else {
+              RoutesStore.getRouter().transitionTo(previousStepLink);
+            }
+          }
+        }}
+        className="btn btn-link"
+      >
+        {buttonText}
+      </button>
     );
   },
   renderButtonNext() {
@@ -228,20 +223,25 @@ export default React.createClass({
       buttonText = 'Close';
     }
 
-    if (this.getStepLink() === 'storage' || this.getNextStepLink() === 'storage') {
-      return (
-        <button
-          onClick={() => {
-            this.handleStep('next');
-            redirectTo(this.getProjectPageUrlHref(this.getNextStepLink()));
-          }}
-          className="btn btn-primary">
-          {buttonText}
-        </button>
-      );
-    }
     return (
-      <Button onClick={() => this.handleStep('next')} bsStyle="primary">{buttonText}</Button>
+      <button
+        onClick={() => {
+          this.handleStep('next');
+          if (this.hasNextStep() && this.hasNextStepLink()) {
+            const nextStepLink = this.props.lesson.steps[this.props.step + 1].link;
+            if (this.getStepLink() === 'storage' || nextStepLink === 'storage') {
+              redirectTo(this.getProjectPageUrlHref(nextStepLink));
+            } else {
+              RoutesStore
+                .getRouter()
+                .transitionTo(nextStepLink);
+            }
+          }
+        }}
+        className="btn btn-primary"
+      >
+        {buttonText}
+      </button>
     );
   },
   renderNavigation() {
@@ -249,7 +249,7 @@ export default React.createClass({
       <ListGroup className="guide-navigation">
         {
           this.getLessonSteps().filter((step) => {
-            return step.id < this.getStepsCount();
+            return step.id <= this.getStepsCount();
           }, this).map((step, index) => {
             if (this.isNavigationVisible()) {
               return (
@@ -268,7 +268,7 @@ export default React.createClass({
     if (this.getStepLink() === 'storage') {
       redirectTo(this.getProjectPageUrlHref(''));
     } else {
-      RoutesStore.getRouter().transitionTo('home');
+      RoutesStore.getRouter().transitionTo('app');
     }
     hideWizardModalFn();
   },
@@ -288,14 +288,14 @@ export default React.createClass({
     }
   },
   increaseStep() {
+    if (this.props.step === this.getStepsCount() - 2) {
+      setAchievedLesson(this.getLessonId());
+    }
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
-    }
-    if (this.props.step === this.getStepsCount() - 2) {
-      setAchievedLesson(this.getLessonId());
     }
   }
 

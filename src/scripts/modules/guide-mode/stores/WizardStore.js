@@ -4,7 +4,11 @@ import Dispatcher from '../../../Dispatcher';
 import StoreUtils from '../../../utils/StoreUtils';
 import { ActionTypes } from './ActionCreators';
 import wizardLessons from '../WizardLessons';
-import RoutesStore from '../../../stores/RoutesStore';
+
+import { ActionTypes as componentsActionTypes } from '../../components/Constants';
+import { ActionTypes as jobActionTypes } from '../../jobs/Constants';
+import { ActionTypes as transformationsActionTypes } from '../../transformations/Constants';
+import { ActionTypes as orchestrationsActionTypes } from '../../orchestrations/Constants';
 
 const LOCAL_STORAGE_KEY = 'kbc-ui-guide-mode';
 
@@ -25,12 +29,6 @@ export const setStateToLocalStorage = (value) => {
   window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
 };
 
-const containsAction = (dispatchedAction, action) => {
-  return Object.keys(action).reduce(
-    (memo, key) => memo && dispatchedAction[key] && dispatchedAction[key] === action[key]
-    , true);
-};
-
 const getMaxStep = (currentStepId) => {
   return Math.max(currentStepId, getStateFromLocalStorage().achievedStep);
 };
@@ -42,24 +40,6 @@ const WizardStore = StoreUtils.createStore({
   getCurrentLesson: () => {
     return wizardLessons[getStateFromLocalStorage().lessonNumber];
   },
-  getNextLink: () => {
-    const localStorageState = getStateFromLocalStorage();
-    const lesson = wizardLessons[localStorageState.lessonNumber];
-    const nextStep = lesson ? lesson.steps[localStorageState.step] || {} : {};
-    const nextLink = nextStep.link;
-    const matchLink = nextStep.matchLink;
-    if (nextLink) {
-      return nextLink;
-    }
-    if (matchLink) {
-      const router = RoutesStore.getRouter();
-      const path = router.getCurrentPath();
-      const nextPathMatch = path.match(matchLink);
-      const nextPath = nextPathMatch ? nextPathMatch[0] : null;
-      return nextPath;
-    }
-    return null;
-  },
 
   getCurrentStep: () => {
     const localStorageState = getStateFromLocalStorage();
@@ -69,43 +49,95 @@ const WizardStore = StoreUtils.createStore({
 });
 
 Dispatcher.register((payload) => {
-  let action = payload.action;
-  const  nextStepDispatchAction = WizardStore.getCurrentStep().nextStepDispatchAction;
-  if (nextStepDispatchAction && containsAction(action, nextStepDispatchAction)) {
-    const localStorageState = getStateFromLocalStorage();
+  const action = payload.action;
+  const localStorageState = getStateFromLocalStorage();
+
+  const saveAndEmit = (stepId) => {
     setStateToLocalStorage(
-      objectAssign(localStorageState, {step: localStorageState.step + 1})
+      objectAssign(localStorageState, {
+        step: stepId - 1, // step index
+        achievedStep: stepId - 1 // step index
+      })
     );
     WizardStore.emitChange();
-    const nextLink = WizardStore.getNextLink();
-    if (nextLink) {
-      RoutesStore.getRouter().transitionTo(nextLink);
-    }
-    return null;
-  }
+  };
 
   switch (action.type) {
-    case ActionTypes.GUIDE_WIZARD_SET_STEP: {
-      const localStorageState = getStateFromLocalStorage();
+    case ActionTypes.GUIDE_WIZARD_SET_STEP:
       setStateToLocalStorage(
         objectAssign(localStorageState, {
           step: action.step,
-          achievedStep: getMaxStep(action.step),
-          achievedLesson: getStateFromLocalStorage().achievedLesson
+          achievedStep: getMaxStep(action.step)
         })
       );
-      return WizardStore.emitChange();
-    }
-    case ActionTypes.UPDATE_WIZARD_MODAL_STATE: {
-      const localStorageState = getStateFromLocalStorage();
-      setStateToLocalStorage({
+      WizardStore.emitChange();
+      break;
+    case ActionTypes.UPDATE_WIZARD_MODAL_STATE:
+      setStateToLocalStorage(objectAssign(localStorageState, {
         showLessonModal: action.showLessonModal,
         lessonNumber: action.lessonNumber,
-        step: action.showLessonModal ? localStorageState.step : 0,
-        achievedLesson: localStorageState.achievedLesson
-      });
-      return WizardStore.emitChange();
-    }
+        step: action.showLessonModal ? localStorageState.step : 0
+      }));
+      WizardStore.emitChange();
+      break;
+    case componentsActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 2 && action.componentId === 'keboola.ex-db-snowflake') {
+        saveAndEmit(2);
+      } else if (WizardStore.getCurrentLesson().id === 4 && WizardStore.getCurrentStep().id === 2 && action.componentId === 'tde-exporter') {
+        saveAndEmit(2);
+      }
+      break;
+    case componentsActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 3 && action.componentId === 'keboola.ex-db-snowflake') {
+        saveAndEmit(3);
+      } else if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 4 && action.componentId === 'keboola.ex-db-snowflake') {
+        saveAndEmit(4);
+      }
+      break;
+    case jobActionTypes.JOB_LOAD_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 5) {
+        saveAndEmit(5);
+      } else if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 5) {
+        saveAndEmit(5);
+      } else if (WizardStore.getCurrentLesson().id === 4 && WizardStore.getCurrentStep().id === 3) {
+        saveAndEmit(3);
+      }
+      break;
+    case transformationsActionTypes.TRANSFORMATION_BUCKET_CREATE_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 2) {
+        saveAndEmit(2);
+      }
+      break;
+    case transformationsActionTypes.TRANSFORMATION_CREATE_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 3) {
+        saveAndEmit(3);
+      }
+      break;
+    case orchestrationsActionTypes.ORCHESTRATION_CREATE_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 2) {
+        saveAndEmit(2);
+      }
+      break;
+    case orchestrationsActionTypes.ORCHESTRATION_TASKS_EDIT_START:
+      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 3) {
+        saveAndEmit(3);
+      }
+      break;
+    case orchestrationsActionTypes.ORCHESTRATION_TASKS_SAVE_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 4) {
+        saveAndEmit(4);
+      }
+      break;
+    case orchestrationsActionTypes.ORCHESTRATION_LOAD_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 5) {
+        saveAndEmit(5);
+      }
+      break;
+    case orchestrationsActionTypes.ORCHESTRATION_FIELD_SAVE_SUCCESS:
+      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 6) {
+        saveAndEmit(6);
+      }
+      break;
     default:
   }
 });
