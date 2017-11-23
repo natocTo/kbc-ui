@@ -110,6 +110,11 @@ Dispatcher.register((payload) => {
           saveAndEmit(5);
         }
         break;
+      case componentsActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 1 && WizardStore.getCurrentStep().id === 3) {
+          saveAndEmit(4);
+        }
+        break;
       case jobActionTypes.JOB_LOAD_SUCCESS:
         if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 5) {
           saveAndEmit(6);
