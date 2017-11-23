@@ -45,6 +45,13 @@ var storageApi = {
       return response.body;
     });
   },
+
+  updateToken(tokenId, params) {
+    return createRequest('PUT', `tokens/${tokenId}`).type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   createToken: function(params) {
     return createRequest('POST', 'tokens').type('form').send(params).promise().then(function(response) {
       return response.body;

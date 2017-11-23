@@ -27,12 +27,21 @@ const StorageTokensStore = StoreUtils.createStore({
 
 Dispatcher.register( (payload) => {
   let newTokens = null;
+  let tokens = null;
+  let token = null;
   const action = payload.action;
   switch (action.type) {
     case ActionTypes.STORAGE_TOKEN_CREATE_SUCCESS:
-      const token = fromJS(action.token);
-      const tokens = _store.get('tokens', List());
+      token = fromJS(action.token);
+      tokens = _store.get('tokens', List());
       _store = _store.set('tokens', tokens.push(token));
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_UPDATE_SUCCESS:
+      token = fromJS(action.token);
+      const tokenId = action.tokenId;
+      tokens = _store.get('tokens', List()).map(t => t.get('id') === tokenId ? token : t);
+      _store = _store.set('tokens', tokens);
       StorageTokensStore.emitChange();
       break;
     case ActionTypes.STORAGE_TOKENS_LOAD:

@@ -86,6 +86,23 @@ export default {
       });
       throw error;
     });
+  },
+
+  updateToken(tokenId, params) {
+    return storageApi.updateToken(tokenId, params).then((token) => {
+      return dispatcher.handleViewAction({
+        type: ActionTypes.STORAGE_TOKEN_UPDATE_SUCCESS,
+        tokenId: tokenId,
+        token: token
+      });
+    }).catch((error) => {
+      dispatcher.handleViewAction({
+        type: ActionTypes.STORAGE_TOKEN_CREATE_ERROR,
+        status: error.status,
+        response: error.response
+      });
+      throw error;
+    });
   }
 
 };
