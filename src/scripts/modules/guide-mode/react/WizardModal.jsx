@@ -217,8 +217,6 @@ export default React.createClass({
     let buttonText = 'Next step';
     if (this.props.step === 0) {
       buttonText = 'Take lesson';
-    } else if (this.props.step === this.getStepsCount() - 2) {
-      buttonText = 'Finish';
     } else if (this.props.step === this.getStepsCount() - 1) {
       buttonText = 'Close';
     }
@@ -249,7 +247,7 @@ export default React.createClass({
       <ListGroup className="guide-navigation">
         {
           this.getLessonSteps().filter((step) => {
-            return step.id <= this.getStepsCount();
+            return step.id < this.getStepsCount();
           }, this).map((step, index) => {
             if (this.isNavigationVisible()) {
               return (

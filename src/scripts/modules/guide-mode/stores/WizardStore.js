@@ -71,7 +71,8 @@ Dispatcher.register((payload) => {
         setStateToLocalStorage(objectAssign(localStorageState, {
           showLessonModal: action.showLessonModal,
           lessonNumber: action.lessonNumber,
-          step: action.showLessonModal ? localStorageState.step : 0
+          step: action.showLessonModal ? localStorageState.step : 0,
+          achievedStep: action.showLessonModal ? localStorageState.step : 0
         }));
         WizardStore.emitChange();
         break;
