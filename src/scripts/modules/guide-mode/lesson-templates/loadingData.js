@@ -70,6 +70,7 @@ export default {
       'title': 'Run Extraction',
       'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To run the extraction and create the tables, click <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right. The data from your selected external database tables will be loaded into the new tables in your project. <br/><br/> Be patient. It takes a while to finish.',
       'media': '',
+      'link': 'extractors',
       'mediaType': ''
     }, {
       'id': 6,
