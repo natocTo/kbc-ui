@@ -93,7 +93,7 @@ export default {
       'position': 'center',
       'backdrop': true,
       'isNavigationVisible': true,
-      'title': 'Lesson 3 Finished',
+      'title': 'Learn More',
       'link': '',
       'markdown': 'To see how to write the output data from Keboola Connection, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',

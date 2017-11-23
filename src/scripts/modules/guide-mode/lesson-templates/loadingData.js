@@ -9,7 +9,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Introduction',
       'link': 'app',
-      'markdown': 'As promised in Lesson 1, you are about to build a simple workflow that analyzes data about car ownership stored in two database tables. <br/> In this lesson you will start by configuring an extractor to access the prepared tables in a sample database. You will then take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. <br/><br/> *Follow the instructions written for you in each step. Once you are done, you will be moved to the next step automatically. If hitting **Next step** is required though, you will be told to do so in the instructions.* <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'As promised in Lesson 1, you are about to build a simple workflow that analyzes data about **car ownership** stored in two database tables. In this lesson you will start by configuring an extractor to access the prepared tables in a sample database. You will then take the data in the tables and copy it into new tables created for this purpose in Keboola Connection Storage. <br/><br/> *Follow the instructions written for you in each step. Once you are done, you will be moved to the next step automatically. If hitting **Next step** is required though, you will be told to do so in the instructions.* <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-ext.svg',
       'mediaType': 'img'
     }, {
@@ -68,7 +68,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Extraction',
-      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To run the extraction and create the tables, click <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right. The data from your selected external database tables will be loaded into the new tables in your project. <br/><br/> Be patient. It takes a while to finish.',
+      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> The data from your selected external database tables will be loaded into the new tables in your project once you click <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right.',
       'media': '',
       'link': 'extractors',
       'mediaType': ''
@@ -79,7 +79,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Check Storage',
       'link': 'storage',
-      'markdown': 'If you open your **Storage** and click the bucket **in.c-keboola-ex-db-snowflake**, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. Feel free to click on the table names to see more details, including a data sample. ',
+      'markdown': 'Wait for the extraction to finish. The orange indicator will turn green. If you open your **Storage** and click the bucket **in.c-keboola-ex-db-snowflake**, you can see that both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. Feel free to click on the table names to see more details, including a data sample. ',
       'media': '',
       'mediaType': ''
     }, {
@@ -87,7 +87,7 @@ export default {
       'position': 'center',
       'backdrop': true,
       'isNavigationVisible': true,
-      'title': 'Lesson 2 Finished',
+      'title': 'Learn More',
       'link': '',
       'markdown': 'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
       'media': '',
