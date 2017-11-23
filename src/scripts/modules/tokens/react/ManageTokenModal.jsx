@@ -46,7 +46,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {this.props.isCreate ? 'Create' : 'Update'} Token
+            {this.props.isCreate ? 'Create token' : `Update token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -96,6 +96,7 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
+            isDisabled={!this.isValid() || this.props.token === this.state.dirtyToken}
             isSaving={this.props.isSaving}
             onSave={this.handleSave}
             onCancel={this.handleClose}
@@ -204,8 +205,15 @@ export default React.createClass({
     );
   },
 
+  isValid() {
+    const {dirtyToken} = this.state;
+    const expiresIn = dirtyToken.get('expiresIn');
+    const validExpiresIn = expiresIn !== 0;
+    return !!dirtyToken.get('description') && validExpiresIn;
+  },
+
   handleSave() {
-    this.props.onSaveFn(this.state.dirtyToken).then(this.handeClose);
+    this.props.onSaveFn(this.state.dirtyToken).then(this.handleClose);
   },
 
   handleClose() {
