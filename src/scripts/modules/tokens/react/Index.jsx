@@ -43,6 +43,8 @@ export default React.createClass({
                     currentAdmin={this.state.currentAdmin}
                     tokens={this.state.tokens}
                     allBuckets={this.state.allBuckets}
+                    saveTokenFn={this.handleSaveToken}
+                    isSavingToken={this.state.localState.get('isSaving', false)}
                   />
                 </div>
               </div>
@@ -51,6 +53,16 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  handleSaveToken(tokenId, token) {
+    this.updateLocalState('isSaving', true);
+    const cancelSaving = () => this.updateLocalState('isSaving', false);
+    if (tokenId) {
+      return TokensActions.updateToken(tokenId, token.toJS()).then(cancelSaving);
+    } else {
+      return TokensActions.createToken(token.toJS()).then(cancelSaving);
+    }
   },
 
   updateLocalState(key, newValue) {

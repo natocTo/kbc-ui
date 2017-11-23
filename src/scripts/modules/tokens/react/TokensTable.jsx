@@ -20,7 +20,9 @@ export default React.createClass({
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     onRefreshFn: PropTypes.func.isRequired,
-    isRefreshingFn: PropTypes.func.isRequired
+    isRefreshingFn: PropTypes.func.isRequired,
+    saveTokenFn: PropTypes.func.isRequired,
+    isSavingToken: PropTypes.bool.isRequired
   },
 
   render() {
@@ -168,16 +170,16 @@ export default React.createClass({
     const manageData = this.props.localState.get('manageToken', Map());
     const show = manageData.get('show', false);
     const token = manageData.get('token', Map());
-    const isCreate = !token.get('id');
+    const tokenId = token.get('id');
     return (
       <ManageTokenModal
         allBuckets={this.props.allBuckets}
         token={token}
-        isCreate={isCreate}
+        isCreate={!tokenId}
         show={show}
         onHideFn={() => this.updateLocalState(['manageToken'], Map())}
-        onSaveFn={(newToken) => newToken /* TODO */}
-        isSaving={false}
+        onSaveFn={(newToken) => this.props.saveTokenFn(tokenId, newToken)}
+        isSaving={this.props.isSavingToken}
       />
     );
   },
