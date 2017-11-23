@@ -1,8 +1,3 @@
-import ComponentsConstants from '../../components/Constants';
-import JobsConstants from '../../jobs/Constants';
-
-const {COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS} = ComponentsConstants.ActionTypes;
-const {JOB_LOAD_SUCCESS} = JobsConstants.ActionTypes;
 export default {
   'id': 4,
   'title': 'Visualizing Results',
@@ -25,7 +20,6 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Writer',
       'link': 'writers',
-      'nextStepDispatchAction': {type: COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS, componentId: 'tde-exporter'},
       'media': '',
       'markdown': 'Let’s say you have Tableau Desktop installed on your computer. Now you need to find the writer Tableau in the **Writers** section.'
                 + `
@@ -42,7 +36,6 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Table',
-      'nextStepDispatchAction': {type: JOB_LOAD_SUCCESS},
       'markdown':
       'Now add the table you want to send to Tableau. For each of its columns you also need to specify whether it contains text or a number.'
       + `
