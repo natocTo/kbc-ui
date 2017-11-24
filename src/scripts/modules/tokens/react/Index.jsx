@@ -29,27 +29,19 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           {this.renderTabs()}
-          <div>
-            <div className="kbc-header">
-              <div className="row">
-                <div className="col-md-12">
-                  <TokensTable
-                    localState={this.state.localState.get('TokensTable', Map())}
-                    updateLocalState={(newState) => this.updateLocalState('TokensTable', newState)}
-                    isDeletingFn={t => this.state.isDeletingTokenFn(t.get('id'))}
-                    onDeleteFn={TokensActions.deleteToken}
-                    onRefreshFn={TokensActions.refreshToken}
-                    isRefreshingFn={t => this.state.isRefreshingTokenFn(t.get('id'))}
-                    currentAdmin={this.state.currentAdmin}
-                    tokens={this.state.tokens}
-                    allBuckets={this.state.allBuckets}
-                    saveTokenFn={this.handleSaveToken}
-                    isSavingToken={this.state.localState.get('isSaving', false)}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <TokensTable
+            localState={this.state.localState.get('TokensTable', Map())}
+            updateLocalState={(newState) => this.updateLocalState('TokensTable', newState)}
+            isDeletingFn={t => this.state.isDeletingTokenFn(t.get('id'))}
+            onDeleteFn={TokensActions.deleteToken}
+            onRefreshFn={TokensActions.refreshToken}
+            isRefreshingFn={t => this.state.isRefreshingTokenFn(t.get('id'))}
+            currentAdmin={this.state.currentAdmin}
+            tokens={this.state.tokens}
+            allBuckets={this.state.allBuckets}
+            saveTokenFn={this.handleSaveToken}
+            isSavingToken={this.state.localState.get('isSaving', false)}
+          />
         </div>
       </div>
     );

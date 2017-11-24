@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Table} from 'react-bootstrap';
 import {List, Map} from 'immutable';
-import {Check} from 'kbc-react-components';
 import moment from 'moment';
 import Tooltip from '../../../react/common/Tooltip';
 import Confirm from '../../../react/common/Confirm';
@@ -46,15 +45,15 @@ export default React.createClass({
                 Expires
               </th>
               <th>
-                Can Read All files
+                File Uploads Access
               </th>
               <th>
                 Component Access
               </th>
               <th>
-                Buckets Permissions
+                Buckets Access
               </th>
-              <th>
+              <th className="text-right">
                 <button
                   onClick={() => this.updateLocalState(['manageToken', 'show'], true)}
                   className="btn btn-success"> Create Token </button>
@@ -77,10 +76,10 @@ export default React.createClass({
     }
 
     if (accessCnt === 0) {
-      return 'No component';
+      return 'None';
     }
-
-    return `${accessCnt} component(s)`;
+    const pluralSuffix = accessCnt > 1 ? 's' : '';
+    return `${accessCnt} component${pluralSuffix}`;
   },
 
   renderBucketsAceess(token) {
@@ -91,10 +90,11 @@ export default React.createClass({
     }
 
     if (accessCnt === 0) {
-      return 'No bucket';
+      return 'None';
     }
 
-    return `${accessCnt} bucket(s)`;
+    const pluralSuffix = accessCnt > 1 ? 's' : '';
+    return `${accessCnt} bucket${pluralSuffix}`;
   },
 
   formatDate(date) {
@@ -139,7 +139,9 @@ export default React.createClass({
       <button
         onClick={() => this.updateLocalState('refreshToken', token)}
         className="btn btn-link">
-        Refresh token
+        <Tooltip placement="top" tooltip="Refresh token">
+          <i className="fa fa-refresh" />
+        </Tooltip>
       </button>
     );
   },
@@ -164,6 +166,7 @@ export default React.createClass({
     const token = manageData.get('token', Map());
     const tokenId = token.get('id');
     const onCloseModal = () => {
+      this.updateLocalState(['manageToken', 'show'], false);
       this.updateLocalState(['manageToken'], Map());
       if (!!tokenId) {
         RoutesStore.getRouter().transitionTo('tokens');
@@ -189,7 +192,9 @@ export default React.createClass({
         to="tokens"
         query={{tokenId: token.get('id')}}
         className="btn btn-link">
-        Edit token
+        <Tooltip placement="top" tooltip="Edit token">
+          <i className="kbc-icon-pencil" />
+        </Tooltip>
       </Link>
     );
   },
@@ -214,7 +219,12 @@ export default React.createClass({
           <ExpiresInfo token={token} />
         </td>
         <td>
-          <Check isChecked={token.get('canReadAllFileUploads')} />
+          {token.get('canReadAllFileUploads') ?
+           'All files'
+           :
+           'Own files'
+          }
+
         </td>
         <td>
           {this.renderComponentsAccess(token)}
@@ -222,16 +232,10 @@ export default React.createClass({
         <td>
           {this.renderBucketsAceess(token)}
         </td>
-        <td>
-          <ul>
-            <li> {this.renderEditTokenButton(token)}</li>
-            <li> token detail</li>
-            <li> {this.renderTokenDelete(token)}</li>
-            <li> {this.renderTokenRefreshButton(token)}</li>
-            <li> share/send token</li>
-            <li> copy to cliboard/show</li>
-          </ul>
-
+        <td className="text-right kbc-no-wrap">
+          {this.renderEditTokenButton(token)}
+          {this.renderTokenDelete(token)}
+          {this.renderTokenRefreshButton(token)}
         </td>
       </tr>
     );
