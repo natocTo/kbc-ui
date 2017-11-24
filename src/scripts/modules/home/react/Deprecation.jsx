@@ -40,7 +40,7 @@ export default React.createClass({
             <h3>
               Deprecated MySQL Storage Backend
             </h3>
-            <div>
+            <div style={{paddingRight: '6em'}}>
               <p>
                 This project has {mysqlBuckets.count()} buckets stored on deprecated MySQL backend.
               </p>
