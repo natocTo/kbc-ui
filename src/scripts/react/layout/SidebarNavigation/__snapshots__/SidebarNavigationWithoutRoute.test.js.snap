@@ -1,0 +1,95 @@
+exports[`<SidebarNavigation /> should render standard navigation, without route 1`] = `
+<SidebarNavigation>
+  <ul
+    className="kbc-nav-sidebar nav nav-sidebar">
+    <li
+      className="">
+      <a
+        href="/home">
+        <span
+          className="kbc-icon-overview" />
+        <span>
+          Overview
+        </span>
+      </a>
+    </li>
+    <li
+      className="active">
+      <a
+        href="/extractors">
+        <span
+          className="kbc-icon-extractors" />
+        <span>
+          Extractors
+        </span>
+      </a>
+    </li>
+    <li
+      className="">
+      <a
+        href="/transformations">
+        <span
+          className="kbc-icon-transformations" />
+        <span>
+          Transformations
+        </span>
+      </a>
+    </li>
+    <li
+      className="">
+      <a
+        href="/writers">
+        <span
+          className="kbc-icon-writers" />
+        <span>
+          Writers
+        </span>
+      </a>
+    </li>
+    <li
+      className="">
+      <a
+        href="/orchestrations">
+        <span
+          className="kbc-icon-orchestrations" />
+        <span>
+          Orchestrations
+        </span>
+      </a>
+    </li>
+    <li
+      className="">
+      <a
+        href="/storage">
+        <span
+          className="kbc-icon-storage" />
+        <span>
+          Storage
+        </span>
+      </a>
+    </li>
+    <li
+      className="">
+      <a
+        href="/jobs">
+        <span
+          className="kbc-icon-jobs" />
+        <span>
+          Jobs
+        </span>
+      </a>
+    </li>
+    <li
+      className="">
+      <a
+        href="/applications">
+        <span
+          className="kbc-icon-applications" />
+        <span>
+          Applications
+        </span>
+      </a>
+    </li>
+  </ul>
+</SidebarNavigation>
+`;
