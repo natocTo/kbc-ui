@@ -79,6 +79,9 @@ export default React.createClass({
         }).count() > 0;
       }).count();
     }
+    if (this.state.buckets.filter((bucket) => bucket.get('backend') === 'mysql').count() > 0) {
+      componentCount++;
+    }
     if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
     }
