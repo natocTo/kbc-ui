@@ -13,6 +13,7 @@ export default React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     setStep: React.PropTypes.func.isRequired,
+    setAchievedLessonFn: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
@@ -277,6 +278,11 @@ export default React.createClass({
     }
   },
   increaseStep() {
+    // try to set achieved lesson on last 2 steps
+    if (this.props.step >= this.getStepsCount() - 2) {
+      this.props.setAchievedLessonFn(this.getLessonId());
+    }
+
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
       this.props.setStep(nextStep);
