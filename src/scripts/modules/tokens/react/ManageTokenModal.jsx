@@ -15,7 +15,7 @@ export default React.createClass({
     onHideFn: PropTypes.func.isRequired,
     onSaveFn: PropTypes.func.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    isCreate: PropTypes.bool.isRequired,
+    isEditting: PropTypes.bool.isRequired,
     token: PropTypes.object.isRequired,
     allBuckets: PropTypes.object.isRequired
   },
@@ -46,7 +46,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {this.props.isCreate ? 'Create token' : `Update token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
+            {!this.props.isEditting ? 'Create token' : `Update token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -57,7 +57,7 @@ export default React.createClass({
                  {this.renderDescriptionInput()}
                </div>
             )}
-            {this.props.isCreate && this.renderFormGroup(
+            {!this.props.isEditting && this.renderFormGroup(
                'Expires In',
                <ExpiresInEdit
                  value={this.state.dirtyToken.get('expiresIn', null)}
@@ -101,7 +101,7 @@ export default React.createClass({
             onSave={this.handleSave}
             onCancel={this.handleClose}
             placement="right"
-            saveLabel={this.props.isCreate ? 'Create' : 'Update'}
+            saveLabel={this.props.isEditting ? 'Update' : 'Create'}
           />
         </Modal.Footer>
       </Modal>
@@ -155,7 +155,7 @@ export default React.createClass({
           <label>
             <input
               type="radio"
-              disabled={!this.props.isCreate}
+              disabled={this.props.isEditting}
               checked={canManageBuckets}
               onChange={() => this.updateDirtyToken('canManageBuckets', true)}
             />
@@ -168,7 +168,7 @@ export default React.createClass({
         <div className="radio">
           <label>
             <input
-              disabled={!this.props.isCreate}
+              disabled={this.props.isEditting}
               type="radio"
               checked={!canManageBuckets}
               onChange={() => this.updateDirtyToken('canManageBuckets', false)}

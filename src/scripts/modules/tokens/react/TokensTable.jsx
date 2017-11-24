@@ -175,7 +175,7 @@ export default React.createClass({
       <ManageTokenModal
         allBuckets={this.props.allBuckets}
         token={token}
-        isCreate={!tokenId}
+        isEditting={!!tokenId}
         show={show}
         onHideFn={() => this.updateLocalState(['manageToken'], Map())}
         onSaveFn={(newToken) => this.props.saveTokenFn(tokenId, newToken)}
