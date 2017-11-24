@@ -61,7 +61,11 @@ export default React.createClass({
     if (tokenId) {
       return TokensActions.updateToken(tokenId, token.toJS()).then(cancelSaving);
     } else {
-      return TokensActions.createToken(token.toJS()).then(cancelSaving);
+      return TokensActions.createToken(token.toJS()).then((createdToken) => {
+        cancelSaving();
+        return createdToken;
+      }
+      );
     }
   },
 

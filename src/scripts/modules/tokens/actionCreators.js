@@ -73,11 +73,13 @@ export default {
   },
 
   createToken(params) {
-    return storageApi.createToken(params).then((token) => {
-      return dispatcher.handleViewAction({
+    return storageApi.createToken(params).then((createdToken) => {
+      const token = fromJS(createdToken);
+      dispatcher.handleViewAction({
         type: ActionTypes.STORAGE_TOKEN_CREATE_SUCCESS,
         token: token
       });
+      return token;
     }).catch((error) => {
       dispatcher.handleViewAction({
         type: ActionTypes.STORAGE_TOKEN_CREATE_ERROR,
@@ -89,12 +91,14 @@ export default {
   },
 
   updateToken(tokenId, params) {
-    return storageApi.updateToken(tokenId, params).then((token) => {
-      return dispatcher.handleViewAction({
+    return storageApi.updateToken(tokenId, params).then((updatedToken) => {
+      const token = fromJS(updatedToken);
+      dispatcher.handleViewAction({
         type: ActionTypes.STORAGE_TOKEN_UPDATE_SUCCESS,
         tokenId: tokenId,
         token: token
       });
+      return token;
     }).catch((error) => {
       dispatcher.handleViewAction({
         type: ActionTypes.STORAGE_TOKEN_CREATE_ERROR,
