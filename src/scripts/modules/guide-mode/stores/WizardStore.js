@@ -21,12 +21,12 @@ const store = {
   achievedLesson: 0
 };
 
-export const getStateFromLocalStorage = () => {
+const getStateFromLocalStorage = () => {
   const value = window.localStorage.getItem(LOCAL_STORAGE_KEY);
   return value ? JSON.parse(value) : store;
 };
 
-export const setStateToLocalStorage = (value) => {
+const setStateToLocalStorage = (value) => {
   window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
 };
 
