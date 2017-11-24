@@ -1,21 +1,19 @@
 import React from 'react';
 import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
-import { hideWizardModalFn, getAchievedStep, setAchievedLesson } from '../stores/ActionCreators.js';
+import { hideWizardModalFn, getAchievedStep } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
-// import ApplicationStore from '../../../stores/ApplicationStore';
-//
 
 const redirectTo = (pathname) => {
   window.location.assign(window.location.origin + pathname);
 };
 
 export default React.createClass({
-  displayName: 'WizardModal',
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     setStep: React.PropTypes.func.isRequired,
+    setAchievedLessonFn: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
@@ -142,12 +140,6 @@ export default React.createClass({
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
   },
-  isFirstStep() {
-    return this.getActiveStep() === 0;
-  },
-  isLastStep() {
-    return this.getStepsCount() - 1 === this.getActiveStep();
-  },
   isCongratulations() {
     return typeof this.getLessonSteps()[this.getActiveStep()].congratulations === 'undefined' ? false : true;
   },
@@ -217,8 +209,6 @@ export default React.createClass({
     let buttonText = 'Next step';
     if (this.props.step === 0) {
       buttonText = 'Take lesson';
-    } else if (this.props.step === this.getStepsCount() - 2) {
-      buttonText = 'Finish';
     } else if (this.props.step === this.getStepsCount() - 1) {
       buttonText = 'Close';
     }
@@ -288,9 +278,11 @@ export default React.createClass({
     }
   },
   increaseStep() {
-    if (this.props.step === this.getStepsCount() - 2) {
-      setAchievedLesson(this.getLessonId());
+    // try to set achieved lesson on last 2 steps
+    if (this.props.step >= this.getStepsCount() - 2) {
+      this.props.setAchievedLessonFn(this.getLessonId());
     }
+
     if (this.props.step < this.getStepsCount() - 1) {
       const nextStep = this.props.step + 1;
       this.props.setStep(nextStep);
