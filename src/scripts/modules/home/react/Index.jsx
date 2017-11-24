@@ -4,11 +4,11 @@ import filesize from 'filesize';
 import string from 'underscore.string';
 import LimitsOverQuota from './LimitsOverQuota';
 import Expiration from './Expiration';
-// import ComponentStore from '../../components/stores/ComponentsStore';
+import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
-// import InstalledComponentsApi from '../../components/InstalledComponentsApi';
+import storageActions from '../../components/StorageActionCreators';
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn, getAchievedLesson } from '../../guide-mode/stores/ActionCreators.js';
@@ -16,10 +16,11 @@ import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentStore, TransformationsStore)],
+  mixins: [createStoreMixin(InstalledComponentStore, TransformationsStore, StorageBucketsStore)],
 
   getStateFromStores() {
     return {
+      buckets: StorageBucketsStore.getAll(),
       installedComponents: InstalledComponentStore.getAll(),
       transformations: TransformationsStore.getAllTransformations()
     };
@@ -30,6 +31,7 @@ export default React.createClass({
     if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
       componentsActions.loadComponentConfigsData('transformation');
     }
+    storageActions.loadBuckets();
   },
 
   getInitialState() {
@@ -141,7 +143,11 @@ export default React.createClass({
           }
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-          <Deprecation components={this.state.installedComponents} transformations={this.state.transformations}/>
+          <Deprecation
+            buckets={this.state.buckets}
+            components={this.state.installedComponents}
+            transformations={this.state.transformations}
+          />
         </div>
         }
         <div className="kbc-main-content">
