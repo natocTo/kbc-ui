@@ -42,6 +42,9 @@ const WizardStore = StoreUtils.createStore({
     const localStorageState = getStateFromLocalStorage();
     return localStorageState.lessonNumber > 0;
   },
+  getAchievedLessonId: () => {
+    return getStateFromLocalStorage().achievedLesson;
+  },
   getCurrentLesson: () => {
     return wizardLessons[getStateFromLocalStorage().lessonNumber];
   },
