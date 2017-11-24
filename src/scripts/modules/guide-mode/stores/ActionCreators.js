@@ -11,10 +11,6 @@ export const getAchievedLesson = () => {
   return getStateFromLocalStorage().achievedLesson;
 };
 
-export const getAchievedStep = () => {
-  return getStateFromLocalStorage().achievedStep;
-};
-
 export const hideWizardModalFn = () => {
   Dispatcher.handleViewAction({
     type: ActionTypes.GUIDE_MODE_UPDATE_MODAL_STATE,
