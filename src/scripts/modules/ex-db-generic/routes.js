@@ -65,8 +65,9 @@ export default function(componentId) {
         requireData: [
           () => StorageActionCreators.loadTables()
         ],
-        handler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning),
-        headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning)
+        defaultRouteHandler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning),
+        headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning),
+        childRoutes: [ createTablesRoute('ex-db-generic-' + componentId + '-query')]
       }, {
         name: 'ex-db-generic-' + componentId + '-credentials',
         path: 'credentials',
@@ -79,4 +80,3 @@ export default function(componentId) {
     ]
   };
 }
-
