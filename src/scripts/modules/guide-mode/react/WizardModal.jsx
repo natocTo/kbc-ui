@@ -4,15 +4,12 @@ import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn, getAchievedStep } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
-// import ApplicationStore from '../../../stores/ApplicationStore';
-//
 
 const redirectTo = (pathname) => {
   window.location.assign(window.location.origin + pathname);
 };
 
 export default React.createClass({
-  displayName: 'WizardModal',
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     setStep: React.PropTypes.func.isRequired,
@@ -141,12 +138,6 @@ export default React.createClass({
   },
   isStepBackdrop() {
     return this.getLessonSteps()[this.getActiveStep()].backdrop;
-  },
-  isFirstStep() {
-    return this.getActiveStep() === 0;
-  },
-  isLastStep() {
-    return this.getStepsCount() - 1 === this.getActiveStep();
   },
   isCongratulations() {
     return typeof this.getLessonSteps()[this.getActiveStep()].congratulations === 'undefined' ? false : true;
