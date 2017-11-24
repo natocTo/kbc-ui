@@ -1,5 +1,5 @@
 exports[`<SidebarNavigation /> should render standard navigation, with route 1`] = `
-<Sidebar>
+<SidebarNavigation>
   <ul
     className="kbc-nav-sidebar nav nav-sidebar">
     <li
@@ -115,5 +115,5 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
       </Component>
     </li>
   </ul>
-</Sidebar>
+</SidebarNavigation>
 `;

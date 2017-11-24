@@ -49,8 +49,6 @@ const _pages = [
 ];
 
 const SidebarNavigation = React.createClass({
-  displayName: 'Sidebar',
-
   mixins: [State],
 
   render() {
