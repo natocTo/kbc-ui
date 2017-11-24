@@ -5,6 +5,7 @@ import ExpiresInEdit from './ExpiresInEdit';
 import ComponentsStore from '../../components/stores/ComponentsStore';
 import ExpiresInfo from './ExpiresInfo';
 import ComponentsSelector from './ComponentsSelector';
+import TokenString from './TokenString';
 import BucketPermissionsManager from './BucketPermissionsManager';
 import {List, Map} from 'immutable';
 
@@ -26,7 +27,8 @@ export default React.createClass({
 
   getStateFromProps(props) {
     return {
-      dirtyToken: props.token
+      dirtyToken: props.token,
+      createdToken: null
     };
   },
 
@@ -46,7 +48,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {!this.props.isEditting ? 'Create token' : `Update token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
+            {!this.props.isEditting ? 'Create token' : `Token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -67,6 +69,7 @@ export default React.createClass({
                </div>
                :
                <ExpiresInEdit
+                 disabled={this.isInputDisabled()}
                  value={this.state.dirtyToken.get('expiresIn', null)}
                  onChange={(value) => this.updateDirtyToken('expiresIn', value)}
                />
@@ -83,6 +86,7 @@ export default React.createClass({
                '',
                <div className="col-sm-offset-3 col-sm-9">
                  <ComponentsSelector
+                   disabled={this.isInputDisabled()}
                    onChange={(components) => this.updateDirtyToken('componentAccess', components)}
                    selectedComponents={this.state.dirtyToken.get('componentAccess', List())}
                    allComponents={ComponentsStore.getAll()}
@@ -92,26 +96,44 @@ export default React.createClass({
             {isCustomAccess && this.renderFormGroup(
                '',
                <BucketPermissionsManager
+                 disabled={this.isInputDisabled()}
                  bucketPermissions={this.state.dirtyToken.get('bucketPermissions', Map())}
                  onChange={(permissions) => this.updateDirtyToken('bucketPermissions', permissions)}
                  allBuckets={this.props.allBuckets}
                  wrapperClassName="cols-sm-offset-3 col-sm-9"
                />
             )}
-
+            {this.state.createdToken && this.renderFormGroup(
+               '',
+               this.renderTokenCreated()
+            )}
           </div>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isDisabled={!this.isValid() || this.props.token === this.state.dirtyToken}
+            isDisabled={!this.isValid() || this.props.token === this.state.dirtyToken || !!this.state.createdToken}
             isSaving={this.props.isSaving}
             onSave={this.handleSave}
             onCancel={this.handleClose}
             placement="right"
+            cancelLabel={!!this.state.createdToken ? 'Close' : 'Cancel'}
             saveLabel={this.props.isEditting ? 'Update' : 'Create'}
           />
         </Modal.Footer>
       </Modal>
+    );
+  },
+
+  isInputDisabled() {
+    return this.props.isSaving || !!this.state.createdToken;
+  },
+
+  renderTokenCreated() {
+    return (
+      <div className="col-sm-12">
+        <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. Make sure to copy it. You won't be able to see it again. </p>
+        <TokenString token={this.state.createdToken} />
+      </div>
     );
   },
 
@@ -127,6 +149,7 @@ export default React.createClass({
         <div className="radio">
           <label>
             <input
+              disabled={this.isInputDisabled()}
               type="radio"
               checked={isFullAccess}
               onChange={() => this.updateDirtyToken('canReadAllFileUploads', true)}
@@ -140,6 +163,7 @@ export default React.createClass({
         <div className="radio">
           <label>
             <input
+              disabled={this.isInputDisabled()}
               type="radio"
               checked={!isFullAccess}
               onChange={() => this.updateDirtyToken('canReadAllFileUploads', false)}
@@ -168,7 +192,7 @@ export default React.createClass({
              {!isEditting &&
               <input
                 type="radio"
-                disabled={this.props.isEditting}
+                disabled={this.isInputDisabled()}
                 checked={canManageBuckets}
                 onChange={() => this.updateDirtyToken('canManageBuckets', true)}
               />
@@ -186,7 +210,7 @@ export default React.createClass({
            <label style={radioLabelStyle}>
              {!isEditting &&
               <input
-                disabled={this.props.isEditting}
+                disabled={this.isInputDisabled()}
                 type="radio"
                 checked={!canManageBuckets}
                 onChange={() => this.updateDirtyToken('canManageBuckets', false)}
@@ -206,6 +230,7 @@ export default React.createClass({
   renderDescriptionInput() {
     return (
       <input
+        disabled={this.isInputDisabled()}
         className="form-control"
         type="text"
         value={this.state.dirtyToken.get('description')}
@@ -233,7 +258,12 @@ export default React.createClass({
   },
 
   handleSave() {
-    this.props.onSaveFn(this.state.dirtyToken).then(this.handleClose);
+    this.props.onSaveFn(this.state.dirtyToken).then((token) => {
+      if (this.props.isEditting) {
+        return this.handleClose();
+      }
+      this.setState({createdToken: token, dirtyToken: token});
+    });
   },
 
   handleClose() {

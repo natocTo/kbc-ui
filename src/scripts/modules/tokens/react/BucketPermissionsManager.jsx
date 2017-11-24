@@ -7,6 +7,7 @@ import {Table, Panel} from 'react-bootstrap';
 export default React.createClass({
 
   propTypes: {
+    disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     bucketPermissions: PropTypes.object.isRequired,
     allBuckets: PropTypes.object.isRequired,
@@ -40,6 +41,7 @@ export default React.createClass({
       <div className="row">
         <span className="col-sm-7">
           <Select
+            disabled={this.props.disabled}
             placeholder="Select bucket..."
             value={this.state.selectedBucket}
             onChange={({value}) => this.setState({selectedBucket: value})}
@@ -48,6 +50,7 @@ export default React.createClass({
         </span>
         <span className="col-sm-2">
           <Select
+            disabled={this.props.disabled}
             placeholder="Select permission"
             value={this.state.selectedPermission}
             onChange={({value}) => this.setState({selectedPermission: value})}
@@ -84,7 +87,7 @@ export default React.createClass({
           <Table fill className="table">
             <tbody>
               {this.props.bucketPermissions.map((permission, bucketId) =>
-                <tr aclassName="col-sm-12">
+                <tr key={bucketId}>
                   <td>
                     <div className="row">
                       <span className="col-sm-8">{bucketId}</span>

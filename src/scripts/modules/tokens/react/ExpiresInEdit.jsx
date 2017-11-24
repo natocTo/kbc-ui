@@ -7,6 +7,7 @@ export default React.createClass({
 
   propTypes: {
     value: PropTypes.number,
+    disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired
   },
 
@@ -41,6 +42,7 @@ export default React.createClass({
       <div>
         <Select
           className="col-sm-4"
+          disabled={this.props.disabled}
           clearable={false}
           searchable={false}
           options={this.selectOptions}
@@ -51,6 +53,7 @@ export default React.createClass({
          <span className="col-sm-3">
            <div className="input-group">
              <input
+               disabled={this.props.disabled}
                type="number"
                min="1"
                value={this.props.value / 3600}

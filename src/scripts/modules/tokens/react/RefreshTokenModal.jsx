@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
-// import Clipboard from '../../../react/common/Clipboard';
+import TokenString from './TokenString';
 
 export default React.createClass({
 
@@ -56,18 +56,12 @@ export default React.createClass({
   },
 
   renderRefreshed() {
-    const token = this.state.newToken.get('token');
     return (
       <div>
         <p className="alert alert-success">
           Token has been refreshed. Make sure to copy it. You won't be able to see it again.
         </p>
-        <pre>
-          {token}
-          {/* <div>
-              <Clipboard text={token} label="Copy token to clipboard"/>
-              </div> */}
-        </pre>
+        <TokenString token={this.state.newToken} />
       </div>
     );
   },

@@ -7,6 +7,7 @@ import ComponentName from '../../../react/common/ComponentName';
 export default React.createClass({
 
   propTypes: {
+    disabled: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     selectedComponents: PropTypes.object.isRequired,
     allComponents: PropTypes.object.isRequired
@@ -17,6 +18,7 @@ export default React.createClass({
       <Select
         placeholder="Select component..."
         multi={true}
+        disabled={this.props.disabled}
         value={this.props.selectedComponents.toArray()}
         onChange={this.handleSelect}
         optionRenderer={this.optionRenderer}
