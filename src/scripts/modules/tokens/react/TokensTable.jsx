@@ -9,6 +9,8 @@ import {Loader} from 'kbc-react-components';
 import RefreshTokenModal from './RefreshTokenModal';
 import ManageTokenModal from './ManageTokenModal';
 import ExpiresInfo from './ExpiresInfo';
+import {Link} from 'react-router';
+import RoutesStore from '../../../stores/RoutesStore';
 
 export default React.createClass({
 
@@ -142,7 +144,6 @@ export default React.createClass({
     );
   },
 
-
   renderTokenRefreshModal() {
     const token = this.props.localState.get('refreshToken', Map());
     const isRefreshing = token && this.props.isRefreshingFn(token);
@@ -162,13 +163,20 @@ export default React.createClass({
     const show = manageData.get('show', false);
     const token = manageData.get('token', Map());
     const tokenId = token.get('id');
+    const onCloseModal = () => {
+      this.updateLocalState(['manageToken'], Map());
+      if (!!tokenId) {
+        RoutesStore.getRouter().transitionTo('tokens');
+      }
+    };
+
     return (
       <ManageTokenModal
         allBuckets={this.props.allBuckets}
         token={token}
         isEditting={!!tokenId}
         show={show}
-        onHideFn={() => this.updateLocalState(['manageToken'], Map())}
+        onHideFn={onCloseModal}
         onSaveFn={(newToken) => this.props.saveTokenFn(tokenId, newToken)}
         isSaving={this.props.isSavingToken}
       />
@@ -176,16 +184,13 @@ export default React.createClass({
   },
 
   renderEditTokenButton(token) {
-    const manageData = Map({
-      token: token,
-      show: true
-    });
     return (
-      <button
-        onClick={() => this.updateLocalState('manageToken', manageData)}
+      <Link
+        to="tokens"
+        query={{tokenId: token.get('id')}}
         className="btn btn-link">
         Edit token
-      </button>
+      </Link>
     );
   },
 
