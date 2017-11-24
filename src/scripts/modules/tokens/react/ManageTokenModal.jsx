@@ -40,66 +40,66 @@ export default React.createClass({
     const isCustomAccess = !this.state.dirtyToken.get('canManageBuckets', false);
     return (
       <Modal
-      bsSize="large"
-      show={this.props.show}
-      onHide={this.handleClose}
+        bsSize="large"
+        show={this.props.show}
+        onHide={this.handleClose}
       >
-      <Modal.Header closeButton>
-      <Modal.Title>
-      {!this.props.isEditting ? 'Create token' : `Update token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
-      </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      <div className="form form-horizontal">
-      {this.renderFormGroup(
-        'Description',
-        <div className="col-sm-9">
-          {this.renderDescriptionInput()}
-        </div>
-      )}
-      {this.renderFormGroup(
-        'Expires In',
-        this.props.isEditting ?
-        <div className="col-sm-9">
-          <p className="form-control-static">
-            <ExpiresInfo token={this.props.token} />
-          </p>
-        </div>
-        :
-        <ExpiresInEdit
-          value={this.state.dirtyToken.get('expiresIn', null)}
-          onChange={(value) => this.updateDirtyToken('expiresIn', value)}
-        />
-      )}
-      {this.renderFormGroup(
-        'File Uploads Access',
-        this.renderFileUploadsAccessInput()
-      )}
-      {this.renderFormGroup(
-        'Buckets&Components Access',
-        this.renderBucketsAndComponentsAccessInput()
-      )}
-      {isCustomAccess && this.renderFormGroup(
-        'Components Custom Access',
-        <div className="col-sm-9">
-          <ComponentsSelector
-            onChange={(components) => this.updateDirtyToken('componentAccess', components)}
-            selectedComponents={this.state.dirtyToken.get('componentAccess', List())}
-            allComponents={ComponentsStore.getAll()}
-          />
-        </div>
-      )}
-      {isCustomAccess && this.renderFormGroup(
-        'Buckets Custom Access',
-        <BucketPermissionsManager
-          bucketPermissions={this.state.dirtyToken.get('bucketPermissions', Map())}
-          onChange={(permissions) => this.updateDirtyToken('bucketPermissions', permissions)}
-          allBuckets={this.props.allBuckets}
-          wrapperClassName="col-sm-9"
-        />
-      )}
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {!this.props.isEditting ? 'Create token' : `Update token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form form-horizontal">
+            {this.renderFormGroup(
+               'Description',
+               <div className="col-sm-9">
+                 {this.renderDescriptionInput()}
+               </div>
+            )}
+            {this.renderFormGroup(
+               'Expires In',
+               this.props.isEditting ?
+               <div className="col-sm-9">
+                 <p className="form-control-static">
+                   <ExpiresInfo token={this.props.token} />
+                 </p>
+               </div>
+               :
+               <ExpiresInEdit
+                 value={this.state.dirtyToken.get('expiresIn', null)}
+                 onChange={(value) => this.updateDirtyToken('expiresIn', value)}
+               />
+            )}
+            {this.renderFormGroup(
+               'File Uploads Access',
+               this.renderFileUploadsAccessInput()
+            )}
+            {this.renderFormGroup(
+               'Buckets&Components Access',
+               this.renderBucketsAndComponentsAccessInput()
+            )}
+            {isCustomAccess && this.renderFormGroup(
+               'Components Custom Access',
+               <div className="col-sm-9">
+                 <ComponentsSelector
+                   onChange={(components) => this.updateDirtyToken('componentAccess', components)}
+                   selectedComponents={this.state.dirtyToken.get('componentAccess', List())}
+                   allComponents={ComponentsStore.getAll()}
+                 />
+               </div>
+            )}
+            {isCustomAccess && this.renderFormGroup(
+               'Buckets Custom Access',
+               <BucketPermissionsManager
+                 bucketPermissions={this.state.dirtyToken.get('bucketPermissions', Map())}
+                 onChange={(permissions) => this.updateDirtyToken('bucketPermissions', permissions)}
+                 allBuckets={this.props.allBuckets}
+                 wrapperClassName="col-sm-9"
+               />
+            )}
 
-      </div>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
@@ -155,37 +155,50 @@ export default React.createClass({
   },
 
   renderBucketsAndComponentsAccessInput() {
+    const {isEditting} = this.props;
+    const radioLabelStyle = isEditting ? {'paddingLeft': '0px', 'cursor': 'default'} : {};
     const canManageBuckets = this.state.dirtyToken.get('canManageBuckets', false);
+    const showFull = !isEditting || (isEditting && canManageBuckets);
+    const showCustom = !isEditting || (isEditting && !canManageBuckets);
     return (
       <div className="col-sm-9">
-        <div className="radio">
-          <label>
-            <input
-              type="radio"
-              disabled={this.props.isEditting}
-              checked={canManageBuckets}
-              onChange={() => this.updateDirtyToken('canManageBuckets', true)}
-            />
-            <span>Full Access</span>
-          </label>
-        </div>
-        <span className="help-block">
-          Allow full access to all buckets and components including buckets created in future
-        </span>
-        <div className="radio">
-          <label>
-            <input
-              disabled={this.props.isEditting}
-              type="radio"
-              checked={!canManageBuckets}
-              onChange={() => this.updateDirtyToken('canManageBuckets', false)}
-            />
-            <span>Custom Access</span>
-          </label>
-        </div>
-        <span className="help-block">
-          Only specified components and buckets will be accessible.
-        </span>
+        {showFull &&
+         <div className="radio">
+           <label style={radioLabelStyle}>
+             {!isEditting &&
+              <input
+                type="radio"
+                disabled={this.props.isEditting}
+                checked={canManageBuckets}
+                onChange={() => this.updateDirtyToken('canManageBuckets', true)}
+              />
+             }
+
+             <span>Full Access</span>
+           </label>
+           <span className="help-block">
+             Allow full access to all buckets and components including buckets created in future
+           </span>
+         </div>
+        }
+        {showCustom &&
+         <div className="radio">
+           <label style={radioLabelStyle}>
+             {!isEditting &&
+              <input
+                disabled={this.props.isEditting}
+                type="radio"
+                checked={!canManageBuckets}
+                onChange={() => this.updateDirtyToken('canManageBuckets', false)}
+              />
+             }
+             <span>Custom Access</span>
+           </label>
+           <span className="help-block">
+             Only specified components and buckets will be accessible.
+           </span>
+         </div>
+        }
       </div>
     );
   },
