@@ -3,7 +3,7 @@ import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import ExpiresInEdit from './ExpiresInEdit';
 import ComponentsStore from '../../components/stores/ComponentsStore';
-
+import ExpiresInfo from './ExpiresInfo';
 import ComponentsSelector from './ComponentsSelector';
 import BucketPermissionsManager from './BucketPermissionsManager';
 import {List, Map} from 'immutable';
@@ -40,59 +40,66 @@ export default React.createClass({
     const isCustomAccess = !this.state.dirtyToken.get('canManageBuckets', false);
     return (
       <Modal
-        bsSize="large"
-        show={this.props.show}
-        onHide={this.handleClose}
+      bsSize="large"
+      show={this.props.show}
+      onHide={this.handleClose}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {!this.props.isEditting ? 'Create token' : `Update token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="form form-horizontal">
-            {this.renderFormGroup(
-               'Description',
-               <div className="col-sm-9">
-                 {this.renderDescriptionInput()}
-               </div>
-            )}
-            {!this.props.isEditting && this.renderFormGroup(
-               'Expires In',
-               <ExpiresInEdit
-                 value={this.state.dirtyToken.get('expiresIn', null)}
-                 onChange={(value) => this.updateDirtyToken('expiresIn', value)}
-               />
-            )}
-            {this.renderFormGroup(
-               'File Uploads Access',
-               this.renderFileUploadsAccessInput()
-            )}
-            {this.renderFormGroup(
-               'Buckets&Components Access',
-               this.renderBucketsAndComponentsAccessInput()
-            )}
-            {isCustomAccess && this.renderFormGroup(
-               'Components Custom Access',
-               <div className="col-sm-9">
-                 <ComponentsSelector
-                   onChange={(components) => this.updateDirtyToken('componentAccess', components)}
-                   selectedComponents={this.state.dirtyToken.get('componentAccess', List())}
-                   allComponents={ComponentsStore.getAll()}
-                 />
-               </div>
-            )}
-            {isCustomAccess && this.renderFormGroup(
-               'Buckets Custom Access',
-               <BucketPermissionsManager
-                 bucketPermissions={this.state.dirtyToken.get('bucketPermissions', Map())}
-                 onChange={(permissions) => this.updateDirtyToken('bucketPermissions', permissions)}
-                 allBuckets={this.props.allBuckets}
-                 wrapperClassName="col-sm-9"
-               />
-            )}
+      <Modal.Header closeButton>
+      <Modal.Title>
+      {!this.props.isEditting ? 'Create token' : `Update token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
+      </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <div className="form form-horizontal">
+      {this.renderFormGroup(
+        'Description',
+        <div className="col-sm-9">
+          {this.renderDescriptionInput()}
+        </div>
+      )}
+      {this.renderFormGroup(
+        'Expires In',
+        this.props.isEditting ?
+        <div className="col-sm-9">
+          <p className="form-control-static">
+            <ExpiresInfo token={this.props.token} />
+          </p>
+        </div>
+        :
+        <ExpiresInEdit
+          value={this.state.dirtyToken.get('expiresIn', null)}
+          onChange={(value) => this.updateDirtyToken('expiresIn', value)}
+        />
+      )}
+      {this.renderFormGroup(
+        'File Uploads Access',
+        this.renderFileUploadsAccessInput()
+      )}
+      {this.renderFormGroup(
+        'Buckets&Components Access',
+        this.renderBucketsAndComponentsAccessInput()
+      )}
+      {isCustomAccess && this.renderFormGroup(
+        'Components Custom Access',
+        <div className="col-sm-9">
+          <ComponentsSelector
+            onChange={(components) => this.updateDirtyToken('componentAccess', components)}
+            selectedComponents={this.state.dirtyToken.get('componentAccess', List())}
+            allComponents={ComponentsStore.getAll()}
+          />
+        </div>
+      )}
+      {isCustomAccess && this.renderFormGroup(
+        'Buckets Custom Access',
+        <BucketPermissionsManager
+          bucketPermissions={this.state.dirtyToken.get('bucketPermissions', Map())}
+          onChange={(permissions) => this.updateDirtyToken('bucketPermissions', permissions)}
+          allBuckets={this.props.allBuckets}
+          wrapperClassName="col-sm-9"
+        />
+      )}
 
-          </div>
+      </div>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons

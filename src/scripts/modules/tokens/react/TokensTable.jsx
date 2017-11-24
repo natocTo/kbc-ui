@@ -8,6 +8,7 @@ import Confirm from '../../../react/common/Confirm';
 import {Loader} from 'kbc-react-components';
 import RefreshTokenModal from './RefreshTokenModal';
 import ManageTokenModal from './ManageTokenModal';
+import ExpiresInfo from './ExpiresInfo';
 
 export default React.createClass({
 
@@ -92,16 +93,6 @@ export default React.createClass({
     }
 
     return `${accessCnt} bucket(s)`;
-  },
-
-  renderExpired(token) {
-    const expires = token.get('expires');
-    if (!expires) return 'never';
-    return (
-      <Tooltip placement="top" tooltip={this.formatDate(expires)}>
-        <span>{moment(expires).fromNow()}</span>
-      </Tooltip>
-    );
   },
 
   formatDate(date) {
@@ -215,7 +206,7 @@ export default React.createClass({
           {this.formatDate(token.get('created'))}
         </td>
         <td>
-          {this.renderExpired(token)}
+          <ExpiresInfo token={token} />
         </td>
         <td>
           <Check isChecked={token.get('canReadAllFileUploads')} />
