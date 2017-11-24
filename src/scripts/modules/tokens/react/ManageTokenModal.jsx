@@ -80,8 +80,8 @@ export default React.createClass({
                this.renderBucketsAndComponentsAccessInput()
             )}
             {isCustomAccess && this.renderFormGroup(
-               'Components Custom Access',
-               <div className="col-sm-9">
+               '',
+               <div className="col-sm-offset-3 col-sm-9">
                  <ComponentsSelector
                    onChange={(components) => this.updateDirtyToken('componentAccess', components)}
                    selectedComponents={this.state.dirtyToken.get('componentAccess', List())}
@@ -90,12 +90,12 @@ export default React.createClass({
                </div>
             )}
             {isCustomAccess && this.renderFormGroup(
-               'Buckets Custom Access',
+               '',
                <BucketPermissionsManager
                  bucketPermissions={this.state.dirtyToken.get('bucketPermissions', Map())}
                  onChange={(permissions) => this.updateDirtyToken('bucketPermissions', permissions)}
                  allBuckets={this.props.allBuckets}
-                 wrapperClassName="col-sm-9"
+                 wrapperClassName="cols-sm-offset-3 col-sm-9"
                />
             )}
 
