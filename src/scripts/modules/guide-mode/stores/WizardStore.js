@@ -132,9 +132,7 @@ Dispatcher.register((payload) => {
         }
         break;
       case jobActionTypes.JOB_LOAD_SUCCESS:
-        if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 5) {
-          saveAndEmit(6);
-        } else if (WizardStore.getCurrentLesson().id === 4 && WizardStore.getCurrentStep().id === 3) {
+        if (WizardStore.getCurrentLesson().id === 4 && WizardStore.getCurrentStep().id === 3) {
           saveAndEmit(4);
         }
         break;
