@@ -1,18 +1,9 @@
 import Dispatcher from '../../../Dispatcher';
-import { getStateFromLocalStorage } from './WizardStore';
 
 export const ActionTypes = {
   GUIDE_MODE_UPDATE_MODAL_STATE: 'GUIDE_MODE_UPDATE_MODAL_STATE',
   GUIDE_MODE_SET_STEP: 'GUIDE_MODE_SET_STEP',
   GUIDE_MODE_SET_ACHIEVED_LESSON: 'GUIDE_MODE_SET_ACHIEVED_LESSON'
-};
-
-export const getAchievedLesson = () => {
-  return getStateFromLocalStorage().achievedLesson;
-};
-
-export const getAchievedStep = () => {
-  return getStateFromLocalStorage().achievedStep;
 };
 
 export const hideWizardModalFn = () => {

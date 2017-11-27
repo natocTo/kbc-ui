@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
-import { hideWizardModalFn, getAchievedStep } from '../stores/ActionCreators.js';
+import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
 
@@ -18,6 +18,7 @@ export default React.createClass({
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
+    achievedStep: React.PropTypes.number.isRequired,
     lesson: React.PropTypes.object.isRequired,
     projectBaseUrl: React.PropTypes.string.isRequired
   },
@@ -174,7 +175,7 @@ export default React.createClass({
   },
   getStepState(step) {
     let stepState = '';
-    if (step.id - 1 < getAchievedStep() + 1) {
+    if (step.id - 1 < this.props.achievedStep + 1) {
       stepState = 'guide-navigation-step-passed';
     }
     if (this.getActiveStep() === step.id - 1) {

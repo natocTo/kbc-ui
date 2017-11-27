@@ -46,6 +46,7 @@ export default React.createClass({
         <WizardModal
           projectBaseUrl={this.props.projectBaseUrl}
           step={this.state.wizard.step}
+          achievedStep={this.state.wizard.achievedStep}
           setStep={setStep}
           setAchievedLessonFn={setAchievedLesson}
           show={this.state.wizard.showLessonModal}
