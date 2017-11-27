@@ -87,11 +87,9 @@ export default {
       'position': 'center',
       'backdrop': true,
       'isNavigationVisible': false,
-      'title': 'Lesson 2 Finished',
+      'title': 'Conclusion',
       'link': '',
-      'markdown': 'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
-      'media': '',
-      'mediaType': ''
+      'markdown': 'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
     }
 
   ]
