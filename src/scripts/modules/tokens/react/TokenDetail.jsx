@@ -25,23 +25,27 @@ export default React.createClass({
       const newLs = localState.setIn(lsPath.concat(key), value);
       TokensActions.updateLocalState(newLs);
     };
-    const resetDirtyToken = () => {
+    const resetDirtyToken = (isUpdated) => {
       const newLs = localState
         .deleteIn(lsPath.concat('dirtyToken'))
-        .setIn(lsPath.concat('saveLabel'), 'Updated');
+        .setIn(lsPath.concat('saveLabel'), isUpdated ? 'Updated' : 'Update')
+        .setIn(lsPath.concat('cancelLabel'), 'Back To Tokens Page');
       TokensActions.updateLocalState(newLs);
     };
     const updateDirtyToken = (key, value) => {
       const newDirtyToken = dirtyToken.setIn([].concat(key), value);
       const newLs = localState
         .setIn(lsPath.concat('dirtyToken'), newDirtyToken)
-        .setIn(lsPath.concat('saveLabel'), 'Update');
+        .setIn(lsPath.concat('saveLabel'), 'Update')
+        .setIn(lsPath.concat('cancelLabel'), 'Cancel');
       TokensActions.updateLocalState(newLs);
     };
 
     const saveLabel = tokenDetailState.get('saveLabel', 'Update');
+    const cancelLabel = tokenDetailState.get('cancelLabel', 'Back To Tokens Page');
     return {
       saveLabel: saveLabel,
+      cancelLabel: cancelLabel,
       token: token,
       tokenId: tokenId,
       dirtyToken: dirtyToken,
@@ -75,7 +79,7 @@ export default React.createClass({
               onSave={this.handleSaveToken}
               onCancel={this.handleClose}
               placement="right"
-              cancelLabel={'todo: cancel or back'}
+              cancelLabel={this.state.cancelLabel}
               saveLabel={this.state.saveLabel}
             />
           </div>n
@@ -85,7 +89,11 @@ export default React.createClass({
   },
 
   handleClose() {
-
+    if (this.state.cancelLabel === 'Cancel') {
+      this.state.resetDirtyToken(false);
+    } else {
+      RoutesStore.getRouter().transitionTo('tokens');
+    }
   },
 
   isValid() {
@@ -101,7 +109,7 @@ export default React.createClass({
     this.state.updateLocalState('isSaving', true);
     return TokensActions.updateToken(tokenId, this.state.dirtyToken.toJS()).then(() => {
       this.state.updateLocalState('isSaving', false);
-      this.state.resetDirtyToken();
+      this.state.resetDirtyToken(true);
     });
   },
 
