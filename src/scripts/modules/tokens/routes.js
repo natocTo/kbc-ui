@@ -1,4 +1,5 @@
 import Index from './react/Index';
+import TokenDetail from './react/TokenDetail';
 import tokensActions from './actionCreators';
 import StorageActions from '../components/StorageActionCreators';
 import TokensStore from './StorageTokensStore';
@@ -24,5 +25,12 @@ export default {
       });
     },
     () => StorageActions.loadBuckets()
+  ],
+  childRoutes: [
+    {
+      name: 'tokens-detail',
+      path: ':tokenId',
+      handler: TokenDetail
+    }
   ]
 };

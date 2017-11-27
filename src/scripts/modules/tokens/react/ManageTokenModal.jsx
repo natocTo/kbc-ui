@@ -54,7 +54,7 @@ export default React.createClass({
             allBuckets={this.props.allBuckets}
           />
           {this.state.createdToken &&
-           <div className="form-group">
+           <div className="row">
              {this.renderTokenCreated()}
            </div>
           }
