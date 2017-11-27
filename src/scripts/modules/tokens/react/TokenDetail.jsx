@@ -82,7 +82,7 @@ export default React.createClass({
               cancelLabel={this.state.cancelLabel}
               saveLabel={this.state.saveLabel}
             />
-          </div>n
+          </div>
         </div>
       </div>
     );
