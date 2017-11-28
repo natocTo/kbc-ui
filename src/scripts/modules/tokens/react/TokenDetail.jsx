@@ -10,6 +10,8 @@ import BucketsStore from '../../components/stores/StorageBucketsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 
+const makeDetailPath = (tokenId) => (rest) => ['TokenDetail', tokenId].concat(rest || []);
+
 export default React.createClass({
   mixins: [createStoreMixin(TokensStore, BucketsStore)],
 
@@ -17,46 +19,53 @@ export default React.createClass({
     const tokenId = RoutesStore.getCurrentRouteParam('tokenId');
     const tokens = TokensStore.getAll();
     const token = tokens.find(t => t.get('id') === tokenId);
-    const lsPath = ['TokenDetail', tokenId];
+    const path = makeDetailPath(tokenId);
     const localState = TokensStore.localState();
-    const tokenDetailState = localState.getIn(lsPath, Map());
-    const dirtyToken = tokenDetailState.get('dirtyToken', token);
-    const updateLocalState = (key, value) => {
-      const newLs = localState.setIn(lsPath.concat(key), value);
-      TokensActions.updateLocalState(newLs);
-    };
-    const resetDirtyToken = (isUpdated) => {
-      const newLs = localState
-        .deleteIn(lsPath.concat('dirtyToken'))
-        .setIn(lsPath.concat('saveLabel'), isUpdated ? 'Updated' : 'Update')
-        .setIn(lsPath.concat('cancelLabel'), 'Back To Tokens Page');
-      TokensActions.updateLocalState(newLs);
-    };
-    const updateDirtyToken = (key, value) => {
-      const newDirtyToken = dirtyToken.setIn([].concat(key), value);
-      const newLs = localState
-        .setIn(lsPath.concat('dirtyToken'), newDirtyToken)
-        .setIn(lsPath.concat('saveLabel'), 'Update')
-        .setIn(lsPath.concat('cancelLabel'), 'Cancel');
-      TokensActions.updateLocalState(newLs);
-    };
+    const tokenDetailState = localState.getIn(path(), Map());
 
+    const dirtyToken = tokenDetailState.get('dirtyToken', token);
     const saveLabel = tokenDetailState.get('saveLabel', 'Update');
     const cancelLabel = tokenDetailState.get('cancelLabel', 'Back To Tokens Page');
+    const isSaving = tokenDetailState.get('isSaving', false);
+
     return {
-      saveLabel: saveLabel,
-      cancelLabel: cancelLabel,
+      localState: localState,
       token: token,
       tokenId: tokenId,
       dirtyToken: dirtyToken,
-      isSaving: tokenDetailState.get('isSaving', false),
-      allBuckets: BucketsStore.getAll(),
-      updateLocalState: updateLocalState,
-      updateDirtyToken: updateDirtyToken,
-      resetDirtyToken: resetDirtyToken
+      saveLabel: saveLabel,
+      cancelLabel: cancelLabel,
+      isSaving: isSaving,
+      allBuckets: BucketsStore.getAll()
     };
   },
 
+  updateLocalState(key, value) {
+    const path = makeDetailPath(this.state.tokenId);
+    const newLs = this.state.localState.setIn(path(key), value);
+    TokensActions.updateLocalState(newLs);
+  },
+
+  resetDirtyToken(isUpdated) {
+    const path = makeDetailPath(this.state.tokenId);
+    const {localState} = this.state;
+    const newLs = localState
+      .deleteIn(path('dirtyToken'))
+      .setIn(path('saveLabel'), isUpdated ? 'Updated' : 'Update')
+      .setIn(path('cancelLabel'), 'Back To Tokens Page');
+    TokensActions.updateLocalState(newLs);
+  },
+
+  updateDirtyToken(key, value) {
+    const path = makeDetailPath(this.state.tokenId);
+    const {localState} = this.state;
+    const newDirtyToken = this.state.dirtyToken.setIn([].concat(key), value);
+    const newLs = localState
+      .setIn(path('dirtyToken'), newDirtyToken)
+      .setIn(path('saveLabel'), 'Update')
+      .setIn(path('cancelLabel'), 'Cancel');
+    TokensActions.updateLocalState(newLs);
+  },
 
   render() {
     return (
@@ -69,7 +78,7 @@ export default React.createClass({
               isEditting={true}
               token={this.state.dirtyToken}
               allBuckets={this.state.allBuckets}
-              updateToken={this.state.updateDirtyToken}
+              updateToken={this.updateDirtyToken}
             />
           </div>
           <div className="row text-right">
@@ -90,7 +99,7 @@ export default React.createClass({
 
   handleClose() {
     if (this.state.cancelLabel === 'Cancel') {
-      this.state.resetDirtyToken(false);
+      this.resetDirtyToken(false);
     } else {
       RoutesStore.getRouter().transitionTo('tokens');
     }
@@ -106,10 +115,10 @@ export default React.createClass({
 
   handleSaveToken() {
     const tokenId = this.state.tokenId;
-    this.state.updateLocalState('isSaving', true);
+    this.updateLocalState('isSaving', true);
     return TokensActions.updateToken(tokenId, this.state.dirtyToken.toJS()).then(() => {
-      this.state.updateLocalState('isSaving', false);
-      this.state.resetDirtyToken(true);
+      this.updateLocalState('isSaving', false);
+      this.resetDirtyToken(true);
     });
   },
 
