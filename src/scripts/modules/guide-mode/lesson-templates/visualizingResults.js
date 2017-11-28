@@ -21,7 +21,7 @@ export default {
       'title': 'Create Writer',
       'link': 'writers',
       'media': '',
-      'markdown': 'Let’s say you have Tableau Desktop installed on your computer. Now you need to find the writer Tableau in the **Writers** section.'
+      'markdown': 'Let’s say you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the **Writers** section.'
                 + `
 - Click on <span class="btn btn-success btn-xs">+ New Writer</span>.
 - Find **Tableau**. You can use the search feature to find it faster.
