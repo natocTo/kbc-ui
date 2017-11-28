@@ -30,7 +30,16 @@ export default {
     {
       name: 'tokens-detail',
       path: ':tokenId',
-      handler: TokenDetail
+      handler: TokenDetail,
+      title: (routerState) => {
+        const tokenId = routerState.getIn(['params', 'tokenId']);
+        const token = tokenId && TokensStore.getAll().find(t => t.get('id') === tokenId);
+        if (token) {
+          return `Token ${token.get('description')} (${token.get('id')})`;
+        } else {
+          return `Unknown token ${tokenId}`;
+        }
+      }
     }
   ]
 };
