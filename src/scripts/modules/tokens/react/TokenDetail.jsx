@@ -63,7 +63,7 @@ export default React.createClass({
     const newLs = localState
       .setIn(path('dirtyToken'), newDirtyToken)
       .setIn(path('saveLabel'), 'Update')
-      .setIn(path('cancelLabel'), 'Cancel');
+      .setIn(path('cancelLabel'), 'Reset');
     TokensActions.updateLocalState(newLs);
   },
 
@@ -98,7 +98,7 @@ export default React.createClass({
   },
 
   handleClose() {
-    if (this.state.cancelLabel === 'Cancel') {
+    if (this.state.cancelLabel === 'Reset') {
       this.resetDirtyToken(false);
     } else {
       RoutesStore.getRouter().transitionTo('tokens');
