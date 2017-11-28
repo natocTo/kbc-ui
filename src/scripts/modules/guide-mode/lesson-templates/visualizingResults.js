@@ -23,10 +23,10 @@ export default {
       'media': '',
       'markdown': 'Let’s say you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the **Writers** section.'
                 + `
-- Click on <span class="btn btn-success btn-xs">+ New Writer</span>.
+- Click on <span class="btn btn-success btn-sm">+ New Writer</span>.
 - Find **Tableau**. You can use the search feature to find it faster.
-- Click on <span class="btn btn-success btn-xs">More</span> and continue with <span class="btn btn-success btn-xs">+ New Configuration</span>.
-- Name the configuration, e.g., *My writer* and click on <span class="btn btn-success btn-xs">Create Configuration</span>.
+- Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
+- Name the configuration, e.g., *My writer* and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 `,
       'mediaType': ''
     },
@@ -39,11 +39,11 @@ export default {
       'markdown':
       'Now add the table you want to send to Tableau. For each of its columns you also need to specify whether it contains text or a number.'
       + `
-- Click on <span class="btn btn-success btn-xs">+ New Table</span>.
+- Click on <span class="btn btn-success btn-sm">+ New Table</span>.
 - Select  \`out.c-snowflake.transformed\` as the Source table you want to add to Tableau.
 - Specify a data type for each of the table's columns under **TDE Data Type** (COUNTRY/string, CARS/number, POPULATION/number, PERSON_PER_CAR/decimal). 
-- <span class="btn btn-success btn-xs">Save</span> the configuration.
-- Click <span class="btn btn-success btn-xs">Export tables to TDE</span> to run the writer. 
+- <span class="btn btn-success btn-sm">Save</span> the configuration.
+- Click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run Extraction</span>Export tables to TDE</span> to run the writer. 
 <br>
 
 A Tableau Desktop Extract file will be created. In a real project, you would find the file in Storage under the tab **Files** from where it can be downloaded to your computer.   

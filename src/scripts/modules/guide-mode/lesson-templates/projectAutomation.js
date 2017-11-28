@@ -17,7 +17,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Orchestration',
       'link': 'orchestrations',
-      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-xs">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., *My orchestration*.',
+      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-sm">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., *My orchestration*.',
       'media': '',
       'mediaType': ''
     }, {
@@ -26,7 +26,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Orchestration Overview',
-      'markdown': 'The orchestrator configuration consists of three separate parts in which you will create the desired **sequence** of the tasks you wish to execute. You will set your execution **schedule**, and select **notifications** you want to be sent to you in case of errors, delays, etc. <br/><br/> Start by clicking on <span class="btn btn-success btn-xs">Configure Tasks</span> to select and order the tasks.',
+      'markdown': 'The orchestrator configuration consists of three separate parts in which you will create the desired **sequence** of the tasks you wish to execute. You will set your execution **schedule**, and select **notifications** you want to be sent to you in case of errors, delays, etc. <br/><br/> Start by clicking on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Configure Tasks</span> to select and order the tasks.',
       'media': '',
       'mediaType': ''
     }, {
@@ -35,14 +35,14 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Configure Task',
-      'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on the green button <span class="btn btn-success btn-xs">+ New Task</span>.'
+      'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on the green button <span class="btn btn-success btn-sm">+ New Task</span>.'
                 + `
-- Step 1: After clicking <span class="btn btn-success btn-xs">+ New task</span>, select your Snowflake extractor.
-- Step 2: Click <span class="btn btn-success btn-xs">+ New task</span> again. Then click on the little Back icon on the right, and select your transformation from the list.
-- Step 3: Click <span class="btn btn-success btn-xs">+ New task</span>, then return to the list of your configurations one more time, and select your Tableau Writer.
+- Step 1: After clicking <span class="btn btn-success btn-sm">+ New task</span>, select your Snowflake extractor.
+- Step 2: Click <span class="btn btn-success btn-sm">+ New task</span> again. Then click on the little Back icon on the right, and select your transformation from the list.
+- Step 3: Click <span class="btn btn-success btn-sm">+ New task</span>, then return to the list of your configurations one more time, and select your Tableau Writer.
 <br>
 
-Then click <span class="btn btn-success btn-xs">Save</span> in the upper right corner.
+Then click <span class="btn btn-success btn-sm">Save</span> in the upper right corner.
 
 `,
       'media': '',
@@ -53,10 +53,10 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Schedule Orchestration',
-      'markdown': 'Now click on <span class="btn btn-success btn-xs">Edit schedule</span> to choose how often, on what days and at what time you want the configured tasks to run.' +
+      'markdown': 'Now click on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Edit schedule</span> to choose how often, on what days and at what time you want the configured tasks to run.' +
       `
-- Choose whether you want to run the tasks every hour, every day, month, etc. Notice the generated <span class="btn btn-success btn-xs">Next Schedules</span> below, telling you when the next orchestrations will run in your local time.
-- Click on <span class="btn btn-success btn-xs">Save</span>.
+- Choose whether you want to run the tasks every hour, every day, month, etc. Notice the generated **Next Schedules** below, telling you when the next orchestrations will run in your local time.
+- Click on <span class="btn btn-success btn-sm">Save</span>.
       
       `,
       'media': '',
@@ -69,10 +69,10 @@ Then click <span class="btn btn-success btn-xs">Save</span> in the upper right c
       'title': 'Configure Notifications',
       'markdown': 'Finally, to receive email notifications about errors, warnings and processing delays, enter the email address where you want notifications about your scheduled tasks to be sent.' +
       `
-- Click on <span class="btn btn-success btn-xs">Configure Notifications</span>.
-- Then click on <span class="btn btn-success btn-xs">Edit Notifications</span> in the upper right corner.
-- Add your email address for all three notification types and click the <span class="btn btn-success btn-xs"> + </span> button. It moves the address to the subscriber field above. You can add as many recipients as you want.
-- Click on <span class="btn btn-success btn-xs">Save</span>.
+- Click on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Configure Notifications</span>.
+- Then click on <span class="btn btn-success btn-sm">Edit Notifications</span> in the upper right corner.
+- Add your email address for all three notification types and click the <span class="btn btn-success btn-sm"> + </span> button. It moves the address to the subscriber field above. You can add as many recipients as you want.
+- Click on <span class="btn btn-success btn-sm">Save</span>.
 
 `,
       'media': '',

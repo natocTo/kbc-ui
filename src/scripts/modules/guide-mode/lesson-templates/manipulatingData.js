@@ -19,7 +19,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Bucket',
       'link': 'transformations',
-      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-xs">+ New Transformation Bucket</span> and name it, e.g., *My transformation bucket*. Then click <span class="btn btn-success btn-xs">Create Bucket</span>.',
+      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-sm">+ New Transformation Bucket</span> and name it, e.g., *My transformation bucket*. Then click <span class="btn btn-success btn-sm">Create Bucket</span>.',
       'media': '',
       'mediaType': ''
     }, {
@@ -29,7 +29,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Transformation',
       'link': 'transformations',
-      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. <br/><br/> Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
+      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-sm">+ New Transformation</span>. <br/><br/> Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
       'media': '',
       'mediaType': ''
     }, {
@@ -48,12 +48,12 @@ export default {
 - **Queries** &ndash; what will happen with the data in the transformation
 <br>
 <br>
-- Click on <span class="btn btn-success btn-xs">+ New Input</span> and select \`in.c-tutorial.cars\` as the Source table from the drop down menu. Accept the suggested Destination. It is the name of the selected table inside the transformation. Press <span class="btn btn-success btn-xs">Create Input</span>.
-- Repeat the steps for the second table. Click on <span class="btn btn-success btn-xs">+ New Input</span> and select \`in.c-tutorial.population\` as the Source table.
-- Then click on <span class="btn btn-success btn-xs">+ New Output</span> and enter *Transformed* as the Source table. This table does not exist yet. It will be created in the transformation. 
-- Set Destination to \`out.c-snowflake.transformed\`. This is the name the new table *Transformed* will have when put in Storage. Press <span class="btn btn-success btn-xs">Create Output</span>.
-- To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and <span class="btn btn-success btn-xs">Save</span> it.
-- Click on <span class="btn btn-success btn-xs">Next step</span>.
+- Click on <span class="btn btn-success btn-sm">+ New Input</span> and select \`in.c-tutorial.cars\` as the Source table from the drop down menu. Accept the suggested Destination. It is the name of the selected table inside the transformation. Press <span class="btn btn-success btn-sm">Create Input</span>.
+- Repeat the steps for the second table. Click on <span class="btn btn-success btn-sm">+ New Input</span> and select \`in.c-tutorial.population\` as the Source table.
+- Then click on <span class="btn btn-success btn-sm">+ New Output</span> and enter *Transformed* as the Source table. This table does not exist yet. It will be created in the transformation. 
+- Set Destination to \`out.c-snowflake.transformed\`. This is the name the new table *Transformed* will have when put in Storage. Press <span class="btn btn-success btn-sm">Create Output</span>.
+- To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and <span class="btn btn-success btn-sm">Save</span> it.
+- Click on <span class="btn btn-primary btn-sm">Next step</span>.
 
 `,
       'media': '',
@@ -64,7 +64,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Transformation',
-      'markdown': 'Now when everything is ready, you can click on <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run transformation</span>. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
+      'markdown': 'Now when everything is ready, you can click on <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span>. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put in to Storage back again.',
       'media': '',
       'mediaType': ''
     }, {
@@ -75,7 +75,7 @@ export default {
       'title': 'Check Jobs',
       'link': 'jobs',
       'markdown': 'You can see the status of your jobs in the section **Jobs**. Your input tables were joined and the output table *Transformed* was created. You can check the details of each job here too.' +
-      '<br/><br/> When you are ready, hit <span class="btn btn-success btn-xs">Next step</span>.',
+      '<br/><br/> When you are ready, hit <span class="btn btn-primary btn-sm">Next step</span>.',
       'media': '',
       'mediaType': ''
     }, {
