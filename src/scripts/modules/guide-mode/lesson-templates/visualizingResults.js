@@ -40,7 +40,7 @@ export default {
       'Now add the table you want to send to Tableau. For each of its columns you also need to specify whether it contains text or a number.'
       + `
 - Click on <span class="btn btn-success btn-sm">+ New Table</span>.
-- Select  \`out.c-snowflake.transformed\` as the Source table you want to add to Tableau.
+- Select  \`out.c-snowflake.TRANSFORMED\` as the Source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>..
 - Specify a data type for each of the table's columns under **TDE Data Type** (COUNTRY/string, CARS/number, POPULATION/number, PERSON_PER_CAR/decimal). 
 - <span class="btn btn-success btn-sm">Save</span> the configuration.
 - Click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run Extraction</span>Export tables to TDE</span> to run the writer. 

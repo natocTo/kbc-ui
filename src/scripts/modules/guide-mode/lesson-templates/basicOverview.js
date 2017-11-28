@@ -31,7 +31,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Store data',
       'link': 'storage',
-      'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage** where they can be accessed at any time. To find what you need quickly, the data tables are organized into buckets.',
+      'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage** where they can be accessed at any time. <br/><br/> Being sorted into buckets, your tables can always be easily found.',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     },
@@ -77,7 +77,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Example Workflow',
       'link': 'app',
-      'markdown': 'Having learned all the basics, you can explore the individual steps in more detail in the lessons that follow. <br/><br/> After extracting data from two database tables, merging them into one table, and calculating some statistics, you will visualize the results. Finally, you will set up the whole process to run automatically. See our example workflow below.',
+      'markdown': 'Having learned all the basics, you can explore the individual steps in more detail in the lessons that follow. <br/><br/> After extracting data from two database tables, merging them into one table, and calculating some statistics, you will visualize the results. Finally, you will set up the whole process to run automatically. See our **example workflow** below.',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     }
