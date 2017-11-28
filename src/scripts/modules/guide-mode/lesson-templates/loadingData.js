@@ -22,8 +22,8 @@ export default {
       'markdown': 'Because both data tables are stored in a Snowflake database, you’ll be using the Snowflake extractor. By configuring it, you’ll specify what data to bring from the external database to your project and how.'
                 + `
 - Find **Snowflake**. You can use the search feature to find it quickly.
-- Click on <span class="btn btn-success btn-xs">More</span> and continue with <span class="btn btn-success btn-xs">+ New Configuration</span>.
-- Name the configuration, e.g., *My database extractor*, and click on <span class="btn btn-success btn-xs">Create Configuration</span>.
+- Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
+- Name the configuration, e.g., *My database extractor*, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 
 `,
       'media': '',
@@ -36,12 +36,12 @@ export default {
       'title': 'Setup Connection',
       'markdown': 'To access the source database where the data about cars and population is stored, provide a password and other credentials.'
                 + `
-- Click on <span class="btn btn-success btn-xs">Setup Database Credentials</span>.
+- Click on <span class="btn btn-success btn-sm">Setup Database Credentials</span>.
 - Set Host to \`kebooladev.snowflakecomputing.com\`
 - Set Port to \`443\`
 - Set Username, Password, Database and Schema to \`HELP_TUTORIAL\`
 - Set Warehouse to \`DEV\`
-- You can test the credentials. Make sure to save them by clicking on <span class="btn btn-success btn-xs">Save</span> in the upper right corner.
+- You can test the credentials. Make sure to save them by clicking on <span class="btn btn-success btn-sm">Save</span> in the upper right corner.
 `,
       'media': '',
       'mediaType': ''
@@ -55,7 +55,7 @@ export default {
       'Once you have access to the database, it’s time to actually extract the data about the number of cars in different countries.'
       + `
 - Select the tables CARS and POPULATION from the drop-down list on the left.
-- Click <span class="btn btn-success btn-xs">Create</span>. Your extractor will be automatically configured.
+- Click <span class="btn btn-success btn-sm">Create</span>. Your extractor will be automatically configured.
 
 `,
       'media': '',
@@ -68,7 +68,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Extraction',
-      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To run the extraction and create the tables, click <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run Extraction</span> on the right. The data from your selected external database tables will be loaded into the new tables in your project. <br/><br/> Be patient. It takes a while to finish.',
+      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To run the extraction and create the tables, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run Extraction</span> on the right. The data from your selected external database tables will be loaded into the new tables in your project. <br/><br/> Be patient. It takes a while to finish.',
       'media': '',
       'link': 'extractors',
       'mediaType': ''
@@ -87,11 +87,9 @@ export default {
       'position': 'center',
       'backdrop': true,
       'isNavigationVisible': false,
-      'title': 'Lesson 2 Finished',
+      'title': 'Conclusion',
       'link': '',
-      'markdown': 'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
-      'media': '',
-      'mediaType': ''
+      'markdown': 'To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
     }
 
   ]
