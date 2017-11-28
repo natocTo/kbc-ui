@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {Map} from 'immutable';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import TokenString from './TokenString';
@@ -11,26 +12,14 @@ export default React.createClass({
     onHideFn: PropTypes.func.isRequired,
     onSaveFn: PropTypes.func.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    isEditting: PropTypes.bool.isRequired,
-    token: PropTypes.object.isRequired,
     allBuckets: PropTypes.object.isRequired
   },
 
   getInitialState() {
-    return this.getStateFromProps(this.props);
-  },
-
-  getStateFromProps(props) {
     return {
-      dirtyToken: props.token,
+      dirtyToken: Map(),
       createdToken: null
     };
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.isSaving && !this.props.isSaving) {
-      this.setState(this.getStateFromProps(nextProps));
-    }
   },
 
   render() {
@@ -42,13 +31,13 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {!this.props.isEditting ? 'Create token' : `Token ${this.props.token.get('description')}(${this.props.token.get('id')})`}
+            Create Token
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <TokenEditor
             disabled={this.isInputDisabled()}
-            isEditting={this.props.isEditting}
+            isEditting={false}
             token={this.state.dirtyToken}
             updateToken={this.updateDirtyToken}
             allBuckets={this.props.allBuckets}
@@ -61,13 +50,13 @@ export default React.createClass({
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-            isDisabled={!this.isValid() || this.props.token === this.state.dirtyToken || !!this.state.createdToken}
+            isDisabled={!this.isValid() || !!this.state.createdToken}
             isSaving={this.props.isSaving}
             onSave={this.handleSave}
             onCancel={this.handleClose}
             placement="right"
             cancelLabel={!!this.state.createdToken ? 'Close' : 'Cancel'}
-            saveLabel={this.props.isEditting ? 'Update' : 'Create'}
+            saveLabel="Create"
           />
         </Modal.Footer>
       </Modal>
@@ -101,15 +90,13 @@ export default React.createClass({
 
   handleSave() {
     this.props.onSaveFn(this.state.dirtyToken).then((token) => {
-      if (this.props.isEditting) {
-        return this.handleClose();
-      }
       this.setState({createdToken: token, dirtyToken: token});
     });
   },
 
   handleClose() {
     this.props.onHideFn();
+    this.setState({createdToken: null, dirtyToken: Map()});
   }
 
 });

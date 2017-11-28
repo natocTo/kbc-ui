@@ -6,10 +6,9 @@ import Tooltip from '../../../react/common/Tooltip';
 import Confirm from '../../../react/common/Confirm';
 import {Loader} from 'kbc-react-components';
 import RefreshTokenModal from './RefreshTokenModal';
-import ManageTokenModal from './ManageTokenModal';
+import CreateTokenModal from './CreateTokenModal';
 import ExpiresInfo from './ExpiresInfo';
 import {Link} from 'react-router';
-import RoutesStore from '../../../stores/RoutesStore';
 
 export default React.createClass({
 
@@ -31,7 +30,7 @@ export default React.createClass({
     return (
       <span>
         {this.renderTokenRefreshModal()}
-        {this.renderManageTokenModal()}
+        {this.renderCreateTokenModal()}
         <div responsive className="table table-striped table-hover">
           <div className="thead">
             <div className="tr">
@@ -55,7 +54,7 @@ export default React.createClass({
               </div>
               <div className="th text-right">
                 <button
-                  onClick={() => this.updateLocalState(['manageToken', 'show'], true)}
+                  onClick={() => this.updateLocalState(['createToken', 'show'], true)}
                   className="btn btn-success"> Create Token </button>
               </div>
             </div>
@@ -165,42 +164,21 @@ export default React.createClass({
     );
   },
 
-  renderManageTokenModal() {
-    const manageData = this.props.localState.get('manageToken', Map());
-    const show = manageData.get('show', false);
-    const token = manageData.get('token', Map());
-    const tokenId = token.get('id');
+  renderCreateTokenModal() {
+    const createData = this.props.localState.get('createToken', Map());
+    const show = createData.get('show', false);
     const onCloseModal = () => {
-      this.updateLocalState(['manageToken', 'show'], false);
-      this.updateLocalState(['manageToken'], Map());
-      if (!!tokenId) {
-        RoutesStore.getRouter().transitionTo('tokens');
-      }
+      this.updateLocalState(['createToken'], Map());
     };
 
     return (
-      <ManageTokenModal
+      <CreateTokenModal
         allBuckets={this.props.allBuckets}
-        token={token}
-        isEditting={!!tokenId}
         show={show}
         onHideFn={onCloseModal}
-        onSaveFn={(newToken) => this.props.saveTokenFn(tokenId, newToken)}
+        onSaveFn={(newToken) => this.props.saveTokenFn(newToken)}
         isSaving={this.props.isSavingToken}
       />
-    );
-  },
-
-  renderEditTokenButton(token) {
-    return (
-      <Link
-        to="tokens"
-        query={{tokenId: token.get('id')}}
-        className="btn btn-link">
-        <Tooltip placement="top" tooltip="Edit token">
-          <i className="kbc-icon-pencil" />
-        </Tooltip>
-      </Link>
     );
   },
 
