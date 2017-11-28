@@ -28,7 +28,7 @@ dropoxExtractorRoutes = require('../ex-dropbox/routes').default
 dropoxExtractorRoutesV2 = require('../ex-dropbox-v2/routes').default
 dropoxWriterRoutes = require '../wr-dropbox/routes'
 wrPortalCreateRouteFn = require('../wr-portal/Routes').default
-createDbWriterRoutes = require '../wr-db/routes'
+createDbWriterRoutes = require('../wr-db-generic/routes').default
 
 createGenericDetailRoute = require './createGenericDetailRoute'
 createComponentRoute = require('./createComponentRoute').default
