@@ -17,7 +17,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Orchestration',
       'link': 'orchestrations',
-      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-xs">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., *My orchestration*.',
+      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-xs">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., *My orchestration* and click <span class="btn btn-success btn-xs">Create Orchestration</span>.',
       'media': '',
       'mediaType': ''
     }, {
