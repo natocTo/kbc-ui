@@ -19,7 +19,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Bucket',
       'link': 'transformations',
-      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-xs">+ New Transformation Bucket</span> and name it, e.g., *My transformation bucket*. Then click <span class="btn btn-success btn-xs">Create Bucket</span>.',
+      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-sm">+ New Transformation Bucket</span> and name it, e.g., *My transformation bucket*. Then click <span class="btn btn-success btn-sm">Create Bucket</span>.',
       'media': '',
       'mediaType': ''
     }, {
@@ -29,7 +29,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Transformation',
       'link': 'transformations',
-      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-xs">+ New Transformation</span>. <br/><br/> Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
+      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-sm">+ New Transformation</span>. <br/><br/> Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
       'media': '',
       'mediaType': ''
     }, {
@@ -48,12 +48,13 @@ export default {
 - **Queries** &ndash; what will happen with the data in the transformation.
 <br>
 <br>
-- Click on <span class="btn btn-success btn-xs">+ New Input</span> and select \`in.c-keboola-ex-db-snowflake.CARS\` as the Source table from the drop down menu. Accept the suggested Destination. It will be the name of the selected table inside the transformation. Press <span class="btn btn-success btn-xs">Create Input</span>.
-- Repeat the steps for the second table. Click on <span class="btn btn-success btn-xs">+ New Input</span> and select \`in.c-keboola-ex-db-snowflake.POPULATION\` as the Source table.
-- Then click on <span class="btn btn-success btn-xs">+ New Output</span> and enter *TRANSFORMED* as the Source table. This table does not exist yet. It will be created in the transformation. 
-- Set Destination to \`out.c-snowflake.TRANSFORMED\`. This is the name the new table *TRANSFORMED* will have when put in Storage. Press <span class="btn btn-success btn-xs">Create Output</span>.
-- To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and <span class="btn btn-success btn-xs">Save</span> it.
-- Click on <span class="btn btn-success btn-xs">Next step</span>.
+
+- Click on <span class="btn btn-success btn-sm">+ New Input</span> and select \`in.c-keboola-ex-db-snowflake.CARS\` as the Source table from the drop down menu. Accept the suggested Destination. It will be the name of the selected table inside the transformation. Press <span class="btn btn-success btn-sm">Create Input</span>.
+- Repeat the steps for the second table. Click on <span class="btn btn-success btn-sm">+ New Input</span> and select \`in.c-keboola-ex-db-snowflake.POPULATION\` as the Source table.
+- Then click on <span class="btn btn-success btn-sm">+ New Output</span> and enter *TRANSFORMED* as the Source table. This table does not exist yet. It will be created in the transformation. 
+- Set Destination to \`out.c-snowflake.TRANSFORMED\`. This is the name the new table *TRANSFORMED* will have when put in Storage. Press <span class="btn btn-success btn-sm">Create Output</span>.
+- To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and <span class="btn btn-success btn-sm">Save</span> it.
+- Click on <span class="btn btn-primary btn-sm">Next step</span>.
 
 `,
       'media': '',
@@ -64,7 +65,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Transformation',
-      'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-xs"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put into Storage back again. <br/><br/> To see the status of your extraction, click <span class="btn btn-success btn-xs">Next step</span>.',
+      'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put into Storage back again. <br/><br/> To see the status of your extraction, click <span class="btn btn-success btn-sm">Next step</span>.',
       'media': '',
       'mediaType': ''
     }, {
@@ -75,7 +76,7 @@ export default {
       'title': 'Check Jobs',
       'link': 'jobs',
       'markdown': 'In the section **Jobs** you can see all operations you have run in your project so far. The status of your transformation job is *processing* at the moment. It will change to *success* in a little while. Your input tables will be joined and the output table *Transformed* created. You can check the details of each job here too.' +
-      '<br/><br/> When you are ready, hit <span class="btn btn-success btn-xs">Next step</span>.',
+      '<br/><br/> When you are ready, hit <span class="btn btn-success btn-sm">Next step</span>.',
       'media': '',
       'mediaType': ''
     }, {
@@ -92,12 +93,10 @@ export default {
       'id': 8,
       'position': 'center',
       'backdrop': true,
-      'isNavigationVisible': true,
+      'isNavigationVisible': false,
       'title': 'Learn More',
       'link': '',
       'markdown': 'In this lesson you have created a basic transformation in Keboola Connection. To see how to write the output data into Tableau, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
-      'media': '',
-      'mediaType': ''
     }
   ]
 };

@@ -242,6 +242,7 @@ module.exports = React.createClass
         intable.get('source') != tableId
       configData = configData.setIn ['storage', 'input', 'tables'], intables
     configData = configData.deleteIn ['parameters', 'typedefs', tableId]
+    configData = configData.deleteIn ['parameters', 'tables', tableId]
 
     updateFn = InstalledComponentsActions.saveComponentConfigData
     tableId = @state.tableId

@@ -1,7 +1,7 @@
 import React from 'react';
 import WizardModal from './WizardModal';
 import WizardStore from '../stores/WizardStore';
-import { setStep, hideWizardModalFn } from '../stores/ActionCreators';
+import { setStep, setAchievedLesson, hideWizardModalFn } from '../stores/ActionCreators';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
@@ -46,7 +46,9 @@ export default React.createClass({
         <WizardModal
           projectBaseUrl={this.props.projectBaseUrl}
           step={this.state.wizard.step}
+          achievedStep={this.state.wizard.achievedStep}
           setStep={setStep}
+          setAchievedLessonFn={setAchievedLesson}
           show={this.state.wizard.showLessonModal}
           onHide={hideWizardModalFn}
           position="aside"

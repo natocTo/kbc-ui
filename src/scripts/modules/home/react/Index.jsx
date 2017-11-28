@@ -4,24 +4,30 @@ import filesize from 'filesize';
 import string from 'underscore.string';
 import LimitsOverQuota from './LimitsOverQuota';
 import Expiration from './Expiration';
-// import ComponentStore from '../../components/stores/ComponentsStore';
+import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
-// import InstalledComponentsApi from '../../components/InstalledComponentsApi';
+import storageActions from '../../components/StorageActionCreators';
 import Deprecation from './Deprecation';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import { showWizardModalFn, getAchievedLesson } from '../../guide-mode/stores/ActionCreators.js';
+import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
+import WizardStore from '../../guide-mode/stores/WizardStore';
+import Overview from '../../guide-mode/react/Overview';
 import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentStore, TransformationsStore)],
+  mixins: [
+    createStoreMixin(InstalledComponentStore, TransformationsStore, StorageBucketsStore, WizardStore)
+  ],
 
   getStateFromStores() {
     return {
+      buckets: StorageBucketsStore.getAll(),
       installedComponents: InstalledComponentStore.getAll(),
-      transformations: TransformationsStore.getAllTransformations()
+      transformations: TransformationsStore.getAllTransformations(),
+      guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
     };
   },
 
@@ -30,6 +36,7 @@ export default React.createClass({
     if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
       componentsActions.loadComponentConfigsData('transformation');
     }
+    storageActions.loadBuckets();
   },
 
   getInitialState() {
@@ -77,71 +84,35 @@ export default React.createClass({
         }).count() > 0;
       }).count();
     }
+    if (this.state.buckets.filter((bucket) => bucket.get('backend') === 'mysql').count() > 0) {
+      componentCount++;
+    }
     if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
     }
     return componentCount;
   },
-  renderLessonList() {
-    return (
-      Object.keys(lessons).map((lesson, key) => {
-        return (
-          <li key={key}>
-            <a
-              className={'guide-lesson-link' + (getAchievedLesson() < key ? ' guide-lesson-link-locked' : '')}
-              href="#" onClick={(e) => {
-                e.preventDefault();
-                this.openLessonModal(key + 1);
-              }}
-            >
-              Lesson {key + 1} - {lessons[key + 1].title}
-            </a>
-            {getAchievedLesson() < key && <i className="guide-lock fa fa-lock"/>}
-          </li>
-        );
-      })
-    );
-  },
-
 
   render() {
     return (
       <div className="container-fluid">
         {this.countOverviewComponent() > 0  &&
         <div className="kbc-overview-component-container">
-          {this.state.projectHasGuideModeOn &&
-          <div className="kbc-overview-component">
-            <div className="guide-desk-container">
-              <div className="guide-desk">
-                <h2>Welcome to Keboola Connection</h2>
-                <h1>Guide Mode</h1>
-                <div className="row">
-                  <div className="col-xs-4">
-                    <ul>
-                        {this.renderLessonList()}
-                    </ul>
-                  </div>
-                  <div className="col-xs-5">
-                    <p>
-                      Learn all you need to know about Keboola Connection &ndash; our powerful and safe environment for working with data.
-                      <br/>
-                      <br/>
-                      These lessons will walk you through the basic steps of creating a project: from loading and manipulating data to visualizing the results and automating the whole process.
-                      <br/>
-                      <br/>
-                      Feel free to switch the Guide Mode off at any time. If needed, bring it back by going to <a
-                        className="guide-link" href={ApplicationStore.getProjectPageUrl('settings')}>Settings
-                      > Guide Mode.</a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          }
+          {this.state.projectHasGuideModeOn && (
+            <Overview
+              linkToSettings={ApplicationStore.getProjectPageUrl('settings')}
+              lessons={lessons}
+              achievedLessonId={this.state.guideModeAchievedLessonId}
+              openLessonModalFn={this.openLessonModal}
+            />
+          )}
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-          <Deprecation components={this.state.installedComponents} transformations={this.state.transformations}/>
+          <Deprecation
+            buckets={this.state.buckets}
+            components={this.state.installedComponents}
+            transformations={this.state.transformations}
+          />
         </div>
         }
         <div className="kbc-main-content">

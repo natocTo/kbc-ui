@@ -21,12 +21,12 @@ const store = {
   achievedLesson: 0
 };
 
-export const getStateFromLocalStorage = () => {
+const getStateFromLocalStorage = () => {
   const value = window.localStorage.getItem(LOCAL_STORAGE_KEY);
   return value ? JSON.parse(value) : store;
 };
 
-export const setStateToLocalStorage = (value) => {
+const setStateToLocalStorage = (value) => {
   window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
 };
 
@@ -42,6 +42,9 @@ const WizardStore = StoreUtils.createStore({
     const localStorageState = getStateFromLocalStorage();
     return localStorageState.lessonNumber > 0;
   },
+  getAchievedLessonId: () => {
+    return getStateFromLocalStorage().achievedLesson;
+  },
   getCurrentLesson: () => {
     return wizardLessons[getStateFromLocalStorage().lessonNumber];
   },
@@ -53,108 +56,123 @@ const WizardStore = StoreUtils.createStore({
 });
 
 Dispatcher.register((payload) => {
-  if (!ApplicationStore.getKbcVars().get('projectHasGuideModeOn')) {
-    return;
+  if (ApplicationStore.getKbcVars().get('projectHasGuideModeOn')) {
+    const action = payload.action;
+    const localStorageState = getStateFromLocalStorage();
+
+    switch (action.type) {
+      case ActionTypes.GUIDE_MODE_SET_STEP:
+        setStateToLocalStorage(
+          objectAssign(localStorageState, {
+            step: action.step,
+            achievedStep: getMaxStep(action.step)
+          })
+        );
+        WizardStore.emitChange();
+        break;
+      case ActionTypes.GUIDE_MODE_SET_ACHIEVED_LESSON:
+        setStateToLocalStorage(
+          objectAssign(localStorageState, {
+            achievedLesson: Math.max(action.lessonId, localStorageState.achievedLesson)
+          })
+        );
+        WizardStore.emitChange();
+        break;
+      case ActionTypes.GUIDE_MODE_UPDATE_MODAL_STATE:
+        setStateToLocalStorage(objectAssign(localStorageState, {
+          showLessonModal: action.showLessonModal,
+          lessonNumber: action.lessonNumber,
+          step: action.showLessonModal ? localStorageState.step : 0,
+          achievedStep: action.showLessonModal ? localStorageState.step : 0
+        }));
+        WizardStore.emitChange();
+        break;
+      default:
+    }
   }
+});
 
-  const action = payload.action;
-  const localStorageState = getStateFromLocalStorage();
+Dispatcher.register((payload) => {
+  if (ApplicationStore.getKbcVars().get('projectHasGuideModeOn') && WizardStore.hasLessonOn()) {
+    const action = payload.action;
+    const localStorageState = getStateFromLocalStorage();
 
-  switch (action.type) {
-    case ActionTypes.GUIDE_WIZARD_SET_STEP:
+    const saveAndEmit = (stepId) => {
       setStateToLocalStorage(
         objectAssign(localStorageState, {
-          step: action.step,
-          achievedStep: getMaxStep(action.step)
+          step: stepId - 1, // step index
+          achievedStep: stepId - 1 // step index
         })
       );
       WizardStore.emitChange();
-      break;
-    case ActionTypes.UPDATE_WIZARD_MODAL_STATE:
-      setStateToLocalStorage(objectAssign(localStorageState, {
-        showLessonModal: action.showLessonModal,
-        lessonNumber: action.lessonNumber,
-        step: action.showLessonModal ? localStorageState.step : 0
-      }));
-      WizardStore.emitChange();
-      break;
-    default:
-  }
+    };
 
-  if (!WizardStore.hasLessonOn()) {
-    return;
-  }
-
-  const saveAndEmit = (stepId) => {
-    setStateToLocalStorage(
-      objectAssign(localStorageState, {
-        step: stepId - 1, // step index
-        achievedStep: stepId - 1 // step index
-      })
-    );
-    WizardStore.emitChange();
-  };
-
-  switch (action.type) {
-    case componentsActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 2 && action.componentId === 'keboola.ex-db-snowflake') {
-        saveAndEmit(2);
-      } else if (WizardStore.getCurrentLesson().id === 4 && WizardStore.getCurrentStep().id === 2 && action.componentId === 'tde-exporter') {
-        saveAndEmit(2);
-      }
-      break;
-    case componentsActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 3 && action.componentId === 'keboola.ex-db-snowflake') {
-        saveAndEmit(3);
-      } else if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 4 && action.componentId === 'keboola.ex-db-snowflake') {
-        saveAndEmit(4);
-      }
-      break;
-    case jobActionTypes.JOB_LOAD_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 5) {
-        saveAndEmit(5);
-      } else if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 5) {
-        saveAndEmit(5);
-      } else if (WizardStore.getCurrentLesson().id === 4 && WizardStore.getCurrentStep().id === 3) {
-        saveAndEmit(3);
-      }
-      break;
-    case transformationsActionTypes.TRANSFORMATION_BUCKET_CREATE_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 2) {
-        saveAndEmit(2);
-      }
-      break;
-    case transformationsActionTypes.TRANSFORMATION_CREATE_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 3) {
-        saveAndEmit(3);
-      }
-      break;
-    case orchestrationsActionTypes.ORCHESTRATION_CREATE_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 2) {
-        saveAndEmit(2);
-      }
-      break;
-    case orchestrationsActionTypes.ORCHESTRATION_TASKS_EDIT_START:
-      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 3) {
-        saveAndEmit(3);
-      }
-      break;
-    case orchestrationsActionTypes.ORCHESTRATION_TASKS_SAVE_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 4) {
-        saveAndEmit(4);
-      }
-      break;
-    case orchestrationsActionTypes.ORCHESTRATION_LOAD_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 5) {
-        saveAndEmit(5);
-      }
-      break;
-    case orchestrationsActionTypes.ORCHESTRATION_FIELD_SAVE_SUCCESS:
-      if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 6) {
-        saveAndEmit(6);
-      }
-      break;
-    default:
+    switch (action.type) {
+      case componentsActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 2 && action.componentId === 'keboola.ex-db-snowflake') {
+          saveAndEmit(3);
+        } else if (WizardStore.getCurrentLesson().id === 4 && WizardStore.getCurrentStep().id === 2 && action.componentId === 'tde-exporter') {
+          saveAndEmit(3);
+        }
+        break;
+      case componentsActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_SAVE_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 3 && action.componentId === 'keboola.ex-db-snowflake') {
+          saveAndEmit(4);
+        } else if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 4 && action.componentId === 'keboola.ex-db-snowflake') {
+          saveAndEmit(5);
+        }
+        break;
+      case componentsActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 1 && WizardStore.getCurrentStep().id === 3) {
+          saveAndEmit(4);
+        } else if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 6) {
+          saveAndEmit(7);
+        } else if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 7) {
+          saveAndEmit(8);
+        }
+        break;
+      case jobActionTypes.JOB_LOAD_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 4 && WizardStore.getCurrentStep().id === 3) {
+          saveAndEmit(4);
+        }
+        break;
+      case transformationsActionTypes.TRANSFORMATION_BUCKET_CREATE_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 2) {
+          saveAndEmit(3);
+        }
+        break;
+      case transformationsActionTypes.TRANSFORMATION_CREATE_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 3) {
+          saveAndEmit(4);
+        }
+        break;
+      case orchestrationsActionTypes.ORCHESTRATION_CREATE_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 2) {
+          saveAndEmit(3);
+        }
+        break;
+      case orchestrationsActionTypes.ORCHESTRATION_TASKS_EDIT_START:
+        if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 3) {
+          saveAndEmit(4);
+        }
+        break;
+      case orchestrationsActionTypes.ORCHESTRATION_TASKS_SAVE_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 4) {
+          saveAndEmit(5);
+        }
+        break;
+      case orchestrationsActionTypes.ORCHESTRATION_LOAD_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 5) {
+          saveAndEmit(6);
+        }
+        break;
+      case orchestrationsActionTypes.ORCHESTRATION_FIELD_SAVE_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 5 && WizardStore.getCurrentStep().id === 6) {
+          saveAndEmit(7);
+        }
+        break;
+      default:
+    }
   }
 });
 
