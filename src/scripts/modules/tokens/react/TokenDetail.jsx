@@ -9,6 +9,9 @@ import {Map} from 'immutable';
 import BucketsStore from '../../components/stores/StorageBucketsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import {Tabs, Tab} from 'react-bootstrap';
+import Events from '../../sapi-events/react/Events';
+import createTokenEventsApi from '../TokenEventsApi';
 
 const makeDetailPath = (tokenId) => (rest) => ['TokenDetail', tokenId].concat(rest || []);
 
@@ -27,6 +30,7 @@ export default React.createClass({
     const saveLabel = tokenDetailState.get('saveLabel', 'Update');
     const cancelLabel = tokenDetailState.get('cancelLabel', 'Back To Tokens Page');
     const isSaving = tokenDetailState.get('isSaving', false);
+    const eventsApi = createTokenEventsApi(tokenId);
 
     return {
       localState: localState,
@@ -36,7 +40,8 @@ export default React.createClass({
       saveLabel: saveLabel,
       cancelLabel: cancelLabel,
       isSaving: isSaving,
-      allBuckets: BucketsStore.getAll()
+      allBuckets: BucketsStore.getAll(),
+      eventsApi: eventsApi
     };
   },
 
@@ -72,29 +77,48 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           {this.renderTabs()}
-          <div className="row">
-            <TokenEditor
-              disabled={this.state.isSaving}
-              isEditting={true}
-              token={this.state.dirtyToken}
-              allBuckets={this.state.allBuckets}
-              updateToken={this.updateDirtyToken}
-            />
-          </div>
-          <div className="row text-right">
-            <ConfirmButtons
-              isDisabled={!this.isValid() || this.state.token === this.state.dirtyToken}
-              isSaving={this.state.isSaving}
-              onSave={this.handleSaveToken}
-              onCancel={this.handleClose}
-              placement="right"
-              cancelLabel={this.state.cancelLabel}
-              saveLabel={this.state.saveLabel}
-            />
-          </div>
+          <Tabs id="token-detail-tabs">
+            <Tab title="Overview" eventKey="overview">
+              <div className="row">
+                <TokenEditor
+                  disabled={this.state.isSaving}
+                  isEditting={true}
+                  token={this.state.dirtyToken}
+                  allBuckets={this.state.allBuckets}
+                  updateToken={this.updateDirtyToken}
+                />
+              </div>
+              <div className="row text-right">
+                <ConfirmButtons
+                  isDisabled={!this.isValid() || this.state.token === this.state.dirtyToken}
+                  isSaving={this.state.isSaving}
+                  onSave={this.handleSaveToken}
+                  onCancel={this.handleClose}
+                  placement="right"
+                  cancelLabel={this.state.cancelLabel}
+                  saveLabel={this.state.saveLabel}
+                />
+              </div>
+            </Tab>
+            <Tab title="Events" eventKey="events">
+              <div className="row">
+                <Events
+                  eventsApi={this.state.eventsApi}
+                  autoreload={true}
+                  link={{to: 'tokens-detail', params: {tokenId: this.state.tokenId}}}
+                />
+              </div>
+            </Tab>
+
+          </Tabs>
         </div>
       </div>
     );
+  },
+
+  prepareEventsQuery() {
+    const tokenId = this.state.tokenId;
+    return `token.id:${tokenId} OR (objectId:${tokenId} AND objectType:token)`;
   },
 
   handleClose() {
