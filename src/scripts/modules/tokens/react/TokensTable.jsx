@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Table} from 'react-bootstrap';
+// import {Table} from 'react-bootstrap';
 import {List, Map} from 'immutable';
 import moment from 'moment';
 import Tooltip from '../../../react/common/Tooltip';
@@ -32,38 +32,38 @@ export default React.createClass({
       <span>
         {this.renderTokenRefreshModal()}
         {this.renderManageTokenModal()}
-        <Table responsive className="table table-striped">
-          <thead>
-            <tr>
-              <th>
+        <div responsive className="table table-striped table-hover">
+          <div className="thead">
+            <div className="tr">
+              <div className="th">
                 Name
-              </th>
-              <th>
+              </div>
+              <div className="th">
                 Created
-              </th>
-              <th>
+              </div>
+              <div className="th">
                 Expires
-              </th>
-              <th>
+              </div>
+              <div className="th">
                 File Uploads Access
-              </th>
-              <th>
+              </div>
+              <div className="th">
                 Component Access
-              </th>
-              <th>
+              </div>
+              <div className="th">
                 Buckets Access
-              </th>
-              <th className="text-right">
+              </div>
+              <div className="th text-right">
                 <button
                   onClick={() => this.updateLocalState(['manageToken', 'show'], true)}
                   className="btn btn-success"> Create Token </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+              </div>
+            </div>
+          </div>
+          <div className="tbody">
             {this.props.tokens.map(this.renderTableRow).toArray()}
-          </tbody>
-        </Table>
+          </div>
+        </div>
       </span>
     );
   },
@@ -135,9 +135,14 @@ export default React.createClass({
   },
 
   renderTokenRefreshButton(token) {
+    const onClickButton = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.updateLocalState('refreshToken', token);
+    };
     return (
       <button
-        onClick={() => this.updateLocalState('refreshToken', token)}
+        onClick={onClickButton}
         className="btn btn-link">
         <Tooltip placement="top" tooltip="Refresh token">
           <i className="fa fa-refresh" />
@@ -206,38 +211,38 @@ export default React.createClass({
 
   renderTableRow(token) {
     return (
-      <tr key={token.get('id')}>
-        <td>
+      <Link to="tokens-detail" params={{tokenId: token.get('id')}}
+        className="tr" key={token.get('id')}>
+        <div className="td">
           {token.get('description')}
           {' '}
           {this.renderYoursLabel(token)}
-        </td>
-        <td>
+        </div>
+        <div className="td">
           {this.formatDate(token.get('created'))}
-        </td>
-        <td>
+        </div>
+        <div className="td">
           <ExpiresInfo token={token} />
-        </td>
-        <td>
+        </div>
+        <div className="td">
           {token.get('canReadAllFileUploads') ?
            'All files'
            :
            'Own files'
           }
 
-        </td>
-        <td>
+        </div>
+        <div className="td">
           {this.renderComponentsAccess(token)}
-        </td>
-        <td>
+        </div>
+        <div className="td">
           {this.renderBucketsAceess(token)}
-        </td>
-        <td className="text-right kbc-no-wrap">
-          {this.renderEditTokenButton(token)}
+        </div>
+        <div className="td text-right kbc-no-wrap">
           {this.renderTokenDelete(token)}
           {this.renderTokenRefreshButton(token)}
-        </td>
-      </tr>
+        </div>
+      </Link>
     );
   }
 });
