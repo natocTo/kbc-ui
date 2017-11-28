@@ -89,7 +89,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Learn More',
       'link': '',
-      'markdown': 'In this lesson you have extracted data from two tables in an external database and imported the data to your project in Keboola Connection. To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
+      'markdown': 'In this lesson you have extracted data from two tables in an external database and imported the data to your project in Keboola Connection. To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
     }
 
   ]
