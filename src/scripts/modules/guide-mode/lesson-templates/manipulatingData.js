@@ -96,7 +96,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Learn More',
       'link': '',
-      'markdown': 'In this lesson you have created a basic transformation in Keboola Connection. To see how to write the output data into Tableau, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
+      'markdown': 'In this lesson you have created a basic transformation in Keboola Connection. To see how to write the output data into Tableau, continue to the next lesson - Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.',
     }
   ]
 };
