@@ -15,6 +15,7 @@ const LOCAL_STORAGE_KEY = 'kbc-ui-guide-mode';
 
 const store = {
   showLessonModal: false,
+  direction: 'next',
   lessonNumber: 0,
   step: 0,
   achievedStep: 0,
@@ -66,6 +67,14 @@ Dispatcher.register((payload) => {
           objectAssign(localStorageState, {
             step: action.step,
             achievedStep: getMaxStep(action.step)
+          })
+        );
+        WizardStore.emitChange();
+        break;
+      case ActionTypes.GUIDE_MODE_SET_DIRECTION:
+        setStateToLocalStorage(
+          objectAssign(localStorageState, {
+            direction: action.direction
           })
         );
         WizardStore.emitChange();
