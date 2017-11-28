@@ -192,15 +192,18 @@ export function createStore(componentId, configId) {
       const bucketName = string.sanitizeKbcTableIdString(componentId);
       const fullBucketName = `in.c-${bucketName}`;
       const fullBucketNameWithConfigSuffix = `${fullBucketName}-${configId}`;
-      if (this.shouldDestinationHaveNewFormat(fullBucketNameWithConfigSuffix)) {
-        return `${fullBucketNameWithConfigSuffix}.${qname}`;
+      if (this.shouldDestinationHaveOldFormat(fullBucketName)) {
+        return `${fullBucketName}.${qname}`;
       }
-      return `${fullBucketName}.${qname}`;
+      return `${fullBucketNameWithConfigSuffix}.${qname}`;
     },
 
-    shouldDestinationHaveNewFormat(fullBucketNameWithConfigSuffix) {
+    shouldDestinationHaveOldFormat(fullBucketName) {
+      if (data.parameters.get('tables', List()).count() === 0) {
+        return false;
+      }
       return data.parameters.get('tables', List()).filter((table) => {
-        return table.get('outputTable').indexOf(fullBucketNameWithConfigSuffix + '.') === 0;
+        return table.get('outputTable').indexOf(fullBucketName + '.') === 0;
       }).count() === data.parameters.get('tables', List()).count();
     },
 
