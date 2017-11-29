@@ -28,6 +28,7 @@ export default React.createClass({
         bsSize="large"
         show={this.props.show}
         onHide={this.handleClose}
+        enforceFocus={false}
       >
         <Modal.Header closeButton>
           <Modal.Title>
