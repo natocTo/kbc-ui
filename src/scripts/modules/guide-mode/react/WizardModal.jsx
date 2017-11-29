@@ -4,6 +4,7 @@ import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const redirectTo = (pathname) => {
   window.location.assign(window.location.origin + pathname);
@@ -13,10 +14,12 @@ export default React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     setStep: React.PropTypes.func.isRequired,
+    setDirection: React.PropTypes.func.isRequired,
     setAchievedLessonFn: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     backdrop: React.PropTypes.bool.isRequired,
     position: React.PropTypes.string.isRequired,
+    direction: React.PropTypes.string.isRequired,
     step: React.PropTypes.number.isRequired,
     achievedStep: React.PropTypes.number.isRequired,
     lesson: React.PropTypes.object.isRequired,
@@ -55,32 +58,43 @@ export default React.createClass({
             )}
           </Modal.Header>
           <Modal.Body>
-            <div className="row">
-              <div className="col-md-12">
-                {!this.isCongratulations() &&
-                <span>
-                  <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-                </span>
-                }
-              <div>
-                <div className="guide-media">
-                {this.renderMedia()}
-                </div>
-              </div>
-                {this.isCongratulations() &&
-                <span className="guide-congratulations">
-                    <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-                </span>
-                }
-                {this.isNavigationVisible() && this.renderNavigation()}
-              </div>
-            </div>
+            <ReactCSSTransitionGroup
+                transitionName={'guide-wizard-animated-' + this.props.direction}
+                transitionEnterTimeout={200}
+                transitionLeaveTimeout={200}
+            >
+                {this.getModalBody()}
+            </ReactCSSTransitionGroup>
           </Modal.Body>
           <Modal.Footer>
             {this.hasPreviousStep() && this.renderButtonPrev()}
             {this.renderButtonNext()}
           </Modal.Footer>
         </Modal>
+      </div>
+    );
+  },
+  getModalBody() {
+    return (
+      <div key={this.props.step} className="row">
+        <div className="col-md-12">
+          {!this.isCongratulations() &&
+          <span>
+            <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+          </span>
+          }
+        <div>
+          <div className="guide-media">
+          {this.renderMedia()}
+          </div>
+        </div>
+          {this.isCongratulations() &&
+          <span className="guide-congratulations">
+              <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+          </span>
+          }
+          {this.isNavigationVisible() && this.renderNavigation()}
+        </div>
       </div>
     );
   },
@@ -264,6 +278,7 @@ export default React.createClass({
     hideWizardModalFn();
   },
   handleStep(direction) {
+    this.props.setDirection(direction);
     if (direction === 'next') {
       this.increaseStep();
     } else if (direction === 'prev') {
