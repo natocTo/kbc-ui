@@ -148,6 +148,9 @@ export default React.createClass({
     return TokensActions.updateToken(tokenId, this.state.dirtyToken.toJS()).then(() => {
       this.updateLocalState('isSaving', false);
       this.resetDirtyToken(true);
+    }).catch((e) => {
+      this.updateLocalState('isSaving', false);
+      throw e;
     });
   },
 

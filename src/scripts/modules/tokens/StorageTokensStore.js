@@ -66,6 +66,10 @@ Dispatcher.register( (payload) => {
       _store = _store.set('tokens', newTokens);
       StorageTokensStore.emitChange();
       break;
+    case ActionTypes.STORAGE_TOKEN_DELETE_ERROR:
+      _store = _store.setIn(['deletingTokens', action.tokenId], false);
+      StorageTokensStore.emitChange();
+      break;
     case ActionTypes.STORAGE_TOKENS_LOAD_ERROR:
       _store = _store.set('isLoading', false);
       StorageTokensStore.emitChange();
@@ -80,6 +84,10 @@ Dispatcher.register( (payload) => {
         return t.get('id') === action.tokenId ? action.newToken : t;
       });
       _store = _store.set('tokens', newTokens);
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_REFRESH_ERROR:
+      _store = _store.setIn(['refreshingTokens', action.tokenId], false);
       StorageTokensStore.emitChange();
       break;
     case ActionTypes.STORAGE_TOKEN_UPDATE_LOCALSTATE:

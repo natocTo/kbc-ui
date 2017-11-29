@@ -27,6 +27,13 @@ export default {
         type: ActionTypes.STORAGE_TOKEN_DELETE_SUCCESS,
         tokenId: tokenId
       });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.STORAGE_TOKEN_DELETE_ERROR,
+        error: error,
+        tokenId: tokenId
+      });
+      throw error;
     });
   },
 
@@ -44,6 +51,13 @@ export default {
         newToken: newTokenMap
       });
       return newTokenMap;
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.STORAGE_TOKEN_REFRESH_ERROR,
+        error: error,
+        tokenId: tokenId
+      });
+      throw error;
     });
   },
 
@@ -59,7 +73,7 @@ export default {
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: ActionTypes.STORAGE_TOKENS_LOAD_ERROR,
-        errors: error
+        error: error
       });
       throw error;
     });

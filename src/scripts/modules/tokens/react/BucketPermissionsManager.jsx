@@ -21,7 +21,7 @@ export default React.createClass({
     });
   },
 
-  permissionOptions: [{label: 'read', value: 'read'}, {label: 'write', value: 'write'}, {label: 'manage', value: 'manage', disabled: true}],
+  permissionOptions: [{label: 'read', value: 'read'}, {label: 'write', value: 'write'}, {label: 'manage (deprecated)', value: 'manage', disabled: true}],
 
   render() {
     return (

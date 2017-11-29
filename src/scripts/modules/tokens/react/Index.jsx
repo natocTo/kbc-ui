@@ -53,6 +53,9 @@ export default React.createClass({
     return TokensActions.createToken(token.toJS()).then((createdToken) => {
       cancelSaving();
       return createdToken;
+    }).catch((e) => {
+      cancelSaving();
+      throw e;
     });
   },
 
