@@ -105,6 +105,9 @@ export default {
   },
 
   updateToken(tokenId, params) {
+    if (params.componentAccess && params.componentAccess.length === 0) {
+      params.componentAccess = null;
+    }
     return storageApi.updateToken(tokenId, params).then((updatedToken) => {
       const token = fromJS(updatedToken);
       dispatcher.handleViewAction({
