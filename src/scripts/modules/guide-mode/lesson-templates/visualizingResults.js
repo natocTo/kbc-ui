@@ -21,12 +21,11 @@ export default {
       'title': 'Create Writer',
       'link': 'writers',
       'media': '',
-      'markdown': 'Let’s say you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the **Writers** section.'
+      'markdown': 'Imagine you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the section **Writers**.'
                 + `
-- Click on <span class="btn btn-success btn-sm">+ New Writer</span>.
 - Find **Tableau**. You can use the search feature to find it faster.
 - Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
-- Name the configuration, e.g., *My writer* and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
+- Name the configuration, e.g., My writer, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 `,
       'mediaType': ''
     },
@@ -40,7 +39,7 @@ export default {
       'Now add the table you want to send to Tableau. For each of its columns you also need to specify whether it contains text or a number.'
       + `
 - Click on <span class="btn btn-success btn-sm">+ New Table</span>.
-- Select  \`out.c-snowflake.TRANSFORMED\` as the Source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>.
+- Select  *out.c-snowflake.CARS_POPULATION* as the Source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>.
 - Specify a data type for each of the table's columns under **TDE Data Type** (COUNTRY/string, CARS/number, POPULATION/number, PERSON_PER_CAR/decimal). 
 - <span class="btn btn-success btn-sm">Save</span> the configuration.
 - To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
@@ -54,7 +53,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Run Writer',
       'markdown':
-      'To run the writer, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span>. A Tableau Desktop Extract file will be created. You can find it in **Storage** under the tab **Files** from where it can be downloaded to your computer. <br/><br/> For the purposes of the Guide Mode, let’s say you have downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step</span>.'
+      'To run the writer, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span>. A Tableau Desktop Extract file will be created. You can find it in the section **Storage** under the tab **Files**, from where it can be downloaded. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step</span>.'
 `
     },
     {
