@@ -19,8 +19,12 @@
       margin-top: @statusBarHeight;
     }
     .kbc-main-content {
-      //margin-top: @statusBarHeight;
+      margin-top: @statusBarHeight;
       min-height: 86vh;
+      overflow: hidden;
+    }
+    .kbc-overview-component-container + .kbc-main-content{
+      margin-top: 10px;
     }
     .kbc-main-sidebar{
       margin-top: @statusBarHeight;
