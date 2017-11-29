@@ -77,40 +77,45 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           {this.renderTabs()}
-          <Tabs id="token-detail-tabs">
-            <Tab title="Overview" eventKey="overview">
-              <div className="row">
-                <TokenEditor
-                  disabled={this.state.isSaving}
-                  isEditting={true}
-                  token={this.state.dirtyToken}
-                  allBuckets={this.state.allBuckets}
-                  updateToken={this.updateDirtyToken}
-                />
-              </div>
-              <div className="row text-right">
-                <ConfirmButtons
-                  isDisabled={!this.isValid() || this.state.token === this.state.dirtyToken}
-                  isSaving={this.state.isSaving}
-                  onSave={this.handleSaveToken}
-                  onCancel={this.handleClose}
-                  placement="right"
-                  cancelLabel={this.state.cancelLabel}
-                  saveLabel={this.state.saveLabel}
-                />
-              </div>
-            </Tab>
-            <Tab title="Events" eventKey="events">
-              <div className="row">
-                <Events
-                  eventsApi={this.state.eventsApi}
-                  autoreload={true}
-                  link={{to: 'tokens-detail', params: {tokenId: this.state.tokenId}}}
-                />
-              </div>
-            </Tab>
-
-          </Tabs>
+          {this.state.token ?
+           <Tabs id="token-detail-tabs">
+             <Tab title="Overview" eventKey="overview">
+               <div className="row">
+                 <TokenEditor
+                   disabled={this.state.isSaving}
+                   isEditting={true}
+                   token={this.state.dirtyToken}
+                   allBuckets={this.state.allBuckets}
+                   updateToken={this.updateDirtyToken}
+                 />
+               </div>
+               <div className="row text-right">
+                 <ConfirmButtons
+                   isDisabled={!this.isValid() || this.state.token === this.state.dirtyToken}
+                   isSaving={this.state.isSaving}
+                   onSave={this.handleSaveToken}
+                   onCancel={this.handleClose}
+                   placement="right"
+                   cancelLabel={this.state.cancelLabel}
+                   saveLabel={this.state.saveLabel}
+                 />
+               </div>
+             </Tab>
+             <Tab title="Events" eventKey="events">
+               <div className="row">
+                 <Events
+                   eventsApi={this.state.eventsApi}
+                   autoreload={true}
+                   link={{to: 'tokens-detail', params: {tokenId: this.state.tokenId}}}
+                 />
+               </div>
+             </Tab>
+           </Tabs>
+           :
+           <div className="row text-center">
+             Token {this.state.tokenId} does not exist or has been removed.
+           </div>
+          }
         </div>
       </div>
     );
