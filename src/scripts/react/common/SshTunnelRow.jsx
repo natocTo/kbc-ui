@@ -41,7 +41,7 @@ export default React.createClass({
   },
 
   isEnabled() {
-    return this.props.data.get('enabled');
+    return this.props.data.get('enabled', false);
   },
 
   renderEnableCheckbox() {
