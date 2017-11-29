@@ -9,7 +9,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Introduction',
       'link': 'app',
-      'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (Cars and Population) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (*CARS* and *POPULATION*) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img'
     }, {
@@ -29,7 +29,14 @@ export default {
       'isNavigationVisible': true,
       'title': 'Create Transformation',
       'link': 'transformations',
-      'markdown': 'Now add a new transformation into the new bucket by clicking on <span class="btn btn-success btn-sm">+ New Transformation</span>. <br/><br/> Name the transformation *My transformation* and select Snowflake as the backend &ndash; the engine running the transformation script.',
+      'markdown': 'Now add a new transformation into the new bucket:'
+      + `
+- Click <span class="btn btn-success btn-sm">+ New Transformation</span>.
+- Name the transformation, e.g., *My transformation*.
+- Select Snowflake as the backend &ndash; the engine running the transformation script.
+- Then click <span class="btn btn-success btn-sm">Create Transformation</span>.
+
+`,
       'media': '',
       'mediaType': ''
     }, {
@@ -40,18 +47,11 @@ export default {
       'title': 'Map Data & Set Queries',
       'link': 'transformations',
       'markdown':
-      'Now let’s specify the following: '
-
+      'Next you need to specify what tables will be used in the transformation, what tables will be written to Storage as results, and what will happen with the data in the transformation.'
       + `
-- **Input Mapping** &ndash; what tables will be used in the transformation.
-- **Output Mapping** &ndash; what tables will be written to Storage as results.
-- **Queries** &ndash; what will happen with the data in the transformation.
-<br>
-<br>
-
-- Click on <span class="btn btn-success btn-sm">+ New Input</span> and select \`in.c-keboola-ex-db-snowflake.CARS\` as the Source table from the drop down menu. Accept the suggested Destination. It will be the name of the selected table inside the transformation. Press <span class="btn btn-success btn-sm">Create Input</span>.
-- Repeat the steps for the second table. Click on <span class="btn btn-success btn-sm">+ New Input</span> and select \`in.c-keboola-ex-db-snowflake.POPULATION\` as the Source table.
-- Then click on <span class="btn btn-success btn-sm">+ New Output</span> and enter *TRANSFORMED* as the Source table. This table does not exist yet. It will be created in the transformation. 
+- Input Mapping &ndash; click on <span class="btn btn-success btn-sm">+ New Input</span> and select \`in.c-keboola-ex-db-snowflake.CARS\` as the Source table from the drop down menu. Accept the suggested Destination. It will be the name of the selected table inside the transformation. Press <span class="btn btn-success btn-sm">Create Input</span>.
+- Input Mapping &ndash; repeat the steps for the second table. Click on <span class="btn btn-success btn-sm">+ New Input</span> and select \`in.c-keboola-ex-db-snowflake.POPULATION\` as the Source table.
+- Output Mapping &ndash; then click on <span class="btn btn-success btn-sm">+ New Output</span> and enter *CARS_POPULATION* as the Source table. This table does not exist yet. It will be created in the transformation. 
 - Set Destination to \`out.c-snowflake.TRANSFORMED\`. This is the name the new table *TRANSFORMED* will have when put in Storage. Press <span class="btn btn-success btn-sm">Create Output</span>.
 - To create your output table, paste the following code to **Queries**: \`CREATE TABLE "transformed" AS SELECT "cars".*, "population"."POPULATION", ("population"."POPULATION" / "cars"."CARS") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" On "cars"."COUNTRY" = "population"."COUNTRY"\` and <span class="btn btn-success btn-sm">Save</span> it.
 - Click on <span class="btn btn-primary btn-sm">Next step</span>.
