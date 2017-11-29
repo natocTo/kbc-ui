@@ -4,6 +4,7 @@ import ExpiresInEdit from './ExpiresInEdit';
 import ExpiresInfo from './ExpiresInfo';
 import ComponentsSelector from './ComponentsSelector';
 import BucketPermissionsManager from './BucketPermissionsManager';
+import CreatedDate from './CreatedDate';
 import {List, Map} from 'immutable';
 
 export default React.createClass({
@@ -40,6 +41,14 @@ export default React.createClass({
              value={this.props.token.get('expiresIn', null)}
              onChange={(value) => this.props.updateToken('expiresIn', value)}
            />
+        )}
+        {this.props.isEditting && this.renderFormGroup(
+           'Created',
+           <div className="col-sm-9">
+             <p className="form-control-static">
+               <CreatedDate token={this.props.token} />
+             </p>
+           </div>
         )}
         {this.renderFormGroup(
            'File Uploads Access',

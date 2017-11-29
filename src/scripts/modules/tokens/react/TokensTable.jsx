@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 // import {Table} from 'react-bootstrap';
 import {List, Map} from 'immutable';
-import moment from 'moment';
+
 import Tooltip from '../../../react/common/Tooltip';
 import Confirm from '../../../react/common/Confirm';
 import {Loader} from 'kbc-react-components';
@@ -9,6 +9,7 @@ import RefreshTokenModal from './RefreshTokenModal';
 import CreateTokenModal from './CreateTokenModal';
 import ExpiresInfo from './ExpiresInfo';
 import {Link} from 'react-router';
+import CreatedDate from './CreatedDate';
 
 export default React.createClass({
 
@@ -94,10 +95,6 @@ export default React.createClass({
 
     const pluralSuffix = accessCnt > 1 ? 's' : '';
     return `${accessCnt} bucket${pluralSuffix}`;
-  },
-
-  formatDate(date) {
-    return moment(date).format('YYYY-MM-DD HH:mm');
   },
 
   renderYoursLabel(token) {
@@ -197,7 +194,7 @@ export default React.createClass({
           {this.renderYoursLabel(token)}
         </div>
         <div className="td">
-          {this.formatDate(token.get('created'))}
+          <CreatedDate token={token} />
         </div>
         <div className="td">
           <ExpiresInfo token={token} />
