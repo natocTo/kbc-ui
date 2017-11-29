@@ -3,10 +3,10 @@ import React from 'react';
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 import routesStore from '../../../../../stores/RoutesStore';
 
-import CredentialsForm from './CredentialsForm';
-import SSLForm from './SSLForm';
+import SaveButtons from '../../../../../react/common/SaveButtons';
 
-import {Tabs, Tab} from 'react-bootstrap';
+
+import CredentialsForm from './CredentialsForm';
 
 export default function(componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, hasSshTunnel) {
   const actionCreators = actionsProvisioning.createActions(componentId);
@@ -25,6 +25,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
         isEditing: isEditing,
         editingCredentials: editingCredentials,
         isSaving: dbStore.isSavingCredentials(),
+        isChangedCredentials: dbStore.isChangedCredentials(),
         isValidCredentials: isEditing ? dbStore.hasValidCredentials(editingCredentials) : dbStore.hasValidCredentials(credentials)
       };
     },
@@ -33,49 +34,43 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
       return (
         <div className="container-fluid">
           <div className="kbc-main-content">
-            <Tabs defaultActiveKey="db" animation={false} id="ex-db-generic-credentials-page-tabs">
-              <Tab eventKey="db" title="Database Credentials">
-                <CredentialsForm
-                  isValidEditingCredentials={this.state.isValidCredentials}
-                  credentials={(this.state.isEditing) ? this.state.editingCredentials : this.state.credentials}
-                  savedCredentials={this.state.credentials}
-                  enabled={!this.state.isSaving}
-                  isEditing={this.state.isEditing}
-                  onChange={this.handleChange}
-                  componentId={componentId}
-                  configId={this.state.configId}
-                  credentialsTemplate={credentialsTemplate}
-                  hasSshTunnel={hasSshTunnel}
-                  actionCreators={actionCreators}
-                />
-              </Tab>
-              {this.renderSSLForm()}
-            </Tabs>
+            <div className="kbc-inner-content-padding-fix text-right">
+              <SaveButtons
+                isSaving={this.state.isSaving}
+                isChanged={this.state.isChangedCredentials}
+                disabled={this.state.isSaving || !this.state.isValidCredentials}
+                onReset={this.handleReset}
+                onSave={this.handleSave}
+              />
+            </div>
+            <CredentialsForm
+                isValidEditingCredentials={this.state.isValidCredentials}
+                credentials={(this.state.isEditing) ? this.state.editingCredentials : this.state.credentials}
+                savedCredentials={this.state.credentials}
+                enabled={!this.state.isSaving}
+                isEditing={this.state.isEditing}
+                onChange={this.handleChange}
+                componentId={componentId}
+                configId={this.state.configId}
+                credentialsTemplate={credentialsTemplate}
+                hasSshTunnel={hasSshTunnel}
+                actionCreators={actionCreators}
+            />
           </div>
         </div>
       );
     },
 
-    renderSSLForm() {
-      if (componentId === 'keboola.ex-db-mysql' || componentId === 'keboola.ex-db-mysql-custom') {
-        return (
-          <Tab eventKey="ssl" title="SSL">
-            <SSLForm
-              credentials={(this.state.isEditing) ? this.state.editingCredentials : this.state.credentials}
-              enabled={!this.state.isSaving}
-              onChange={this.handleChange}
-              componentId={componentId}
-              configId={this.state.configId}
-              actionsProvisioning={actionCreators}
-              isEditing={this.state.isEditing}
-            />
-          </Tab>
-        );
-      }
-    },
-
     handleChange(newCredentials) {
       actionCreators.updateEditingCredentials(this.state.configId, newCredentials);
+    },
+
+    handleReset() {
+      actionCreators.cancelCredentialsEdit(this.state.configId);
+    },
+
+    handleSave() {
+      actionCreators.saveCredentialsEdit(this.state.configId);
     }
   });
 }
