@@ -6,7 +6,7 @@ branches:
 before_script:
   - git --version
   - git describe --tags
-  - export KBC_REVISION=`git describe --tags`
+  - export KBC_REVISION=`git describe --tags --always --long`
 script:
  - yarn test
  - yarn build
