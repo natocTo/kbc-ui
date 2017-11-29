@@ -85,7 +85,7 @@ export default React.createClass({
   isValid() {
     const {dirtyToken} = this.state;
     const expiresIn = dirtyToken.get('expiresIn');
-    const validExpiresIn = expiresIn !== 0;
+    const validExpiresIn = !(expiresIn === 0  || expiresIn < 0);
     return !!dirtyToken.get('description') && validExpiresIn;
   },
 
