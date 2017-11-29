@@ -26,10 +26,8 @@ export default React.createClass({
   render() {
     return (
       <div className={this.props.wrapperClassName}>
-        <div className="row">
-          {this.renderSelectedPermissions()}
-        </div>
-        <div className="well">
+        {this.renderSelectedPermissions()}
+        <div className="well" fstyle={{margin: '0'}}>
           {this.renderAddingRow()}
         </div>
       </div>
@@ -38,49 +36,51 @@ export default React.createClass({
 
   renderAddingRow() {
     return (
-      <div className="row">
-        <span className="col-sm-7">
-          <Select
-            disabled={this.props.disabled}
-            placeholder="Select bucket..."
-            value={this.state.selectedBucket}
-            onChange={({value}) => this.setState({selectedBucket: value})}
-            options={this.getOptions()}
-          />
+      <span className="row">
+        <span className="col-sm-12">
+          <span className="col-sm-8" style={{padding: '0px'}}>
+            <Select
+              disabled={this.props.disabled}
+              placeholder="Select bucket..."
+              value={this.state.selectedBucket}
+              onChange={({value}) => this.setState({selectedBucket: value})}
+              options={this.getOptions()}
+            />
+          </span>
+          <span className="col-sm-3" style={{paddingRight: '11px', paddingLeft: '16px'}}>
+            <Select
+              disabled={this.props.disabled}
+              placeholder="Select permission"
+              value={this.state.selectedPermission}
+              onChange={({value}) => this.setState({selectedPermission: value})}
+              clearable={false}
+              searchable={false}
+              options={this.permissionOptions}
+            />
+          </span>
+          <span className="col-sm-1">
+            <button
+              onClick={this.addSelectedPermission}
+              disabled={!this.state.selectedPermission || !this.state.selectedBucket}
+              className="btn btn-success">
+              Add
+            </button>
+          </span>
         </span>
-        <span className="col-sm-2">
-          <Select
-            disabled={this.props.disabled}
-            placeholder="Select permission"
-            value={this.state.selectedPermission}
-            onChange={({value}) => this.setState({selectedPermission: value})}
-            clearable={false}
-            searchable={false}
-            options={this.permissionOptions}
-          />
-        </span>
-        <span className="col-sm-3">
-          <button
-            onClick={this.addSelectedPermission}
-            disabled={!this.state.selectedPermission || !this.state.selectedBucket}
-            className="btn btn-success">
-            Add Permission
-          </button>
-        </span>
-      </div>
+      </span>
     );
   },
 
   renderSelectedPermissions() {
     if (this.props.bucketPermissions.count() === 0) {
       return (
-        <span className="col-sm-12">
+        <span>
           <p><small>No buckets permissions added</small></p>
         </span>
       );
     }
     return (
-      <span className="col-sm-12">
+      <span>
         <Panel
           header="Buckets Permissions"
           collapsible={true} defaultExpanded={true}>
@@ -89,25 +89,24 @@ export default React.createClass({
               {this.props.bucketPermissions.map((permission, bucketId) =>
                 <tr key={bucketId}>
                   <td>
-                    <div className="row">
-                      <span className="col-sm-8">{bucketId}</span>
-                      <span className="col-sm-3">
-                        <Select
-                          value={permission}
-                          onChange={({value}) => this.updatePermission(bucketId, value)}
-                          clearable={false}
-                          searchable={false}
-                          options={this.permissionOptions}
-                        />
-                      </span>
-                      <span className="col-sm-1 pull-right">
-                        <button
-                          onClick={() => this.removeBucket(bucketId)}
-                          className="btn btn-link ">
-                          <i className="kbc-icon-cup" />
-                        </button>
-                      </span>
-                    </div>
+                    <span className="col-sm-8">{bucketId}</span>
+                    <span className="col-sm-3">
+                      <Select
+                        value={permission}
+                        onChange={({value}) => this.updatePermission(bucketId, value)}
+                        clearable={false}
+                        searchable={false}
+                        options={this.permissionOptions}
+                      />
+                    </span>
+                    <span className="col-sm-1">
+                      <button
+                        onClick={() => this.removeBucket(bucketId)}
+                        className="btn btn-link ">
+                        <i className="kbc-icon-cup" />
+                      </button>
+                    </span>
+
                   </td>
                 </tr>
 
@@ -131,6 +130,7 @@ export default React.createClass({
 
   addSelectedPermission() {
     this.updatePermission(this.state.selectedBucket, this.state.selectedPermission);
+    this.setState({selectedBucket: null});
   },
 
 
