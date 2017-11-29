@@ -28,7 +28,7 @@ export default React.createClass({
 
     const dirtyToken = tokenDetailState.get('dirtyToken', token);
     const saveLabel = tokenDetailState.get('saveLabel', 'Update');
-    const cancelLabel = tokenDetailState.get('cancelLabel', 'Back To Tokens Page');
+    const cancelLabel = tokenDetailState.get('cancelLabel', 'Back To Tokens');
     const isSaving = tokenDetailState.get('isSaving', false);
     const eventsApi = createTokenEventsApi(tokenId);
 
@@ -57,7 +57,7 @@ export default React.createClass({
     const newLs = localState
       .deleteIn(path('dirtyToken'))
       .setIn(path('saveLabel'), isUpdated ? 'Updated' : 'Update')
-      .setIn(path('cancelLabel'), 'Back To Tokens Page');
+      .setIn(path('cancelLabel'), 'Back To Tokens');
     TokensActions.updateLocalState(newLs);
   },
 
