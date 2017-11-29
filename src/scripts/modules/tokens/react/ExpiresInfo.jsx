@@ -1,11 +1,17 @@
 import React, {PropTypes} from 'react';
-import Tooltip from '../../../react/common/Tooltip';
 import moment from 'moment';
 
 export default React.createClass({
 
   propTypes: {
+    withIcon: PropTypes.bool,
     token: PropTypes.object.isRequired
+  },
+
+  getDefaultProps() {
+    return {
+      withIcon: false
+    };
   },
 
   render() {
@@ -15,9 +21,11 @@ export default React.createClass({
     }
 
     return (
-      <Tooltip placement="top" tooltip={this.formatDate(expires)}>
-        <span>{moment(expires).fromNow()}</span>
-      </Tooltip>
+      <span title={this.formatDate(expires)}>
+        {this.props.withIcon && <i className="fa fa-fw fa-calendar" />}
+        {' '}
+        {moment(expires).fromNow()}
+      </span>
     );
   },
 

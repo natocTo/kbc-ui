@@ -27,7 +27,7 @@ export default React.createClass({
     const tokenDetailState = localState.getIn(path(), Map());
 
     const dirtyToken = tokenDetailState.get('dirtyToken', token);
-    const saveLabel = tokenDetailState.get('saveLabel', 'Update');
+    const saveLabel = tokenDetailState.get('saveLabel', 'Save');
     const cancelLabel = tokenDetailState.get('cancelLabel', 'Back To Tokens');
     const isSaving = tokenDetailState.get('isSaving', false);
     const eventsApi = createTokenEventsApi(tokenId);
@@ -56,7 +56,7 @@ export default React.createClass({
     const {localState} = this.state;
     const newLs = localState
       .deleteIn(path('dirtyToken'))
-      .setIn(path('saveLabel'), isUpdated ? 'Updated' : 'Update')
+      .setIn(path('saveLabel'), isUpdated ? 'Saved' : 'Save')
       .setIn(path('cancelLabel'), 'Back To Tokens');
     TokensActions.updateLocalState(newLs);
   },
@@ -67,7 +67,7 @@ export default React.createClass({
     const newDirtyToken = this.state.dirtyToken.setIn([].concat(key), value);
     const newLs = localState
       .setIn(path('dirtyToken'), newDirtyToken)
-      .setIn(path('saveLabel'), 'Update')
+      .setIn(path('saveLabel'), 'Save')
       .setIn(path('cancelLabel'), 'Reset');
     TokensActions.updateLocalState(newLs);
   },

@@ -32,7 +32,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            Create Token
+            New Token
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -57,7 +57,7 @@ export default React.createClass({
             onCancel={this.handleClose}
             placement="right"
             cancelLabel={!!this.state.createdToken ? 'Close' : 'Cancel'}
-            saveLabel="Create"
+            saveLabel="Create Token"
           />
         </Modal.Footer>
       </Modal>

@@ -4,9 +4,9 @@ import ExpiresInEdit from './ExpiresInEdit';
 import ExpiresInfo from './ExpiresInfo';
 import ComponentsSelector from './ComponentsSelector';
 import BucketPermissionsManager from './BucketPermissionsManager';
-import CreatedDate from './CreatedDate';
 import {List, Map} from 'immutable';
 import {Link} from 'react-router';
+import CreatedWithIcon from '../../../react/common/CreatedWithIcon';
 
 export default React.createClass({
 
@@ -33,7 +33,7 @@ export default React.createClass({
            this.props.isEditting ?
            <div className="col-sm-9">
              <p className="form-control-static">
-               <ExpiresInfo token={this.props.token} />
+               <ExpiresInfo withIcon={true} token={this.props.token} />
              </p>
            </div>
            :
@@ -47,7 +47,7 @@ export default React.createClass({
            'Created',
            <div className="col-sm-9">
              <p className="form-control-static">
-               <CreatedDate token={this.props.token} />
+               <CreatedWithIcon createdTime={this.props.token.get('created')} />
                {this.rednerCreatorTokenLink()}
              </p>
            </div>
@@ -57,7 +57,7 @@ export default React.createClass({
            this.renderFileUploadsAccessInput()
         )}
         {this.renderFormGroup(
-           'Components&Buckets',
+           'Components & Buckets',
            this.renderBucketsAndComponentsAccessInput()
         )}
         {isCustomAccess && this.renderFormGroup(
