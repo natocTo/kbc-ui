@@ -11,7 +11,6 @@ ExDbNewQuery = require './react/pages/new-query/NewQuery'
 
 ExDbNewQueryHeaderButtons = require('./react/components/NewQueryHeaderButtons').default
 ExDbQueryHeaderButtons = require('../ex-db-generic/react/components/QueryActionButtons').default
-ExDbCredentialsHeaderButtons = require('../ex-db-generic/react/components/CredentialsHeaderButtons').default
 
 ExDbQueryName = require('../ex-db-generic/react/components/QueryName').default
 
@@ -87,5 +86,4 @@ module.exports = (componentId) ->
     handler: ExDbCredentialsPage(
       componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, hasSshTunnel
     )
-    headerButtonsHandler: ExDbCredentialsHeaderButtons(componentId, actionsProvisioning, storeProvisioning)
   ]
