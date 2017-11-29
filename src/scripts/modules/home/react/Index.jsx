@@ -25,25 +25,8 @@ export default React.createClass({
   ],
 
   getStateFromStores() {
-    return {
-      buckets: StorageBucketsStore.getAll(),
-      installedComponents: InstalledComponentStore.getAll(),
-      transformations: TransformationsStore.getAllTransformations(),
-      guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
-    };
-  },
-
-  componentDidMount() {
-    componentsActions.loadComponents();
-    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
-      componentsActions.loadComponentConfigsData('transformation');
-    }
-    storageActions.loadBuckets();
-  },
-
-  getInitialState() {
-    const currentProject = ApplicationStore.getCurrentProject(),
-      tokenStats = ApplicationStore.getTokenStats();
+    const currentProject = ApplicationStore.getCurrentProject();
+    const tokenStats = ApplicationStore.getTokenStats();
     const limits = ApplicationStore.getLimits().find(function(group) {
       return group.get('id') === 'connection';
     }).get('limits');
@@ -54,16 +37,28 @@ export default React.createClass({
       return limit.get('id') === 'storage.rowsCount';
     }).get('metricValue');
     return {
+      tokens: tokenStats,
+      projectId: currentProject.get('id'),
       data: {
         sizeBytes: sizeBytes,
         rowsCount: rowsCount
       },
-      tokens: tokenStats,
-      projectId: currentProject.get('id'),
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
       expires: ApplicationStore.getCurrentProject().get('expires'),
-      projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn')
+      buckets: StorageBucketsStore.getAll(),
+      installedComponents: InstalledComponentStore.getAll(),
+      transformations: TransformationsStore.getAllTransformations(),
+      projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn'),
+      guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
     };
+  },
+
+  componentDidMount() {
+    componentsActions.loadComponents();
+    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
+      componentsActions.loadComponentConfigsData('transformation');
+    }
+    storageActions.loadBuckets();
   },
 
   openLessonModal(lessonNumber) {
