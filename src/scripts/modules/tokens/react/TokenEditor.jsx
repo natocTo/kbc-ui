@@ -6,6 +6,7 @@ import ComponentsSelector from './ComponentsSelector';
 import BucketPermissionsManager from './BucketPermissionsManager';
 import CreatedDate from './CreatedDate';
 import {List, Map} from 'immutable';
+import {Link} from 'react-router';
 
 export default React.createClass({
 
@@ -47,6 +48,7 @@ export default React.createClass({
            <div className="col-sm-9">
              <p className="form-control-static">
                <CreatedDate token={this.props.token} />
+               {this.rednerCreatorTokenLink()}
              </p>
            </div>
         )}
@@ -80,6 +82,18 @@ export default React.createClass({
            />
         )}
       </div>
+    );
+  },
+
+  rednerCreatorTokenLink() {
+    const creatorToken = this.props.token.get('creatorToken', null);
+    return creatorToken && (
+      <span>
+        {' '} by {' '}
+        <Link to="tokens-detail" params={{tokenId: creatorToken.get('id')}}>
+          {creatorToken.get('description')}
+        </Link>
+      </span>
     );
   },
 
