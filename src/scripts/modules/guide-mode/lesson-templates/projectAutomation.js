@@ -33,11 +33,11 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Configure Task',
-      'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on the green button <span class="btn btn-success btn-sm">+ New Task</span>.'
+      'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on <span class="btn btn-success btn-sm">+ New Task</span>.'
                 + `
 - Step 1: After clicking <span class="btn btn-success btn-sm">+ New task</span>, select your Snowflake extractor.
-- Step 2: Click <span class="btn btn-success btn-sm">+ New task</span> again. Then click on the little Back icon on the right, and select your transformation from the list.
-- Step 3: Click <span class="btn btn-success btn-sm">+ New task</span>, then return to the list of your configurations one more time, and select your Tableau Writer.
+- Step 2: Click <span class="btn btn-success btn-sm">+ New task</span> again. Then click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Back</span> on the right, and select your transformation from the list.
+- Step 3: Click <span class="btn btn-success btn-sm">+ New task</span>, then return to the list of your configurations one more time, and select your Tableau writer.
 <br>
 
 Then click <span class="btn btn-success btn-sm">Save</span> in the upper right corner.
@@ -51,8 +51,10 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Schedule Orchestration',
-      'markdown': 'Now click on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Edit schedule</span> to choose how often, on what days and at what time you want the configured tasks to run.' +
+      'markdown': 'Now return to the orchestration overview and choose how often, on what days and at what time you want the configured tasks to run:' +
       `
+- Click on the name of your orchestration in the top navigation (Orchestrations > **My orchestration** > Tasks). 
+- Then click on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Edit schedule</span>.
 - Choose whether you want to run the tasks every hour, every day, month, etc. Notice the generated **Next Schedules** below, telling you when the next orchestrations will run in your local time.
 - Click on <span class="btn btn-success btn-sm">Save</span>.
       
@@ -69,8 +71,8 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       `
 - Click on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Configure Notifications</span>.
 - Then click on <span class="btn btn-success btn-sm">Edit Notifications</span> in the upper right corner.
-- Add your email address for all three notification types and click the <span class="btn btn-success btn-sm"> + </span> button. It moves the address to the subscriber field above. You can add as many recipients as you want.
-- Click on <span class="btn btn-success btn-sm">Save</span>.
+- Add your email address for at least one notification type, and click the <span class="btn btn-success btn-sm"> + </span> button. It moves the address to the subscriber field above. You can add as many recipients as you want.
+- Click on <span class="btn btn-success btn-sm">Save</span> in the upper right corner.
 
 `,
       'media': '',
@@ -81,7 +83,7 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Conclusion',
-      'markdown': 'And that`s it! From data extraction to data writing, you have set up the full pipeline. Any change to your Snowflake database tables will be automatically reflected in your Tableau results. <br/><br/> Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow the hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>. <br/><br/> Remember that no matter what problems you encounter while working with Keboola Connection, we will be more than happy to help you via our **Support**. There is <a href="https://help.keboola.com/" target="_blank">user documentation</a> written for you as well, covering every component of Keboola Connection. <br/><br/> If you wish to disable the Guide Mode, go to **Users & Settings**, the tab **Settings**.',
+      'markdown': 'And that’s it! From data extraction to data writing, you have set up the full pipeline. Any change to your Snowflake database tables will be automatically reflected in your Tableau results. <br/><br/> Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow the hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>. <br/><br/> Remember that no matter what problems you encounter while working with Keboola Connection, we will be more than happy to help you via our **Support**. There is <a href="https://help.keboola.com/" target="_blank">user documentation</a> written for you as well, covering every component of Keboola Connection. <br/><br/> If you wish to disable the Guide Mode, go to **Users & Settings**, the tab **Settings**.',
       'media': '',
       'mediaType': ''
     },

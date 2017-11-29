@@ -79,7 +79,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Check Storage',
       'link': 'storage',
-      'markdown': 'You can also check the result of your extraction directly by opening the bucket **in.c-keboola-ex-db-snowflake** in your **Storage**. Both tables have been successfully extracted from the Snowflake database and loaded into Keboola Connection. <br/><br/> Click on the tables if you want to see more information about them, for example, a data sample.',
+      'markdown': 'You can also check the result of your extraction directly in **Storage**. If you open the bucket **in.c-keboola-ex-db-snowflake** on the left, you will see both tables successfully extracted from the Snowflake database and loaded into Keboola Connection. <br/><br/> Click on the tables if you want to see more information about them, for example, a data sample.',
       'media': '',
       'mediaType': ''
     }, {
