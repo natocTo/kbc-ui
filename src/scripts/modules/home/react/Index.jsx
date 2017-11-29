@@ -9,7 +9,9 @@ import InstalledComponentStore from '../../components/stores/InstalledComponents
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import storageActions from '../../components/StorageActionCreators';
-import Deprecation from './Deprecation';
+import DeprecatedComponents from './DeprecatedComponents';
+import DeprecatedTransformations from './DeprecatedTransformations';
+import DeprecatedStorage from './DeprecatedStorage';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
 import WizardStore from '../../guide-mode/stores/WizardStore';
@@ -108,11 +110,17 @@ export default React.createClass({
           )}
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-          <Deprecation
+
+          <DeprecatedStorage
             buckets={this.state.buckets}
+          />
+          <DeprecatedComponents
             components={this.state.installedComponents}
+          />
+          <DeprecatedTransformations
             transformations={this.state.transformations}
           />
+
         </div>
         }
         <div className="kbc-main-content">
