@@ -3,6 +3,7 @@ import Select from 'react-select';
 import {fromJS} from 'immutable';
 import ComponentIcon from '../../../react/common/ComponentIcon';
 import ComponentName from '../../../react/common/ComponentName';
+import './ComponentsSelector.less';
 
 export default React.createClass({
 
@@ -16,6 +17,7 @@ export default React.createClass({
   render() {
     return (
       <Select
+        className="kbc-components-selector"
         placeholder="Select component..."
         multi={true}
         disabled={this.props.disabled}

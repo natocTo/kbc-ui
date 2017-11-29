@@ -57,7 +57,7 @@ export default React.createClass({
            this.renderFileUploadsAccessInput()
         )}
         {this.renderFormGroup(
-           'Buckets&Components Access',
+           'Components&Buckets Access',
            this.renderBucketsAndComponentsAccessInput()
         )}
         {isCustomAccess && this.renderFormGroup(
@@ -69,6 +69,9 @@ export default React.createClass({
                selectedComponents={this.props.token.get('componentAccess', List())}
                allComponents={ComponentsStore.getAll()}
              />
+             <span className="help-block">
+               Token can run selected components
+             </span>
            </div>
         )}
         {isCustomAccess && this.renderFormGroup(
