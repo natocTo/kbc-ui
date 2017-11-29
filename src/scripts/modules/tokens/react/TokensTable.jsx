@@ -56,7 +56,7 @@ export default React.createClass({
               <div className="th text-right">
                 <button
                   onClick={() => this.updateLocalState(['createToken', 'show'], true)}
-                  className="btn btn-success"> Create Token </button>
+                  className="btn btn-success">+ New Token</button>
               </div>
             </div>
           </div>

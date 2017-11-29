@@ -78,7 +78,7 @@ export default React.createClass({
         <div className="kbc-main-content">
           {this.renderTabs()}
           {this.state.token ?
-           <Tabs id="token-detail-tabs">
+           <Tabs id="token-detail-tabs" animation={false}>
              <Tab title="Overview" eventKey="overview">
                <div className="row">
                  <TokenEditor

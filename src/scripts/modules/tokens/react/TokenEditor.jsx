@@ -53,11 +53,11 @@ export default React.createClass({
            </div>
         )}
         {this.renderFormGroup(
-           'File Uploads Access',
+           'File Uploads',
            this.renderFileUploadsAccessInput()
         )}
         {this.renderFormGroup(
-           'Components&Buckets Access',
+           'Components&Buckets',
            this.renderBucketsAndComponentsAccessInput()
         )}
         {isCustomAccess && this.renderFormGroup(

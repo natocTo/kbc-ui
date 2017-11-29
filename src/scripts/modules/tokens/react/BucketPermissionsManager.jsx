@@ -40,6 +40,7 @@ export default React.createClass({
         <span className="col-sm-12">
           <span className="col-sm-8" style={{padding: '0px'}}>
             <Select
+              clearable={false}
               disabled={this.props.disabled}
               placeholder="Select bucket..."
               value={this.state.selectedBucket}
