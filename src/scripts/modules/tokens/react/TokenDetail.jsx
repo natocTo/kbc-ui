@@ -106,7 +106,7 @@ export default React.createClass({
                <div className="row">
                  <Events
                    eventsApi={this.state.eventsApi}
-                   autoreload={true}
+                   autoReload={true}
                    link={{to: 'tokens-detail', params: {tokenId: this.state.tokenId}}}
                  />
                </div>
