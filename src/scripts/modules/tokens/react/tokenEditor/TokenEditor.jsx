@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
-import ComponentsStore from '../../components/stores/ComponentsStore';
+import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ExpiresInEdit from './ExpiresInEdit';
 import ExpiresInfo from './ExpiresInfo';
 import ComponentsSelector from './ComponentsSelector';
 import BucketPermissionsManager from './BucketPermissionsManager';
 import {List, Map} from 'immutable';
 import {Link} from 'react-router';
-import CreatedWithIcon from '../../../react/common/CreatedWithIcon';
+import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 
 export default React.createClass({
 

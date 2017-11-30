@@ -2,12 +2,12 @@ import React, {PropTypes} from 'react';
 // import {Table} from 'react-bootstrap';
 import {List, Map} from 'immutable';
 
-import Tooltip from '../../../react/common/Tooltip';
-import Confirm from '../../../react/common/Confirm';
+import Tooltip from '../../../../react/common/Tooltip';
+import Confirm from '../../../../react/common/Confirm';
 import {Loader} from 'kbc-react-components';
 import RefreshTokenModal from './RefreshTokenModal';
 import CreateTokenModal from './CreateTokenModal';
-import ExpiresInfo from './ExpiresInfo';
+import ExpiresInfo from '../tokenEditor/ExpiresInfo';
 import {Link} from 'react-router';
 import CreatedDate from './CreatedDate';
 

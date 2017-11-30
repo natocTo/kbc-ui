@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router';
-import ApplicationStore from '../../../stores/ApplicationStore';
-import TokensStore from '../StorageTokensStore';
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import ApplicationStore from '../../../../stores/ApplicationStore';
+import TokensStore from '../../StorageTokensStore';
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import TokensTable from './TokensTable';
-import TokensActions from '../actionCreators';
+import TokensActions from '../../actionCreators';
 import {Map} from 'immutable';
-import BucketsStore from '../../components/stores/StorageBucketsStore';
+import BucketsStore from '../../../components/stores/StorageBucketsStore';
 
 export default React.createClass({
   mixins: [createStoreMixin(TokensStore, BucketsStore)],

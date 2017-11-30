@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Clipboard from '../../../react/common/Clipboard';
+import Clipboard from '../../../../react/common/Clipboard';
 
 const TokenString = ({token}) => {
   const tokenString = token.get('token');

@@ -1,4 +1,4 @@
-import Index from './react/Index';
+import Index from './react/Index/Index';
 import TokenDetail from './react/TokenDetail';
 import tokensActions from './actionCreators';
 import StorageActions from '../components/StorageActionCreators';

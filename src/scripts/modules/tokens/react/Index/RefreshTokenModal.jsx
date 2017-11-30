@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
-import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TokenString from './TokenString';
 
 export default React.createClass({
