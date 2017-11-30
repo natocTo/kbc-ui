@@ -20,6 +20,7 @@ export default React.createClass({
 
   render() {
     const isCustomAccess = !this.props.token.get('canManageBuckets', false);
+    const isAdminToken = this.props.token.has('admin');
     return (
       <div className="form form-horizontal">
         {this.renderFormGroup(
@@ -30,25 +31,21 @@ export default React.createClass({
         )}
         {this.renderFormGroup(
            'Expires In',
-           this.props.isEditting ?
+           isAdminToken ?
            <div className="col-sm-9">
              <p className="form-control-static">
-               <ExpiresInfo withIcon={true} token={this.props.token} />
+               This is a user admin token that is valid as long the user exists.
              </p>
            </div>
            :
-           <ExpiresInEdit
-             disabled={this.props.disabled}
-             value={this.props.token.get('expiresIn', null)}
-             onChange={(value) => this.props.updateToken('expiresIn', value)}
-           />
+           this.renderCustomExpires()
         )}
         {this.props.isEditting && this.renderFormGroup(
            'Created',
            <div className="col-sm-9">
              <p className="form-control-static">
                <CreatedWithIcon createdTime={this.props.token.get('created')} />
-               {this.rednerCreatorTokenLink()}
+               {this.renderCreatorTokenLink()}
              </p>
            </div>
         )}
@@ -88,7 +85,24 @@ export default React.createClass({
     );
   },
 
-  rednerCreatorTokenLink() {
+  renderCustomExpires() {
+    return (
+      this.props.isEditting ?
+      <div className="col-sm-9">
+        <p className="form-control-static">
+          <ExpiresInfo withIcon={true} token={this.props.token} />
+        </p>
+      </div>
+      :
+      <ExpiresInEdit
+        disabled={this.props.disabled}
+        value={this.props.token.get('expiresIn', null)}
+        onChange={(value) => this.props.updateToken('expiresIn', value)}
+      />
+    );
+  },
+
+  renderCreatorTokenLink() {
     const creatorToken = this.props.token.get('creatorToken', null);
     return creatorToken && (
       <span>
