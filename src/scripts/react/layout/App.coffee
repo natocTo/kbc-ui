@@ -47,9 +47,9 @@ App = React.createClass
       if @state.projectHasGuideModeOn == true
         div className: 'guide-status-bar',
           p null,
-            'Guide Mode'
+            'Guide Mode '
           p null,
-            ' — learn everything you need to know about Keboola Connection'
+            '\xa0- learn everything you need to know about Keboola Connection'
           a href: ApplicationStore.getProjectPageUrl('settings'),
             'Disable Guide Mode \xa0',
             i className: 'fa fa-times',
