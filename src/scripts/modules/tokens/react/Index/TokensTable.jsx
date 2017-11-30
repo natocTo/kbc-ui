@@ -61,11 +61,15 @@ export default React.createClass({
             </div>
           </div>
           <div className="tbody">
-            {this.props.tokens.map(this.renderTableRow).toArray()}
+            {this.getSortedTokens().map(this.renderTableRow).toArray()}
           </div>
         </div>
       </span>
     );
+  },
+
+  getSortedTokens() {
+    return this.props.tokens.sortBy(t => t.get('description').toLowerCase());
   },
 
   renderComponentsAccess(token) {
