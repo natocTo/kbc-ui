@@ -9,7 +9,9 @@ import InstalledComponentStore from '../../components/stores/InstalledComponents
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import storageActions from '../../components/StorageActionCreators';
-import Deprecation from './Deprecation';
+import DeprecatedComponents from './DeprecatedComponents';
+import DeprecatedTransformations from './DeprecatedTransformations';
+import DeprecatedStorage from './DeprecatedStorage';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
 import WizardStore from '../../guide-mode/stores/WizardStore';
@@ -23,25 +25,8 @@ export default React.createClass({
   ],
 
   getStateFromStores() {
-    return {
-      buckets: StorageBucketsStore.getAll(),
-      installedComponents: InstalledComponentStore.getAll(),
-      transformations: TransformationsStore.getAllTransformations(),
-      guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
-    };
-  },
-
-  componentDidMount() {
-    componentsActions.loadComponents();
-    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
-      componentsActions.loadComponentConfigsData('transformation');
-    }
-    storageActions.loadBuckets();
-  },
-
-  getInitialState() {
-    const currentProject = ApplicationStore.getCurrentProject(),
-      tokenStats = ApplicationStore.getTokenStats();
+    const currentProject = ApplicationStore.getCurrentProject();
+    const tokenStats = ApplicationStore.getTokenStats();
     const limits = ApplicationStore.getLimits().find(function(group) {
       return group.get('id') === 'connection';
     }).get('limits');
@@ -52,16 +37,28 @@ export default React.createClass({
       return limit.get('id') === 'storage.rowsCount';
     }).get('metricValue');
     return {
+      tokens: tokenStats,
+      projectId: currentProject.get('id'),
       data: {
         sizeBytes: sizeBytes,
         rowsCount: rowsCount
       },
-      tokens: tokenStats,
-      projectId: currentProject.get('id'),
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
       expires: ApplicationStore.getCurrentProject().get('expires'),
-      projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn')
+      buckets: StorageBucketsStore.getAll(),
+      installedComponents: InstalledComponentStore.getAll(),
+      transformations: TransformationsStore.getAllTransformations(),
+      projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn'),
+      guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
     };
+  },
+
+  componentDidMount() {
+    componentsActions.loadComponents();
+    if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
+      componentsActions.loadComponentConfigsData('transformation');
+    }
+    storageActions.loadBuckets();
   },
 
   openLessonModal(lessonNumber) {
@@ -108,11 +105,17 @@ export default React.createClass({
           )}
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-          <Deprecation
+
+          <DeprecatedStorage
             buckets={this.state.buckets}
+          />
+          <DeprecatedComponents
             components={this.state.installedComponents}
+          />
+          <DeprecatedTransformations
             transformations={this.state.transformations}
           />
+
         </div>
         }
         <div className="kbc-main-content">

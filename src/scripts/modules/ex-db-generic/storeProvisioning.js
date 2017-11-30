@@ -190,7 +190,21 @@ export function createStore(componentId, configId) {
       }
       const qname = string.sanitizeKbcTableIdString(name);
       const bucketName = string.sanitizeKbcTableIdString(componentId);
-      return `in.c-${bucketName}.${qname}`;
+      const fullBucketName = `in.c-${bucketName}`;
+      const fullBucketNameWithConfigSuffix = `${fullBucketName}-${configId}`;
+      if (this.shouldDestinationHaveOldFormat(fullBucketName)) {
+        return `${fullBucketName}.${qname}`;
+      }
+      return `${fullBucketNameWithConfigSuffix}.${qname}`;
+    },
+
+    shouldDestinationHaveOldFormat(fullBucketName) {
+      if (data.parameters.get('tables', List()).count() === 0) {
+        return false;
+      }
+      return data.parameters.get('tables', List()).filter((table) => {
+        return table.get('outputTable').indexOf(fullBucketName + '.') === 0;
+      }).count() === data.parameters.get('tables', List()).count();
     },
 
     getQueriesPendingActions() {

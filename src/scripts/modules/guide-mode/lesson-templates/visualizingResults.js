@@ -44,6 +44,7 @@ export default {
 - To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
 `,
       'mediaType': ''
+
     },
     {
       'id': 4,
