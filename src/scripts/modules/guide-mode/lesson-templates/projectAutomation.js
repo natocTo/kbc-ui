@@ -33,7 +33,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Configure Task',
-      'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one by clicking on <span class="btn btn-success btn-sm">+ New Task</span>.'
+      'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one.'
                 + `
 - Step 1: After clicking <span class="btn btn-success btn-sm">+ New task</span>, select your Snowflake extractor.
 - Step 2: Click <span class="btn btn-success btn-sm">+ New task</span> again. Then click <span class="btn btn-link btn-sm"> <i class="fa fa-chevron-left"></i> Back</span> on the right, and select your transformation from the list.
