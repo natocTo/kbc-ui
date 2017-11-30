@@ -214,7 +214,8 @@ export default React.createClass({
           {this.renderBucketsAceess(token)}
         </div>
         <div className="td text-right kbc-no-wrap">
-          {this.renderTokenDelete(token)}
+
+          {!token.has('admin') && this.renderTokenDelete(token)}
           {this.renderTokenRefreshButton(token)}
         </div>
       </Link>
