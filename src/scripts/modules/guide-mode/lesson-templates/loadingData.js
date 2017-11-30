@@ -9,7 +9,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Introduction',
       'link': 'app',
-      'markdown': 'As promised in Lesson 1, you are about to build a simple workflow that analyzes data about **car ownership** stored in two database tables. In this lesson you will start by configuring an extractor to access the prepared tables in a sample database. You will then take the data in the tables and copy it into two new tables created for this purpose in Keboola Connection Storage. <br/><br/> *Follow the instructions written for you in each step. Once you are done, the next step will appear automatically or you will be asked to click <span class="btn btn-primary btn-sm">Next step</span>.* <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'As promised in Lesson 1, you are about to build a simple workflow that analyzes data about **car ownership** stored in two database tables. In this lesson you will start by configuring an extractor to access the prepared tables in a sample database. You will then take the data in the tables and copy it into two new tables created for this purpose in Keboola Connection Storage. <br/><br/> *Follow the instructions written for you in each step. Once you are done, the next step will appear automatically, or you will be asked to click <span class="btn btn-primary btn-sm">Next step</span>.* <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-ext.svg',
       'mediaType': 'img'
     }, {
@@ -79,7 +79,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Check Storage',
       'link': 'storage',
-      'markdown': 'You can also check the result of your extraction directly in **Storage**. If you open the bucket **in.c-keboola-ex-db-snowflake** on the left, you will see both tables successfully extracted from the Snowflake database and loaded into Keboola Connection. <br/><br/> Click on the tables if you want to see more information about them, for example, a data sample.',
+      'markdown': 'You can also check the results of your extraction directly in **Storage**. If you open the bucket **in.c-keboola-ex-db-snowflake** on the left, you will see both tables successfully extracted from the Snowflake database and loaded into Keboola Connection. <br/><br/> Click on the tables if you want to see more information about them, for example, a data sample.',
       'media': '',
       'mediaType': ''
     }, {
@@ -89,7 +89,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Learn More',
       'link': '',
-      'markdown': 'In this lesson, you have extracted data from two tables from an external database, and imported the data to two new tables in your Keboola Connection project. To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
+      'markdown': 'In this lesson, you extracted data from two tables from an external database, and imported the data to two new tables in your Keboola Connection project. To find out how you can work with the loaded data, continue to **Lesson 3 – Manipulating Data**. <br/><br/> Learn more about <a href="https://help.keboola.com/overview/#extractors" target="_blank">Extractors</a>, or follow the hands-on tutorial on loading in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
     }
 
   ]

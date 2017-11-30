@@ -51,7 +51,7 @@ export default {
       + `
 - Input Mapping — click on <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.CARS* as the Source table. Accept the suggested Destination. It will be the name of the selected table inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. Then repeat the steps for the second table *in.c-keboola-ex-db-snowflake.POPULATION*.
 - Output Mapping — click on <span class="btn btn-success btn-sm">+ New Output</span> and enter \`CARS_POPULATION\` as the Source table. This table does not exist yet. It will be created in the transformation. Then set Destination to \`out.c-snowflake.CARS_POPULATION\`. This is the name the new table *CARS_POPULATION* will have when put in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
-- Queries — to create your output table, copy and paste the following code: \`CREATE TABLE "CARS_POPULATION" AS SELECT "CARS".*, "POPULATION"."POPULATION", ("POPULATION"."POPULATION" / "CARS"."CARS") AS "PERSON_PER_CAR" FROM "CARS" JOIN "POPULATION" On "CARS"."COUNTRY" = "POPULATION"."COUNTRY"\`. Then <span class="btn btn-success btn-sm">Save</span> it.
+- Queries — to create your output table, copy and paste the following code: \`CREATE TABLE "CARS_POPULATION" AS SELECT "CARS".*, "POPULATION"."POPULATION", ("POPULATION"."POPULATION" / "CARS"."CARS") AS "PERSON_PER_CAR" FROM "CARS" JOIN "POPULATION" ON "CARS"."COUNTRY" = "POPULATION"."COUNTRY"\`. Then <span class="btn btn-success btn-sm">Save</span> it.
 - To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
 
 `,
@@ -63,7 +63,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Transformation',
-      'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database where they will be changed by the queries. The result will be put into Storage back again. <br/><br/> To see the status of your extraction, click <span class="btn btn-success btn-sm">Next step</span>.',
+      'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database, where they will be changed by the queries. The result will be put into Storage back again. <br/><br/> To see the status of your extraction, click <span class="btn btn-primary btn-sm">Next step</span>.',
       'media': '',
       'mediaType': ''
     }, {
@@ -94,7 +94,7 @@ export default {
       'isNavigationVisible': false,
       'title': 'Learn More',
       'link': '',
-      'markdown': 'In this lesson, you have created a basic transformation in Keboola Connection. To see how to write the output data into Tableau, continue to the next lesson — Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
+      'markdown': 'In this lesson, you created a basic transformation in Keboola Connection. To see how to write the output data into Tableau, continue to the next lesson — Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
     }
   ]
 };
