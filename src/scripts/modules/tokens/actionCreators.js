@@ -108,6 +108,10 @@ export default {
     if (params.componentAccess && params.componentAccess.length === 0) {
       params.componentAccess = null;
     }
+    if (params.canManageBuckets) {
+      delete params.componentAccess;
+      delete params.bucketPermissions;
+    }
     return storageApi.updateToken(tokenId, params).then((updatedToken) => {
       const token = fromJS(updatedToken);
       dispatcher.handleViewAction({
