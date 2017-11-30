@@ -52,9 +52,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Writer',
-      'markdown':
-      'To run the writer, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span>. A Tableau Desktop Extract file will be created. You can find it in the section **Storage** under the tab **Files**, from where it can be downloaded. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step</span>.'
-`
+      'markdown': 'To run the writer, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span>. A Tableau Desktop Extract file will be created. You can find it in the section **Storage** under the tab **Files**, from where it can be downloaded. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step</span>.'
     },
     {
       'id': 5,
