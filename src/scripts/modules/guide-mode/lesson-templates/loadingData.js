@@ -68,7 +68,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Extraction',
-      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To create the new tables in your project, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run Extraction</span> on the right and wait for the orange indicator to turn green. Once it does, the extraction is finished. <br/><br/> Hover above the blue output table names to see that they are no longer empty. If you click the links, you will be able to see more details. <br/><br/> To continue, click <span class="btn btn-primary btn-sm">Next step</span>.',
+      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To create the new tables in your project, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run Extraction</span> on the right and wait for the orange indicator to turn green. Once it does, the extraction is finished. <br/><br/> Hover above the blue output table names to see that the tables are no longer empty. If you click the links, you will be able to see more details. <br/><br/> To continue, click <span class="btn btn-primary btn-sm">Next step</span>.',
       'media': '',
       'link': 'extractors',
       'mediaType': ''

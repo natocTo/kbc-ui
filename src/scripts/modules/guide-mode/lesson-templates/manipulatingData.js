@@ -47,12 +47,15 @@ export default {
       'title': 'Map Data & Set Queries',
       'link': 'transformations',
       'markdown':
-      'Next you need to specify what tables will be used in the transformation, what tables will be written to Storage as results, and what will happen with the data in the transformation.'
+      'Next you need to specify what tables will be used in the transformation, what tables will be written to Storage as results, and what will happen with the data in the transformation:'
       + `
-- Input Mapping — click on <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.CARS* as the Source table. Accept the suggested Destination. It will be the name of the selected table inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. Then repeat the steps for the second table *in.c-keboola-ex-db-snowflake.POPULATION*.
-- Output Mapping — click on <span class="btn btn-success btn-sm">+ New Output</span> and enter \`CARS_POPULATION\` as the Source table. This table does not exist yet. It will be created in the transformation. Then set Destination to \`out.c-snowflake.CARS_POPULATION\`. This is the name the new table *CARS_POPULATION* will have when put in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
-- Queries — to create your output table, copy and paste the following code: \`CREATE TABLE "CARS_POPULATION" AS SELECT "CARS".*, "POPULATION"."POPULATION", ("POPULATION"."POPULATION" / "CARS"."CARS") AS "PERSON_PER_CAR" FROM "CARS" JOIN "POPULATION" ON "CARS"."COUNTRY" = "POPULATION"."COUNTRY"\`. Then <span class="btn btn-success btn-sm">Save</span> it.
-- To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
+**Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.CARS* as the source table. Accept the suggested destination. It will be the name of the selected table inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. Repeat the steps for the second table *in.c-keboola-ex-db-snowflake.POPULATION*.
+<br/>
+**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and enter \`CARS_POPULATION\` as the source table. This table does not exist yet. It will be created in the transformation. Then set destination to \`out.c-snowflake.CARS_POPULATION\`. This is the name the new table *CARS_POPULATION* will have when put in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
+<br/>
+**Queries** — to create your output table, copy and paste this code: \`CREATE TABLE "CARS_POPULATION" AS SELECT "CARS".*, "POPULATION"."POPULATION", ("POPULATION"."POPULATION" / "CARS"."CARS") AS "PERSON_PER_CAR" FROM "CARS" JOIN "POPULATION" ON "CARS"."COUNTRY" = "POPULATION"."COUNTRY"\`. Then <span class="btn btn-success btn-sm">Save</span> it.
+<br/>
+To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
 
 `,
       'media': '',
@@ -63,7 +66,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Transformation',
-      'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database, where they will be changed by the queries. The result will be put into Storage back again. <br/><br/> To see the status of your extraction, click <span class="btn btn-primary btn-sm">Next step</span>.',
+      'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database, where they will be changed by the queries. The result will be put back into Storage again. <br/><br/> To see the status of your extraction, click <span class="btn btn-primary btn-sm">Next step</span>.',
       'media': '',
       'mediaType': ''
     }, {
@@ -73,7 +76,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Check Jobs',
       'link': 'jobs',
-      'markdown': 'In the section **Jobs**, you can find all operations you have run in your project so far. <br/><br/> The status of your transformation job probably says **processing** now. It will change to **success** in a little while. Your input tables will be joined and the output table *CARS_POPULATION* created. You can check the details of each job here too.' +
+      'markdown': 'In the section **Jobs**, you can find all operations you have run in your project so far. <br/><br/> The status of your transformation job probably says **processing** now. It will change to **success** in a little while. Your input tables will be joined, the ratio of motor vehicles to persons per country will be calculated, and the output table *CARS_POPULATION* will be created. You can check the details of each job here too.' +
       '<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step</span>.',
       'media': '',
       'mediaType': ''
