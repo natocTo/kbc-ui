@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import {Map} from 'immutable';
 
 import './TrashIndex.less';
@@ -8,13 +7,12 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import InstaledComponentsActions from '../../../components/InstalledComponentsActionCreators';
-import ApplicationStore from '../../../../stores/ApplicationStore';
-
 import Select from 'react-select';
 import SplashIcon from '../../../../react/common/SplashIcon';
 import SearchRow from '../../../../react/common/SearchRow';
 import DeletedComponentRow from '../components/DeletedComponentRow';
 import TrashHeaderButtons from '../components/TrashHeaderButtons';
+import SettingsTabs from '../../../../react/layout/SettingsTabs';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
@@ -32,28 +30,6 @@ export default React.createClass({
 
   handleFilterChange(query, filterType) {
     InstaledComponentsActions.deletedConfigurationsFilterChange(query, filterType);
-  },
-
-  renderTabs() {
-    return (
-      <ul className="nav nav-tabs">
-        <li role="presentation">
-          <a href={this.projectPageUrl('settings-users')}>Users</a>
-        </li>
-        <li role="presentation">
-          <a href={this.projectPageUrl('settings')}>Settings</a>
-        </li>
-        <li role="presentation">
-          <Link to="settings-limits">Limits</Link>
-        </li>
-        <li role="presentation">
-          <Link to="settings-project-power">Project Power</Link>
-        </li>
-        <li role="presentation" className="active">
-          <Link to="settings-trash">Trash</Link>
-        </li>
-      </ul>
-    );
   },
 
   renderRows() {
@@ -118,7 +94,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content kbc-components-list">
-          {this.renderTabs()}
+          <SettingsTabs active="settings-trash" />
           <div className="kbc-trash-search clearfix">
             <div className="col-md-7">
               <SearchRow
@@ -152,9 +128,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
-
-  projectPageUrl(path) {
-    return ApplicationStore.getProjectPageUrl(path);
   }
 });

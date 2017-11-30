@@ -1,6 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router';
-import ApplicationStore from '../../../stores/ApplicationStore';
+import SettingsTabs from '../../../react/layout/SettingsTabs';
+// import {Link} from 'react-router';
+// import ApplicationStore from '../../../stores/ApplicationStore';
 import TokensStore from '../StorageTokensStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import TokenEditor from './tokenEditor/TokenEditor';
@@ -155,32 +156,6 @@ export default React.createClass({
   },
 
   renderTabs() {
-    return (
-      <ul className="nav nav-tabs">
-        <li role="presentation">
-          <a href={this.projectPageUrl('settings-users')}>Users</a>
-        </li>
-        <li role="presentation">
-          <a href={this.projectPageUrl('settings')}>Settings</a>
-        </li>
-        <li role="presentation">
-          <Link to="settings-limits">Limits</Link>
-        </li>
-        <li role="presentation">
-          <Link to="settings-project-power">Project Power</Link>
-        </li>
-        <li role="presentation">
-          <Link to="settings-trash">Trash</Link>
-        </li>
-        <li role="presentation" className="active">
-          <Link to="tokens">Tokens</Link>
-        </li>
-      </ul>
-    );
-  },
-
-  projectPageUrl(path) {
-    return ApplicationStore.getProjectPageUrl(path);
+    return <SettingsTabs active="tokens" />;
   }
-
 });

@@ -4,7 +4,7 @@ import createStoreMixin from '../../react/mixins/createStoreMixin';
 import LimitsSection from './LimitsSection';
 import StorageApi from '../components/StorageApi';
 import Keen from 'keen-js';
-import { Link } from 'react-router';
+import SettingsTabs from '../../react/layout/SettingsTabs';
 
 export default React.createClass({
   mixins: [createStoreMixin(ApplicationStore)],
@@ -42,23 +42,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <ul className="nav nav-tabs">
-            <li role="presentation">
-              <a href={this.projectPageUrl('settings-users')}>Users</a>
-            </li>
-            <li role="presentation">
-              <a href={this.projectPageUrl('settings')}>Settings</a>
-            </li>
-            <li role="presentation" className="active">
-              <Link to="settings-limits">Limits</Link>
-            </li>
-            <li role="presentation">
-              <Link to="settings-project-power">Project Power</Link>
-            </li>
-            <li role="presentation">
-              <Link to="settings-trash">Trash</Link>
-            </li>
-          </ul>
+          <SettingsTabs active="settings-limits" />
           {this.state.sections.map((section) => {
             return React.createElement(LimitsSection, {
               section: section,
@@ -70,10 +54,6 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
-
-  projectPageUrl(path) {
-    return ApplicationStore.getProjectPageUrl(path);
   },
 
   keenReady() {
