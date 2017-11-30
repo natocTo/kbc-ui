@@ -31,7 +31,7 @@ export default {
       'isNavigationVisible': true,
       'title': 'Store data',
       'link': 'storage',
-      'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage** where they can be accessed at any time. <br/><br/> Being sorted into buckets, your tables can always be easily found.',
+      'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage**, where they can be accessed at any time. <br/><br/> Being sorted into buckets, your tables can always be easily found.',
       'media': 'kbc_scheme_light_blue.svg',
       'mediaType': 'img'
     },

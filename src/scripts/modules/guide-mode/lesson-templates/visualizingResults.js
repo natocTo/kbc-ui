@@ -21,12 +21,11 @@ export default {
       'title': 'Create Writer',
       'link': 'writers',
       'media': '',
-      'markdown': 'Let’s say you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the **Writers** section.'
-                + `
-- Click on <span class="btn btn-success btn-sm">+ New Writer</span>.
+      'markdown': 'Imagine you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the section **Writers**.'
+      + `
 - Find **Tableau**. You can use the search feature to find it faster.
 - Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
-- Name the configuration, e.g., *My writer* and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
+- Name the configuration, e.g., My writer, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 `,
       'mediaType': ''
     },
@@ -36,35 +35,41 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Table',
-      'markdown':
-      'Now add the table you want to send to Tableau. For each of its columns you also need to specify whether it contains text or a number.'
+      'markdown': 'Now add the table you want to send to Tableau. For each of its columns you also need to specify whether it contains text or a number.'
       + `
 - Click on <span class="btn btn-success btn-sm">+ New Table</span>.
-- Select  \`out.c-snowflake.TRANSFORMED\` as the Source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>..
+- Select  *out.c-snowflake.CARS_POPULATION* as the Source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>.
 - Specify a data type for each of the table's columns under **TDE Data Type** (COUNTRY/string, CARS/number, POPULATION/number, PERSON_PER_CAR/decimal). 
 - <span class="btn btn-success btn-sm">Save</span> the configuration.
-- Click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span> to run the writer.
-<br>
+- To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
+`,
+      'mediaType': ''
 
-A Tableau Desktop Extract file will be created. In a real project, you would find the file in Storage under the tab **Files** from where it can be downloaded to your computer.   
-`
     },
     {
       'id': 4,
-      'position': 'center',
-      'backdrop': true,
-      'isNavigationVisible': false,
-      'title': 'Run Extraction',
-      'media': 'tbl.png',
-      'mediaType': 'img'
+      'position': 'aside',
+      'backdrop': false,
+      'isNavigationVisible': true,
+      'title': 'Run Writer',
+      'markdown': 'To run the writer, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span>. A Tableau Desktop Extract file will be created. You can find it in the section **Storage** under the tab **Files**, from where it can be downloaded. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step</span>.'
     },
     {
       'id': 5,
       'position': 'center',
       'backdrop': true,
       'isNavigationVisible': false,
-      'title': 'Run Extraction',
-      'markdown': 'For the purposes of the Guide Mode, let’s say you have downloaded the Tableau Desktop Extract file to your computer and opened it in Tableau. The graph below is one of many reports you can create. <br/><br/> To see how to automate the whole process, continue to the next lesson – Project Automation. <br/><br/> Learn more about <a href="https://help.keboola.com/writers/" target="_blank">Writers</a>, or follow the hands-on tutorial on writing data in our <a href="https://help.keboola.com/tutorial/write/" target="_blank">user documentation</a>.'
+      'title': 'Tableau Report',
+      'media': 'tbl.png',
+      'mediaType': 'img'
+    },
+    {
+      'id': 6,
+      'position': 'center',
+      'backdrop': true,
+      'isNavigationVisible': false,
+      'title': 'Learn More',
+      'markdown': 'In this lesson, you were shown how easy it is to export your data from Keboola Connection and visualize the results. To see how to automate the whole process, continue to the next lesson – Project Automation. <br/><br/> Learn more about <a href="https://help.keboola.com/writers/" target="_blank">Writers</a>, or follow the hands-on tutorial on writing data in our <a href="https://help.keboola.com/tutorial/write/" target="_blank">user documentation</a>.'
     }
   ]
 };
