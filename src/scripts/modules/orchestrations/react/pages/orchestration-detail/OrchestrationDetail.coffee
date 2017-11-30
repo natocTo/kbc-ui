@@ -66,8 +66,8 @@ OrchestrationDetail = React.createClass
               div className: 'tr',
                 div className: 'td',
                   div className: 'row',
-                    span className: 'col-md-3', 'Schedule '
-                    strong className: 'col-md-9',
+                    div className: 'col-lg-3 kbc-orchestration-detail-label', 'Schedule '
+                    div className: 'col-lg-9',
                       CronRecord crontabRecord: @state.orchestration.get('crontabRecord')
                       br null
                       ScheduleModal
@@ -75,12 +75,12 @@ OrchestrationDetail = React.createClass
                         orchestrationId: @state.orchestration.get 'id'
 
                   div className: 'row',
-                    span className: 'col-md-3', 'Assigned Token'
-                    strong className: 'col-md-9', @state.orchestration.getIn ['token', 'description']
+                    div className: 'col-lg-3 kbc-orchestration-detail-label', 'Assigned Token'
+                    div className: 'col-lg-9', @state.orchestration.getIn ['token', 'description']
                 div className: 'td',
                   div className: 'row',
-                    span className: 'col-md-3', 'Notifications '
-                    strong className: 'col-md-9',
+                    div className: 'col-lg-3 kbc-orchestration-detail-label', 'Notifications '
+                    div className: 'col-lg-9',
                       if @state.orchestration.get('notifications').count()
                         span className: 'badge',
                           @state.orchestration.get('notifications').count()
@@ -97,8 +97,8 @@ OrchestrationDetail = React.createClass
                         span className: 'fa fa-edit'
                         ' Configure Notifications'
                   div className: 'row',
-                    span className: 'col-md-3', 'Tasks '
-                    strong className: 'col-md-9',
+                    div className: 'col-lg-3 kbc-orchestration-detail-label', 'Tasks '
+                    div className: 'col-lg-9',
                       TasksSummary tasks: @state.tasks
                       br null
                       Link to: 'orchestrationTasks', params:
