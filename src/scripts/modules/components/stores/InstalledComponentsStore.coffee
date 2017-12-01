@@ -400,11 +400,22 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS
-      _store = _store.deleteIn ['configDataLoading', action.componentId, action.configId]
-      storePath = ['configData', action.componentId, action.configId]
-      _store = _store.setIn storePath, fromJSOrdered(action.configData)
-      storePath = ['components', action.componentId, 'configurations', action.configId]
-      _store = _store.setIn storePath, fromJSOrdered(action.configuration)
+      _store = _store.withMutations (store) ->
+        store = store.deleteIn ['configDataLoading', action.componentId, action.configId]
+        storePath = ['configData', action.componentId, action.configId]
+        store = store.setIn storePath, fromJSOrdered(action.data.configuration)
+        storePath = ['components', action.componentId, action.configId]
+        store = store.setIn storePath, fromJSOrdered(action.data)
+        j = 0
+        while j < action.data.rows.length
+          store = store.setIn [
+            'configRowsData', action.componentId, action.configId, action.data.rows[j].id
+          ], fromJSOrdered(action.data.rows[j].configuration)
+          store = store.setIn [
+            'configRows', action.componentId, action.configId, action.data.rows[j].id
+          ], Immutable.fromJS(action.data.rows[j])
+          j++
+        return store
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_ERROR

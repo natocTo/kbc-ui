@@ -121,8 +121,7 @@ module.exports = {
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS,
         componentId: componentId,
         configId: configId,
-        configData: response.configuration,
-        configuration: response
+        data: response
       });
       return response.configuration;
     }).catch(function(error) {
