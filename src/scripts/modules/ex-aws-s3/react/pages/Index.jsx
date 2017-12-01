@@ -16,7 +16,7 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 import {Link} from 'react-router';
 
 // local components
-import CreateRowButton from '../components/CreateRowButton';
+import CreateRowButton from '../../../components/react/components/CreateRowButton';
 
 
 // css
@@ -57,7 +57,13 @@ export default React.createClass({
               Rows
             </p>
             <div className="text-center">
-              <CreateRowButton/>
+              <CreateRowButton
+                componentId={COMPONENT_ID}
+                configId={this.state.configId}
+                onRowCreated={function() { return; }}
+                emptyConfig={function() { return {};}}
+                type="button"
+              />
             </div>
           </div>
         </div>
@@ -76,6 +82,15 @@ export default React.createClass({
               >
                 <span>You are about to run an extraction.</span>
               </RunComponentButton>
+            </li>
+            <li>
+              <CreateRowButton
+                componentId={COMPONENT_ID}
+                configId={this.state.configId}
+                onRowCreated={function() { return; }}
+                emptyConfig={function() { return {};}}
+                type="link"
+              />
             </li>
             <li>
               <Link to={COMPONENT_ID + '-credentials'} params={{config: this.state.configId}}>
