@@ -36,39 +36,37 @@ export default React.createClass({
 
   renderAddingRow() {
     return (
-      <span className="row">
-        <span className="col-sm-12">
-          <span className="col-sm-8" style={{padding: '0px'}}>
-            <Select
-              clearable={false}
-              disabled={this.props.disabled}
-              placeholder="Select bucket..."
-              value={this.state.selectedBucket}
-              onChange={({value}) => this.setState({selectedBucket: value})}
-              options={this.getOptions()}
-            />
-          </span>
-          <span className="col-sm-3" style={{paddingRight: '11px', paddingLeft: '16px'}}>
-            <Select
-              disabled={this.props.disabled}
-              placeholder="Select permission"
-              value={this.state.selectedPermission}
-              onChange={({value}) => this.setState({selectedPermission: value})}
-              clearable={false}
-              searchable={false}
-              options={this.permissionOptions}
-            />
-          </span>
-          <span className="col-sm-1">
-            <button
-              onClick={this.addSelectedPermission}
-              disabled={!this.state.selectedPermission || !this.state.selectedBucket}
-              className="btn btn-success">
-              Add
-            </button>
-          </span>
-        </span>
-      </span>
+      <div className="row">
+        <div className="col-sm-8" style={{padding: '0px'}}>
+          <Select
+            clearable={false}
+            disabled={this.props.disabled}
+            placeholder="Select bucket..."
+            value={this.state.selectedBucket}
+            onChange={({value}) => this.setState({selectedBucket: value})}
+            options={this.getOptions()}
+          />
+        </div>
+        <div className="col-sm-3" style={{paddingRight: '11px', paddingLeft: '16px'}}>
+          <Select
+            disabled={this.props.disabled}
+            placeholder="Select permission"
+            value={this.state.selectedPermission}
+            onChange={({value}) => this.setState({selectedPermission: value})}
+            clearable={false}
+            searchable={false}
+            options={this.permissionOptions}
+          />
+        </div>
+        <div className="col-sm-1" style={{paddingLeft: '1px'}}>
+          <button
+            onClick={this.addSelectedPermission}
+            disabled={!this.state.selectedPermission || !this.state.selectedBucket}
+            className="btn btn-success">
+            Add
+          </button>
+        </div>
+      </div>
     );
   },
 

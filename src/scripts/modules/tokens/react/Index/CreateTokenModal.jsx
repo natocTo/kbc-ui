@@ -43,11 +43,7 @@ export default React.createClass({
             updateToken={this.updateDirtyToken}
             allBuckets={this.props.allBuckets}
           />
-          {this.state.createdToken &&
-           <div className="row">
-             {this.renderTokenCreated()}
-           </div>
-          }
+          {this.state.createdToken && this.renderTokenCreated()}
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
@@ -70,7 +66,7 @@ export default React.createClass({
 
   renderTokenCreated() {
     return (
-      <div className="col-sm-12">
+      <div>
         <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. Make sure to copy it. You won't be able to see it again. </p>
         <TokenString token={this.state.createdToken} />
       </div>

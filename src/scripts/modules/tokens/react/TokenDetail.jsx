@@ -81,7 +81,7 @@ export default React.createClass({
           {this.state.token ?
            <Tabs id="token-detail-tabs" animation={false}>
              <Tab title="Overview" eventKey="overview">
-               <div className="row">
+               <div>
                  <TokenEditor
                    disabled={this.state.isSaving}
                    isEditting={true}
@@ -90,7 +90,7 @@ export default React.createClass({
                    updateToken={this.updateDirtyToken}
                  />
                </div>
-               <div className="row">
+               <div>
                  <div className="form form-horizontal">
                    <div className="form-group">
                      <div className="col-sm-offset-3 col-sm-9">
@@ -109,17 +109,15 @@ export default React.createClass({
                </div>
              </Tab>
              <Tab title="Events" eventKey="events">
-               <div className="row">
-                 <Events
-                   eventsApi={this.state.eventsApi}
-                   autoReload={true}
-                   link={{to: 'tokens-detail', params: {tokenId: this.state.tokenId}}}
-                 />
-               </div>
+               <Events
+                 eventsApi={this.state.eventsApi}
+                 autoReload={true}
+                 link={{to: 'tokens-detail', params: {tokenId: this.state.tokenId}}}
+               />
              </Tab>
            </Tabs>
            :
-           <div className="row text-center">
+           <div className="text-center">
              Token {this.state.tokenId} does not exist or has been removed.
            </div>
           }
