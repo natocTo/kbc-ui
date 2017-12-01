@@ -1,9 +1,11 @@
 import React from 'react';
 import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
-import ConfigRowItem from './ConfigRowItem';
+import ConfigRowItem from './ConfigRowsTableItem';
+import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import DeleteConfigRowButton from './DeleteConfigRowButton';
 
 export default React.createClass({
-  displayName: 'ConfigRowTable',
+  displayName: 'ConfigRowsTable',
 
   mixins: [ImmutableRenderMixin],
 
@@ -12,10 +14,10 @@ export default React.createClass({
     configId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string.isRequired,
     headers: React.PropTypes.array,
-    configRowItemElement: React.PropTypes.function
+    configRowItemElement: React.PropTypes.func
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       headers: ['Name'],
       configRowItemElement: ConfigRowItem
@@ -24,13 +26,31 @@ export default React.createClass({
 
 
   renderHeaders() {
-    return this.props.headers.map(function(header) {
+    return this.props.headers.map(function(header, index) {
       return (
-        <span className="th">
+        <span className="th" key={index}>
           <strong>{header}</strong>
         </span>
       );
     });
+  },
+
+  renderRowActionButtons(row) {
+    return (
+      <span className="td text-right kbc-no-wrap">
+        <DeleteConfigRowButton
+          isPending={false}
+          onClick={function() {}}
+        />
+        <ActivateDeactivateButton
+          activateTooltip="Enable"
+          deactivateTooltip="Disable"
+          isActive={!row.get('disabled', false)}
+          isPending={false}
+          onChange={function() {}}
+        />
+      </span>
+    );
   },
 
   render() {
@@ -39,7 +59,8 @@ export default React.createClass({
         row: row,
         componentId: this.props.componentId,
         configId: this.props.configId,
-        key: row.get('id')
+        key: row.get('id'),
+        children: this.renderRowActionButtons(row)
       };
       return React.createElement(this.props.configRowItemElement, props);
     }, this).toArray();

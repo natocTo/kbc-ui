@@ -15,7 +15,7 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import {Link} from 'react-router';
 import CreateConfigRowButton from '../../../components/react/components/CreateConfigRowButton';
-import ConfigRowTable from '../../../components/react/components/ConfigRowTable';
+import ConfigRowsTable from '../../../components/react/components/ConfigRowsTable';
 
 // css
 import './Index.less';
@@ -56,7 +56,7 @@ export default React.createClass({
               Rows
             </p>
           </div>
-          <ConfigRowTable
+          <ConfigRowsTable
             rows={this.state.rows.toList()}
             componentId={COMPONENT_ID}
             configId={this.state.configId}

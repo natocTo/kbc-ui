@@ -7,7 +7,8 @@ export default React.createClass({
   propTypes: {
     row: React.PropTypes.object.isRequired,
     configId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired
+    componentId: React.PropTypes.string.isRequired,
+    children: React.PropTypes.object
   },
 
   renderRowName() {
@@ -24,6 +25,7 @@ export default React.createClass({
     return (
       <div className="tr">
         <span className="td kbc-break-all">{this.renderRowName()}</span>
+        {this.props.children}
       </div>
     );
   }

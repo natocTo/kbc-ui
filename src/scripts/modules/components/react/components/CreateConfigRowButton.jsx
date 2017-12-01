@@ -2,9 +2,9 @@ import React, {PropTypes} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import Immutable from 'immutable';
 
-import {Input} from './../../../../react/common/KbcBootstrap';
+import {Input} from '../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import InstalledComponentsActionCreators from '../../../components/InstalledComponentsActionCreators';
+import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
