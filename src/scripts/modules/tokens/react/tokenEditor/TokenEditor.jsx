@@ -138,7 +138,23 @@ export default React.createClass({
   },
 
   renderFileUploadsAccessInput() {
+    const isAdminToken = this.props.token.has('admin');
     const isFullAccess = this.props.token.get('canReadAllFileUploads', false);
+
+    if (isAdminToken) {
+      return (
+        <div className="col-sm-9">
+          <div className="radio">
+            <label style={{'paddingLeft': '0px', 'cursor': 'default'}}>
+              <span>Full Access</span>
+            </label>
+            <span className="help-block">
+              Allow access to all file uploads
+            </span>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="col-sm-9">
         <div className="radio">
