@@ -1,7 +1,4 @@
 import React from 'react';
-import SettingsTabs from '../../../react/layout/SettingsTabs';
-// import {Link} from 'react-router';
-// import ApplicationStore from '../../../stores/ApplicationStore';
 import TokensStore from '../StorageTokensStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import TokenEditor from './tokenEditor/TokenEditor';
@@ -77,8 +74,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          {this.renderTabs()}
-          {this.state.token ?
+           {this.state.token ?
            <Tabs id="token-detail-tabs" animation={false}>
              <Tab title="Overview" eventKey="overview">
                <div>
@@ -157,9 +153,5 @@ export default React.createClass({
       this.updateLocalState('isSaving', false);
       throw e;
     });
-  },
-
-  renderTabs() {
-    return <SettingsTabs active="tokens" />;
   }
 });
