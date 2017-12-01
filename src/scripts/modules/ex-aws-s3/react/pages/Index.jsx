@@ -16,7 +16,7 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 import {Link} from 'react-router';
 
 // local components
-import CreateRowButton from '../../../components/react/components/CreateRowButton';
+import CreateConfigRowButton from '../../../components/react/components/CreateConfigRowButton';
 
 
 // css
@@ -57,8 +57,11 @@ export default React.createClass({
             <p>
               Rows
             </p>
+            <pre>
+              {JSON.stringify(this.state.rows.toJS(), null, '    ')}
+            </pre>
             <div className="text-center">
-              <CreateRowButton
+              <CreateConfigRowButton
                 componentId={COMPONENT_ID}
                 configId={this.state.configId}
                 onRowCreated={function() { return; }}
@@ -85,7 +88,7 @@ export default React.createClass({
               </RunComponentButton>
             </li>
             <li>
-              <CreateRowButton
+              <CreateConfigRowButton
                 componentId={COMPONENT_ID}
                 configId={this.state.configId}
                 onRowCreated={function() { return; }}
@@ -99,6 +102,7 @@ export default React.createClass({
                 &nbsp;Credentials
               </Link>
             </li>
+
             <li>
               <DeleteConfigurationButton
                 componentId={COMPONENT_ID}
