@@ -33,6 +33,5 @@ export default {
       isComponent: true,
       defaultRouteHandler: Credentials
     }
-    // createTablesRoute(COMPONENT_ID)
   ]
 };

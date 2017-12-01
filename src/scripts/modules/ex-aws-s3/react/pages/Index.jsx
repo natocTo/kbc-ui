@@ -14,10 +14,8 @@ import DeleteConfigurationButton from '../../../components/react/components/Dele
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import {Link} from 'react-router';
-
-// local components
 import CreateConfigRowButton from '../../../components/react/components/CreateConfigRowButton';
-
+import ConfigRowTable from '../../../components/react/components/ConfigRowTable';
 
 // css
 import './Index.less';
@@ -57,18 +55,23 @@ export default React.createClass({
             <p>
               Rows
             </p>
-            <pre>
-              {JSON.stringify(this.state.rows.toJS(), null, '    ')}
-            </pre>
-            <div className="text-center">
-              <CreateConfigRowButton
-                componentId={COMPONENT_ID}
-                configId={this.state.configId}
-                onRowCreated={function() { return; }}
-                emptyConfig={function() { return {};}}
-                type="button"
-              />
-            </div>
+          </div>
+          <ConfigRowTable
+            rows={this.state.rows.toList()}
+            componentId={COMPONENT_ID}
+            configId={this.state.configId}
+          />
+          <pre>
+            {JSON.stringify(this.state.rows.toJS(), null, '    ')}
+          </pre>
+          <div className="text-center">
+            <CreateConfigRowButton
+              componentId={COMPONENT_ID}
+              configId={this.state.configId}
+              onRowCreated={function() { return; }}
+              emptyConfig={function() { return {};}}
+              type="button"
+            />
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
