@@ -34,7 +34,7 @@ export default React.createClass({
            isAdminToken ?
            <div className="col-sm-9">
              <p className="form-control-static">
-               This is a user admin token that is valid as long the user exists.
+               This is a user admin token that is valid as long as the user exists.
              </p>
            </div>
            :
