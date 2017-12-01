@@ -31,10 +31,7 @@ export default {
       path: ':config/credentials',
       title: 'Credentials',
       isComponent: true,
-      defaultRouteHandler: Credentials,
-      requireData: [
-        (params) => installedComponentsActions.loadComponentConfigData(COMPONENT_ID, params.config)
-      ]
+      defaultRouteHandler: Credentials
     }
     // createTablesRoute(COMPONENT_ID)
   ]
