@@ -55,7 +55,8 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         componentSupportsSimpleSetup: actionsProvisioning.componentSupportsSimpleSetup(componentId),
         queryNameExists: ExDbStore.queryNameExists(editingQuery),
         localState: ExDbStore.getLocalState(),
-        credentialsHasDatabase: !!credentials.get('database')
+        credentialsHasDatabase: !!credentials.get('database'),
+        validConnection: ExDbStore.isConnectionValid()
       };
     },
 

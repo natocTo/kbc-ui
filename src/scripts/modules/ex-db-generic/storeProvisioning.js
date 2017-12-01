@@ -12,6 +12,10 @@ const defaultSshPort = 22;
 export const sourceTablesPath = ['sourceTables', 'data'];
 export const sourceTablesErrorPath = ['sourceTables', 'error'];
 export const loadingSourceTablesPath = ['sourceTables', 'loading'];
+export const testingConnectionPath = ['connection', 'testing'];
+export const connectionErrorPath = ['connection', 'error'];
+export const connectionValidPath = ['connection', 'valid'];
+export const connectionTestedPath = ['connection', 'tested'];
 
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
@@ -120,6 +124,18 @@ export function createStore(componentId, configId) {
       } else {
         return defaultNewCredentials;
       }
+    },
+
+    isConnectionValid() {
+      return data.localState.get(connectionValidPath);
+    },
+
+    getConnectionError() {
+      return data.localState.get(connectionErrorPath);
+    },
+
+    hasConnectionBeenTested() {
+      return data.localState.get(connectionTestedPath);
     },
     // Credentials -- end --
 

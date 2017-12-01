@@ -27,10 +27,6 @@ import LastUpdateInfo from '../../../../../react/common/LastUpdateInfo';
 
 import {Navigation} from 'react-router';
 
-import {loadingSourceTablesPath} from '../../../storeProvisioning';
-import {sourceTablesPath} from '../../../storeProvisioning';
-import {sourceTablesErrorPath} from '../../../storeProvisioning';
-
 import Quickstart from '../../components/Quickstart';
 import SourceTablesError from '../../components/SourceTablesError';
 
@@ -72,6 +68,7 @@ export default function(componentId) {
         queriesFilter: ExDbStore.getQueriesFilter(),
         queriesFiltered: ExDbStore.getQueriesFiltered(),
         hasEnabledQueries: enabledQueries.count() > 0,
+        validConnection: ExDbStore.isConnectionValid(),
         localState: ExDbStore.getLocalState()
       };
     },
@@ -148,9 +145,11 @@ export default function(componentId) {
               <Quickstart
                 componentId={componentId}
                 configId={this.state.configId}
-                isLoadingSourceTables={this.state.localState.getIn(loadingSourceTablesPath)}
-                sourceTables={this.state.localState.getIn(sourceTablesPath)}
-                sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
+                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath)}
+                isTestingConnection={this.state.localState.getIn(storeProvisioning.testingConnectionPath)}
+                validConnection={this.state.localState.getIn(storeProvisioning.connectionValidPath)}
+                sourceTables={this.state.localState.getIn(storeProvisioning.sourceTablesPath)}
+                sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
                 quickstart={this.state.localState.get('quickstart') || Map()}
                 onChange={actionsCreators.quickstartSelected}
                 onSubmit={actionsCreators.quickstart}
@@ -190,7 +189,7 @@ export default function(componentId) {
         return (
           <li>
             <Link to={link} params={{ config: this.state.configId }}>
-              <i className="fa fa-fw fa-user"/> Database Credentials
+              <i className="fa fa-fw fa-user"/> Database Credentials Is {this.state.validConnection} Valid?
             </Link>
           </li>
         );
@@ -213,8 +212,10 @@ export default function(componentId) {
             <SourceTablesError
               componentId={componentId}
               configId={this.state.configId}
-              sourceTablesLoading={this.state.localState.getIn(loadingSourceTablesPath, false)}
-              sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
+              connectionTesting={this.state.localState.getIn(storeProvisioning.testingConnectionPath, false)}
+              connectionError={this.state.localState.getIn(storeProvisioning.connectionErrorPath)}
+              sourceTablesLoading={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath, false)}
+              sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
             />
             {this.state.hasCredentials && this.state.queries.count() > 0 ? (
               <div className="row">

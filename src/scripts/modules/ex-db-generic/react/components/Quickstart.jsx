@@ -10,6 +10,8 @@ export default React.createClass({
     configId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string,
     isLoadingSourceTables: React.PropTypes.bool.isRequired,
+    isTestingConnection: React.PropTypes.bool.isRequired,
+    validConnection: React.PropTypes.bool.isRequired,
     sourceTables: React.PropTypes.object,
     sourceTablesError: React.PropTypes.string,
     quickstart: React.PropTypes.object,
@@ -95,7 +97,7 @@ export default React.createClass({
 
     var loader = (
       <div className="form-control-static">
-        <Loader/> Fetching table list from source database ...
+        <Loader/> {}Fetching table list from source database ...
       </div>
     );
 

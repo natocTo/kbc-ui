@@ -9,17 +9,30 @@ import getDefaultPort from './templates/defaultPorts';
 import {getProtectedProperties} from './templates/credentials';
 
 export function loadConfiguration(componentId, configId) {
-  if (!createActions(componentId).sourceTablesLoaded(configId)) {
-    createActions(componentId).updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
+  const actions = createActions(componentId);
+  const store = storeProvisioning.createStore(componentId, configId);
+  if (!store.getSourceTables()) {
+    actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
+    actions.updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
   }
   return componentsActions.loadComponentConfigData(componentId, configId);
 }
 
 export function loadSourceTables(componentId, configId) {
   const actions = createActions(componentId);
-  if (componentSupportsSimpleSetup(componentId) && !actions.sourceTablesLoaded(configId)) {
-    createActions(componentId).updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
-    return createActions(componentId).getSourceTables(configId);
+  const store = storeProvisioning.createStore(componentId, configId);
+  if (componentSupportsSimpleSetup(componentId) && !store.getSourceTables()) {
+    if (!store.connection) {
+      actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
+      return actions.testSavedCredentials(configId).then(() => {
+        actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, false);
+        if (store.isConnectionValid()) {
+          return createActions(componentId).getSourceTables(configId);
+        }
+      });
+    } else if (store.isConnectionValid()) {
+      return createActions(componentId).getSourceTables(configId);
+    }
   }
 }
 
@@ -127,6 +140,7 @@ export function createActions(componentId) {
     updateEditingCredentials(configId, newCredentials) {
       updateLocalState(configId, 'editingCredentials', newCredentials);
       if (!getLocalState(configId).get('isChangedCredentials', false)) {
+        updateLocalState(configId, storeProvisioning.connectionTestedPath, false);
         updateLocalState(configId, ['isChangedCredentials'], true);
       }
     },
@@ -147,6 +161,7 @@ export function createActions(componentId) {
       const diffMsg = 'Save new credentials';
       return saveConfigData(configId, newData, ['isSavingCredentials'], diffMsg).then(() => {
         this.resetNewCredentials(configId);
+        this.updateLocalState(configId, storeProvisioning.connectionTestedPath, false);
         RoutesStore.getRouter().transitionTo(componentId, {config: configId});
       });
     },
@@ -172,6 +187,20 @@ export function createActions(componentId) {
         configData: runData.toJS()
       };
       return callDockerAction(componentId, 'testConnection', params);
+    },
+
+    testSavedCredentials(configId) {
+      const store = getStore(configId);
+      return this.testCredentials(configId, store.getCredentials()).then(function(data) {
+        if (data.status === 'error') {
+          updateLocalState(configId, storeProvisioning.connectionErrorPath, fromJS(data.message));
+        } else if (data.status === 'success') {
+          updateLocalState(configId, storeProvisioning.connectionValidPath, true);
+          updateLocalState(configId, storeProvisioning.connectionErrorPath, null);
+        }
+        updateLocalState(configId, storeProvisioning.testingConnectionPath, false);
+        updateLocalState(configId, storeProvisioning.connectionTestedPath, false);
+      });
     },
     // Credentials actions end
 
@@ -333,11 +362,6 @@ export function createActions(componentId) {
       updateLocalState(configId, ['quickstart', 'tables'], selected);
     },
 
-    sourceTablesLoaded(configId) {
-      const store = getStore(configId);
-      return !!store.getSourceTables(configId);
-    },
-
     updateLocalState(configId, path, data) {
       return updateLocalState(configId, path, data);
     },
@@ -345,6 +369,7 @@ export function createActions(componentId) {
     getSourceTables(configId) {
       const store = getStore(configId);
       const credentials = store.getCredentials();
+      updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
       if (store.hasValidCredentials(credentials)) {
         let runData = store.configData.setIn(['parameters', 'tables'], List());
         runData = runData.setIn(['parameters', 'db'], store.getCredentials());
