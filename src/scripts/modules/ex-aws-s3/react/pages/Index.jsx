@@ -32,7 +32,8 @@ export default React.createClass({
     const configId = RoutesStore.getCurrentRouteParam('config');
     return {
       configId: configId,
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId)
+      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
+      rows: InstalledComponentsStore.getConfigRows(COMPONENT_ID, configId)
     };
   },
 
