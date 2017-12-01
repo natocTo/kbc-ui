@@ -90,16 +90,22 @@ export default React.createClass({
                    updateToken={this.updateDirtyToken}
                  />
                </div>
-               <div className="row text-right">
-                 <ConfirmButtons
-                   isDisabled={!this.isValid() || this.state.token === this.state.dirtyToken}
-                   isSaving={this.state.isSaving}
-                   onSave={this.handleSaveToken}
-                   onCancel={this.handleClose}
-                   placement="right"
-                   cancelLabel={this.state.cancelLabel}
-                   saveLabel={this.state.saveLabel}
-                 />
+               <div className="row">
+                 <div className="form form-horizontal">
+                   <div className="form-group">
+                     <div className="col-sm-offset-3 col-sm-9">
+                       <ConfirmButtons
+                         isDisabled={!this.isValid() || this.state.token === this.state.dirtyToken}
+                         isSaving={this.state.isSaving}
+                         onSave={this.handleSaveToken}
+                         onCancel={this.handleClose}
+                         placement="left"
+                         cancelLabel={this.state.cancelLabel}
+                         saveLabel={this.state.saveLabel}
+                       />
+                     </div>
+                   </div>
+                 </div>
                </div>
              </Tab>
              <Tab title="Events" eventKey="events">
