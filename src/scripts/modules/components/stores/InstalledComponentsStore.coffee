@@ -197,6 +197,9 @@ InstalledComponentsStore = StoreUtils.createStore
   getDeletedConfig: (componentId, configId) ->
     _store.getIn ['deletedComponents', componentId, 'configurations', configId]
 
+  getConfigRows: (componentId, configId) ->
+    _store.getIn ['configRows', componentId, configId], Map()
+
   getConfigRow: (componentId, configId, rowId) ->
     _store.getIn ['configRows', componentId, configId, rowId], Map()
 
@@ -992,10 +995,44 @@ Dispatcher.register (payload) ->
     when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS
       _store = _store.withMutations (store) ->
         store
-          .mergeIn ['configRows', action.componentId, action.configurationId, action.rowId],
+          .mergeIn [
+            'configRows', action.componentId, action.configurationId, action.rowId
+          ],
           fromJSOrdered(action.data)
+          .mergeIn [
+            'configRowsData', action.componentId, action.configurationId, action.rowId
+          ],
+          fromJSOrdered(action.data.configuration)
+
           .deleteIn ['savingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
           .deleteIn ['editingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
+      InstalledComponentsStore.emitChange()
+
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_START
+      _store = _store.setIn [
+        'creatingConfigurationRows', action.componentId, action.configurationId
+      ], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_ERROR
+      _store = _store.deleteIn [
+        'creatingConfigurationRows', action.componentId, action.configurationId
+      ]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+          .setIn [
+            'configRows', action.componentId, action.configurationId, action.data.id
+          ],
+          fromJSOrdered(action.data)
+          .setIn [
+            'configRowsData', action.componentId, action.configurationId, action.data.id
+          ],
+          fromJSOrdered(action.data.configuration)
+
       InstalledComponentsStore.emitChange()
 
 module.exports = InstalledComponentsStore

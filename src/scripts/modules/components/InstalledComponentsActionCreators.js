@@ -863,5 +863,37 @@ module.exports = {
       });
       throw e;
     });
+  },
+
+  createConfigurationRow: function(componentId, configurationId, name, description, config) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId
+    });
+    const data = {
+      name: name,
+      description: description,
+      configuration: config
+    };
+    const changeDescription = 'Row ' + name + ' added';
+    return installedComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription)
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          data: response
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          error: e
+        });
+        throw e;
+      });
   }
 };
