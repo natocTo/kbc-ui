@@ -9,7 +9,7 @@
   @GuideColor2: #25B8EB;
   @wizardWidth: 900px;
   @wizardWidthAside: 320px;
-  @wizardHeight: 400px;
+  @wizardHeight: 458px;
   @statusBarHeight: 50px;
   @verticalPadding: 8px;
 
@@ -61,6 +61,11 @@
         position: relative;
         width: 100%;
       }
+    }
+
+    // prevent app modals to overflow wizard modal
+    .modal-lg:not(.guide-wizard) {
+      width: 670px;
     }
   }
 
@@ -227,7 +232,8 @@
         }
         .btn {
           pointer-events: none;
-          padding: 2px 5px;
+          padding: 1px 5px;
+          font-size: 12px;
           &-link {
             color: #15c3ff;
             padding-bottom: 0;
@@ -243,6 +249,7 @@
         transform: translate(50%, -50%);
         width: @wizardWidth;
         transition: all 200ms ease;
+        z-index: 1100;
       }
 
       &.guide-wizard-aside {
@@ -268,7 +275,7 @@
           }
         }
         .modal-dialog {
-          top: 355px;
+          top: 385px;
           right: @wizardWidthAside/2 - 2;
           width: @wizardWidthAside;
           .col-md-6 {
