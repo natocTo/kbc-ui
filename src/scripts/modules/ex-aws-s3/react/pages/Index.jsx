@@ -61,9 +61,6 @@ export default React.createClass({
             componentId={COMPONENT_ID}
             configId={this.state.configId}
           />
-          <pre>
-            {JSON.stringify(this.state.rows.toJS(), null, '    ')}
-          </pre>
           <div className="text-center">
             <CreateConfigRowButton
               componentId={COMPONENT_ID}
