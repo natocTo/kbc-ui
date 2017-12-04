@@ -1,6 +1,5 @@
 import React from 'react';
 import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
-import ConfigRowItem from './ConfigRowsTableItem';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import DeleteConfigRowButton from './DeleteConfigRowButton';
 
@@ -14,16 +13,26 @@ export default React.createClass({
     configId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string.isRequired,
     headers: React.PropTypes.array,
-    configRowItemElement: React.PropTypes.func
+    columns: React.PropTypes.array
   },
 
   getDefaultProps() {
     return {
-      headers: ['Name'],
-      configRowItemElement: ConfigRowItem
+      headers: ['Name', 'Description'],
+      columns: [
+        function(row) {
+          return row.get('name') !== '' ? row.get('name') : 'Untitled';
+        },
+        function(row) {
+          return (
+            <small>
+              {row.get('description') !== '' ? row.get('description') : 'No description'}
+            </small>
+          );
+        }
+      ]
     };
   },
-
 
   renderHeaders() {
     return this.props.headers.map(function(header, index) {
@@ -35,36 +44,44 @@ export default React.createClass({
     });
   },
 
+  renderRows() {
+    return this.props.rows.map(function(row, rowIndex) {
+      return (
+        <div className="tr" key={rowIndex}>
+          {this.props.columns.map(function(columnFunction, columnIndex) {
+            return (
+              <div className="td kbc-break-all" key={columnIndex}>
+                {columnFunction(row)}
+              </div>
+            );
+          })}
+          <div className="td text-right kbc-no-wrap">
+            {this.renderRowActionButtons(row)}
+          </div>
+        </div>
+      );
+    }, this);
+  },
+
   renderRowActionButtons(row) {
-    return (
-      <span className="td text-right kbc-no-wrap">
-        <DeleteConfigRowButton
-          isPending={false}
-          onClick={function() {}}
-        />
-        <ActivateDeactivateButton
-          activateTooltip="Enable"
-          deactivateTooltip="Disable"
-          isActive={!row.get('disabled', false)}
-          isPending={false}
-          onChange={function() {}}
-        />
-      </span>
-    );
+    return [
+      (<DeleteConfigRowButton
+        key="delete"
+        isPending={false}
+        onClick={function() {}}
+      />),
+      (<ActivateDeactivateButton
+        key="activate"
+        activateTooltip="Enable"
+        deactivateTooltip="Disable"
+        isActive={!row.get('disabled', false)}
+        isPending={false}
+        onChange={function() {}}
+      />)
+    ];
   },
 
   render() {
-    const children = this.props.rows.map(function(row) {
-      const props = {
-        row: row,
-        componentId: this.props.componentId,
-        configId: this.props.configId,
-        key: row.get('id'),
-        children: this.renderRowActionButtons(row)
-      };
-      return React.createElement(this.props.configRowItemElement, props);
-    }, this).toArray();
-
     return (
       <div className="table table-striped table-hover">
         <div className="thead" key="table-header">
@@ -73,7 +90,7 @@ export default React.createClass({
           </div>
         </div>
         <div className="tbody">
-          {children}
+          {this.renderRows()}
         </div>
       </div>
     );
