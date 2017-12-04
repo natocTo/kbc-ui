@@ -21,17 +21,19 @@ export function loadConfiguration(componentId, configId) {
 export function loadSourceTables(componentId, configId) {
   const actions = createActions(componentId);
   const store = storeProvisioning.createStore(componentId, configId);
-  if (componentSupportsSimpleSetup(componentId) && (!store.hasConnectionBeenTested() || !store.getSourceTables())) {
+  if (!store.hasConnectionBeenTested() || !store.getSourceTables()) {
     if (!store.hasConnectionBeenTested()) {
       actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
       return actions.testSavedCredentials(configId).then((connectionValid) => {
         actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, false);
-        if (connectionValid) {
+        if (connectionValid && componentSupportsSimpleSetup(componentId)) {
           return createActions(componentId).getSourceTables(configId);
         }
       });
     }
-    return createActions(componentId).getSourceTables(configId);
+    if (componentSupportsSimpleSetup(componentId)) {
+      return createActions(componentId).getSourceTables(configId);
+    }
   }
 }
 
