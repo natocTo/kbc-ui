@@ -119,7 +119,9 @@ To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
       'route': {
         'name': 'storage',
         'params': []
-      }
+      },
+      'previousLink': 'jobs',
+      'nextLink': ''
     }, {
       'id': 8,
       'position': 'center',
