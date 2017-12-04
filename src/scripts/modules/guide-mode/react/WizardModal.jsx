@@ -10,6 +10,8 @@ const redirectTo = (pathname) => {
   window.location.assign(window.location.origin + pathname);
 };
 
+const ROUTE_PATH_STORAGE = 'storage';
+
 export default React.createClass({
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
@@ -35,7 +37,7 @@ export default React.createClass({
       return this.props.projectBaseUrl + delimiter + path;
     }
     // development
-    if (path === 'storage') {
+    if (path === ROUTE_PATH_STORAGE) {
       return '/index-storage.html';
     } else {
       return '/?token=TOKEN#/' + path;
@@ -202,13 +204,13 @@ export default React.createClass({
     return stepState;
   },
   isCurrentStepStorage() {
-    return this.getStepRoute().name === 'storage';
+    return this.getStepRoute().name === ROUTE_PATH_STORAGE;
   },
   isPrevStepStorage() {
-    return this.hasPreviousStepRoute() && this.getPreviousStepRoute().name === 'storage';
+    return this.hasPreviousStepRoute() && this.getPreviousStepRoute().name === ROUTE_PATH_STORAGE;
   },
   isNextStepStorage() {
-    return this.hasNextStepRoute() && this.getNextStepRoute().name === 'storage';
+    return this.hasNextStepRoute() && this.getNextStepRoute().name === ROUTE_PATH_STORAGE;
   },
   handlePrevStepClick() {
     this.handleStep('prev');
@@ -294,7 +296,7 @@ export default React.createClass({
     );
   },
   closeLessonModal() {
-    if (this.getStepRoute().name === 'storage') {
+    if (this.isCurrentStepStorage()) {
       redirectTo(this.getProjectPageUrlHref(''));
     } else {
       RoutesStore.getRouter().transitionTo('app');
