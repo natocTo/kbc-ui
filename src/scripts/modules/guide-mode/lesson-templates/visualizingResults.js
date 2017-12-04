@@ -92,7 +92,11 @@ export default {
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Learn More',
-      'markdown': 'This lesson gave you a taste of how easy it is to export data from Keboola Connection and visualize the results. To see how to automate the whole process, continue to the next lesson – Project Automation. <br/><br/> Learn more about <a href="https://help.keboola.com/writers/" target="_blank">Writers</a>, or follow the hands-on tutorial on writing data in our <a href="https://help.keboola.com/tutorial/write/" target="_blank">user documentation</a>.'
+      'markdown': 'This lesson gave you a taste of how easy it is to export data from Keboola Connection and visualize the results. To see how to automate the whole process, continue to the next lesson – Project Automation. <br/><br/> Learn more about <a href="https://help.keboola.com/writers/" target="_blank">Writers</a>, or follow the hands-on tutorial on writing data in our <a href="https://help.keboola.com/tutorial/write/" target="_blank">user documentation</a>.',
+      'route': {
+        'name': 'app',
+        'params': []
+      }
     }
   ]
 };
