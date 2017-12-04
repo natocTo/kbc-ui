@@ -9,6 +9,7 @@ import { ActionTypes as componentsActionTypes } from '../../components/Constants
 import { ActionTypes as jobActionTypes } from '../../jobs/Constants';
 import { ActionTypes as transformationsActionTypes } from '../../transformations/Constants';
 import { ActionTypes as orchestrationsActionTypes } from '../../orchestrations/Constants';
+import { ActionTypes as applicationActionTypes } from '../../../constants/KbcConstants';
 import ApplicationStore from '../../../stores/ApplicationStore';
 
 const LOCAL_STORAGE_KEY = 'kbc-ui-guide-mode';
@@ -117,6 +118,28 @@ Dispatcher.register((payload) => {
     };
 
     switch (action.type) {
+      // we're checking routerState.path to update Wizard Steps after navigation from storage app
+      case applicationActionTypes.ROUTER_ROUTE_CHANGE_SUCCESS:
+        if (WizardStore.getCurrentLesson().id === 1 && WizardStore.getCurrentStep().id === 3) {
+          if (action.routerState.path === '/extractors') {
+            saveAndEmit(2);
+          } else if (action.routerState.path === '/transformations') {
+            saveAndEmit(4);
+          }
+        } else if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 6) {
+          if (action.routerState.path === '/extractors/keboola.ex-db-snowflake') {
+            saveAndEmit(5);
+          } else if (action.routerState.path === '/') {
+            saveAndEmit(7);
+          }
+        } else if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 7) {
+          if (action.routerState.path === '/jobs') {
+            saveAndEmit(6);
+          } else if (action.routerState.path === '/') {
+            saveAndEmit(8);
+          }
+        }
+        break;
       case componentsActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS:
         if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 2 && action.componentId === 'keboola.ex-db-snowflake') {
           saveAndEmit(3);
@@ -129,15 +152,6 @@ Dispatcher.register((payload) => {
           saveAndEmit(4);
         } else if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 4 && action.componentId === 'keboola.ex-db-snowflake') {
           saveAndEmit(5);
-        }
-        break;
-      case componentsActionTypes.INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS:
-        if (WizardStore.getCurrentLesson().id === 1 && WizardStore.getCurrentStep().id === 3) {
-          saveAndEmit(4);
-        } else if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 6) {
-          saveAndEmit(7);
-        } else if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 7) {
-          saveAndEmit(8);
         }
         break;
       case jobActionTypes.JOB_LOAD_SUCCESS:
