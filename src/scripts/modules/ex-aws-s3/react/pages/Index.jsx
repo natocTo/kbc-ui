@@ -71,11 +71,12 @@ export default React.createClass({
             rowDeletePending={function(rowId) {
               return InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('delete');
             }}
-            rowDisable={function(rowId) {
-              return installedComponentsActions.disableConfigurationRow(COMPONENT_ID, state.configId, rowId);
-            }}
-            rowEnable={function(rowId) {
-              return installedComponentsActions.enableConfigurationRow(COMPONENT_ID, state.configId, rowId);
+            rowEnableDisable={function(rowId) {
+              if (state.rows.get(rowId).get('disabled')) {
+                return installedComponentsActions.enableConfigurationRow(COMPONENT_ID, state.configId, rowId);
+              } else {
+                return installedComponentsActions.disableConfigurationRow(COMPONENT_ID, state.configId, rowId);
+              }
             }}
             rowEnableDisablePending={function(rowId) {
               return InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('disable') || InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('enable');

@@ -15,8 +15,7 @@ export default React.createClass({
     headers: React.PropTypes.array,
     columns: React.PropTypes.array,
     rowDelete: React.PropTypes.func.isRequired,
-    rowDisable: React.PropTypes.func.isRequired,
-    rowEnable: React.PropTypes.func.isRequired,
+    rowEnableDisable: React.PropTypes.func.isRequired,
     rowDeletePending: React.PropTypes.func.isRequired,
     rowEnableDisablePending: React.PropTypes.func.isRequired
   },
@@ -85,11 +84,7 @@ export default React.createClass({
         isActive={!row.get('disabled', false)}
         isPending={this.props.rowEnableDisablePending(row.get('id'))}
         onChange={function() {
-          if (row.get('disabled')) {
-            return props.rowEnable(row.get('id'));
-          } else {
-            return props.rowDisable(row.get('id'));
-          }
+          return props.rowEnableDisable(row.get('id'));
         }}
       />)
     ];
