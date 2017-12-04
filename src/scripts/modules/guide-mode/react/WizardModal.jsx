@@ -156,9 +156,6 @@ export default React.createClass({
   getStepMediaType() {
     return this.getLessonSteps()[this.getActiveStep()].mediaType;
   },
-  getStepLink() {
-    return this.getLessonSteps()[this.getActiveStep()].link;
-  },
   getStepRoute() {
     return this.getLessonSteps()[this.getActiveStep()].route;
   },
@@ -297,7 +294,7 @@ export default React.createClass({
     );
   },
   closeLessonModal() {
-    if (this.getStepLink() === 'storage') {
+    if (this.getStepRoute().name === 'storage') {
       redirectTo(this.getProjectPageUrlHref(''));
     } else {
       RoutesStore.getRouter().transitionTo('app');
