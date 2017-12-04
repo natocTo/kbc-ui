@@ -51,7 +51,7 @@ export default {
       + `<br><br>
 **Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.CARS* as the source table. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. Repeat the steps for the second table *in.c-keboola-ex-db-snowflake.POPULATION*.
 <br/><br/>
-**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and enter \`CARS_POPULATION\` as the source table. This table does not exist yet. It will be created in the transformation. Then set destination to \`out.c-snowflake.CARS_POPULATION\`. It’s the name the new table *CARS_POPULATION* will have when put in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
+**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and enter \`CARS_POPULATION\` as the source table. This table will be created in the transformation. Then set destination to \`out.c-snowflake.CARS_POPULATION\`. It’s the name the new table *CARS_POPULATION* will have in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
 <br/><br/>
 **Queries** — to create your output table, copy and paste this code: \`CREATE TABLE "CARS_POPULATION" AS SELECT "CARS".*, "POPULATION"."POPULATION", ("POPULATION"."POPULATION" / "CARS"."CARS") AS "PERSON_PER_CAR" FROM "CARS" JOIN "POPULATION" ON "CARS"."COUNTRY" = "POPULATION"."COUNTRY"\`. Then <br><span class="btn btn-success btn-sm">Save</span> it.
 <br/><br/>
