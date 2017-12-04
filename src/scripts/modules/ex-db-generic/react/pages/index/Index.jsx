@@ -21,15 +21,15 @@ import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 
-import {Link} from 'react-router';
+import {Loader} from 'kbc-react-components';
 import SearchRow from '../../../../../react/common/SearchRow';
 import * as actionsProvisioning from '../../../actionsProvisioning';
 import LastUpdateInfo from '../../../../../react/common/LastUpdateInfo';
 
-import {Navigation} from 'react-router';
+import {Link, Navigation} from 'react-router';
 
 import Quickstart from '../../components/Quickstart';
-import SourceTablesError from '../../components/SourceTablesError';
+import SourceTablesError from '../../components/AsynchActionError';
 
 export default function(componentId) {
   const actionsCreators = actionsProvisioning.createActions(componentId);
@@ -43,7 +43,7 @@ export default function(componentId) {
 
     componentDidMount() {
       // fetch sourceTable info if not done already
-      if (!this.state.sourceTables) {
+      if (!this.state.hasConnectionBeenTested || !this.state.sourceTables) {
         return actionsProvisioning.loadSourceTables(componentId, this.state.configId);
       }
     },
@@ -70,6 +70,8 @@ export default function(componentId) {
         queriesFiltered: ExDbStore.getQueriesFiltered(),
         hasEnabledQueries: enabledQueries.count() > 0,
         validConnection: ExDbStore.isConnectionValid(),
+        isTestingConnection: ExDbStore.isTestingConnection(),
+        hasConnectionBeenTested: ExDbStore.hasConnectionBeenTested(),
         localState: ExDbStore.getLocalState()
       };
     },
@@ -187,13 +189,23 @@ export default function(componentId) {
     renderCredentialsLink() {
       if (this.state.hasCredentials) {
         const link = 'ex-db-generic-' + componentId + '-credentials';
-        return (
-          <li>
-            <Link to={link} params={{ config: this.state.configId }}>
-              <JobStatusCircle status={(this.state.validConnection) ? 'success' : 'error'}/> Database Credentials
-            </Link>
-          </li>
-        );
+        if (this.state.isTestingConnection) {
+          return (
+            <li>
+              <Link to={link} params={{config: this.state.configId}}>
+                <Loader/> Database Credentials
+              </Link>
+            </li>
+          );
+        } else {
+          return (
+            <li>
+              <Link to={link} params={{ config: this.state.configId }}>
+                <JobStatusCircle status={(this.state.validConnection) ? 'success' : 'error'}/> Database Credentials
+              </Link>
+            </li>
+          );
+        }
       }
     },
 

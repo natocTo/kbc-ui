@@ -2,6 +2,7 @@ import React from 'react';
 
 import { loadSourceTables } from '../../actionsProvisioning';
 import { Loader } from 'kbc-react-components';
+import { Link } from 'react-router';
 
 export default React.createClass({
   propTypes: {
@@ -16,24 +17,22 @@ export default React.createClass({
   render() {
     const { componentId, configId, sourceTablesError, sourceTablesLoading, connectionTesting, connectionError } = this.props;
     if (connectionError) {
+      const link = 'ex-db-generic-' + componentId + '-credentials';
       return (
         <div className="kbc-inner-content-padding-fix">
           <div className="alert alert-warning">
-            <h4>The database connection is not valid</h4>
+            <h4>Connecting to the database failed</h4>
             <p>{connectionError}</p>
             <p>
               {connectionTesting ? (
                 <span>
-                  <Loader /> Retrying fetch of table list from source database ...
+                  <Loader /> Retrying the database connection ...
                 </span>
               ) : (
-                <button
-                  className="btn btn-warning"
-                  onClick={() => loadSourceTables(componentId, configId)}
-                >
-                  Retest connection
-                </button>
-              )}
+                <Link to={link} params={{config: configId}}>
+                  Update Database Credentials
+                </Link>
+              ) }
             </p>
           </div>
         </div>

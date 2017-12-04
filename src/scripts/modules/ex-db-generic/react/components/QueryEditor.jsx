@@ -7,7 +7,7 @@ import {CodeEditor} from '../../../../react/common/common';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 
-import SourceTablesError from './SourceTablesError';
+import SourceTablesError from './AsynchActionError';
 import TableLoader from './TableLoader';
 
 import editorMode from '../../templates/editorMode';

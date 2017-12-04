@@ -21,8 +21,8 @@ export function loadConfiguration(componentId, configId) {
 export function loadSourceTables(componentId, configId) {
   const actions = createActions(componentId);
   const store = storeProvisioning.createStore(componentId, configId);
-  if (componentSupportsSimpleSetup(componentId) && !store.getSourceTables()) {
-    if (!store.isConnectionValid()) {
+  if (componentSupportsSimpleSetup(componentId) && (!store.hasConnectionBeenTested() || !store.getSourceTables())) {
+    if (!store.hasConnectionBeenTested()) {
       actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
       return actions.testSavedCredentials(configId).then((connectionValid) => {
         actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, false);
@@ -173,6 +173,7 @@ export function createActions(componentId) {
       const diffMsg = 'Update credentials';
       return saveConfigData(configId, newConfigData, ['isSavingCredentials'], diffMsg).then(() => {
         this.cancelCredentialsEdit(configId);
+        this.updateLocalState(configId, storeProvisioning.connectionTestedPath, false);
         RoutesStore.getRouter().transitionTo(componentId, {config: configId});
       });
     },
