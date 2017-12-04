@@ -310,7 +310,7 @@ export default React.createClass({
   scrollBodyToTop() {
     let modalBody = document.getElementsByClassName('guide-modal-body')[0];
     if (typeof modalBody !== 'undefined') {
-      document.getElementsByClassName('guide-modal-body')[0].scrollTop = 0;
+      modalBody.scrollTop = 0;
     }
   }
 
