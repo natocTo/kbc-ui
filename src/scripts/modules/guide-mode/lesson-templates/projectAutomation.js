@@ -8,16 +8,22 @@ export default {
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Introduction',
-      'link': 'app',
-      'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically. <br/><br/> In this lesson, you will specify at what time or how often the tasks you configured in the previous lessons should be executed, and in what order. In addition, you will set up notifications that will be sent to you in case something goes wrong and requires your attention. <br/><br/> _Note: Your own projects won’t be affected by this in any way._'
+      'markdown': 'To bring in the newest data available, the whole sequence of loading, transforming and writing must be done repeatedly. Keboola Connection Orchestrator does exactly that – automatically. <br/><br/> In this lesson, you will specify at what time or how often the tasks you configured in the previous lessons should be executed, and in what order. In addition, you will set up notifications that will be sent to you in case something goes wrong and requires your attention. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'route': {
+        'name': 'app',
+        'params': []
+      }
     }, {
       'id': 2,
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Orchestration',
-      'link': 'orchestrations',
-      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-sm">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., My orchestration, and click <span class="btn btn-success btn-sm">Create Orchestration</span>.'
+      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-sm">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., My orchestration, and click <span class="btn btn-success btn-sm">Create Orchestration</span>.',
+      'route': {
+        'name': 'orchestrations',
+        'params': []
+      }
     }, {
       'id': 3,
       'position': 'aside',
@@ -26,7 +32,13 @@ export default {
       'title': 'Orchestration Overview',
       'markdown': 'The orchestrator configuration consists of three separate parts in which you will create the desired **sequence** of the tasks you wish to execute. You will set your execution **schedule**, and select **notifications** you want to be sent to you in case of errors, delays, etc. <br/><br/> Start by clicking on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Configure Tasks</span> to select and order the tasks.',
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'orchestration',
+        'params': [
+          'orchestrationId'
+        ]
+      }
     }, {
       'id': 4,
       'position': 'aside',
@@ -44,7 +56,13 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
 
 `,
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'orchestrationTasks',
+        'params': [
+          'orchestrationId'
+        ]
+      }
     }, {
       'id': 5,
       'position': 'aside',
@@ -60,7 +78,13 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       
       `,
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'orchestration',
+        'params': [
+          'orchestrationId'
+        ]
+      }
     }, {
       'id': 6,
       'position': 'aside',
@@ -76,7 +100,13 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
 
 `,
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'orchestration',
+        'params': [
+          'orchestrationId'
+        ]
+      }
     }, {
       'id': 7,
       'position': 'center',
@@ -85,7 +115,13 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       'title': 'Conclusion',
       'markdown': 'And that’s it! From data extraction to data writing, you have set up the full pipeline. Any change to your Snowflake database tables will be automatically reflected in your Tableau results. <br/><br/> Learn more about <a href="https://help.keboola.com/orchestrator/" target="_blank">Automation</a>, or follow the hands-on tutorial on automation in our <a href="https://help.keboola.com/tutorial/automate/" target="_blank">user documentation</a>. <br/><br/> Remember that no matter what problems you encounter while working with Keboola Connection, we will be more than happy to help you via our **Support**. There is <a href="https://help.keboola.com/" target="_blank">user documentation</a> written for you as well, covering every component of Keboola Connection. <br/><br/> If you wish to disable the Guide Mode, go to **Users & Settings**, the tab **Settings**.',
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'orchestration',
+        'params': [
+          'orchestrationId'
+        ]
+      }
     },
     {
       'id': 8,

@@ -7,11 +7,14 @@ export default {
       'position': 'center',
       'backdrop': true,
       'title': 'Introduction',
-      'link': 'app',
       'isNavigationVisible': false,
       'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. <br/><br/> In this lesson, you are going to take the table you created in your transformation in Lesson 3,and generate a Tableau Data Extract (TDE) file, using yet another Keboola Connection component – Writer. The file will be manually loaded into Tableau Desktop for visualization. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-wri.svg',
-      'mediaType': 'img'
+      'mediaType': 'img',
+      'route': {
+        'name': 'app',
+        'params': []
+      }
     },
     {
       'id': 2,
@@ -19,7 +22,6 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Writer',
-      'link': 'writers',
       'media': '',
       'markdown': 'Let’s assume you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the section **Writers**.'
       + `
@@ -27,7 +29,11 @@ export default {
 - Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
 - Name the configuration, e.g., My writer, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 `,
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'writers',
+        'params': []
+      }
     },
     {
       'id': 3,
@@ -43,8 +49,13 @@ export default {
 - <span class="btn btn-success btn-sm">Save</span> the configuration.
 - To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
 `,
-      'mediaType': ''
-
+      'mediaType': '',
+      'route': {
+        'name': 'tde-exporter',
+        'params': [
+          'config'
+        ]
+      }
     },
     {
       'id': 4,
@@ -52,7 +63,13 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Writer',
-      'markdown': 'To run the writer, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span>. After your Tableau Desktop Extract file is created, it can be downloaded by clicking on the link <a href="#" class="guide-link guide-link-fake">out.c_snowflake.cars_population.tde</a> and then loaded into Tableau Desktop. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the file to your computer, and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step</span>.'
+      'markdown': 'To run the writer, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span>. After your Tableau Desktop Extract file is created, it can be downloaded by clicking on the link <a href="#" class="guide-link guide-link-fake">out.c_snowflake.cars_population.tde</a> and then loaded into Tableau Desktop. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the file to your computer, and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step</span>.',
+      'route': {
+        'name': 'tde-exporter',
+        'params': [
+          'config'
+        ]
+      }
     },
     {
       'id': 5,
@@ -61,7 +78,13 @@ export default {
       'isNavigationVisible': false,
       'title': 'Tableau Report',
       'media': 'tbl.png',
-      'mediaType': 'img'
+      'mediaType': 'img',
+      'route': {
+        'name': 'tde-exporter',
+        'params': [
+          'config'
+        ]
+      }
     },
     {
       'id': 6,
