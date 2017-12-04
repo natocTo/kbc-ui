@@ -215,8 +215,10 @@ export default React.createClass({
   handlePrevStepClick() {
     this.handleStep('prev');
     if (this.hasPreviousStep()) {
-      if (this.isCurrentStepStorage() || this.isPrevStepStorage()) {
-        redirectTo(this.getProjectPageUrlHref(this.getPreviousStepRoute().name));
+      if (this.isCurrentStepStorage()) {
+        redirectTo(this.getProjectPageUrlHref(this.getCurrentStep().previousLink));
+      } else if (this.isPrevStepStorage()) {
+        redirectTo(this.getProjectPageUrlHref(ROUTE_PATH_STORAGE));
       } else if (this.hasPreviousStepRoute()) {
         const previousStepRoute = this.getPreviousStepRoute();
         let params = {};
@@ -244,8 +246,10 @@ export default React.createClass({
   handleNextStepClick() {
     this.handleStep('next');
     if (this.hasNextStep()) {
-      if (this.isCurrentStepStorage() || this.isNextStepStorage()) {
-        redirectTo(this.getProjectPageUrlHref(this.getNextStepRoute().name));
+      if (this.isCurrentStepStorage()) {
+        redirectTo(this.getProjectPageUrlHref(this.getCurrentStep().nextLink));
+      } else if (this.isNextStepStorage()) {
+        redirectTo(this.getProjectPageUrlHref(ROUTE_PATH_STORAGE));
       } else if (this.hasNextStepRoute()) {
         const nextStepRoute = this.getNextStepRoute();
         let params = {};
