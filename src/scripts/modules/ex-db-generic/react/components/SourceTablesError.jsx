@@ -28,7 +28,7 @@ export default React.createClass({
                 </span>
               ) : (
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-warning"
                   onClick={() => loadSourceTables(componentId, configId)}
                 >
                   Retest connection

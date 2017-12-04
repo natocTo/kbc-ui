@@ -13,7 +13,7 @@ export function loadConfiguration(componentId, configId) {
   const store = storeProvisioning.createStore(componentId, configId);
   if (!store.getSourceTables()) {
     actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
-    actions.updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
+    actions.updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, false);
   }
   return componentsActions.loadComponentConfigData(componentId, configId);
 }
@@ -22,17 +22,16 @@ export function loadSourceTables(componentId, configId) {
   const actions = createActions(componentId);
   const store = storeProvisioning.createStore(componentId, configId);
   if (componentSupportsSimpleSetup(componentId) && !store.getSourceTables()) {
-    if (!store.connection) {
+    if (!store.isConnectionValid()) {
       actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
-      return actions.testSavedCredentials(configId).then(() => {
+      return actions.testSavedCredentials(configId).then((connectionValid) => {
         actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, false);
-        if (store.isConnectionValid()) {
+        if (connectionValid) {
           return createActions(componentId).getSourceTables(configId);
         }
       });
-    } else if (store.isConnectionValid()) {
-      return createActions(componentId).getSourceTables(configId);
     }
+    return createActions(componentId).getSourceTables(configId);
   }
 }
 
@@ -192,14 +191,18 @@ export function createActions(componentId) {
     testSavedCredentials(configId) {
       const store = getStore(configId);
       return this.testCredentials(configId, store.getCredentials()).then(function(data) {
+        var connectionValid = false;
         if (data.status === 'error') {
           updateLocalState(configId, storeProvisioning.connectionErrorPath, fromJS(data.message));
+          updateLocalState(configId, storeProvisioning.connectionValidPath, false);
         } else if (data.status === 'success') {
           updateLocalState(configId, storeProvisioning.connectionValidPath, true);
           updateLocalState(configId, storeProvisioning.connectionErrorPath, null);
+          connectionValid = true;
         }
         updateLocalState(configId, storeProvisioning.testingConnectionPath, false);
-        updateLocalState(configId, storeProvisioning.connectionTestedPath, false);
+        updateLocalState(configId, storeProvisioning.connectionTestedPath, true);
+        return connectionValid;
       });
     },
     // Credentials actions end

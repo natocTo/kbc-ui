@@ -56,6 +56,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         queryNameExists: ExDbStore.queryNameExists(editingQuery),
         localState: ExDbStore.getLocalState(),
         credentialsHasDatabase: !!credentials.get('database'),
+        isTestingConnection: ExDbStore.isTestingConnection(),
         validConnection: ExDbStore.isConnectionValid()
       };
     },
@@ -88,6 +89,8 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           componentId={componentId}
           getDefaultOutputTable={this.getDefaultOutputTableId}
           isLoadingSourceTables={this.state.localState.getIn(loadingSourceTablesPath)}
+          isTestingConnection={this.state.isTestingConnection}
+          validConnection={this.state.validConnection}
           sourceTables={this.state.localState.getIn(sourceTablesPath) || List()}
           sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
           destinationEditing={this.state.localState.getIn(['isDestinationEditing', this.state.queryId], false)}

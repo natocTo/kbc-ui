@@ -18,6 +18,7 @@ import SidebarVersions from '../../../../components/react/components/SidebarVers
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
 
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
+import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 
 import {Link} from 'react-router';
@@ -189,7 +190,7 @@ export default function(componentId) {
         return (
           <li>
             <Link to={link} params={{ config: this.state.configId }}>
-              <i className="fa fa-fw fa-user"/> Database Credentials Is {this.state.validConnection} Valid?
+              <JobStatusCircle status={(this.state.validConnection) ? 'success' : 'error'}/> Database Credentials
             </Link>
           </li>
         );

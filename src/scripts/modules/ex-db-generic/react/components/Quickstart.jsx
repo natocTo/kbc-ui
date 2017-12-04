@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Immutable from 'immutable';
-import {Loader} from 'kbc-react-components';
 import Select from 'react-select';
+import TableLoader from './TableLoader';
 
 export default React.createClass({
   displayName: 'Quickstart',
@@ -95,15 +95,16 @@ export default React.createClass({
       </div>
     );
 
-    var loader = (
-      <div className="form-control-static">
-        <Loader/> {}Fetching table list from source database ...
-      </div>
-    );
-
     return (
       <div className="row text-center">
-        {(this.props.isLoadingSourceTables) ? loader : tableSelector }
+        <TableLoader
+          componentId={this.props.componentId}
+          configId={this.props.configId}
+          isLoadingSourceTables={this.props.isLoadingSourceTables}
+          isTestingConnection={this.props.isTestingConnection}
+          validConnection={this.props.validConnection}
+          tableSelectorElement={tableSelector}
+        />
       </div>
     );
   },

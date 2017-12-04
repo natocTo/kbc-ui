@@ -2,12 +2,13 @@
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
-import {Loader} from 'kbc-react-components';
+
 import {CodeEditor} from '../../../../react/common/common';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 
 import SourceTablesError from './SourceTablesError';
+import TableLoader from './TableLoader';
 
 import editorMode from '../../templates/editorMode';
 
@@ -23,6 +24,8 @@ export default React.createClass({
     getDefaultOutputTable: React.PropTypes.func.isRequired,
     componentId: React.PropTypes.string.isRequired,
     isLoadingSourceTables: React.PropTypes.bool.isRequired,
+    isTestingConnection: React.PropTypes.bool.isRequired,
+    validConnection: React.PropTypes.bool.isRequired,
     sourceTables: React.PropTypes.object.isRequired,
     sourceTablesError: React.PropTypes.string,
     destinationEditing: React.PropTypes.bool.isRequired,
@@ -367,7 +370,7 @@ export default React.createClass({
 
   renderSimpleTable() {
     if (this.props.showSimple && !this.props.query.get('advancedMode')) {
-      var tableSelect = (
+      var tableSelector = (
         <Select
           name="sourceTable"
           value={this.getTableValue()}
@@ -379,17 +382,18 @@ export default React.createClass({
         />
       );
 
-      var loader = (
-        <div className="form-control-static">
-          <Loader/> Fetching table list from source database ...
-        </div>
-      );
-
       return (
         <div className="form-group">
           <label className="col-md-3 control-label">Source Table</label>
           <div className="col-md-9">
-            { (this.props.isLoadingSourceTables) ? loader : tableSelect }
+            <TableLoader
+              componentId={this.props.componentId}
+              configId={this.props.configId}
+              isLoadingSourceTables={this.props.isLoadingSourceTables}
+              isTestingConnection={this.props.isTestingConnection}
+              validConnection={this.props.validConnection}
+              tableSelectorElement={tableSelector}
+            />
           </div>
         </div>
       );
