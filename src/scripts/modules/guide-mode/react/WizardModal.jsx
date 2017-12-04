@@ -57,7 +57,7 @@ export default React.createClass({
                 this.getModalTitle()
             )}
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className="guide-modal-body">
             <ReactCSSTransitionGroup
                 transitionName={'guide-wizard-animated-' + this.props.direction}
                 transitionEnterTimeout={200}
@@ -75,6 +75,7 @@ export default React.createClass({
     );
   },
   getModalBody() {
+    this.scrollBodyToTop();
     return (
       <div key={this.props.step} className="row">
         <div className="col-md-12">
@@ -304,6 +305,12 @@ export default React.createClass({
       this.props.setStep(nextStep);
     } else {
       this.closeLessonModal();
+    }
+  },
+  scrollBodyToTop() {
+    let modalBody = document.getElementsByClassName('guide-modal-body')[0];
+    if (typeof modalBody !== 'undefined') {
+      document.getElementsByClassName('guide-modal-body')[0].scrollTop = 0;
     }
   }
 
