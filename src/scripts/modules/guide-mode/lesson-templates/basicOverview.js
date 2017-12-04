@@ -42,7 +42,9 @@ export default {
       'route': {
         'name': 'storage',
         'params': []
-      }
+      },
+      'previousLink': 'extractors',
+      'nextLink': 'transformations'
     },
     {
       'id': 4,

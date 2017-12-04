@@ -132,7 +132,11 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       'markdown': 'Congratulations! You have completed all lessons.',
       'media': 'keboola-finished.svg',
       'mediaType': 'img',
-      'congratulations': true
+      'congratulations': true,
+      'route': {
+        'name': 'app',
+        'params': []
+      }
     }
   ]
 };

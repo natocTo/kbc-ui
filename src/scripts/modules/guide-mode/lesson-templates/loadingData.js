@@ -106,7 +106,9 @@ export default {
       'route': {
         'name': 'storage',
         'params': []
-      }
+      },
+      'previousLink': 'extractors/keboola.ex-db-snowflake',
+      'nextLink': ''
     }, {
       'id': 7,
       'position': 'center',
