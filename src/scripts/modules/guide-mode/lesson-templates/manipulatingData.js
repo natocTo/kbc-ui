@@ -8,27 +8,32 @@ export default {
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Introduction',
-      'link': 'app',
       'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (*CARS* and *POPULATION*) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
       'media': 'kbc_scheme_light_blue-tra.svg',
-      'mediaType': 'img'
+      'mediaType': 'img',
+      'route': {
+        'name': 'app',
+        'params': []
+      }
     }, {
       'id': 2,
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Bucket',
-      'link': 'transformations',
       'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-sm">+ New Transformation Bucket</span> and name it, e.g., My transformation bucket. Then click <span class="btn btn-success btn-sm">Create Bucket</span>.',
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'transformations',
+        'params': []
+      }
     }, {
       'id': 3,
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Transformation',
-      'link': 'transformations',
       'markdown': 'Now add a new transformation into the new bucket:'
       + `
 - Click <span class="btn btn-success btn-sm">+ New Transformation</span>.
@@ -38,14 +43,19 @@ export default {
 
 `,
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'transformationBucket',
+        'params': [
+          'config'
+        ]
+      }
     }, {
       'id': 4,
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Map Data & Set Queries',
-      'link': 'transformations',
       'markdown':
       'Next you need to specify what tables will be used in the transformation, what tables will be written to Storage as results, and what will happen with the data in the transformation:'
       + `<br><br>
@@ -59,7 +69,14 @@ To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
 
 `,
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'transformationDetail',
+        'params': [
+          'config',
+          'row'
+        ]
+      }
     }, {
       'id': 5,
       'position': 'aside',
@@ -68,35 +85,51 @@ To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
       'title': 'Run Transformation',
       'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database, where they will be changed by the queries. The result will be put back into Storage again. <br/><br/> To see the status of your extraction, click <span class="btn btn-primary btn-sm">Next step</span>.',
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'transformationDetail',
+        'params': [
+          'config',
+          'row'
+        ]
+      }
     }, {
       'id': 6,
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Check Jobs',
-      'link': 'jobs',
       'markdown': 'In the section **Jobs**, you can find all operations you have run in your project so far. <br/><br/> The status of your transformation job probably says **processing** now. It will change to **success** in a little while. Your input tables will be joined, the ratio of motor vehicles to persons per country will be calculated, and the output table *CARS_POPULATION* will be created. You can check the details of each job here too.' +
       '<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step</span>.',
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'jobs',
+        'params': []
+      }
     }, {
       'id': 7,
       'position': 'aside',
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Check Storage',
-      'link': 'storage',
       'markdown': 'To see what the final table looks like, check its data sample in Storage. Just click on the bucket **out.c-snowflake** on the left. Then click on the table *CARS_POPULATION* and select the tab **Data sample**.',
       'media': '',
-      'mediaType': ''
+      'mediaType': '',
+      'route': {
+        'name': 'storage',
+        'params': []
+      }
     }, {
       'id': 8,
       'position': 'center',
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Learn More',
-      'link': '',
+      'route': {
+        'name': '',
+        'params': []
+      },
       'markdown': 'In this lesson, you created a basic transformation in Keboola Connection. To see how to write the output data into Tableau, continue to the next lesson — Visualizing Results. <br/><br/> Learn more about <a href="https://help.keboola.com/manipulation/" target="_blank">Data Manipulation</a>, or follow the hands-on tutorial on data transformation in our <a href="https://help.keboola.com/tutorial/load" target="_blank">user documentation</a>.'
     }
   ]
