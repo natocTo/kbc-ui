@@ -49,7 +49,9 @@ _store = Map(
   pendingActions: Map()
   openMappings: Map()
 
-  filters: Map()
+  filters: Map(),
+
+  rowPendingActions: Map()
 )
 
 InstalledComponentsStore = StoreUtils.createStore
@@ -335,6 +337,9 @@ InstalledComponentsStore = StoreUtils.createStore
 
   isTemplatedConfigEditingString: (componentId, configId) ->
     _store.getIn(['templatedConfigEditingString', componentId, configId]) || false
+
+  getRowPendingActions: (componentId, configId, rowId) ->
+    _store.getIn ['rowPendingActions', componentId, configId, rowId], Map()
 
 
 Dispatcher.register (payload) ->
@@ -1008,7 +1013,6 @@ Dispatcher.register (payload) ->
           .deleteIn ['editingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
       InstalledComponentsStore.emitChange()
 
-
     when constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_START
       _store = _store.setIn [
         'creatingConfigurationRows', action.componentId, action.configurationId
@@ -1033,6 +1037,32 @@ Dispatcher.register (payload) ->
           ],
           fromJSOrdered(action.data.configuration)
 
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_START
+      _store = _store.setIn [
+        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'delete'
+      ], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_ERROR
+      _store = _store.deleteIn [
+        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'delete'
+      ]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+          .deleteIn [
+            'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'delete'
+          ]
+          .deleteIn [
+            'configRows', action.componentId, action.configurationId, action.rowId
+          ]
+          .deleteIn [
+            'configRowsData', action.componentId, action.configurationId, action.rowId
+          ]
       InstalledComponentsStore.emitChange()
 
 module.exports = InstalledComponentsStore

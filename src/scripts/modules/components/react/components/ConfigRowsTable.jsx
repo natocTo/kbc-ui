@@ -13,7 +13,9 @@ export default React.createClass({
     configId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string.isRequired,
     headers: React.PropTypes.array,
-    columns: React.PropTypes.array
+    columns: React.PropTypes.array,
+    rowDelete: React.PropTypes.func.isRequired,
+    rowDeletePending: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
@@ -64,11 +66,14 @@ export default React.createClass({
   },
 
   renderRowActionButtons(row) {
+    const props = this.props;
     return [
       (<DeleteConfigRowButton
         key="delete"
-        isPending={false}
-        onClick={function() {}}
+        isPending={this.props.rowDeletePending(row.get('id'))}
+        onClick={function() {
+          return props.rowDelete(row.get('id'));
+        }}
       />),
       (<ActivateDeactivateButton
         key="activate"

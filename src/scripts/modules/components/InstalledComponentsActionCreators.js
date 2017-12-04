@@ -20,6 +20,7 @@ import jobScheduledNotification from './react/components/notifications/jobSchedu
 import configurationRestoredNotification from './react/components/notifications/configurationRestored';
 import configurationMovedToTrash from './react/components/notifications/configurationMovedToTrash';
 import configurationMovedToTrashWithRestore from './react/components/notifications/configurationMovedToTrashWithRestore';
+import configurationRowDeleted from './react/components/notifications/configurationRowDeleted';
 
 const storeEncodedConfig = function(componentId, configId, dataToSave, changeDescription) {
   var component, projectId;
@@ -891,6 +892,39 @@ module.exports = {
           type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_ERROR,
           componentId: componentId,
           configurationId: configurationId,
+          error: e
+        });
+        throw e;
+      });
+  },
+
+  deleteConfigurationRow: function(componentId, configurationId, rowId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    const row = InstalledComponentsStore.getConfigRow(componentId, configurationId, rowId);
+    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' deleted';
+    return installedComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
+      .then(function() {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId
+        });
+        return ApplicationActionCreators.sendNotification({
+          message: configurationRowDeleted(row)
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
           error: e
         });
         throw e;

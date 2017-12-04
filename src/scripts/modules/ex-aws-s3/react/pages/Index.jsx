@@ -6,6 +6,9 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
+// actions
+import installedComponentsActions from '../../../components/InstalledComponentsActionCreators';
+
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import ComponentDescription from '../../../components/react/components/ComponentDescription';
@@ -16,6 +19,7 @@ import LatestJobs from '../../../components/react/components/SidebarJobs';
 import {Link} from 'react-router';
 import CreateConfigRowButton from '../../../components/react/components/CreateConfigRowButton';
 import ConfigRowsTable from '../../../components/react/components/ConfigRowsTable';
+
 
 // css
 import './Index.less';
@@ -36,6 +40,7 @@ export default React.createClass({
   },
 
   render() {
+    const state = this.state;
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -60,6 +65,12 @@ export default React.createClass({
             rows={this.state.rows.toList()}
             componentId={COMPONENT_ID}
             configId={this.state.configId}
+            rowDelete={function(rowId) {
+              return installedComponentsActions.deleteConfigurationRow(COMPONENT_ID, state.configId, rowId);
+            }}
+            rowDeletePending={function(rowId) {
+              return InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('delete');
+            }}
           />
           <div className="text-center">
             <CreateConfigRowButton
