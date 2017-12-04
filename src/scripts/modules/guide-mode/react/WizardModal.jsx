@@ -194,9 +194,6 @@ export default React.createClass({
       </ResponsiveEmbed>
     );
   },
-  getNextStepDispatchAction() {
-    return this.getLessonSteps()[this.getActiveStep()].nextStepDispatchAction;
-  },
   getStepState(step) {
     let stepState = '';
     if (step.id - 1 < this.props.achievedStep + 1) {
