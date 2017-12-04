@@ -1065,4 +1065,51 @@ Dispatcher.register (payload) ->
           ]
       InstalledComponentsStore.emitChange()
 
+    when constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_START
+      _store = _store.setIn [
+        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'enable'
+      ], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_ERROR
+      _store = _store.deleteIn [
+        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'enable'
+      ]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+          .deleteIn [
+            'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'enable'
+          ]
+          .setIn [
+            'configRows', action.componentId, action.configurationId, action.rowId, 'disabled',
+          ], false
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_START
+      _store = _store.setIn [
+        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'disable'
+      ], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_ERROR
+      _store = _store.deleteIn [
+        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'disable'
+      ]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_SUCCESS
+      _store = _store.withMutations (store) ->
+        store
+          .deleteIn [
+            'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'disable'
+          ]
+          .setIn [
+            'configRows', action.componentId, action.configurationId, action.rowId, 'disabled',
+          ], true
+      InstalledComponentsStore.emitChange()
+
+
 module.exports = InstalledComponentsStore

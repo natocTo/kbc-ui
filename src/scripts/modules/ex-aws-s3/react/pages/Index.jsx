@@ -71,6 +71,15 @@ export default React.createClass({
             rowDeletePending={function(rowId) {
               return InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('delete');
             }}
+            rowDisable={function(rowId) {
+              return installedComponentsActions.disableConfigurationRow(COMPONENT_ID, state.configId, rowId);
+            }}
+            rowEnable={function(rowId) {
+              return installedComponentsActions.enableConfigurationRow(COMPONENT_ID, state.configId, rowId);
+            }}
+            rowEnableDisablePending={function(rowId) {
+              return InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('disable') || InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('enable');
+            }}
           />
           <div className="text-center">
             <CreateConfigRowButton

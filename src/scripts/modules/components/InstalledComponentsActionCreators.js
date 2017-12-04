@@ -929,5 +929,65 @@ module.exports = {
         });
         throw e;
       });
+  },
+
+  disableConfigurationRow: function(componentId, configurationId, rowId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    const row = InstalledComponentsStore.getConfigRow(componentId, configurationId, rowId);
+    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' disabled';
+    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 1}, changeDescription)
+      .then(function() {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
+  },
+
+  enableConfigurationRow: function(componentId, configurationId, rowId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    const row = InstalledComponentsStore.getConfigRow(componentId, configurationId, rowId);
+    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' enabled';
+    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 0}, changeDescription)
+      .then(function() {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
   }
 };

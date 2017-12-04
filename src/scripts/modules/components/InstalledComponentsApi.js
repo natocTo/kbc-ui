@@ -120,10 +120,18 @@ const installedComponentsApi = {
       return response.body;
     });
   },
-  updateConfigurationRow: function(componentId, configurationId, rowId, data) {
-    return createRequest('PUT', 'components/' + componentId + '/configs/' + configurationId + '/rows/' + rowId).type('form').send(data).promise().then(function(response) {
-      return response.body;
-    });
+  updateConfigurationRow: function(componentId, configurationId, rowId, data, changeDescription) {
+    var formData = data;
+    if (changeDescription) {
+      formData.changeDescription = changeDescription;
+    }
+    return createRequest('PUT', 'components/' + componentId + '/configs/' + configurationId + '/rows/' + rowId)
+      .type('form')
+      .send(formData)
+      .promise()
+      .then(function(response) {
+        return response.body;
+      });
   },
   updateConfigurationRowEncrypted: function(componentUrl, componentId, configurationId, rowId, data) {
     return request('PUT', componentUrl + '/configs/' + configurationId + '/rows/' + rowId).set('X-StorageApi-Token', ApplicationStore.getSapiTokenString()).type('form').send(data).promise().then(function(response) {
