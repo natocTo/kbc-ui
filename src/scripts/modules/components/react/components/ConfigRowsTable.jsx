@@ -89,6 +89,7 @@ export default React.createClass({
         }}
       />),
       (<RunComponentButton
+        key="run"
         title="Run"
         component={this.props.componentId}
         runParams={function() {
