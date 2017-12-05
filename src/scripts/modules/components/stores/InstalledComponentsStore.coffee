@@ -537,8 +537,8 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_EDIT_START
-      _store = _store.withMutations (store) ->
-        store.setIn ['editingConfigurations', action.componentId, action.configurationId, action.field],
+      _store = _store
+        .setIn ['editingConfigurations', action.componentId, action.configurationId, action.field],
           InstalledComponentsStore.getConfig(action.componentId, action.configurationId).get action.field
       InstalledComponentsStore.emitChange()
 
@@ -622,32 +622,29 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_SUCCESS
-      _store = _store.withMutations (store) ->
-        store
-          .mergeIn ['components', action.componentId, 'configurations', action.configurationId],
+      _store = _store
+        .mergeIn ['components', action.componentId, 'configurations', action.configurationId],
           fromJSOrdered(action.data)
-          .deleteIn ['savingConfigurations', action.componentId, action.configurationId, action.field]
-          .deleteIn ['editingConfigurations', action.componentId, action.configurationId, action.field]
+        .deleteIn ['savingConfigurations', action.componentId, action.configurationId, action.field]
+        .deleteIn ['editingConfigurations', action.componentId, action.configurationId, action.field]
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_LOAD_SUCCESS
-      _store = _store.withMutations((store) ->
-        store
-          .set('isLoading', false)
-          .set('isLoaded', true)
-          .set('components',
-            ## convert to by key structure
-            fromJSOrdered(action.components)
-            .toMap()
-            .map((component) ->
-              component.set 'configurations', component.get('configurations').toMap().mapKeys((key, config) ->
-                config.get 'id'
-              )
+      _store = _store
+        .set('isLoading', false)
+        .set('isLoaded', true)
+        .set('components',
+          ## convert to by key structure
+          fromJSOrdered(action.components)
+          .toMap()
+          .map((component) ->
+            component.set 'configurations', component.get('configurations').toMap().mapKeys((key, config) ->
+              config.get 'id'
             )
-            .mapKeys((key, component) ->
-              component.get 'id'
-            ))
-      )
+          )
+          .mapKeys((key, component) ->
+            component.get 'id'
+          ))
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.DELETED_COMPONENTS_LOAD
@@ -659,23 +656,21 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.DELETED_COMPONENTS_LOAD_SUCCESS
-      _store = _store.withMutations((store) ->
-        store
-          .set('isDeletedLoading', false)
-          .set('isDeletedLoaded', true)
-          .set('deletedComponents',
-            ## convert to by key structure
-            fromJSOrdered(action.components)
-            .toMap()
-            .map((component) ->
-              component.set 'configurations', component.get('configurations').toMap().mapKeys((key, config) ->
-                config.get 'id'
-              )
+      _store = _store
+        .set('isDeletedLoading', false)
+        .set('isDeletedLoaded', true)
+        .set('deletedComponents',
+          ## convert to by key structure
+          fromJSOrdered(action.components)
+          .toMap()
+          .map((component) ->
+            component.set 'configurations', component.get('configurations').toMap().mapKeys((key, config) ->
+              config.get 'id'
             )
-            .mapKeys((key, component) ->
-              component.get 'id'
-            ))
-      )
+          )
+          .mapKeys((key, component) ->
+            component.get 'id'
+          ))
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.COMPONENTS_NEW_CONFIGURATION_SAVE_SUCCESS
@@ -833,10 +828,11 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_CANCEL
-      _store = _store.deleteIn(["templatedConfigValuesEditingValues", action.componentId, action.configId])
-      _store = _store.deleteIn(["templatedConfigValuesEditingString", action.componentId, action.configId])
-      _store = _store.deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
-      _store = _store.deleteIn(["templatedConfigEditing", action.componentId, action.configId])
+      _store = _store
+        .deleteIn(["templatedConfigValuesEditingValues", action.componentId, action.configId])
+        .deleteIn(["templatedConfigValuesEditingString", action.componentId, action.configId])
+        .deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
+        .deleteIn(["templatedConfigEditing", action.componentId, action.configId])
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_UPDATE_TEMPLATE
@@ -906,19 +902,19 @@ Dispatcher.register (payload) ->
         ['configData', action.componentId, action.configId],
         fromJSOrdered(action.configData)
       )
-      _store = _store.deleteIn(['templatedConfigValuesEditingValues', action.componentId, action.configId])
-      _store = _store.deleteIn(['templatedConfigValuesEditingString', action.componentId, action.configId])
-      _store = _store.deleteIn(["templatedConfigEditing", action.componentId, action.configId])
-      _store = _store.deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
-      _store = _store.deleteIn ['configDataSaving', action.componentId, action.configId]
+        .deleteIn(['templatedConfigValuesEditingValues', action.componentId, action.configId])
+        .deleteIn(['templatedConfigValuesEditingString', action.componentId, action.configId])
+        .deleteIn(["templatedConfigEditing", action.componentId, action.configId])
+        .deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
+        .deleteIn ['configDataSaving', action.componentId, action.configId]
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_SAVE_ERROR
       _store = _store.deleteIn(['templatedConfigValuesEditingValues', action.componentId, action.configId])
-      _store = _store.deleteIn(['templatedConfigValuesEditingString', action.componentId, action.configId])
-      _store = _store.deleteIn(["templatedConfigEditing", action.componentId, action.configId])
-      _store = _store.deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
-      _store = _store.deleteIn ['configDataSaving', action.componentId, action.configId]
+        .deleteIn(['templatedConfigValuesEditingString', action.componentId, action.configId])
+        .deleteIn(["templatedConfigEditing", action.componentId, action.configId])
+        .deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
+        .deleteIn ['configDataSaving', action.componentId, action.configId]
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_STRING_TOGGLE
@@ -950,7 +946,7 @@ Dispatcher.register (payload) ->
           store = store.setIn(["templatedConfigEditingString", action.componentId, action.configId], true)
       else
         _store = _store.deleteIn(["templatedConfigValuesEditingString", action.componentId, action.configId])
-        _store = _store.deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
+          .deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_SEARCH_CONFIGURATION_FILTER_CHANGE
@@ -1024,15 +1020,14 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_SUCCESS
-      _store = _store.withMutations (store) ->
-        store
-          .setIn [
-            'configRows', action.componentId, action.configurationId, action.data.id
-          ],
+      _store = _store
+        .setIn [
+          'configRows', action.componentId, action.configurationId, action.data.id
+        ],
           fromJSOrdered(action.data)
-          .setIn [
-            'configRowsData', action.componentId, action.configurationId, action.data.id
-          ],
+        .setIn [
+          'configRowsData', action.componentId, action.configurationId, action.data.id
+        ],
           fromJSOrdered(action.data.configuration)
 
       InstalledComponentsStore.emitChange()
@@ -1050,17 +1045,16 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_SUCCESS
-      _store = _store.withMutations (store) ->
-        store
-          .deleteIn [
-            'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'delete'
-          ]
-          .deleteIn [
-            'configRows', action.componentId, action.configurationId, action.rowId
-          ]
-          .deleteIn [
-            'configRowsData', action.componentId, action.configurationId, action.rowId
-          ]
+      _store = _store
+        .deleteIn [
+          'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'delete'
+        ]
+        .deleteIn [
+          'configRows', action.componentId, action.configurationId, action.rowId
+        ]
+        .deleteIn [
+          'configRowsData', action.componentId, action.configurationId, action.rowId
+        ]
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_START
@@ -1076,14 +1070,13 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_SUCCESS
-      _store = _store.withMutations (store) ->
-        store
-          .deleteIn [
-            'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'enable'
-          ]
-          .setIn [
-            'configRows', action.componentId, action.configurationId, action.rowId, 'disabled',
-          ], false
+      _store = _store
+        .deleteIn [
+          'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'enable'
+        ]
+        .setIn [
+          'configRows', action.componentId, action.configurationId, action.rowId, 'disabled',
+        ], false
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_START
@@ -1099,14 +1092,13 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_SUCCESS
-      _store = _store.withMutations (store) ->
-        store
-          .deleteIn [
-            'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'disable'
-          ]
-          .setIn [
-            'configRows', action.componentId, action.configurationId, action.rowId, 'disabled',
-          ], true
+      _store = _store
+        .deleteIn [
+          'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'disable'
+        ]
+        .setIn [
+          'configRows', action.componentId, action.configurationId, action.rowId, 'disabled',
+        ], true
       InstalledComponentsStore.emitChange()
 
 
