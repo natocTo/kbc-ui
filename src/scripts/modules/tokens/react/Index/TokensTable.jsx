@@ -32,7 +32,7 @@ export default React.createClass({
       <span>
         {this.renderTokenRefreshModal()}
         {this.renderCreateTokenModal()}
-        <div responsive className="table table-striped table-hover">
+        <div className="table table-striped table-hover">
           <div className="thead">
             <div className="tr">
               <div className="th">
@@ -86,7 +86,7 @@ export default React.createClass({
     return `${accessCnt} component${pluralSuffix}`;
   },
 
-  renderBucketsAceess(token) {
+  renderBucketsAccess(token) {
     const allAccess = token.get('canManageBuckets');
     const accessCnt = token.get('bucketPermissions', List()).count();
     if (allAccess) {
@@ -215,7 +215,7 @@ export default React.createClass({
           {this.renderComponentsAccess(token)}
         </div>
         <div className="td">
-          {this.renderBucketsAceess(token)}
+          {this.renderBucketsAccess(token)}
         </div>
         <div className="td text-right kbc-no-wrap">
 

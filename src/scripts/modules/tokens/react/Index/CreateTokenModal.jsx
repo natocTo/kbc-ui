@@ -38,7 +38,7 @@ export default React.createClass({
         <Modal.Body>
           <TokenEditor
             disabled={this.isInputDisabled()}
-            isEditting={false}
+            isEditing={false}
             token={this.state.dirtyToken}
             updateToken={this.updateDirtyToken}
             allBuckets={this.props.allBuckets}

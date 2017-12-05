@@ -80,7 +80,7 @@ export default React.createClass({
                <div>
                  <TokenEditor
                    disabled={this.state.isSaving}
-                   isEditting={true}
+                   isEditing={true}
                    token={this.state.dirtyToken}
                    allBuckets={this.state.allBuckets}
                    updateToken={this.updateDirtyToken}

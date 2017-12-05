@@ -27,7 +27,7 @@ export default React.createClass({
     return (
       <div className={this.props.wrapperClassName}>
         {this.renderSelectedPermissions()}
-        <div className="well" fstyle={{margin: '0'}}>
+        <div className="well">
           {this.renderAddingRow()}
         </div>
       </div>

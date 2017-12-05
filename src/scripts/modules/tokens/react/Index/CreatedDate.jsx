@@ -3,8 +3,8 @@ import moment from 'moment';
 
 const CreatedDate = ({token}) => {
   const created = moment(token.get('created'));
-  const formatedDate =  created.format('YYYY-MM-DD HH:mm');
-  return <span title={formatedDate}>{created.fromNow()}</span>;
+  const formattedDate =  created.format('YYYY-MM-DD HH:mm');
+  return <span title={formattedDate}>{created.fromNow()}</span>;
 };
 
 CreatedDate.propTypes = {

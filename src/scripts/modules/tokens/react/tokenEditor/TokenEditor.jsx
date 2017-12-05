@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ExpiresInEdit from './ExpiresInEdit';
 import ExpiresInfo from './ExpiresInfo';
@@ -12,7 +13,7 @@ export default React.createClass({
 
   propTypes: {
     disabled: PropTypes.bool.isRequired,
-    isEditting: PropTypes.bool.isRequired,
+    isEditing: PropTypes.bool.isRequired,
     token: PropTypes.object.isRequired,
     allBuckets: PropTypes.object.isRequired,
     updateToken: PropTypes.func.isRequired
@@ -40,7 +41,7 @@ export default React.createClass({
            :
            this.renderCustomExpires()
         )}
-        {this.props.isEditting && this.renderFormGroup(
+        {this.props.isEditing && this.renderFormGroup(
            'Created',
            <div className="col-sm-9">
              <p className="form-control-static">
@@ -87,7 +88,7 @@ export default React.createClass({
 
   renderCustomExpires() {
     return (
-      this.props.isEditting ?
+      this.props.isEditing ?
       <div className="col-sm-9">
         <p className="form-control-static">
           <ExpiresInfo withIcon={true} token={this.props.token} />
@@ -190,17 +191,17 @@ export default React.createClass({
   },
 
   renderBucketsAndComponentsAccessInput() {
-    const {isEditting} = this.props;
-    const radioLabelStyle = isEditting ? {'paddingLeft': '0px', 'cursor': 'default'} : {};
+    const {isEditing} = this.props;
+    const radioLabelStyle = isEditing ? {'paddingLeft': '0px', 'cursor': 'default'} : {};
     const canManageBuckets = this.props.token.get('canManageBuckets', false);
-    const showFull = !isEditting || (isEditting && canManageBuckets);
-    const showCustom = !isEditting || (isEditting && !canManageBuckets);
+    const showFull = !isEditing || (isEditing && canManageBuckets);
+    const showCustom = !isEditing || (isEditing && !canManageBuckets);
     return (
       <div className="col-sm-9">
         {showFull &&
          <div className="radio">
            <label style={radioLabelStyle}>
-             {!isEditting &&
+             {!isEditing &&
               <input
                 type="radio"
                 disabled={this.props.disabled}
@@ -219,7 +220,7 @@ export default React.createClass({
         {showCustom &&
          <div className="radio">
            <label style={radioLabelStyle}>
-             {!isEditting &&
+             {!isEditing &&
               <input
                 disabled={this.props.disabled}
                 type="radio"
