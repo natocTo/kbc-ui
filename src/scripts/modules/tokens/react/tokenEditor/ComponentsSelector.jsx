@@ -37,17 +37,17 @@ export default React.createClass({
 
   filterOption(op, filter) {
     if (filter) {
-      return !op.isDeprecated && op.value.includes(filter);
+      return !op.isHidden && op.value.includes(filter);
     } else {
-      return !op.isDeprecated;
+      return !op.isHidden;
     }
   },
 
   getOptions() {
     const options = this.props.allComponents.map((component, componentId) => {
       const componentRender = this.renderComponent(component);
-      const isDeprecated = component.get('flags').includes('deprecated');
-      return {label: componentId, value: componentId, componentRender, isDeprecated};
+      const isHidden = component.get('flags').includes('excludeFromNewList');
+      return {label: componentId, value: componentId, componentRender, isHidden};
     });
     return options.toArray();
   },
