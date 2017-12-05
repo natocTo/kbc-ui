@@ -117,25 +117,36 @@ Dispatcher.register((payload) => {
       WizardStore.emitChange();
     };
 
+    const getPath = (path) => {
+      const projectBaseUrl = ApplicationStore.getProjectBaseUrl();
+      if (process.env.NODE_ENV === 'production') {
+        if (path === '') {
+          return projectBaseUrl;
+        }
+        return `${projectBaseUrl}/${path}`;
+      }
+      return `${projectBaseUrl}${path}`; // projectBaseUrl is "/" for dev
+    };
+
     switch (action.type) {
       // we're checking routerState.path to update Wizard Steps after navigation from storage app
       case applicationActionTypes.ROUTER_ROUTE_CHANGE_SUCCESS:
         if (WizardStore.getCurrentLesson().id === 1 && WizardStore.getCurrentStep().id === 3) {
-          if (action.routerState.path === '/extractors') {
+          if (action.routerState.path === getPath('extractors')) {
             saveAndEmit(2);
-          } else if (action.routerState.path === '/transformations') {
+          } else if (action.routerState.path === getPath('transformations')) {
             saveAndEmit(4);
           }
         } else if (WizardStore.getCurrentLesson().id === 2 && WizardStore.getCurrentStep().id === 6) {
-          if (action.routerState.path === '/extractors/keboola.ex-db-snowflake') {
+          if (action.routerState.path === getPath('extractors/keboola.ex-db-snowflake')) {
             saveAndEmit(5);
-          } else if (action.routerState.path === '/') {
+          } else if (action.routerState.path === getPath('')) {
             saveAndEmit(7);
           }
         } else if (WizardStore.getCurrentLesson().id === 3 && WizardStore.getCurrentStep().id === 7) {
-          if (action.routerState.path === '/jobs') {
+          if (action.routerState.path === getPath('jobs')) {
             saveAndEmit(6);
-          } else if (action.routerState.path === '/') {
+          } else if (action.routerState.path === getPath('')) {
             saveAndEmit(8);
           }
         }
