@@ -151,7 +151,7 @@ Dispatcher.register(function(payload) {
       return ConfigRowsStore.emitChange();
 
     default:
-      return ConfigRowsStore.emitChange();
+      break;
   }
 });
 
