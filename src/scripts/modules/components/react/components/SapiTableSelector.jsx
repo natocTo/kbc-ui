@@ -12,11 +12,13 @@ import InstalledComponentStore from '../../stores/InstalledComponentsStore';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import fuzzy from 'fuzzy';
 import ApplicationStore from '../../../../stores/ApplicationStore';
+import {Nav, NavItem} from 'react-bootstrap';
+
 const PREVIEW_FEATURE = 'table-selector-ex';
 const BEGIN_MATCH = '%%%_';
 const END_MATCH = '_%%%';
 export default  React.createClass({
-  mixins: [createStoreMixin(storageTablesStore, MetadataStore, ComponentsStore, InstalledComponentStore, ApplicationStore)],
+  mixins: [createStoreMixin(storageTablesStore, MetadataStore, ComponentsStore, InstalledComponentStore)],
   propTypes: {
     onSelectTableFn: React.PropTypes.func.isRequired,
     placeholder: React.PropTypes.string.isRequired,
@@ -53,7 +55,8 @@ export default  React.createClass({
   },
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.value !== this.props.value ||
+    const selectTypeChanged = this.state.selectByComponents !== nextState.selectByComponents;
+    return selectTypeChanged || nextProps.value !== this.props.value ||
            nextState.isTablesLoading !== this.state.isTablesLoading;
   },
 
@@ -63,9 +66,15 @@ export default  React.createClass({
     return this.props.onSelectTableFn(tableId, table);
   },
 
+  getInitialState() {
+    return {
+      selectByComponents: true
+    };
+  },
+
   render() {
     const isNew = this.state.hasMetadataFeature;
-    const enhancedProps = isNew ? {
+    const enhancedProps = isNew && this.state.selectByComponents ? {
       valueRenderer: this.valueRenderer,
       optionRenderer: this.optionRenderer,
       filterOption: this.filterOption,
@@ -74,6 +83,7 @@ export default  React.createClass({
     return (
       <Select
         disabled={this.props.disabled}
+        inputRenderer={this.inputRenderer}
         name="source"
         clearable={false}
         value={this.props.value}
@@ -81,7 +91,7 @@ export default  React.createClass({
         placeholder={this.props.placeholder}
         {...enhancedProps}
         onChange={this.onSelectTable}
-        options={isNew ? this.prepareOptions() : this._getTables(this.state.tables)}
+        options={isNew && this.state.selectByComponents ? this.prepareOptions() : this._getTables(this.state.tables)}
       />
     );
   },
@@ -181,10 +191,10 @@ export default  React.createClass({
     return (
       <span>
         {groups.parentGroup.length > 0 &&
-          <small>
-            {this.renderMatchedOptionParts(groups.parentGroup)}
-            {' '}/{' '}
-          </small>
+         <small>
+           {this.renderMatchedOptionParts(groups.parentGroup)}
+           {' '}/{' '}
+         </small>
         }
         <span>{this.renderMatchedOptionParts(groups.tableGroup)}</span>
       </span>
@@ -209,11 +219,30 @@ export default  React.createClass({
   },
 
   valueRenderer(op) {
-    if (op.component)  {
-      return <span><ComponentIcon component={fromJS(op.component)}/> {op.groupName} / {op.tableLabel}</span>;
-    } else {
-      return <span>{op.tableLabel}</span>;
-    }
+    return op.table.id;
+  },
+
+  renderButtonsBar() {
+    return (
+      <Nav bsStyle="tabs"
+        onSelect={ek => this.setState({selectByComponents: ek === '2'})}
+        activeKey={this.state.selectByComponents ? '2' : '1'} justified>
+        <NavItem eventKey="1">Tables By Buckets</NavItem>
+        <NavItem eventKey="2">Tables By Components Configurations</NavItem>
+      </Nav>
+    );
+  },
+
+  inputRenderer(inputProps) {
+    const isExpanded = inputProps['aria-expanded'] === 'true';
+    return (
+      <span>
+        <div className="Select-input" key="input-wrap">
+          <input  {...inputProps} />
+        </div>
+        {isExpanded && this.renderButtonsBar()}
+      </span>
+    );
   },
 
   mapTablesMetadataToConfigs(storageTables, getConfigFn, components, tablesByComponentAndConfig) {
