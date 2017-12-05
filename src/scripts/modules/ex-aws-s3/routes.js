@@ -5,7 +5,7 @@ import installedComponentsActions from '../components/InstalledComponentsActionC
 import versionsActions from '../components/VersionsActionCreators';
 import jobsActions from '../jobs/ActionCreators';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
-// import {createTablesRoute} from '../table-browser/routes';
+import ConfigRowsStore from '../components/stores/ConfigRowsStore';
 
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
@@ -31,7 +31,6 @@ export default {
       name: COMPONENT_ID + '-credentials',
       path: ':config/credentials',
       title: 'Credentials',
-      isComponent: true,
       defaultRouteHandler: Credentials
     },
     {
@@ -40,13 +39,10 @@ export default {
       title: (routerState) => {
         const configId = routerState.getIn(['params', 'config']);
         const rowId = routerState.getIn(['params', 'row']);
-        const configRow = InstalledComponentsStore.getConfigRow(COMPONENT_ID, configId, rowId);
+        const configRow = ConfigRowsStore.get(COMPONENT_ID, configId, rowId);
         return configRow.get('name') !== '' ? configRow.get('name') : 'Untitled';
       },
-      isComponent: true,
       defaultRouteHandler: Row
     }
-
-
   ]
 };
