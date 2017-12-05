@@ -534,7 +534,7 @@ module.exports =
                 React.DOM.a
                   onClick: @revertConfigRemove
                 ,
-                  'Revert'
+                  'Restore'
 
     .catch (e) ->
       dispatcher.handleViewAction
