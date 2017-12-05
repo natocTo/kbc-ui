@@ -1,15 +1,11 @@
 import React from 'react';
 
 // stores
-import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ConfigRowsStore from '../../../components/stores/ConfigRowsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
-import VersionsStore from '../../../components/stores/VersionsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
-// import installedComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import configRowActions from '../../../components/ConfigRowsActionCreators';
 
 // global components
@@ -23,7 +19,7 @@ import JSONConfiguration from '../../../components/react/components/JSONConfigur
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, ConfigRowsStore, LatestJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(ConfigRowsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
