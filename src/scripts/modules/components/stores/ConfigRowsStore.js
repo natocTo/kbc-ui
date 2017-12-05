@@ -149,6 +149,21 @@ Dispatcher.register(function(payload) {
         ['editingJSONDataString', action.componentId, action.configurationId, action.rowId]
       );
       return ConfigRowsStore.emitChange();
+    
+    case constants.ActionTypes.CONFIG_ROWS_SAVE_JSON_DATA_STRING_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-json-data'], true);
+      return ConfigRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIG_ROWS_SAVE_JSON_DATA_STRING_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-json-data']);
+      return ConfigRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIG_ROWS_SAVE_JSON_DATA_STRING_SUCCESS:
+      _store = _store
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-json-data'])
+        .deleteIn(['editingJSONDataString', action.componentId, action.configurationId, action.rowId])
+        .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.jsonData);
+      return ConfigRowsStore.emitChange();
 
     default:
       break;

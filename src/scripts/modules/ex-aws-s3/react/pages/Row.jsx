@@ -38,9 +38,6 @@ export default React.createClass({
 
   render() {
     const state = this.state;
-    if (!this.state.rowId) {
-      return null;
-    }
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -68,7 +65,7 @@ export default React.createClass({
                 return configRowActions.updateJSONDataString(COMPONENT_ID, state.configId, state.rowId, jsonDataString);
               }}
               onEditSubmit={function() {
-                return;
+                return configRowActions.saveJSONDataString(COMPONENT_ID, state.configId, state.rowId);
               }}
             />
           </div>

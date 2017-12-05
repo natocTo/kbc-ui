@@ -149,6 +149,37 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-  }
+  },
 
+  saveJSONDataString: function(componentId, configurationId, rowId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.CONFIG_ROWS_SAVE_JSON_DATA_STRING_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    const row = ConfigRowsStore.get(componentId, configurationId, rowId);
+    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited';
+    const configuration = ConfigRowsStore.getEditingJSONDataString(componentId, configurationId, rowId);
+    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {configuration: configuration}, changeDescription)
+      .then(function() {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.CONFIG_ROWS_SAVE_JSON_DATA_STRING_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          jsonData: JSON.parse(configuration)
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.CONFIG_ROWS_SAVE_JSON_DATA_STRING_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
+  }
 };
