@@ -144,6 +144,12 @@ Dispatcher.register(function(payload) {
       );
       return ConfigRowsStore.emitChange();
 
+    case constants.ActionTypes.CONFIG_ROWS_RESET_JSON_DATA_STRING:
+      _store = _store.deleteIn(
+        ['editingJSONDataString', action.componentId, action.configurationId, action.rowId]
+      );
+      return ConfigRowsStore.emitChange();
+
     default:
       return ConfigRowsStore.emitChange();
   }

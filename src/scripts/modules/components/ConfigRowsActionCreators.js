@@ -140,5 +140,15 @@ module.exports = {
       rowId: rowId,
       jsonDataString: jsonDataString
     });
+  },
+
+  resetJSONDataString: function(componentId, configurationId, rowId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.CONFIG_ROWS_RESET_JSON_DATA_STRING,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
   }
+
 };

@@ -62,7 +62,7 @@ export default React.createClass({
               isEditingValid={this.state.isJSONEditingValid}
               isChanged={this.state.isJSONEditingChanged}
               onEditCancel={function() {
-                return;
+                return configRowActions.resetJSONDataString(COMPONENT_ID, state.configId, state.rowId);
               }}
               onEditChange={function(jsonDataString) {
                 return configRowActions.updateJSONDataString(COMPONENT_ID, state.configId, state.rowId, jsonDataString);
