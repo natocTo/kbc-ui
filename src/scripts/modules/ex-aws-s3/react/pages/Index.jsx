@@ -20,10 +20,6 @@ import {Link} from 'react-router';
 import CreateConfigRowButton from '../../../components/react/components/CreateConfigRowButton';
 import ConfigRowsTable from '../../../components/react/components/ConfigRowsTable';
 
-
-// css
-import './Index.less';
-
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
