@@ -38,6 +38,7 @@ _store = Map(
   deletedComponents: Map()
   editingConfigurations: Map()
   editingConfigurationRows: Map()
+  editingConfigurationRowJSONDataString: Map()
   savingConfigurations: Map()
   savingConfigurationRows: Map()
   deletingConfigurations: Map()
@@ -232,7 +233,6 @@ InstalledComponentsStore = StoreUtils.createStore
   getEditingConfigRow: (componentId, configId, rowId, field) ->
     _store.getIn ['editingConfigurationRows', componentId, configId, rowId, field]
 
-
   isValidEditingConfig: (componentId, configId, field) ->
     value = @getEditingConfig(componentId, configId, field)
     return true if value == undefined
@@ -340,6 +340,20 @@ InstalledComponentsStore = StoreUtils.createStore
 
   getRowPendingActions: (componentId, configId, rowId) ->
     _store.getIn ['rowPendingActions', componentId, configId, rowId], Map()
+
+  isEditingConfigRowJSONDataStringValid: (componentId, configId, rowId) ->
+    value = @getEditingConfigRowJSONDataString(componentId, configId, rowId)
+    try
+      JSON.parse(value)
+      return true
+    return false
+
+  getEditingConfigRowJSONDataString: (componentId, configId, rowId) ->
+    _store.getIn(['editingConfigurationRowJSONDataString', componentId, configId,
+      rowId], JSON.stringify(this.getConfigRowData(componentId, configId, rowId), null, '    '))
+
+  isEditingConfigRowJSONDataString: (componentId, configId, rowId) ->
+    _store.hasIn ['editingConfigurationRowJSONDataString', componentId, configId, rowId]
 
 
 Dispatcher.register (payload) ->
@@ -1101,5 +1115,11 @@ Dispatcher.register (payload) ->
         ], true
       InstalledComponentsStore.emitChange()
 
+    when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_JSON_DATA_STRING
+      _store = _store
+        .setIn [
+          'editingConfigurationRowJSONDataString', action.componentId, action.configurationId, action.rowId
+        ], action.jsonDataString
+      InstalledComponentsStore.emitChange()
 
 module.exports = InstalledComponentsStore

@@ -5,13 +5,19 @@ import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default React.createClass({
   propTypes: {
-    jsonData: PropTypes.string.isRequired,
+    jsonData: PropTypes.string,
     isEditingValid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired
+  },
+
+  getDefaultProps() {
+    return {
+      jsonData: ''
+    };
   },
 
   render() {

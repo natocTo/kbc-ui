@@ -989,5 +989,15 @@ module.exports = {
         });
         throw e;
       });
+  },
+
+  updatetConfigurationRowJSONDataString: function(componentId, configurationId, rowId, jsonDataString) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_JSON_DATA_STRING,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId,
+      jsonDataString: jsonDataString
+    });
   }
 };

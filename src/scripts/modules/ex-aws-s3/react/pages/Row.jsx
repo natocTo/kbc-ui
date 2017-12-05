@@ -7,6 +7,9 @@ import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
+// actions
+import installedComponentsActions from '../../../components/InstalledComponentsActionCreators';
+
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import ConfigurationRowDescription from '../../../components/react/components/ConfigurationRowDescription';
@@ -23,16 +26,20 @@ export default React.createClass({
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
     const rowId = RoutesStore.getCurrentRouteParam('row');
+    const row = InstalledComponentsStore.getConfigRow(COMPONENT_ID, configId, rowId);
     return {
       configId: configId,
       rowId: rowId,
-      row: InstalledComponentsStore.getConfigRow(COMPONENT_ID, configId, rowId)
-
+      row: row,
+      jsonDataString: InstalledComponentsStore.getEditingConfigRowJSONDataString(COMPONENT_ID, configId, rowId),
+      isJSONEditingSaving: InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, configId, rowId).has('save-json-data'),
+      isJSONEditingValid: InstalledComponentsStore.isEditingConfigRowJSONDataStringValid(COMPONENT_ID, configId, rowId),
+      isJSONEditingChanged: InstalledComponentsStore.isEditingConfigRowJSONDataString(COMPONENT_ID, configId, rowId)
     };
   },
 
   render() {
-    // const state = this.state;
+    const state = this.state;
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -49,16 +56,15 @@ export default React.createClass({
               Row
             </p>
             <JSONConfiguration
-              isSaving={false}
-              jsonData={JSON.stringify(this.state.row.get('configuration').toJS(), null, '    ')}
-              isEditingValid={true}
-              isChanged={false}
-              disabled={false}
+              isSaving={this.state.isJSONEditingSaving}
+              jsonData={this.state.jsonDataString}
+              isEditingValid={this.state.isJSONEditingValid}
+              isChanged={this.state.isJSONEditingChanged}
               onEditCancel={function() {
                 return;
               }}
-              onEditChange={function() {
-                return;
+              onEditChange={function(jsonDataString) {
+                installedComponentsActions.updatetConfigurationRowJSONDataString(COMPONENT_ID, state.configId, state.rowId, jsonDataString);
               }}
               onEditSubmit={function() {
                 return;
