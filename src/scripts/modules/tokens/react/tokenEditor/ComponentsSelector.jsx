@@ -26,6 +26,7 @@ export default React.createClass({
         optionRenderer={this.optionRenderer}
         valueRenderer={this.optionRenderer}
         options={this.getOptions()}
+        filterOption={this.filterOption}
       />
     );
   },
@@ -34,21 +35,44 @@ export default React.createClass({
     this.props.onChange(fromJS(componentsArray.map(c => c.value)));
   },
 
+  filterOption(op, filter) {
+    if (filter) {
+      return !op.isDeprecated && op.value.includes(filter);
+    } else {
+      return !op.isDeprecated;
+    }
+  },
+
   getOptions() {
     const options = this.props.allComponents.map((component, componentId) => {
-      const componentRender = (
-        <span>
-          <ComponentIcon component={component}/>
-          <ComponentName component={component}/>
-        </span>
-      );
-      return {label: componentId, value: componentId, componentRender};
+      const componentRender = this.renderComponent(component);
+      const isDeprecated = component.get('flags').includes('deprecated');
+      return {label: componentId, value: componentId, componentRender, isDeprecated};
     });
     return options.toArray();
   },
 
+  renderComponent(component) {
+    return (
+      <span>
+        <ComponentIcon component={component}/>
+        <ComponentName component={component}/>
+      </span>
+    );
+  },
+
   optionRenderer(op) {
-    return op.componentRender;
+    if (op.componentRender) {
+      return op.componentRender;
+    } else {
+      const componentId = op.value;
+      const component = this.props.allComponents.find(c => c.get('id') === componentId);
+      if (component) {
+        return this.renderComponent(component);
+      } else {
+        return <span> Unknown component {componentId} </span>;
+      }
+    }
   }
 
 });
