@@ -3,6 +3,7 @@ import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixi
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import DeleteConfigRowButton from './DeleteConfigRowButton';
 import RunComponentButton from './RunComponentButton';
+import {Link} from 'react-router';
 
 export default React.createClass({
   displayName: 'ConfigRowsTable',
@@ -52,7 +53,7 @@ export default React.createClass({
   renderRows() {
     return this.props.rows.map(function(row, rowIndex) {
       return (
-        <div className="tr" key={rowIndex}>
+        <Link to="keboola.ex-aws-s3-row" params={{config: this.props.configId, row: row.get('id')}} className="tr" key={rowIndex}>
           {this.props.columns.map(function(columnFunction, columnIndex) {
             return (
               <div className="td kbc-break-all" key={columnIndex}>
@@ -63,7 +64,7 @@ export default React.createClass({
           <div className="td text-right kbc-no-wrap">
             {this.renderRowActionButtons(row)}
           </div>
-        </div>
+        </Link>
       );
     }, this);
   },

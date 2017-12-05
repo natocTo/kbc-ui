@@ -1,4 +1,5 @@
 import Index from './react/pages/Index';
+import Row from './react/pages/Row';
 import Credentials from './react/pages/Credentials';
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
@@ -32,6 +33,20 @@ export default {
       title: 'Credentials',
       isComponent: true,
       defaultRouteHandler: Credentials
+    },
+    {
+      name: COMPONENT_ID + '-row',
+      path: ':config/:row',
+      title: (routerState) => {
+        const configId = routerState.getIn(['params', 'config']);
+        const rowId = routerState.getIn(['params', 'row']);
+        const configRow = InstalledComponentsStore.getConfigRow(COMPONENT_ID, configId, rowId);
+        return configRow.get('name') !== '' ? configRow.get('name') : 'Untitled';
+      },
+      isComponent: true,
+      defaultRouteHandler: Row
     }
+
+
   ]
 };
