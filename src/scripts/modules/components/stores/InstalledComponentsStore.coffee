@@ -998,19 +998,17 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS
-      _store = _store.withMutations (store) ->
-        store
-          .mergeIn [
-            'configRows', action.componentId, action.configurationId, action.rowId
-          ],
+      _store = _store
+        .mergeIn [
+          'configRows', action.componentId, action.configurationId, action.rowId
+        ],
           fromJSOrdered(action.data)
-          .mergeIn [
-            'configRowsData', action.componentId, action.configurationId, action.rowId
-          ],
+        .mergeIn [
+          'configRowsData', action.componentId, action.configurationId, action.rowId
+        ],
           fromJSOrdered(action.data.configuration)
-
-          .deleteIn ['savingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
-          .deleteIn ['editingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
+        .deleteIn ['savingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
+        .deleteIn ['editingConfigurationRows', action.componentId, action.configurationId, action.rowId, action.field]
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_START
