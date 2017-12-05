@@ -29,7 +29,7 @@ import LastUpdateInfo from '../../../../../react/common/LastUpdateInfo';
 import {Link, Navigation} from 'react-router';
 
 import Quickstart from '../../components/Quickstart';
-import SourceTablesError from '../../components/AsynchActionError';
+import AsynchActionError from '../../components/AsynchActionError';
 
 export default function(componentId) {
   const actionsCreators = actionsProvisioning.createActions(componentId);
@@ -144,7 +144,8 @@ export default function(componentId) {
         return (
           <div className="row component-empty-state text-center">
             <div className="col-md-12">
-              <p>There are no tables configured yet.</p>
+              <p>Select the tables you'd like to import to autogenerate your configuration.
+                You can edit them later at any time.  </p>
               <Quickstart
                 componentId={componentId}
                 configId={this.state.configId}
@@ -156,23 +157,8 @@ export default function(componentId) {
                 quickstart={this.state.localState.get('quickstart') || Map()}
                 onChange={actionsCreators.quickstartSelected}
                 onSubmit={actionsCreators.quickstart}
+                refreshMethod={this.handleRefreshSourceTables}
               />
-              <div className="help-block">
-                Select the tables you'd like to import to autogenerate your configuration.
-                You can edit them later at any time.  <br/>
-                Not seeing your newest tables?
-                {' '}
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.handleRefreshSourceTables();
-                  }}
-                >
-                  Reload
-                </a>
-                {' '}
-                the tables list.
-              </div>
             </div>
           </div>
         );
@@ -222,7 +208,7 @@ export default function(componentId) {
                 />
               </div>
             </div>
-            <SourceTablesError
+            <AsynchActionError
               componentId={componentId}
               configId={this.state.configId}
               connectionTesting={this.state.localState.getIn(storeProvisioning.testingConnectionPath, false)}

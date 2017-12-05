@@ -12,7 +12,8 @@ export default React.createClass({
     isLoadingSourceTables: React.PropTypes.bool.isRequired,
     isTestingConnection: React.PropTypes.bool.isRequired,
     validConnection: React.PropTypes.bool.isRequired,
-    tableSelectorElement: React.PropTypes.object.isRequired
+    tableSelectorElement: React.PropTypes.object.isRequired,
+    refreshMethod: React.PropTypes.func.isRequired
   },
 
   render() {
@@ -39,6 +40,27 @@ export default React.createClass({
       return (
         <div className="form-control-static">
           <Loader/> Fetching table list from source database ...
+        </div>
+      );
+    }
+    if (validConnection && !isLoadingSourceTables) {
+      return (
+        <div>
+          {tableSelectorElement}
+          <div className="help-block">
+            Not seeing your newest tables?
+            {' '}
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                this.props.refreshMethod();
+              }}
+            >
+              Reload
+            </a>
+            {' '}
+            the tables list.
+          </div>
         </div>
       );
     }

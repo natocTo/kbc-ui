@@ -7,7 +7,7 @@ import {CodeEditor} from '../../../../react/common/common';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 
-import SourceTablesError from './AsynchActionError';
+import AsynchActionError from './AsynchActionError';
 import TableLoader from './TableLoader';
 
 import editorMode from '../../templates/editorMode';
@@ -32,7 +32,8 @@ export default React.createClass({
     onDestinationEdit: React.PropTypes.func.isRequired,
     getPKColumns: React.PropTypes.func.isRequired,
     queryNameExists: React.PropTypes.bool.isRequired,
-    credentialsHasDatabase: React.PropTypes.bool
+    credentialsHasDatabase: React.PropTypes.bool,
+    refreshMethod: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
@@ -244,7 +245,7 @@ export default React.createClass({
     return (
       <div className="kbc-inner-content-padding-fix">
         <div className="form-horizontal">
-          <SourceTablesError
+          <AsynchActionError
             componentId={this.props.componentId}
             configId={this.props.configId}
             sourceTablesLoading={this.props.isLoadingSourceTables}
@@ -393,6 +394,7 @@ export default React.createClass({
               isTestingConnection={this.props.isTestingConnection}
               validConnection={this.props.validConnection}
               tableSelectorElement={tableSelector}
+              refreshMethod={this.props.refreshMethod}
             />
           </div>
         </div>

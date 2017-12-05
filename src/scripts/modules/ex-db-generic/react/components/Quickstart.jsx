@@ -16,7 +16,8 @@ export default React.createClass({
     sourceTablesError: React.PropTypes.string,
     quickstart: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired
+    onSubmit: React.PropTypes.func.isRequired,
+    refreshMethod: React.PropTypes.func.isRequired
   },
 
   quickstart() {
@@ -71,7 +72,7 @@ export default React.createClass({
 
   render() {
     var tableSelector = (
-      <div className="form-group text-left">
+      <div className="row text-left">
         <div className="col-md-8 col-md-offset-2">
           <Select
             multi={true}
@@ -104,6 +105,7 @@ export default React.createClass({
           isTestingConnection={this.props.isTestingConnection}
           validConnection={this.props.validConnection}
           tableSelectorElement={tableSelector}
+          refreshMethod={this.props.refreshMethod}
         />
       </div>
     );

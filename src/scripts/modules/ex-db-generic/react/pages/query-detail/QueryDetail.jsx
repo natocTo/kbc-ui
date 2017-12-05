@@ -13,7 +13,7 @@ import {sourceTablesErrorPath} from '../../../storeProvisioning';
 
 import QueryNav from './QueryNav';
 import SaveButtons from '../../../../../react/common/SaveButtons';
-import {loadSourceTables} from '../../../actionsProvisioning';
+import {loadSourceTables, reloadSourceTables} from '../../../actionsProvisioning';
 
 export default function(componentId, actionsProvisioning, storeProvisioning) {
   const ExDbActionCreators = actionsProvisioning.createActions(componentId);
@@ -73,6 +73,10 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
       return ExDbActionCreators.saveQueryEdit(this.state.configId, this.state.editingQuery.get('id'));
     },
 
+    handleRefreshSourceTables() {
+      return reloadSourceTables(componentId, this.state.configId);
+    },
+
     getDefaultOutputTableId(name) {
       return ExDbActionCreators.getDefaultOutputTableId(this.state.configId, name);
     },
@@ -98,6 +102,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           getPKColumns={ExDbActionCreators.getPKColumnsFromSourceTable}
           queryNameExists={this.state.queryNameExists}
           credentialsHasDatabase={this.state.credentialsHasDatabase}
+          refreshMethod={this.handleRefreshSourceTables}
         />
       );
     },
