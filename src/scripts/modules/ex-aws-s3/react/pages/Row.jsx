@@ -12,6 +12,7 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import ConfigurationRowDescription from '../../../components/react/components/ConfigurationRowDescription';
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
+import JSONConfiguration from '../../../components/react/components/JSONConfiguration';
 
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-aws-s3';
@@ -26,6 +27,7 @@ export default React.createClass({
       configId: configId,
       rowId: rowId,
       row: InstalledComponentsStore.getConfigRow(COMPONENT_ID, configId, rowId)
+
     };
   },
 
@@ -42,11 +44,26 @@ export default React.createClass({
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <h3>Config Row Detail</h3>
+            <h3>Configuration</h3>
             <p>
               Row
             </p>
-            <pre>{JSON.stringify(this.state.row.toJS(), null, '    ')}</pre>
+            <JSONConfiguration
+              isSaving={false}
+              jsonData={JSON.stringify(this.state.row.get('configuration').toJS(), null, '    ')}
+              isEditingValid={true}
+              isChanged={false}
+              disabled={false}
+              onEditCancel={function() {
+                return;
+              }}
+              onEditChange={function() {
+                return;
+              }}
+              onEditSubmit={function() {
+                return;
+              }}
+            />
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
