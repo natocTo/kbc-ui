@@ -2,6 +2,7 @@ import React from 'react';
 import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import DeleteConfigRowButton from './DeleteConfigRowButton';
+import RunComponentButton from './RunComponentButton';
 
 export default React.createClass({
   displayName: 'ConfigRowsTable',
@@ -86,7 +87,21 @@ export default React.createClass({
         onChange={function() {
           return props.rowEnableDisable(row.get('id'));
         }}
-      />)
+      />),
+      (<RunComponentButton
+        title="Run"
+        component={this.props.componentId}
+        runParams={function() {
+          return {
+            config: props.configId,
+            row: row.get('id')
+          };
+        }}
+      >
+          You are about to run row {row.get('name') !== '' ? row.get('name') : 'Untitled'}.
+          {row.get('disabled') === true ? ' This row is disabled and will be forced to run.' : null}
+        </RunComponentButton>
+      )
     ];
   },
 
