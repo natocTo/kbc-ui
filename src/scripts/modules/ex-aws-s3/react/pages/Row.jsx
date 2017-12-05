@@ -9,7 +9,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
-import ComponentDescription from '../../../components/react/components/ComponentDescription';
+import ConfigurationRowDescription from '../../../components/react/components/ConfigurationRowDescription';
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 
@@ -35,9 +35,10 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <ComponentDescription
+            <ConfigurationRowDescription
               componentId={COMPONENT_ID}
               configId={this.state.configId}
+              rowId={this.state.rowId}
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
