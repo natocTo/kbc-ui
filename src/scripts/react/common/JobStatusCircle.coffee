@@ -2,10 +2,10 @@ React = require 'react'
 ApplicationStore = require '../../stores/ApplicationStore'
 
 images =
-  green: require '@keboola/indigo-ui/src/kbc-bootstrap/img/status-green.svg'
-  grey: require '@keboola/indigo-ui/src/kbc-bootstrap/img/status-grey.svg'
-  orange: require '@keboola/indigo-ui/src/kbc-bootstrap/img/status-orange.svg'
-  red: require '@keboola/indigo-ui/src/kbc-bootstrap/img/status-red.svg'
+  green: require '@keboola/indigo-ui/src/indigo/img/status-green.svg'
+  grey: require '@keboola/indigo-ui/src/indigo/img/status-grey.svg'
+  orange: require '@keboola/indigo-ui/src/indigo/img/status-orange.svg'
+  red: require '@keboola/indigo-ui/src/indigo/img/status-red.svg'
 
 statusColorMap =
   success: 'green'
