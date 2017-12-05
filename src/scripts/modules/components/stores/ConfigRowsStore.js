@@ -39,7 +39,7 @@ let ConfigRowsStore = StoreUtils.createStore({
   getEditingJSONDataString: function(componentId, configId, rowId) {
     return _store.getIn(
       ['editingJSONDataString', componentId, configId, rowId],
-      JSON.stringify(this.getConfiguration(componentId, configId, rowId), null, '    ')
+      JSON.stringify(this.getConfiguration(componentId, configId, rowId), null, '  ')
     );
   },
 
