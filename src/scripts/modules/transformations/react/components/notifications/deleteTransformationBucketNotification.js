@@ -17,7 +17,7 @@ export default (bucket, restoreTransformationBucketFn) => {
           onClick: this.props.onClick
         }, 'Trash'), '. ', React.DOM.a({
           onClick: this.revertConfigRemove
-        }, 'Revert'));
+        }, 'Restore'));
     }
   });
 };
