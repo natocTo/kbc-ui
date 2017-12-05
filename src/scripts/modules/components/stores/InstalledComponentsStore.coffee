@@ -50,9 +50,7 @@ _store = Map(
   pendingActions: Map()
   openMappings: Map()
 
-  filters: Map(),
-
-  rowPendingActions: Map()
+  filters: Map()
 )
 
 InstalledComponentsStore = StoreUtils.createStore
@@ -337,23 +335,6 @@ InstalledComponentsStore = StoreUtils.createStore
 
   isTemplatedConfigEditingString: (componentId, configId) ->
     _store.getIn(['templatedConfigEditingString', componentId, configId]) || false
-
-  getRowPendingActions: (componentId, configId, rowId) ->
-    _store.getIn ['rowPendingActions', componentId, configId, rowId], Map()
-
-  isEditingConfigRowJSONDataStringValid: (componentId, configId, rowId) ->
-    value = @getEditingConfigRowJSONDataString(componentId, configId, rowId)
-    try
-      JSON.parse(value)
-      return true
-    return false
-
-  getEditingConfigRowJSONDataString: (componentId, configId, rowId) ->
-    _store.getIn(['editingConfigurationRowJSONDataString', componentId, configId,
-      rowId], JSON.stringify(this.getConfigRowData(componentId, configId, rowId), null, '    '))
-
-  isEditingConfigRowJSONDataString: (componentId, configId, rowId) ->
-    _store.hasIn ['editingConfigurationRowJSONDataString', componentId, configId, rowId]
 
 
 Dispatcher.register (payload) ->
@@ -1044,82 +1025,6 @@ Dispatcher.register (payload) ->
         ],
           fromJSOrdered(action.data.configuration)
 
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_START
-      _store = _store.setIn [
-        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'delete'
-      ], true
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_ERROR
-      _store = _store.deleteIn [
-        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'delete'
-      ]
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_SUCCESS
-      _store = _store
-        .deleteIn [
-          'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'delete'
-        ]
-        .deleteIn [
-          'configRows', action.componentId, action.configurationId, action.rowId
-        ]
-        .deleteIn [
-          'configRowsData', action.componentId, action.configurationId, action.rowId
-        ]
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_START
-      _store = _store.setIn [
-        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'enable'
-      ], true
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_ERROR
-      _store = _store.deleteIn [
-        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'enable'
-      ]
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_ENABLE_CONFIGURATION_ROW_SUCCESS
-      _store = _store
-        .deleteIn [
-          'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'enable'
-        ]
-        .setIn [
-          'configRows', action.componentId, action.configurationId, action.rowId, 'disabled',
-        ], false
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_START
-      _store = _store.setIn [
-        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'disable'
-      ], true
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_ERROR
-      _store = _store.deleteIn [
-        'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'disable'
-      ]
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_DISABLE_CONFIGURATION_ROW_SUCCESS
-      _store = _store
-        .deleteIn [
-          'rowPendingActions', action.componentId, action.configurationId, action.rowId, 'disable'
-        ]
-        .setIn [
-          'configRows', action.componentId, action.configurationId, action.rowId, 'disabled',
-        ], true
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_JSON_DATA_STRING
-      _store = _store
-        .setIn [
-          'editingConfigurationRowJSONDataString', action.componentId, action.configurationId, action.rowId
-        ], action.jsonDataString
       InstalledComponentsStore.emitChange()
 
 module.exports = InstalledComponentsStore

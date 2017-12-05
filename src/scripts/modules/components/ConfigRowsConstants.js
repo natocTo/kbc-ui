@@ -1,0 +1,24 @@
+import keyMirror from 'fbjs/lib/keyMirror';
+
+module.exports = {
+  ActionTypes: keyMirror({
+    CONFIG_ROWS_CREATE_START: null,
+    CONFIG_ROWS_CREATE_SUCCESS: null,
+    CONFIG_ROWS_CREATE_ERROR: null,
+
+    CONFIG_ROWS_DELETE_START: null,
+    CONFIG_ROWS_DELETE_SUCCESS: null,
+    CONFIG_ROWS_DELETE_ERROR: null,
+
+    CONFIG_ROWS_DISABLE_START: null,
+    CONFIG_ROWS_DISABLE_SUCCESS: null,
+    CONFIG_ROWS_DISABLE_ERROR: null,
+
+    CONFIG_ROWS_ENABLE_START: null,
+    CONFIG_ROWS_ENABLE_SUCCESS: null,
+    CONFIG_ROWS_ENABLE_ERROR: null,
+
+    CONFIG_ROWS_UPDATE_JSON_DATA_STRING: null
+
+  })
+};

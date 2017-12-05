@@ -21,7 +21,7 @@ export default React.createClass({
       buttonDisabled: false,
       mode: MODE_BUTTON,
       tooltipPlacement: 'top',
-      label: 'Move Row To Trash'
+      label: 'Delete Row'
     };
   },
 
@@ -31,6 +31,12 @@ export default React.createClass({
     } else {
       return this.renderLink();
     }
+  },
+
+  onClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.props.onClick();
   },
 
   renderButton() {
@@ -44,7 +50,7 @@ export default React.createClass({
       return (
         <Tooltip placement={this.props.tooltipPlacement} tooltip={this.props.label}>
           <button disabled={this.props.buttonDisabled}
-                  className="btn btn-link" onClick={this.props.onClick}>
+                  className="btn btn-link" onClick={this.onClick}>
             <i className="kbc-icon-cup"/>
           </button>
         </Tooltip>

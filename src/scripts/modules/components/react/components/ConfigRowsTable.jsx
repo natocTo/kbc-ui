@@ -19,7 +19,8 @@ export default React.createClass({
     rowDelete: React.PropTypes.func.isRequired,
     rowEnableDisable: React.PropTypes.func.isRequired,
     rowDeletePending: React.PropTypes.func.isRequired,
-    rowEnableDisablePending: React.PropTypes.func.isRequired
+    rowEnableDisablePending: React.PropTypes.func.isRequired,
+    rowLinkTo: React.PropTypes.string.isRequired
   },
 
   getDefaultProps() {
@@ -53,7 +54,7 @@ export default React.createClass({
   renderRows() {
     return this.props.rows.map(function(row, rowIndex) {
       return (
-        <Link to="keboola.ex-aws-s3-row" params={{config: this.props.configId, row: row.get('id')}} className="tr" key={rowIndex}>
+        <Link to={this.props.rowLinkTo} params={{config: this.props.configId, row: row.get('id')}} className="tr" key={rowIndex}>
           {this.props.columns.map(function(columnFunction, columnIndex) {
             return (
               <div className="td kbc-break-all" key={columnIndex}>
@@ -83,7 +84,7 @@ export default React.createClass({
         key="activate"
         activateTooltip="Enable"
         deactivateTooltip="Disable"
-        isActive={!row.get('disabled', false)}
+        isActive={!row.get('isDisabled', false)}
         isPending={this.props.rowEnableDisablePending(row.get('id'))}
         onChange={function() {
           return props.rowEnableDisable(row.get('id'));

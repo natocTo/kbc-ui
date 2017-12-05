@@ -2,13 +2,15 @@ import React from 'react';
 
 // stores
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
+import ConfigRowsStore from '../../../components/stores/ConfigRowsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
-import installedComponentsActions from '../../../components/InstalledComponentsActionCreators';
+// import installedComponentsActions from '../../../components/InstalledComponentsActionCreators';
+import configRowActions from '../../../components/ConfigRowsActionCreators';
 
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
@@ -21,20 +23,20 @@ import JSONConfiguration from '../../../components/react/components/JSONConfigur
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
     const rowId = RoutesStore.getCurrentRouteParam('row');
-    const row = InstalledComponentsStore.getConfigRow(COMPONENT_ID, configId, rowId);
+    const row = ConfigRowsStore.get(COMPONENT_ID, configId, rowId);
     return {
       configId: configId,
       rowId: rowId,
       row: row,
-      jsonDataString: InstalledComponentsStore.getEditingConfigRowJSONDataString(COMPONENT_ID, configId, rowId),
-      isJSONEditingSaving: InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, configId, rowId).has('save-json-data'),
-      isJSONEditingValid: InstalledComponentsStore.isEditingConfigRowJSONDataStringValid(COMPONENT_ID, configId, rowId),
-      isJSONEditingChanged: InstalledComponentsStore.isEditingConfigRowJSONDataString(COMPONENT_ID, configId, rowId)
+      jsonDataString: ConfigRowsStore.getEditingJSONDataString(COMPONENT_ID, configId, rowId),
+      isJSONEditingSaving: ConfigRowsStore.getPendingActions(COMPONENT_ID, configId, rowId).has('save-json-data'),
+      isJSONEditingValid: ConfigRowsStore.isEditingJSONDataStringValid(COMPONENT_ID, configId, rowId),
+      isJSONEditingChanged: ConfigRowsStore.isEditingJSONDataString(COMPONENT_ID, configId, rowId)
     };
   },
 
@@ -64,7 +66,7 @@ export default React.createClass({
                 return;
               }}
               onEditChange={function(jsonDataString) {
-                installedComponentsActions.updatetConfigurationRowJSONDataString(COMPONENT_ID, state.configId, state.rowId, jsonDataString);
+                return configRowActions.updateJSONDataString(COMPONENT_ID, state.configId, state.rowId, jsonDataString);
               }}
               onEditSubmit={function() {
                 return;

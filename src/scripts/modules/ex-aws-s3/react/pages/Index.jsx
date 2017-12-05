@@ -2,13 +2,14 @@ import React from 'react';
 
 // stores
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
+import ConfigRowsStore from '../../../components/stores/ConfigRowsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
-import installedComponentsActions from '../../../components/InstalledComponentsActionCreators';
+import configRowsActions from '../../../components/ConfigRowsActionCreators';
 
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
@@ -25,14 +26,14 @@ import ConfigRowsTable from '../../../components/react/components/ConfigRowsTabl
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, LatestJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
     return {
       configId: configId,
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
-      rows: InstalledComponentsStore.getConfigRows(COMPONENT_ID, configId)
+      rows: ConfigRowsStore.getRows(COMPONENT_ID, configId)
     };
   },
 
@@ -63,21 +64,22 @@ export default React.createClass({
             componentId={COMPONENT_ID}
             configId={this.state.configId}
             rowDelete={function(rowId) {
-              return installedComponentsActions.deleteConfigurationRow(COMPONENT_ID, state.configId, rowId);
+              return configRowsActions.delete(COMPONENT_ID, state.configId, rowId);
             }}
             rowDeletePending={function(rowId) {
-              return InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('delete');
+              return ConfigRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('delete');
             }}
             rowEnableDisable={function(rowId) {
-              if (state.rows.get(rowId).get('disabled')) {
-                return installedComponentsActions.enableConfigurationRow(COMPONENT_ID, state.configId, rowId);
+              if (state.rows.get(rowId).get('isDisabled', false)) {
+                return configRowsActions.enable(COMPONENT_ID, state.configId, rowId);
               } else {
-                return installedComponentsActions.disableConfigurationRow(COMPONENT_ID, state.configId, rowId);
+                return configRowsActions.disable(COMPONENT_ID, state.configId, rowId);
               }
             }}
             rowEnableDisablePending={function(rowId) {
-              return InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('disable') || InstalledComponentsStore.getRowPendingActions(COMPONENT_ID, state.configId, rowId).has('enable');
+              return ConfigRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('disable') || ConfigRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('enable');
             }}
+            rowLinkTo={COMPONENT_ID + '-row'}
           />
           <div className="text-center">
             <CreateConfigRowButton
