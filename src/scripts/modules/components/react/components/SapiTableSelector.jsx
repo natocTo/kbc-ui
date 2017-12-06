@@ -68,22 +68,22 @@ export default  React.createClass({
 
   getInitialState() {
     return {
-      selectByComponents: true
+      selectByComponents: false
     };
   },
 
   render() {
     const isNew = this.state.hasMetadataFeature;
-    const enhancedProps = isNew && this.state.selectByComponents ? {
+    const enhancedProps = isNew ? {
       valueRenderer: this.valueRenderer,
       optionRenderer: this.optionRenderer,
       filterOption: this.filterOption,
+      inputRenderer: this.inputRenderer,
       filterOptions: this.filterOptions
     } : {};
     return (
       <Select
         disabled={this.props.disabled}
-        inputRenderer={this.inputRenderer}
         name="source"
         clearable={false}
         value={this.props.value}
@@ -91,7 +91,7 @@ export default  React.createClass({
         placeholder={this.props.placeholder}
         {...enhancedProps}
         onChange={this.onSelectTable}
-        options={isNew && this.state.selectByComponents ? this.prepareOptions() : this._getTables(this.state.tables)}
+        options={isNew ? this.prepareOptions() : this._getTables(this.state.tables)}
       />
     );
   },
@@ -267,6 +267,17 @@ export default  React.createClass({
     return groups;
   },
 
+  prepareTablesByBucketsOptions() {
+    const originalTableOptionsIds = this._getTables(this.state.tables).map(t => t.value);
+    const tablesToOffer = this.state.tables.filter(t => originalTableOptionsIds.includes(t.get('id')));
+    const bucketGroups = tablesToOffer.groupBy(t => t.getIn(['bucket', 'id']));
+    return bucketGroups.reduce((acc, tables, bucketId) => {
+      const childrenOptions = tables.map(t => ({groupName: bucketId, table: t.toJS(), value: t.get('id'), tableLabel: t.get('name')})).toArray();
+      const parent = {groupName: bucketId, isParent: true, disabled: true, childrenOptions};
+      return acc.concat(parent).concat(childrenOptions);
+    }, []);
+  },
+
   composeGroupName(jsComponent, jsConfig) {
     const componentType = jsComponent && jsComponent.type !== 'transformation' ? ` ${jsComponent.type}` : '';
     const componentName = jsComponent ? `${jsComponent.name}${componentType}` : 'Unknown component';
@@ -284,16 +295,21 @@ export default  React.createClass({
   },
 
   prepareOptions() {
-    return this.state.parsedTablesMap.reduce((acc, tables, groupInfo) => {
-      // const componentName = groupInfo.get('label');
-      const jsComponent = groupInfo.get('component') ? groupInfo.get('component').toJS() : null;
-      const jsConfig = groupInfo.get('config') ? groupInfo.get('config').toJS() : null;
-      const jsTables = tables.toJS();
-      const children = jsTables.map(table => this.makeOption(jsComponent, jsConfig, null, table));
-      const parent = this.makeOption(jsComponent, jsConfig, children);
-      return acc.concat(parent).concat(children);
-    }, []);
+    if (this.state.selectByComponents) {
+      return this.state.parsedTablesMap.reduce((acc, tables, groupInfo) => {
+        // const componentName = groupInfo.get('label');
+        const jsComponent = groupInfo.get('component') ? groupInfo.get('component').toJS() : null;
+        const jsConfig = groupInfo.get('config') ? groupInfo.get('config').toJS() : null;
+        const jsTables = tables.toJS();
+        const children = jsTables.map(table => this.makeOption(jsComponent, jsConfig, null, table));
+        const parent = this.makeOption(jsComponent, jsConfig, children);
+        return acc.concat(parent).concat(children);
+      }, []);
+    } else {
+      return this.prepareTablesByBucketsOptions();
+    }
   },
+
 
   _getTables(allTables) {
     let tables = allTables;
