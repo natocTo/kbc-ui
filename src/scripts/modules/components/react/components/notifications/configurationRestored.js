@@ -6,6 +6,7 @@ export default (componentId, configurationId, configuration) => {
     propTypes: {
       onClick: React.PropTypes.func.isRequired
     },
+
     render: function() {
       return (<ConfigurationCopiedNotification
           message={'Configuration ' + (configuration.get('name')) + ' was '}

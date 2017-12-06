@@ -6,6 +6,7 @@ export default (component, jobId) => {
     propTypes: {
       onClick: React.PropTypes.func.isRequired
     },
+
     getJobName() {
       if (component) {
         if (component.get('type') === 'transformation') {
@@ -17,13 +18,15 @@ export default (component, jobId) => {
         return 'Job';
       }
     },
+
     render() {
       return (
         <span>
           <Link to="jobDetail" params={{jobId: jobId}} onClick={this.props.onClick}>
             {this.getJobName()}
           </Link>
-          {' '}has been scheduled.
+          {' '}
+          has been scheduled.
         </span>
       );
     }

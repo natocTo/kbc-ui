@@ -6,6 +6,7 @@ export default (component, configuration, restoreConfigurationCallback) => {
     propTypes: {
       onClick: React.PropTypes.func.isRequired
     },
+
     revertConfigRemove: function() {
       restoreConfigurationCallback();
       return this.props.onClick();
@@ -14,7 +15,15 @@ export default (component, configuration, restoreConfigurationCallback) => {
     render: function() {
       return (
         <span>
-          Configuration {configuration.get('name')} was moved to <Link to="settings-trash" onClick={this.props.onClick}>Trash</Link>. <a onClick={this.revertConfigRemove}>Restore</a>
+          Configuration {configuration.get('name')} was moved to
+          {' '}
+          <Link to="settings-trash" onClick={this.props.onClick}>
+            Trash
+          </Link>.
+          {' '}
+          <a onClick={this.revertConfigRemove}>
+            Restore
+          </a>
         </span>
       );
     }

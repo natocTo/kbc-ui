@@ -6,10 +6,15 @@ export default (configuration) => {
     propTypes: {
       onClick: React.PropTypes.func.isRequired
     },
+
     render: function() {
       return (
         <span>
-          Configuration {configuration.get('name')} was moved to <Link to="settings-trash" onClick={this.props.onClick}>Trash</Link>.
+          Configuration {configuration.get('name')} was moved to
+          {' '}
+          <Link to="settings-trash" onClick={this.props.onClick}>
+            Trash
+          </Link>.
         </span>
       );
     }
