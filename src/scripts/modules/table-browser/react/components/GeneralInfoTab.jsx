@@ -11,7 +11,7 @@ import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentConfigurationLink from '../../../components/react/components/ComponentConfigurationLink';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
-import {fromJS} from 'immutable';
+import {fromJS, Map} from 'immutable';
 
 
 export default React.createClass({
@@ -72,8 +72,8 @@ export default React.createClass({
 
   renderComponentFromMetadata(table) {
     const metadata = table.get('metadata');
-    const componentId = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.component.id').get('value');
-    const configId = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.configuration.id').get('value');
+    const componentId = (metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.component.id') || Map()).get('value');
+    const configId = (metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.configuration.id') || Map()).get('value');
     const component = componentId && ComponentsStore.getComponent(componentId);
     if (!component) return 'N/A';
     const componentName = component.get('type') !== 'transformation' ? `${component.get('name')} ${component.get('type')}` : `${component.get('type')}`;
