@@ -7,6 +7,11 @@ import {Table} from 'react-bootstrap';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import filesize from 'filesize';
+import ComponentsStore from '../../../stores/ComponentsStore';
+import ComponentIcon from '../../../../../react/common/ComponentIcon';
+import ComponentConfigurationLink from '../../../../components/react/components/ComponentConfigurationLink';
+import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
+import {fromJS} from 'immutable';
 
 export default React.createClass({
 
@@ -53,6 +58,7 @@ export default React.createClass({
             {this.renderTableRow('Primary Key', _.isEmpty(primaryKey) ? 'N/A' : primaryKey.join(', '))}
             {this.renderTableRow('Last Import', this.renderTimefromNow(table.get('lastImportDate')))}
             {this.renderTableRow('Last Change', this.renderTimefromNow(table.get('lastChangeDate')))}
+            {this.renderTableRow('Resulted from', this.renderComponentFromMetadata(table))}
 
             {this.renderTableRow('Rows Count', this.renderRowsCount(table.get('rowsCount')))}
             {this.renderTableRow('Data Size', this.renderDataSize(table.get('dataSizeBytes')))}
@@ -61,6 +67,24 @@ export default React.createClass({
           </tbody>
         </Table>
       </div>
+    );
+  },
+
+  renderComponentFromMetadata(table) {
+    const metadata = table.get('metadata');
+    const componentId = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.component.id');
+    const configId = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.configuration.id');
+    const component = componentId && ComponentsStore.getComponent(componentId);
+    if (!component) return 'N/A';
+    const componentName = component.get('type') !== 'transformation' ? `${component.get('name')} ${component.get('type')}` : `${component.get('type')}`;
+    const config = InstalledComponentsStore.getConfig(componentId, configId);
+    const configName = config ? config.get('name', configId) : configId;
+    return (
+      <span>
+        <ComponentIcon component={fromJS(component)}/>
+        <ComponentConfigurationLink componentId={componentId} configId={configId}>{componentName} / {configName}
+          </ComponentConfigurationLink>
+      </span>
     );
   },
 
