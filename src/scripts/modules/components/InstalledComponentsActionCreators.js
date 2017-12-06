@@ -49,7 +49,7 @@ const storeEncodedConfigRow = function(componentId, configId, rowId, dataToSave,
   let dataToSavePrepared = dataToSave;
   if (component.get('flags').includes('encrypt')) {
     dataToSavePrepared = {
-      configuration: JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)))
+      configuration: JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSavePrepared)))
     };
   } else {
     dataToSavePrepared = {
