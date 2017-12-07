@@ -17,7 +17,6 @@ exDbRoutes = require '../ex-db/exDbRoutes'
 exDbGenericRoutes = require('../ex-db-generic/routes').default
 exMongoDbRoutes = require '../ex-mongodb/routes'
 exGoogleBigqueryRoutes = require('../ex-google-bigquery/routes').default
-exGdriveGoogleRoutes = require '../ex-google-drive-old/exGdriveRoutes'
 exGanalRoutes = require '../ex-google-analytics/exGanalRoutes'
 exGaV4Routes = require('../ex-google-analytics-v4/routes').default
 exFacebookRoutes = require('../ex-facebook/routes.js').default
@@ -93,8 +92,6 @@ routes =
       defaultRouteHandler: extractor(NewComponent)
     ,
       createComponentRoute 'ex-db', [exDbRoutes]
-    ,
-      createComponentRoute 'ex-google-drive', [exGdriveGoogleRoutes]
     ,
       createComponentRoute 'ex-google-analytics', [exGanalRoutes]
       createComponentRoute 'keboola.ex-google-analytics-v4', [exGaV4Routes('keboola.ex-google-analytics-v4')]
