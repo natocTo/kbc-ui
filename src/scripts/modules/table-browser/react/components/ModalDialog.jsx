@@ -9,8 +9,7 @@ import TableDescriptionTab from './TableDescriptionTab';
 import SapiTableLink from '../../../components/react/components/StorageApiTableLink';
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
-import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import {Modal, Tabs, Tab} from 'react-bootstrap';
 import {RefreshIcon} from 'kbc-react-components';
 import './ModalDialog.less';
 
@@ -125,23 +124,23 @@ export default React.createClass({
   renderModalBody() {
     return (
       <div>
-        <TabbedArea defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
-          <TabPane eventKey="general" title="General Info">
+        <Tabs defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
+          <Tab eventKey="general" title="General Info">
             {this.renderGeneralInfo()}
-          </TabPane>
-          <TabPane eventKey="description" title="Description">
+          </Tab>
+          <Tab eventKey="description" title="Description">
             {this.renderTableDescription()}
-          </TabPane>
-          <TabPane eventKey="columns" title="Columns">
+          </Tab>
+          <Tab eventKey="columns" title="Columns">
             {this.renderColumnsInfo()}
-          </TabPane>
-          <TabPane eventKey="datasample" title="Data Sample">
+          </Tab>
+          <Tab eventKey="datasample" title="Data Sample">
             {this.renderDataSample()}
-          </TabPane>
-          <TabPane eventKey="events" title="Events">
+          </Tab>
+          <Tab eventKey="events" title="Events">
             {this.renderEvents()}
-          </TabPane>
-        </TabbedArea>
+          </Tab>
+        </Tabs>
       </div>
     );
   },

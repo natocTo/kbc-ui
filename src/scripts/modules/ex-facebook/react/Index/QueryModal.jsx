@@ -4,8 +4,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import TemplateSelector from './TemplateSelector';
 import GraphAPIExplorerLink from './GraphAPIExplorerLink';
 import DateRangeSelector from './DateRangeSelector';
-import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import {Modal, Tabs, Tab} from 'react-bootstrap';
 import Select from 'react-select';
 
 const NAME_HELP = 'Helps describing the query and also used to prefix output tables name resulting from the query if they differ.';
@@ -54,8 +53,8 @@ export default React.createClass({
             query={this.query('query', Map())}
             apiVersion={this.props.apiVersion}
           />
-          <TabbedArea defaultActiveKey={1} animation={false}>
-            <TabPane title="General" eventKey={1}>
+          <Tabs defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs">
+            <Tab title="General" eventKey={1}>
               <div className="row form-horizontal clearfix">
                 {this.renderTemplateSelect()}
                 {this.renderInput('Name', 'name', NAME_HELP, placeholders.name, this.nameInvalidReason)}
@@ -63,16 +62,16 @@ export default React.createClass({
                 {this.renderFieldsInput(placeholders.fields)}
                 {this.renderAccountSelector()}
               </div>
-            </TabPane>
-            <TabPane title="Advanced" eventKey={2}>
+            </Tab>
+            <Tab title="Advanced" eventKey={2}>
               <div className="row form-horizontal clearfix">
                 {this.renderDateRangeSelector()}
                 {this.renderInput('Since', ['query', 'since'], SINCE_HELP, 'yyyy-mm-dd or 15 days ago')}
                 {this.renderInput('Until', ['query', 'until'], UNTIL_HELP, 'yyyy-mm-dd or 15 days ago')}
                 {this.renderInput('Limit', ['query', 'limit'], LIMIT_HELP, '25')}
               </div>
-            </TabPane>
-          </TabbedArea>
+            </Tab>
+          </Tabs>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons

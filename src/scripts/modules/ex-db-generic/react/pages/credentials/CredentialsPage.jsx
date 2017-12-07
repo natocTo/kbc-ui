@@ -6,7 +6,7 @@ import routesStore from '../../../../../stores/RoutesStore';
 import CredentialsForm from './CredentialsForm';
 import SSLForm from './SSLForm';
 
-import {TabbedArea, TabPane} from './../../../../../react/common/KbcBootstrap';
+import {Tabs, Tab} from 'react-bootstrap';
 
 export default function(componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, hasSshTunnel) {
   const actionCreators = actionsProvisioning.createActions(componentId);
@@ -33,8 +33,8 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
       return (
         <div className="container-fluid">
           <div className="kbc-main-content">
-            <TabbedArea defaultActiveKey="db" animation={false} id="credentialstab">
-              <TabPane eventKey="db" title="Database Credentials">
+            <Tabs defaultActiveKey="db" animation={false} id="ex-db-generic-credentials-page-tabs">
+              <Tab eventKey="db" title="Database Credentials">
                 <CredentialsForm
                   isValidEditingCredentials={this.state.isValidCredentials}
                   credentials={(this.state.isEditing) ? this.state.editingCredentials : this.state.credentials}
@@ -48,9 +48,9 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
                   hasSshTunnel={hasSshTunnel}
                   actionCreators={actionCreators}
                 />
-              </TabPane>
+              </Tab>
               {this.renderSSLForm()}
-            </TabbedArea>
+            </Tabs>
           </div>
         </div>
       );
@@ -59,7 +59,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
     renderSSLForm() {
       if (componentId === 'keboola.ex-db-mysql' || componentId === 'keboola.ex-db-mysql-custom') {
         return (
-          <TabPane eventKey="ssl" title="SSL">
+          <Tab eventKey="ssl" title="SSL">
             <SSLForm
               credentials={(this.state.isEditing) ? this.state.editingCredentials : this.state.credentials}
               enabled={!this.state.isSaving}
@@ -69,7 +69,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
               actionsProvisioning={actionCreators}
               isEditing={this.state.isEditing}
             />
-          </TabPane>
+          </Tab>
         );
       }
     },

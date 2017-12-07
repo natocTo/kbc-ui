@@ -1,14 +1,13 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Alert, Modal, Table} from 'react-bootstrap';
+import {Alert, Modal, Table, Tabs, Tab} from 'react-bootstrap';
 import {Check, Loader, RefreshIcon} from 'kbc-react-components';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
 import SapiTableLink from './StorageApiTableLink';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import {TabbedArea, TabPane} from './../../../../react/common/KbcBootstrap';
 import jobsApi from '../../../jobs/JobsApi';
 import DockerActionFn from '../../DockerActionsApi';
 import date from '../../../../utils/date';
@@ -169,15 +168,15 @@ export default React.createClass({
          </p>
          :
          <div>
-           <TabbedArea defaultActiveKey="general" animation={false} id="daterangetab">
+           <Tabs defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
 
-             <TabPane eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
+             <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
                {this.renderConfigStatus()}
-             </TabPane>
-             <TabPane eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
+             </Tab>
+             <Tab eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
                {this.renderOrhcestrationsStatus()}
-             </TabPane>
-           </TabbedArea>
+             </Tab>
+           </Tabs>
          </div>
         }
       </span>

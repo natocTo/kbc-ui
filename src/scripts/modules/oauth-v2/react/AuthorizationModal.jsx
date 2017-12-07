@@ -1,13 +1,12 @@
 import React, {PropTypes} from 'react';
 import InstantAuthorizationFields from './InstantAuthorizationFields';
-import {TabbedArea, TabPane} from './../../../react/common/KbcBootstrap';
 import Clipboard from '../../../react/common/Clipboard';
 import AuthorizationForm from './AuthorizationForm';
 import DirectTokenInsertFields from './DirectTokenInsertFields';
 import CustomAuthorizationFields from './CustomAuthorizationFields';
 import * as oauthUtils from '../OauthUtils';
 import {Loader} from 'kbc-react-components';
-import { Button, ButtonToolbar, Modal } from 'react-bootstrap';
+import { Button, ButtonToolbar, Modal, Tabs, Tab } from 'react-bootstrap';
 
 import './AuthorizationModal.less';
 
@@ -59,34 +58,34 @@ export default React.createClass({
           id={this.props.id}
         >
           <Modal.Body>
-            <TabbedArea
+            <Tabs
               id="authorizationrowtabs"
               activeKey={this.state.activeTab}
               onSelect={this.goToTab}
               animation={false}
               className="kbc-wrapper-tabs-margin-fix"
             >
-              <TabPane eventKey="instant" title="Instant authorization">
+              <Tab eventKey="instant" title="Instant authorization">
                 {this.renderInstant()}
-              </TabPane>
+              </Tab>
               {this.props.allowExternalAuthorization &&
-                <TabPane eventKey="external" title="External authorization">
+                <Tab eventKey="external" title="External authorization">
                   {this.renderExternal()}
-                </TabPane>
+                </Tab>
               }
               {DIRECT_TOKEN_COMPONENTS.includes(this.props.componentId) ?
-                <TabPane key="direct" eventKey="direct" title="Direct token insert">
+                <Tab key="direct" eventKey="direct" title="Direct token insert">
                   {this.renderDirectTokenInsert()}
-                </TabPane>
+                </Tab>
                : null
               }
               {CUSTOM_AUTHORIZATION_COMPONENTS.includes(this.props.componentId) ?
-                <TabPane key="custom" eventKey="custom" title="Custom authorization">
+                <Tab key="custom" eventKey="custom" title="Custom authorization">
                   {this.renderCustom()}
-                </TabPane>
+                </Tab>
                 : null
               }
-            </TabbedArea>
+            </Tabs>
           </Modal.Body>
           <Modal.Footer>
             {this.renderFooterButtons()}

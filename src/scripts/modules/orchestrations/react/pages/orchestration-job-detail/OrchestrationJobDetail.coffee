@@ -18,8 +18,8 @@ JobsNav = React.createFactory(require './JobsNav')
 JobOverview = React.createFactory(require './Overview')
 Events =  React.createFactory(require('../../../../sapi-events/react/Events').default)
 
-TabbedArea = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabbedArea)
-TabPane = React.createFactory(require('./../../../../../react/common/KbcBootstrap').TabPane)
+Tabs = React.createFactory(require('react-bootstrap').Tabs)
+Tab = React.createFactory(require('react-bootstrap').Tab)
 
 {div} = React.DOM
 
@@ -66,10 +66,10 @@ OrchestrationJobDetail = React.createClass
                 activeJobId: @state.job.get 'id'
           div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
             div {},
-              TabbedArea defaultActiveKey: @state.openedTab, animation: false,
-                TabPane eventKey: 'overview', title: 'Overview',
+              Tabs defaultActiveKey: @state.openedTab, animation: false, id: 'orchestration-job-detail-tabs',
+                Tab eventKey: 'overview', title: 'Overview',
                   JobOverview(job: @state.job)
-                TabPane eventKey: 'log', title: 'Log',
+                Tab eventKey: 'log', title: 'Log',
                   Events
                     link:
                       to: 'orchestrationJob'

@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
-import {TabbedArea, TabPane} from './../../../react/common/KbcBootstrap';
-import {Button} from 'react-bootstrap';
+import {Button, Tabs, Tab} from 'react-bootstrap';
 import {Steps} from '../constants';
 import Select from 'react-select';
 import CredentialsForm from './CredentialsForm';
@@ -24,8 +23,8 @@ export default React.createClass({
 
   render() {
     return (
-      <TabbedArea activeKey={this.props.step} onSelect={this.goToStep} animation={false} id="wizardtab">
-        <TabPane eventKey={Steps.STEP_CREDENTIALS} title="1. Credentials">
+      <Tabs activeKey={this.props.step} onSelect={this.goToStep} animation={false} id="wizardtab">
+        <Tab eventKey={Steps.STEP_CREDENTIALS} title="1. Credentials">
           <div className="row">
             <div className="col-md-8">
               <CredentialsForm
@@ -54,8 +53,8 @@ export default React.createClass({
               </div>
             </div>
           </div>
-        </TabPane>
-        <TabPane eventKey={Steps.STEP_TEMPLATE} title="2. Template" disabled={!this.isCredentialsValid()}>
+        </Tab>
+        <Tab eventKey={Steps.STEP_TEMPLATE} title="2. Template" disabled={!this.isCredentialsValid()}>
           <div className="row">
             <div className="col-sm-10">
               <p>Please select from the predefined templates to initialize the Adform configuration:</p>
@@ -99,8 +98,8 @@ export default React.createClass({
               </Button>
             </div>
           </div>
-        </TabPane>
-      </TabbedArea>
+        </Tab>
+      </Tabs>
     );
   },
 
