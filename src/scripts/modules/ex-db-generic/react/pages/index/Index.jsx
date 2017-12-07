@@ -18,7 +18,6 @@ import SidebarVersions from '../../../../components/react/components/SidebarVers
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
 
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
-import JobStatusCircle from '../../../../../react/common/JobStatusCircle';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 
 import {Loader} from 'kbc-react-components';
@@ -179,7 +178,7 @@ export default function(componentId) {
           return (
             <li>
               <Link to={link} params={{config: this.state.configId}}>
-                <Loader/> Database Credentials
+                <Loader className="fa-fw"/> Database Credentials
               </Link>
             </li>
           );
@@ -187,7 +186,9 @@ export default function(componentId) {
           return (
             <li>
               <Link to={link} params={{ config: this.state.configId }}>
-                <JobStatusCircle status={(this.state.validConnection) ? 'success' : 'error'}/> Database Credentials
+                <i className={(this.state.validConnection)
+                  ? 'fa fa-fw fa-check-circle text-success'
+                  : 'fa fa-fw fa-times-circle text-danger'}/> Database Credentials
               </Link>
             </li>
           );
