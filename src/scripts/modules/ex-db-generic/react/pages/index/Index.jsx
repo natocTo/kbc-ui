@@ -143,8 +143,6 @@ export default function(componentId) {
         return (
           <div className="row component-empty-state text-center">
             <div className="col-md-12">
-              <p>Select the tables you'd like to import to autogenerate your configuration.
-                You can edit them later at any time.  </p>
               <Quickstart
                 componentId={componentId}
                 configId={this.state.configId}
