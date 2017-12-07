@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
-import {Modal} from 'react-bootstrap';
-import {TabbedArea, TabPane} from '../../../../react/common/KbcBootstrap.jsx';
+import {Modal, Tabs, Tab} from 'react-bootstrap';
 import WizardButtons from './WizardButtons';
 import InputTab from './InputTab';
 import SpreadsheetTab from './SpreadsheetTab';
@@ -39,16 +38,16 @@ export default React.createClass({
             minHeight: '250px'
           }}
         >
-          <TabbedArea activeKey={step} defaultActiveEventKey={1} animation={false}>
-            <TabPane title="Source" eventKey={1} disabled={step !== 1}>
+          <Tabs activeKey={step} defaultActiveKey={1} animation={false} id="wr-google-sheets-sheet-modal-tabs">
+            <Tab title="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
                  onSelect={this.onChangeInputMapping}
                  tables={storageTables}
                  mapping={this.localState(['mapping'], Map())}
                  exclude={this.localState(['exclude'], Map())}
                />
-            </TabPane>
-            <TabPane title="Destination" eventKey={2} disabled={step !== 3}>
+            </Tab>
+            <Tab title="Destination" eventKey={2} disabled={step !== 3}>
               <SpreadsheetTab
                   onSelectExisting={(data) => {
                     this.updateLocalState(['sheet'].concat('fileId'), data[0].id);
@@ -64,15 +63,15 @@ export default React.createClass({
                   valueFolder={this.sheet(['folder', 'title'], '/')}
                   type={this.localState('uploadType', 'new')}
                   />
-            </TabPane>
-            <TabPane title="Options" eventKey={3} disabled={step !== 3}>
+            </Tab>
+            <Tab title="Options" eventKey={3} disabled={step !== 3}>
               <SheetTab
                 onChangeSheetTitle={this.onChangeSheetTitle}
                 onChangeAction={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}                 valueSheetTitle={this.sheet('sheetTitle')}
                 valueAction={this.sheet('action')}
                 />
-            </TabPane>
-          </TabbedArea>
+            </Tab>
+          </Tabs>
         </Modal.Body>
         <Modal.Footer>
           <WizardButtons

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Tabs, Tab} from 'react-bootstrap';
 
 // stores
 import ComponentStore from '../../../../components/stores/ComponentsStore';
@@ -26,7 +27,6 @@ import RunComponentButton from '../../../../components/react/components/RunCompo
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import SaveButtons from '../../../../../react/common/SaveButtons';
-import {TabbedArea, TabPane} from './../../../../../react/common/KbcBootstrap';
 
 // utils
 import {getDefaultTable, getDefaultBucket} from '../../../utils';
@@ -72,12 +72,12 @@ export default React.createClass({
 
   renderSettings() {
     return (
-      <TabbedArea
+      <Tabs
         defaultActiveEventKey={1}
         animation={false}
         id="modules-ex-s3-react-pages-index-index-tabbed-area"
       >
-        <TabPane title="General" eventKey={1}>
+        <Tab title="General" eventKey={1}>
           <Settings
             s3Bucket={this.state.settings.get('s3Bucket')}
             s3Key={this.state.settings.get('s3Key')}
@@ -94,24 +94,24 @@ export default React.createClass({
             destinationEditing={this.state.localState.get('isDestinationEditing', false)}
             onDestinationEdit={this.state.actions.destinationEdit}
           />
-        </TabPane>
-        <TabPane title="AWS Credentials" eventKey={2}>
+        </Tab>
+        <Tab title="AWS Credentials" eventKey={2}>
           <Credentials
             awsAccessKeyId={this.state.settings.get('awsAccessKeyId')}
             awsSecretAccessKey={this.state.settings.get('awsSecretAccessKey')}
             onChange={this.state.actions.editChange}
             disabled={this.state.localState.get('isSaving', false)}
           />
-        </TabPane>
-        <TabPane title="Advanced" eventKey={3}>
+        </Tab>
+        <Tab title="Advanced" eventKey={3}>
           <Advanced
             delimiter={this.state.settings.get('delimiter')}
             enclosure={this.state.settings.get('enclosure')}
             onChange={this.state.actions.editChange}
             disabled={this.state.localState.get('isSaving', false)}
           />
-        </TabPane>
-      </TabbedArea>
+        </Tab>
+      </Tabs>
     );
   },
 

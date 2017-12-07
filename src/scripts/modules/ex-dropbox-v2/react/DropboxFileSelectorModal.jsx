@@ -1,8 +1,7 @@
 import { first, isEmpty } from 'underscore';
 import React from 'react';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
-import {TabbedArea, TabPane} from '../../../react/common/KbcBootstrap';
-import {Modal} from 'react-bootstrap';
+import {Modal, Tabs, Tab} from 'react-bootstrap';
 import DropboxChooser from 'react-dropbox-chooser';
 import { Button } from 'react-bootstrap';
 import {getDestinationName} from '../actions/ApplicationActions.js';
@@ -57,8 +56,10 @@ export default React.createClass({
           <Modal.Title>Dropbox file selector</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <TabbedArea activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}>
-            <TabPane eventKey="instant" title="Choose From Dropbox">
+          <Tabs activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}
+            id="ex-dropbox-v2-dropbox-file-selector-modal-tabs"
+          >
+            <Tab eventKey="instant" title="Choose From Dropbox">
               <div style={{padding: '1.5em'}}>
                 <p>Please choose a CSV file you want to extract via Dropbox Chooser that uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
                 <div className="dropbox-button">
@@ -85,11 +86,11 @@ export default React.createClass({
                  </div>
                 }
               </div>
-            </TabPane>
-            <TabPane eventKey="external" title="Insert Link Manually">
+            </Tab>
+            <Tab eventKey="external" title="Insert Link Manually">
               {this.renderManualInsert()}
-            </TabPane>
-          </TabbedArea>
+            </Tab>
+          </Tabs>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons

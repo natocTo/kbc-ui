@@ -9,7 +9,7 @@ Button = React.createFactory(require('react-bootstrap').Button)
 Check = React.createFactory(require('kbc-react-components').Check)
 NewDimensionForm = React.createFactory(require('./../../components/NewDimensionForm').default)
 
-{TabbedArea, TabPane} = require './../../../../../react/common/KbcBootstrap'
+{Tabs, Tab} = require 'react-bootstrap'
 actionCreators = require '../../../actionCreators'
 dateDimensionStore = require '../../../dateDimensionsStore'
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
@@ -68,8 +68,8 @@ module.exports = React.createClass
             @_title()
 
         ModalBody null,
-          React.createElement TabbedArea, null,
-            React.createElement TabPane,
+          React.createElement Tabs, id: 'gooddata-writer-date-dimension-select-modal-tabs',
+            React.createElement Tab,
               eventKey: 'select'
               title: 'Select from existing'
             ,
@@ -78,7 +78,7 @@ module.exports = React.createClass
                   'Loading ...'
               else
                 @_renderTable()
-            React.createElement TabPane,
+            React.createElement Tab,
               eventKey: 'new'
               title: 'Create new'
             ,

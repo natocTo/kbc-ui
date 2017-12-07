@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Map} from 'immutable';
 import {Modal, Tab, Tabs} from 'react-bootstrap';
-// import {TabbedArea, TabPane} from '../../../../react/common/KbcBootstrap.jsx';
 import WizardButtons from '../../../components/react/components/WizardButtons';
 import InputTab from './InputTab';
 import FileTab from './FileTab';

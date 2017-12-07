@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {TabPane} from './../../../../react/common/KbcBootstrap';
+import {Tab} from 'react-bootstrap';
 
 export default React.createClass({
 
@@ -12,7 +12,7 @@ export default React.createClass({
 
   render() {
     return (
-      <TabPane {...this.props} eventKey={this.props.step} title={this.props.title}>
+      <Tab {...this.props} eventKey={this.props.step} title={this.props.title}>
         <div className="row" style={this.style()}>
           {this.props.children}
         </div>
@@ -21,7 +21,7 @@ export default React.createClass({
             {this.props.buttons}
           </div>
         </div>
-      </TabPane>
+      </Tab>
     );
   },
 

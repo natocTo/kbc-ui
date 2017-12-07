@@ -2,8 +2,8 @@ React = require('react')
 ComponentsStore = require '../../components/stores/ComponentsStore'
 RoutesStore = require '../../../stores/RoutesStore'
 ApplicationStore = require '../../../stores/ApplicationStore'
-TabbedArea = React.createFactory(require('./../../../react/common/KbcBootstrap').TabbedArea)
-TabPane = React.createFactory(require('./../../../react/common/KbcBootstrap').TabPane)
+Tabs = React.createFactory(require('react-bootstrap').Tabs)
+Tab = React.createFactory(require('react-bootstrap').Tab)
 Button = React.createFactory(require('react-bootstrap').Button)
 Input = React.createFactory(require('./../../../react/common/KbcBootstrap').Input)
 Loader = React.createFactory(require('kbc-react-components').Loader)
@@ -51,9 +51,9 @@ module.exports = React.createClass
 
     div {className: 'container-fluid'},
       div {className: 'kbc-main-content'},
-        TabbedArea defaultActiveKey: @state.defaultActiveKey, animation: false,
+        Tabs defaultActiveKey: @state.defaultActiveKey, animation: false,
           if not @props.isExtLinkOnly
-            TabPane eventKey: 'instant', title: 'Instant Authorization',
+            Tab eventKey: 'instant', title: 'Instant Authorization',
               form {className: 'form-horizontal', action: @_getOAuthUrl(), method: 'POST'},
                 div  className: 'row',
                   div className: 'well',
@@ -67,7 +67,7 @@ module.exports = React.createClass
                     type: 'submit',
                       @props.caption
           if not @props.isInstantOnly
-            TabPane eventKey: 'external', title: 'External Authorization',
+            Tab eventKey: 'external', title: 'External Authorization',
               form {className: 'form-horizontal'},
                 div className: 'row',
                   div className: 'well',
