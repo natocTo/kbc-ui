@@ -7,7 +7,7 @@ import StorageTablesStore from '../../../../components/stores/StorageTablesStore
 import RoutesStore from '../../../../../stores/RoutesStore';
 
 import QueryEditor from '../../components/QueryEditor';
-import {loadingSourceTablesPath} from '../../../storeProvisioning';
+import {connectionErrorPath, loadingSourceTablesPath} from '../../../storeProvisioning';
 import {sourceTablesPath} from '../../../storeProvisioning';
 import {sourceTablesErrorPath} from '../../../storeProvisioning';
 
@@ -92,9 +92,10 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           configId={this.state.configId}
           componentId={componentId}
           getDefaultOutputTable={this.getDefaultOutputTableId}
-          isLoadingSourceTables={this.state.localState.getIn(loadingSourceTablesPath)}
+          isLoadingSourceTables={this.state.localState.getIn(loadingSourceTablesPath, false)}
           isTestingConnection={this.state.isTestingConnection}
           validConnection={this.state.validConnection}
+          connectionError={this.state.localState.getIn(connectionErrorPath)}
           sourceTables={this.state.localState.getIn(sourceTablesPath) || List()}
           sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
           destinationEditing={this.state.localState.getIn(['isDestinationEditing', this.state.queryId], false)}

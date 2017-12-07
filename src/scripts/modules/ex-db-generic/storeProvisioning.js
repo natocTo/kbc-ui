@@ -127,19 +127,19 @@ export function createStore(componentId, configId) {
     },
 
     isTestingConnection() {
-      return data.localState.getIn(testingConnectionPath);
+      return data.localState.getIn(testingConnectionPath, false);
     },
 
     isConnectionValid() {
-      return data.localState.getIn(connectionValidPath);
+      return data.localState.getIn(connectionValidPath, false);
     },
 
     getConnectionError() {
-      return data.localState.getIn(connectionErrorPath);
+      return data.localState.getIn(connectionErrorPath, null);
     },
 
     hasConnectionBeenTested() {
-      return data.localState.getIn(connectionTestedPath);
+      return data.localState.getIn(connectionTestedPath, false);
     },
     // Credentials -- end --
 

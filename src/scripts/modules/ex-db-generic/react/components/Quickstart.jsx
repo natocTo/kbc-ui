@@ -74,7 +74,7 @@ export default React.createClass({
     var tableSelector = (
       <div>
         <div className="row text-left">
-          <div className="col-md-10 col-md-offset-2 help-block">
+          <div className="col-md-8 col-md-offset-2 help-block">
           Select the tables you'd like to import to autogenerate your configuration. <br/>
           You can edit them later at any time.
           </div>

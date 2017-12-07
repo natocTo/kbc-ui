@@ -26,6 +26,7 @@ export default React.createClass({
     isLoadingSourceTables: React.PropTypes.bool.isRequired,
     isTestingConnection: React.PropTypes.bool.isRequired,
     validConnection: React.PropTypes.bool.isRequired,
+    connectionError: React.PropTypes.string,
     sourceTables: React.PropTypes.object.isRequired,
     sourceTablesError: React.PropTypes.string,
     destinationEditing: React.PropTypes.bool.isRequired,
@@ -248,6 +249,8 @@ export default React.createClass({
           <AsynchActionError
             componentId={this.props.componentId}
             configId={this.props.configId}
+            connectionTesting={this.props.isTestingConnection}
+            connectionError={this.props.connectionError}
             sourceTablesLoading={this.props.isLoadingSourceTables}
             sourceTablesError={this.props.sourceTablesError}
           />

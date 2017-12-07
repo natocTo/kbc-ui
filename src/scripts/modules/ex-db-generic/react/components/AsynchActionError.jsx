@@ -19,22 +19,20 @@ export default React.createClass({
     if (connectionError) {
       const link = 'ex-db-generic-' + componentId + '-credentials';
       return (
-        <div className="kbc-inner-content-padding-fix">
-          <div className="alert alert-warning">
-            <h4>Connecting to the database failed</h4>
-            <p>{connectionError}</p>
-            <p>
-              {connectionTesting ? (
-                <span>
-                  <Loader /> Retrying the database connection ...
-                </span>
-              ) : (
-                <Link to={link} params={{config: configId}}>
-                  Update Database Credentials
-                </Link>
-              ) }
-            </p>
-          </div>
+        <div className="alert alert-warning">
+          <h4>Connecting to the database failed</h4>
+          <p>{connectionError}</p>
+          <p>
+            {connectionTesting ? (
+              <span>
+                <Loader /> Retrying the database connection ...
+              </span>
+            ) : (
+              <Link to={link} params={{config: configId}}>
+                Update Database Credentials
+              </Link>
+            ) }
+          </p>
         </div>
       );
     } else if (sourceTablesError) {

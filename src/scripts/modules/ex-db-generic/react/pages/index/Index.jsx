@@ -185,12 +185,30 @@ export default function(componentId) {
             <li>
               <Link to={link} params={{ config: this.state.configId }}>
                 <i className={(this.state.validConnection)
-                  ? 'fa fa-fw fa-check-circle text-success'
+                  ? 'fa fa-fw fa-check-circle kbc-version-icon last'
                   : 'fa fa-fw fa-times-circle text-danger'}/> Database Credentials
               </Link>
             </li>
           );
         }
+      }
+    },
+
+    renderAsynchError() {
+      if (this.state.localState.getIn(storeProvisioning.connectionErrorPath) ||
+        this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)) {
+        return (
+          <div className="kbc-inner-content-padding-fix">
+            <AsynchActionError
+              componentId={componentId}
+              configId={this.state.configId}
+              connectionTesting={this.state.localState.getIn(storeProvisioning.testingConnectionPath, false)}
+              connectionError={this.state.localState.getIn(storeProvisioning.connectionErrorPath)}
+              sourceTablesLoading={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath, false)}
+              sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
+            />
+          </div>
+        );
       }
     },
 
@@ -207,30 +225,26 @@ export default function(componentId) {
                 />
               </div>
             </div>
-            <AsynchActionError
-              componentId={componentId}
-              configId={this.state.configId}
-              connectionTesting={this.state.localState.getIn(storeProvisioning.testingConnectionPath, false)}
-              connectionError={this.state.localState.getIn(storeProvisioning.connectionErrorPath)}
-              sourceTablesLoading={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath, false)}
-              sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
-            />
-            {this.state.hasCredentials && this.state.queries.count() > 0 ? (
-              <div className="row">
-                <div className="col-sm-9" style={{padding: '0px'}}>
-                  <SearchRow
-                    onChange={this.handleFilterChange}
-                    query={this.state.queriesFilter}
-                  />
-                </div>
-                <div className="col-sm-3">
-                  <div className="text-right" style={{marginTop: '16px'}}>
-                    {this.renderNewQueryLink()}
+            {this.renderCredentialsSetup()}
+            {this.renderAsynchError()}
+            {
+              this.state.queries.count() > 0 ? (
+                <div className="row">
+                  <div className="col-sm-9" style={{padding: '0px'}}>
+                    <SearchRow
+                      onChange={this.handleFilterChange}
+                      query={this.state.queriesFilter}
+                    />
+                  </div>
+                  <div className="col-sm-3">
+                    <div className="text-right" style={{marginTop: '16px'}}>
+                      {this.renderNewQueryLink()}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : null}
-            {this.state.hasCredentials ? this.renderQueriesMain() : this.renderCredentialsSetup()}
+              ) : null
+            }
+            {this.renderQueriesMain()}
           </div>
           <div className="col-md-3 kbc-main-sidebar">
             <div className="kbc-buttons kbc-text-light">

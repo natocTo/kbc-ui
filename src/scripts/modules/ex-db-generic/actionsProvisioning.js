@@ -9,19 +9,13 @@ import getDefaultPort from './templates/defaultPorts';
 import {getProtectedProperties} from './templates/credentials';
 
 export function loadConfiguration(componentId, configId) {
-  const actions = createActions(componentId);
-  const store = storeProvisioning.createStore(componentId, configId);
-  if (!store.getSourceTables()) {
-    actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
-    actions.updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, false);
-  }
   return componentsActions.loadComponentConfigData(componentId, configId);
 }
 
 export function loadSourceTables(componentId, configId) {
   const actions = createActions(componentId);
   const store = storeProvisioning.createStore(componentId, configId);
-  if (!store.hasConnectionBeenTested() || !store.getSourceTables()) {
+  if (store.hasValidCredentials(store.getCredentials()) && (!store.hasConnectionBeenTested() || !store.getSourceTables())) {
     if (!store.hasConnectionBeenTested()) {
       actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
       return actions.testSavedCredentials(configId).then((connectionValid) => {
