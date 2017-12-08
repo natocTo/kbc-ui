@@ -174,14 +174,14 @@ export default React.createClass({
           {this.renderFields()}
           {this.renderSshRow()}
           {this.renderSSLForm()}
+          <TestCredentialsButtonGroup
+            componentId={componentId}
+            configId={configId}
+            isEditing={isEditing}
+            disabled={enabled ? !isValidEditingCredentials : false}
+            testCredentialsFn={this.testCredentials}
+          />
         </div>
-        <TestCredentialsButtonGroup
-          componentId={componentId}
-          configId={configId}
-          isEditing={isEditing}
-          disabled={enabled ? !isValidEditingCredentials : false}
-          testCredentialsFn={this.testCredentials}
-        />
       </form>
     );
   }
