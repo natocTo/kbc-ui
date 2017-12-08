@@ -1,15 +1,5 @@
 var Immutable = require('immutable');
 
-function findProcessor(processors, component) {
-  const found = processors.find(function(processor) {
-    return processor.getIn(['definition', 'component']) === component;
-  });
-  if (!found) {
-    return Immutable.Map();
-  }
-  return found;
-}
-
 function createConfiguration(localState) {
   let skipLinesProcessor;
   let createManifestProcessor = {
@@ -20,7 +10,8 @@ function createConfiguration(localState) {
       delimiter: localState.get('delimiter', ','),
       enclosure: localState.get('enclosure', '"'),
       incremental: localState.get('incremental', false),
-      primary_key: localState.get('primaryKey', Immutable.List()).toJS()
+      primary_key: localState.get('primaryKey', Immutable.List()).toJS(),
+      columns: []
     }
   };
 
@@ -64,7 +55,7 @@ function createConfiguration(localState) {
     }
   };
   if (skipLinesProcessor) {
-    config.processors.push(skipLinesProcessor);
+    config.processors.after.push(skipLinesProcessor);
   }
   return config;
 }
@@ -79,19 +70,13 @@ function parseConfiguration(configuration) {
     name: configData.getIn(['parameters', 'saveAs'], ''),
     wildcard: isWildcard,
     subfolders: configData.getIn(['parameters', 'includeSubfolders'], false),
-    incremental: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')
-      .getIn(['parameters', 'incremental'], false),
+    incremental: configData.getIn(['processors', 'after', 1, 'parameters', 'incremental'], false),
     newFilesOnly: configData.getIn(['parameters', 'newFilesOnly'], false),
-    primaryKey: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')
-      .getIn(['parameters', 'primary_key'], Immutable.List()).toJS(),
-    delimiter: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')
-      .getIn(['parameters', 'delimiter'], ','),
-    enclosure: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')
-      .getIn(['parameters', 'enclosure'], '"'),
-    columns: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')
-      .getIn(['parameters', 'columns'], Immutable.List()).toJS(),
-    columnsFrom: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')
-      .getIn(['parameters', 'columns_from'], 'manual')
+    primaryKey: configData.getIn(['processors', 'after', 1, 'parameters', 'primary_key'], Immutable.List()).toJS(),
+    delimiter: configData.getIn(['processors', 'after', 1, 'parameters', 'delimiter'], ','),
+    enclosure: configData.getIn(['processors', 'after', 1, 'parameters', 'enclosure'], '"'),
+    columns: configData.getIn(['processors', 'after', 1, 'parameters', 'columns'], Immutable.List()).toJS(),
+    columnsFrom: configData.getIn(['processors', 'after', 1, 'parameters', 'columns_from'], 'manual')
   };
 }
 
