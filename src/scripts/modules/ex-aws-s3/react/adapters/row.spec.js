@@ -55,7 +55,16 @@ describe('row', function() {
       const created = createConfiguration(Immutable.fromJS(cases.manualColumns.localState));
       assert.deepEqual(cases.manualColumns.configuration, created);
     });
-
+    it('should return a valid config for a local state with autoColumns', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.autoColumns.localState));
+      assert.deepEqual(cases.autoColumns.configuration, created);
+    });
+    it('should return a valid config for a local state with headerColumns', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.headerColumns.localState));
+      console.log(JSON.stringify(created));
+      console.log(JSON.stringify(cases.headerColumns.configuration));
+      assert.deepEqual(cases.headerColumns.configuration, created);
+    });
   });
 
   describe('#parseConfiguration()', function() {
@@ -96,6 +105,11 @@ describe('row', function() {
     it('should return a correct localState with manualColumns', function() {
       assert.deepEqual(cases.manualColumns.localState, parseConfiguration(cases.manualColumns.configuration));
     });
-
+    it('should return a correct localState with autoColumns', function() {
+      assert.deepEqual(cases.autoColumns.localState, parseConfiguration(cases.autoColumns.configuration));
+    });
+    it('should return a correct localState with headerColumns', function() {
+      assert.deepEqual(cases.headerColumns.localState, parseConfiguration(cases.headerColumns.configuration));
+    });
   });
 });
