@@ -188,7 +188,7 @@ export function createStore(componentId, configId) {
       if (!name || name === '') {
         return '';
       }
-      const qname = string.sanitizeKbcTableIdString(name);
+      const qname = string.sanitizeKbcTableIdString(name).toLowerCase();
       const bucketName = string.sanitizeKbcTableIdString(componentId);
       const fullBucketName = `in.c-${bucketName}`;
       const fullBucketNameWithConfigSuffix = `${fullBucketName}-${configId}`;
