@@ -240,7 +240,7 @@ Dispatcher.register (payload) ->
     when ComponentsConstants.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS
       componentId = action.componentId
       configId = action.configId
-      configName = action.configuration.name
+      configName = action.data.name
 
       # update breadcrumb title for generic-detail component route
       breadcrumbs = _store.get('breadcrumbs').map((breadcrumb) ->
