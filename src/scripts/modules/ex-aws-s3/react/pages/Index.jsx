@@ -37,29 +37,30 @@ export default React.createClass({
     };
   },
 
-  render() {
+  renderRowsTable() {
     const state = this.state;
-    return (
-      <div className="container-fluid">
-        <div className="col-md-9 kbc-main-content">
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <ComponentDescription
-              componentId={COMPONENT_ID}
-              configId={this.state.configId}
-            />
-          </div>
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <h3>Empty state description</h3>
-            <ul>
-              <li>Create credentials</li>
-              <li>Add rows button</li>
-              <li>Link to documentation</li>
-            </ul>
-            <p>
-              Rows
-            </p>
-          </div>
-          <ConfigRowsTable
+    if (this.state.rows.count() === 0) {
+      return [
+        (<div className="kbc-inner-content-padding-fix with-bottom-border">
+          <h3>TODO (Empty state)</h3>
+          <ul>
+            <li>Create credentials</li>
+            <li>Add rows button</li>
+            <li>Link to documentation</li>
+          </ul>
+        </div>)
+      ];
+    } else {
+      return [
+        (<div className="kbc-inner-content-padding-fix with-bottom-border">
+          <h3>TODO</h3>
+          <ul>
+            <li>Row sorting</li>
+            <li>Add row link icon</li>
+            <li>Documentation?</li>
+          </ul>
+        </div>),
+        (<ConfigRowsTable
             rows={this.state.rows.toList()}
             componentId={COMPONENT_ID}
             configId={this.state.configId}
@@ -80,16 +81,31 @@ export default React.createClass({
               return ConfigRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('disable') || ConfigRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('enable');
             }}
             rowLinkTo={COMPONENT_ID + '-row'}
+          />),
+        (<div className="text-center">
+          <CreateConfigRowButton
+            componentId={COMPONENT_ID}
+            configId={this.state.configId}
+            onRowCreated={function() { return; }}
+            emptyConfig={function() { return {};}}
+            type="button"
           />
-          <div className="text-center">
-            <CreateConfigRowButton
+        </div>)
+      ];
+    }
+  },
+
+  render() {
+    return (
+      <div className="container-fluid">
+        <div className="col-md-9 kbc-main-content">
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <ComponentDescription
               componentId={COMPONENT_ID}
               configId={this.state.configId}
-              onRowCreated={function() { return; }}
-              emptyConfig={function() { return {};}}
-              type="button"
             />
           </div>
+          {this.renderRowsTable()}
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata

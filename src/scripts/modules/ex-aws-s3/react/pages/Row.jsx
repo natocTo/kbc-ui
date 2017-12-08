@@ -49,10 +49,16 @@ export default React.createClass({
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <h3>Configuration</h3>
-            <p>
-              Row
-            </p>
+            <h3>TODO</h3>
+            <ul>
+              <li>Dummy config for empty state</li>
+              <li>JSON editor documentation link</li>
+              <li>Visual editor && switching</li>
+              <li>Unify headlines</li>
+              <li>Right bar content</li>
+            </ul>
+          </div>
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
             <JSONConfiguration
               isSaving={this.state.isJSONEditingSaving}
               jsonData={this.state.jsonDataString}

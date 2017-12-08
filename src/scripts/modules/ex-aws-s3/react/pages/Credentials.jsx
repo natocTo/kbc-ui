@@ -77,6 +77,13 @@ export default React.createClass({
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <h3>TODO</h3>
+            <ul>
+              <li>Content of the right bar</li>
+              <li>Back button? Navigation back?</li>
+            </ul>
+          </div>
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
             {this.renderButtons()}
             {this.renderCredentials()}
           </div>
