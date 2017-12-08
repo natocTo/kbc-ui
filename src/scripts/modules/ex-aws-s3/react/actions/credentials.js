@@ -5,7 +5,7 @@ import componentsActions from '../../../components/InstalledComponentsActionCrea
 import installedComponentsStore from '../../../components/stores/InstalledComponentsStore';
 
 // utils
-import {createConfiguration} from '../../utils';
+import {createConfiguration} from '../adapters/credentials';
 
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 

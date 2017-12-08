@@ -1,7 +1,7 @@
 var assert = require('assert');
 var Immutable = require('immutable');
-var createConfiguration = require('./utils').createConfiguration;
-var parseConfiguration = require('./utils').parseConfiguration;
+var createConfiguration = require('./credentials').createConfiguration;
+var parseConfiguration = require('./credentials').parseConfiguration;
 
 const emptyLocalState = {};
 const emptyConfiguration = {};
