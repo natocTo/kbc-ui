@@ -53,6 +53,7 @@ export default React.createClass({
             <ul>
               <li>Dummy config for empty state</li>
               <li>JSON editor documentation link</li>
+              <li>JSON editor processors and parameters as separate fields?</li>
               <li>Visual editor && switching</li>
               <li>Unify headlines</li>
               <li>Right bar content</li>
