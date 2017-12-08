@@ -512,7 +512,7 @@ const cases = {
       subfolders: false,
       incremental: false,
       newFilesOnly: false,
-      primaryKey: ['col'],
+      primaryKey: [],
       delimiter: ',',
       enclosure: '\'',
       columns: ['col1', 'col2'],
@@ -545,8 +545,8 @@ const cases = {
               delimiter: ',',
               enclosure: '\'',
               incremental: false,
-              primary_key: ['col1', 'col2'],
-              columns: []
+              primary_key: [],
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -562,7 +562,7 @@ const cases = {
       subfolders: false,
       incremental: false,
       newFilesOnly: false,
-      primaryKey: ['col'],
+      primaryKey: [],
       delimiter: ',',
       enclosure: '\'',
       columns: [],
@@ -595,7 +595,7 @@ const cases = {
               delimiter: ',',
               enclosure: '\'',
               incremental: false,
-              primary_key: ['col1', 'col2'],
+              primary_key: [],
               columns: [],
               columns_from: 'auto'
             }
@@ -604,7 +604,6 @@ const cases = {
       }
     }
   }
-
 };
 
 module.exports = {
