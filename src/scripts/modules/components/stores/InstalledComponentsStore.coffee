@@ -84,8 +84,9 @@ InstalledComponentsStore = StoreUtils.createStore
       .map (component) ->
         return component.set('configurations',
           component.get('configurations', Map()).filter((configuration) ->
-            fuzzy.match(filterQuery, configuration.get('name').toString()) or
-              fuzzy.match(filterQuery, configuration.get('description').toString())
+            description = if configuration.get('description') then configuration.get('description').toString() else ''
+            return fuzzy.match(filterQuery, configuration.get('name').toString()) or
+              fuzzy.match(filterQuery, description)
           )
         )
       .filter (component) ->
@@ -141,9 +142,10 @@ InstalledComponentsStore = StoreUtils.createStore
     else
       configurations.filter(
         (configuration) ->
-          fuzzy.match(filter, configuration.get('name').toString()) or
-          fuzzy.match(filter, configuration.get('description').toString()) or
-          fuzzy.match(filter, configuration.get('id', '').toString())
+          description = if configuration.get('description') then configuration.get('description').toString() else ''
+          return fuzzy.match(filter, configuration.get('name').toString()) or
+            fuzzy.match(filter, description) or
+            fuzzy.match(filter, configuration.get('id').toString())
         ,
         @
       )
