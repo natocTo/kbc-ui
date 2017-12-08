@@ -2,6 +2,7 @@ var Immutable = require('immutable');
 
 function createConfiguration(localState) {
   let skipLinesProcessor;
+  let decompressProcessor;
   let createManifestProcessor = {
     definition: {
       component: 'keboola.processor-create-manifest'
@@ -23,12 +24,21 @@ function createConfiguration(localState) {
     createManifestProcessor.parameters.columns_from = 'header';
     skipLinesProcessor = {
       definition: {
-        component: 'processor-skip-lines'
+        component: 'keboola.processor-skip-lines'
       },
       parameters: {
         lines: 1
       }
     };
+  }
+
+  if (localState.get('decompress', false) === true) {
+    decompressProcessor = {
+      definition: {
+        component: 'keboola.processor-decompress'
+      }
+    };
+
   }
 
   let config = {
@@ -40,23 +50,30 @@ function createConfiguration(localState) {
       newFilesOnly: localState.get('newFilesOnly', false)
     },
     processors: {
-      after: [
-        {
-          definition: {
-            component: 'keboola.processor-move-files'
-          },
-          parameters: {
-            direction: 'tables',
-            addCsvSuffix: true
-          }
-        },
-        createManifestProcessor
-      ]
+      after: []
     }
   };
+
+  if (decompressProcessor) {
+    config.processors.after.push(decompressProcessor);
+  }
+
+  config.processors.after.push({
+    definition: {
+      component: 'keboola.processor-move-files'
+    },
+    parameters: {
+      direction: 'tables',
+      addCsvSuffix: true
+    }
+  });
+
+  config.processors.after.push(createManifestProcessor);
+
   if (skipLinesProcessor) {
     config.processors.after.push(skipLinesProcessor);
   }
+
   return config;
 }
 
@@ -64,19 +81,26 @@ function parseConfiguration(configuration) {
   const configData = Immutable.fromJS(configuration);
   const key = configData.getIn(['parameters', 'key'], '');
   const isWildcard = key.slice(-1) === '*' ? true : false;
+  const processorCreateManifest = configData.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+    return processor.getIn(["definition", "component"]) === 'keboola.processor-create-manifest';
+  }, null, Immutable.Map());
+  const processorDecompress = configData.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+    return processor.getIn(["definition", "component"]) === 'keboola.processor-decompress';
+  });
   return {
     bucket: configData.getIn(['parameters', 'bucket'], ''),
     key: isWildcard ? key.substring(0, key.length - 1) : key,
     name: configData.getIn(['parameters', 'saveAs'], ''),
     wildcard: isWildcard,
     subfolders: configData.getIn(['parameters', 'includeSubfolders'], false),
-    incremental: configData.getIn(['processors', 'after', 1, 'parameters', 'incremental'], false),
+    incremental: processorCreateManifest.getIn(['parameters', 'incremental'], false),
     newFilesOnly: configData.getIn(['parameters', 'newFilesOnly'], false),
-    primaryKey: configData.getIn(['processors', 'after', 1, 'parameters', 'primary_key'], Immutable.List()).toJS(),
-    delimiter: configData.getIn(['processors', 'after', 1, 'parameters', 'delimiter'], ','),
-    enclosure: configData.getIn(['processors', 'after', 1, 'parameters', 'enclosure'], '"'),
-    columns: configData.getIn(['processors', 'after', 1, 'parameters', 'columns'], Immutable.List()).toJS(),
-    columnsFrom: configData.getIn(['processors', 'after', 1, 'parameters', 'columns_from'], 'manual')
+    primaryKey: processorCreateManifest.getIn(['parameters', 'primary_key'], Immutable.List()).toJS(),
+    delimiter: processorCreateManifest.getIn(['parameters', 'delimiter'], ','),
+    enclosure: processorCreateManifest.getIn(['parameters', 'enclosure'], '"'),
+    columns: processorCreateManifest.getIn(['parameters', 'columns'], Immutable.List()).toJS(),
+    columnsFrom: processorCreateManifest.getIn(['parameters', 'columns_from'], 'manual'),
+    decompress: processorDecompress ? true : false
   };
 }
 

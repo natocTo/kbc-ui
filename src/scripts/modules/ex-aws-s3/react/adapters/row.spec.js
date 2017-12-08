@@ -61,10 +61,13 @@ describe('row', function() {
     });
     it('should return a valid config for a local state with headerColumns', function() {
       const created = createConfiguration(Immutable.fromJS(cases.headerColumns.localState));
-      console.log(JSON.stringify(created));
-      console.log(JSON.stringify(cases.headerColumns.configuration));
       assert.deepEqual(cases.headerColumns.configuration, created);
     });
+    it('should return a valid config for a local state with decompress', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.decompress.localState));
+      assert.deepEqual(cases.decompress.configuration, created);
+    });
+
   });
 
   describe('#parseConfiguration()', function() {
@@ -111,5 +114,9 @@ describe('row', function() {
     it('should return a correct localState with headerColumns', function() {
       assert.deepEqual(cases.headerColumns.localState, parseConfiguration(cases.headerColumns.configuration));
     });
+    it('should return a correct localState with decompress', function() {
+      assert.deepEqual(cases.decompress.localState, parseConfiguration(cases.decompress.configuration));
+    });
+
   });
 });
