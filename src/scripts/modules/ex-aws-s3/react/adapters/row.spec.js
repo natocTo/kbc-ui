@@ -2,7 +2,7 @@ var assert = require('assert');
 var Immutable = require('immutable');
 var createConfiguration = require('./row').createConfiguration;
 var parseConfiguration = require('./row').parseConfiguration;
-var diff = require('deep-diff').diff;
+// var diff = require('deep-diff').diff;
 
 const empty = {
   localState: {},
