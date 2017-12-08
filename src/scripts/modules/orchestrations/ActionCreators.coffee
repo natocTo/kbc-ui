@@ -468,7 +468,6 @@ module.exports =
           message: React.createClass
             render: ->
               React.DOM.span null,
-                "Orchestration scheduled. You can track the progress "
                 React.createElement Link,
                   to: 'orchestrationJob'
                   params:
@@ -476,8 +475,8 @@ module.exports =
                     orchestrationId: id
                   onClick: @props.onClick
                 ,
-                  'here'
-
+                  'Orchestrator job',
+                ' has been scheduled'
     )
 
   terminateJob: (jobId) ->
