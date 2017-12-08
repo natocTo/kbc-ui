@@ -46,7 +46,7 @@ function createConfiguration(localState) {
       key: localState.get('key', '') + (localState.get('wildcard', false) ? '*' : ''),
       saveAs: localState.get('name', ''),
       includeSubfolders: localState.get('subfolders', false),
-      newFilesOnly: localState.get('incremental', false)
+      newFilesOnly: localState.get('newFilesOnly', false)
     },
     processors: {
       after: [
@@ -75,11 +75,13 @@ function parseConfiguration(configuration) {
   const isWildcard = key.slice(-1) === '*' ? true : false;
   return {
     bucket: configData.getIn(['parameters', 'bucket'], ''),
-    key: isWildcard ? key.substring(0, key.length - 2) : key,
+    key: isWildcard ? key.substring(0, key.length - 1) : key,
     name: configData.getIn(['parameters', 'saveAs'], ''),
     wildcard: isWildcard,
     subfolders: configData.getIn(['parameters', 'includeSubfolders'], false),
-    incremental: configData.getIn(['parameters', 'newFilesOnly'], false),
+    incremental: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')
+      .getIn(['parameters', 'incremental'], false),
+    newFilesOnly: configData.getIn(['parameters', 'newFilesOnly'], false),
     primaryKey: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')
       .getIn(['parameters', 'primary_key'], Immutable.List()).toJS(),
     delimiter: findProcessor(configData.getIn(['processors', 'after'], Immutable.List()), 'keboola.processor-create-manifest')

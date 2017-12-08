@@ -3,138 +3,99 @@ var Immutable = require('immutable');
 var createConfiguration = require('./row').createConfiguration;
 var parseConfiguration = require('./row').parseConfiguration;
 // var diff = require('deep-diff').diff;
-
-const empty = {
-  localState: {},
-  configuration: {}
-};
-
-const emptyWithDefaults = {
-  localState: {
-    bucket: '',
-    key: '',
-    name: '',
-    wildcard: false,
-    subfolders: false,
-    incremental: false,
-    primaryKey: [],
-    delimiter: ',',
-    enclosure: '"',
-    columns: [],
-    columnsFrom: 'manual'
-  },
-  configuration: {
-    parameters: {
-      bucket: '',
-      key: '',
-      saveAs: '',
-      includeSubfolders: false,
-      newFilesOnly: false
-    },
-    processors: {
-      after: [
-        {
-          definition: {
-            component: 'keboola.processor-move-files'
-          },
-          parameters: {
-            direction: 'tables',
-            addCsvSuffix: true
-          }
-        },
-        {
-          definition: {
-            component: 'keboola.processor-create-manifest'
-          },
-          parameters: {
-            delimiter: ',',
-            enclosure: '"',
-            incremental: false,
-            primary_key: [],
-            columns: []
-          }
-        }
-      ]
-    }
-  }
-};
-
-const simple = {
-  localState: {
-    bucket: 'mybucket',
-    key: 'mykey',
-    name: 'mytable',
-    wildcard: false,
-    subfolders: false,
-    incremental: false,
-    primaryKey: ['col1'],
-    delimiter: ',',
-    enclosure: '"',
-    columns: ['col1', 'col2'],
-    columnsFrom: 'manual'
-  },
-  configuration: {
-    parameters: {
-      bucket: 'mybucket',
-      key: 'mykey',
-      saveAs: 'mytable',
-      includeSubfolders: false,
-      newFilesOnly: false
-    },
-    processors: {
-      after: [
-        {
-          definition: {
-            component: 'keboola.processor-move-files'
-          },
-          parameters: {
-            direction: 'tables',
-            addCsvSuffix: true
-          }
-        },
-        {
-          definition: {
-            component: 'keboola.processor-create-manifest'
-          },
-          parameters: {
-            delimiter: ',',
-            enclosure: '"',
-            incremental: false,
-            primary_key: ['col1'],
-            columns: ['col1', 'col2']
-          }
-        }
-      ]
-    }
-  }
-};
+var cases = require('./row.spec.def').cases;
 
 describe('row', function() {
   describe('#createConfiguration()', function() {
     it('should return an empty config with defaults from an empty local state', function() {
-      const created = createConfiguration(Immutable.fromJS(empty.localState));
-      assert.deepEqual(emptyWithDefaults.configuration, created);
+      const created = createConfiguration(Immutable.fromJS(cases.empty.localState));
+      assert.deepEqual(cases.emptyWithDefaults.configuration, created);
     });
     it('should return an empty config with defaults from a local state with defaults', function() {
-      const created = createConfiguration(Immutable.fromJS(emptyWithDefaults.localState));
-      assert.deepEqual(emptyWithDefaults.configuration, created);
+      const created = createConfiguration(Immutable.fromJS(cases.emptyWithDefaults.localState));
+      assert.deepEqual(cases.emptyWithDefaults.configuration, created);
     });
     it('should return a valid config for a simple local state', function() {
-      const created = createConfiguration(Immutable.fromJS(simple.localState));
-      assert.deepEqual(simple.configuration, created);
+      const created = createConfiguration(Immutable.fromJS(cases.simple.localState));
+      assert.deepEqual(cases.simple.configuration, created);
     });
+    it('should return a valid config for a local state with wildcard', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.wildcard.localState));
+      assert.deepEqual(cases.wildcard.configuration, created);
+    });
+    it('should return a valid config for a local state with subfolders', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.subfolders.localState));
+      assert.deepEqual(cases.subfolders.configuration, created);
+    });
+    it('should return a valid config for a local state with incremental', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.incremental.localState));
+      assert.deepEqual(cases.incremental.configuration, created);
+    });
+    it('should return a valid config for a local state with newFilesOnly', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.newFilesOnly.localState));
+      assert.deepEqual(cases.newFilesOnly.configuration, created);
+    });
+    it('should return a valid config for a local state with primaryKey', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.primaryKey.localState));
+      assert.deepEqual(cases.primaryKey.configuration, created);
+    });
+    it('should return a valid config for a local state with delimiter', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.delimiter.localState));
+      assert.deepEqual(cases.delimiter.configuration, created);
+    });
+    it('should return a valid config for a local state with tabDelimiter', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.tabDelimiter.localState));
+      assert.deepEqual(cases.tabDelimiter.configuration, created);
+    });
+    it('should return a valid config for a local state with enclosure', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.enclosure.localState));
+      assert.deepEqual(cases.enclosure.configuration, created);
+    });
+    it('should return a valid config for a local state with manualColumns', function() {
+      const created = createConfiguration(Immutable.fromJS(cases.manualColumns.localState));
+      assert.deepEqual(cases.manualColumns.configuration, created);
+    });
+
   });
 
   describe('#parseConfiguration()', function() {
     it('should return empty localState with defaults from empty configuration', function() {
-      const parsed = parseConfiguration(empty.configuration);
-      assert.deepEqual(emptyWithDefaults.localState, parsed);
+      const parsed = parseConfiguration(cases.empty.configuration);
+      assert.deepEqual(cases.emptyWithDefaults.localState, parsed);
     });
     it('should return empty localState with defaults from empty configuration with defaults', function() {
-      assert.deepEqual(emptyWithDefaults.localState, parseConfiguration(emptyWithDefaults.configuration));
+      assert.deepEqual(cases.emptyWithDefaults.localState, parseConfiguration(cases.emptyWithDefaults.configuration));
     });
     it('should return a correct simple localState', function() {
-      assert.deepEqual(simple.localState, parseConfiguration(simple.configuration));
+      assert.deepEqual(cases.simple.localState, parseConfiguration(cases.simple.configuration));
     });
+    it('should return a correct localState with wildcard', function() {
+      assert.deepEqual(cases.wildcard.localState, parseConfiguration(cases.wildcard.configuration));
+    });
+    it('should return a correct localState with subfolders', function() {
+      assert.deepEqual(cases.subfolders.localState, parseConfiguration(cases.subfolders.configuration));
+    });
+    it('should return a correct localState with incremental', function() {
+      assert.deepEqual(cases.incremental.localState, parseConfiguration(cases.incremental.configuration));
+    });
+    it('should return a correct localState with newFilesOnly', function() {
+      assert.deepEqual(cases.newFilesOnly.localState, parseConfiguration(cases.newFilesOnly.configuration));
+    });
+    it('should return a correct localState with primaryKey', function() {
+      assert.deepEqual(cases.primaryKey.localState, parseConfiguration(cases.primaryKey.configuration));
+    });
+    it('should return a correct localState with delimiter', function() {
+      assert.deepEqual(cases.delimiter.localState, parseConfiguration(cases.delimiter.configuration));
+    });
+    it('should return a correct localState with tabDelimiter', function() {
+      assert.deepEqual(cases.tabDelimiter.localState, parseConfiguration(cases.tabDelimiter.configuration));
+    });
+    it('should return a correct localState with enclosure', function() {
+      assert.deepEqual(cases.enclosure.localState, parseConfiguration(cases.enclosure.configuration));
+    });
+    it('should return a correct localState with manualColumns', function() {
+      assert.deepEqual(cases.manualColumns.localState, parseConfiguration(cases.manualColumns.configuration));
+    });
+
   });
 });
