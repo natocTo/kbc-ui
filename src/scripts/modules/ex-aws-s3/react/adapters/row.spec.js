@@ -117,6 +117,5 @@ describe('row', function() {
     it('should return a correct localState with decompress', function() {
       assert.deepEqual(cases.decompress.localState, parseConfiguration(cases.decompress.configuration));
     });
-
   });
 });

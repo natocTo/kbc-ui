@@ -38,7 +38,6 @@ function createConfiguration(localState) {
         component: 'keboola.processor-decompress'
       }
     };
-
   }
 
   let config = {
@@ -82,10 +81,10 @@ function parseConfiguration(configuration) {
   const key = configData.getIn(['parameters', 'key'], '');
   const isWildcard = key.slice(-1) === '*' ? true : false;
   const processorCreateManifest = configData.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
-    return processor.getIn(["definition", "component"]) === 'keboola.processor-create-manifest';
+    return processor.getIn(['definition', 'component']) === 'keboola.processor-create-manifest';
   }, null, Immutable.Map());
   const processorDecompress = configData.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
-    return processor.getIn(["definition", "component"]) === 'keboola.processor-decompress';
+    return processor.getIn(['definition', 'component']) === 'keboola.processor-decompress';
   });
   return {
     bucket: configData.getIn(['parameters', 'bucket'], ''),
