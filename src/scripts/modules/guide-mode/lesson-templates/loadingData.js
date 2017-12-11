@@ -25,7 +25,7 @@ export default {
                 + `
 - Find **Snowflake**. You can use the search feature to find it quickly.
 - Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
-- Name the configuration, e.g., My database extractor, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
+- Name the configuration, e.g., _Guide extractor_, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 
 `,
       'media': '',
