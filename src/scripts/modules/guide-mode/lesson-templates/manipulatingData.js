@@ -8,7 +8,7 @@ export default {
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Introduction',
-      'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (*CARS* and *POPULATION*) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (*CARS* and *POPULATION*) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage.',
       'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img',
       'route': {
