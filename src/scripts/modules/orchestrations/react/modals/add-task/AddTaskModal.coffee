@@ -74,7 +74,7 @@ AddTaskModal = React.createClass
 
       ModalHeader closeButton: true,
         ModalTitle null,
-          "Add new task to #{@props.phaseId} "
+          "New task to #{@props.phaseId} "
           React.createElement ComponentsReloaderButton
 
       ModalBody null,

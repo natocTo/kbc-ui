@@ -200,4 +200,4 @@ module.exports = React.createClass
         className: 'btn btn-success'
       ,
         i className: 'fa fa-fw fa-plus'
-        'Add Query'
+        'New Query'
