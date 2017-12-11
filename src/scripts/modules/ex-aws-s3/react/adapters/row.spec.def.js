@@ -1,8 +1,4 @@
 const cases = {
-  empty: {
-    localState: {},
-    configuration: {}
-  },
   emptyWithDefaults: {
     localState: {
       bucket: '',
