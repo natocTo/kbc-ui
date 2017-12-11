@@ -67,7 +67,6 @@ describe('row', function() {
       const created = createConfiguration(Immutable.fromJS(cases.decompress.localState));
       assert.deepEqual(cases.decompress.configuration, created);
     });
-
   });
 
   describe('#parseConfiguration()', function() {
