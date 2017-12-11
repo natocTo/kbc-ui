@@ -1,5 +1,4 @@
 var Immutable = require('immutable');
-var diff = require('deep-diff').diff;
 
 function createConfiguration(localState) {
   let skipLinesProcessor;
@@ -81,23 +80,22 @@ function createConfiguration(localState) {
 }
 
 function parseConfiguration(configuration) {
-  const configData = Immutable.fromJS(configuration);
-  const key = configData.getIn(['parameters', 'key'], '');
+  const key = configuration.getIn(['parameters', 'key'], '');
   const isWildcard = key.slice(-1) === '*' ? true : false;
-  const processorCreateManifest = configData.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+  const processorCreateManifest = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-create-manifest';
   }, null, Immutable.Map());
-  const processorDecompress = configData.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+  const processorDecompress = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-decompress';
   });
   return Immutable.fromJS({
-    bucket: configData.getIn(['parameters', 'bucket'], ''),
+    bucket: configuration.getIn(['parameters', 'bucket'], ''),
     key: isWildcard ? key.substring(0, key.length - 1) : key,
-    name: configData.getIn(['parameters', 'saveAs'], ''),
+    name: configuration.getIn(['parameters', 'saveAs'], ''),
     wildcard: isWildcard,
-    subfolders: configData.getIn(['parameters', 'includeSubfolders'], false),
+    subfolders: configuration.getIn(['parameters', 'includeSubfolders'], false),
     incremental: processorCreateManifest.getIn(['parameters', 'incremental'], false),
-    newFilesOnly: configData.getIn(['parameters', 'newFilesOnly'], false),
+    newFilesOnly: configuration.getIn(['parameters', 'newFilesOnly'], false),
     primaryKey: processorCreateManifest.getIn(['parameters', 'primary_key'], Immutable.List()).toJS(),
     delimiter: processorCreateManifest.getIn(['parameters', 'delimiter'], ','),
     enclosure: processorCreateManifest.getIn(['parameters', 'enclosure'], '"'),
@@ -107,7 +105,17 @@ function parseConfiguration(configuration) {
   });
 }
 
+function isParsableConfiguration(configuration) {
+  if (configuration.isEmpty()) {
+    return true;
+  }
+  const parsed = parseConfiguration(configuration);
+  const reconstructed = createConfiguration(parsed);
+  return Immutable.is(configuration, reconstructed);
+}
+
 module.exports = {
   createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration
+  parseConfiguration: parseConfiguration,
+  isParsableConfiguration: isParsableConfiguration
 };
