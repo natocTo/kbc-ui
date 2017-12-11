@@ -5,7 +5,6 @@ import ExDbIndex from './react/pages/index/Index';
 import ExDbCredentialsPage from './react/pages/credentials/CredentialsPage';
 import ExDbQueryDetail from './react/pages/query-detail/QueryDetail';
 import ExDbQueryHeaderButtons from './react/components/QueryActionButtons';
-import ExDbCredentialsHeaderButtons from './react/components/CredentialsHeaderButtons';
 import ExDbQueryName from './react/components/QueryName';
 
 import createVersionsPageRoute from '../../modules/components/utils/createVersionsPageRoute';
@@ -74,8 +73,7 @@ export default function(componentId) {
         title: () => 'Credentials',
         handler: ExDbCredentialsPage(
           componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, hasSshTunnel
-        ),
-        headerButtonsHandler: ExDbCredentialsHeaderButtons(componentId, actionsProvisioning, storeProvisioning)
+        )
       }
     ]
   };

@@ -1,22 +1,20 @@
 import React from 'react';
 
 import Textarea from 'react-textarea-autosize';
-import {Input} from './../../../../../react/common/KbcBootstrap';
-import TestCredentials from '../../../../../react/common/TestCredentialsButtonGroup';
+import {Input, FormControls} from './../../../../../react/common/KbcBootstrap';
+
 import {NewLineToBr, Check} from 'kbc-react-components';
+import {HelpBlock} from 'react-bootstrap';
 
 const helpUrl = 'https://help.keboola.com/extractors/database/sqldb/#mysql-encryption';
+const StaticText = FormControls.Static;
 
 export default React.createClass({
   displayName: 'SSLForm',
   propTypes: {
-    credentials: React.PropTypes.object.isRequired,
-    enabled: React.PropTypes.bool.isRequired,
     onChange: React.PropTypes.func,
-    componentId: React.PropTypes.string.isRequired,
-    configId: React.PropTypes.string.isRequired,
-    isEditing: React.PropTypes.bool.isRequired,
-    actionsProvisioning: React.PropTypes.object.isRequired
+    data: React.PropTypes.object.isRequired,
+    isEditing: React.PropTypes.bool.isRequired
   },
 
   getDefaultProps() {
@@ -26,87 +24,72 @@ export default React.createClass({
   },
 
   handleChange(propName, event) {
-    return this.props.onChange(this.props.credentials.setIn(['ssl', propName], event.target.value));
+    return this.props.onChange(this.props.data.set(propName, event.target.value));
   },
 
   handleToggle(propName, event) {
-    return this.props.onChange(this.props.credentials.setIn(['ssl', propName], event.target.checked));
+    return this.props.onChange(this.props.data.set(propName, event.target.checked));
   },
 
-  isSSLEnabled() {
-    return this.props.credentials.getIn(['ssl', 'enabled']);
+  isEnabled() {
+    return this.props.data.get('enabled', false);
   },
 
-  testCredentials() {
-    const ExDbActionCreators = this.props.actionsProvisioning.createActions(this.props.componentId);
-    return ExDbActionCreators.testCredentials(this.props.configId, this.props.credentials);
-  },
-
-  createEnableSSLCheckbox(propName) {
-    if (this.props.enabled) {
+  renderEnableCheckbox(propName) {
+    if (this.props.isEditing) {
       return (
-        <div className="form-group">
-          <Input
-            label="Enable encrypted connection"
-            type="checkbox"
-            onChange={this.handleToggle.bind(this, propName)}
-            checked={this.isSSLEnabled()}
-          />
-        </div>
+        <Input
+          disabled={!this.props.isEditing}
+          type="checkbox"
+          label={<span>Enable encrypted (SSL) connection {this.renderHelp()}</span>}
+          wrapperClassName="col-xs-8 col-xs-offset-4"
+          checked={this.isEnabled()}
+          onChange={this.handleToggle.bind(this, propName)}
+        />
       );
     } else {
       return (
-        <div className="form-horizontal">
-          <div className="form-group">
-            <label className="control-label col-xs-4">
-              Encrypted connection
-            </label>
-            <div>
-              <p className="form-control-static col-xs-8">
-                <Check isChecked={this.isSSLEnabled()}/>
-              </p>
-            </div>
-          </div>
-        </div>
+        <StaticText
+          label={<span>Encrypted connection (SSL) <small>{this.renderHelp()}</small></span>}
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8">
+          <Check isChecked={this.isEnabled()} />
+        </StaticText>
       );
     }
   },
 
   createStaticControl(labelValue, propName) {
-    var staticProp = 'Not set.';
-    if (this.props.credentials.getIn(['ssl', propName])) {
-      staticProp = <NewLineToBr text={this.props.credentials.getIn(['ssl', propName])}/>;
-    }
     return (
-      <div className="form-group">
-        <label className="control-label">
-          {labelValue}
-        </label>
-        <div>
-          <p className="form-control-static">
-            {staticProp}
-          </p>
-        </div>
-      </div>
+      <StaticText
+        label={labelValue}
+        labelClassName="col-xs-4"
+        wrapperClassName="col-xs-8">
+        {this.isEnabled() ? <NewLineToBr text={this.props.data.get(propName)}/> : ''}
+      </StaticText>
     );
   },
 
   createInput(labelValue, propName, help = null) {
-    if (this.props.enabled) {
+    if (this.props.isEditing) {
       return (
-        <div className="form-group">
-          <label className="control-label">
-            {labelValue}
-          </label>
-          {(help) ? <p className="help-block">{help}</p> : null}
-          <Textarea
-            label={labelValue}
-            type="textarea"
-            value={this.props.credentials.getIn(['ssl', propName])}
-            onChange={this.handleChange.bind(this, propName)}
-            className="form-control"
-            minRows={4}
-          />
+        <div>
+          <div className="form-group">
+            <label className="control-label col-xs-4">
+              {labelValue}
+            </label>
+            <div className="col-xs-8">
+              <Textarea
+                label={labelValue}
+                type="textarea"
+                value={this.props.data.get(propName)}
+                onChange={this.handleChange.bind(this, propName)}
+                className="form-control"
+                minRows={4}
+              />
+              {help && <HelpBlock>{help}</HelpBlock>}
+            </div>
+          </div>
         </div>
       );
     } else {
@@ -115,43 +98,32 @@ export default React.createClass({
   },
 
   render() {
-    var sslPortion = null;
-    if (this.isSSLEnabled()) {
-      sslPortion = (
-        <div className="row">
-          {this.createInput('SSL Client Certificate (client-cert.pem)', 'cert')}
-          {this.createInput('SSL Client Key (client-key.pem)', 'key')}
-          {this.createInput('SSL CA Certificate (ca-cert.pem)', 'ca')}
-          {this.createInput(
-            'SSL Cipher',
-            'cipher',
-            'You can optionally provide a list of permissible ciphers to use for the SSL encryption.')}
-          <TestCredentials
-            testCredentialsFn={this.testCredentials}
-            hasOffset={false}
-            componentId={this.props.componentId}
-            configId={this.props.configId}
-            isEditing={this.props.isEditing}
-          />
-        </div>
-      );
-    }
     return (
-      <form>
-        <div className="row">
-          <div className="well">
-            The MySQL database extractor supports secure (encrypted) connections
-            between MySQL clients and the server using SSL.
-            Provide a set of SSL certificates to configure the secure connection. Read more on
-            {' '}
-            <a href={helpUrl}>How to Configure MySQL server - DB Admin's article.</a>
+      <div>
+        {this.renderEnableCheckbox('enabled')}
+        {this.isEnabled() ?
+          <div>
+            {this.createInput('SSL Client Certificate (client-cert.pem)', 'cert')}
+            {this.createInput('SSL Client Key (client-key.pem)', 'key')}
+            {this.createInput('SSL CA Certificate (ca-cert.pem)', 'ca')}
+            {this.createInput(
+              'SSL Cipher',
+              'cipher',
+              'You can optionally provide a list of permissible ciphers to use for the SSL encryption.')}
           </div>
-        </div>
-        <div className="row">
-          {this.createEnableSSLCheckbox('enabled')}
-        </div>
-        {sslPortion}
-      </form>
+          : null
+        }
+      </div>
+    );
+  },
+
+  renderHelp() {
+    return (
+      <span>
+        <a href={helpUrl} target="_blank">
+          Help
+        </a>
+      </span>
     );
   }
 });
