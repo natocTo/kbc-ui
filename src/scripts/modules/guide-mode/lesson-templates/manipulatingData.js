@@ -65,7 +65,7 @@ export default {
 <br/><br/>
 **Queries** — to create your output table, copy and paste this code : <br/> \`CREATE TABLE "CARS_POPULATION" AS SELECT "CARS".*, "POPULATION"."POPULATION", ("POPULATION"."POPULATION" / "CARS"."CARS") AS "PERSON_PER_CAR" FROM "CARS" JOIN "POPULATION" ON "CARS"."COUNTRY" = "POPULATION"."COUNTRY"\` <br/> You need to overwrite the template code. Then <span class="btn btn-success btn-sm">Save</span> it.
 <br/><br/>
-To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
+To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.
 
 `,
       'media': '',
@@ -83,7 +83,7 @@ To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Transformation',
-      'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database, where they will be changed by the queries. The result will be put back into Storage again. <br/><br/> To see the status of your extraction, click <span class="btn btn-primary btn-sm">Next step</span>.',
+      'markdown': 'Now when everything is ready, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run transformation</span> on the right. <br/><br/> The specified tables will be taken from Storage and put in a transformation database, where they will be changed by the queries. The result will be put back into Storage again. <br/><br/> To see the status of your extraction, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'media': '',
       'mediaType': '',
       'route': {
@@ -100,7 +100,7 @@ To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
       'isNavigationVisible': true,
       'title': 'Check Jobs',
       'markdown': 'In the **Jobs** section, you can find all operations you have run in your project so far. <br/><br/> The status of your transformation job probably says **processing** now. It will change to **success** in a little while. Your input tables will be joined, the ratio of motor vehicles to persons per country will be calculated, and the output table *CARS_POPULATION* will be created. You can check the details of each job here too.' +
-      '<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step</span>.',
+      '<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'media': '',
       'mediaType': '',
       'route': {
@@ -113,7 +113,7 @@ To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Check Storage',
-      'markdown': 'To see what the final table looks like, check its data sample in Storage. Just click on the bucket **out.c-snowflake** on the left. Then click on the table *CARS_POPULATION* and select the tab **Data sample**.<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step</span>.',
+      'markdown': 'To see what the final table looks like, check its data sample in Storage. Just click on the bucket **out.c-snowflake** on the left. Then click on the table *CARS_POPULATION* and select the tab **Data sample**.<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'media': '',
       'mediaType': '',
       'route': {

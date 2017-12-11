@@ -8,7 +8,7 @@ export default {
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Introduction',
-      'markdown': 'As promised in Lesson 1, you are about to build a simple workflow that analyzes data about **car ownership** stored in two database tables. In this lesson you will start by configuring an extractor to access the prepared tables in a sample database. You will then take the data in the tables and copy it into two new tables created for this purpose in Keboola Connection Storage. <br/><br/> *Follow the instructions written for you in each step. Once you are done, the next step will appear automatically, or you will be asked to click <span class="btn btn-primary btn-sm">Next step</span>.*',
+      'markdown': 'As promised in Lesson 1, you are about to build a simple workflow that analyzes data about **car ownership** stored in two database tables. In this lesson you will start by configuring an extractor to access the prepared tables in a sample database. You will then take the data in the tables and copy it into two new tables created for this purpose in Keboola Connection Storage. <br/><br/> *Follow the instructions written for you in each step. Once you are done, the next step will appear automatically, or you will be asked to click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.*',
       'media': 'kbc_scheme_light_blue-ext.svg',
       'mediaType': 'img',
       'route': {
@@ -85,7 +85,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Extraction',
-      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To create the new tables in your project, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run Extraction</span> on the right and wait for the orange indicator to turn green. Once it does, the extraction is finished. <br/><br/> Hover above the blue output table names to see that the tables are no longer empty. If you click the links, you will be able to see more details. <br/><br/> To continue, click <span class="btn btn-primary btn-sm">Next step</span>.',
+      'markdown': 'In the summary on the left, you can see what tables will be created in Storage once the extraction runs. They do not exist yet. <br/><br/> To create the new tables in your project, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Run Extraction</span> on the right and wait for the orange indicator to turn green. Once it does, the extraction is finished. <br/><br/> Hover above the blue output table names to see that the tables are no longer empty. If you click the links, you will be able to see more details. <br/><br/> To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'media': '',
       'route': {
         'name': 'keboola.ex-db-snowflake',
