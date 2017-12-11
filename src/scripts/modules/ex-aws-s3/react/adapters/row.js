@@ -1,9 +1,10 @@
 var Immutable = require('immutable');
+var diff = require('deep-diff').diff;
 
 function createConfiguration(localState) {
   let skipLinesProcessor;
   let decompressProcessor;
-  let createManifestProcessor = {
+  let createManifestProcessor = Immutable.fromJS({
     definition: {
       component: 'keboola.processor-create-manifest'
     },
@@ -11,36 +12,36 @@ function createConfiguration(localState) {
       delimiter: localState.get('delimiter', ','),
       enclosure: localState.get('enclosure', '"'),
       incremental: localState.get('incremental', false),
-      primary_key: localState.get('primaryKey', Immutable.List()).toJS(),
-      columns: []
+      primary_key: localState.get('primaryKey', Immutable.List()),
+      columns: Immutable.List()
     }
-  };
+  });
 
   if (localState.get('columnsFrom', 'manual') === 'manual') {
-    createManifestProcessor.parameters.columns = localState.get('columns', Immutable.List()).toJS();
+    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns'], localState.get('columns', Immutable.List()));
   } else if (localState.get('columnsFrom') === 'auto') {
-    createManifestProcessor.parameters.columns_from = 'auto';
+    createManifestProcessor= createManifestProcessor.setIn(['parameters', 'columns_from'], 'auto');
   } else if (localState.get('columnsFrom') === 'header') {
-    createManifestProcessor.parameters.columns_from = 'header';
-    skipLinesProcessor = {
+    createManifestProcessor= createManifestProcessor.setIn(['parameters', 'columns_from'], 'header');
+    skipLinesProcessor = Immutable.fromJS({
       definition: {
         component: 'keboola.processor-skip-lines'
       },
       parameters: {
         lines: 1
       }
-    };
+    });
   }
 
   if (localState.get('decompress', false) === true) {
-    decompressProcessor = {
+    decompressProcessor = Immutable.fromJS({
       definition: {
         component: 'keboola.processor-decompress'
       }
-    };
+    });
   }
 
-  let config = {
+  let config = Immutable.fromJS({
     parameters: {
       bucket: localState.get('bucket', ''),
       key: localState.get('key', '') + (localState.get('wildcard', false) ? '*' : ''),
@@ -51,27 +52,30 @@ function createConfiguration(localState) {
     processors: {
       after: []
     }
-  };
-
-  if (decompressProcessor) {
-    config.processors.after.push(decompressProcessor);
-  }
-
-  config.processors.after.push({
-    definition: {
-      component: 'keboola.processor-move-files'
-    },
-    parameters: {
-      direction: 'tables',
-      addCsvSuffix: true
-    }
   });
 
-  config.processors.after.push(createManifestProcessor);
+  let processors = Immutable.List([]);
+
+  if (decompressProcessor) {
+    processors = processors.push(decompressProcessor);
+  }
+
+  processors = processors.push(Immutable.fromJS({
+      definition: {
+        component: 'keboola.processor-move-files'
+      },
+      parameters: {
+        direction: 'tables',
+        addCsvSuffix: true
+      }
+    }))
+    .push(createManifestProcessor);
 
   if (skipLinesProcessor) {
-    config.processors.after.push(skipLinesProcessor);
+    processors = processors.push(skipLinesProcessor);
   }
+
+  config = config.setIn(['processors', 'after'], processors);
 
   return config;
 }
@@ -86,7 +90,7 @@ function parseConfiguration(configuration) {
   const processorDecompress = configData.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-decompress';
   });
-  return {
+  return Immutable.fromJS({
     bucket: configData.getIn(['parameters', 'bucket'], ''),
     key: isWildcard ? key.substring(0, key.length - 1) : key,
     name: configData.getIn(['parameters', 'saveAs'], ''),
@@ -100,7 +104,7 @@ function parseConfiguration(configuration) {
     columns: processorCreateManifest.getIn(['parameters', 'columns'], Immutable.List()).toJS(),
     columnsFrom: processorCreateManifest.getIn(['parameters', 'columns_from'], 'manual'),
     decompress: processorDecompress ? true : false
-  };
+  });
 }
 
 module.exports = {
