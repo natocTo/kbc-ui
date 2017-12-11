@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup} from 'react-bootstrap';
+import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
 import { hideWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
@@ -236,11 +236,14 @@ export default React.createClass({
   },
   renderButtonPrev() {
     const { step } = this.props.step;
-    const buttonText = step === 0 ? 'Close' : 'Prev step';
+    let buttonText =  <span><i className="fa fa-chevron-left"/> Back</span>;
+    if (step === 0) {
+      buttonText = 'Close';
+    }
     return (
-      <button onClick={this.handlePrevStepClick} className="btn btn-link">
+      <Button onClick={this.handlePrevStepClick} bsStyle="link">
         {buttonText}
-      </button>
+      </Button>
     );
   },
   handleNextStepClick() {
@@ -266,7 +269,7 @@ export default React.createClass({
     }
   },
   renderButtonNext() {
-    let buttonText = 'Next step';
+    let buttonText =  <span>Next step <i className="fa fa-chevron-right"/></span>;
     if (this.props.step === 0) {
       buttonText = 'Take lesson';
     } else if (this.props.step === this.getStepsCount() - 1) {
@@ -274,9 +277,9 @@ export default React.createClass({
     }
 
     return (
-      <button onClick={this.handleNextStepClick} className="btn btn-primary">
+      <Button onClick={this.handleNextStepClick} bsStyle="primary">
         {buttonText}
-      </button>
+      </Button>
     );
   },
   renderNavigation() {
