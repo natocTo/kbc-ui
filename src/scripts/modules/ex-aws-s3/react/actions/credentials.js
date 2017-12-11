@@ -43,7 +43,7 @@ export default function(configId) {
 
   function editSave() {
     const localState = getLocalState();
-    const config = Immutable.fromJS(createConfiguration(localState.get('credentials', Immutable.Map()), configId));
+    const config = createConfiguration(localState.get('credentials', Immutable.Map()), configId);
     updateLocalState(['isSaving'], true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config).then(() => {
       removeFromLocalState(['credentials']);

@@ -9,10 +9,10 @@ const COMPONENT_ID = 'keboola.ex-aws-s3';
 export default function(configId) {
   let credentials;
   let localState = InstalledComponentStore.getLocalState(COMPONENT_ID, configId);
-  const defaultCredentials = parseConfiguration({});
+  const defaultCredentials = parseConfiguration(Immutable.fromJS({}));
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || defaultCredentials;
   if (!configData.isEmpty()) {
-    credentials = localState.get('credentials', parseConfiguration(configData, configId));
+    credentials = localState.get('credentials', parseConfiguration(Immutable.fromJS(configData)));
   } else {
     credentials = localState.get('credentials', defaultCredentials);
   }

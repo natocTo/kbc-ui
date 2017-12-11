@@ -10,10 +10,9 @@ function createConfiguration(localState) {
 }
 
 function parseConfiguration(configuration) {
-  const configData = Immutable.fromJS(configuration);
   return Immutable.fromJS({
-    awsAccessKeyId: configData.getIn(['parameters', 'accessKeyId'], ''),
-    awsSecretAccessKey: configData.getIn(['parameters', '#secretAccessKey'], '')
+    awsAccessKeyId: configuration.getIn(['parameters', 'accessKeyId'], ''),
+    awsSecretAccessKey: configuration.getIn(['parameters', '#secretAccessKey'], '')
   });
 }
 

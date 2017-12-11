@@ -43,13 +43,13 @@ describe('credentials', function() {
 
   describe('#parseConfiguration()', function() {
     it('should return empty localState with defaults from empty configuration', function() {
-      assert.deepEqual(emptyLocalStateWithDefaults, parseConfiguration(emptyConfiguration, 'test').toJS());
+      assert.deepEqual(emptyLocalStateWithDefaults, parseConfiguration(Immutable.fromJS(emptyConfiguration)).toJS());
     });
     it('should return empty localState with defaults from empty configuration with defaults', function() {
-      assert.deepEqual(emptyLocalStateWithDefaults, parseConfiguration(emptyConfigurationWithDefauls, 'test').toJS());
+      assert.deepEqual(emptyLocalStateWithDefaults, parseConfiguration(Immutable.fromJS(emptyConfigurationWithDefauls)).toJS());
     });
     it('should return a correct simple localState', function() {
-      assert.deepEqual(simpleLocalState, parseConfiguration(simpleConfiguration, 'test').toJS());
+      assert.deepEqual(simpleLocalState, parseConfiguration(Immutable.fromJS(simpleConfiguration)).toJS());
     });
   });
 });
