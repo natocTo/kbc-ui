@@ -30,8 +30,6 @@ import {Link, Navigation} from 'react-router';
 import Quickstart from '../../components/Quickstart';
 import AsynchActionError from '../../components/AsynchActionError';
 
-import './Index.less';
-
 export default function(componentId) {
   const actionsCreators = actionsProvisioning.createActions(componentId);
   return React.createClass({
@@ -186,9 +184,7 @@ export default function(componentId) {
           return (
             <li>
               <Link to={link} params={{ config: this.state.configId }}>
-                <i className={(this.state.validConnection)
-                  ? 'fa fa-fw fa-check-circle database-credentials-success'
-                  : 'fa fa-fw fa-times-circle database-credentials-danger'}/> Database Credentials
+                <i className="fa fa-fw fa-user"/> Database Credentials
               </Link>
             </li>
           );
