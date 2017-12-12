@@ -2,18 +2,18 @@ import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
 
 /* global require */
-require('./JSONConfigurationInput.less');
+require('./ParametersInput.less');
 
 export default React.createClass({
   propTypes: {
-    jsonData: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
   },
 
   render() {
     var codeMirrorParams = {
-      value: this.props.jsonData,
+      value: this.props.value,
       theme: 'solarized',
       lineNumbers: true,
       mode: 'application/json',
@@ -41,7 +41,7 @@ export default React.createClass({
   },
 
   help() {
-    return 'help';
+    return null;
   },
 
   handleChange(e) {

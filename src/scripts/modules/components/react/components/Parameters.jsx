@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
-import Input from './JSONConfigurationInput';
+import Input from './ParametersInput';
 import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default React.createClass({
   propTypes: {
-    jsonData: PropTypes.string,
+    value: PropTypes.string,
     isEditingValid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditCancel: PropTypes.func.isRequired,
@@ -16,7 +16,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      jsonData: ''
+      value: ''
     };
   },
 
@@ -24,13 +24,18 @@ export default React.createClass({
     return (
       <div>
         <h2 style={{lineHeight: '32px'}}>
-          JSON Configuration
+          Parameters
+          {' '}
           <small>
-            <Clipboard text={this.props.jsonData}/>
+            <Clipboard text={this.props.value}/>
           </small>
           {this.renderButtons()}
         </h2>
-        {this.scripts()}
+        <Input
+          value={this.props.value}
+          disabled={this.props.isSaving}
+          onChange={this.props.onEditChange}
+          />
       </div>
     );
   },
@@ -46,16 +51,6 @@ export default React.createClass({
           onReset={this.props.onEditCancel}
         />
       </span>
-    );
-  },
-
-  scripts() {
-    return (
-      <Input
-        jsonData={this.props.jsonData}
-        disabled={this.props.isSaving}
-        onChange={this.props.onEditChange}
-        />
     );
   }
 });

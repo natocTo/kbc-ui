@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import Edit from './ProcessorsEdit';
+import Input from './ProcessorsInput';
+import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default React.createClass({
@@ -26,9 +27,17 @@ export default React.createClass({
       <div>
         <h2 style={{lineHeight: '32px'}}>
           Processors
+          {' '}
+          <small>
+            <Clipboard text={this.props.value}/>
+          </small>
           {this.renderButtons()}
         </h2>
-        {this.scripts()}
+        <Input
+          value={this.getValue()}
+          disabled={this.props.isSaving}
+          onChange={this.props.onEditChange}
+          />
       </div>
     );
   },
@@ -44,16 +53,6 @@ export default React.createClass({
           onReset={this.props.onEditCancel}
         />
       </span>
-    );
-  },
-
-  scripts() {
-    return (
-      <Edit
-        value={this.getValue()}
-        disabled={this.props.isSaving}
-        onChange={this.props.onEditChange}
-        />
     );
   }
 });

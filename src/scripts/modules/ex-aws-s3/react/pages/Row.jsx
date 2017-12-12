@@ -13,7 +13,8 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import ConfigurationRowDescription from '../../../components/react/components/ConfigurationRowDescription';
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
-import JSONConfiguration from '../../../components/react/components/JSONConfiguration';
+import Parameters from '../../../components/react/components/Parameters';
+import Processors from '../../../components/react/components/Processors';
 
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-aws-s3';
@@ -29,10 +30,15 @@ export default React.createClass({
       configId: configId,
       rowId: rowId,
       row: row,
-      jsonDataString: ConfigRowsStore.getEditingJSONDataString(COMPONENT_ID, configId, rowId),
-      isJSONEditingSaving: ConfigRowsStore.getPendingActions(COMPONENT_ID, configId, rowId).has('save-json-data'),
-      isJSONEditingValid: ConfigRowsStore.isEditingJSONDataStringValid(COMPONENT_ID, configId, rowId),
-      isJSONEditingChanged: ConfigRowsStore.isEditingJSONDataString(COMPONENT_ID, configId, rowId)
+      parametersValue: ConfigRowsStore.getEditingParametersString(COMPONENT_ID, configId, rowId),
+      isParametersSaving: ConfigRowsStore.getPendingActions(COMPONENT_ID, configId, rowId).has('save-parameters'),
+      isParametersValid: ConfigRowsStore.isEditingParametersValid(COMPONENT_ID, configId, rowId),
+      isParametersChanged: ConfigRowsStore.isEditingParameters(COMPONENT_ID, configId, rowId),
+
+      processorsValue: ConfigRowsStore.getEditingProcessorsString(COMPONENT_ID, configId, rowId),
+      isProcessorsSaving: ConfigRowsStore.getPendingActions(COMPONENT_ID, configId, rowId).has('save-processors'),
+      isProcessorsValid: ConfigRowsStore.isEditingProcessorsValid(COMPONENT_ID, configId, rowId),
+      isProcessorsChanged: ConfigRowsStore.isEditingProcessors(COMPONENT_ID, configId, rowId)
     };
   },
 
@@ -52,27 +58,41 @@ export default React.createClass({
             <h3>TODO</h3>
             <ul>
               <li>Dummy config for empty state</li>
-              <li>JSON editor documentation link</li>
-              <li>JSON editor processors and parameters as separate fields?</li>
-              <li>Visual editor && switching</li>
+              <li>JSON editors documentation link / help</li>
+              <li>Visual editor & switching</li>
               <li>Unify headlines</li>
               <li>Right bar content</li>
             </ul>
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <JSONConfiguration
-              isSaving={this.state.isJSONEditingSaving}
-              jsonData={this.state.jsonDataString}
-              isEditingValid={this.state.isJSONEditingValid}
-              isChanged={this.state.isJSONEditingChanged}
+            <Parameters
+              isSaving={this.state.isParametersSaving}
+              value={this.state.parametersValue}
+              isEditingValid={this.state.isParametersValid}
+              isChanged={this.state.isParametersChanged}
               onEditCancel={function() {
-                return configRowActions.resetJSONDataString(COMPONENT_ID, state.configId, state.rowId);
+                return configRowActions.resetParameters(COMPONENT_ID, state.configId, state.rowId);
               }}
-              onEditChange={function(jsonDataString) {
-                return configRowActions.updateJSONDataString(COMPONENT_ID, state.configId, state.rowId, jsonDataString);
+              onEditChange={function(parameters) {
+                return configRowActions.updateParameters(COMPONENT_ID, state.configId, state.rowId, parameters);
               }}
               onEditSubmit={function() {
-                return configRowActions.saveJSONDataString(COMPONENT_ID, state.configId, state.rowId);
+                return configRowActions.saveParameters(COMPONENT_ID, state.configId, state.rowId);
+              }}
+            />
+            <Processors
+              isSaving={this.state.isProcessorsSaving}
+              value={this.state.processorsValue}
+              isEditingValid={this.state.isProcessorsValid}
+              isChanged={this.state.isProcessorsChanged}
+              onEditCancel={function() {
+                return configRowActions.resetProcessors(COMPONENT_ID, state.configId, state.rowId);
+              }}
+              onEditChange={function(parameters) {
+                return configRowActions.updateProcessors(COMPONENT_ID, state.configId, state.rowId, parameters);
+              }}
+              onEditSubmit={function() {
+                return configRowActions.saveProcessors(COMPONENT_ID, state.configId, state.rowId);
               }}
             />
           </div>
