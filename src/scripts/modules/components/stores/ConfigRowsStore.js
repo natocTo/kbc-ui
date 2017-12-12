@@ -9,8 +9,8 @@ import InstalledComponentsConstants from '../Constants';
 var _store = Map({
   rows: Map(),
   pendingActions: Map(),
-  editingParameters: Map(),
-  editingProcessors: Map()
+  editing: Map(),
+  creating: Map()
 });
 
 let ConfigRowsStore = StoreUtils.createStore({
@@ -39,13 +39,13 @@ let ConfigRowsStore = StoreUtils.createStore({
 
   getEditingParametersString: function(componentId, configId, rowId) {
     return _store.getIn(
-      ['editingParameters', componentId, configId, rowId],
+      ['editing', componentId, configId, rowId, 'parameters'],
       JSON.stringify(this.getConfiguration(componentId, configId, rowId).get('parameters', Immutable.Map()), null, '  ')
     );
   },
 
   isEditingParameters: function(componentId, configId, rowId) {
-    return _store.hasIn(['editingParameters', componentId, configId, rowId]);
+    return _store.hasIn(['editing', componentId, configId, rowId, 'parameters']);
   },
 
   isEditingProcessorsValid: function(componentId, configId, rowId) {
@@ -61,13 +61,13 @@ let ConfigRowsStore = StoreUtils.createStore({
 
   getEditingProcessorsString: function(componentId, configId, rowId) {
     return _store.getIn(
-      ['editingProcessors', componentId, configId, rowId],
+      ['editing', componentId, configId, rowId, 'processors'],
       JSON.stringify(this.getConfiguration(componentId, configId, rowId).get('processors', Immutable.Map()).toJS(), null, '  ')
     );
   },
 
   isEditingProcessors: function(componentId, configId, rowId) {
-    return _store.hasIn(['editingProcessors', componentId, configId, rowId]);
+    return _store.hasIn(['editing', componentId, configId, rowId, 'processors']);
   },
 
   getPendingActions: function(componentId, configId, rowId) {
@@ -104,11 +104,11 @@ Dispatcher.register(function(payload) {
 
 
     case constants.ActionTypes.CONFIG_ROWS_CREATE_START:
-      _store = _store.setIn(['creatingConfigurationRows', action.componentId, action.configurationId], true);
+      _store = _store.setIn(['creating', action.componentId, action.configurationId], true);
       return ConfigRowsStore.emitChange();
 
     case constants.ActionTypes.CONFIG_ROWS_CREATE_ERROR:
-      _store = _store.deleteIn(['creatingConfigurationRows', action.componentId, action.configurationId]);
+      _store = _store.deleteIn(['creating', action.componentId, action.configurationId]);
       return ConfigRowsStore.emitChange();
 
     case constants.ActionTypes.CONFIG_ROWS_CREATE_SUCCESS:
@@ -161,14 +161,14 @@ Dispatcher.register(function(payload) {
 
     case constants.ActionTypes.CONFIG_ROWS_UPDATE_PARAMETERS:
       _store = _store.setIn(
-        ['editingParameters', action.componentId, action.configurationId, action.rowId],
+        ['editing', action.componentId, action.configurationId, action.rowId, 'parameters'],
         action.value
       );
       return ConfigRowsStore.emitChange();
 
     case constants.ActionTypes.CONFIG_ROWS_RESET_PARAMETERS:
       _store = _store.deleteIn(
-        ['editingParameters', action.componentId, action.configurationId, action.rowId]
+        ['editing', action.componentId, action.configurationId, action.rowId, 'parameters']
       );
       return ConfigRowsStore.emitChange();
 
@@ -183,20 +183,20 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.CONFIG_ROWS_SAVE_PARAMETERS_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-parameters'])
-        .deleteIn(['editingParameters', action.componentId, action.configurationId, action.rowId])
+        .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'parameters'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
       return ConfigRowsStore.emitChange();
 
     case constants.ActionTypes.CONFIG_ROWS_UPDATE_PROCESSORS:
       _store = _store.setIn(
-        ['editingProcessors', action.componentId, action.configurationId, action.rowId],
+        ['editing', action.componentId, action.configurationId, action.rowId, 'processors'],
         action.value
       );
       return ConfigRowsStore.emitChange();
 
     case constants.ActionTypes.CONFIG_ROWS_RESET_PROCESSORS:
       _store = _store.deleteIn(
-        ['editingProcessors', action.componentId, action.configurationId, action.rowId]
+        ['editing', action.componentId, action.configurationId, action.rowId, 'processors']
       );
       return ConfigRowsStore.emitChange();
 
@@ -211,7 +211,7 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.CONFIG_ROWS_SAVE_PROCESSORS_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-processors'])
-        .deleteIn(['editingProcessors', action.componentId, action.configurationId, action.rowId])
+        .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'processors'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
       return ConfigRowsStore.emitChange();
 
