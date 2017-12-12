@@ -44,7 +44,7 @@ export default React.createClass({
         (<div className="kbc-inner-content-padding-fix with-bottom-border">
           <h3>TODO (Empty state)</h3>
           <ul>
-            <li>Create credentials</li>
+            <li>Create credentials button</li>
             <li>Add rows button</li>
             <li>Link to documentation</li>
           </ul>
@@ -58,6 +58,7 @@ export default React.createClass({
             <li>Row sorting</li>
             <li>Add row link icon</li>
             <li>Documentation?</li>
+            <li>Delete row button underine</li>
           </ul>
         </div>),
         (<ConfigRowsTable
