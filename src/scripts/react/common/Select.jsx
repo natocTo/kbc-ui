@@ -18,7 +18,8 @@ export default React.createClass({
     trimMultiCreatedValues: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     optionRenderer: PropTypes.func,
-    filterOption: PropTypes.func
+    filterOption: PropTypes.func,
+    options: PropTypes.array
   },
 
   getDefaultProps() {
@@ -176,7 +177,17 @@ export default React.createClass({
   },
 
   mapValuesSingle(value) {
+    const props = this.props;
     if (value) {
+      let selectedOption = null;
+      if (this.props.options) {
+        selectedOption = this.props.options.find(function(option) {
+          return option[props.valueKey] === value;
+        });
+      }
+      if (selectedOption) {
+        return selectedOption;
+      }
       return {
         label: value,
         value: value
@@ -186,23 +197,33 @@ export default React.createClass({
     }
   },
 
-  mapValuesMulti(value) {
-    if (value) {
-      return value.map(function(item) {
-        if (item === '') {
+  mapValuesMulti(values) {
+    const props = this.props;
+    if (values) {
+      return values.map(function(value) {
+        if (value === '') {
           return {
             label: '%_EMPTY_STRING_%',
             value: '%_EMPTY_STRING_%'
           };
-        } else if (item === ' ') {
+        } else if (value === ' ') {
           return {
             label: '%_SPACE_CHARACTER_%',
             value: '%_SPACE_CHARACTER_%'
           };
         } else {
+          let selectedOption = null;
+          if (props.options) {
+            selectedOption = props.options.find(function(option) {
+              return option[props.valueKey] === value;
+            });
+          }
+          if (selectedOption) {
+            return selectedOption;
+          }
           return {
-            label: item,
-            value: item
+            label: value,
+            value: value
           };
         }
       });
