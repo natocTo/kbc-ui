@@ -148,7 +148,7 @@ export default React.createClass({
       onChange={function(value) {
         configRowActions.updateConfiguration(COMPONENT_ID, state.configId, state.rowId, value);
       }}
-      disabled={false}
+      disabled={this.state.isSaving}
       value={configuration}
     />);
   },
