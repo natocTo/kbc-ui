@@ -18,7 +18,7 @@ import Processors from '../../../components/react/components/Processors';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
 // adapters
-import {isParsableConfiguration, parseConfiguration, createConfiguration} from '../adapters/row';
+import {isParsableConfiguration, parseConfiguration, createConfiguration} from '../../adapters/row';
 
 // local components
 import Configuration from '../components/Configuration';

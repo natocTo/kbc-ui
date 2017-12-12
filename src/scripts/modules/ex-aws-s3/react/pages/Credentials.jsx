@@ -5,10 +5,10 @@ import ComponentStore from '../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import storeProvisioning from '../../react/stores/credentials';
+import storeProvisioning from '../../stores/credentials';
 
 // actions
-import actionsProvisioning from '../../react/actions/credentials';
+import actionsProvisioning from '../../actions/credentials';
 
 // specific components
 import Credentials from '../components/Credentials';

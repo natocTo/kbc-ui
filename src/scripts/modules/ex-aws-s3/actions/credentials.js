@@ -1,8 +1,8 @@
 import Immutable from 'immutable';
 
 import storeProvisioning from '../stores/credentials';
-import componentsActions from '../../../components/InstalledComponentsActionCreators';
-import installedComponentsStore from '../../../components/stores/InstalledComponentsStore';
+import componentsActions from '../../components/InstalledComponentsActionCreators';
+import installedComponentsStore from '../../components/stores/InstalledComponentsStore';
 
 // utils
 import {createConfiguration} from '../adapters/credentials';

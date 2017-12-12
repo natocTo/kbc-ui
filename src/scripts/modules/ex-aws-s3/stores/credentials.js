@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import _ from 'underscore';
 
-import InstalledComponentStore from '../../../components/stores/InstalledComponentsStore';
+import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import {parseConfiguration} from '../adapters/credentials';
 
 const COMPONENT_ID = 'keboola.ex-aws-s3';
