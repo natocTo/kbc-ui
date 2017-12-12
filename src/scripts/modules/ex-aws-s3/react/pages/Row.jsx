@@ -16,6 +16,9 @@ import DeleteConfigurationButton from '../../../components/react/components/Dele
 import Parameters from '../../../components/react/components/Parameters';
 import Processors from '../../../components/react/components/Processors';
 
+// adapters
+import {isParsableConfiguration} from '../adapters/row';
+
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
@@ -38,12 +41,13 @@ export default React.createClass({
       processorsValue: ConfigRowsStore.getEditingProcessorsString(COMPONENT_ID, configId, rowId),
       isProcessorsSaving: ConfigRowsStore.getPendingActions(COMPONENT_ID, configId, rowId).has('save-processors'),
       isProcessorsValid: ConfigRowsStore.isEditingProcessorsValid(COMPONENT_ID, configId, rowId),
-      isProcessorsChanged: ConfigRowsStore.isEditingProcessors(COMPONENT_ID, configId, rowId)
+      isProcessorsChanged: ConfigRowsStore.isEditingProcessors(COMPONENT_ID, configId, rowId),
+
+      showJSONEditingFields: !isParsableConfiguration(ConfigRowsStore.getConfiguration(COMPONENT_ID, configId, rowId))
     };
   },
 
   render() {
-    const state = this.state;
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -65,36 +69,7 @@ export default React.createClass({
             </ul>
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <Parameters
-              isSaving={this.state.isParametersSaving}
-              value={this.state.parametersValue}
-              isEditingValid={this.state.isParametersValid}
-              isChanged={this.state.isParametersChanged}
-              onEditCancel={function() {
-                return configRowActions.resetParameters(COMPONENT_ID, state.configId, state.rowId);
-              }}
-              onEditChange={function(parameters) {
-                return configRowActions.updateParameters(COMPONENT_ID, state.configId, state.rowId, parameters);
-              }}
-              onEditSubmit={function() {
-                return configRowActions.saveParameters(COMPONENT_ID, state.configId, state.rowId);
-              }}
-            />
-            <Processors
-              isSaving={this.state.isProcessorsSaving}
-              value={this.state.processorsValue}
-              isEditingValid={this.state.isProcessorsValid}
-              isChanged={this.state.isProcessorsChanged}
-              onEditCancel={function() {
-                return configRowActions.resetProcessors(COMPONENT_ID, state.configId, state.rowId);
-              }}
-              onEditChange={function(parameters) {
-                return configRowActions.updateProcessors(COMPONENT_ID, state.configId, state.rowId, parameters);
-              }}
-              onEditSubmit={function() {
-                return configRowActions.saveProcessors(COMPONENT_ID, state.configId, state.rowId);
-              }}
-            />
+            {this.state.showJSONEditingFields ? this.renderJSONEditors() : this.renderForm()}
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -123,5 +98,45 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderForm() {
+    return null;
+  },
+
+  renderJSONEditors() {
+    const state = this.state;
+    return [
+      (<Parameters
+        isSaving={this.state.isParametersSaving}
+        value={this.state.parametersValue}
+        isEditingValid={this.state.isParametersValid}
+        isChanged={this.state.isParametersChanged}
+        onEditCancel={function() {
+          return configRowActions.resetParameters(COMPONENT_ID, state.configId, state.rowId);
+        }}
+        onEditChange={function(parameters) {
+          return configRowActions.updateParameters(COMPONENT_ID, state.configId, state.rowId, parameters);
+        }}
+        onEditSubmit={function() {
+          return configRowActions.saveParameters(COMPONENT_ID, state.configId, state.rowId);
+        }}
+      />),
+      (<Processors
+        isSaving={this.state.isProcessorsSaving}
+        value={this.state.processorsValue}
+        isEditingValid={this.state.isProcessorsValid}
+        isChanged={this.state.isProcessorsChanged}
+        onEditCancel={function() {
+          return configRowActions.resetProcessors(COMPONENT_ID, state.configId, state.rowId);
+        }}
+        onEditChange={function(parameters) {
+          return configRowActions.updateProcessors(COMPONENT_ID, state.configId, state.rowId, parameters);
+        }}
+        onEditSubmit={function() {
+          return configRowActions.saveProcessors(COMPONENT_ID, state.configId, state.rowId);
+        }}
+      />)
+    ];
   }
 });
