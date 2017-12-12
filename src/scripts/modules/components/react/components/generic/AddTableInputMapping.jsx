@@ -51,7 +51,7 @@ export default React.createClass({
       'input',
       'tables',
       'new-mapping',
-      `Add input table ${newTableId}`
+      `Create input table ${newTableId}`
     );
   }
 

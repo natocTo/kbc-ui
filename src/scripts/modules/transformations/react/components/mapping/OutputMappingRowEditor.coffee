@@ -175,7 +175,7 @@ module.exports = React.createClass
                   disabled: @props.disabled
                   allowCreate: (@_getColumns().size == 0)
                   delimiter: ','
-                  placeholder: 'Add a column to primary key...'
+                  placeholder: 'Assign columns to primary key ...'
                   emptyStrings: false
                   noResultsText: 'No matching column found'
                   help: React.DOM.small {},
@@ -218,7 +218,7 @@ module.exports = React.createClass
                   disabled: @props.disabled
                   allowCreate: true
                   delimiter: ','
-                  placeholder: 'Add a value...'
+                  placeholder: 'Select values...'
                   emptyStrings: true,
                   onChange: @_handleChangeDeleteWhereValues
               React.DOM.div className: 'col-xs-10 col-xs-offset-2 small help-block bottom-margin',

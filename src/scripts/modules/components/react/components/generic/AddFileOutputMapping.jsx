@@ -46,7 +46,7 @@ export default React.createClass({
       'output',
       'files',
       'new-mapping',
-      'Add file output'
+      'Create file output'
     );
   }
 

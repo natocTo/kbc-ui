@@ -226,7 +226,7 @@ module.exports = React.createClass
                 multi: true
                 disabled: @props.disabled
                 allowCreate: true
-                placeholder: 'Add a value...'
+                placeholder: 'Select values...'
                 emptyStrings: true,
                 onChange: @_handleChangeWhereValues
       if @state.showDetails

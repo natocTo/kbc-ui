@@ -36,7 +36,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            Add Sheets
+            New Sheets
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

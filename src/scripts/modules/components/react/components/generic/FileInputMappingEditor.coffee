@@ -127,11 +127,11 @@ module.exports = React.createClass
                 name: 'processed_tags'
                 value: @_getProcessedTags()
                 disabled: @props.disabled
-                placeholder: "Add tags"
+                placeholder: "Select tags"
                 multi: true
                 onChange: @_handleChangeProcessedTags
               React.DOM.small
                 className: "help-block"
               ,
-                "Add these tags to files that were successfully processed"
+                "Include these tags to files that were successfully processed"
 

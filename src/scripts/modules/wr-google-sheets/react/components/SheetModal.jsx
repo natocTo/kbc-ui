@@ -30,7 +30,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {this.localState(['currentSheet', 'title'], false) ? 'Edit Sheet' : 'Add Sheet'}
+            {this.localState(['currentSheet', 'title'], false) ? 'Edit Sheet' : 'New Sheet'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body

@@ -46,7 +46,7 @@ export default React.createClass({
       'input',
       'files',
       'new-mapping',
-      'Add input file'
+      'Create input file'
     );
   }
 

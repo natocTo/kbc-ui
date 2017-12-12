@@ -23,7 +23,7 @@ export default React.createClass({
             multi={true}
             disabled={this.props.isSaving}
             onChange={this.handleValueChange}
-            placeholder="Add packages..."
+            placeholder="Select packages..."
             isLoading={this.props.isSaving}
             />
           <span className="help-block">

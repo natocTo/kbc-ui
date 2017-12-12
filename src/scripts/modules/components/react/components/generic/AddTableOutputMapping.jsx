@@ -51,7 +51,7 @@ export default React.createClass({
       'output',
       'tables',
       'new-mapping',
-      `Add output table ${newTableId}`
+      `Create output table ${newTableId}`
     );
   }
 

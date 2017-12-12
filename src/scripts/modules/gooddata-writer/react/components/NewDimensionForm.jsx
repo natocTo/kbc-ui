@@ -28,7 +28,7 @@ export default React.createClass({
     const {dimension, className, isPending} = this.props;
     return (
       <div>
-        <h3>Add Dimension</h3>
+        <h3>New Dimension</h3>
         <div className={className}>
           <Input
             type="text"

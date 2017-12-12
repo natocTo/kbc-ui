@@ -14,7 +14,7 @@ actionCreators = require '../../../actionCreators'
 dateDimensionStore = require '../../../dateDimensionsStore'
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 
-{div, p, span, table, tbody, thead, tr, th, td, div, a} = React.DOM
+{div, p, span, table, tbody, thead, tr, th, td, div, a, i} = React.DOM
 
 module.exports = React.createClass
   displayName: 'DateDimensionSelectModal'
@@ -139,10 +139,15 @@ module.exports = React.createClass
   renderOpenButton: ->
     span
       onClick: @open
-      className: 'btn btn-link',
-        span className: 'fa fa-calendar'
-        ' '
-        if @props.column.get('dateDimension')
-          'Change'
-        else
-          'Add'
+      className: 'btn btn-link'
+    ,
+    if @props.column.get('dateDimension')
+      span null
+      ,
+        i className: 'fa fa-calendar'
+        ' Change'
+    else
+      span null
+      ,
+        i className: 'kbc-icon-plus'
+        'New'

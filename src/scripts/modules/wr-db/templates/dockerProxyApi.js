@@ -244,7 +244,7 @@ export default function(componentId) {
           var tables = data.getIn(['parameters', 'tables'], List());
           dataToSave = data.setIn(['parameters', 'tables'], tables.push(tableToSave));
           dataToSave = updateTablesMapping(dataToSave, tableToSave);
-          const msg = `Add table ${tableId}`;
+          const msg = `Create table ${tableId}`;
           return this.saveConfigData(configId, dataToSave, msg);
         }
       );

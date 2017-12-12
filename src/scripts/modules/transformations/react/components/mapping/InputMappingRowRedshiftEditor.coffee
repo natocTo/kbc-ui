@@ -296,7 +296,7 @@ module.exports = React.createClass
                 disabled: @props.disabled
                 allowCreate: true
                 delimiter: ','
-                placeholder: 'Add a value...'
+                placeholder: 'Select values...'
                 emptyStrings: true,
                 onChange: @_handleChangeWhereValues
       if @state.showDetails

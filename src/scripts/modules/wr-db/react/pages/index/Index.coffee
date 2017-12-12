@@ -107,7 +107,8 @@ templateFn = (componentId) ->
           updateStateFn(['show'], true)
         bsStyle: 'success'
       ,
-        '+ Add New Table'
+        i className: 'kbc-icon-plus'
+        'New Table'
       React.createElement AddNewTableModal,
         show: data.get('show', false)
         allowedBuckets: allowedBuckets
