@@ -2,7 +2,7 @@ import React from 'react';
 
 import Immutable from 'immutable';
 import Select from 'react-select';
-import TableLoader from './TableLoader';
+import TableLoader from './TableLoaderQuickStart';
 
 export default React.createClass({
   displayName: 'Quickstart',

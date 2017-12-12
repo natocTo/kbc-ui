@@ -8,7 +8,7 @@ import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 
 import AsynchActionError from './AsynchActionError';
-import TableLoader from './TableLoader';
+import TableLoader from './TableLoaderQueryEditor';
 
 import editorMode from '../../templates/editorMode';
 
