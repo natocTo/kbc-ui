@@ -286,6 +286,20 @@
           &-next {
             &-enter {
               position: absolute;
+              transform: translate3D(320px, 0, 0);
+              &-active {
+                animation: list-prev-enter 200ms ease-in;
+              }
+            }
+            &-leave {
+              &-active {
+                animation: list-prev-leave 200ms ease-in;
+              }
+            }
+          }
+          &-prev {
+            &-enter {
+              position: absolute;
               transform: translate3D(-320px, 0, 0);
               &-active {
                 animation: list-next-enter 200ms ease-in;
@@ -295,20 +309,6 @@
               width: 310px;
               &-active {
                 animation: list-next-leave 200ms ease-in;
-              }
-            }
-          }
-          &-prev {
-            &-enter {
-              position: absolute;
-              transform: translate3D(320px, 0, 0);
-              &-active {
-                animation: list-prev-enter 200ms ease-in;
-              }
-            }
-            &-leave {
-              &-active {
-                animation: list-prev-leave 200ms ease-in;
               }
             }
           }
