@@ -19,9 +19,9 @@ function createConfiguration(localState) {
   if (localState.get('columnsFrom', 'manual') === 'manual') {
     createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns'], localState.get('columns', Immutable.List()));
   } else if (localState.get('columnsFrom') === 'auto') {
-    createManifestProcessor= createManifestProcessor.setIn(['parameters', 'columns_from'], 'auto');
+    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns_from'], 'auto');
   } else if (localState.get('columnsFrom') === 'header') {
-    createManifestProcessor= createManifestProcessor.setIn(['parameters', 'columns_from'], 'header');
+    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns_from'], 'header');
     skipLinesProcessor = Immutable.fromJS({
       definition: {
         component: 'keboola.processor-skip-lines'
@@ -59,7 +59,8 @@ function createConfiguration(localState) {
     processors = processors.push(decompressProcessor);
   }
 
-  processors = processors.push(Immutable.fromJS({
+  processors = processors.push(Immutable.fromJS(
+    {
       definition: {
         component: 'keboola.processor-move-files'
       },
@@ -67,7 +68,8 @@ function createConfiguration(localState) {
         direction: 'tables',
         addCsvSuffix: true
       }
-    }))
+    }
+  ))
     .push(createManifestProcessor);
 
   if (skipLinesProcessor) {
