@@ -238,5 +238,56 @@ module.exports = {
         });
         throw e;
       });
+  },
+
+  updateConfiguration: function(componentId, configurationId, rowId, value) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.CONFIG_ROWS_UPDATE_CONFIGURATION,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId,
+      value: value
+    });
+  },
+
+  resetConfiguration: function(componentId, configurationId, rowId) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.CONFIG_ROWS_RESET_CONFIGURATION,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+  },
+
+  saveConfiguration: function(componentId, configurationId, rowId, createFn, parseFn) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    const row = ConfigRowsStore.get(componentId, configurationId, rowId);
+    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited';
+    const configuration = createFn(ConfigRowsStore.getEditingConfiguration(componentId, configurationId, rowId, parseFn));
+    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {configuration: JSON.stringify(configuration.toJS())}, changeDescription)
+      .then(function() {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          value: configuration
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
   }
 };

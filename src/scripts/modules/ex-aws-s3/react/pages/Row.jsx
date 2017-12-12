@@ -15,9 +15,13 @@ import ComponentMetadata from '../../../components/react/components/ComponentMet
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import Parameters from '../../../components/react/components/Parameters';
 import Processors from '../../../components/react/components/Processors';
+import SaveButtons from '../../../../react/common/SaveButtons';
 
 // adapters
-import {isParsableConfiguration} from '../adapters/row';
+import {isParsableConfiguration, parseConfiguration, createConfiguration} from '../adapters/row';
+
+// local components
+import Configuration from '../components/Configuration';
 
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-aws-s3';
@@ -33,6 +37,7 @@ export default React.createClass({
       configId: configId,
       rowId: rowId,
       row: row,
+
       parametersValue: ConfigRowsStore.getEditingParametersString(COMPONENT_ID, configId, rowId),
       isParametersSaving: ConfigRowsStore.getPendingActions(COMPONENT_ID, configId, rowId).has('save-parameters'),
       isParametersValid: ConfigRowsStore.isEditingParametersValid(COMPONENT_ID, configId, rowId),
@@ -43,7 +48,11 @@ export default React.createClass({
       isProcessorsValid: ConfigRowsStore.isEditingProcessorsValid(COMPONENT_ID, configId, rowId),
       isProcessorsChanged: ConfigRowsStore.isEditingProcessors(COMPONENT_ID, configId, rowId),
 
-      showJSONEditingFields: !isParsableConfiguration(ConfigRowsStore.getConfiguration(COMPONENT_ID, configId, rowId))
+      showJSONEditingFields: !isParsableConfiguration(ConfigRowsStore.getConfiguration(COMPONENT_ID, configId, rowId)),
+
+      configuration: ConfigRowsStore.getEditingConfiguration(COMPONENT_ID, configId, rowId, parseConfiguration),
+      isSaving: ConfigRowsStore.getPendingActions(COMPONENT_ID, configId, rowId).has('save-configuration'),
+      isChanged: ConfigRowsStore.isEditingConfiguration(COMPONENT_ID, configId, rowId)
     };
   },
 
@@ -66,6 +75,8 @@ export default React.createClass({
               <li>Visual editor & switching</li>
               <li>Unify headlines</li>
               <li>Right bar content</li>
+              <li>Form layout</li>
+              <li>Conditional form fields</li>
             </ul>
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
@@ -100,8 +111,46 @@ export default React.createClass({
     );
   },
 
+  renderButtons() {
+    const state = this.state;
+    return (
+      <div className="text-right">
+        <SaveButtons
+          isSaving={this.state.isSaving}
+          isChanged={this.state.isChanged}
+          onSave={function() {
+            return configRowActions.saveConfiguration(COMPONENT_ID, state.configId, state.rowId, createConfiguration, parseConfiguration);
+          }}
+          onReset={function() {
+            return configRowActions.resetConfiguration(COMPONENT_ID, state.configId, state.rowId);
+          }}
+            />
+      </div>
+    );
+  },
+
   renderForm() {
-    return null;
+    return (
+      <div>
+        <h2 style={{lineHeight: '32px'}}>
+          Configuration
+          {this.renderButtons()}
+        </h2>
+        {this.renderFormFields()}
+      </div>
+    );
+  },
+
+  renderFormFields() {
+    const state = this.state;
+    const configuration = this.state.configuration;
+    return (<Configuration
+      onChange={function(value) {
+        configRowActions.updateConfiguration(COMPONENT_ID, state.configId, state.rowId, value);
+      }}
+      disabled={false}
+      value={configuration}
+    />);
   },
 
   renderJSONEditors() {

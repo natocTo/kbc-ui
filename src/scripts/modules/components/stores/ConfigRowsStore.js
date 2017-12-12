@@ -72,6 +72,18 @@ let ConfigRowsStore = StoreUtils.createStore({
 
   getPendingActions: function(componentId, configId, rowId) {
     return _store.getIn(['pendingActions', componentId, configId, rowId], Map());
+  },
+
+  getEditingConfiguration: function(componentId, configId, rowId, parseFn) {
+    const storedConfiguration = parseFn(this.getConfiguration(componentId, configId, rowId));
+    return _store.getIn(
+      ['editing', componentId, configId, rowId, 'configuration'],
+      storedConfiguration
+    );
+  },
+
+  isEditingConfiguration: function(componentId, configId, rowId) {
+    return _store.hasIn(['editing', componentId, configId, rowId, 'configuration']);
   }
 });
 
@@ -214,6 +226,35 @@ Dispatcher.register(function(payload) {
         .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'processors'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
       return ConfigRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIG_ROWS_UPDATE_CONFIGURATION:
+      _store = _store.setIn(
+        ['editing', action.componentId, action.configurationId, action.rowId, 'configuration'],
+        action.value
+      );
+      return ConfigRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIG_ROWS_RESET_CONFIGURATION:
+      _store = _store.deleteIn(
+        ['editing', action.componentId, action.configurationId, action.rowId, 'configuration']
+      );
+      return ConfigRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-configuration'], true);
+      return ConfigRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-configuration']);
+      return ConfigRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_SUCCESS:
+      _store = _store
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-configuration'])
+        .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'configuration'])
+        .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
+      return ConfigRowsStore.emitChange();
+
 
     default:
       break;
