@@ -96,7 +96,7 @@ module.exports = React.createClass
               name: 'tags'
               value: @_getTags()
               disabled: @props.disabled
-              placeholder: "Add tags"
+              placeholder: "Select tags"
               multi: true
               onChange: @_handleChangeTags
             React.DOM.span

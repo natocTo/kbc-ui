@@ -30,7 +30,7 @@ export default React.createClass({
       return (
         <a className="list-group-item" onClick={this.createQuery}>
           <strong><i className="kbc-icon-plus"/>
-            Create a new entry
+            New entry
           </strong>
         </a>
       );
@@ -40,7 +40,7 @@ export default React.createClass({
           className="btn btn-success"
           onClick={this.createQuery}
         >
-          <i className="kbc-icon-plus"/> New Table
+          <i className="kbc-icon-plus"/>New Table
         </button>
       );
     }

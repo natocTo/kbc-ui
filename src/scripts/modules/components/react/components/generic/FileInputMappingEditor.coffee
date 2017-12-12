@@ -98,7 +98,7 @@ module.exports = React.createClass
               autofocus: true
               value: @_getTags()
               disabled: @props.disabled
-              placeholder: "Add tags"
+              placeholder: "Select tags"
               multi: true
               onChange: @_handleChangeTags
 

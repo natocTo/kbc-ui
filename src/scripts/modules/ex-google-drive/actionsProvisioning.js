@@ -116,7 +116,7 @@ export default function(configId) {
       const data = store.configData.setIn(['parameters', 'sheets'], sheetsToSave);
       const savingPath = store.getSavingPath(['newSheets']);
       const plural = newSheets.count() > 1 ? 's' : '';
-      return saveConfigData(data, savingPath, `New ${newSheets.count()} sheet${plural}`);
+      return saveConfigData(data, savingPath, `Created ${newSheets.count()} sheet${plural}`);
     },
 
     saveEditingSheet(sheet, processor) {
