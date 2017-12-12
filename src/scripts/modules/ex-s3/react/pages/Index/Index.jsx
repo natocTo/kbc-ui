@@ -31,9 +31,6 @@ import SaveButtons from '../../../../../react/common/SaveButtons';
 // utils
 import {getDefaultTable, getDefaultBucket} from '../../../utils';
 
-// css
-import './Index.less';
-
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-s3';
 
