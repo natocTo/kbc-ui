@@ -1,8 +1,7 @@
 import React from 'react';
+import { Loader } from 'kbc-react-components';
 
 import { loadSourceTables } from '../../actionsProvisioning';
-import { Loader } from 'kbc-react-components';
-import { Link } from 'react-router';
 
 export default React.createClass({
   propTypes: {
@@ -15,24 +14,28 @@ export default React.createClass({
   },
 
   render() {
-    const { componentId, configId, sourceTablesError, sourceTablesLoading, connectionTesting, connectionError } = this.props;
+    const {
+      componentId,
+      configId,
+      sourceTablesError,
+      sourceTablesLoading,
+      connectionTesting,
+      connectionError
+    } = this.props;
     if (connectionError) {
-      const link = 'ex-db-generic-' + componentId + '-credentials';
       return (
-        <div className="alert alert-warning">
-          <h4>Connecting to the database failed</h4>
-          <p>{connectionError}</p>
-          <p>
-            {connectionTesting ? (
-              <span>
-                <Loader /> Retrying the database connection ...
-              </span>
-            ) : (
-              <Link to={link} params={{config: configId}}>
-                Update Database Credentials
-              </Link>
-            ) }
-          </p>
+        <div>
+          <div className="alert alert-warning">
+            <h4>Connecting to the database failed, please check database credentials</h4>
+            <p>{connectionError}</p>
+            <p>
+              {connectionTesting && (
+                <span>
+                  <Loader /> Retrying the database connection ...
+                </span>
+              )}
+            </p>
+          </div>
         </div>
       );
     } else if (sourceTablesError) {
