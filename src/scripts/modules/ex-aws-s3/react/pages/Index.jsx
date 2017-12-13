@@ -44,6 +44,7 @@ export default React.createClass({
         (<div className="kbc-inner-content-padding-fix with-bottom-border">
           <h3>TODO (Empty state)</h3>
           <ul>
+            <li><strong>Copy from DB Extractor</strong></li>
             <li>Create credentials button</li>
             <li>Add rows button</li>
             <li>Link to documentation</li>
@@ -59,6 +60,9 @@ export default React.createClass({
             <li>Add row link icon</li>
             <li>Documentation?</li>
             <li>Delete row button underine</li>
+            <li>New Table a table mít parametrizovatelný</li>
+            <li>Tlačítko back i do řádku</li>
+            <li>Search</li>
           </ul>
         </div>),
         (<ConfigRowsTable
