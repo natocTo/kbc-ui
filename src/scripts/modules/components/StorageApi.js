@@ -45,6 +45,13 @@ var storageApi = {
       return response.body;
     });
   },
+
+  updateToken(tokenId, params) {
+    return createRequest('PUT', `tokens/${tokenId}`).type('form').send(params).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   createToken: function(params) {
     return createRequest('POST', 'tokens').type('form').send(params).promise().then(function(response) {
       return response.body;
@@ -53,6 +60,12 @@ var storageApi = {
 
   deleteToken: function(tokenId) {
     return createRequest('DELETE', 'tokens/' + tokenId).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+  refreshToken: function(tokenId) {
+    return createRequest('POST', 'tokens/' + tokenId + '/refresh').promise().then(function(response) {
       return response.body;
     });
   },

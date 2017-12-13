@@ -15,7 +15,8 @@ export default React.createClass({
   propTypes: {
     params: React.PropTypes.object,
     autoReload: React.PropTypes.bool,
-    link: React.PropTypes.object
+    link: React.PropTypes.object,
+    eventsApi: React.PropTypes.object
   },
 
   _handleChange() {
@@ -78,7 +79,7 @@ export default React.createClass({
   },
 
   _createEventsService(params) {
-    this._events = eventsFactory(params);
+    this._events = eventsFactory(params, this.props.eventsApi);
     return this._events.addChangeListener(this._handleChange);
   },
 
