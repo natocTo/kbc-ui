@@ -16,6 +16,9 @@ const SettingsTabs = ({active}) => {
       <li role="presentation" className={getClassName('settings')}>
         <a href={projectPageUrl('settings')}>Settings</a>
       </li>
+      <li role="presentation" className={getClassName('tokens')}>
+        <Link to="tokens">Tokens</Link>
+      </li>
       <li role="presentation" className={getClassName('settings-limits')}>
         <Link to="settings-limits">Limits</Link>
       </li>
@@ -25,11 +28,6 @@ const SettingsTabs = ({active}) => {
       <li role="presentation" className={getClassName('settings-trash')}>
         <Link to="settings-trash">Trash</Link>
       </li>
-      {active === 'tokens' &&
-       <li role="presentation" className={getClassName('tokens')}>
-         <Link to="tokens">Tokens</Link>
-       </li>
-      }
     </ul>
   );
 };
