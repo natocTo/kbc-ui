@@ -148,8 +148,8 @@ export default React.createClass({
     const state = this.state;
     const configuration = this.state.configuration;
     return (<Configuration
-      onChange={function(value) {
-        configRowsActions.updateConfiguration(COMPONENT_ID, state.configId, state.rowId, Immutable.fromJS(value));
+      onChange={function(diff) {
+        configRowsActions.updateConfiguration(COMPONENT_ID, state.configId, state.rowId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
       }}
       disabled={this.state.isSaving}
       value={configuration.toJS()}

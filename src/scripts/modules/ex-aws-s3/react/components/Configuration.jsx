@@ -54,9 +54,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={this.props.value.bucket}
           onChange={function(e) {
-            let value = props.value;
-            value.bucket = e.target.value;
-            props.onChange(value);
+            props.onChange({bucket: e.target.value});
           }}
           placeholder="mybucket"
           disabled={this.props.disabled}
@@ -68,9 +66,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={this.props.value.key}
           onChange={function(e) {
-            let value = props.value;
-            value.key = e.target.value;
-            props.onChange(value);
+            props.onChange({key: e.target.value});
           }}
           placeholder="myfolder/myfile.csv"
           disabled={this.props.disabled}
@@ -83,9 +79,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={this.props.value.wildcard}
           onChange={function(e) {
-            let value = props.value;
-            value.wildcard = e.target.checked;
-            props.onChange(value);
+            props.onChange({wildcard: e.target.checked});
           }}
           disabled={this.props.disabled}
           help={(<span>Match all files beginning with the specified key.</span>)}
@@ -96,9 +90,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={this.props.value.subfolders}
           onChange={function(e) {
-            let value = props.value;
-            value.subfolders = e.target.checked;
-            props.onChange(value);
+            props.onChange({subfolders: e.target.checked});
           }}
           disabled={this.props.disabled}
           help={(<span>Download subfolders recursively.</span>)}
@@ -109,9 +101,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={this.props.value.newFilesOnly}
           onChange={function(e) {
-            let value = props.value;
-            value.newFilesOnly = e.target.checked;
-            props.onChange(value);
+            props.onChange({newFilesOnly: e.target.checked});
           }}
           disabled={this.props.disabled}
           help={(<span>Every job stores the timestamp of the last downloaded file and a subsequent job can pick up from there.</span>)}
@@ -122,9 +112,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={this.props.value.decompress}
           onChange={function(e) {
-            let value = props.value;
-            value.decompress = e.target.checked;
-            props.onChange(value);
+            props.onChange({decompress: e.target.checked});
           }}
           disabled={this.props.disabled}
           help={(<span>Decompress downloaded file(s). Please note, ZIP files can contain multiple files, which can lead to ambiguity. We recommend using GZIP only.</span>)}
@@ -137,9 +125,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={this.props.value.name}
           onChange={function(e) {
-            let value = props.value;
-            value.name = e.target.value;
-            props.onChange(value);
+            props.onChange({name: e.target.value});
           }}
           placeholder="mytable"
           disabled={this.props.disabled}
@@ -151,9 +137,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={this.props.value.incremental}
           onChange={function(e) {
-            let value = props.value;
-            value.incremental = e.target.checked;
-            props.onChange(value);
+            props.onChange({incremental: e.target.checked});
           }}
           help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
           disabled={this.props.disabled}
@@ -163,10 +147,8 @@ export default React.createClass({
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
           value={this.props.value.delimiter}
-          onChange={function(newValue) {
-            let value = props.value;
-            value.delimiter = newValue;
-            props.onChange(value);
+          onChange={function(value) {
+            props.onChange({delimiter: value});
           }}
           disabled={this.props.disabled}
           />
@@ -177,9 +159,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={this.props.value.enclosure}
           onChange={function(e) {
-            let value = props.value;
-            value.enclosure = e.target.value;
-            props.onChange(value);
+            props.onChange({enclosure: e.target.value});
           }}
           placeholder={'"'}
           disabled={this.props.disabled}
@@ -198,14 +178,14 @@ export default React.createClass({
               searchable={false}
               clearable={false}
               options={columnsFromOptions}
-              onChange={function(newValue) {
-                let value = props.value;
-                value.columnsFrom = newValue;
-                props.onChange(value);
-                if (newValue !== 'manual') {
-                  value.columns = [];
+              onChange={function(value) {
+                let diff = {
+                  columnsFrom: value
+                };
+                if (value !== 'manual') {
+                  diff.columns = [];
                 }
-                props.onChange(value);
+                props.onChange(diff);
               }}
             />
           </div>
@@ -222,10 +202,8 @@ export default React.createClass({
                 delimiter=","
                 placeholder="Add a column"
                 emptyStrings={false}
-                onChange={function(newValue) {
-                  let value = props.value;
-                  value.columns = newValue;
-                  props.onChange(value);
+                onChange={function(value) {
+                  props.onChange({columns: value});
                 }}
               />
             </div>
@@ -242,10 +220,8 @@ export default React.createClass({
               delimiter=","
               placeholder="Add a column to the primary key"
               emptyStrings={false}
-              onChange={function(newValue) {
-                let value = props.value;
-                value.primaryKey = newValue;
-                props.onChange(value);
+              onChange={function(value) {
+                props.onChange({primaryKey: value});
               }}
             />
             <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
