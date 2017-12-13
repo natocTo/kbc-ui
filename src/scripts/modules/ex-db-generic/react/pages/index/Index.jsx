@@ -20,19 +20,15 @@ import DeleteConfigurationButton from '../../../../components/react/components/D
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 
-import {Link} from 'react-router';
+import {Loader} from 'kbc-react-components';
 import SearchRow from '../../../../../react/common/SearchRow';
 import * as actionsProvisioning from '../../../actionsProvisioning';
 import LastUpdateInfo from '../../../../../react/common/LastUpdateInfo';
 
-import {Navigation} from 'react-router';
-
-import {loadingSourceTablesPath} from '../../../storeProvisioning';
-import {sourceTablesPath} from '../../../storeProvisioning';
-import {sourceTablesErrorPath} from '../../../storeProvisioning';
+import {Link, Navigation} from 'react-router';
 
 import Quickstart from '../../components/Quickstart';
-import SourceTablesError from '../../components/SourceTablesError';
+import AsynchActionError from '../../components/AsynchActionError';
 
 export default function(componentId) {
   const actionsCreators = actionsProvisioning.createActions(componentId);
@@ -46,7 +42,7 @@ export default function(componentId) {
 
     componentDidMount() {
       // fetch sourceTable info if not done already
-      if (!this.state.sourceTables) {
+      if (!this.state.hasConnectionBeenTested || !this.state.sourceTables) {
         return actionsProvisioning.loadSourceTables(componentId, this.state.configId);
       }
     },
@@ -72,6 +68,9 @@ export default function(componentId) {
         queriesFilter: ExDbStore.getQueriesFilter(),
         queriesFiltered: ExDbStore.getQueriesFiltered(),
         hasEnabledQueries: enabledQueries.count() > 0,
+        validConnection: ExDbStore.isConnectionValid(),
+        isTestingConnection: ExDbStore.isTestingConnection(),
+        hasConnectionBeenTested: ExDbStore.hasConnectionBeenTested(),
         localState: ExDbStore.getLocalState()
       };
     },
@@ -144,33 +143,19 @@ export default function(componentId) {
         return (
           <div className="row component-empty-state text-center">
             <div className="col-md-12">
-              <p>There are no tables configured yet.</p>
               <Quickstart
                 componentId={componentId}
                 configId={this.state.configId}
-                isLoadingSourceTables={this.state.localState.getIn(loadingSourceTablesPath)}
-                sourceTables={this.state.localState.getIn(sourceTablesPath)}
-                sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
+                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath)}
+                isTestingConnection={this.state.localState.getIn(storeProvisioning.testingConnectionPath)}
+                validConnection={this.state.localState.getIn(storeProvisioning.connectionValidPath)}
+                sourceTables={this.state.localState.getIn(storeProvisioning.sourceTablesPath)}
+                sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
                 quickstart={this.state.localState.get('quickstart') || Map()}
                 onChange={actionsCreators.quickstartSelected}
                 onSubmit={actionsCreators.quickstart}
+                refreshMethod={this.handleRefreshSourceTables}
               />
-              <div className="help-block">
-                Select the tables you'd like to import to autogenerate your configuration.
-                You can edit them later at any time.  <br/>
-                Not seeing your newest tables?
-                {' '}
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.handleRefreshSourceTables();
-                  }}
-                >
-                  Reload
-                </a>
-                {' '}
-                the tables list.
-              </div>
             </div>
           </div>
         );
@@ -187,12 +172,40 @@ export default function(componentId) {
     renderCredentialsLink() {
       if (this.state.hasCredentials) {
         const link = 'ex-db-generic-' + componentId + '-credentials';
+        if (this.state.isTestingConnection) {
+          return (
+            <li>
+              <Link to={link} params={{config: this.state.configId}}>
+                <Loader className="fa-fw"/> Database Credentials
+              </Link>
+            </li>
+          );
+        } else {
+          return (
+            <li>
+              <Link to={link} params={{ config: this.state.configId }}>
+                <i className="fa fa-fw fa-user"/> Database Credentials
+              </Link>
+            </li>
+          );
+        }
+      }
+    },
+
+    renderAsynchError() {
+      if (this.state.localState.getIn(storeProvisioning.connectionErrorPath) ||
+        this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)) {
         return (
-          <li>
-            <Link to={link} params={{ config: this.state.configId }}>
-              <i className="fa fa-fw fa-user"/> Database Credentials
-            </Link>
-          </li>
+          <div className="kbc-inner-content-padding-fix">
+            <AsynchActionError
+              componentId={componentId}
+              configId={this.state.configId}
+              connectionTesting={this.state.localState.getIn(storeProvisioning.testingConnectionPath, false)}
+              connectionError={this.state.localState.getIn(storeProvisioning.connectionErrorPath)}
+              sourceTablesLoading={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath, false)}
+              sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
+            />
+          </div>
         );
       }
     },
@@ -210,28 +223,26 @@ export default function(componentId) {
                 />
               </div>
             </div>
-            <SourceTablesError
-              componentId={componentId}
-              configId={this.state.configId}
-              sourceTablesLoading={this.state.localState.getIn(loadingSourceTablesPath, false)}
-              sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
-            />
-            {this.state.hasCredentials && this.state.queries.count() > 0 ? (
-              <div className="row">
-                <div className="col-sm-9" style={{padding: '0px'}}>
-                  <SearchRow
-                    onChange={this.handleFilterChange}
-                    query={this.state.queriesFilter}
-                  />
-                </div>
-                <div className="col-sm-3">
-                  <div className="text-right" style={{marginTop: '16px'}}>
-                    {this.renderNewQueryLink()}
+            {this.renderCredentialsSetup()}
+            {this.renderAsynchError()}
+            {
+              this.state.queries.count() > 0 ? (
+                <div className="row">
+                  <div className="col-sm-9" style={{padding: '0px'}}>
+                    <SearchRow
+                      onChange={this.handleFilterChange}
+                      query={this.state.queriesFilter}
+                    />
+                  </div>
+                  <div className="col-sm-3">
+                    <div className="text-right" style={{marginTop: '16px'}}>
+                      {this.renderNewQueryLink()}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : null}
-            {this.state.hasCredentials ? this.renderQueriesMain() : this.renderCredentialsSetup()}
+              ) : null
+            }
+            {this.renderQueriesMain()}
           </div>
           <div className="col-md-3 kbc-main-sidebar">
             <div className="kbc-buttons kbc-text-light">
