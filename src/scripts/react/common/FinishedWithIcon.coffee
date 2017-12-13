@@ -1,6 +1,6 @@
 React = require 'react'
 moment = require 'moment'
-Finished = React.createFactory(require('./common').Finished)
+Finished = React.createFactory(require('./Finished').default)
 date = require '../../utils/date'
 
 {span, i} = React.DOM
