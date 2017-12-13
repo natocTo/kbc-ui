@@ -226,6 +226,9 @@
         strong {
           font-weight: bold;
         }
+        ul{
+          padding-left: 16px;
+        }
         li {
           color: #7C8498;
           line-height: 1.5;
@@ -319,25 +322,24 @@
 
   &-navigation {
     padding: @verticalPadding 0;
+    padding-left: 8px!important;
     border: 0;
     &-step {
       padding: 0px;
-      padding-left: 8px;
       line-height: 1.5!important;
       border: 0;
-      font-size: 18px;
-      margin-left: 24px;
+      font-size: 16px;
+      margin-left: 10px;
       font-family: "Gotham Rounded A", "Gotham Rounded B";
 
       &-passed {
-
         span {
           color: #ddd;
         }
       }
       &-active{
         &:before {
-          left: -16px;
+          left: -20px;
           position: absolute;
           content: '\0025B6';
           color: @GuideColor2

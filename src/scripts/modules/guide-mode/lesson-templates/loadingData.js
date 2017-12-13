@@ -8,7 +8,7 @@ export default {
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Introduction',
-      'markdown': 'As promised in Lesson 1, you are about to build a simple workflow that analyzes data about **car ownership** stored in two database tables. In this lesson you will start by configuring an extractor to access the prepared tables in a sample database. You will then take the data in the tables and copy it into two new tables created for this purpose in Keboola Connection Storage. <br/><br/> *Follow the instructions written for you in each step. Once you are done, the next step will appear automatically, or you will be asked to click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.*',
+      'markdown': 'As promised in Lesson 1, you are about to build a simple workflow that analyzes data about **car ownership** stored in two database tables. In this lesson you will start by configuring an extractor to access the prepared tables in a sample database. You will then take the data in the tables and copy it into two new tables created for this purpose in Keboola Connection Storage.',
       'media': 'kbc_scheme_light_blue-ext.svg',
       'mediaType': 'img',
       'route': {
