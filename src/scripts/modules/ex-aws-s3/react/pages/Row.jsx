@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 
 // stores
 import ConfigRowsStore from '../../../components/stores/ConfigRowsStore';
@@ -148,10 +149,10 @@ export default React.createClass({
     const configuration = this.state.configuration;
     return (<Configuration
       onChange={function(value) {
-        configRowsActions.updateConfiguration(COMPONENT_ID, state.configId, state.rowId, value);
+        configRowsActions.updateConfiguration(COMPONENT_ID, state.configId, state.rowId, Immutable.fromJS(value));
       }}
       disabled={this.state.isSaving}
-      value={configuration}
+      value={configuration.toJS()}
     />);
   },
 
