@@ -206,6 +206,24 @@
         font-family: "Gotham Rounded A", "Gotham Rounded B";
         color: #7C8498;
       }
+      p {
+        margin-bottom: 20px;
+        color: #7C8498;
+        line-height: 1.5;
+      }
+      strong {
+        font-weight: bold;
+      }
+      ul {
+        padding-left: 16px;
+      }
+      li {
+        color: #7C8498;
+        line-height: 1.5;
+      }
+      .btn.btn-primary {
+        background-color: @GuideColor1;
+      }
       .modal {
         &-dialog {
           position: fixed;
@@ -238,21 +256,7 @@
         &-body {
           padding: 0 40px 20px;
           overflow: hidden; // animation fix
-          p {
-            margin-bottom: 20px;
-            color: #7C8498;
-            line-height: 1.5;
-          }
-          strong {
-            font-weight: bold;
-          }
-          ul {
-            padding-left: 16px;
-          }
-          li {
-            color: #7C8498;
-            line-height: 1.5;
-          }
+
           .btn {
             pointer-events: none;
             padding: 1px 5px;
@@ -265,6 +269,7 @@
             }
           }
         }
+
       }
       &.guide-wizard-aside {
         position: static;
