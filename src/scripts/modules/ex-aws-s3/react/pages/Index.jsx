@@ -53,7 +53,7 @@ export default React.createClass({
       ];
     } else {
       return [
-        (<div className="kbc-inner-content-padding-fix with-bottom-border">
+        (<div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
           <h3>TODO</h3>
           <ul>
             <li>Row sorting</li>
@@ -66,6 +66,7 @@ export default React.createClass({
           </ul>
         </div>),
         (<ConfigurationRowsTable
+            key="rows"
             rows={this.state.rows.toList()}
             componentId={COMPONENT_ID}
             configId={this.state.configId}
@@ -87,7 +88,7 @@ export default React.createClass({
             }}
             rowLinkTo={COMPONENT_ID + '-row'}
           />),
-        (<div className="text-center">
+        (<div className="text-center" key="create">
           <CreateConfigurationRowButton
             componentId={COMPONENT_ID}
             configId={this.state.configId}
