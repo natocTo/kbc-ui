@@ -22,11 +22,10 @@ import configurationMovedToTrash from './react/components/notifications/configur
 import configurationMovedToTrashWithRestore from './react/components/notifications/configurationMovedToTrashWithRestore';
 
 const storeEncodedConfig = function(componentId, configId, dataToSave, changeDescription) {
-  var component, projectId;
-  component = InstalledComponentsStore.getComponent(componentId);
+  let component = InstalledComponentsStore.getComponent(componentId);
   if (component.get('flags').includes('encrypt')) {
     const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
-    projectId = ApplicationStore.getCurrentProject().get('id');
+    let projectId = ApplicationStore.getCurrentProject().get('id');
     return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
       const dataToSaveEncrypted = {
         configuration: JSON.stringify(encryptedResponse.body),
@@ -39,30 +38,28 @@ const storeEncodedConfig = function(componentId, configId, dataToSave, changeDes
       configuration: JSON.stringify(dataToSave),
       changeDescription: changeDescription
     };
-    return installedComponentsApi.updateComponentConfiguration(componentId, configId, dataToSavePrepared, changeDescription);
+    return installedComponentsApi.updateComponentConfiguration(componentId, configId, dataToSavePrepared);
   }
 };
 
 const storeEncodedConfigRow = function(componentId, configId, rowId, dataToSave, changeDescription) {
-  var component;
-  component = InstalledComponentsStore.getComponent(componentId);
-  let dataToSavePrepared = dataToSave;
+  let component = InstalledComponentsStore.getComponent(componentId);
   if (component.get('flags').includes('encrypt')) {
-    dataToSavePrepared = {
-      configuration: JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSavePrepared)))
-    };
+    const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
+    let projectId = ApplicationStore.getCurrentProject().get('id');
+    return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
+      const dataToSaveEncrypted = {
+        configuration: JSON.stringify(encryptedResponse.body),
+        changeDescription: changeDescription
+      };
+      return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSaveEncrypted);
+    });
   } else {
-    dataToSavePrepared = {
-      configuration: JSON.stringify(dataToSavePrepared)
+    const dataToSavePrepared = {
+      configuration: JSON.stringify(dataToSave),
+      changeDescription: changeDescription
     };
-  }
-  if (changeDescription) {
-    dataToSavePrepared.changeDescription = changeDescription;
-  }
-  if (component.get('flags').includes('encrypt')) {
-    return installedComponentsApi.updateConfigurationRowEncrypted(component.get('uri'), componentId, configId, dataToSavePrepared, changeDescription);
-  } else {
-    return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSavePrepared, changeDescription);
+    return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSavePrepared);
   }
 };
 
@@ -831,18 +828,19 @@ module.exports = {
       rowId: rowId,
       field: field
     });
+    let changeDescription;
     newValue = InstalledComponentsStore.getEditingConfigRow(componentId, configurationId, rowId, field);
     if (field === 'configuration') {
       data = newValue;
-      data.changeDescription = 'Update configuration';
+      changeDescription = 'Update configuration';
       calledFunction = storeEncodedConfigRow;
     } else {
       data = {};
-      data.changeDescription = 'Update ' + field;
+      changeDescription = 'Update ' + field;
       data[field] = newValue;
       calledFunction = installedComponentsApi.updateConfigurationRow;
     }
-    return calledFunction(componentId, configurationId, rowId, data).then(function(response) {
+    return calledFunction(componentId, configurationId, rowId, data, changeDescription).then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configurationId);
       return dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS,
