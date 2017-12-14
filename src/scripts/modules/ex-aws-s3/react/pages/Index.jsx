@@ -2,14 +2,14 @@ import React from 'react';
 
 // stores
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
-import ConfigRowsStore from '../../../components/stores/ConfigRowsStore';
+import ConfigurationRowsStore from '../../../components/stores/ConfigurationRowsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
-import configRowsActions from '../../../components/ConfigRowsActionCreators';
+import configurationRowsActions from '../../../components/ConfigurationRowsActionCreators';
 
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
@@ -19,21 +19,21 @@ import DeleteConfigurationButton from '../../../components/react/components/Dele
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import {Link} from 'react-router';
-import CreateConfigRowButton from '../../../components/react/components/CreateConfigRowButton';
-import ConfigRowsTable from '../../../components/react/components/ConfigRowsTable';
+import CreateConfigurationRowButton from '../../../components/react/components/CreateConfigurationRowButton';
+import ConfigurationRowsTable from '../../../components/react/components/ConfigurationRowsTable';
 
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, ConfigRowsStore, LatestJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
     return {
       configId: configId,
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
-      rows: ConfigRowsStore.getRows(COMPONENT_ID, configId)
+      rows: ConfigurationRowsStore.getRows(COMPONENT_ID, configId)
     };
   },
 
@@ -65,30 +65,30 @@ export default React.createClass({
             <li>Search</li>
           </ul>
         </div>),
-        (<ConfigRowsTable
+        (<ConfigurationRowsTable
             rows={this.state.rows.toList()}
             componentId={COMPONENT_ID}
             configId={this.state.configId}
             rowDelete={function(rowId) {
-              return configRowsActions.delete(COMPONENT_ID, state.configId, rowId);
+              return configurationRowsActions.delete(COMPONENT_ID, state.configId, rowId);
             }}
             rowDeletePending={function(rowId) {
-              return ConfigRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('delete');
+              return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('delete');
             }}
             rowEnableDisable={function(rowId) {
               if (state.rows.get(rowId).get('isDisabled', false)) {
-                return configRowsActions.enable(COMPONENT_ID, state.configId, rowId);
+                return configurationRowsActions.enable(COMPONENT_ID, state.configId, rowId);
               } else {
-                return configRowsActions.disable(COMPONENT_ID, state.configId, rowId);
+                return configurationRowsActions.disable(COMPONENT_ID, state.configId, rowId);
               }
             }}
             rowEnableDisablePending={function(rowId) {
-              return ConfigRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('disable') || ConfigRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('enable');
+              return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('enable');
             }}
             rowLinkTo={COMPONENT_ID + '-row'}
           />),
         (<div className="text-center">
-          <CreateConfigRowButton
+          <CreateConfigurationRowButton
             componentId={COMPONENT_ID}
             configId={this.state.configId}
             onRowCreated={function() { return; }}
@@ -129,7 +129,7 @@ export default React.createClass({
               </RunComponentButton>
             </li>
             <li>
-              <CreateConfigRowButton
+              <CreateConfigurationRowButton
                 componentId={COMPONENT_ID}
                 configId={this.state.configId}
                 onRowCreated={function() { return; }}

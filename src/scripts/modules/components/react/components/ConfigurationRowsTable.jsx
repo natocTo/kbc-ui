@@ -1,12 +1,12 @@
 import React from 'react';
 import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
-import DeleteConfigRowButton from './DeleteConfigRowButton';
+import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
 import {Link} from 'react-router';
 
 export default React.createClass({
-  displayName: 'ConfigRowsTable',
+  displayName: 'ConfigurationRowsTable',
 
   mixins: [ImmutableRenderMixin],
 
@@ -73,7 +73,7 @@ export default React.createClass({
   renderRowActionButtons(row) {
     const props = this.props;
     return [
-      (<DeleteConfigRowButton
+      (<DeleteConfigurationRowButton
         key="delete"
         isPending={this.props.rowDeletePending(row.get('id'))}
         onClick={function() {

@@ -6,7 +6,7 @@ import {Loader} from 'kbc-react-components';
 const MODE_BUTTON = 'button', MODE_LINK = 'link';
 
 export default React.createClass({
-  displayName: 'DeleteConfigRowButton',
+  displayName: 'DeleteConfigurationRowButton',
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
     isPending: React.PropTypes.bool.isRequired,

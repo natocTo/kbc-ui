@@ -1,7 +1,7 @@
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import dispatcher from '../../Dispatcher';
-import constants from './ConfigRowsConstants';
-import ConfigRowsStore from './stores/ConfigRowsStore';
+import constants from './ConfigurationRowsConstants';
+import ConfigurationRowsStore from './stores/ConfigurationRowsStore';
 import installedComponentsApi from './InstalledComponentsApi';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import configurationRowDeleted from './react/components/notifications/configurationRowDeleted';
@@ -47,7 +47,7 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-    const row = ConfigRowsStore.get(componentId, configurationId, rowId);
+    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' deleted';
     return installedComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
       .then(function() {
@@ -80,7 +80,7 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-    const row = ConfigRowsStore.get(componentId, configurationId, rowId);
+    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' disabled';
     return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 1}, changeDescription)
       .then(function() {
@@ -110,7 +110,7 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-    const row = ConfigRowsStore.get(componentId, configurationId, rowId);
+    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' enabled';
     return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 0}, changeDescription)
       .then(function() {
@@ -159,10 +159,10 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-    const row = ConfigRowsStore.get(componentId, configurationId, rowId);
+    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited';
-    let configuration = ConfigRowsStore.getConfiguration(componentId, configurationId, rowId);
-    let parameters = ConfigRowsStore.getEditingParametersString(componentId, configurationId, rowId);
+    let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
+    let parameters = ConfigurationRowsStore.getEditingParametersString(componentId, configurationId, rowId);
     configuration = configuration.set('parameters', Immutable.fromJS(JSON.parse(parameters)));
 
     return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {configuration: JSON.stringify(configuration.toJS())}, changeDescription)
@@ -213,10 +213,10 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-    const row = ConfigRowsStore.get(componentId, configurationId, rowId);
+    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' processors edited';
-    let configuration = ConfigRowsStore.getConfiguration(componentId, configurationId, rowId);
-    let processors = ConfigRowsStore.getEditingProcessorsString(componentId, configurationId, rowId);
+    let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
+    let processors = ConfigurationRowsStore.getEditingProcessorsString(componentId, configurationId, rowId);
     configuration = configuration.set('processors', Immutable.fromJS(JSON.parse(processors)));
     return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {configuration: JSON.stringify(configuration.toJS())}, changeDescription)
       .then(function() {
@@ -266,9 +266,9 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-    const row = ConfigRowsStore.get(componentId, configurationId, rowId);
+    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited';
-    const configuration = createFn(ConfigRowsStore.getEditingConfiguration(componentId, configurationId, rowId, parseFn));
+    const configuration = createFn(ConfigurationRowsStore.getEditingConfiguration(componentId, configurationId, rowId, parseFn));
     return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {configuration: JSON.stringify(configuration.toJS())}, changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);

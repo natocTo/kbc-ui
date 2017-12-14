@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 
 import {Input} from '../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import ConfigRowsActions from '../../ConfigRowsActionCreators';
+import ConfigurationRowsActions from '../../ConfigurationRowsActionCreators';
 
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
@@ -145,7 +145,7 @@ export default React.createClass({
 
   handleCreate() {
     this.setState({isSaving: true});
-    ConfigRowsActions.create(
+    ConfigurationRowsActions.create(
       this.props.componentId,
       this.props.configId,
       this.state.form.get('name'),

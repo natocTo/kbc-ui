@@ -5,7 +5,7 @@ import installedComponentsActions from '../components/InstalledComponentsActionC
 import versionsActions from '../components/VersionsActionCreators';
 import jobsActions from '../jobs/ActionCreators';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
-import ConfigRowsStore from '../components/stores/ConfigRowsStore';
+import ConfigurationRowsStore from '../components/stores/ConfigurationRowsStore';
 
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
@@ -39,8 +39,8 @@ export default {
       title: (routerState) => {
         const configId = routerState.getIn(['params', 'config']);
         const rowId = routerState.getIn(['params', 'row']);
-        const configRow = ConfigRowsStore.get(COMPONENT_ID, configId, rowId);
-        return configRow.get('name') !== '' ? configRow.get('name') : 'Untitled';
+        const configurationRow = ConfigurationRowsStore.get(COMPONENT_ID, configId, rowId);
+        return configurationRow.get('name') !== '' ? configurationRow.get('name') : 'Untitled';
       },
       defaultRouteHandler: Row
     }
