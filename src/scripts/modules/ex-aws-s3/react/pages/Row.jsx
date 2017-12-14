@@ -81,9 +81,8 @@ export default React.createClass({
               <li>Unify headlines</li>
               <li>Right bar content</li>
               <li>Form layout</li>
+              <li>Enable / disable in right bar</li>
               <li>Conditional form fields - disable instead of hide</li>
-              <li>Move to trash -> Delete</li>
-              <li>Run configuration row</li>
             </ul>
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
@@ -107,9 +106,14 @@ export default React.createClass({
                   title="Run"
                   component={COMPONENT_ID}
                   mode="link"
-                  runParams={() => ({config: this.state.configurationId})}
+                  runParams={function() {
+                    return {
+                      config: state.configurationId,
+                      row: state.rowId
+                    };
+                  }}
               >
-                <span>You are about to run an extraction of {this.state.row.get('name', 'Untitled')}.</span>
+                <span>You are about to run {this.state.row.get('name', 'Untitled')}.</span>
               </RunComponentButton>
             </li>
             <li>
