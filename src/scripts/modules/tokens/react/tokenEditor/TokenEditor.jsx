@@ -118,6 +118,7 @@ export default React.createClass({
   renderDescriptionInput() {
     return (
       <input
+        placeholder="Describe token..."
         disabled={this.props.disabled}
         className="form-control"
         type="text"

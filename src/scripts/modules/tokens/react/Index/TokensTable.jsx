@@ -36,7 +36,7 @@ export default React.createClass({
           <div className="thead">
             <div className="tr">
               <div className="th">
-                Name
+                Description
               </div>
               <div className="th">
                 Created
@@ -45,13 +45,13 @@ export default React.createClass({
                 Expires
               </div>
               <div className="th">
-                File Uploads Access
+                Files
               </div>
               <div className="th">
-                Component Access
+                Components
               </div>
               <div className="th">
-                Buckets Access
+                Buckets
               </div>
               <div className="th text-right">
                 <button
