@@ -54,9 +54,9 @@ export default React.createClass({
                 Buckets
               </div>
               <div className="th text-right">
-                <button
-                  onClick={() => this.updateLocalState(['createToken', 'show'], true)}
-                  className="btn btn-success">+ New Token</button>
+                <Link
+                  to="tokens-detail" params={{tokenId: 'new-token'}}
+                  className="btn btn-success">+ New Token</Link>
               </div>
             </div>
           </div>

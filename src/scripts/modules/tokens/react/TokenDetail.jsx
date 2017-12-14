@@ -10,6 +10,8 @@ import {Tabs, Tab} from 'react-bootstrap';
 import Events from '../../sapi-events/react/Events';
 import createTokenEventsApi from '../TokenEventsApi';
 import SaveButtons from '../../../react/common/SaveButtons';
+import ConfirmButtons from '../../../react/common/ConfirmButtons';
+import TokenString from './Index/TokenString';
 
 const makeDetailPath = (tokenId) => (rest) => ['TokenDetail', tokenId].concat(rest || []);
 
@@ -18,23 +20,22 @@ export default React.createClass({
 
   getStateFromStores() {
     const tokenId = RoutesStore.getCurrentRouteParam('tokenId');
+    const isNew = tokenId === 'new-token';
     const tokens = TokensStore.getAll();
-    const token = tokens.find(t => t.get('id') === tokenId);
+    const token = !isNew && tokens.find(t => t.get('id') === tokenId);
     const path = makeDetailPath(tokenId);
     const localState = TokensStore.localState();
     const tokenDetailState = localState.getIn(path(), Map());
-
-    const dirtyToken = tokenDetailState.get('dirtyToken', token);
-    const saveLabel = tokenDetailState.get('saveLabel', 'Save');
+    const dirtyToken = tokenDetailState.get('dirtyToken', token || Map());
     const isSaving = tokenDetailState.get('isSaving', false);
-    const eventsApi = createTokenEventsApi(tokenId);
+    const eventsApi = !isNew && createTokenEventsApi(tokenId);
 
     return {
       localState: localState,
+      isNew: isNew,
       token: token,
       tokenId: tokenId,
       dirtyToken: dirtyToken,
-      saveLabel: saveLabel,
       isSaving: isSaving,
       allBuckets: BucketsStore.getAll(),
       eventsApi: eventsApi
@@ -83,15 +84,8 @@ export default React.createClass({
                  </div>
                </div>
                <div>
-                 <TokenEditor
-                   disabled={this.state.isSaving}
-                   isEditing={true}
-                   token={this.state.dirtyToken}
-                   allBuckets={this.state.allBuckets}
-                   updateToken={this.updateDirtyToken}
-                 />
+                 {this.renderTokenEditor(true)}
                </div>
-
              </Tab>
              <Tab title="Events" eventKey="events">
                <Events
@@ -101,11 +95,66 @@ export default React.createClass({
                />
              </Tab>
            </Tabs>
-           :
-           <div className="text-center">
-             Token {this.state.tokenId} does not exist or has been removed.
-           </div>
+           : this.renderNewToken()
           }
+        </div>
+      </div>
+    );
+  },
+
+  renderTokenEditor(isEditing) {
+    return (
+      <TokenEditor
+        disabled={!!this.state.isSaving || !!this.state.createdToken}
+        isEditing={isEditing}
+        token={this.state.dirtyToken}
+        allBuckets={this.state.allBuckets}
+        updateToken={this.updateDirtyToken}
+      />
+    );
+  },
+
+  renderTokenCreated() {
+    if (!this.state.createdToken) return null;
+
+    return (
+      <div>
+        <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. Make sure to copy it. You won't be able to see it again. </p>
+        <TokenString token={this.state.createdToken} />
+      </div>
+    );
+  },
+
+
+  renderNewToken() {
+    if (!this.state.isNew) {
+      return (
+        <div className="text-center">
+          Token {this.state.tokenId} does not exist or has been removed.
+        </div>
+      );
+    }
+    return (
+      <div className="row">
+        {this.renderTokenCreated()}
+        {!this.state.createdToken &&
+         <div className="kbc-header">
+           <div className="kbc-buttons">
+             <ConfirmButtons
+               isSaving={this.state.isSaving}
+               isDisabled={!this.isValid()}
+               onSave={this.handleSaveToken}
+               onCancel={this.handleClose}
+               saveLabel="Create"
+               showCancel={false}
+             />
+           </div>
+         </div>
+        }
+        <div>
+          <div>
+            {this.renderTokenEditor(false)}
+          </div>
         </div>
       </div>
     );
@@ -127,8 +176,25 @@ export default React.createClass({
     return !!dirtyToken.get('description') && validExpiresIn;
   },
 
+  handleCreateToken() {
+    const token = this.state.dirtyToken;
+    this.updateLocalState('isSaving', true);
+    const cancelSaving = () => this.updateLocalState('isSaving', false);
+    return TokensActions.createToken(token.toJS()).then((createdToken) => {
+      cancelSaving();
+      this.setState({ createdToken: createdToken});
+      return createdToken;
+    }).catch((e) => {
+      cancelSaving();
+      throw e;
+    });
+  },
 
   handleSaveToken() {
+    if (this.state.isNew) {
+      return this.handleCreateToken();
+    }
+
     const tokenId = this.state.tokenId;
     this.updateLocalState('isSaving', true);
     return TokensActions.updateToken(tokenId, this.state.dirtyToken.toJS()).then(() => {

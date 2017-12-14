@@ -19,6 +19,9 @@ export default {
       handler: TokenDetail,
       title: (routerState) => {
         const tokenId = routerState.getIn(['params', 'tokenId']);
+        if (tokenId === 'new-token') {
+          return 'New Token';
+        }
         const token = tokenId && TokensStore.getAll().find(t => t.get('id') === tokenId);
         if (token) {
           return `${token.get('description')} (${token.get('id')})`;
