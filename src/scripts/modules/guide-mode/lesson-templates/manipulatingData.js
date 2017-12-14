@@ -59,7 +59,7 @@ export default {
       'markdown':
       'Next you need to specify what tables will be used in the transformation, what tables will be written to Storage as results, and what will happen with the data in the transformation:'
       + `<br><br>
-**Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.CARS* as the source table. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. Repeat the steps for the second table *in.c-keboola-ex-db-snowflake.POPULATION*.
+**Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.CARS* as the source table. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. <br> Repeat the steps for the second table *in.c-keboola-ex-db-snowflake.POPULATION*.
 <br/><br/>
 **Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and enter \`CARS_POPULATION\` as the source table. This table will be created in the transformation. Then set the destination to \`out.c-snowflake.CARS_POPULATION\`. It’s the name the new table *CARS_POPULATION* will have in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
 <br/><br/>
