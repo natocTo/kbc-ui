@@ -1,16 +1,41 @@
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
-import dispatcher from '../../Dispatcher';
-import constants from './ConfigurationRowsConstants';
+import Dispatcher from '../../Dispatcher';
+import Constants from './ConfigurationRowsConstants';
 import ConfigurationRowsStore from './stores/ConfigurationRowsStore';
-import installedComponentsApi from './InstalledComponentsApi';
+import InstalledComponentsApi from './InstalledComponentsApi';
+import InstalledComponentsStore from './stores/InstalledComponentsStore';
 import VersionActionCreators from '../components/VersionsActionCreators';
+import ApplicationStore from '../../stores/ApplicationStore';
 import configurationRowDeleted from './react/components/notifications/configurationRowDeleted';
 import Immutable from 'immutable';
+import removeEmptyEncryptAttributes from './utils/removeEmptyEncryptAttributes';
+import preferEncryptedAttributes from './utils/preferEncryptedAttributes';
+
+const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
+  let component = InstalledComponentsStore.getComponent(componentId);
+  if (component.get('flags').includes('encrypt')) {
+    const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
+    let projectId = ApplicationStore.getCurrentProject().get('id');
+    return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
+      const dataToSaveEncrypted = {
+        configuration: JSON.stringify(encryptedResponse.body),
+        changeDescription: changeDescription
+      };
+      return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, dataToSaveEncrypted, changeDescription);
+    });
+  } else {
+    const dataToSavePrepared = {
+      configuration: JSON.stringify(configuration),
+      changeDescription: changeDescription
+    };
+    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, dataToSavePrepared, changeDescription);
+  }
+};
 
 module.exports = {
   create: function(componentId, configurationId, name, description, config) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START,
       componentId: componentId,
       configurationId: configurationId
     });
@@ -20,18 +45,18 @@ module.exports = {
       configuration: config
     };
     const changeDescription = 'Row ' + name + ' added';
-    return installedComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription)
+    return InstalledComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription)
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        return dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_CREATE_SUCCESS,
+        return Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           data: response
         });
       }).catch(function(e) {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_CREATE_ERROR,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           error: e
@@ -41,19 +66,19 @@ module.exports = {
   },
 
   delete: function(componentId, configurationId, rowId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_DELETE_START,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_DELETE_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' deleted';
-    return installedComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
+    return InstalledComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_DELETE_SUCCESS,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_DELETE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId
@@ -62,8 +87,8 @@ module.exports = {
           message: configurationRowDeleted(row)
         });
       }).catch(function(e) {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_DELETE_ERROR,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_DELETE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -74,26 +99,26 @@ module.exports = {
   },
 
   disable: function(componentId, configurationId, rowId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_START,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' disabled';
-    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 1}, changeDescription)
+    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 1}, changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_SUCCESS,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId
         });
       }).catch(function(e) {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_ERROR,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -104,26 +129,26 @@ module.exports = {
   },
 
   enable: function(componentId, configurationId, rowId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_START,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' enabled';
-    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 0}, changeDescription)
+    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 0}, changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_SUCCESS,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId
         });
       }).catch(function(e) {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_ERROR,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -134,8 +159,8 @@ module.exports = {
   },
 
   updateParameters: function(componentId, configurationId, rowId, value) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PARAMETERS,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PARAMETERS,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId,
@@ -144,8 +169,8 @@ module.exports = {
   },
 
   resetParameters: function(componentId, configurationId, rowId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_RESET_PARAMETERS,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_PARAMETERS,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -153,8 +178,8 @@ module.exports = {
   },
 
   saveParameters: function(componentId, configurationId, rowId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_START,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -165,19 +190,19 @@ module.exports = {
     let parameters = ConfigurationRowsStore.getEditingParametersString(componentId, configurationId, rowId);
     configuration = configuration.set('parameters', Immutable.fromJS(JSON.parse(parameters)));
 
-    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {configuration: JSON.stringify(configuration.toJS())}, changeDescription)
+    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_SUCCESS,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
           value: configuration
         });
       }).catch(function(e) {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_ERROR,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -188,8 +213,8 @@ module.exports = {
   },
 
   updateProcessors: function(componentId, configurationId, rowId, value) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PROCESSORS,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PROCESSORS,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId,
@@ -198,8 +223,8 @@ module.exports = {
   },
 
   resetProcessors: function(componentId, configurationId, rowId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_RESET_PROCESSORS,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_PROCESSORS,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -207,8 +232,8 @@ module.exports = {
   },
 
   saveProcessors: function(componentId, configurationId, rowId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_START,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -218,19 +243,19 @@ module.exports = {
     let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
     let processors = ConfigurationRowsStore.getEditingProcessorsString(componentId, configurationId, rowId);
     configuration = configuration.set('processors', Immutable.fromJS(JSON.parse(processors)));
-    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {configuration: JSON.stringify(configuration.toJS())}, changeDescription)
+    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_SUCCESS,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
           value: configuration
         });
       }).catch(function(e) {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_ERROR,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -241,8 +266,8 @@ module.exports = {
   },
 
   updateConfiguration: function(componentId, configurationId, rowId, value) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_CONFIGURATION,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_CONFIGURATION,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId,
@@ -251,8 +276,8 @@ module.exports = {
   },
 
   resetConfiguration: function(componentId, configurationId, rowId) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_RESET_CONFIGURATION,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_CONFIGURATION,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -260,8 +285,8 @@ module.exports = {
   },
 
   saveConfiguration: function(componentId, configurationId, rowId, createFn, parseFn) {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_START,
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -269,19 +294,19 @@ module.exports = {
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited';
     const configuration = createFn(ConfigurationRowsStore.getEditingConfiguration(componentId, configurationId, rowId, parseFn));
-    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {configuration: JSON.stringify(configuration.toJS())}, changeDescription)
+    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
           value: configuration
         });
       }).catch(function(e) {
-        dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_ERROR,
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
