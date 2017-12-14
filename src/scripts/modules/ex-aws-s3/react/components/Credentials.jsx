@@ -6,21 +6,16 @@ export default React.createClass({
   mixins: [immutableMixin],
 
   propTypes: {
-    awsAccessKeyId: PropTypes.string.isRequired,
-    awsSecretAccessKey: PropTypes.string.isRequired,
+    value: PropTypes.shape({
+      awsAccessKeyId: PropTypes.string.isRequired,
+      awsSecretAccessKey: PropTypes.string.isRequired
+    }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
   },
 
-  onChangeAwsAccessKeyId(e) {
-    this.props.onChange('awsAccessKeyId', e.target.value);
-  },
-
-  onChangeAwsSecretAccessKey(e) {
-    this.props.onChange('awsSecretAccessKey', e.target.value);
-  },
-
   render() {
+    const props = this.props;
     return (
       <div className="form-horizontal">
         <Input
@@ -28,8 +23,10 @@ export default React.createClass({
           label="Access Key Id"
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
-          value={this.props.awsAccessKeyId}
-          onChange={this.onChangeAwsAccessKeyId}
+          value={this.props.value.awsAccessKeyId}
+          onChange={function(e) {
+            props.onChange({awsAccessKeyId: e.target.value});
+          }}
           placeholder="MYAWSACCESSKEYID123"
           disabled={this.props.disabled}
           help={(
@@ -49,8 +46,10 @@ export default React.createClass({
           label="Secret Access Key"
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
-          value={this.props.awsSecretAccessKey}
-          onChange={this.onChangeAwsSecretAccessKey}
+          value={this.props.value.awsSecretAccessKey}
+          onChange={function(e) {
+            props.onChange({awsSecretAccessKey: e.target.value});
+          }}
           help={(<span>The AWS Secret Access Key will be encrypted.</span>)}
           disabled={this.props.disabled}
           />

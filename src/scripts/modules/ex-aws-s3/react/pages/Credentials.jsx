@@ -1,17 +1,21 @@
 import React from 'react';
+import Immutable from 'immutable';
 
 // stores
 import ComponentStore from '../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import storeProvisioning from '../../stores/credentials';
+import Store from '../../../components/stores/ConfigurationsStore';
 
 // actions
-import actionsProvisioning from '../../actions/credentials';
+import Actions from '../../../components/ConfigurationsActionCreators';
 
 // specific components
 import Credentials from '../components/Credentials';
+
+// adapters
+import {parseConfiguration, createConfiguration} from '../../adapters/credentials';
 
 // global components
 import ComponentDescription from '../../../components/react/components/ComponentDescription';
@@ -19,51 +23,52 @@ import ComponentMetadata from '../../../components/react/components/ComponentMet
 import SaveButtons from '../../../../react/common/SaveButtons';
 import {Link} from 'react-router';
 
-// css
-import './Credentials.less';
-
 // CONSTS
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, Store)],
 
   getStateFromStores() {
-    const configId = RoutesStore.getCurrentRouteParam('config');
+    const configurationId = RoutesStore.getCurrentRouteParam('config');
     const component = ComponentStore.getComponent(COMPONENT_ID);
-    const store = storeProvisioning(configId);
-    const actions = actionsProvisioning(configId);
     return {
       component: component,
-      configId: configId,
-      actions: actions,
-      localState: store.getLocalState(),
-      credentials: store.credentials
+      configurationId: configurationId,
+      configuration: Store.getEditingConfiguration(COMPONENT_ID, configurationId, parseConfiguration),
+      isSaving: Store.getPendingActions(COMPONENT_ID, configurationId).has('save-configuration'),
+      isChanged: Store.isEditingConfiguration(COMPONENT_ID, configurationId)
     };
   },
 
   renderButtons() {
+    const state = this.state;
     return (
       <div className="text-right">
         <SaveButtons
-          isSaving={this.state.localState.get('isSaving', false)}
-          isChanged={this.state.localState.get('isChanged', false)}
-          onSave={this.state.actions.editSave}
-          onReset={this.state.actions.editReset}
-            />
+          isSaving={this.state.isSaving}
+          isChanged={this.state.isChanged}
+          onSave={function() {
+            return Actions.saveConfiguration(COMPONENT_ID, state.configurationId, createConfiguration, parseConfiguration);
+          }}
+          onReset={function() {
+            return Actions.resetConfiguration(COMPONENT_ID, state.configurationId);
+          }}
+        />
       </div>
     );
   },
 
   renderCredentials() {
-    return (
-      <Credentials
-        awsAccessKeyId={this.state.credentials.get('awsAccessKeyId')}
-        awsSecretAccessKey={this.state.credentials.get('awsSecretAccessKey')}
-        onChange={this.state.actions.editChange}
-        disabled={this.state.localState.get('isSaving', false)}
-      />
-    );
+    const state = this.state;
+    const configuration = this.state.configuration;
+    return (<Credentials
+      onChange={function(diff) {
+        Actions.updateConfiguration(COMPONENT_ID, state.configurationId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
+      }}
+      disabled={this.state.isSaving}
+      value={configuration.toJS()}
+    />);
   },
 
   render() {
@@ -73,7 +78,7 @@ export default React.createClass({
           <div className="kbc-inner-content-padding-fix with-bottom-border">
             <ComponentDescription
               componentId={COMPONENT_ID}
-              configId={this.state.configId}
+              configId={this.state.configurationId}
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
@@ -91,11 +96,11 @@ export default React.createClass({
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata
             componentId={COMPONENT_ID}
-            configId={this.state.configId}
+            configId={this.state.configurationId}
           />
           <ul className="nav nav-stacked">
             <li>
-              <Link to={COMPONENT_ID} params={{config: this.state.configId}}>
+              <Link to={COMPONENT_ID} params={{config: this.state.configurationId}}>
                 <span className="fa fa-arrow-left fa-fw" />
                 &nbsp;Back
               </Link>
