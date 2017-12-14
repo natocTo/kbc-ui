@@ -1,0 +1,12 @@
+import keyMirror from 'fbjs/lib/keyMirror';
+
+module.exports = {
+  ActionTypes: keyMirror({
+    CONFIGURATIONS_UPDATE_CONFIGURATION: null,
+    CONFIGURATIONS_RESET_CONFIGURATION: null,
+
+    CONFIGURATIONS_SAVE_CONFIGURATION_START: null,
+    CONFIGURATIONS_SAVE_CONFIGURATION_SUCCESS: null,
+    CONFIGURATIONS_SAVE_CONFIGURATION_ERROR: null
+  })
+};

@@ -15,7 +15,7 @@ const storeEncodedConfigurationRow = function(componentId, configurationId, rowI
   let component = InstalledComponentsStore.getComponent(componentId);
   if (component.get('flags').includes('encrypt')) {
     const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
-    let projectId = ApplicationStore.getCurrentProject().get('id');
+    const projectId = ApplicationStore.getCurrentProject().get('id');
     return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
       const dataToSaveEncrypted = {
         configuration: JSON.stringify(encryptedResponse.body),
