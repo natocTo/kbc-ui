@@ -115,15 +115,15 @@ Dispatcher.register(function(payload) {
       return ConfigurationRowsStore.emitChange();
 
 
-    case constants.ActionTypes.CONFIG_ROWS_CREATE_START:
+    case constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START:
       _store = _store.setIn(['creating', action.componentId, action.configurationId], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_CREATE_ERROR:
+    case constants.ActionTypes.CONFIGURATION_ROWS_CREATE_ERROR:
       _store = _store.deleteIn(['creating', action.componentId, action.configurationId]);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_CREATE_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_CREATE_SUCCESS:
       _store = _store
         .setIn(
           ['rows', action.componentId, action.configurationId, action.data.id],
@@ -131,124 +131,124 @@ Dispatcher.register(function(payload) {
         );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_DELETE_START:
+    case constants.ActionTypes.CONFIGURATION_ROWS_DELETE_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'delete'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_DELETE_ERROR:
+    case constants.ActionTypes.CONFIGURATION_ROWS_DELETE_ERROR:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'delete']);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_DELETE_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_DELETE_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'delete'])
         .deleteIn(['rows', action.componentId, action.configurationId, action.rowId]);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_ENABLE_START:
+    case constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'enable'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_ENABLE_ERROR:
+    case constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_ERROR:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'enable']);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_ENABLE_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_SUCCESS:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'enable'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'isDisabled'], false);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_DISABLE_START:
+    case constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'disable'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_DISABLE_ERROR:
+    case constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_ERROR:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'disable']);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_DISABLE_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_SUCCESS:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'disable'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'isDisabled'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_UPDATE_PARAMETERS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PARAMETERS:
       _store = _store.setIn(
         ['editing', action.componentId, action.configurationId, action.rowId, 'parameters'],
         action.value
       );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_RESET_PARAMETERS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_PARAMETERS:
       _store = _store.deleteIn(
         ['editing', action.componentId, action.configurationId, action.rowId, 'parameters']
       );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_PARAMETERS_START:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-parameters'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_PARAMETERS_ERROR:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_ERROR:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-parameters']);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_PARAMETERS_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-parameters'])
         .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'parameters'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_UPDATE_PROCESSORS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PROCESSORS:
       _store = _store.setIn(
         ['editing', action.componentId, action.configurationId, action.rowId, 'processors'],
         action.value
       );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_RESET_PROCESSORS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_PROCESSORS:
       _store = _store.deleteIn(
         ['editing', action.componentId, action.configurationId, action.rowId, 'processors']
       );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_PROCESSORS_START:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-processors'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_PROCESSORS_ERROR:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_ERROR:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-processors']);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_PROCESSORS_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-processors'])
         .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'processors'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_UPDATE_CONFIGURATION:
+    case constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_CONFIGURATION:
       _store = _store.setIn(
         ['editing', action.componentId, action.configurationId, action.rowId, 'configuration'],
         action.value
       );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_RESET_CONFIGURATION:
+    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_CONFIGURATION:
       _store = _store.deleteIn(
         ['editing', action.componentId, action.configurationId, action.rowId, 'configuration']
       );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_START:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-configuration'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_ERROR:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_ERROR:
       _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-configuration']);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-configuration'])
         .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'configuration'])

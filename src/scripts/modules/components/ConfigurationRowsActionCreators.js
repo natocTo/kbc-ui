@@ -10,7 +10,7 @@ import Immutable from 'immutable';
 module.exports = {
   create: function(componentId, configurationId, name, description, config) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_CREATE_START,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START,
       componentId: componentId,
       configurationId: configurationId
     });
@@ -24,14 +24,14 @@ module.exports = {
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         return dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_CREATE_SUCCESS,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_CREATE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           data: response
         });
       }).catch(function(e) {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_CREATE_ERROR,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_CREATE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           error: e
@@ -42,7 +42,7 @@ module.exports = {
 
   delete: function(componentId, configurationId, rowId) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_DELETE_START,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_DELETE_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -53,7 +53,7 @@ module.exports = {
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_DELETE_SUCCESS,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_DELETE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId
@@ -63,7 +63,7 @@ module.exports = {
         });
       }).catch(function(e) {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_DELETE_ERROR,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_DELETE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -75,7 +75,7 @@ module.exports = {
 
   disable: function(componentId, configurationId, rowId) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_DISABLE_START,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -86,14 +86,14 @@ module.exports = {
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_DISABLE_SUCCESS,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId
         });
       }).catch(function(e) {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_DISABLE_ERROR,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -105,7 +105,7 @@ module.exports = {
 
   enable: function(componentId, configurationId, rowId) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_ENABLE_START,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -116,14 +116,14 @@ module.exports = {
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_ENABLE_SUCCESS,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId
         });
       }).catch(function(e) {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_ENABLE_ERROR,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -135,7 +135,7 @@ module.exports = {
 
   updateParameters: function(componentId, configurationId, rowId, value) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_UPDATE_PARAMETERS,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PARAMETERS,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId,
@@ -145,7 +145,7 @@ module.exports = {
 
   resetParameters: function(componentId, configurationId, rowId) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_RESET_PARAMETERS,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_RESET_PARAMETERS,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -154,7 +154,7 @@ module.exports = {
 
   saveParameters: function(componentId, configurationId, rowId) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_SAVE_PARAMETERS_START,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -169,7 +169,7 @@ module.exports = {
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_SAVE_PARAMETERS_SUCCESS,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -177,7 +177,7 @@ module.exports = {
         });
       }).catch(function(e) {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_SAVE_PARAMETERS_ERROR,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -189,7 +189,7 @@ module.exports = {
 
   updateProcessors: function(componentId, configurationId, rowId, value) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_UPDATE_PROCESSORS,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PROCESSORS,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId,
@@ -199,7 +199,7 @@ module.exports = {
 
   resetProcessors: function(componentId, configurationId, rowId) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_RESET_PROCESSORS,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_RESET_PROCESSORS,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -208,7 +208,7 @@ module.exports = {
 
   saveProcessors: function(componentId, configurationId, rowId) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_SAVE_PROCESSORS_START,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -222,7 +222,7 @@ module.exports = {
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_SAVE_PROCESSORS_SUCCESS,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -230,7 +230,7 @@ module.exports = {
         });
       }).catch(function(e) {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_SAVE_PROCESSORS_ERROR,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -242,7 +242,7 @@ module.exports = {
 
   updateConfiguration: function(componentId, configurationId, rowId, value) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_UPDATE_CONFIGURATION,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_CONFIGURATION,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId,
@@ -252,7 +252,7 @@ module.exports = {
 
   resetConfiguration: function(componentId, configurationId, rowId) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_RESET_CONFIGURATION,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_RESET_CONFIGURATION,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -261,7 +261,7 @@ module.exports = {
 
   saveConfiguration: function(componentId, configurationId, rowId, createFn, parseFn) {
     dispatcher.handleViewAction({
-      type: constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_START,
+      type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -273,7 +273,7 @@ module.exports = {
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_SUCCESS,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -281,7 +281,7 @@ module.exports = {
         });
       }).catch(function(e) {
         dispatcher.handleViewAction({
-          type: constants.ActionTypes.CONFIG_ROWS_SAVE_CONFIGURATION_ERROR,
+          type: constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
