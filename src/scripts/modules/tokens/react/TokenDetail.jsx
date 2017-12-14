@@ -6,10 +6,10 @@ import TokensActions from '../actionCreators';
 import {Map} from 'immutable';
 import BucketsStore from '../../components/stores/StorageBucketsStore';
 import RoutesStore from '../../../stores/RoutesStore';
-import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import {Tabs, Tab} from 'react-bootstrap';
 import Events from '../../sapi-events/react/Events';
 import createTokenEventsApi from '../TokenEventsApi';
+import SaveButtons from '../../../react/common/SaveButtons';
 
 const makeDetailPath = (tokenId) => (rest) => ['TokenDetail', tokenId].concat(rest || []);
 
@@ -26,7 +26,6 @@ export default React.createClass({
 
     const dirtyToken = tokenDetailState.get('dirtyToken', token);
     const saveLabel = tokenDetailState.get('saveLabel', 'Save');
-    const cancelLabel = tokenDetailState.get('cancelLabel', 'Back To Tokens');
     const isSaving = tokenDetailState.get('isSaving', false);
     const eventsApi = createTokenEventsApi(tokenId);
 
@@ -36,7 +35,6 @@ export default React.createClass({
       tokenId: tokenId,
       dirtyToken: dirtyToken,
       saveLabel: saveLabel,
-      cancelLabel: cancelLabel,
       isSaving: isSaving,
       allBuckets: BucketsStore.getAll(),
       eventsApi: eventsApi
@@ -49,13 +47,10 @@ export default React.createClass({
     TokensActions.updateLocalState(newLs);
   },
 
-  resetDirtyToken(isUpdated) {
+  resetDirtyToken() {
     const path = makeDetailPath(this.state.tokenId);
     const {localState} = this.state;
-    const newLs = localState
-      .deleteIn(path('dirtyToken'))
-      .setIn(path('saveLabel'), isUpdated ? 'Saved' : 'Save')
-      .setIn(path('cancelLabel'), 'Back To Tokens');
+    const newLs = localState.deleteIn(path('dirtyToken'));
     TokensActions.updateLocalState(newLs);
   },
 
@@ -63,10 +58,7 @@ export default React.createClass({
     const path = makeDetailPath(this.state.tokenId);
     const {localState} = this.state;
     const newDirtyToken = this.state.dirtyToken.setIn([].concat(key), value);
-    const newLs = localState
-      .setIn(path('dirtyToken'), newDirtyToken)
-      .setIn(path('saveLabel'), 'Save')
-      .setIn(path('cancelLabel'), 'Reset');
+    const newLs = localState.setIn(path('dirtyToken'), newDirtyToken);
     TokensActions.updateLocalState(newLs);
   },
 
@@ -74,9 +66,22 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-           {this.state.token ?
+          {this.state.token ?
            <Tabs id="token-detail-tabs" animation={false}>
              <Tab title="Overview" eventKey="overview">
+               <div className="row kbc-header">
+                 <div className="kbc-buttons">
+                   <div className="col-sm-12">
+                     <SaveButtons
+                       isSaving={this.state.isSaving}
+                       disabled={!this.isValid()}
+                       isChanged={this.state.token !== this.state.dirtyToken}
+                       onSave={this.handleSaveToken}
+                       onReset={this.handleClose}
+                     />
+                   </div>
+                 </div>
+               </div>
                <div>
                  <TokenEditor
                    disabled={this.state.isSaving}
@@ -86,23 +91,7 @@ export default React.createClass({
                    updateToken={this.updateDirtyToken}
                  />
                </div>
-               <div>
-                 <div className="form form-horizontal">
-                   <div className="form-group">
-                     <div className="col-sm-offset-3 col-sm-9">
-                       <ConfirmButtons
-                         isDisabled={!this.isValid() || this.state.token === this.state.dirtyToken}
-                         isSaving={this.state.isSaving}
-                         onSave={this.handleSaveToken}
-                         onCancel={this.handleClose}
-                         placement="left"
-                         cancelLabel={this.state.cancelLabel}
-                         saveLabel={this.state.saveLabel}
-                       />
-                     </div>
-                   </div>
-                 </div>
-               </div>
+
              </Tab>
              <Tab title="Events" eventKey="events">
                <Events
@@ -128,11 +117,7 @@ export default React.createClass({
   },
 
   handleClose() {
-    if (this.state.cancelLabel === 'Reset') {
-      this.resetDirtyToken(false);
-    } else {
-      RoutesStore.getRouter().transitionTo('tokens');
-    }
+    this.resetDirtyToken();
   },
 
   isValid() {
@@ -148,7 +133,7 @@ export default React.createClass({
     this.updateLocalState('isSaving', true);
     return TokensActions.updateToken(tokenId, this.state.dirtyToken.toJS()).then(() => {
       this.updateLocalState('isSaving', false);
-      this.resetDirtyToken(true);
+      this.resetDirtyToken();
     }).catch((e) => {
       this.updateLocalState('isSaving', false);
       throw e;
