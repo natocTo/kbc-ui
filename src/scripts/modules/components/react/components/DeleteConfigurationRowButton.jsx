@@ -21,7 +21,7 @@ export default React.createClass({
       buttonDisabled: false,
       mode: MODE_BUTTON,
       tooltipPlacement: 'top',
-      label: 'Delete Row'
+      label: 'Delete'
     };
   },
 
@@ -40,27 +40,36 @@ export default React.createClass({
   },
 
   renderButton() {
+    return (
+      <Tooltip placement={this.props.tooltipPlacement} tooltip={this.props.label}>
+        <button disabled={this.props.buttonDisabled || this.props.isPending}
+                className="btn btn-link" onClick={this.onClick}>
+          {this.renderIcon()}
+        </button>
+      </Tooltip>
+    );
+  },
+
+  renderIcon() {
     if (this.props.isPending) {
       return (
-        <span className="btn btn-link">
-           <Loader className="fa-fw"/>
-         </span>
+        <Loader className="fa-fw"/>
       );
     } else {
       return (
-        <Tooltip placement={this.props.tooltipPlacement} tooltip={this.props.label}>
-          <button disabled={this.props.buttonDisabled}
-                  className="btn btn-link" onClick={this.onClick}>
-            <i className="kbc-icon-cup"/>
-          </button>
-        </Tooltip>
+        <i className="kbc-icon-cup"/>
       );
     }
   },
 
   renderLink() {
-    // TODO
-    return;
+    return (
+      <a onClick={this.onClick}>
+        {this.renderIcon()}
+        {' '}
+        {this.props.label}
+      </a>
+    );
   }
 });
 

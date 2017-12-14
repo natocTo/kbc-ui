@@ -2,18 +2,18 @@ import React from 'react';
 import Immutable from 'immutable';
 
 // stores
-import ConfigurationRowsStore from '../../../components/stores/ConfigurationRowsStore';
+import Store from '../../../components/stores/ConfigurationRowsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
-import configurationRowsActions from '../../../components/ConfigurationRowsActionCreators';
+import Actions from '../../../components/ConfigurationRowsActionCreators';
 
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import ConfigurationRowDescription from '../../../components/react/components/ConfigurationRowDescription';
 import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
-import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
+import DeleteConfigurationRowButton from '../../../components/react/components/DeleteConfigurationRowButton';
 import Parameters from '../../../components/react/components/Parameters';
 import Processors from '../../../components/react/components/Processors';
 import SaveButtons from '../../../../react/common/SaveButtons';
@@ -29,43 +29,46 @@ import Configuration from '../components/Configuration';
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
 export default React.createClass({
-  mixins: [createStoreMixin(ConfigurationRowsStore)],
+  mixins: [createStoreMixin(Store)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const rowId = RoutesStore.getCurrentRouteParam('row');
-    const row = ConfigurationRowsStore.get(COMPONENT_ID, configurationId, rowId);
+    const row = Store.get(COMPONENT_ID, configurationId, rowId);
     return {
       configurationId: configurationId,
       rowId: rowId,
       row: row,
 
-      parametersValue: ConfigurationRowsStore.getEditingParametersString(COMPONENT_ID, configurationId, rowId),
-      isParametersSaving: ConfigurationRowsStore.getPendingActions(COMPONENT_ID, configurationId, rowId).has('save-parameters'),
-      isParametersValid: ConfigurationRowsStore.isEditingParametersValid(COMPONENT_ID, configurationId, rowId),
-      isParametersChanged: ConfigurationRowsStore.isEditingParameters(COMPONENT_ID, configurationId, rowId),
+      parametersValue: Store.getEditingParametersString(COMPONENT_ID, configurationId, rowId),
+      isParametersSaving: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('save-parameters'),
+      isParametersValid: Store.isEditingParametersValid(COMPONENT_ID, configurationId, rowId),
+      isParametersChanged: Store.isEditingParameters(COMPONENT_ID, configurationId, rowId),
 
-      processorsValue: ConfigurationRowsStore.getEditingProcessorsString(COMPONENT_ID, configurationId, rowId),
-      isProcessorsSaving: ConfigurationRowsStore.getPendingActions(COMPONENT_ID, configurationId, rowId).has('save-processors'),
-      isProcessorsValid: ConfigurationRowsStore.isEditingProcessorsValid(COMPONENT_ID, configurationId, rowId),
-      isProcessorsChanged: ConfigurationRowsStore.isEditingProcessors(COMPONENT_ID, configurationId, rowId),
+      processorsValue: Store.getEditingProcessorsString(COMPONENT_ID, configurationId, rowId),
+      isProcessorsSaving: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('save-processors'),
+      isProcessorsValid: Store.isEditingProcessorsValid(COMPONENT_ID, configurationId, rowId),
+      isProcessorsChanged: Store.isEditingProcessors(COMPONENT_ID, configurationId, rowId),
 
-      showJSONEditingFields: !isParsableConfiguration(ConfigurationRowsStore.getConfiguration(COMPONENT_ID, configurationId, rowId)),
+      showJSONEditingFields: !isParsableConfiguration(Store.getConfiguration(COMPONENT_ID, configurationId, rowId)),
 
-      configuration: ConfigurationRowsStore.getEditingConfiguration(COMPONENT_ID, configurationId, rowId, parseConfiguration),
-      isSaving: ConfigurationRowsStore.getPendingActions(COMPONENT_ID, configurationId, rowId).has('save-configuration'),
-      isChanged: ConfigurationRowsStore.isEditingConfiguration(COMPONENT_ID, configurationId, rowId)
+      configuration: Store.getEditingConfiguration(COMPONENT_ID, configurationId, rowId, parseConfiguration),
+      isSaving: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('save-configuration'),
+      isChanged: Store.isEditingConfiguration(COMPONENT_ID, configurationId, rowId),
+
+      isDeletePending: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('delete')
     };
   },
 
   render() {
+    const state = this.state;
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-content-padding-fix with-bottom-border">
             <ConfigurationRowDescription
               componentId={COMPONENT_ID}
-              configurationId={this.state.configurationId}
+              configId={this.state.configurationId}
               rowId={this.state.rowId}
             />
           </div>
@@ -80,6 +83,7 @@ export default React.createClass({
               <li>Form layout</li>
               <li>Conditional form fields - disable instead of hide</li>
               <li>Move to trash -> Delete</li>
+              <li>Run configuration row</li>
             </ul>
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
@@ -89,7 +93,7 @@ export default React.createClass({
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata
             componentId={COMPONENT_ID}
-            configurationId={this.state.configurationId}
+            configId={this.state.configurationId}
           />
           <ul className="nav nav-stacked">
             <li>
@@ -128,10 +132,10 @@ export default React.createClass({
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={function() {
-            return configurationRowsActions.saveConfiguration(COMPONENT_ID, state.configurationId, state.rowId, createConfiguration, parseConfiguration);
+            return Actions.saveConfiguration(COMPONENT_ID, state.configurationId, state.rowId, createConfiguration, parseConfiguration);
           }}
           onReset={function() {
-            return configurationRowsActions.resetConfiguration(COMPONENT_ID, state.configurationId, state.rowId);
+            return Actions.resetConfiguration(COMPONENT_ID, state.configurationId, state.rowId);
           }}
             />
       </div>
@@ -155,7 +159,7 @@ export default React.createClass({
     const configuration = this.state.configuration;
     return (<Configuration
       onChange={function(diff) {
-        configurationRowsActions.updateConfiguration(COMPONENT_ID, state.configurationId, state.rowId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
+        Actions.updateConfiguration(COMPONENT_ID, state.configurationId, state.rowId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
       }}
       disabled={this.state.isSaving}
       value={configuration.toJS()}
@@ -171,13 +175,13 @@ export default React.createClass({
         isEditingValid={this.state.isParametersValid}
         isChanged={this.state.isParametersChanged}
         onEditCancel={function() {
-          return configurationRowsActions.resetParameters(COMPONENT_ID, state.configurationId, state.rowId);
+          return Actions.resetParameters(COMPONENT_ID, state.configurationId, state.rowId);
         }}
         onEditChange={function(parameters) {
-          return configurationRowsActions.updateParameters(COMPONENT_ID, state.configurationId, state.rowId, parameters);
+          return Actions.updateParameters(COMPONENT_ID, state.configurationId, state.rowId, parameters);
         }}
         onEditSubmit={function() {
-          return configurationRowsActions.saveParameters(COMPONENT_ID, state.configurationId, state.rowId);
+          return Actions.saveParameters(COMPONENT_ID, state.configurationId, state.rowId);
         }}
       />),
       (<Processors
@@ -186,13 +190,13 @@ export default React.createClass({
         isEditingValid={this.state.isProcessorsValid}
         isChanged={this.state.isProcessorsChanged}
         onEditCancel={function() {
-          return configurationRowsActions.resetProcessors(COMPONENT_ID, state.configurationId, state.rowId);
+          return Actions.resetProcessors(COMPONENT_ID, state.configurationId, state.rowId);
         }}
         onEditChange={function(parameters) {
-          return configurationRowsActions.updateProcessors(COMPONENT_ID, state.configurationId, state.rowId, parameters);
+          return Actions.updateProcessors(COMPONENT_ID, state.configurationId, state.rowId, parameters);
         }}
         onEditSubmit={function() {
-          return configurationRowsActions.saveProcessors(COMPONENT_ID, state.configurationId, state.rowId);
+          return Actions.saveProcessors(COMPONENT_ID, state.configurationId, state.rowId);
         }}
       />)
     ];
