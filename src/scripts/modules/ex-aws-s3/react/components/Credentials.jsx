@@ -18,6 +18,10 @@ export default React.createClass({
     const props = this.props;
     return (
       <div className="form-horizontal">
+        <h3>
+          AWS Credentials
+        </h3>
+
         <Input
           type="text"
           label="Access Key Id"
