@@ -21,7 +21,6 @@ export default React.createClass({
         <h3>
           AWS Credentials
         </h3>
-
         <Input
           type="text"
           label="Access Key Id"
