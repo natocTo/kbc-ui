@@ -105,7 +105,7 @@ export default React.createClass({
                   mode="link"
                   runParams={() => ({config: this.state.configurationId})}
               >
-                <span>You are about to run an extraction.</span>
+                <span>You are about to run an extraction of {this.state.row.get('name', 'Untitled')}.</span>
               </RunComponentButton>
             </li>
             <li>
