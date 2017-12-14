@@ -82,15 +82,11 @@ export default React.createClass({
       <div key={this.props.step} className="row">
         <div className="col-md-12">
           {!this.isCongratulations() &&
-          <span>
             <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
-          </span>
           }
-        <div>
           <div className="guide-media">
           {this.renderMedia()}
           </div>
-        </div>
           {this.isCongratulations() &&
           <span className="guide-congratulations">
               <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
