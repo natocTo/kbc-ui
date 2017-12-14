@@ -251,8 +251,8 @@ Dispatcher.register(function(payload) {
     case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS:
       _store = _store
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-configuration'])
-        .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'configuration'])
-        .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
+        .deleteIn(['editing', action.componentId, action.configurationId, action.rowId])
+        .setIn(['rows', action.componentId, action.configurationId, action.rowId], Immutable.fromJS(action.row));
       return ConfigurationRowsStore.emitChange();
 
 

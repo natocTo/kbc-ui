@@ -295,14 +295,14 @@ module.exports = {
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited';
     const configuration = createFn(ConfigurationRowsStore.getEditingConfiguration(componentId, configurationId, rowId, parseFn));
     return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription)
-      .then(function() {
+      .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
-          value: configuration
+          row: response
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({
