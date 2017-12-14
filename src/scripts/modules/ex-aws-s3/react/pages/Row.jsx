@@ -113,7 +113,7 @@ export default React.createClass({
                     };
                   }}
               >
-                <span>You are about to run {this.state.row.get('name', 'Untitled')}.</span>
+                {this.renderRunModalContent()}
               </RunComponentButton>
             </li>
             <li>
@@ -129,6 +129,15 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderRunModalContent() {
+    const rowName = this.state.row.get('name', 'Untitled');
+    if (this.state.row.get('isDisabled')) {
+      return 'You are about to run ' + rowName + '. Configuration ' + rowName + ' is disabled and will be forced to run ';
+    } else {
+      return 'You are about to run ' + rowName + '.';
+    }
   },
 
   renderButtons() {

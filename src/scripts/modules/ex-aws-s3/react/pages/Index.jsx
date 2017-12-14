@@ -61,8 +61,8 @@ export default React.createClass({
             <li>Documentation?</li>
             <li>Delete row button underine</li>
             <li>New Table a table mít parametrizovatelný</li>
-            <li>Tlačítko back i do řádku</li>
             <li>Search</li>
+            <li>ConfigurationRowsTable configurable columns</li>
           </ul>
         </div>),
         (<ConfigurationRowsTable

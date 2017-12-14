@@ -101,11 +101,19 @@ export default React.createClass({
           };
         }}
       >
-          You are about to run row {row.get('name') !== '' ? row.get('name') : 'Untitled'}.
-          {row.get('disabled') === true ? ' This row is disabled and will be forced to run.' : null}
+          {this.renderRunModalContent(row)}
         </RunComponentButton>
       )
     ];
+  },
+
+  renderRunModalContent(row) {
+    const rowName = row.get('name', 'Untitled');
+    if (row.get('isDisabled')) {
+      return 'You are about to run ' + rowName + '. Configuration ' + rowName + ' is disabled and will be forced to run ';
+    } else {
+      return 'You are about to run ' + rowName + '.';
+    }
   },
 
   render() {
