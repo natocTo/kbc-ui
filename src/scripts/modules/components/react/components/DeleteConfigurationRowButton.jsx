@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Tooltip from '../../../../react/common/Tooltip';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 
 const MODE_BUTTON = 'button', MODE_LINK = 'link';
 
@@ -57,7 +57,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <i className="kbc-icon-cup"/>
+        <i className="kbc-icon-cup fa fa-fw"/>
       );
     }
   },

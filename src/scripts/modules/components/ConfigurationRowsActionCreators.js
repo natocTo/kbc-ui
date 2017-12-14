@@ -6,6 +6,7 @@ import InstalledComponentsApi from './InstalledComponentsApi';
 import InstalledComponentsStore from './stores/InstalledComponentsStore';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
+import RoutesStore from '../../stores/RoutesStore';
 import configurationRowDeleted from './react/components/notifications/configurationRowDeleted';
 import Immutable from 'immutable';
 import removeEmptyEncryptAttributes from './utils/removeEmptyEncryptAttributes';
@@ -65,7 +66,7 @@ module.exports = {
       });
   },
 
-  delete: function(componentId, configurationId, rowId) {
+  delete: function(componentId, configurationId, rowId, transition) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_DELETE_START,
       componentId: componentId,
@@ -74,6 +75,14 @@ module.exports = {
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' deleted';
+    if (transition) {
+      const transitionParams = {
+        component: componentId,
+        config: configurationId
+      };
+      RoutesStore.getRouter().transitionTo(componentId, transitionParams);
+    }
+
     return InstalledComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);

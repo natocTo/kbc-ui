@@ -113,9 +113,12 @@ export default React.createClass({
               </RunComponentButton>
             </li>
             <li>
-              <DeleteConfigurationButton
-                componentId={COMPONENT_ID}
-                configurationId={this.state.configurationId}
+              <DeleteConfigurationRowButton
+                onClick={function() {
+                  return Actions.delete(COMPONENT_ID, state.configurationId, state.rowId, true);
+                }}
+                isPending={this.state.isDeletePending}
+                mode="link"
               />
             </li>
           </ul>
