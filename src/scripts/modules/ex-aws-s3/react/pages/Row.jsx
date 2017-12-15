@@ -18,6 +18,7 @@ import Parameters from '../../../components/react/components/Parameters';
 import Processors from '../../../components/react/components/Processors';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import {Link} from 'react-router';
+import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 
 // adapters
 import {isParsableConfiguration, parseConfiguration, createConfiguration} from '../../adapters/row';
@@ -56,7 +57,8 @@ export default React.createClass({
       isSaving: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('save-configuration'),
       isChanged: Store.isEditingConfiguration(COMPONENT_ID, configurationId, rowId),
 
-      isDeletePending: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('delete')
+      isDeletePending: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('delete'),
+      isEnableDisablePending: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('enable') || Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('disable')
     };
   },
 
@@ -81,7 +83,6 @@ export default React.createClass({
               <li>Unify headlines</li>
               <li>Right bar content</li>
               <li>Form layout</li>
-              <li>Enable / disable in right bar</li>
               <li>Conditional form fields - disable instead of hide</li>
             </ul>
           </div>
@@ -115,6 +116,25 @@ export default React.createClass({
               >
                 {this.renderRunModalContent()}
               </RunComponentButton>
+            </li>
+            <li>
+              <ActivateDeactivateButton
+                key="activate"
+                activateTooltip="Enable"
+                deactivateTooltip="Disable"
+                activateLabel="Enable"
+                deactivateLabel="Disable"
+                isActive={!this.state.row.get('isDisabled', false)}
+                isPending={this.state.isEnableDisablePending}
+                onChange={function() {
+                  if (state.row.get('isDisabled', false)) {
+                    return Actions.enable(COMPONENT_ID, state.configurationId, state.rowId);
+                  } else {
+                    return Actions.disable(COMPONENT_ID, state.configurationId, state.rowId);
+                  }
+                }}
+                mode="link"
+              />
             </li>
             <li>
               <DeleteConfigurationRowButton
