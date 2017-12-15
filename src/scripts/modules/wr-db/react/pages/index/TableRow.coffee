@@ -2,7 +2,7 @@ React = require 'react'
 
 {ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'
 {span, button, strong, div} = React.DOM
-{Check, Loader} = require 'kbc-react-components'
+{Check, Loader} = require '@keboola/indigo-ui'
 Link = React.createFactory(require('react-router').Link)
 
 dockerProxyApi = require('../../../templates/dockerProxyApi').default

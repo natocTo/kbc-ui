@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import {Button, Modal} from 'react-bootstrap';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import {OAUTH_V2_WRITERS} from '../../../tdeCommon';
 
 export default React.createClass({

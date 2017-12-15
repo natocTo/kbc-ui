@@ -2,7 +2,7 @@ import React from 'react';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
 import {Button} from 'react-bootstrap';
 import Tooltip from './../../../../react/common/Tooltip';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import RoutesStore from '../../../../stores/RoutesStore';
 import classnames from 'classnames';
 import RunModal from './RunComponentButtonModal';

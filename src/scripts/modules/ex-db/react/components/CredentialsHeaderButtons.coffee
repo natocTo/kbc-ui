@@ -5,7 +5,7 @@ RoutesStore = require '../../../../stores/RoutesStore'
 ExDbActionCreators = require '../../exDbActionCreators'
 {Navigation} = require 'react-router'
 
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 
 {button, span} = React.DOM
 

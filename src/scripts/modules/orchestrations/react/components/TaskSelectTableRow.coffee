@@ -8,7 +8,7 @@ InstalledComponentsStore = require '../../../components/stores/InstalledComponen
 
 ComponentIcon = common.ComponentIcon
 ComponentName = common.ComponentName
-{Tree, Check} = require 'kbc-react-components'
+{Tree, Check} = require '@keboola/indigo-ui'
 
 {span, input} = React.DOM
 {table, thead, tbody} = React.DOM

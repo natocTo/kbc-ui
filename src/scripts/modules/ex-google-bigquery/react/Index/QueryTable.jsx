@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-import {Check} from 'kbc-react-components';
+import {Check} from '@keboola/indigo-ui';
 
 import StorageTableLink from '../../../components/react/components/StorageApiTableLinkEx';
 

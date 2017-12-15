@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tooltip} from '../../react/common/common';
 import RollbackVersionModal from './RollbackVersionModal';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
 

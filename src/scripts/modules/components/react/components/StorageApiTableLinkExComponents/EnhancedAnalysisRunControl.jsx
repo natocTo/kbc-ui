@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import {Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 

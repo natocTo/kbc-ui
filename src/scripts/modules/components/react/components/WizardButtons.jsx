@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import {Button} from 'react-bootstrap';
 
 export default React.createClass({

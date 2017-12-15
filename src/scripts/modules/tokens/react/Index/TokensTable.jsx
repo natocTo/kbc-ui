@@ -4,7 +4,7 @@ import {List, Map} from 'immutable';
 
 import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import RefreshTokenModal from './RefreshTokenModal';
 import CreateTokenModal from './CreateTokenModal';
 import ExpiresInfo from '../tokenEditor/ExpiresInfo';

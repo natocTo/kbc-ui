@@ -2,7 +2,7 @@ import React from 'react';
 import {List, Map} from 'immutable';
 import _ from 'underscore';
 import {FormControls} from './../../../react/common/KbcBootstrap';
-import {Check} from 'kbc-react-components';
+import {Check} from '@keboola/indigo-ui';
 import Select from 'react-select';
 import classnames from 'classnames';
 

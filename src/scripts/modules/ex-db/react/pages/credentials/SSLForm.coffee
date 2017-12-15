@@ -4,7 +4,7 @@ _ = require 'underscore'
 Textarea = require 'react-textarea-autosize'
 {form, div, label, p, a, label} = React.DOM
 TestCredentials = require './TestCredentialsButtonGroup'
-{NewLineToBr} = require('kbc-react-components')
+{NewLineToBr} = require('@keboola/indigo-ui')
 
 _helpUrl = 'https://help.keboola.com/extractors/database/sqldb/#mysql-encryption'
 

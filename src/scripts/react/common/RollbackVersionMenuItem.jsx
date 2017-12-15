@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuItem } from 'react-bootstrap';
 import RollbackVersionModal from './RollbackVersionModal';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import {Tooltip} from '../../react/common/common';
 
 export default React.createClass({

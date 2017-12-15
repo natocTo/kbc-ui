@@ -5,8 +5,8 @@ createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 TransformationActionCreators = require '../../ActionCreators'
 InstalledComponentsActionCreators = require '../../../components/InstalledComponentsActionCreators'
 TransformationBucketsStore = require '../../stores/TransformationBucketsStore'
-RefreshIcon = React.createFactory(require('kbc-react-components').RefreshIcon)
-{Loader} = require 'kbc-react-components'
+RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
+{Loader} = require '@keboola/indigo-ui'
 
 TransformationsIndexReloaderButton = React.createClass
   displayName: 'TransformationsIndexReloaderButton'

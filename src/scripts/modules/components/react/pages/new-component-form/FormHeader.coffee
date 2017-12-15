@@ -2,7 +2,7 @@ React = require 'react'
 ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
 Button = React.createFactory(require('react-bootstrap').Button)
 
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 
 {div, h2, p, span} = React.DOM
 

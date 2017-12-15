@@ -4,7 +4,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 import RoutesStore from '../../../../stores/RoutesStore';
 
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 
 
 export default function(componentId, actionsProvisioning, storeProvisioning) {

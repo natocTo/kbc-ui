@@ -7,7 +7,7 @@ TransformationTableTypeLabel = React.createFactory(
   require '../../../../transformations/react/components/TransformationTableTypeLabel'
 )
 FileSize = React.createFactory(require('../../../../../react/common/FileSize').default)
-Check = React.createFactory(require('kbc-react-components').Check)
+Check = React.createFactory(require('@keboola/indigo-ui').Check)
 ListGroup = React.createFactory(require('react-bootstrap').ListGroup)
 ListGroupItem = React.createFactory(require('react-bootstrap').ListGroupItem)
 _ = require('underscore')

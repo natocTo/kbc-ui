@@ -1,5 +1,5 @@
 
-import {RefreshIcon} from 'kbc-react-components';
+import {RefreshIcon} from '@keboola/indigo-ui';
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import GoodDataWriterStore from '../../store';

@@ -1,7 +1,7 @@
 React = require('react')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin')
 JobsStore = require('../../stores/JobsStore')
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 ActionCreators = require('../../ActionCreators')
 RoutesStore = require('../../../../stores/RoutesStore')
 

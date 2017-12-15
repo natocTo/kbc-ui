@@ -2,7 +2,7 @@ import React from 'react';
 import ImmutableRenderMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 
 import {Link} from 'react-router';
-import {Check} from 'kbc-react-components';
+import {Check} from '@keboola/indigo-ui';
 import QueryDeleteButton from '../../components/QueryDeleteButton';
 import RunExtractionButton from '../../../../components/react/components/RunComponentButton';
 import SapiTableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';

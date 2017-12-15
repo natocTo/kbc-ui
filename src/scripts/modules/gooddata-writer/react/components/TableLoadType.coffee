@@ -11,7 +11,7 @@ ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 {Input} = require './../../../../react/common/KbcBootstrap'
 
 {strong, a, small, option, select, label, input, div, span} = React.DOM
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
 
 

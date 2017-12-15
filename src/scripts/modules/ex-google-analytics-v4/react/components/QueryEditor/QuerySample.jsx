@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 // import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import {Table} from 'react-bootstrap';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 
 export default React.createClass({

@@ -3,7 +3,7 @@ React = require 'react'
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 InstalledComponentsActionCreators = require '../../InstalledComponentsActionCreators'
 InstalledComponetsStore = require '../../stores/InstalledComponentsStore'
-RefreshIcon = React.createFactory(require('kbc-react-components').RefreshIcon)
+RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 
 module.exports = React.createClass
   displayName: 'ComponentsReloaderButton'

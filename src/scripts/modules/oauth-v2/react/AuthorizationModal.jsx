@@ -5,7 +5,7 @@ import AuthorizationForm from './AuthorizationForm';
 import DirectTokenInsertFields from './DirectTokenInsertFields';
 import CustomAuthorizationFields from './CustomAuthorizationFields';
 import * as oauthUtils from '../OauthUtils';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import { Button, ButtonToolbar, Modal, Tabs, Tab } from 'react-bootstrap';
 
 import './AuthorizationModal.less';

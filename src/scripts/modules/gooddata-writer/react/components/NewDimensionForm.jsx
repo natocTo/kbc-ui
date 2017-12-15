@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import {Button} from 'react-bootstrap';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import {DateDimensionTemplates} from '../../constants';
 
 export default React.createClass({

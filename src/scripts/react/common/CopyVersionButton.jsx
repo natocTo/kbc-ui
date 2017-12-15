@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tooltip} from '../../react/common/common';
 import CopyVersionModal from './CopyVersionModal';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import ImmutableRenderMixin from '../mixins/ImmutableRendererMixin';
 
 export default React.createClass({

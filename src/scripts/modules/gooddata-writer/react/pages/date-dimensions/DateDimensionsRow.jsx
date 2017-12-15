@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-import {Check, Loader} from 'kbc-react-components';
+import {Check, Loader} from '@keboola/indigo-ui';
 import DeleteButton from '../../../../../react/common/DeleteButton';
 import Tooltip from '../../../../../react/common/Tooltip';
 import Confirm from '../../../../../react/common/Confirm';

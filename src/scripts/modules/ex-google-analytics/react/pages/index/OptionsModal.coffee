@@ -13,7 +13,7 @@ fuzzy = require 'fuzzy'
 AutoSuggestWrapperComponent = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
 AutosuggestWrapper = React.createFactory(AutoSuggestWrapperComponent)
 
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 bucketsStore = require '../../../../components/stores/StorageBucketsStore'
 storageActionCreators = require '../../../../components/StorageActionCreators'
 analStore = require '../../../exGanalStore'

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import Tooltip from '../../../../react/common/Tooltip';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 
 export default React.createClass({

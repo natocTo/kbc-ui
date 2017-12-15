@@ -11,7 +11,7 @@ Button = React.createFactory(require('react-bootstrap').Button)
 {Panel} = require('react-bootstrap')
 {div, p, span, i, input, label} = React.DOM
 
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 Panel  = React.createFactory Panel
 ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
 
