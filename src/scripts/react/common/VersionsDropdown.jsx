@@ -10,7 +10,6 @@ import createVersionOnRollback from '../../utils/createVersionOnRollback';
 import createVersionOnCopy from '../../utils/createVersionOnCopy';
 import {getPreviousVersion} from '../../utils/VersionsDiffUtils';
 import VersionsActionCreators from '../../../scripts/modules/components/VersionsActionCreators';
-// import {Loader} from 'kbc-react-components';
 import RoutesStore from '../../stores/RoutesStore';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 

@@ -5,7 +5,6 @@ import RadioGroup from 'react-radio-group';
 import {Input} from '../../../../react/common/KbcBootstrap';
 
 import Select from 'react-select';
-// import {Loader} from 'kbc-react-components';
 import {RefreshIcon} from 'kbc-react-components';
 
 export const CRAWLER_KEY = 1;
