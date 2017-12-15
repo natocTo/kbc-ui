@@ -195,7 +195,7 @@ export default React.createClass({
     const configuration = this.state.configuration;
     return (<Configuration
       onChange={function(diff) {
-        Actions.updateConfiguration(COMPONENT_ID, state.configurationId, state.rowId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
+        Actions.updateConfiguration(COMPONENT_ID, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)));
       }}
       disabled={this.state.isSaving}
       value={configuration.toJS()}
