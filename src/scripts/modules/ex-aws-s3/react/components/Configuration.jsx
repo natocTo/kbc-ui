@@ -178,6 +178,7 @@ export default React.createClass({
               searchable={false}
               clearable={false}
               options={columnsFromOptions}
+              disabled={this.props.disabled}
               onChange={function(value) {
                 let diff = {
                   columnsFrom: value
@@ -190,25 +191,24 @@ export default React.createClass({
             />
           </div>
         </div>
-        {this.props.value.columnsFrom === 'manual' &&
-          <div className="form-group">
-            <div className="col-xs-4 control-label">Set Headers</div>
-            <div className="col-xs-8">
-              <Select
-                name="columns"
-                value={this.props.value.columns}
-                multi={true}
-                allowCreate={true}
-                delimiter=","
-                placeholder="Add a column"
-                emptyStrings={false}
-                onChange={function(value) {
-                  props.onChange({columns: value});
-                }}
-              />
-            </div>
+        <div className="form-group">
+          <div className="col-xs-4 control-label">Set Headers</div>
+          <div className="col-xs-8">
+            <Select
+              name="columns"
+              value={this.props.value.columns}
+              multi={true}
+              allowCreate={true}
+              delimiter=","
+              placeholder="Add a column"
+              emptyStrings={false}
+              onChange={function(value) {
+                props.onChange({columns: value});
+              }}
+              disabled={this.props.value.columnsFrom !== 'manual' || this.props.disabled}
+            />
           </div>
-        }
+        </div>
         <div className="form-group">
           <div className="col-xs-4 control-label">Primary Key</div>
           <div className="col-xs-8">
@@ -223,6 +223,7 @@ export default React.createClass({
               onChange={function(value) {
                 props.onChange({primaryKey: value});
               }}
+              disabled={this.props.disabled}
             />
             <div className="help-block">If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns. Primary key of an existing table cannot be changed.</div>
           </div>
