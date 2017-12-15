@@ -4,6 +4,8 @@ import Clipboard from '../../../../react/common/Clipboard';
 import {Input, FormControls} from '../../../../react/common/KbcBootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
 
+const StaticText = FormControls.Static;
+
 export default React.createClass({
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
@@ -45,7 +47,7 @@ export default React.createClass({
   },
 
   createProtectedInput(labelValue, propName) {
-    let savedValue = this.props.credentials.get(propName);
+    let savedValue = this.props.credentials.get(propName, '');
 
     return (
           <Input
@@ -78,7 +80,7 @@ export default React.createClass({
       }
     } else if (isProtected) {
       return (
-        <FormControls.StaticText
+        <StaticText
           key={propName}
           label={labelValue}
           labelClassName="col-xs-4"
@@ -86,18 +88,18 @@ export default React.createClass({
           <Tooltip tooltip="Encrypted password">
             <span className="fa fa-fw fa-lock"/>
           </Tooltip>
-        </FormControls.StaticText>
+        </StaticText>
       );
     } else {
       return (
-        <FormControls.StaticText
+        <StaticText
           key={propName}
           label={labelValue}
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8">
           {this.props.editingCredentials.get(propName)}
           {(this.props.editingCredentials.get(propName)) ? <Clipboard text={this.props.editingCredentials.get(propName).toString()}/> : null}
-        </FormControls.StaticText>
+        </StaticText>
       );
     }
   },
