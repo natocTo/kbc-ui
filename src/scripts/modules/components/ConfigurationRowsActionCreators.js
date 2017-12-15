@@ -323,5 +323,27 @@ module.exports = {
         });
         throw e;
       });
+  },
+
+  openJsonEditor: function(componentId, configurationId, rowId) {
+    this.resetConfiguration(componentId, configurationId, rowId);
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_JSON_EDITOR_OPEN,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+  },
+
+  closeJsonEditor: function(componentId, configurationId, rowId) {
+    this.resetParameters(componentId, configurationId, rowId);
+    this.resetProcessors(componentId, configurationId, rowId);
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_JSON_EDITOR_CLOSE,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
   }
+
 };

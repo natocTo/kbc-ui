@@ -10,7 +10,8 @@ var _store = Map({
   rows: Map(),
   pendingActions: Map(),
   editing: Map(),
-  creating: Map()
+  creating: Map(),
+  jsonEditor: Map()
 });
 
 let ConfigurationRowsStore = StoreUtils.createStore({
@@ -84,6 +85,10 @@ let ConfigurationRowsStore = StoreUtils.createStore({
 
   isEditingConfiguration: function(componentId, configId, rowId) {
     return _store.hasIn(['editing', componentId, configId, rowId, 'configuration']);
+  },
+
+  hasJsonEditor: function(componentId, configId, rowId) {
+    return _store.hasIn(['jsonEditor', componentId, configId, rowId]);
   }
 });
 
@@ -253,6 +258,16 @@ Dispatcher.register(function(payload) {
         .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-configuration'])
         .deleteIn(['editing', action.componentId, action.configurationId, action.rowId])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId], Immutable.fromJS(action.row));
+      return ConfigurationRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIGURATION_ROWS_JSON_EDITOR_OPEN:
+      _store = _store
+        .setIn(['jsonEditor', action.componentId, action.configurationId, action.rowId], true);
+      return ConfigurationRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIGURATION_ROWS_JSON_EDITOR_CLOSE:
+      _store = _store
+        .deleteIn(['jsonEditor', action.componentId, action.configurationId, action.rowId]);
       return ConfigurationRowsStore.emitChange();
 
 

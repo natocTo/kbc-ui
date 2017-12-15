@@ -51,7 +51,8 @@ export default React.createClass({
       isProcessorsValid: Store.isEditingProcessorsValid(COMPONENT_ID, configurationId, rowId),
       isProcessorsChanged: Store.isEditingProcessors(COMPONENT_ID, configurationId, rowId),
 
-      showJSONEditingFields: !isParsableConfiguration(Store.getConfiguration(COMPONENT_ID, configurationId, rowId)),
+      isParsableConfiguration: isParsableConfiguration(Store.getConfiguration(COMPONENT_ID, configurationId, rowId)),
+      isJsonEditorOpen: Store.hasJsonEditor(COMPONENT_ID, configurationId, rowId),
 
       configuration: Store.getEditingConfiguration(COMPONENT_ID, configurationId, rowId, parseConfiguration),
       isSaving: Store.getPendingActions(COMPONENT_ID, configurationId, rowId).has('save-configuration'),
@@ -79,15 +80,11 @@ export default React.createClass({
             <ul>
               <li>Dummy config for empty state</li>
               <li>JSON editors documentation link / help</li>
-              <li>Visual editor & switching</li>
-              <li>Unify headlines</li>
               <li>Right bar content</li>
-              <li>Form layout</li>
-              <li>Conditional form fields - disable instead of hide</li>
             </ul>
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            {this.state.showJSONEditingFields ? this.renderJSONEditors() : this.renderForm()}
+            {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration ? this.renderJSONEditors() : this.renderForm()}
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -178,11 +175,54 @@ export default React.createClass({
     );
   },
 
+  renderOpenJSONLink() {
+    const state = this.state;
+    return (
+      <span style={{marginLeft: '10px'}}>
+        <small>
+          <a onClick={function() {
+            Actions.openJsonEditor(COMPONENT_ID, state.configurationId, state.rowId);
+          }}>
+            Open JSON
+          </a>
+          {' '}
+          (discards all unsaved changes)
+        </small>
+      </span>
+    );
+  },
+
+  renderCloseJSONLink() {
+    const state = this.state;
+    if (!this.state.isParsableConfiguration) {
+      return (
+        <div>
+          <small>Can't switch back to visual form, configuration is not compatible.</small>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <small>
+          <a onClick={function() {
+            Actions.closeJsonEditor(COMPONENT_ID, state.configurationId, state.rowId);
+          }}>
+            Close JSON
+          </a>
+          {' '}
+          (discards all unsaved changes)
+        </small>
+      </div>
+    );
+  },
+
+
   renderForm() {
     return (
       <div>
         <h2 style={{lineHeight: '32px'}}>
           Configuration
+          {this.renderOpenJSONLink()}
           {this.renderButtons()}
         </h2>
         {this.renderFormFields()}
@@ -205,7 +245,9 @@ export default React.createClass({
   renderJSONEditors() {
     const state = this.state;
     return [
+      this.renderCloseJSONLink(),
       (<Parameters
+        key="parameters"
         isSaving={this.state.isParametersSaving}
         value={this.state.parametersValue}
         isEditingValid={this.state.isParametersValid}
@@ -221,6 +263,7 @@ export default React.createClass({
         }}
       />),
       (<Processors
+        key="processors"
         isSaving={this.state.isProcessorsSaving}
         value={this.state.processorsValue}
         isEditingValid={this.state.isProcessorsValid}
