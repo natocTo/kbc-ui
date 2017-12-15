@@ -5,7 +5,7 @@ Router = require 'react-router'
 
 Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 Confirm = React.createFactory(require('../../../../react/common/Confirm').default)
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 
 {button, span, i} = React.DOM
 

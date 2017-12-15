@@ -1,5 +1,5 @@
 import React from 'react';
-import {Check, Loader} from 'kbc-react-components';
+import {Check, Loader} from '@keboola/indigo-ui';
 import Tooltip from './Tooltip';
 
 const MODE_BUTTON = 'button', MODE_LINK = 'link';

@@ -9,7 +9,7 @@ Button = React.createFactory(require('react-bootstrap').Button)
 Panel = React.createFactory(require('react-bootstrap').Panel)
 ConfirmButtons = require('../../../../react/common/ConfirmButtons').default
 TaskSelectTable = require '../components/TaskSelectTable'
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 
 OrchestrationActionCreators = require '../../ActionCreators'
 

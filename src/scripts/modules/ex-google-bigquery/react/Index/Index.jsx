@@ -27,7 +27,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import {Link} from 'react-router';
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 
 // index components
 

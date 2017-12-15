@@ -8,7 +8,7 @@ ApplicationStore = require '../../../../../stores/ApplicationStore'
 WrDbActions = require '../../../actionCreators'
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
 V2Actions = require('../../../v2-actions').default
-{Loader} = require 'kbc-react-components'
+{Loader} = require '@keboola/indigo-ui'
 credentialsTemplate = require '../../../templates/credentialsFields'
 provisioningTemplates = require '../../../templates/provisioning'
 WrDbStore = require '../../../store'
@@ -18,7 +18,7 @@ MissingRedshiftModal = require('./MissingRedshiftModal').default
 CredentialsForm = require './CredentialsForm'
 {isProvisioningCredentials} = require '../../../provisioningUtils'
 {div} = React.DOM
-{Protected} = require 'kbc-react-components'
+{Protected} = require '@keboola/indigo-ui'
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Tooltip from './../../../../react/common/Tooltip';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import {Navigation} from 'react-router';
 
 export default React.createClass({

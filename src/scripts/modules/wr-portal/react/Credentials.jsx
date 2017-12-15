@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {FormControls} from './../../../react/common/KbcBootstrap';
-import {Protected} from 'kbc-react-components';
+import {Protected} from '@keboola/indigo-ui';
 import Clipboard from '../../../react/common/Clipboard';
 const StaticText = FormControls.Static;
 

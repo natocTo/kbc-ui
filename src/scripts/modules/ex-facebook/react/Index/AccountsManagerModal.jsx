@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {List, Map} from 'immutable';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import SearchRow from '../../../../react/common/SearchRow';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';

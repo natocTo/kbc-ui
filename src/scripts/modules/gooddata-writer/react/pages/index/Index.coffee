@@ -15,12 +15,12 @@ SearchRow = require('../../../../../react/common/SearchRow').default
 TablesList = require './BucketTablesList'
 TableRow = require './TableRow'
 TablesByBucketsPanel = require '../../../../components/react/components/TablesByBucketsPanel'
-{Protected} = require 'kbc-react-components'
+{Protected} = require '@keboola/indigo-ui'
 
 ActiveCountBadge = require './ActiveCountBadge'
 {Link} = require('react-router')
 {Confirm} = require '../../../../../react/common/common'
-{Loader} = require 'kbc-react-components'
+{Loader} = require '@keboola/indigo-ui'
 
 LatestJobs = require '../../../../components/react/components/SidebarJobs'
 LatestJobsStore = require '../../../../jobs/stores/LatestJobsStore'

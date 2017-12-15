@@ -1,6 +1,6 @@
 import React from 'react';
 import Confirm from './Confirm';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {

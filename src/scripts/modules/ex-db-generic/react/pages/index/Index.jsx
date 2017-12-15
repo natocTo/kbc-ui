@@ -20,7 +20,7 @@ import DeleteConfigurationButton from '../../../../components/react/components/D
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import SearchRow from '../../../../../react/common/SearchRow';
 import * as actionsProvisioning from '../../../actionsProvisioning';
 import LastUpdateInfo from '../../../../../react/common/LastUpdateInfo';

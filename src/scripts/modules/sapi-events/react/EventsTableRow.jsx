@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import _ from 'underscore';
 import classnames from 'classnames';
 import {format} from '../../../utils/date';
-import {NewLineToBr} from 'kbc-react-components';
+import {NewLineToBr} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {

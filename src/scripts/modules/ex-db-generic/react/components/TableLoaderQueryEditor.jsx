@@ -1,5 +1,5 @@
 import React from 'react';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import {Link} from 'react-router';
 
 export default React.createClass({

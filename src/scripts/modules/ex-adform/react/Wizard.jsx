@@ -3,7 +3,7 @@ import {Button, Tabs, Tab} from 'react-bootstrap';
 import {Steps} from '../constants';
 import Select from 'react-select';
 import CredentialsForm from './CredentialsForm';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
 
 export default React.createClass({

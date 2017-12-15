@@ -7,7 +7,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import RunExtractionButton from '../../../components/react/components/RunComponentButton';
 
 import Tooltip from '../../../../react/common/Tooltip';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 
 // import {Link} from 'react-router';

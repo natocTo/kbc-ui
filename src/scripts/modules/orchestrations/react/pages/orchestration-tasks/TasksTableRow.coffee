@@ -4,7 +4,7 @@ ComponentConfigurationLink = require '../../../../components/react/components/Co
 TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
 OrchestrationTaskRunButton = React.createFactory(require('../../components/OrchestrationTaskRunButton').default)
 
-{Tree, Check} = require 'kbc-react-components'
+{Tree, Check} = require '@keboola/indigo-ui'
 
 {small, div, tr, td, span, button, i} = React.DOM
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tooltip} from '../../react/common/common';
 import VersionsDiffModal from './VersionsDiffModal';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
 

@@ -14,7 +14,7 @@ import SapiTableLinkEx from '../../components/react/components/StorageApiTableLi
 import actions from '../../components/InstalledComponentsActionCreators';
 
 import { MD5 } from 'crypto-js';
-import { Loader } from 'kbc-react-components';
+import { Loader } from '@keboola/indigo-ui';
 import { fromJS, Map, List } from 'immutable';
 
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';

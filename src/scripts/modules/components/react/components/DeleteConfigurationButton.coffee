@@ -5,7 +5,7 @@ InstalledComponentsActionCreators = require '../../InstalledComponentsActionCrea
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 
 Confirm = require('../../../../react/common/Confirm').default
-{Loader} = require 'kbc-react-components'
+{Loader} = require '@keboola/indigo-ui'
 trashUtils = require '../../../trash/utils.js'
 
 module.exports = React.createClass

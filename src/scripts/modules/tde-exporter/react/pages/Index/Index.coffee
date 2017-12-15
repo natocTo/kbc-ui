@@ -17,7 +17,7 @@ TableRow = require './TableRow'
 
 {Tooltip} = require '../../../../../react/common/common'
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
-RefreshIcon = React.createFactory(require('kbc-react-components').RefreshIcon)
+RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentDescription = React.createFactory(ComponentDescription)
 ComponentMetadata = require '../../../../components/react/components/ComponentMetadata'

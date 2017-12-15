@@ -28,7 +28,7 @@ import LatestJobs from '../../components/react/components/SidebarJobs';
 import ComponentsMetadata from '../../components/react/components/ComponentMetadata';
 import { fromJS, Map, List } from 'immutable';
 import { ActivateDeactivateButton, Confirm } from '../../../react/common/common';
-import { Loader } from 'kbc-react-components';
+import { Loader } from '@keboola/indigo-ui';
 import { MD5 } from 'crypto-js';
 
 import {

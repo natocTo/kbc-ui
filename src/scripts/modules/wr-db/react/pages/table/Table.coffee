@@ -8,7 +8,7 @@ TableNameEdit = React.createFactory require './TableNameEdit'
 ColumnsEditor = React.createFactory require './ColumnsEditor'
 ColumnRow = require './ColumnRow'
 DataTypes = require '../../../templates/dataTypes'
-{Check, Loader} = require 'kbc-react-components'
+{Check, Loader} = require '@keboola/indigo-ui'
 
 storageApi = require '../../../../components/StorageApi'
 

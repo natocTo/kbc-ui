@@ -3,7 +3,7 @@ ExDbActionCreators = require '../../exDbActionCreators'
 
 Tooltip = React.createFactory(require('./../../../../react/common/Tooltip').default)
 Confirm = React.createFactory(require('../../../../react/common/Confirm').default)
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 {Navigation} = require 'react-router'
 
 {button, span, i} = React.DOM

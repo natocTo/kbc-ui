@@ -5,7 +5,7 @@ goodDataWriterStore = require '../../store'
 actionCreators = require '../../actionCreators'
 RoutesStore = require '../../../../stores/RoutesStore'
 {ColumnTypes} = require '../../constants'
-Loader = require('kbc-react-components').Loader
+Loader = require('@keboola/indigo-ui').Loader
 TableLoadType = React.createFactory(require './TableLoadType')
 
 {Button} = require 'react-bootstrap'

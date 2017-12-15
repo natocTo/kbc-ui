@@ -1,7 +1,7 @@
 React = require 'react'
 
 JobRow = require './SidebarJobsRow'
-{Loader} = require 'kbc-react-components'
+{Loader} = require '@keboola/indigo-ui'
 {Link} = require('react-router')
 PureRenderMixin = require('react-addons-pure-render-mixin')
 {div, small} = React.DOM

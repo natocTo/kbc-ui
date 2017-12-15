@@ -6,7 +6,7 @@ InstalledComponentsStore = require '../../../components/stores/InstalledComponen
 OrchestrationStore = require '../../stores/OrchestrationsStore'
 OrchestrationActionCreators = require '../../ActionCreators'
 
-RefreshIcon = React.createFactory(require('kbc-react-components').RefreshIcon)
+RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 
 module.exports = React.createClass
   displayName: 'ComponentsReloaderButton'

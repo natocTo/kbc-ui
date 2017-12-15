@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {List} from 'immutable';
 import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
 export default React.createClass({
   propTypes: {

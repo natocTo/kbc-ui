@@ -2,7 +2,7 @@ import React from 'react';
 import {Map, fromJS} from 'immutable';
 import _ from 'underscore';
 
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import SapiTableSelector from  '../../../components/react/components/SapiTableSelector';
 import {Modal, Button} from 'react-bootstrap';
 

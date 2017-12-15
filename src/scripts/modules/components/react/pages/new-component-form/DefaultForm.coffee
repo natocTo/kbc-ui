@@ -13,7 +13,7 @@ ModalBody = React.createFactory(require('react-bootstrap').ModalBody)
 ModalFooter = React.createFactory(require('react-bootstrap').ModalFooter)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 EmptyState = require('../../../react/components/ComponentEmptyState').default
 
 require './DefaultForm.less'

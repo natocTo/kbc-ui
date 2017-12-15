@@ -2,7 +2,7 @@ React = require 'react'
 classnames = require 'classnames'
 Button = React.createFactory(require('react-bootstrap').Button)
 
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 ExDbActionCreators = require '../../../exDbActionCreators'
 Link = React.createFactory(require('react-router').Link)
 

@@ -3,7 +3,7 @@ import React from 'react';
 import Textarea from 'react-textarea-autosize';
 import {Input, FormControls} from './../../../../../react/common/KbcBootstrap';
 
-import {NewLineToBr, Check} from 'kbc-react-components';
+import {NewLineToBr, Check} from '@keboola/indigo-ui';
 import {HelpBlock} from 'react-bootstrap';
 
 const helpUrl = 'https://help.keboola.com/extractors/database/sqldb/#mysql-encryption';
