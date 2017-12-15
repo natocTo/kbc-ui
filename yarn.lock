@@ -2,12 +2,14 @@
 # yarn lockfile v1
 
 
-"@keboola/indigo-ui@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-2.0.0.tgz#780f931761999179662c49d1f476794f437a786b"
+"@keboola/indigo-ui@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-2.1.2.tgz#56885b6fd7431d70bcb47ee6932cb11ffc20bfe3"
   dependencies:
     bootstrap "^3.3.7"
+    classnames "^2.1.0"
     font-awesome "^4.7.0"
+    immutable "^3.7.3"
 
 JSON2@^0.1.0:
   version "0.1.0"
