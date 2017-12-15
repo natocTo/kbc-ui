@@ -21,6 +21,8 @@ import genericTable from './react/Table/Table';
 import genericCredentials from './react/Creadentials/Credentials';
 import InstalledComponentsActions from '../components/InstalledComponentsActionCreators';
 
+import * as credentialsTemplate from './templates/credentials';
+
 const GENERIC_WR_DB_FEATURE = 'ui-wr-db-generic';
 const hasWrDbGenericFeature = () => ApplicationStore.hasCurrentAdminFeature(GENERIC_WR_DB_FEATURE);
 
@@ -93,7 +95,7 @@ export default function(componentId, driver, isProvisioning) {
       {
         name: componentId + '-credentials',
         path: 'credentials',
-        handler: createProxyRouteHandler(dbWrCredentialsDetail(componentId, driver, isProvisioning), genericCredentials(componentId)),
+        handler: createProxyRouteHandler(dbWrCredentialsDetail(componentId, driver, isProvisioning), genericCredentials(componentId, driver, credentialsTemplate, isProvisioning)),
         headerButtonsHandler: createProxyRouteHandler(dbWrCredentialsHeader(componentId, driver, isProvisioning), null),
         title: () => 'Credentials'
       }
