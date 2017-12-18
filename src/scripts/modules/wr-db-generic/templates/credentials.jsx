@@ -1,11 +1,13 @@
 /**
- * Custom fields for credentials
- *
- * ssa
- * s
- * ss
+ * label
+ * property(from API call)
+ * type('text','number'...)
+ * isProtected(true|false)
+ * defaultValue
+ * options(array)
+ * isRequired(true|false)
+ * help text
  */
-
 const defaultFields = [
   [ 'Host name', 'host', 'text', false, null, [], true, null],
   [ 'Port', 'port', 'number', false, '3306', [], true, null],
@@ -21,7 +23,7 @@ const microsoftSQLFields = [
   [ 'Port', 'port', 'number', false, '1433', [], true, null],
   [ 'Username', 'user', 'text', false, null, [], true, null],
   [ 'Password', '#password', 'password', true, null, [], true, null],
-  [ 'Database Name', 'database', 'text', false, null, [], true, null],
+  [ 'Database', 'database', 'text', false, null, [], true, null],
   [ 'Server Version', 'tdsVersion', 'select', false, '7.1', {
     '7.0': 'Microsoft SQL Server 7.0',
     '7.1': 'Microsoft SQL Server 2000',
@@ -40,9 +42,64 @@ const mysqlFields = [
   [ 'Database', 'database', 'text', false, null, [], true, null]
 ];
 
+// keboola.wr-db-impala
+const impalaFields = [
+  [ 'Host name', 'host', 'text', false, null, [], true, null],
+  [ 'Port', 'port', 'number', false, '21050', [], true, null],
+  [ 'Username', 'user', 'text', false, null, [], true, null],
+  [ 'Password', '#password', 'password', true, null, [], true, null],
+  [ 'Database', 'database', 'text', false, null, [], true, null],
+  [ 'Authentication mechanism', 'auth_mech', 'number', false, '3', [], true, null]
+];
+
+// keboola.wr-redshift-v2
+const redshiftFields = [
+  [ 'Host name', 'host', 'text', false, null, [], true, null],
+  [ 'Port', 'port', 'number', false, '5439', [], true, null],
+  [ 'Username', 'user', 'text', false, null, [], true, null],
+  [ 'Password', '#password', 'password', true, null, [], true, null],
+  [ 'Database', 'database', 'text', false, null, [], true, null],
+  [ 'Schema', 'schema', 'text', false, null, [], true, null]
+];
+
+// keboola.wr-db-oracle
+const oracleFields = [
+  [ 'Host name', 'host', 'text', false, null, [], true, null],
+  [ 'Port', 'port', 'number', false, '1521', [], true, null],
+  [ 'Username', 'user', 'text', false, null, [], true, null],
+  [ 'Password', '#password', 'password', true, null, [], true, null],
+  [ 'Service Name/SID', 'database', 'text', false, null, [], true, null]
+];
+
+// keboola.wr-db-snowflake
+const snowflakeFields = [
+  [ 'Host name', 'host', 'text', false, null, [], true, null],
+  [ 'Port', 'port', 'number', false, '443', [], true, null],
+  [ 'Username', 'user', 'text', false, null, [], true, null],
+  [ 'Password', '#password', 'password', true, null, [], true, null],
+  [ 'Database', 'database', 'text', false, null, [], true, null],
+  [ 'Schema', 'schema', 'text', false, null, [], true, null],
+  [ 'Warehouse', 'warehouse', 'text', false, null, [], false, null]
+];
+
+// keboola.wr-db-pgsql
+const pgsqlFields = [
+  [ 'Host name', 'host', 'text', false, null, [], true, null],
+  [ 'Port', 'port', 'number', false, '5432', [], true, null],
+  [ 'Username', 'user', 'text', false, null, [], true, null],
+  [ 'Password', '#password', 'password', true, null, [], true, null],
+  [ 'Database', 'database', 'text', false, null, [], true, null],
+  [ 'Schema', 'schema', 'text', false, 'public', [], true, null]
+];
+
 const COMPONENTS_FIELDS = {
   'keboola.wr-db-mssql-v2': microsoftSQLFields,
-  'keboola.wr-db-mysql': mysqlFields
+  'keboola.wr-db-mysql': mysqlFields,
+  'keboola.wr-db-impala': impalaFields,
+  'keboola.wr-redshift-v2': redshiftFields,
+  'keboola.wr-db-oracle': oracleFields,
+  'keboola.wr-db-snowflake': snowflakeFields,
+  'keboola.wr-db-pgsql': pgsqlFields
 };
 
 
