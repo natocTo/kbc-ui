@@ -42,6 +42,7 @@ App = React.createClass
     homeUrl: ApplicationStore.getUrlTemplates().get 'home'
     projectFeatures: ApplicationStore.getCurrentProjectFeatures()
     projectBaseUrl: ApplicationStore.getProjectBaseUrl()
+    scriptsBasePath: ApplicationStore.getScriptsBasePath()
   render: ->
     div null,
       if @state.projectHasGuideModeOn == true
@@ -87,5 +88,6 @@ App = React.createClass
             if @state.projectHasGuideModeOn == true
               Wizard
                 projectBaseUrl: @state.projectBaseUrl
+                scriptsBasePath: @state.scriptsBasePath
 
 module.exports = App

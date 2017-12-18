@@ -8,7 +8,8 @@ export default React.createClass({
   displayName: 'Wizard',
 
   propTypes: {
-    projectBaseUrl: React.PropTypes.string.isRequired
+    projectBaseUrl: React.PropTypes.string.isRequired,
+    scriptsBasePath: React.PropTypes.string.isRequired
   },
 
   mixins: [createStoreMixin(WizardStore)],
@@ -56,6 +57,7 @@ export default React.createClass({
           position="aside"
           lesson={this.state.currentLesson}
           backdrop={true}
+          scriptsBasePath={this.props.scriptsBasePath}
         />
       );
     }

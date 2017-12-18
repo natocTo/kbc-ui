@@ -25,7 +25,8 @@ export default React.createClass({
     step: React.PropTypes.number.isRequired,
     achievedStep: React.PropTypes.number.isRequired,
     lesson: React.PropTypes.object.isRequired,
-    projectBaseUrl: React.PropTypes.string.isRequired
+    projectBaseUrl: React.PropTypes.string.isRequired,
+    scriptsBasePath: React.PropTypes.string.isRequired
   },
 
   getProjectPageUrlHref(path) {
@@ -180,7 +181,12 @@ export default React.createClass({
     }
   },
   getImageLink() {
-    return <GuideModeImage imgageName={this.getStepMedia()}/>;
+    return (
+      <GuideModeImage
+        scriptsBasePath={this.props.scriptsBasePath}
+        imgageName={this.getStepMedia()}
+      />
+    );
   },
   getVideoEmbed() {
     return (
