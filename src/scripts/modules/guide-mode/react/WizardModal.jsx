@@ -184,7 +184,7 @@ export default React.createClass({
     return (
       <GuideModeImage
         scriptsBasePath={this.props.scriptsBasePath}
-        imgageName={this.getStepMedia()}
+        imageName={this.getStepMedia()}
       />
     );
   },

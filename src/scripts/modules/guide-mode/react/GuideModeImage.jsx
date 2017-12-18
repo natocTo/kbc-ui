@@ -4,10 +4,10 @@ import {Image} from 'react-bootstrap';
 export default React.createClass({
   propTypes: {
     scriptsBasePath: React.PropTypes.string.isRequired,
-    imgageName: React.PropTypes.string
+    imageName: React.PropTypes.string
   },
   getImagePath() {
-    return this.props.scriptsBasePath + require('../media/' + this.props.imgageName);
+    return this.props.scriptsBasePath + require('../media/' + this.props.imageName);
   },
   render() {
     return (
