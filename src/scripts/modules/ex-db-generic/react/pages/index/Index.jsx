@@ -139,7 +139,11 @@ export default function(componentId) {
             </div>
           );
         }
-      } else if (actionsProvisioning.componentSupportsSimpleSetup(componentId) && this.state.hasCredentials) {
+      } else if (
+        actionsProvisioning.componentSupportsSimpleSetup(componentId)
+        && this.state.hasCredentials
+        && !this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)
+      ) {
         return (
           <div className="row component-empty-state text-center">
             <div className="col-md-12">
