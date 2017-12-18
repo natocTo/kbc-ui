@@ -40,25 +40,23 @@ export default React.createClass({
       );
     } else if (sourceTablesError) {
       return (
-        <div className="kbc-inner-content-padding-fix">
-          <div className="alert alert-danger">
-            <h4>An Error occurred fetching table listing</h4>
-            <p>{sourceTablesError}</p>
-            <p>
-              {sourceTablesLoading ? (
-                <span>
-                  <Loader /> Retrying fetch of table list from source database ...
-                </span>
-              ) : (
-                <button
-                  className="btn btn-danger"
-                  onClick={() => loadSourceTables(componentId, configId)}
-                >
-                  Try again
-                </button>
-              )}
-            </p>
-          </div>
+        <div className="alert alert-danger">
+          <h4>An Error occurred fetching table listing</h4>
+          <p>{sourceTablesError}</p>
+          <p>
+            {sourceTablesLoading ? (
+              <span>
+                <Loader /> Retrying fetch of table list from source database ...
+              </span>
+            ) : (
+              <button
+                className="btn btn-danger"
+                onClick={() => loadSourceTables(componentId, configId)}
+              >
+                Try again
+              </button>
+            )}
+          </p>
         </div>
       );
     }
