@@ -6,7 +6,6 @@ import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
 import {Loader} from '@keboola/indigo-ui';
 import RefreshTokenModal from './RefreshTokenModal';
-import CreateTokenModal from './CreateTokenModal';
 import ExpiresInfo from '../tokenEditor/ExpiresInfo';
 import {Link} from 'react-router';
 import CreatedDate from './CreatedDate';
@@ -22,16 +21,13 @@ export default React.createClass({
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     onRefreshFn: PropTypes.func.isRequired,
-    isRefreshingFn: PropTypes.func.isRequired,
-    saveTokenFn: PropTypes.func.isRequired,
-    isSavingToken: PropTypes.bool.isRequired
+    isRefreshingFn: PropTypes.func.isRequired
   },
 
   render() {
     return (
       <span>
         {this.renderTokenRefreshModal()}
-        {this.renderCreateTokenModal()}
         <div className="table table-striped table-hover">
           <div className="thead">
             <div className="tr">
@@ -165,23 +161,6 @@ export default React.createClass({
     );
   },
 
-  renderCreateTokenModal() {
-    const createData = this.props.localState.get('createToken', Map());
-    const show = createData.get('show', false);
-    const onCloseModal = () => {
-      this.updateLocalState(['createToken'], Map());
-    };
-
-    return (
-      <CreateTokenModal
-        allBuckets={this.props.allBuckets}
-        show={show}
-        onHideFn={onCloseModal}
-        onSaveFn={(newToken) => this.props.saveTokenFn(newToken)}
-        isSaving={this.props.isSavingToken}
-      />
-    );
-  },
 
   updateLocalState(path, newValue) {
     const newls = this.props.localState.setIn([].concat(path), newValue);
