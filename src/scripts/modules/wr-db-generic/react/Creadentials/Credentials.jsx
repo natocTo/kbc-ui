@@ -1,9 +1,8 @@
 import React from 'react';
 
-import RoutesStore from '../../../../stores/RoutesStore';
-
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
+import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 
 import storeProvisioning from '../../storeProvisioning';
@@ -12,7 +11,7 @@ import actionsProvisioning from '../../actionsProvisioning';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import CredentialsForm from './CredentialsForm';
 
-export default function(componentId, driver, credentialsTemplate, isProvisioning) {
+export default function(componentId, driver, credentialsTemplate, isProvisioning, hasSshTunnel) {
   const WrDbActions = actionsProvisioning(componentId);
 
   return React.createClass({
@@ -63,6 +62,7 @@ export default function(componentId, driver, credentialsTemplate, isProvisioning
               componentId={componentId}
               configId={this.state.configId}
               credentialsTemplate={credentialsTemplate}
+              hasSshTunnel={hasSshTunnel}
               credentials={this.state.credentials}
               editingCredentials={(this.state.isEditing) ? this.state.editingCredentials : this.state.credentials}
               enabled={!this.state.isSaving}

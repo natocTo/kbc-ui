@@ -22,6 +22,7 @@ import genericCredentials from './react/Creadentials/Credentials';
 import InstalledComponentsActions from '../components/InstalledComponentsActionCreators';
 
 import * as credentialsTemplate from './templates/credentials';
+import hasSshTunnel from './templates/hasSshTunnel';
 
 const GENERIC_WR_DB_FEATURE = 'ui-wr-db-generic';
 const hasWrDbGenericFeature = () => ApplicationStore.hasCurrentAdminFeature(GENERIC_WR_DB_FEATURE);
@@ -95,7 +96,7 @@ export default function(componentId, driver, isProvisioning) {
       {
         name: componentId + '-credentials',
         path: 'credentials',
-        handler: createProxyRouteHandler(dbWrCredentialsDetail(componentId, driver, isProvisioning), genericCredentials(componentId, driver, credentialsTemplate, isProvisioning)),
+        handler: createProxyRouteHandler(dbWrCredentialsDetail(componentId, driver, isProvisioning), genericCredentials(componentId, driver, credentialsTemplate, isProvisioning, hasSshTunnel(componentId))),
         headerButtonsHandler: createProxyRouteHandler(dbWrCredentialsHeader(componentId, driver, isProvisioning), null),
         title: () => 'Credentials'
       }

@@ -1,8 +1,12 @@
 import React from 'react';
+
+import {Map} from 'immutable';
+
 import Clipboard from '../../../../react/common/Clipboard';
 
 import {Input, FormControls} from '../../../../react/common/KbcBootstrap';
 import Tooltip from '../../../../react/common/Tooltip';
+import SshTunnelRow from '../../../../react/common/SshTunnelRow';
 
 const StaticText = FormControls.Static;
 
@@ -11,6 +15,7 @@ export default React.createClass({
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
     credentialsTemplate: React.PropTypes.object.isRequired,
+    hasSshTunnel: React.PropTypes.bool.isRequired,
     credentials: React.PropTypes.object.isRequired,
     editingCredentials: React.PropTypes.object.isRequired,
     enabled: React.PropTypes.bool.isRequired,
@@ -27,6 +32,10 @@ export default React.createClass({
       value = parseInt(event.target.value, 10);
     }
     return this.props.onChange(this.props.credentials.set(propName, value));
+  },
+
+  sshRowOnChange(sshObject) {
+    return this.props.onChange(this.props.credentials.set('ssh', sshObject));
   },
 
   renderProtectedLabel(labelValue, alreadyEncrypted) {
@@ -110,11 +119,24 @@ export default React.createClass({
     }, this);
   },
 
+  renderSshFields() {
+    if (this.props.hasSshTunnel) {
+      return (
+        <SshTunnelRow
+          isEditing={this.props.enabled}
+          data={this.props.editingCredentials.get('ssh', Map())}
+          onChange={this.sshRowOnChange}
+        />
+      );
+    }
+  },
+
   render() {
     return (
       <form className="form-horizontal">
         <div className="kbc-inner-content-padding-fix">
           {this.renderFields()}
+          {this.renderSshFields()}
         </div>
       </form>
     );
