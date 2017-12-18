@@ -97,6 +97,18 @@ export default React.createClass({
     return `${accessCnt} bucket${pluralSuffix}`;
   },
 
+  renderMasterLabel(token) {
+    const isMaster = token.get('isMasterToken', false);
+    if (isMaster) {
+      return (
+        <div className="label kbc-label-rounded-small label-success">
+          Master
+        </div>
+      );
+    } else {
+      return null;
+    }
+  },
   renderYoursLabel(token) {
     const adminId = token.getIn(['admin', 'id']);
     if (adminId && adminId === this.props.currentAdmin.get('id')) {
@@ -175,6 +187,7 @@ export default React.createClass({
           {token.get('description')}
           {' '}
           {this.renderYoursLabel(token)}
+          {this.renderMasterLabel(token)}
         </div>
         <div className="td">
           <CreatedDate token={token} />
