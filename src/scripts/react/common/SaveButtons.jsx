@@ -30,7 +30,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-buttons kbc-save-buttons">
+      <div className="kbc-buttonss kbc-save-buttonss">
         {this.resetButton()}
         {this.saveButton()}
       </div>

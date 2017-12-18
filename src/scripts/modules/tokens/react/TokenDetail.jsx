@@ -70,16 +70,20 @@ export default React.createClass({
           {this.state.token ?
            <Tabs id="token-detail-tabs" animation={false}>
              <Tab title="Overview" eventKey="overview">
-               <div className="row kbc-header">
-                 <div className="kbc-buttons">
-                   <div className="col-sm-12">
-                     <SaveButtons
-                       isSaving={this.state.isSaving}
-                       disabled={!this.isValid()}
-                       isChanged={this.state.token !== this.state.dirtyToken}
-                       onSave={this.handleSaveToken}
-                       onReset={this.handleClose}
-                     />
+               <div>
+                 <div className="form form-horizontal">
+                   <div className="form-group">
+                     <div className="col-sm-12">
+                       <div className="pull-right">
+                         <SaveButtons
+                           isSaving={this.state.isSaving}
+                           disabled={!this.isValid()}
+                           isChanged={this.state.token !== this.state.dirtyToken}
+                           onSave={this.handleSaveToken}
+                           onReset={this.handleClose}
+                         />
+                       </div>
+                     </div>
                    </div>
                  </div>
                </div>
@@ -115,8 +119,6 @@ export default React.createClass({
   },
 
   renderTokenCreated() {
-    if (!this.state.createdToken) return null;
-
     return (
       <div>
         <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. Make sure to copy it. You won't be able to see it again. </p>
@@ -136,25 +138,27 @@ export default React.createClass({
     }
     return (
       <div className="row">
-        {this.renderTokenCreated()}
-        {!this.state.createdToken &&
-         <div className="kbc-header">
-           <div className="kbc-buttons">
-             <ConfirmButtons
-               isSaving={this.state.isSaving}
-               isDisabled={!this.isValid()}
-               onSave={this.handleSaveToken}
-               onCancel={this.handleClose}
-               saveLabel="Create"
-               showCancel={false}
-             />
-           </div>
-         </div>
-        }
-        <div>
-          <div>
-            {this.renderTokenEditor(false)}
+        <div className="form form-horizontal">
+          <div className="form-group">
+            <div className="col-sm-12">
+              {this.state.createdToken ?
+               this.renderTokenCreated() :
+               <div className="pull-right">
+                 <ConfirmButtons
+                   isSaving={this.state.isSaving}
+                   isDisabled={!this.isValid()}
+                   onSave={this.handleSaveToken}
+                   onCancel={this.handleClose}
+                   saveLabel="Create"
+                   showCancel={false}
+                 />
+               </div>
+              }
+            </div>
           </div>
+        </div>
+        <div>
+          {this.renderTokenEditor(false)}
         </div>
       </div>
     );
