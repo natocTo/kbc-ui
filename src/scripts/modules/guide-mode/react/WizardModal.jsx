@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
-import { hideWizardModalFn } from '../stores/ActionCreators.js';
+import { hideWizardModalFn, showWizardModalFn } from '../stores/ActionCreators.js';
 import GuideModeImage from './GuideModeImage';
 import Remarkable from 'react-remarkable';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -296,6 +296,16 @@ export default React.createClass({
             }
           })}
       </ListGroup>
+    );
+  },
+  renderNextLessonLink() {
+    return (
+        <a href="#" onClick={(e) => {
+          e.preventDefault();
+          showWizardModalFn(this.getLessonId() + 1);
+        }}>
+          Lesson {this.getLessonId() + 1}
+        </a>
     );
   },
   closeLessonModal() {
