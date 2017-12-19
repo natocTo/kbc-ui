@@ -4,6 +4,8 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
 import {Link} from 'react-router';
+import fuzzy from 'fuzzy';
+import SearchRow from '../../../../react/common/SearchRow';
 
 export default React.createClass({
   displayName: 'ConfigurationRowsTable',
@@ -16,6 +18,7 @@ export default React.createClass({
     componentId: React.PropTypes.string.isRequired,
     headers: React.PropTypes.array,
     columns: React.PropTypes.array,
+    filter: React.PropTypes.func,
     rowDelete: React.PropTypes.func.isRequired,
     rowEnableDisable: React.PropTypes.func.isRequired,
     rowDeletePending: React.PropTypes.func.isRequired,
@@ -37,7 +40,16 @@ export default React.createClass({
             </small>
           );
         }
-      ]
+      ],
+      filter: function(row, query) {
+        return fuzzy.test(query, row.get('name')) || fuzzy.test(query, row.get('description'));
+      }
+    };
+  },
+
+  getInitialState() {
+    return {
+      query: ''
     };
   },
 
@@ -51,10 +63,11 @@ export default React.createClass({
     });
   },
 
-  renderRows() {
-    return this.props.rows.map(function(row, rowIndex) {
+  renderTableRows(rows) {
+    return rows.map(function(row, rowIndex) {
       return (
-        <Link to={this.props.rowLinkTo} params={{config: this.props.configId, row: row.get('id')}} className="tr" key={rowIndex}>
+        <Link to={this.props.rowLinkTo} params={{config: this.props.configId, row: row.get('id')}} className="tr"
+              key={rowIndex}>
           {this.props.columns.map(function(columnFunction, columnIndex) {
             return (
               <div className="td kbc-break-all" key={columnIndex}>
@@ -116,17 +129,50 @@ export default React.createClass({
     }
   },
 
-  render() {
-    return (
-      <div className="table table-striped table-hover">
-        <div className="thead" key="table-header">
-          <div className="tr">
-            {this.renderHeaders()}
+  onChangeSearch(query) {
+    this.setState({query: query});
+  },
+
+  onSubmitSearch(query) {
+    this.setState({query: query});
+  },
+
+  renderTable(rows) {
+    if (rows.size === 0) {
+      return (
+        <div>No result found.</div>
+      );
+    } else {
+      return (
+        <div className="table table-striped table-hover">
+          <div className="thead" key="table-header">
+            <div className="tr">
+              {this.renderHeaders()}
+            </div>
+          </div>
+          <div className="tbody">
+            {this.renderTableRows(rows)}
           </div>
         </div>
-        <div className="tbody">
-          {this.renderRows()}
+      );
+    }
+  },
+
+  render() {
+    const filteredRows = this.props.rows.filter(function(row) {
+      return this.props.filter(row, this.state.query);
+    }, this);
+
+    return (
+      <div>
+        <div>
+          <SearchRow
+            query={this.state.query}
+            onChange={this.onChangeSearch}
+            onSubmit={this.onSubmitSearch}
+          />
         </div>
+        {this.renderTable(filteredRows)}
       </div>
     );
   }
