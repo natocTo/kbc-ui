@@ -40,6 +40,7 @@ export const showWizardModalFn = (lessonNumber) => {
   return Dispatcher.handleViewAction({
     type: ActionTypes.GUIDE_MODE_UPDATE_MODAL_STATE,
     showLessonModal: true,
+    step: 0,
     lessonNumber: lessonNumber
   });
 };

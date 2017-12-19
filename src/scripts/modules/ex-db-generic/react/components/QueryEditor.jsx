@@ -74,9 +74,9 @@ export default React.createClass({
 
   primaryKeyPlaceholder() {
     if (this.isExistingTable()) {
-      return 'Cannot add a column';
+      return 'Cannot select a column';
     }
-    return 'Add a column';
+    return 'Select columns';
   },
 
   handlePrimaryKeyChange(newValue) {
@@ -270,7 +270,7 @@ export default React.createClass({
                 emptyStrings={false}
                 onChange={this.handlePrimaryKeyChange}
                 options={this.primaryKeyOptions()}
-                promptTextCreator={(label) => (label) ? 'Add column "' + label + '" as primary key' : ''}
+                promptTextCreator={(label) => (label) ? 'Select columns "' + label + '" as primary key' : ''}
               />
               {this.isExistingTable() && this.primaryKeyHelp()}
             </div>

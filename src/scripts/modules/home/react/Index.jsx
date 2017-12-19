@@ -15,7 +15,7 @@ import DeprecatedStorage from './DeprecatedStorage';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
 import WizardStore from '../../guide-mode/stores/WizardStore';
-import Overview from '../../guide-mode/react/Overview';
+import Desk from '../../guide-mode/react/Desk';
 import lessons from '../../guide-mode/WizardLessons';
 import { List } from 'immutable';
 
@@ -96,7 +96,7 @@ export default React.createClass({
         {this.countOverviewComponent() > 0  &&
         <div className="kbc-overview-component-container">
           {this.state.projectHasGuideModeOn && (
-            <Overview
+            <Desk
               linkToSettings={ApplicationStore.getProjectPageUrl('settings')}
               lessons={lessons}
               achievedLessonId={this.state.guideModeAchievedLessonId}

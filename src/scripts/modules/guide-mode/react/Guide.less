@@ -2,8 +2,6 @@
 /*  GUIDE MODE  */
 /* ========== */
 
-
-
 .guide {
   @GuideColor1: #0099CE;
   @GuideColor2: #25B8EB;
@@ -81,7 +79,7 @@
 
     &-container {
       min-height: 0 !important;
-      margin-top: @statusBarHeight!important;
+      margin-top: @statusBarHeight !important;
 
       + .kbc-main-content{
         margin-top: 17px;
@@ -187,71 +185,92 @@
     -webkit-font-smoothing: subpixel-antialiased;
     -webkit-transform: translateZ(0) scale(1.0, 1.0);
     &.modal {
+      h1 {
+        font-size: 36px;
+        font-weight: 500;
+        margin-top: 0px;
+        @media all and (max-height: 720px) {
+          margin-bottom: 8px;
+        }
+      }
+      h2 {
+        font-size: 36px;
+        font-weight: 300;
+        margin-bottom: 0;
+        @media all and (max-height: 720px) {
+          margin-top: 0px;
+        }
+      }
       h3 {
         font-size: 16px;
         font-family: "Gotham Rounded A", "Gotham Rounded B";
         color: #7C8498;
       }
+      p {
+        margin-bottom: 20px;
+        color: #7C8498;
+        line-height: 1.5;
+      }
+      strong {
+        font-weight: bold;
+      }
+      ul {
+        padding-left: 16px;
+      }
+      li {
+        color: #7C8498;
+        line-height: 1.5;
+      }
+      .btn.btn-primary {
+        background-color: @GuideColor1;
+      }
+      .modal {
+        &-dialog {
+          position: fixed;
+          right: 50%;
+          top: 45.5%;
+          transform: translate(50%, -50%);
+          width: @wizardWidth;
+          transition: all 200ms ease;
+          z-index: 1100;
+        }
 
-      .modal-content {
-        border: 0;
-      }
-      .modal-header {
-        padding: 40px 37px 20px;
-        color: @GuideColor2;
-        border-bottom: 0;
-        font-family: "Gotham Rounded A", "Gotham Rounded B";
-        h1 {
-          font-size: 36px;
-          font-weight: 500;
-          margin-top: 0px;
+        &-content {
+          border: 0;
         }
-        h2 {
-          font-size: 36px;
-          font-weight: 300;
-          margin-bottom: 0;
-        }
-      }
-      .modal-title {
-        line-height: 1.4;
-      }
-      .modal-body {
-        padding: 0 40px 20px;
-        overflow: hidden; // animation fix
-        p {
-          margin-bottom: 20px;
-          color: #7C8498;
-          line-height: 1.5;
-        }
-        strong {
-          font-weight: bold;
-        }
-        li {
-          color: #7C8498;
-          line-height: 1.5;
-        }
-        .btn {
-          pointer-events: none;
-          padding: 1px 5px;
-          font-size: 12px;
-          &-link {
-            color: #15c3ff;
-            padding-bottom: 0;
-            position: relative;
-            top: -1px;
+
+        &-header {
+          padding: 40px 37px 20px;
+          color: @GuideColor2;
+          border-bottom: 0;
+          font-family: "Gotham Rounded A", "Gotham Rounded B";
+          @media all and (max-height: 720px) {
+            padding: 20px 37px 20px;
           }
         }
-      }
-      .modal-dialog {
-        position: fixed;
-        right: 50%;
-        top: 46%;
-        transform: translate(50%, -50%);
-        width: @wizardWidth;
-        transition: all 200ms ease;
-        z-index: 1100;
-      }
 
+        &-title {
+          line-height: 1.4;
+        }
+
+        &-body {
+          padding: 0 40px 20px;
+          overflow: hidden; // animation fix
+
+          .btn {
+            pointer-events: none;
+            padding: 1px 5px;
+            font-size: 12px;
+            &-link {
+              color: #15c3ff;
+              padding-bottom: 0;
+              position: relative;
+              top: -1px;
+            }
+          }
+        }
+
+      }
       &.guide-wizard-aside {
         position: static;
         -webkit-transform: none;
@@ -269,21 +288,38 @@
           padding: 15px;
           height: @wizardHeight;
           overflow-y: auto;
+          @media all and (max-height: 720px) {
+            height: @wizardHeight - 60px;
+          }
           p {
             padding: @verticalPadding 0;
             margin-bottom: 0;
           }
         }
         .modal-dialog {
-          top: 385px;
+          top: 384px;
           right: @wizardWidthAside/2 - 2;
           width: @wizardWidthAside;
-          .col-md-6 {
-            width: 100%;
+          @media all and (max-height: 720px) {
+            top: 354px;
           }
         }
         .guide-wizard-animated {
           &-next {
+            &-enter {
+              position: absolute;
+              transform: translate3D(320px, 0, 0);
+              &-active {
+                animation: list-prev-enter 200ms ease-in;
+              }
+            }
+            &-leave {
+              &-active {
+                animation: list-prev-leave 200ms ease-in;
+              }
+            }
+          }
+          &-prev {
             &-enter {
               position: absolute;
               transform: translate3D(-320px, 0, 0);
@@ -298,20 +334,6 @@
               }
             }
           }
-          &-prev {
-            &-enter {
-              position: absolute;
-              transform: translate3D(320px, 0, 0);
-              &-active {
-                animation: list-prev-enter 200ms ease-in;
-              }
-            }
-            &-leave {
-              &-active {
-                animation: list-prev-leave 200ms ease-in;
-              }
-            }
-          }
         }
       }
     }
@@ -319,32 +341,32 @@
 
   &-navigation {
     padding: @verticalPadding 0;
+    padding-left: 8px!important;
     border: 0;
     &-step {
       padding: 0px;
-      padding-left: 8px;
       line-height: 1.5!important;
       border: 0;
-      font-size: 18px;
-      margin-left: 24px;
+      font-size: 16px;
+      margin-left: 10px;
       font-family: "Gotham Rounded A", "Gotham Rounded B";
 
       &-passed {
-
         span {
           color: #ddd;
         }
       }
       &-active{
         &:before {
-          left: -16px;
+          left: -20px;
           position: absolute;
           content: '\0025B6';
           color: @GuideColor2
         }
         span {
-        color: @GuideColor2;
-      }}
+          color: @GuideColor2;
+        }
+      }
 
     }
   }
@@ -353,6 +375,9 @@
     padding: @verticalPadding 0;
     max-width: 820px;
     margin: 0 auto;
+    @media all and (max-height: 720px) {
+      max-height: 350px;
+    }
   }
 
   &-lesson-link {
@@ -396,6 +421,105 @@
     text-align: center;
     font-family: "Gotham Rounded A", "Gotham Rounded B";
     font-weight: 500;
+  }
+
+  &-timeline {
+    &-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      width: 500px;
+      height: 100px;
+    }
+
+    &-cell {
+      position: relative;
+      width: 100%;
+      margin: 20px;
+      animation: timeline-enter 1s linear forwards;
+    }
+
+    &-circle {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    &-circle-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: absolute;
+      top: 0%;
+      left: 0%;
+    }
+
+    &-circle-passive {
+      background: #7c8498;
+      color: #444752;
+      animation: timeline-enter-circle 1s linear 1s forwards;
+      opacity: 0;
+    }
+
+    &-circle-active {
+      background: #25b8eb;
+      animation: timeline-enter-circle 1s linear 2s forwards;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    &-circle img {
+      width: 80%;
+    }
+
+    &-circle-active:before,
+    &-circle-active:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+
+      content: '';
+      border-radius: 50%;
+
+      height: 100%;
+      width: 100%;
+
+      background: #25b8eb;
+    }
+
+    &-circle-active:before {
+      animation: pulse 3s infinite ease 3s forwards
+    }
+
+    &-circle-active:after {
+      animation: pulse 6s infinite ease 4s forwards;
+    }
+
+    &-circle0 &-circle-active {
+      animation: timeline-enter-circle 1s linear 2s forwards;
+    }
+
+    &-circle1 &-circle-active {
+      animation: timeline-enter-circle 1s linear 3s forwards;
+    }
+
+    &-circle2 &-circle-active {
+      animation: timeline-enter-circle 1s linear 4s forwards;
+    }
+
+    &-circle3 &-circle-active {
+      animation: timeline-enter-circle 1s linear 5s forwards;
+    }
+
+    &-circle4 &-circle-active {
+      animation: timeline-enter-circle 1s linear 6s forwards;
+    }
+
   }
 }
 
@@ -450,3 +574,41 @@
     transform: translate3D(-320px, 0, 0);
   }
 }
+
+@keyframes timeline-enter {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100px;
+  }
+}
+
+@keyframes timeline-enter-circle {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0
+  }
+  20% {
+    opacity: 1
+  }
+  75% {
+    transform: scale(1.33);
+    opacity: 0
+  }
+  100% {
+    opacity: 0
+  }
+}
+

@@ -8,7 +8,7 @@ export default {
       'backdrop': true,
       'title': 'Introduction',
       'isNavigationVisible': false,
-      'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. <br/><br/> In this lesson, you are going to take the table you created in your transformation in Lesson 3,and generate a Tableau Data Extract (TDE) file, using yet another Keboola Connection component – Writer. The file will be manually loaded into Tableau Desktop for visualization. <br/><br/> _Note: Your own projects won’t be affected by this in any way._',
+      'markdown': 'Transformation results can be delivered to any analytics or business intelligence tool. <br/><br/> In this lesson, you are going to take the table you created in your transformation in Lesson 3, and generate a Tableau Data Extract (TDE) file, using yet another Keboola Connection component – Writer. The file will be manually loaded into Tableau Desktop for visualization.',
       'media': 'kbc_scheme_light_blue-wri.svg',
       'mediaType': 'img',
       'route': {
@@ -27,7 +27,7 @@ export default {
       + `
 - Find **Tableau**. You can use the search feature to find it faster.
 - Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
-- Name the configuration, e.g., My writer, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
+- Name the configuration, e.g., _Guide writer_, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 `,
       'mediaType': '',
       'route': {
@@ -45,9 +45,9 @@ export default {
       + `
 - Click on <span class="btn btn-success btn-sm">+ New Table</span>.
 - Select  *out.c-snowflake.CARS_POPULATION* as the source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>.
-- Specify a data type for each of the table's columns under TDE Data Type (COUNTRY/string, CARS/number, POPULATION/number, PERSON_PER_CAR/decimal). 
+- Specify a data type for each of the table's columns under TDE Data Type (COUNTRY -> string, CARS -> number, POPULATION -> number, PERSON_PER_CAR -> decimal). 
 - <span class="btn btn-success btn-sm">Save</span> the configuration.
-- To continue, click <span class="btn btn-primary btn-sm">Next step</span>.
+- To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.
 `,
       'mediaType': '',
       'route': {
@@ -63,7 +63,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Writer',
-      'markdown': 'To run the writer, click <span class="btn btn-link btn-sm"> <i class="fa fa-play"></i> Export tables to TDE</span>. After your Tableau Desktop Extract file is created, it can be downloaded by clicking on the link <a href="#" class="guide-link guide-link-fake">out.c_snowflake.cars_population.tde</a> and then loaded into Tableau Desktop. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the file to your computer, and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step</span>.',
+      'markdown': 'To run the writer, click on <span class="btn btn-link btn-sm"><i class="fa fa-play"></i> Export tables to TDE</span>. After your Tableau Desktop Extract file is created, it can be downloaded by clicking on the link <a href="#" class="guide-link guide-link-fake">out.c_snowflake.cars_population.tde</a> and then loaded into Tableau Desktop. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the file to your computer, and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'route': {
         'name': 'tde-exporter',
         'params': [

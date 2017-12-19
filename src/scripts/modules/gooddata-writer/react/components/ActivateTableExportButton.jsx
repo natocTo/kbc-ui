@@ -16,8 +16,8 @@ export default React.createClass({
   render() {
     return (
       <ActivateDeactivateButton
-        activateTooltip="Add table to project upload"
-        deactivateTooltip="Remove table from the project upload"
+        activateTooltip="Include table to project upload"
+        deactivateTooltip="Exclude table from the project upload"
         isActive={this.props.table.getIn(['data', 'export'])}
         isPending={this.props.table.get('savingFields').contains('export')}
         onChange={this.handleExportChange}
