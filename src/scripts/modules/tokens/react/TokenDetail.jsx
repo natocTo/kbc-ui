@@ -78,7 +78,7 @@ export default React.createClass({
                          <SaveButtons
                            isSaving={this.state.isSaving}
                            disabled={!this.isValid()}
-                           isChanged={this.state.token !== this.state.dirtyToken}
+                           isChanged={!this.state.token.equals(this.state.dirtyToken)}
                            onSave={this.handleSaveToken}
                            onReset={this.handleClose}
                          />
