@@ -51,7 +51,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this._createEventsService(this.props.params);
+    this._createEventsService(this.props.params, this.props.eventsApi);
     this._events.load();
     this._events.setAutoReload(this.props.autoReload);
 
@@ -63,9 +63,9 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (!_.isEqual(nextProps.params, this.props.params)) {
+    if (!_.isEqual(nextProps.params, this.props.params) || !_.isEqual(nextProps.eventsApi, this.props.eventsApi)) {
       this._destroyEventsService();
-      this._createEventsService(nextProps.params);
+      this._createEventsService(nextProps.params, nextProps.eventsApi);
       this._events.setQuery(this.state.searchQuery);
       this._events.load();
     }
@@ -78,8 +78,8 @@ export default React.createClass({
     return RoutesStore.removeChangeListener(this._handleChange);
   },
 
-  _createEventsService(params) {
-    this._events = eventsFactory(params, this.props.eventsApi);
+  _createEventsService(params, eventsApi) {
+    this._events = eventsFactory(params, eventsApi);
     return this._events.addChangeListener(this._handleChange);
   },
 
