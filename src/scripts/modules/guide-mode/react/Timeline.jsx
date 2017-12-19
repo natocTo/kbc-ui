@@ -1,0 +1,62 @@
+import React from 'react';
+import {Image} from 'react-bootstrap';
+import ApplicationStore from '../../../stores/ApplicationStore';
+
+
+export default React.createClass({
+  propTypes: {
+    currentBadge: React.PropTypes.number,
+    badgeCount: React.PropTypes.number
+  },
+  getImagePath() {
+    return ApplicationStore.getScriptsBasePath() + require('../media/kblw.png');
+  },
+  getI() {
+    var array = this.getArray();
+    return array;
+  },
+  getArray() {
+    var rows = [];
+    for (var i = 0; i < this.props.badgeCount; i++) {
+      rows.push(<div className="number-circle-container" key={i}>
+          <div className="number-circle">a</div>
+        </div>);
+    }
+    return rows;
+  },
+  renderActiveItem(order) {
+    if (order < this.props.currentBadge) {
+      return (
+          <div className="guide-timeline-circle-item guide-timeline-circle-active">
+            <Image src={this.getImagePath()}/>
+          </div>
+      );
+    } else {
+      return null;
+    }
+  },
+  getItems() {
+    var rows = [];
+    for (var i = 0; i < this.props.badgeCount; i++) {
+      rows.push(
+          <div className="guide-timeline-cell">
+            <div className={'guide-timeline-circle guide-timeline-circle' + i}>
+              <div className="guide-timeline-circle-item guide-timeline-circle-passive">
+                  {i + 1}
+              </div>
+                {this.renderActiveItem(i)}
+            </div>
+          </div>
+      );
+    }
+    return rows;
+  },
+  render() {
+    return (
+        <div className="guide-timeline-row">
+            {this.getItems()}
+
+        </div>
+    );
+  }
+});

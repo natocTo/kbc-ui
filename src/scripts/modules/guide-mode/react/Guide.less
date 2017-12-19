@@ -422,6 +422,105 @@
     font-family: "Gotham Rounded A", "Gotham Rounded B";
     font-weight: 500;
   }
+
+  &-timeline {
+    &-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      width: 500px;
+      height: 100px;
+    }
+
+    &-cell {
+      position: relative;
+      width: 100%;
+      margin: 20px;
+      animation: timeline-enter 1s linear forwards;
+    }
+
+    &-circle {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    &-circle-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: absolute;
+      top: 0%;
+      left: 0%;
+    }
+
+    &-circle-passive {
+      background: #7c8498;
+      color: #444752;
+      animation: timeline-enter-circle 1s linear 1s forwards;
+      opacity: 0;
+    }
+
+    &-circle-active {
+      background: #25b8eb;
+      animation: timeline-enter-circle 1s linear 2s forwards;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    &-circle img {
+      width: 80%;
+    }
+
+    &-circle-active:before,
+    &-circle-active:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+
+      content: '';
+      border-radius: 50%;
+
+      height: 100%;
+      width: 100%;
+
+      background: #25b8eb;
+    }
+
+    &-circle-active:before {
+      animation: pulse 3s infinite ease 3s forwards
+    }
+
+    &-circle-active:after {
+      animation: pulse 6s infinite ease 4s forwards;
+    }
+
+    &-circle0 &-circle-active {
+      animation: timeline-enter-circle 1s linear 2s forwards;
+    }
+
+    &-circle1 &-circle-active {
+      animation: timeline-enter-circle 1s linear 3s forwards;
+    }
+
+    &-circle2 &-circle-active {
+      animation: timeline-enter-circle 1s linear 4s forwards;
+    }
+
+    &-circle3 &-circle-active {
+      animation: timeline-enter-circle 1s linear 5s forwards;
+    }
+
+    &-circle4 &-circle-active {
+      animation: timeline-enter-circle 1s linear 6s forwards;
+    }
+
+  }
 }
 
 
@@ -475,3 +574,41 @@
     transform: translate3D(-320px, 0, 0);
   }
 }
+
+@keyframes timeline-enter {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100px;
+  }
+}
+
+@keyframes timeline-enter-circle {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0
+  }
+  20% {
+    opacity: 1
+  }
+  75% {
+    transform: scale(1.33);
+    opacity: 0
+  }
+  100% {
+    opacity: 0
+  }
+}
+
