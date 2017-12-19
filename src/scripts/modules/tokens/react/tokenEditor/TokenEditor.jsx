@@ -4,10 +4,10 @@ import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ExpiresInEdit from './ExpiresInEdit';
 import ExpiresInfo from './ExpiresInfo';
 import ComponentsSelector from './ComponentsSelector';
-import BucketPermissionsManager from './BucketPermissionsManager';
 import {List, Map} from 'immutable';
 import {Link} from 'react-router';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
+import BucketsSelector from './BucketsSelector.jsx';
 
 export default React.createClass({
 
@@ -74,11 +74,23 @@ export default React.createClass({
         )}
         {isCustomAccess && this.renderFormGroup(
            '',
-           <BucketPermissionsManager
+           <BucketsSelector
              disabled={this.props.disabled}
              bucketPermissions={this.props.token.get('bucketPermissions', Map())}
              onChange={(permissions) => this.props.updateToken('bucketPermissions', permissions)}
              allBuckets={this.props.allBuckets}
+             permission="read"
+             wrapperClassName="cols-sm-offset-3 col-sm-9"
+           />
+        )}
+        {isCustomAccess && this.renderFormGroup(
+           '',
+           <BucketsSelector
+             disabled={this.props.disabled}
+             bucketPermissions={this.props.token.get('bucketPermissions', Map())}
+             onChange={(permissions) => this.props.updateToken('bucketPermissions', permissions)}
+             allBuckets={this.props.allBuckets}
+             permission="write"
              wrapperClassName="cols-sm-offset-3 col-sm-9"
            />
         )}
