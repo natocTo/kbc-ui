@@ -3,9 +3,54 @@ import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixi
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
+import { DragSource, DropTarget } from 'react-dnd';
+import flow from 'lodash/flow';
+import { findDOMNode } from 'react-dom';
 
-export default React.createClass({
+const ItemType = 'TableRow';
+
+const rowSource = {
+  beginDrag(props) {
+    return {
+      id: props.row.get('id')
+    };
+  }
+};
+
+const rowTarget = {
+  canDrop(props, monitor) {
+    const draggedId = monitor.getItem().id;
+    return draggedId === props.row.get('id');
+  },
+  hover(props, monitor) {
+    const draggedId = monitor.getItem().id;
+    const hoverId = props.row.get('id');
+
+    if (draggedId === hoverId) {
+      return;
+    }
+
+    props.onMove(hoverId, draggedId);
+  }
+};
+
+function collectForDragSource(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  };
+}
+
+
+function collectForDropTarget(connect) {
+  return {
+    connectDropTarget: connect.dropTarget()
+  };
+}
+
+const TableRow = React.createClass({
   displayName: 'ConfigurationRowsTableRow',
 
   mixins: [ImmutableRenderMixin],
@@ -19,27 +64,51 @@ export default React.createClass({
     isDeletePending: React.PropTypes.bool.isRequired,
     onDelete: React.PropTypes.func.isRequired,
     isEnableDisablePending: React.PropTypes.bool.isRequired,
-    onEnableDisable: React.PropTypes.func.isRequired
+    onEnableDisable: React.PropTypes.func.isRequired,
+    onMove: React.PropTypes.func.isRequired,
+
+    // react-dnd
+    isDragging: React.PropTypes.bool.isRequired,
+    connectDragPreview: React.PropTypes.func.isRequired,
+    connectDragSource: React.PropTypes.func.isRequired,
+    connectDropTarget: React.PropTypes.func.isRequired
   },
 
   render() {
+    const { isDragging, connectDragPreview, connectDragSource, connectDropTarget } = this.props;
+    let style = {
+      opacity: isDragging ? 0.5 : 1,
+      'backgroundColor': isDragging ? '#ffc' : null
+    };
     const props = this.props;
     return (
-      <Link to={this.props.linkTo} params={{config: this.props.configurationId, row: this.props.row.get('id')}} className="tr">
-        {this.props.columns.map(function(columnFunction, columnIndex) {
-          return (
-            <div className="td kbc-break-all" key={columnIndex}>
-              {columnFunction(props.row)}
-            </div>
-          );
-        })}
-        <div className="td text-right kbc-no-wrap">
-          {this.renderRowActionButtons()}
-        </div>
-      </Link>
+        <Link
+          to={this.props.linkTo}
+          params={{config: this.props.configurationId, row: this.props.row.get('id')}}
+          className="tr"
+          style={style}
+          ref={function(instance) {
+            const node = findDOMNode(instance);
+            connectDragPreview(node);
+            connectDropTarget(node);
+          }}
+        >
+          <div className="td" key="dnd-handle">
+            {connectDragSource(<span className="fa fa-bars fa-fw" style={{cursor: 'move'}} />)}
+          </div>
+          {this.props.columns.map(function(columnFunction, columnIndex) {
+            return (
+              <div className="td kbc-break-all" key={columnIndex}>
+                {columnFunction(props.row)}
+              </div>
+            );
+          })}
+          <div className="td text-right kbc-no-wrap">
+            {this.renderRowActionButtons()}
+          </div>
+        </Link>
     );
   },
-
 
   renderRowActionButtons() {
     const props = this.props;
@@ -83,3 +152,8 @@ export default React.createClass({
     }
   }
 });
+
+export default flow(
+  DragSource(ItemType, rowSource, collectForDragSource),
+  DropTarget(ItemType, rowTarget, collectForDropTarget)
+)(TableRow);

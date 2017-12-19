@@ -3,8 +3,10 @@ import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixi
 import fuzzy from 'fuzzy';
 import SearchRow from '../../../../react/common/SearchRow';
 import Row from './ConfigurationRowsTableRow';
+import {DragDropContext} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
-export default React.createClass({
+export default DragDropContext(HTML5Backend)(React.createClass({
   displayName: 'ConfigurationRowsTable',
 
   mixins: [ImmutableRenderMixin],
@@ -79,6 +81,9 @@ export default React.createClass({
           onEnableDisable={function() {
             return props.rowEnableDisable(row.get('id'));
           }}
+          onMove={function() {
+            return null;
+          }}
           />
       );
     });
@@ -102,6 +107,7 @@ export default React.createClass({
         <div className="table table-striped table-hover">
           <div className="thead" key="table-header">
             <div className="tr">
+              <span className="th" key="dummy" />
               {this.renderHeaders()}
             </div>
           </div>
@@ -131,4 +137,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}));
