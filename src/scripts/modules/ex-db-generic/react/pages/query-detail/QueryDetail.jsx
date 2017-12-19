@@ -55,7 +55,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         componentSupportsSimpleSetup: actionsProvisioning.componentSupportsSimpleSetup(componentId),
         queryNameExists: ExDbStore.queryNameExists(editingQuery),
         localState: ExDbStore.getLocalState(),
-        credentialsHasDatabase: !!credentials.get('database'),
+        credentialsDatabase: credentials.get('database'),
         isTestingConnection: ExDbStore.isTestingConnection(),
         validConnection: ExDbStore.isConnectionValid()
       };
@@ -102,7 +102,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           onDestinationEdit={ExDbActionCreators.destinationEdit}
           getPKColumns={ExDbActionCreators.getPKColumnsFromSourceTable}
           queryNameExists={this.state.queryNameExists}
-          credentialsHasDatabase={this.state.credentialsHasDatabase}
+          credentialsDatabase={this.state.credentialsDatabase}
           refreshMethod={this.handleRefreshSourceTables}
         />
       );

@@ -33,7 +33,7 @@ export default React.createClass({
     onDestinationEdit: React.PropTypes.func.isRequired,
     getPKColumns: React.PropTypes.func.isRequired,
     queryNameExists: React.PropTypes.bool.isRequired,
-    credentialsHasDatabase: React.PropTypes.bool,
+    credentialsDatabase: React.PropTypes.string,
     refreshMethod: React.PropTypes.func.isRequired
   },
 
@@ -435,7 +435,7 @@ export default React.createClass({
           Please do not put semicolons at the end of the query.
         </div>
       );
-    } else if (this.props.componentId === 'keboola.ex-db-mysql' && !this.props.credentialsHasDatabase) {
+    } else if (this.props.componentId === 'keboola.ex-db-mysql' && !this.props.credentialsDatabase) {
       return (
         <div className="help-block">
           <i className="fa fa-exclamation-triangle"/> This connection does not have a database specified so please be sure to prefix table names with the schema
