@@ -78,7 +78,7 @@ export default React.createClass({
         <GdrivePicker
           email={this.props.authorizedEmail}
           dialogTitle="Select a spreadsheet document"
-          buttonLabel="Select spreadsheet document from Google Drive..."
+          buttonLabel="Select spreadsheet document from Google Drive"
           onPickedFn={this.onPickSpreadsheet}
           requireSheetsApi={true}
           views={[

@@ -19,7 +19,7 @@ module.exports = React.createClass
     disabled: React.PropTypes.bool.isRequired
 
   getDefaultProps: ->
-    inputPlaceholder: 'Enter ...'
+    inputPlaceholder: 'Enter'
     emptyText: 'No packages will be installed'
 
   _handleOnChangeInput: (e) ->

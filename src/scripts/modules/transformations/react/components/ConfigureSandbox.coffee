@@ -37,7 +37,7 @@ ConfigureSandbox = React.createClass
             options: @_bucketsAndTables()
             delimiter: ','
             onChange: @_setInclude
-            placeholder: 'Select buckets and tables...'
+            placeholder: 'Select buckets and tables'
       div className: 'form-group',
         label className: 'col-sm-4 control-label', 'Sample rows'
         div className: 'col-sm-6',

@@ -37,7 +37,7 @@ export default React.createClass({
             multi={true}
             disabled={this.props.isSaving}
             onChange={this.handleValueChange}
-            placeholder="Select required transformations ..."
+            placeholder="Select required transformations"
             isLoading={this.props.isSaving}
             noResultsText="No transformations found"
             onValueClick={this.onValueClick}

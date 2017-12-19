@@ -105,7 +105,7 @@ export default React.createClass({
     return (
       <div>
         <Select
-          placeholder="Select period..."
+          placeholder="Select period"
           value={this.props.value}
           disabled={this.props.disabled}
           onChange={this.onChange}

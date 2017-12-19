@@ -171,7 +171,7 @@ export default React.createClass({
       <div className="row">
         {this.renderFormElement('Input Table',
            <SapiTableSelector
-            placeholder="Select..."
+            placeholder="Select"
             value={this.getEditingValue('intable')}
             onSelectTableFn= {intableChange}
             excludeTableFn= { () => false}/>)
@@ -330,7 +330,7 @@ export default React.createClass({
     const result = this.renderFormElement(
       'Domain',
       <Select.Creatable
-        placeholder="Select or type new..."
+        placeholder="Select or type"
         clearable={true}
         key="domain"
         name="domain"
