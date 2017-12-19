@@ -61,6 +61,7 @@ export default React.createClass({
             <li>Documentation?</li>
             <li>Delete row button underine</li>
             <li>New Table a table mít parametrizovatelný</li>
+            <li>Search bar styling</li>
             <li>Empty search result styling</li>
           </ul>
         </div>),
