@@ -6,7 +6,6 @@ import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
 import {Loader} from '@keboola/indigo-ui';
 import RefreshTokenModal from './RefreshTokenModal';
-import CreateTokenModal from './CreateTokenModal';
 import ExpiresInfo from '../tokenEditor/ExpiresInfo';
 import {Link} from 'react-router';
 import CreatedDate from './CreatedDate';
@@ -22,21 +21,26 @@ export default React.createClass({
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     onRefreshFn: PropTypes.func.isRequired,
-    isRefreshingFn: PropTypes.func.isRequired,
-    saveTokenFn: PropTypes.func.isRequired,
-    isSavingToken: PropTypes.bool.isRequired
+    isRefreshingFn: PropTypes.func.isRequired
   },
 
   render() {
     return (
-      <span>
+      <div>
         {this.renderTokenRefreshModal()}
-        {this.renderCreateTokenModal()}
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <p>
+            Create new token and limit access to specific buckets or components in you project.
+            <Link to="tokens-detail" params={{tokenId: 'new-token'}} className="btn btn-success pull-right">
+              + New Token
+            </Link>
+          </p>
+        </div>
         <div className="table table-striped table-hover">
           <div className="thead">
             <div className="tr">
               <div className="th">
-                Name
+                Description
               </div>
               <div className="th">
                 Created
@@ -45,26 +49,22 @@ export default React.createClass({
                 Expires
               </div>
               <div className="th">
-                File Uploads Access
+                Files
               </div>
               <div className="th">
-                Component Access
+                Components
               </div>
               <div className="th">
-                Buckets Access
+                Buckets
               </div>
-              <div className="th text-right">
-                <button
-                  onClick={() => this.updateLocalState(['createToken', 'show'], true)}
-                  className="btn btn-success">+ New Token</button>
-              </div>
+              <div className="th" />
             </div>
           </div>
           <div className="tbody">
             {this.getSortedTokens().map(this.renderTableRow).toArray()}
           </div>
         </div>
-      </span>
+      </div>
     );
   },
 
@@ -101,6 +101,18 @@ export default React.createClass({
     return `${accessCnt} bucket${pluralSuffix}`;
   },
 
+  renderMasterLabel(token) {
+    const isMaster = token.get('isMasterToken', false);
+    if (isMaster) {
+      return (
+        <div className="label kbc-label-rounded-small label-success">
+          Master
+        </div>
+      );
+    } else {
+      return null;
+    }
+  },
   renderYoursLabel(token) {
     const adminId = token.getIn(['admin', 'id']);
     if (adminId && adminId === this.props.currentAdmin.get('id')) {
@@ -165,23 +177,6 @@ export default React.createClass({
     );
   },
 
-  renderCreateTokenModal() {
-    const createData = this.props.localState.get('createToken', Map());
-    const show = createData.get('show', false);
-    const onCloseModal = () => {
-      this.updateLocalState(['createToken'], Map());
-    };
-
-    return (
-      <CreateTokenModal
-        allBuckets={this.props.allBuckets}
-        show={show}
-        onHideFn={onCloseModal}
-        onSaveFn={(newToken) => this.props.saveTokenFn(newToken)}
-        isSaving={this.props.isSavingToken}
-      />
-    );
-  },
 
   updateLocalState(path, newValue) {
     const newls = this.props.localState.setIn([].concat(path), newValue);
@@ -196,6 +191,7 @@ export default React.createClass({
           {token.get('description')}
           {' '}
           {this.renderYoursLabel(token)}
+          {this.renderMasterLabel(token)}
         </div>
         <div className="td">
           <CreatedDate token={token} />

@@ -19,6 +19,7 @@ export default React.createClass({
     onCancel: React.PropTypes.func.isRequired,
     onSave: React.PropTypes.func.isRequired,
     placement: React.PropTypes.oneOf(['left', 'right']),
+    showCancel: React.PropTypes.bool,
     showSave: React.PropTypes.bool
   },
 
@@ -29,7 +30,8 @@ export default React.createClass({
       cancelLabel: 'Cancel',
       placement: 'right',
       isDisabled: false,
-      showSave: true
+      showSave: true,
+      showCancel: true
     };
   },
 
@@ -72,13 +74,15 @@ export default React.createClass({
   },
 
   _cancelButton() {
-    return (
-      <Button
-        bsStyle="link"
-        disabled={this.props.isSaving}
-        onClick={this.props.onCancel}>
-        {this.props.cancelLabel}
-      </Button>
-    );
+    if (this.props.showCancel) {
+      return (
+        <Button
+          bsStyle="link"
+          disabled={this.props.isSaving}
+          onClick={this.props.onCancel}>
+          {this.props.cancelLabel}
+        </Button>
+      );
+    } else return null;
   }
 });

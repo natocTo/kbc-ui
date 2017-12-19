@@ -4,10 +4,10 @@ import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ExpiresInEdit from './ExpiresInEdit';
 import ExpiresInfo from './ExpiresInfo';
 import ComponentsSelector from './ComponentsSelector';
-import BucketPermissionsManager from './BucketPermissionsManager';
 import {List, Map} from 'immutable';
 import {Link} from 'react-router';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
+import BucketsSelector from './BucketsSelector.jsx';
 
 export default React.createClass({
 
@@ -23,7 +23,7 @@ export default React.createClass({
     const isCustomAccess = !this.props.token.get('canManageBuckets', false);
     const isAdminToken = this.props.token.has('admin');
     return (
-      <div className="form form-horizontal">
+      <div>
         {this.renderFormGroup(
            'Description',
            <div className="col-sm-9">
@@ -51,7 +51,7 @@ export default React.createClass({
            </div>
         )}
         {this.renderFormGroup(
-           'File Uploads',
+           'Files',
            this.renderFileUploadsAccessInput()
         )}
         {this.renderFormGroup(
@@ -74,11 +74,23 @@ export default React.createClass({
         )}
         {isCustomAccess && this.renderFormGroup(
            '',
-           <BucketPermissionsManager
+           <BucketsSelector
              disabled={this.props.disabled}
              bucketPermissions={this.props.token.get('bucketPermissions', Map())}
              onChange={(permissions) => this.props.updateToken('bucketPermissions', permissions)}
              allBuckets={this.props.allBuckets}
+             permission="read"
+             wrapperClassName="cols-sm-offset-3 col-sm-9"
+           />
+        )}
+        {isCustomAccess && this.renderFormGroup(
+           '',
+           <BucketsSelector
+             disabled={this.props.disabled}
+             bucketPermissions={this.props.token.get('bucketPermissions', Map())}
+             onChange={(permissions) => this.props.updateToken('bucketPermissions', permissions)}
+             allBuckets={this.props.allBuckets}
+             permission="write"
              wrapperClassName="cols-sm-offset-3 col-sm-9"
            />
         )}
@@ -118,6 +130,7 @@ export default React.createClass({
   renderDescriptionInput() {
     return (
       <input
+        placeholder="Describe token..."
         disabled={this.props.disabled}
         className="form-control"
         type="text"
@@ -150,7 +163,7 @@ export default React.createClass({
               <span>Full Access</span>
             </label>
             <span className="help-block">
-              Allow access to all file uploads
+              Allow access to all files
             </span>
           </div>
         </div>
@@ -170,7 +183,7 @@ export default React.createClass({
           </label>
         </div>
         <span className="help-block">
-          Allow access to all file uploads
+          Allow access to all files
         </span>
         <div className="radio">
           <label>

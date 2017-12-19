@@ -74,11 +74,12 @@ export default React.createClass({
   },
 
   handleSelectChange({value}) {
-    if (value !== CUSTOM_VALUE) {
-      this.props.onChange(value === NEVER_EXPIRES ? null : value );
-    } else if (!this.props.value) {
-      this.props.onChange(DEFAULT_CUSTOM_VALUE);
-    }
-    this.setState({selectValue: value});
+    this.setState({selectValue: value}, () => {
+      if (value !== CUSTOM_VALUE) {
+        this.props.onChange(value === NEVER_EXPIRES ? null : value );
+      } else if (!this.props.value) {
+        this.props.onChange(DEFAULT_CUSTOM_VALUE);
+      }
+    });
   }
 });
