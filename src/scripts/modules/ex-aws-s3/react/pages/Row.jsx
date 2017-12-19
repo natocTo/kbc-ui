@@ -12,7 +12,7 @@ import Actions from '../../../components/ConfigurationRowsActionCreators';
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import ConfigurationRowDescription from '../../../components/react/components/ConfigurationRowDescription';
-import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
+import ConfigurationRowMetadata from '../../../components/react/components/ConfigurationRowMetadata';
 import DeleteConfigurationRowButton from '../../../components/react/components/DeleteConfigurationRowButton';
 import Parameters from '../../../components/react/components/Parameters';
 import Processors from '../../../components/react/components/Processors';
@@ -76,21 +76,14 @@ export default React.createClass({
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <h3>TODO</h3>
-            <ul>
-              <li>Dummy config for empty state</li>
-              <li>JSON editors documentation link / help</li>
-              <li>Right bar content</li>
-            </ul>
-          </div>
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
             {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration ? this.renderJSONEditors() : this.renderForm()}
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
-          <ComponentMetadata
+          <ConfigurationRowMetadata
             componentId={COMPONENT_ID}
-            configId={this.state.configurationId}
+            configurationId={this.state.configurationId}
+            rowId={this.state.rowId}
           />
           <ul className="nav nav-stacked">
             <li>
