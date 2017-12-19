@@ -242,6 +242,13 @@ export default React.createClass({
     }
   },
 
+  schemaMismatch() {
+    if (!this.props.query.get('table')) {
+      return false;
+    }
+    return this.props.query.get('table').get('schema') !== this.props.credentialsDatabase;
+  },
+
   render() {
     return (
       <div className="kbc-inner-content-padding-fix">
@@ -387,9 +394,13 @@ export default React.createClass({
       );
 
       return (
-        <div className="form-group">
+        <div className={this.schemaMismatch() ? 'form-group has-error' : 'form-group'}>
           <label className="col-md-3 control-label">Source Table</label>
           <div className="col-md-9">
+            {(this.schemaMismatch())
+              ? <div className="help-block">Schema does not match database found in credentials</div>
+              : null
+            }
             <TableLoader
               componentId={this.props.componentId}
               configId={this.props.configId}
