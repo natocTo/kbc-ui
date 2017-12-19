@@ -51,7 +51,7 @@ export default React.createClass({
            </div>
         )}
         {this.renderFormGroup(
-           'File Uploads',
+           'Files',
            this.renderFileUploadsAccessInput()
         )}
         {this.renderFormGroup(
@@ -163,7 +163,7 @@ export default React.createClass({
               <span>Full Access</span>
             </label>
             <span className="help-block">
-              Allow access to all file uploads
+              Allow access to all files
             </span>
           </div>
         </div>
@@ -183,7 +183,7 @@ export default React.createClass({
           </label>
         </div>
         <span className="help-block">
-          Allow access to all file uploads
+          Allow access to all files
         </span>
         <div className="radio">
           <label>
