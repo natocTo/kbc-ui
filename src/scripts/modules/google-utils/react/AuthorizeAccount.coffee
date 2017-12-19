@@ -6,7 +6,7 @@ Tabs = React.createFactory(require('react-bootstrap').Tabs)
 Tab = React.createFactory(require('react-bootstrap').Tab)
 Button = React.createFactory(require('react-bootstrap').Button)
 Input = React.createFactory(require('./../../../react/common/KbcBootstrap').Input)
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 {button, input, textarea, label, div, span, form, pre } = React.DOM
 
 module.exports = React.createClass

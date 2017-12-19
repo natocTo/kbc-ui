@@ -3,7 +3,7 @@ ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMix
 Link = React.createFactory(require('react-router').Link)
 ActivateTableExportButton = require('../../components/ActivateTableExportButton').default
 {ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'
-{Loader} = require 'kbc-react-components'
+{Loader} = require '@keboola/indigo-ui'
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 
 actionCreators = require '../../../actionCreators'

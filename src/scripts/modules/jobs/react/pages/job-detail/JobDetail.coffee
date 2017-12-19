@@ -31,7 +31,7 @@ ErrorNote = require('./ErrorNote').default
 contactSupport = require('../../../../../utils/contactSupport').default
 
 date = require '../../../../../utils/date'
-{Tree, NewLineToBr} = require 'kbc-react-components'
+{Tree, NewLineToBr} = require '@keboola/indigo-ui'
 {strong,div, h2, span, h4, section, p, pre, code, br, blockquote, small} = React.DOM
 
 APPLICATION_ERROR = 'application'

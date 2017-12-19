@@ -7,13 +7,13 @@ import StorageTablesStore from '../../../../components/stores/StorageTablesStore
 import RoutesStore from '../../../../../stores/RoutesStore';
 
 import QueryEditor from '../../components/QueryEditor';
-import {loadingSourceTablesPath} from '../../../storeProvisioning';
+import {connectionErrorPath, loadingSourceTablesPath} from '../../../storeProvisioning';
 import {sourceTablesPath} from '../../../storeProvisioning';
 import {sourceTablesErrorPath} from '../../../storeProvisioning';
 
 import QueryNav from './QueryNav';
 import SaveButtons from '../../../../../react/common/SaveButtons';
-import {loadSourceTables} from '../../../actionsProvisioning';
+import {loadSourceTables, reloadSourceTables} from '../../../actionsProvisioning';
 
 export default function(componentId, actionsProvisioning, storeProvisioning) {
   const ExDbActionCreators = actionsProvisioning.createActions(componentId);
@@ -55,7 +55,9 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         componentSupportsSimpleSetup: actionsProvisioning.componentSupportsSimpleSetup(componentId),
         queryNameExists: ExDbStore.queryNameExists(editingQuery),
         localState: ExDbStore.getLocalState(),
-        credentialsHasDatabase: !!credentials.get('database')
+        credentialsHasDatabase: !!credentials.get('database'),
+        isTestingConnection: ExDbStore.isTestingConnection(),
+        validConnection: ExDbStore.isConnectionValid()
       };
     },
 
@@ -69,6 +71,10 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
 
     handleSave() {
       return ExDbActionCreators.saveQueryEdit(this.state.configId, this.state.editingQuery.get('id'));
+    },
+
+    handleRefreshSourceTables() {
+      return reloadSourceTables(componentId, this.state.configId);
     },
 
     getDefaultOutputTableId(name) {
@@ -86,7 +92,10 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           configId={this.state.configId}
           componentId={componentId}
           getDefaultOutputTable={this.getDefaultOutputTableId}
-          isLoadingSourceTables={this.state.localState.getIn(loadingSourceTablesPath)}
+          isLoadingSourceTables={this.state.localState.getIn(loadingSourceTablesPath, false)}
+          isTestingConnection={this.state.isTestingConnection}
+          validConnection={this.state.validConnection}
+          connectionError={this.state.localState.getIn(connectionErrorPath)}
           sourceTables={this.state.localState.getIn(sourceTablesPath) || List()}
           sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
           destinationEditing={this.state.localState.getIn(['isDestinationEditing', this.state.queryId], false)}
@@ -94,6 +103,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           getPKColumns={ExDbActionCreators.getPKColumnsFromSourceTable}
           queryNameExists={this.state.queryNameExists}
           credentialsHasDatabase={this.state.credentialsHasDatabase}
+          refreshMethod={this.handleRefreshSourceTables}
         />
       );
     },

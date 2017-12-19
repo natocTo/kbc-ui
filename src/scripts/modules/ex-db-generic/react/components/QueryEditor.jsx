@@ -2,12 +2,13 @@
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
-import {Loader} from 'kbc-react-components';
+
 import {CodeEditor} from '../../../../react/common/common';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 
-import SourceTablesError from './SourceTablesError';
+import AsynchActionError from './AsynchActionError';
+import TableLoader from './TableLoaderQueryEditor';
 
 import editorMode from '../../templates/editorMode';
 
@@ -23,13 +24,17 @@ export default React.createClass({
     getDefaultOutputTable: React.PropTypes.func.isRequired,
     componentId: React.PropTypes.string.isRequired,
     isLoadingSourceTables: React.PropTypes.bool.isRequired,
+    isTestingConnection: React.PropTypes.bool.isRequired,
+    validConnection: React.PropTypes.bool.isRequired,
+    connectionError: React.PropTypes.string,
     sourceTables: React.PropTypes.object.isRequired,
     sourceTablesError: React.PropTypes.string,
     destinationEditing: React.PropTypes.bool.isRequired,
     onDestinationEdit: React.PropTypes.func.isRequired,
     getPKColumns: React.PropTypes.func.isRequired,
     queryNameExists: React.PropTypes.bool.isRequired,
-    credentialsHasDatabase: React.PropTypes.bool
+    credentialsHasDatabase: React.PropTypes.bool,
+    refreshMethod: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
@@ -241,9 +246,11 @@ export default React.createClass({
     return (
       <div className="kbc-inner-content-padding-fix">
         <div className="form-horizontal">
-          <SourceTablesError
+          <AsynchActionError
             componentId={this.props.componentId}
             configId={this.props.configId}
+            connectionTesting={this.props.isTestingConnection}
+            connectionError={this.props.connectionError}
             sourceTablesLoading={this.props.isLoadingSourceTables}
             sourceTablesError={this.props.sourceTablesError}
           />
@@ -367,7 +374,7 @@ export default React.createClass({
 
   renderSimpleTable() {
     if (this.props.showSimple && !this.props.query.get('advancedMode')) {
-      var tableSelect = (
+      var tableSelector = (
         <Select
           name="sourceTable"
           value={this.getTableValue()}
@@ -379,17 +386,19 @@ export default React.createClass({
         />
       );
 
-      var loader = (
-        <div className="form-control-static">
-          <Loader/> Fetching table list from source database ...
-        </div>
-      );
-
       return (
         <div className="form-group">
           <label className="col-md-3 control-label">Source Table</label>
           <div className="col-md-9">
-            { (this.props.isLoadingSourceTables) ? loader : tableSelect }
+            <TableLoader
+              componentId={this.props.componentId}
+              configId={this.props.configId}
+              isLoadingSourceTables={this.props.isLoadingSourceTables}
+              isTestingConnection={this.props.isTestingConnection}
+              validConnection={this.props.validConnection}
+              tableSelectorElement={tableSelector}
+              refreshMethod={this.props.refreshMethod}
+            />
           </div>
         </div>
       );

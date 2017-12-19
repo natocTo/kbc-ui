@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {Map} from 'immutable';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import AuthorizationRow from '../../../../oauth-v2/react/AuthorizationRow';
 import OAuthV2Actions from '../../../../oauth-v2/ActionCreators';
 import {FormGroup} from 'react-bootstrap';

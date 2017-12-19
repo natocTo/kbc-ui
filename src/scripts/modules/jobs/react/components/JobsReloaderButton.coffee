@@ -1,7 +1,7 @@
 React = require('react')
 createStoreMixin = require('../../../../react/mixins/createStoreMixin')
 JobsStore = require('../../stores/JobsStore')
-RefreshIcon = React.createFactory(require('kbc-react-components').RefreshIcon)
+RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 ActionCreators = require('../../ActionCreators')
 
 

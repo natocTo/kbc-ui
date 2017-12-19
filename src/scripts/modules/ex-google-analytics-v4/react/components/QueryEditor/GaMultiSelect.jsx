@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 // import fuzzy from 'fuzzy';
 import Select from 'react-select';
 import Tooltip from '../../../../../react/common/Tooltip';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import './GaMultiSelect.less';
 
 function simpleMatch(query, test) {

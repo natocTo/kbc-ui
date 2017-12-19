@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import {ProgressBar} from 'react-bootstrap';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 
 // css
 require('./Upload.less');

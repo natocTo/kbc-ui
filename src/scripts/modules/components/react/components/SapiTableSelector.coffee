@@ -1,7 +1,7 @@
 React = require 'react'
 storageTablesStore = require '../../stores/StorageTablesStore'
 storageActionCreators = require '../../StorageActionCreators'
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 Select = React.createFactory(require('react-select'))
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 validateStorageTableId = require '../../../../utils/validateStorageTableId'

@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Immutable from 'immutable';
-import {Loader} from 'kbc-react-components';
 import Select from 'react-select';
+import TableLoader from './TableLoaderQuickStart';
 
 export default React.createClass({
   displayName: 'Quickstart',
@@ -10,11 +10,14 @@ export default React.createClass({
     configId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string,
     isLoadingSourceTables: React.PropTypes.bool.isRequired,
+    isTestingConnection: React.PropTypes.bool.isRequired,
+    validConnection: React.PropTypes.bool.isRequired,
     sourceTables: React.PropTypes.object,
     sourceTablesError: React.PropTypes.string,
     quickstart: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired
+    onSubmit: React.PropTypes.func.isRequired,
+    refreshMethod: React.PropTypes.func.isRequired
   },
 
   quickstart() {
@@ -69,39 +72,49 @@ export default React.createClass({
 
   render() {
     var tableSelector = (
-      <div className="form-group text-left">
-        <div className="col-md-8 col-md-offset-2">
-          <Select
-            multi={true}
-            matchProp="label"
-            name="quickstart"
-            value={this.getQuickstartValue(this.props.quickstart.get('tables'))}
-            placeholder="Select tables to copy"
-            onChange={this.handleSelectChange}
-            filterOptions={this.filterOptions}
-            optionRenderer={this.optionRenderer}
-            options={this.transformOptions(this.getTableOptions())}/>
+      <div>
+        <div className="row text-left">
+          <div className="col-md-8 col-md-offset-2 help-block">
+          Select the tables you'd like to import to autogenerate your configuration. <br/>
+          You can edit them later at any time.
+          </div>
         </div>
-        <div className="col-md-2">
-          <button
-            className="btn btn-success"
-            onClick={this.quickstart}
-            disabled={!this.props.quickstart.get('tables') || this.props.quickstart.get('tables').count() === 0}
-          > Create
-          </button>
+        <div className="row text-left">
+          <div className="col-md-8 col-md-offset-2">
+            <Select
+              multi={true}
+              matchProp="label"
+              name="quickstart"
+              value={this.getQuickstartValue(this.props.quickstart.get('tables'))}
+              placeholder="Select tables to copy"
+              onChange={this.handleSelectChange}
+              filterOptions={this.filterOptions}
+              optionRenderer={this.optionRenderer}
+              options={this.transformOptions(this.getTableOptions())}/>
+          </div>
+          <div className="col-md-2">
+            <button
+              className="btn btn-success"
+              onClick={this.quickstart}
+              disabled={!this.props.quickstart.get('tables') || this.props.quickstart.get('tables').count() === 0}
+            > Create
+            </button>
+          </div>
         </div>
-      </div>
-    );
-
-    var loader = (
-      <div className="form-control-static">
-        <Loader/> Fetching table list from source database ...
       </div>
     );
 
     return (
       <div className="row text-center">
-        {(this.props.isLoadingSourceTables) ? loader : tableSelector }
+        <TableLoader
+          componentId={this.props.componentId}
+          configId={this.props.configId}
+          isLoadingSourceTables={this.props.isLoadingSourceTables}
+          isTestingConnection={this.props.isTestingConnection}
+          validConnection={this.props.validConnection}
+          tableSelectorElement={tableSelector}
+          refreshMethod={this.props.refreshMethod}
+        />
       </div>
     );
   },

@@ -11,7 +11,7 @@ kbCommon = require '../../../../../react/common/common'
 ComponentIcon = React.createFactory(kbCommon.ComponentIcon)
 ComponentName = React.createFactory(kbCommon.ComponentName)
 Duration = React.createFactory(kbCommon.Duration)
-Tree = React.createFactory(require('kbc-react-components').Tree)
+Tree = React.createFactory(require('@keboola/indigo-ui').Tree)
 JobStatusLabel = React.createFactory(kbCommon.JobStatusLabel)
 
 date = require '../../../../../utils/date'

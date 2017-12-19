@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
 import {fromJS} from 'immutable';
 import callDockerAction from '../../modules/components/DockerActionsApi';
-import {Check} from 'kbc-react-components';
+import {Check} from '@keboola/indigo-ui';
 import {Input, FormControls} from './KbcBootstrap';
-import {Protected} from 'kbc-react-components';
+import {Protected} from '@keboola/indigo-ui';
 import Clipboard from './Clipboard';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 const StaticText = FormControls.Static;
 
 
@@ -41,7 +41,7 @@ export default React.createClass({
   },
 
   isEnabled() {
-    return this.props.data.get('enabled');
+    return this.props.data.get('enabled', false);
   },
 
   renderEnableCheckbox() {

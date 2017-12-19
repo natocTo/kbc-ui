@@ -1,5 +1,5 @@
 import React from 'react';
-import {Protected, Loader} from 'kbc-react-components';
+import {Protected, Loader} from '@keboola/indigo-ui';
 import Clipboard from '../../../../react/common/Clipboard';
 
 module.exports = React.createClass({

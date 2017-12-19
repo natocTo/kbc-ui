@@ -4,7 +4,7 @@ import dispatcher from '../../Dispatcher';
 import constants from './Constants';
 import StorageBucketsStore from './stores/StorageBucketsStore';
 import StorageTablesStore from './stores/StorageTablesStore';
-import StorageTokensStore from './stores/StorageTokensStore';
+
 import StorageFilesStore from './stores/StorageFilesStore';
 import storageApi from './StorageApi';
 import jobPoller from '../../utils/jobPoller';
@@ -68,20 +68,6 @@ module.exports = {
     });
   },
 
-  deleteToken: function(tokenObject) {
-    const tokenId = tokenObject.get('id');
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.STORAGE_TOKEN_DELETE,
-      tokenId: tokenId
-    });
-    return storageApi.deleteToken(tokenId).then(function() {
-      return dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_TOKEN_DELETE_SUCCESS,
-        tokenId: tokenId
-      });
-    });
-  },
-
   deleteCredentials: function(bucketId, credentialsId) {
     dispatcher.handleViewAction({
       type: constants.ActionTypes.STORAGE_BUCKET_CREDENTIALS_DELETE,
@@ -140,49 +126,6 @@ module.exports = {
       return Promise.resolve();
     }
     return this.loadTablesForce();
-  },
-
-  loadTokensForce: function() {
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.STORAGE_TOKENS_LOAD
-    });
-    return storageApi.getTokens().then(function(tokens) {
-      return dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_TOKENS_LOAD_SUCCESS,
-        tokens: tokens
-      });
-    })
-    .catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_TOKENS_LOAD_ERROR,
-        errors: error
-      });
-      throw error;
-    });
-  },
-
-  loadTokens: function() {
-    if (StorageTokensStore.getIsLoaded()) {
-      return Promise.resolve();
-    }
-    return this.loadTokensForce();
-  },
-
-  createToken: function(params) {
-    return storageApi.createToken(params).then(function(token) {
-      return dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_TOKEN_CREATE_SUCCESS,
-        token: token
-      });
-    })
-    .catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_TOKEN_CREATE_ERROR,
-        status: error.status,
-        response: error.response
-      });
-      throw error;
-    });
   },
 
   loadFilesForce: function(params) {

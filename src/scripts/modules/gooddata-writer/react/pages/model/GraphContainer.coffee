@@ -3,7 +3,7 @@ Immutable = require 'immutable'
 
 api = require '../../../api'
 
-{Loader} = require 'kbc-react-components'
+{Loader} = require '@keboola/indigo-ui'
 Graph = require './Graph'
 
 PureRenderMixin = require('react-addons-pure-render-mixin')

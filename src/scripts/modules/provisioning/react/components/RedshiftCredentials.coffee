@@ -1,8 +1,8 @@
 React = require 'react'
 
-Protected = React.createFactory(require('kbc-react-components').Protected)
+Protected = React.createFactory(require('@keboola/indigo-ui').Protected)
 Clipboard = React.createFactory(require('../../../../react/common/Clipboard').default)
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 Input = React.createFactory(require('./../../../../react/common/KbcBootstrap').Input)
 
 {a, span, div, strong, small} = React.DOM

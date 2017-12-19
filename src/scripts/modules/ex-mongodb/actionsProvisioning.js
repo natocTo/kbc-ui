@@ -49,6 +49,12 @@ export function createActions(componentId) {
     componentsActions.updateLocalState(componentId, configId, newLocalState, path);
   }
 
+  function removeFromLocalState(configId, path) {
+    const ls = localState(configId);
+    const newLocalState = ls.deleteIn([].concat(path));
+    componentsActions.updateLocalState(componentId, configId, newLocalState, path);
+  }
+
   function saveConfigData(configId, data, waitingPath) {
     updateLocalState(configId, waitingPath, true);
     return componentsActions.saveComponentConfigData(componentId, configId, data)
@@ -71,8 +77,8 @@ export function createActions(componentId) {
     },
 
     cancelCredentialsEdit(configId) {
-      updateLocalState(configId, ['isChangedCredentials'], null);
-      updateLocalState(configId, ['editingCredentials'], null);
+      removeFromLocalState(configId, ['isChangedCredentials'], null);
+      removeFromLocalState(configId, ['editingCredentials'], null);
     },
 
     updateEditingCredentials(configId, newCredentials) {

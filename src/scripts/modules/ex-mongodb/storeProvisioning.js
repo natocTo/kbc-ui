@@ -131,6 +131,10 @@ export function createStore(componentId, configId) {
       return data.localState.get('isSavingCredentials', false);
     },
 
+    isChangedCredentials() {
+      return data.localState.get('isChangedCredentials', false);
+    },
+
     getEditingCredentials() {
       return data.localState.get('editingCredentials');
     },

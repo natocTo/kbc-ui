@@ -3,7 +3,7 @@ Immutable = require 'immutable'
 
 api = require '../../../TransformationsApiAdapter'
 
-{Loader} = require 'kbc-react-components'
+{Loader} = require '@keboola/indigo-ui'
 Graph = React.createFactory (require './Graph')
 TransformationsStore  = require('../../../stores/TransformationsStore')
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'

@@ -7,15 +7,17 @@ import {Input, FormControls} from './../../../../../react/common/KbcBootstrap';
 import Tooltip from '../../../../../react/common/Tooltip';
 import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 
+import SSLForm from './SSLForm';
+
 const StaticText = FormControls.Static;
 
 export default React.createClass({
   propTypes: {
     savedCredentials: React.PropTypes.object.isRequired,
     credentials: React.PropTypes.object.isRequired,
-    enabled: React.PropTypes.bool.isRequired,
-    isValidEditingCredentials: React.PropTypes.bool.isRequired,
     isEditing: React.PropTypes.bool.isRequired,
+    isValidEditingCredentials: React.PropTypes.bool.isRequired,
+    enabled: React.PropTypes.bool.isRequired,
     onChange: React.PropTypes.func,
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
@@ -136,6 +138,10 @@ export default React.createClass({
     return this.props.onChange(this.props.credentials.set('ssh', sshObject));
   },
 
+  sslRowOnChange(sslObject) {
+    return this.props.onChange(this.props.credentials.set('ssl', sslObject));
+  },
+
   renderSshRow() {
     if (this.props.hasSshTunnel(this.props.componentId)) {
       return (
@@ -148,6 +154,18 @@ export default React.createClass({
     }
   },
 
+  renderSSLForm() {
+    if (this.props.componentId === 'keboola.ex-db-mysql' || this.props.componentId === 'keboola.ex-db-mysql-custom') {
+      return (
+        <SSLForm
+          isEditing={this.props.enabled}
+          data={this.props.credentials.get('ssl', Map())}
+          onChange={this.sslRowOnChange}
+        />
+      );
+    }
+  },
+
   render() {
     const { componentId, configId, enabled, isValidEditingCredentials, isEditing } = this.props;
     return (
@@ -155,14 +173,15 @@ export default React.createClass({
         <div className="kbc-inner-content-padding-fix">
           {this.renderFields()}
           {this.renderSshRow()}
+          {this.renderSSLForm()}
+          <TestCredentialsButtonGroup
+            componentId={componentId}
+            configId={configId}
+            isEditing={isEditing}
+            disabled={enabled ? !isValidEditingCredentials : false}
+            testCredentialsFn={this.testCredentials}
+          />
         </div>
-        <TestCredentialsButtonGroup
-          componentId={componentId}
-          configId={configId}
-          isEditing={isEditing}
-          disabled={enabled ? !isValidEditingCredentials : false}
-          testCredentialsFn={this.testCredentials}
-        />
       </form>
     );
   }

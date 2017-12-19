@@ -11,7 +11,7 @@ ModalFooter = React.createFactory(require('react-bootstrap').ModalFooter)
 ModalTitle = React.createFactory(require('react-bootstrap').ModalTitle)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 
 require './AddConfigurationForm.less'
 

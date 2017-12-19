@@ -2,7 +2,7 @@ React = require 'react'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 
 Link = React.createFactory(require('react-router').Link)
-Check = React.createFactory(require('kbc-react-components').Check)
+Check = React.createFactory(require('@keboola/indigo-ui').Check)
 QueryDeleteButton = React.createFactory(require('../../components/QueryDeleteButton'))
 RunExtractionButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 SapiTableLinkEx = require('../../../../components/react/components/StorageApiTableLinkEx').default

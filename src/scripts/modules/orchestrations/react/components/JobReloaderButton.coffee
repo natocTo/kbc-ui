@@ -5,7 +5,7 @@ createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 OrchestrationsActionCreators = require '../../ActionCreators'
 OrchestrationJobsStore = require '../../stores/OrchestrationJobsStore'
 RoutesStore = require '../../../../stores/RoutesStore'
-RefreshIcon = React.createFactory(require('kbc-react-components').RefreshIcon)
+RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 
 JobReloaderButton = React.createClass
   displayName: 'JobReloaderButton'

@@ -2,8 +2,8 @@ import React from 'react';
 import date from '../../../utils/date';
 import PureRendererMixin from '../../../react/mixins/ImmutableRendererMixin';
 import {Link} from 'react-router';
-import {NewLineToBr} from 'kbc-react-components';
-import {Tree} from 'kbc-react-components';
+import {NewLineToBr} from '@keboola/indigo-ui';
+import {Tree} from '@keboola/indigo-ui';
 import FileLink  from './FileLink';
 
 const classMap = {

@@ -8,7 +8,7 @@ ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMix
 {a, div, strong, span} = React.DOM
 Duration = require('../../../../../utils/duration')
 date = require '../../../../../utils/date'
-{Tree} = require 'kbc-react-components'
+{Tree} = require '@keboola/indigo-ui'
 
 module.exports = React.createClass
   displayName: 'GoodDataResultStats'

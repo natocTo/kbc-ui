@@ -12,6 +12,10 @@ const defaultSshPort = 22;
 export const sourceTablesPath = ['sourceTables', 'data'];
 export const sourceTablesErrorPath = ['sourceTables', 'error'];
 export const loadingSourceTablesPath = ['sourceTables', 'loading'];
+export const testingConnectionPath = ['connection', 'testing'];
+export const connectionErrorPath = ['connection', 'error'];
+export const connectionValidPath = ['connection', 'valid'];
+export const connectionTestedPath = ['connection', 'tested'];
 
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
@@ -97,6 +101,10 @@ export function createStore(componentId, configId) {
       return data.localState.get('isSavingCredentials', false);
     },
 
+    isChangedCredentials() {
+      return data.localState.get('isChangedCredentials', false);
+    },
+
     getEditingCredentials() {
       return data.localState.get('editingCredentials');
     },
@@ -116,6 +124,22 @@ export function createStore(componentId, configId) {
       } else {
         return defaultNewCredentials;
       }
+    },
+
+    isTestingConnection() {
+      return data.localState.getIn(testingConnectionPath, false);
+    },
+
+    isConnectionValid() {
+      return data.localState.getIn(connectionValidPath, false);
+    },
+
+    getConnectionError() {
+      return data.localState.getIn(connectionErrorPath, null);
+    },
+
+    hasConnectionBeenTested() {
+      return data.localState.getIn(connectionTestedPath, false);
     },
     // Credentials -- end --
 

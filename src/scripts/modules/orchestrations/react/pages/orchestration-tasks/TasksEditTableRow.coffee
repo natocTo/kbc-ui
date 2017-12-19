@@ -8,7 +8,7 @@ ComponentConfigurationLink = require '../../../../components/react/components/Co
 TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
 ComponentIcon = React.createFactory(common.ComponentIcon)
 ComponentName = React.createFactory(common.ComponentName)
-Tree = React.createFactory(require('kbc-react-components').Tree)
+Tree = React.createFactory(require('@keboola/indigo-ui').Tree)
 Check = React.createFactory(common.Check)
 Tooltip = React.createFactory(require('../../../../../react/common/Tooltip').default)
 

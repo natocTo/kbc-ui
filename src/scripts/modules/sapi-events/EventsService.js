@@ -227,6 +227,6 @@ class EventsService {
 
 export { EventsService };
 
-export function factory(params) {
-  return new EventsService(api, params);
+export function factory(params, apiParam) {
+  return new EventsService(apiParam || api, params);
 }

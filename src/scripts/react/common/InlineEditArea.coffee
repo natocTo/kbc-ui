@@ -4,7 +4,7 @@ _ = require 'underscore'
 
 Tooltip = React.createFactory(require('./Tooltip').default)
 Button = React.createFactory(require('react-bootstrap').Button)
-{Loader} = require('kbc-react-components')
+{Loader} = require('@keboola/indigo-ui')
 Markdown = React.createFactory(require('./Markdown').default)
 Textarea = require 'react-textarea-autosize'
 

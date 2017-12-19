@@ -10,7 +10,7 @@ import SapiTableLink from '../StorageApiTableLink';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 
 import {Modal, Tabs, Tab} from 'react-bootstrap';
-import {RefreshIcon} from 'kbc-react-components';
+import {RefreshIcon} from '@keboola/indigo-ui';
 
 
 export default React.createClass({

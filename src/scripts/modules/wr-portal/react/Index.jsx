@@ -10,7 +10,7 @@ import BucketStore from '../../components/stores/StorageBucketsStore';
 
 import EmptyState from '../../components/react/components/ComponentEmptyState';
 import ComponentDescription from '../../components/react/components/ComponentDescription';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import Confirm from '../../../react/common/Confirm';
 import ComponentMetadata from '../../components/react/components/ComponentMetadata';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';

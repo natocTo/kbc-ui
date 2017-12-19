@@ -1,8 +1,8 @@
 React = require 'react'
 
-Protected = React.createFactory(require('kbc-react-components').Protected)
+Protected = React.createFactory(require('@keboola/indigo-ui').Protected)
 Clipboard = React.createFactory(require('../../../../react/common/Clipboard').default)
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 ValidUntilWithIcon = React.createFactory(require('../../../../react/common/ValidUntilWithIcon'))
 Extend = React.createFactory(require('./ExtendMySqlCredentials'))
 {span, div, strong, small, a, p} = React.DOM

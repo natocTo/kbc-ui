@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Loader} from 'kbc-react-components';
+import {Loader} from '@keboola/indigo-ui';
 import {Map} from 'immutable';
 import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';

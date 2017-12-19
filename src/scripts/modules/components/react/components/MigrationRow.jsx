@@ -2,7 +2,7 @@ import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
 import {Alert, Modal, Table, Tabs, Tab} from 'react-bootstrap';
-import {Check, Loader, RefreshIcon} from 'kbc-react-components';
+import {Check, Loader, RefreshIcon} from '@keboola/indigo-ui';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
 import SapiTableLink from './StorageApiTableLink';

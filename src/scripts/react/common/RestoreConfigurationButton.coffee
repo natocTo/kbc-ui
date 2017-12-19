@@ -6,7 +6,7 @@ React = require 'react'
 classnames = require 'classnames'
 
 Tooltip = React.createFactory(require('./Tooltip').default)
-Loader = React.createFactory(require('kbc-react-components').Loader)
+Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 Confirm = React.createFactory(require('./Confirm').default)
 
 assign = require 'object-assign'
