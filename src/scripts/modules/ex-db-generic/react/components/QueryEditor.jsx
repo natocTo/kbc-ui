@@ -224,7 +224,7 @@ export default React.createClass({
 
   getTableValue() {
     if (this.props.query.get('table')) {
-      return this.props.query.get('table').get('tableName');
+      return this.props.query.get('table').get('schema') + '.' + this.props.query.get('table').get('tableName');
     } else return '';
   },
 
