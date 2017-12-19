@@ -23,7 +23,7 @@ export default React.createClass({
     const isCustomAccess = !this.props.token.get('canManageBuckets', false);
     const isAdminToken = this.props.token.has('admin');
     return (
-      <div className="form form-horizontal">
+      <div>
         {this.renderFormGroup(
            'Description',
            <div className="col-sm-9">

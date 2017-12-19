@@ -69,26 +69,22 @@ export default React.createClass({
         <div className="kbc-main-content">
           {this.state.token ?
            <Tabs id="token-detail-tabs" animation={false}>
-             <Tab title="Overview" eventKey="overview">
-               <div>
-                 <div className="form form-horizontal">
+             <Tab title="Overview" eventKey="overview" style={{paddingTop: 0}}>
+               <div className="kbc-inner-content-padding-fix">
+                 <div className="form form-horizontal" style={{marginLeft: 0, marginRight: 0}}>
                    <div className="form-group">
-                     <div className="col-sm-12">
-                       <div className="pull-right">
-                         <SaveButtons
-                           isSaving={this.state.isSaving}
-                           disabled={!this.isValid()}
-                           isChanged={!this.state.token.equals(this.state.dirtyToken)}
-                           onSave={this.handleSaveToken}
-                           onReset={this.handleClose}
-                         />
-                       </div>
+                     <div className="col-sm-12 text-right">
+                       <SaveButtons
+                         isSaving={this.state.isSaving}
+                         disabled={!this.isValid()}
+                         isChanged={!this.state.token.equals(this.state.dirtyToken)}
+                         onSave={this.handleSaveToken}
+                         onReset={this.handleClose}
+                       />
                      </div>
                    </div>
+                   {this.renderTokenEditor(true)}
                  </div>
-               </div>
-               <div>
-                 {this.renderTokenEditor(true)}
                </div>
              </Tab>
              <Tab title="Events" eventKey="events">
@@ -137,27 +133,25 @@ export default React.createClass({
       );
     }
     return (
-      <div className="row">
+      <div className="kbc-inner-content-padding-fix">
         <div className="form form-horizontal">
-          <div className="form-group">
-            <div className="col-sm-12">
-              {this.state.createdToken ?
-               this.renderTokenCreated() :
-               <div className="pull-right">
-                 <ConfirmButtons
-                   isSaving={this.state.isSaving}
-                   isDisabled={!this.isValid()}
-                   onSave={this.handleSaveToken}
-                   onCancel={this.handleClose}
-                   saveLabel="Create"
-                   showCancel={false}
-                 />
-               </div>
-              }
-            </div>
-          </div>
-        </div>
-        <div>
+          {this.state.createdToken
+            ? this.renderTokenCreated()
+            : (
+              <div className="form-group">
+                <div className="col-sm-12 text-right">
+                  <ConfirmButtons
+                    isSaving={this.state.isSaving}
+                    isDisabled={!this.isValid()}
+                    onSave={this.handleSaveToken}
+                    onCancel={this.handleClose}
+                    saveLabel="Create"
+                    showCancel={false}
+                  />
+                </div>
+              </div>
+            )
+          }
           {this.renderTokenEditor(false)}
         </div>
       </div>
