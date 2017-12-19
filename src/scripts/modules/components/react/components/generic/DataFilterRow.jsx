@@ -54,7 +54,7 @@ export default React.createClass({
             disabled={this.props.disabled}
             allowCreate={true}
             delimiter=","
-            placeholder="Select values ..."
+            placeholder="Select or type"
             emptyStrings={true}
             onChange={this._handleChangeWhereValues} />
         </div>

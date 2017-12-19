@@ -66,7 +66,7 @@ module.exports = React.createClass
             disabled: false
             allowCreate: true
             delimiter: ','
-            placeholder: 'No primary key'
+            placeholder: 'Select or type'
             emptyStrings: false
             onChange: @_handlePrimaryKeyChange
         div className: 'form-group',

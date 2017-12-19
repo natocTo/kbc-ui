@@ -47,7 +47,7 @@ export default React.createClass({
               </label>
               <div className="col-sm-11">
                 <Select.Creatable
-                  placeholder="Select phase..."
+                  placeholder="Select or type"
                   clearable={false}
                   key="phases select"
                   name="phaseselector"

@@ -263,7 +263,7 @@ export default React.createClass({
                 emptyStrings={false}
                 onChange={this.handlePrimaryKeyChange}
                 options={this.primaryKeyOptions()}
-                promptTextCreator={(label) => (label) ? 'Select column "' + label + '" as primary key' : ''}
+                promptTextCreator={(label) => (label) ? 'Select or type column "' + label + '" as primary key' : ''}
               />
               {this.isExistingTable() && this.primaryKeyHelp()}
             </div>
