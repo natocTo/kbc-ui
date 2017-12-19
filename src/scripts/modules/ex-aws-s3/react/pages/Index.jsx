@@ -29,11 +29,11 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
-    const configId = RoutesStore.getCurrentRouteParam('config');
+    const configurationId = RoutesStore.getCurrentRouteParam('config');
     return {
-      configId: configId,
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
-      rows: ConfigurationRowsStore.getRows(COMPONENT_ID, configId)
+      configurationId: configurationId,
+      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configurationId),
+      rows: ConfigurationRowsStore.getRows(COMPONENT_ID, configurationId)
     };
   },
 
@@ -69,29 +69,29 @@ export default React.createClass({
             key="rows"
             rows={this.state.rows.toList()}
             componentId={COMPONENT_ID}
-            configId={this.state.configId}
+            configurationId={this.state.configurationId}
             rowDelete={function(rowId) {
-              return configurationRowsActions.delete(COMPONENT_ID, state.configId, rowId);
+              return configurationRowsActions.delete(COMPONENT_ID, state.configurationId, rowId);
             }}
             rowDeletePending={function(rowId) {
-              return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('delete');
+              return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configurationId, rowId).has('delete');
             }}
             rowEnableDisable={function(rowId) {
               if (state.rows.get(rowId).get('isDisabled', false)) {
-                return configurationRowsActions.enable(COMPONENT_ID, state.configId, rowId);
+                return configurationRowsActions.enable(COMPONENT_ID, state.configurationId, rowId);
               } else {
-                return configurationRowsActions.disable(COMPONENT_ID, state.configId, rowId);
+                return configurationRowsActions.disable(COMPONENT_ID, state.configurationId, rowId);
               }
             }}
             rowEnableDisablePending={function(rowId) {
-              return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configId, rowId).has('enable');
+              return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configurationId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configurationId, rowId).has('enable');
             }}
             rowLinkTo={COMPONENT_ID + '-row'}
           />),
         (<div className="text-center" key="create">
           <CreateConfigurationRowButton
             componentId={COMPONENT_ID}
-            configId={this.state.configId}
+            configId={this.state.configurationId}
             onRowCreated={function() { return; }}
             emptyConfig={function() { return {};}}
             type="button"
@@ -108,7 +108,7 @@ export default React.createClass({
           <div className="kbc-inner-content-padding-fix with-bottom-border">
             <ComponentDescription
               componentId={COMPONENT_ID}
-              configId={this.state.configId}
+              configId={this.state.configurationId}
             />
           </div>
           {this.renderRowsTable()}
@@ -116,7 +116,7 @@ export default React.createClass({
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata
             componentId={COMPONENT_ID}
-            configId={this.state.configId}
+            configId={this.state.configurationId}
           />
           <ul className="nav nav-stacked">
             <li>
@@ -124,7 +124,7 @@ export default React.createClass({
                   title="Run"
                   component={COMPONENT_ID}
                   mode="link"
-                  runParams={() => ({config: this.state.configId})}
+                  runParams={() => ({config: this.state.configurationId})}
               >
                 <span>You are about to run an extraction.</span>
               </RunComponentButton>
@@ -132,14 +132,14 @@ export default React.createClass({
             <li>
               <CreateConfigurationRowButton
                 componentId={COMPONENT_ID}
-                configId={this.state.configId}
+                configId={this.state.configurationId}
                 onRowCreated={function() { return; }}
                 emptyConfig={function() { return {};}}
                 type="link"
               />
             </li>
             <li>
-              <Link to={COMPONENT_ID + '-credentials'} params={{config: this.state.configId}}>
+              <Link to={COMPONENT_ID + '-credentials'} params={{config: this.state.configurationId}}>
                 <span className="fa fa-user fa-fw" />
                 &nbsp;Credentials
               </Link>
@@ -148,7 +148,7 @@ export default React.createClass({
             <li>
               <DeleteConfigurationButton
                 componentId={COMPONENT_ID}
-                configId={this.state.configId}
+                configId={this.state.configurationId}
               />
             </li>
           </ul>
