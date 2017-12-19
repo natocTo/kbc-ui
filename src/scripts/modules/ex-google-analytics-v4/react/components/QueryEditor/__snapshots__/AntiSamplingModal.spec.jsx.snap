@@ -122,6 +122,7 @@ exports[`<AntiSamplingModal /> should render hidden modal 1`] = `
       placement="right"
       saveLabel="Set"
       saveStyle="primary"
+      showCancel={true}
       showSave={true} />
   </ModalFooter>
 </Modal>
@@ -251,6 +252,7 @@ exports[`<AntiSamplingModal /> should render modal 1`] = `
       placement="right"
       saveLabel="Set"
       saveStyle="primary"
+      showCancel={true}
       showSave={true} />
   </ModalFooter>
 </Modal>
