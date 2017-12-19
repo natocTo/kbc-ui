@@ -26,8 +26,16 @@ export default React.createClass({
 
   render() {
     return (
-      <span>
+      <div>
         {this.renderTokenRefreshModal()}
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <p>
+            Create new token and limit access to specific buckets or components in you project.
+            <Link to="tokens-detail" params={{tokenId: 'new-token'}} className="btn btn-success pull-right">
+              + New Token
+            </Link>
+          </p>
+        </div>
         <div className="table table-striped table-hover">
           <div className="thead">
             <div className="tr">
@@ -49,18 +57,14 @@ export default React.createClass({
               <div className="th">
                 Buckets
               </div>
-              <div className="th text-right">
-                <Link
-                  to="tokens-detail" params={{tokenId: 'new-token'}}
-                  className="btn btn-success">+ New Token</Link>
-              </div>
+              <div className="th" />
             </div>
           </div>
           <div className="tbody">
             {this.getSortedTokens().map(this.renderTableRow).toArray()}
           </div>
         </div>
-      </span>
+      </div>
     );
   },
 
