@@ -18,8 +18,8 @@ export default React.createClass({
     trimMultiCreatedValues: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     optionRenderer: PropTypes.func,
-    filterOption: PropTypes.func,
-    options: PropTypes.array
+    options: PropTypes.array,
+    filterOption: PropTypes.func
   },
 
   getDefaultProps() {
@@ -127,6 +127,7 @@ export default React.createClass({
             valueRenderer={this.valueRenderer}
             filterOptions={this.filterOptions}
             onChange={this.onChange}
+            options={this.props.options || []}
           />
           {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
         </span>

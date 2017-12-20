@@ -93,6 +93,7 @@ module.exports = React.createClass
           React.DOM.label className: 'col-xs-2 control-label', 'Tags'
           React.DOM.div className: 'col-xs-10',
             SelectCreatable
+              options: []
               name: 'tags'
               value: @_getTags()
               disabled: @props.disabled
