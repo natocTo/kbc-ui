@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Button } from 'react-bootstrap';
 
 export default React.createClass({
 
@@ -51,15 +51,15 @@ export default React.createClass({
     return Object.keys(lessons).map((lesson, key) => {
       return (
         <li key={key}>
-          <a
-            className={'guide-lesson-link' + (achievedLessonId < key ? ' guide-lesson-link-locked' : '')}
-            href="#" onClick={(e) => {
+          <Button
+            bsStyle="link" className={'guide-lesson-link' + (achievedLessonId < key ? ' guide-lesson-link-locked' : '')}
+            onClick={(e) => {
               e.preventDefault();
               openLessonModalFn(key + 1);
             }}
           >
             Lesson {key + 1} - {lessons[key + 1].title}
-          </a>
+          </Button>
           {achievedLessonId < key && <i className="guide-lock fa fa-lock"/>}
         </li>
       );
