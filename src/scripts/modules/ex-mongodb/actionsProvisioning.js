@@ -198,7 +198,7 @@ export function createActions(componentId) {
     },
 
     cancelQueryEdit(configId, queryId) {
-      updateLocalState(configId, ['editingQueries', queryId], null);
+      removeFromLocalState(configId, ['editingQueries', queryId]);
     },
 
     saveQueryEdit(configId, queryId) {
