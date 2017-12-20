@@ -40,7 +40,7 @@ export default React.createClass({
             <option
               value={''}
               disabled
-            >Select template...</option>
+            >Select template</option>
             {this.templatesSelectorOptions()}
           </FormControl>
         </FormGroup>

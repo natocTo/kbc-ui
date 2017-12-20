@@ -20,7 +20,7 @@ module.exports = React.createClass({
         rowId={this.props.rowId}
         fieldName="name"
         editElement={InlineEditTextInput}
-        placeholder="Choose a name..."
+        placeholder="Choose a name"
         tooltipPlacememnt="bottom"
         fallbackValue={fallbackValue}
         />

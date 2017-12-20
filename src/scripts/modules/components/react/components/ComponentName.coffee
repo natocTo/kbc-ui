@@ -14,7 +14,7 @@ module.exports = React.createClass
       configId: @props.configId
       fieldName: 'name'
       editElement: InlineEditTextInput
-      placeholder: 'Name the component ...'
+      placeholder: 'Name the component'
       tooltipPlacement: 'bottom'
 
 

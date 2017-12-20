@@ -93,7 +93,7 @@ module.exports = React.createClass
       value: emails.map (email) -> email.get 'email'
       input: @props.inputs.get channelName
       disabled: false
-      inputPlaceholder: 'Enter email ...'
+      inputPlaceholder: 'Enter email'
       emptyText: 'No subscribers yet.'
       onChangeValue: @_onChannelChange.bind @, channelName
       onChangeInput: @_onInputChange.bind @, channelName

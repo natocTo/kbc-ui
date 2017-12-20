@@ -24,7 +24,7 @@ export default React.createClass({
 
   getDefaultProps: function() {
     return {
-      placeholder: 'Describe this ...',
+      placeholder: 'Describe this',
       tooltipPlacement: 'top'
     };
   },

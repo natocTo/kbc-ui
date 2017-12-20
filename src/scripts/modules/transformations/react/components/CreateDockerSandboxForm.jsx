@@ -29,7 +29,7 @@ module.exports = React.createClass({
               multi={true}
               options={this.getTablesOptions().toJS()}
               onChange={this.onChangeTables}
-              placeholder="Select tables to load..."
+              placeholder="Select tables to load"
             />
             <p className="help-block">
               The required tables must be loaded into {this.props.type} when creating the sandbox. Data cannot be added later.

@@ -20,7 +20,7 @@ module.exports = React.createClass
     tooltipPlacement: React.PropTypes.string
 
   getDefaultProps: ->
-    placeholder: 'Describe the component ...'
+    placeholder: 'Describe the component'
     tooltipPlacement: 'top'
 
   componentWillReceiveProps: (nextProps) ->
