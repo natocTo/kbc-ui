@@ -58,6 +58,7 @@ export default React.createClass({
         (<div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
           <h3>TODO</h3>
           <ul>
+            <li>disable sorting on sort save action</li>
             <li>Add row link icon</li>
             <li>Documentation?</li>
             <li>New Table a table mít parametrizovatelný</li>
