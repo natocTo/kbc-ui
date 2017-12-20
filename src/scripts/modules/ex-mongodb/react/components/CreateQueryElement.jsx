@@ -15,7 +15,7 @@ export default React.createClass({
 
   createQuery() {
     const ExDbActionCreators = this.props.actionsProvisioning.createActions(this.props.componentId);
-    let query = ExDbActionCreators.createQuery(this.props.configurationId);
+    let query = ExDbActionCreators.createNewQuery(this.props.configurationId);
     this.transitionTo(
       'ex-db-generic-' + this.props.componentId + '-query',
       {
