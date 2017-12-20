@@ -13,7 +13,6 @@ module.exports = React.createClass
   displayName: 'ExDbQueryDetailStatic'
   propTypes:
     query: React.PropTypes.object.isRequired
-    mode: React.PropTypes.string.isRequired
     componentId: React.PropTypes.string.isRequired
     component: React.PropTypes.object.isRequired
 

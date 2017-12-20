@@ -143,6 +143,15 @@ export function createActions(componentId) {
       return newQuery;
     },
 
+    createNewQuery(configId) {
+      const store = getStore(configId);
+      let newQuery = store.getNewQuery();
+      updateLocalState(configId, ['newQueries', newQuery.get('id')], newQuery);
+      updateLocalState(configId, ['newQueriesIdsList'], store.getNewQueriesIdsList().unshift(newQuery.get('id')));
+      updateLocalState(configId, ['editingQueries', newQuery.get('id')], newQuery);
+      return newQuery;
+    },
+
     createQuery(configId) {
       const store = getStore(configId);
       let newQuery = store.getNewQuery();
@@ -189,7 +198,7 @@ export function createActions(componentId) {
     },
 
     cancelQueryEdit(configId, queryId) {
-      updateLocalState(configId, ['editingQueries', queryId], null);
+      removeFromLocalState(configId, ['editingQueries', queryId]);
     },
 
     saveQueryEdit(configId, queryId) {
@@ -201,7 +210,14 @@ export function createActions(componentId) {
 
       newQueries = newQueries.push(newQuery);
       const newData = store.configData.setIn(['parameters', 'exports'], newQueries);
-      return saveConfigData(configId, newData, ['savingQueries']).then(() => this.cancelQueryEdit(configId, queryId));
+      return saveConfigData(configId, newData, ['savingQueries']).then(() => {
+        this.cancelQueryEdit(configId, queryId);
+        removeFromLocalState(configId, ['isSaving', queryId]);
+        removeFromLocalState(configId, ['isChanged', queryId]);
+        if (store.isNewQuery(queryId)) {
+          removeFromLocalState(configId, ['newQueries', queryId]);
+        }
+      });
     },
 
     testCredentials(configId, credentials) {

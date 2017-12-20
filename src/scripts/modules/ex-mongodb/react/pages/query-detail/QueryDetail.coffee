@@ -7,16 +7,18 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 
 QueryEditor = React.createFactory(require '../../components/QueryEditor')
 QueryDetailStatic = React.createFactory(require './QueryDetailStatic')
-QueryNav = require('../../../../ex-db-generic/react/pages/query-detail/QueryNav').default
+QueryNav = require('./QueryNav').default
 EditButtons = require '../../../../../react/common/EditButtons'
 constants = require './../../../constants'
+
+{ Map, List } = require 'immutable'
 
 {div, table, tbody, tr, td, ul, li, a, span, h2, p, strong} = React.DOM
 
 module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
   ExDbActionCreators = actionsProvisioning.createActions(componentId)
   return React.createClass
-    displayName: 'ExDbQueryDetail'
+    displayName: 'ex-mongodb/QueryDetail'
     mixins: [createStoreMixin(storeProvisioning.componentsStore, StorageTablesStore)]
 
     componentWillReceiveProps: ->
@@ -29,6 +31,9 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
       isEditing = ExDbStore.isEditingQuery(queryId)
       query = ExDbStore.getConfigQuery(queryId)
       editingQuery = ExDbStore.getEditingQuery(queryId)
+      editingQueries: ExDbStore.getEditingQueries()
+      newQueries: ExDbStore.getNewQueries()
+      newQueriesIdsList: ExDbStore.getNewQueriesIdsList()
 
       configId: configId
       query: query
@@ -65,6 +70,10 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
                 filter: @state.queriesFilter
                 componentId: componentId
                 actionsProvisioning: actionsProvisioning
+                navQuery: @state.editingQuery || Map()
+                editingQueries: @state.editingQueries || List()
+                newQueries: @state.newQueries || List()
+                newQueriesIdsList: @state.newQueriesIdsList
           div className: 'col-md-9 kbc-main-content-with-nav',
             div className: 'row kbc-header',
               div className: 'kbc-buttons',

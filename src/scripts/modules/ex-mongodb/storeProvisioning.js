@@ -178,6 +178,14 @@ export function createStore(componentId, configId) {
       return data.localState.getIn(['newQueries', 'query'], defaultNewQuery);
     },
 
+    getNewQueries() {
+      return data.localState.getIn(['newQueries']);
+    },
+
+    getNewQueriesIdsList() {
+      return data.localState.getIn(['newQueriesIdsList'], List([]));
+    },
+
     isEditingQuery(queryId) {
       return !!data.localState.getIn(['editingQueries', queryId]);
     },
@@ -186,8 +194,16 @@ export function createStore(componentId, configId) {
       return data.localState.getIn(['editingQueries', queryId]);
     },
 
+    getEditingQueries() {
+      return data.localState.getIn(['editingQueries']);
+    },
+
     isSavingQuery() {
       return data.localState.get('savingQueries');
+    },
+
+    isNewQuery(queryID) {
+      return !!data.localState.getIn(['newQueries', queryID]);
     },
 
     outTableExist(query) {
@@ -231,6 +247,12 @@ export function createStore(componentId, configId) {
     },
 
     getConfigQuery(qid) {
+      if (this.isEditingQuery(qid)) {
+        return this.getEditingQuery(qid);
+      } else if (this.isNewQuery(qid)) {
+        return this.getNewQuery(qid);
+      }
+
       return this.getQueries().find((q) => q.get('id') === qid );
     },
 
