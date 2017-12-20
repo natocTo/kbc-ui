@@ -54,38 +54,49 @@ App = React.createClass
             'Disable Guide Mode \xa0',
             i className: 'fa fa-times',
       PageTitle()
-      Header
-        homeUrl: @state.homeUrl
-        notifications: @state.notifications
-      React.createElement(FloatingNotifications)
-      div className: 'container-fluid',
-        div className: 'row',
-          div className: 'col-xs-3 kbc-sidebar',
-            ProjectSelect
-              organizations: @state.organizations
-              currentProject: @state.currentProject
-              urlTemplates: @state.urlTemplates
-              xsrf: @state.xsrf
-              canCreateProject: @state.canCreateProject
-              projectTemplates: @state.projectTemplates
-            SidebarNavigation()
-            div className: 'kbc-sidebar-footer',
-              CurrentUser
-                user: @state.currentAdmin
-                maintainers: @state.maintainers
-                urlTemplates: @state.urlTemplates
-                canManageApps: @state.canManageApps
-                dropup: true
-              UserLinks()
-          div className: 'col-xs-9 col-xs-offset-3 kbc-main',
-            if @props.isError
-              ErrorPage()
-            else if @props.isLoading
-              LoadingPage()
-            else
-              RouteHandler()
-            if @state.projectHasGuideModeOn == true
-              Wizard
-                projectBaseUrl: @state.projectBaseUrl
+#      React.createElement(FloatingNotifications)
+      div null,
+        div null,
+          div className: 'navbar navbar-inverse',
+            div className: 'container',
+              div className: 'navbar-header',
+                a className: 'navbar-brand',
+                  'Keboola'
+              div className: 'navbar-collapse',
+                CurrentUser
+                  user: @state.currentAdmin
+                  maintainers: @state.maintainers
+                  urlTemplates: @state.urlTemplates
+                  canManageApps: @state.canManageApps
+                div className: 'nav navbar-nav navbar-right',
+                  ProjectSelect
+                    organizations: @state.organizations
+                    currentProject: @state.currentProject
+                    urlTemplates: @state.urlTemplates
+                    xsrf: @state.xsrf
+                    canCreateProject: @state.canCreateProject
+                    projectTemplates: @state.projectTemplates
+
+          div style: {backgroundColor: '#fff', paddingTop: '1em'},
+            div className: 'container',
+              SidebarNavigation()
+          div null,
+            Header
+              homeUrl: @state.homeUrl
+              notifications: @state.notifications
+#            div null,
+#              UserLinks()
+          div null,
+            div className: 'container',
+              div className: 'kbc-main', style: {marginLeft: 0},
+                if @props.isError
+                  ErrorPage()
+                else if @props.isLoading
+                  LoadingPage()
+                else
+                  RouteHandler()
+                if @state.projectHasGuideModeOn == true
+                  Wizard
+                    projectBaseUrl: @state.projectBaseUrl
 
 module.exports = App

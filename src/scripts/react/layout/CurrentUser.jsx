@@ -27,7 +27,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-user">
+      <div className="nav navbar-nav navbar-right">
         <img
           src={this.props.user.get('profileImageUrl')}
           className="kbc-user-avatar"

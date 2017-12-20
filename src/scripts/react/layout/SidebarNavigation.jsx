@@ -53,7 +53,7 @@ const SidebarNavigation = React.createClass({
 
   render() {
     return (
-      <ul className="kbc-nav-sidebar nav nav-sidebar">
+      <ul className="nav nav-tabs">
         {_pages.map(page => {
           return (
             <li className={this.isActive(page.id) ? 'active' : ''} key={page.id}>
