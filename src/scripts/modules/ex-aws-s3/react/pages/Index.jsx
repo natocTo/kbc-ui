@@ -3,6 +3,7 @@ import React from 'react';
 // stores
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../../../components/stores/ConfigurationRowsStore';
+import ConfigurationsStore from '../../../components/stores/ConfigurationsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
@@ -10,6 +11,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
 import configurationRowsActions from '../../../components/ConfigurationRowsActionCreators';
+import configurationsActions from '../../../components/ConfigurationsActionCreators';
 
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
@@ -26,7 +28,7 @@ import ConfigurationRowsTable from '../../../components/react/components/Configu
 const COMPONENT_ID = 'keboola.ex-aws-s3';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
@@ -56,7 +58,6 @@ export default React.createClass({
         (<div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
           <h3>TODO</h3>
           <ul>
-            <li>Row sorting</li>
             <li>Add row link icon</li>
             <li>Documentation?</li>
             <li>New Table a table mít parametrizovatelný</li>
@@ -86,9 +87,13 @@ export default React.createClass({
               return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configurationId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configurationId, rowId).has('enable');
             }}
             rowLinkTo={COMPONENT_ID + '-row'}
+            onOrder={function(rowIds) {
+              return configurationsActions.orderRows(COMPONENT_ID, state.configurationId, rowIds);
+            }}
           />),
         (<div className="text-center" key="create">
           <CreateConfigurationRowButton
+            key="create"
             componentId={COMPONENT_ID}
             configId={this.state.configurationId}
             onRowCreated={function() { return; }}

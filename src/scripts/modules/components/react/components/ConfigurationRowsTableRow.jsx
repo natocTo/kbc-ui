@@ -11,7 +11,7 @@ import { findDOMNode } from 'react-dom';
 const ItemType = 'TableRow';
 
 const rowSource = {
-  beginDrag(props) {
+  beginDrag: function(props) {
     return {
       id: props.row.get('id')
     };
@@ -19,19 +19,21 @@ const rowSource = {
 };
 
 const rowTarget = {
-  canDrop(props, monitor) {
+  canDrop: function(props, monitor) {
     const draggedId = monitor.getItem().id;
     return draggedId === props.row.get('id');
   },
-  hover(props, monitor) {
+  hover: function(props, monitor) {
     const draggedId = monitor.getItem().id;
     const hoverId = props.row.get('id');
 
     if (draggedId === hoverId) {
       return;
     }
-
-    props.onMove(hoverId, draggedId);
+    props.onMoveProgress(hoverId, draggedId);
+  },
+  drop: function(props) {
+    props.onMoveFinished();
   }
 };
 
@@ -65,7 +67,8 @@ const TableRow = React.createClass({
     onDelete: React.PropTypes.func.isRequired,
     isEnableDisablePending: React.PropTypes.bool.isRequired,
     onEnableDisable: React.PropTypes.func.isRequired,
-    onMove: React.PropTypes.func.isRequired,
+    onMoveProgress: React.PropTypes.func.isRequired,
+    onMoveFinished: React.PropTypes.func.isRequired,
     disabledMove: React.PropTypes.bool.isRequired,
 
     // react-dnd
@@ -85,8 +88,8 @@ const TableRow = React.createClass({
   render() {
     const { isDragging, connectDragPreview, connectDropTarget } = this.props;
     let style = {
-      opacity: isDragging ? 0.5 : 1,
-      'backgroundColor': isDragging ? '#ffc' : null
+      opacity: isDragging ? 0.5 : 1 // ,
+      // 'backgroundColor': isDragging ? '#ffc' : null
     };
     const props = this.props;
     return (

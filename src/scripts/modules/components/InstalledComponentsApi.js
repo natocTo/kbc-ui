@@ -144,6 +144,19 @@ const installedComponentsApi = {
       }
       return response.body;
     });
+  },
+  orderRows: function(componentId, configurationId, rowIds, changeDescription) {
+    const formData = {
+      rowsSortOrder: rowIds,
+      changeDescription: changeDescription
+    };
+    return createRequest('PUT', 'components/' + componentId + '/configs/' + configurationId)
+      .type('form')
+      .send(formData)
+      .promise()
+      .then(function(response) {
+        return response.body;
+      });
   }
 };
 

@@ -3,7 +3,7 @@ import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixi
 import fuzzy from 'fuzzy';
 import SearchRow from '../../../../react/common/SearchRow';
 import Row from './ConfigurationRowsTableRow';
-import {DragDropContext} from 'react-dnd';
+import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 export default DragDropContext(HTML5Backend)(React.createClass({
@@ -22,7 +22,8 @@ export default DragDropContext(HTML5Backend)(React.createClass({
     rowEnableDisable: React.PropTypes.func.isRequired,
     rowDeletePending: React.PropTypes.func.isRequired,
     rowEnableDisablePending: React.PropTypes.func.isRequired,
-    rowLinkTo: React.PropTypes.string.isRequired
+    rowLinkTo: React.PropTypes.string.isRequired,
+    onOrder: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
@@ -48,8 +49,18 @@ export default DragDropContext(HTML5Backend)(React.createClass({
 
   getInitialState() {
     return {
-      query: ''
+      query: '',
+      rows: this.props.rows
     };
+  },
+
+  componentWillReceiveProps(nextProps) {
+    const state = this.state;
+    this.setState({
+      rows: nextProps.rows.filter(function(row) {
+        return nextProps.filter(row, state.query);
+      }, this)
+    });
   },
 
   renderHeaders() {
@@ -65,6 +76,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
   renderTableRows(rows) {
     const props = this.props;
     const state = this.state;
+    const component = this;
     return rows.map(function(row, rowIndex) {
       return (
         <Row
@@ -82,8 +94,31 @@ export default DragDropContext(HTML5Backend)(React.createClass({
           onEnableDisable={function() {
             return props.rowEnableDisable(row.get('id'));
           }}
-          onMove={function() {
-            return null;
+          onMoveProgress={function(hoverId, draggedId) {
+            const draggedRow = state.rows.find(function(findRow) {
+              return findRow.get('id') === draggedId;
+            });
+            const draggedIndex = state.rows.findIndex(function(findRow) {
+              return findRow.get('id') === draggedId;
+            });
+            const hoverIndex = state.rows.findIndex(function(findRow) {
+              return findRow.get('id') === hoverId;
+            });
+            component.setState({
+              rows: state.rows.splice(draggedIndex, 1).splice(hoverIndex, 0, draggedRow)
+            });
+          }}
+          onMoveFinished={function() {
+            const newRowsOrder = state.rows.map(function(mapRow) {
+              return mapRow.get('id');
+            });
+            const currentRowsOrder = props.rows.map(function(mapRow) {
+              return mapRow.get('id');
+            });
+            if (!newRowsOrder.equals(currentRowsOrder)) {
+              return props.onOrder(newRowsOrder.toJS());
+            }
+            return;
           }}
           disabledMove={state.query !== '' ? true : false}
           />
@@ -92,11 +127,12 @@ export default DragDropContext(HTML5Backend)(React.createClass({
   },
 
   onChangeSearch(query) {
-    this.setState({query: query});
-  },
-
-  onSubmitSearch(query) {
-    this.setState({query: query});
+    this.setState({
+      query: query,
+      rows: this.props.rows.filter(function(row) {
+        return this.props.filter(row, query);
+      }, this)
+    });
   },
 
   renderTable(rows) {
@@ -122,20 +158,16 @@ export default DragDropContext(HTML5Backend)(React.createClass({
   },
 
   render() {
-    const filteredRows = this.props.rows.filter(function(row) {
-      return this.props.filter(row, this.state.query);
-    }, this);
-
     return (
       <div>
         <div>
           <SearchRow
             query={this.state.query}
             onChange={this.onChangeSearch}
-            onSubmit={this.onSubmitSearch}
+            onSubmit={this.onChangeSearch}
           />
         </div>
-        {this.renderTable(filteredRows)}
+        {this.renderTable(this.state.rows)}
       </div>
     );
   }

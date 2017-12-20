@@ -74,5 +74,33 @@ module.exports = {
         });
         throw e;
       });
+  },
+
+  orderRows: function(componentId, configurationId, rowIds) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowIds: rowIds
+    });
+    const changeDescription = 'Rows order changed';
+    return InstalledComponentsApi.orderRows(componentId, configurationId, rowIds, changeDescription)
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          response: response
+        });
+      }).catch(function(e) {
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          error: e
+        });
+        throw e;
+      });
   }
 };

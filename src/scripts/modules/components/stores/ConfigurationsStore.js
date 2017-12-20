@@ -79,6 +79,22 @@ Dispatcher.register(function(payload) {
         .setIn(['configurations', action.componentId, action.configurationId], Immutable.fromJS(action.configuration));
       return ConfigurationsStore.emitChange();
 
+    case Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'order-rows'], true);
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, 'order-rows']);
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_SUCCESS:
+      _store = _store
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, 'order-rows'])
+        .deleteIn(['editing', action.componentId, action.configurationId])
+        .setIn(['configurations', action.componentId, action.configurationId], Immutable.fromJS(action.response));
+      return ConfigurationsStore.emitChange();
+
+
     default:
       break;
   }

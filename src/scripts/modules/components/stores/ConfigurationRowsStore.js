@@ -5,6 +5,7 @@ import {Map} from 'immutable';
 import StoreUtils from '../../../utils/StoreUtils';
 import fromJSOrdered from '../../../utils/fromJSOrdered';
 import InstalledComponentsConstants from '../Constants';
+import ConfigurationsConstants from '../ConfigurationsConstants';
 
 var _store = Map({
   rows: Map(),
@@ -99,9 +100,11 @@ Dispatcher.register(function(payload) {
       _store = _store.withMutations(function(store) {
         let retVal = store;
         retVal = retVal.deleteIn(['rows', action.componentId, action.configId]);
+        let orderedRows = Immutable.OrderedMap();
         action.data.rows.forEach(function(row) {
-          retVal = retVal.setIn(['rows', action.componentId, action.configId, row.id], Immutable.fromJS(row));
+          orderedRows = orderedRows.set(row.id, Immutable.fromJS(row));
         });
+        retVal = retVal.setIn(['rows', action.componentId, action.configId], orderedRows);
         return retVal;
       });
       return ConfigurationRowsStore.emitChange();
@@ -111,9 +114,11 @@ Dispatcher.register(function(payload) {
         let retVal = store;
         action.configData.forEach(function(config) {
           retVal = retVal.deleteIn(['rows', action.componentId]);
+          let orderedRows = Immutable.OrderedMap();
           config.rows.forEach(function(row) {
-            retVal = retVal.setIn(['rows', action.componentId, config.id, row.id], Immutable.fromJS(row));
+            orderedRows = orderedRows.set(row.id, Immutable.fromJS(row));
           });
+          retVal = retVal.setIn(['rows', action.componentId, config.id], orderedRows);
         });
         return retVal;
       });
@@ -270,6 +275,34 @@ Dispatcher.register(function(payload) {
         .deleteIn(['jsonEditor', action.componentId, action.configurationId, action.rowId]);
       return ConfigurationRowsStore.emitChange();
 
+    case ConfigurationsConstants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_START:
+      _store = _store.withMutations(function(store) {
+        let retVal = store;
+        const rows = store.getIn(['rows', action.componentId, action.configurationId]);
+        let orderedRows = Immutable.OrderedMap();
+        retVal = retVal.deleteIn(['rows', action.componentId, action.configurationId]);
+        action.rowIds.forEach(function(rowId) {
+          orderedRows = orderedRows.set(rowId, rows.find(function(row) {
+            return row.get('id') === rowId;
+          }));
+        });
+        retVal = retVal.setIn(['rows', action.componentId, action.configurationId], orderedRows);
+        return retVal;
+      });
+      return ConfigurationRowsStore.emitChange();
+
+    case ConfigurationsConstants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_SUCCESS:
+      _store = _store.withMutations(function(store) {
+        let retVal = store;
+        retVal = retVal.deleteIn(['rows', action.componentId, action.configurationId]);
+        let orderedRows = Immutable.OrderedMap();
+        action.response.rows.forEach(function(row) {
+          orderedRows = orderedRows.set(row.id, Immutable.fromJS(row));
+        });
+        retVal = retVal.setIn(['rows', action.componentId, action.configurationId], orderedRows);
+        return retVal;
+      });
+      return ConfigurationRowsStore.emitChange();
 
     default:
       break;
