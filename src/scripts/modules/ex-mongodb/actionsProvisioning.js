@@ -143,6 +143,15 @@ export function createActions(componentId) {
       return newQuery;
     },
 
+    createNewQuery(configId) {
+      const store = getStore(configId);
+      let newQuery = store.getNewQuery();
+      updateLocalState(configId, ['newQueries', newQuery.get('id')], newQuery);
+      updateLocalState(configId, ['newQueriesIdsList'], store.getNewQueriesIdsList().unshift(newQuery.get('id')));
+      updateLocalState(configId, ['editingQueries', newQuery.get('id')], newQuery);
+      return newQuery;
+    },
+
     createQuery(configId) {
       const store = getStore(configId);
       let newQuery = store.getNewQuery();
