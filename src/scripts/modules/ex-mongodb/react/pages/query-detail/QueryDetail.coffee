@@ -16,7 +16,7 @@ constants = require './../../../constants'
 module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
   ExDbActionCreators = actionsProvisioning.createActions(componentId)
   return React.createClass
-    displayName: 'ExDbQueryDetail'
+    displayName: 'ex-mongodb/QueryDetail'
     mixins: [createStoreMixin(storeProvisioning.componentsStore, StorageTablesStore)]
 
     componentWillReceiveProps: ->
