@@ -64,6 +64,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
 
   renderTableRows(rows) {
     const props = this.props;
+    const state = this.state;
     return rows.map(function(row, rowIndex) {
       return (
         <Row
@@ -84,6 +85,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
           onMove={function() {
             return null;
           }}
+          disabledMove={state.query !== '' ? true : false}
           />
       );
     });

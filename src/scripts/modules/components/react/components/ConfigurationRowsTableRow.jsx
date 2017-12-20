@@ -66,6 +66,7 @@ const TableRow = React.createClass({
     isEnableDisablePending: React.PropTypes.bool.isRequired,
     onEnableDisable: React.PropTypes.func.isRequired,
     onMove: React.PropTypes.func.isRequired,
+    disabledMove: React.PropTypes.bool.isRequired,
 
     // react-dnd
     isDragging: React.PropTypes.bool.isRequired,
@@ -74,8 +75,15 @@ const TableRow = React.createClass({
     connectDropTarget: React.PropTypes.func.isRequired
   },
 
+  renderDragSource() {
+    if (this.props.disabledMove) {
+      return (<span className="fa fa-bars fa-fw" style={{cursor: 'not-allowed'}} />);
+    }
+    return this.props.connectDragSource(<span className="fa fa-bars fa-fw" style={{cursor: 'move'}} />);
+  },
+
   render() {
-    const { isDragging, connectDragPreview, connectDragSource, connectDropTarget } = this.props;
+    const { isDragging, connectDragPreview, connectDropTarget } = this.props;
     let style = {
       opacity: isDragging ? 0.5 : 1,
       'backgroundColor': isDragging ? '#ffc' : null
@@ -89,12 +97,14 @@ const TableRow = React.createClass({
           style={style}
           ref={function(instance) {
             const node = findDOMNode(instance);
-            connectDragPreview(node);
-            connectDropTarget(node);
+            if (!props.disabledMove) {
+              connectDragPreview(node);
+              connectDropTarget(node);
+            }
           }}
         >
           <div className="td" key="dnd-handle">
-            {connectDragSource(<span className="fa fa-bars fa-fw" style={{cursor: 'move'}} />)}
+            {this.renderDragSource()}
           </div>
           {this.props.columns.map(function(columnFunction, columnIndex) {
             return (
