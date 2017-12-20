@@ -247,6 +247,12 @@ export function createStore(componentId, configId) {
     },
 
     getConfigQuery(qid) {
+      if (this.isEditingQuery(qid)) {
+        return this.getEditingQuery(qid);
+      } else if (this.isNewQuery(qid)) {
+        return this.getNewQuery(qid);
+      }
+
       return this.getQueries().find((q) => q.get('id') === qid );
     },
 
