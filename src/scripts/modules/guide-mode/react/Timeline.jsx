@@ -11,19 +11,6 @@ export default React.createClass({
   getImagePath() {
     return ApplicationStore.getScriptsBasePath() + require('../media/kblw.png');
   },
-  getI() {
-    var array = this.getArray();
-    return array;
-  },
-  getArray() {
-    var rows = [];
-    for (var i = 0; i < this.props.badgeCount; i++) {
-      rows.push(<div className="number-circle-container" key={i}>
-          <div className="number-circle">a</div>
-        </div>);
-    }
-    return rows;
-  },
   renderActiveItem(order) {
     if (order < this.props.currentBadge) {
       return (
