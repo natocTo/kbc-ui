@@ -80,12 +80,16 @@ export default React.createClass({
       var emptyString = {};
       emptyString[this.props.valueKey] = '%_EMPTY_STRING_%';
       emptyString[this.props.labelKey] = (<code>[empty string]</code>);
-      opts.push(emptyString);
+      if (!opts.find(o => o[this.props.valueKey] === '%_EMPTY_STRING_%')) {
+        opts.push(emptyString);
+      }
 
       var spaceCharacter = {};
       spaceCharacter[this.props.valueKey] = '%_SPACE_CHARACTER_%';
       spaceCharacter[this.props.labelKey] = (<code>[space character]</code>);
-      opts.push(spaceCharacter);
+      if (!opts.find(o => o[this.props.valueKey] === '%_SPACE_CHARACTER_%')) {
+        opts.push(spaceCharacter);
+      }
     }
 
     var filterOption = function(op) {
