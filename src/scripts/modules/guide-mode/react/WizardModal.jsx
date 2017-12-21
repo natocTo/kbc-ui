@@ -300,12 +300,12 @@ export default React.createClass({
   },
   renderNextLessonLink() {
     return (
-        <a href="#" onClick={(e) => {
+        <Button bsStyle="link" onClick={(e) => {
           e.preventDefault();
           showWizardModalFn(this.getLessonId() + 1);
         }}>
           Lesson {this.getLessonId() + 1}
-        </a>
+        </Button>
     );
   },
   closeLessonModal() {

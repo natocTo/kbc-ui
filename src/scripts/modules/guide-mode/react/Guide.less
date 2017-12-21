@@ -118,22 +118,7 @@
     }
     li {
       line-height: 1.5;
-      a{
-        padding: 4px 8px;
-        transition: 0.03s all linear;
-        text-decoration: underline;
 
-        &:focus,
-        &:active{
-          color: #fff;
-          outline:none;
-        }
-        &:hover{
-          background: #50c4ee;
-          border-radius: 5px;
-          text-decoration: none;
-        }
-      }
     }
     strong {
       font-weight: bold;
@@ -382,13 +367,29 @@
 
   &-lesson-link {
     font-size: 18px;
-    line-height: 38px;
+    line-height: 30px;
     text-decoration: none;
     color: #fff;
 
+    margin: 4px 0;
+    padding: 0px 8px;
+    transition: 0.03s all linear;
+    text-decoration: underline;
+    white-space: normal;
+    text-align: left;
+    outline: none;
+
     &:hover {
       color: #fff;
-      text-decoration: underline;
+      background: #50c4ee;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    &:focus,
+    &:active {
+      color: #fff;
+      outline: none !important;
     }
     &-locked {
       opacity: 0.5;
@@ -402,7 +403,7 @@
   &-link {
     color: #ffffff;
     text-decoration: underline;
-    &-fake{
+    &-fake {
       pointer-events: none;
       color: #15c3ff;
     }
@@ -411,7 +412,9 @@
   &-lock {
     color: #ffffff;
     font-size: 18px;
-    line-height: 38px;
+    line-height: 30px;
+    position: relative;
+    top: 2px;
     opacity: 0.5;
   }
 
