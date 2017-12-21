@@ -23,7 +23,8 @@ export default DragDropContext(HTML5Backend)(React.createClass({
     rowDeletePending: React.PropTypes.func.isRequired,
     rowEnableDisablePending: React.PropTypes.func.isRequired,
     rowLinkTo: React.PropTypes.string.isRequired,
-    onOrder: React.PropTypes.func.isRequired
+    onOrder: React.PropTypes.func.isRequired,
+    orderPending: React.PropTypes.bool.isRequired
   },
 
   getDefaultProps() {
@@ -120,7 +121,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
             }
             return;
           }}
-          disabledMove={state.query !== '' ? true : false}
+          disabledMove={state.query !== '' || props.orderPending}
           />
       );
     });

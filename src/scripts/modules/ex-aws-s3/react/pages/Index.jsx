@@ -58,8 +58,6 @@ export default React.createClass({
         (<div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
           <h3>TODO</h3>
           <ul>
-            <li>disable sorting on sort save action</li>
-            <li>Add row link icon</li>
             <li>Documentation?</li>
             <li>New Table a table mít parametrizovatelný</li>
             <li>Search bar styling</li>
@@ -91,6 +89,7 @@ export default React.createClass({
             onOrder={function(rowIds) {
               return configurationsActions.orderRows(COMPONENT_ID, state.configurationId, rowIds);
             }}
+            orderPending={ConfigurationsStore.getPendingActions(COMPONENT_ID, state.configurationId).has('order-rows')}
           />),
         (<div className="text-center" key="create">
           <CreateConfigurationRowButton
