@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import moment from 'moment';
 import date from '../../../../../utils/date';
-import string from 'underscore.string';
+import underscoreString from 'underscore.string';
 import {Table} from 'react-bootstrap';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
@@ -118,7 +118,7 @@ export default React.createClass({
       const cl = `tr ${info.className}`;
       const agoTime = moment(e.get('created')).fromNow();
       const incElement = <p><small><strong>incremental</strong></small></p>;
-      info.message = string.replaceAll(info.message, this.props.tableId, '');
+      info.message = underscoreString.replaceAll(info.message, this.props.tableId, '');
       const incremental = e.getIn(['params', 'incremental']) ? incElement : <span />;
       return (
         <tr className={cl} onClick={() => this.setDetailEventId(e.get('id'))}>
