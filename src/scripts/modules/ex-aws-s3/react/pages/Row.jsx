@@ -31,35 +31,36 @@ export default React.createClass({
   mixins: [createStoreMixin(Store)],
 
   getStateFromStores() {
-    const componentId = RoutesStore.getRouteComponentId();
+    const settings = RoutesStore.getRouteSettings();
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const rowId = RoutesStore.getCurrentRouteParam('row');
-    const row = Store.get(componentId, configurationId, rowId);
+    const row = Store.get(settings.get('componentId'), configurationId, rowId);
     return {
-      componentId: componentId,
+      componentId: settings.get('componentId'),
+      settings: settings,
       configurationId: configurationId,
       rowId: rowId,
       row: row,
 
-      parametersValue: Store.getEditingParametersString(componentId, configurationId, rowId),
-      isParametersSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-parameters'),
-      isParametersValid: Store.isEditingParametersValid(componentId, configurationId, rowId),
-      isParametersChanged: Store.isEditingParameters(componentId, configurationId, rowId),
+      parametersValue: Store.getEditingParametersString(settings.get('componentId'), configurationId, rowId),
+      isParametersSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-parameters'),
+      isParametersValid: Store.isEditingParametersValid(settings.get('componentId'), configurationId, rowId),
+      isParametersChanged: Store.isEditingParameters(settings.get('componentId'), configurationId, rowId),
 
-      processorsValue: Store.getEditingProcessorsString(componentId, configurationId, rowId),
-      isProcessorsSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-processors'),
-      isProcessorsValid: Store.isEditingProcessorsValid(componentId, configurationId, rowId),
-      isProcessorsChanged: Store.isEditingProcessors(componentId, configurationId, rowId),
+      processorsValue: Store.getEditingProcessorsString(settings.get('componentId'), configurationId, rowId),
+      isProcessorsSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-processors'),
+      isProcessorsValid: Store.isEditingProcessorsValid(settings.get('componentId'), configurationId, rowId),
+      isProcessorsChanged: Store.isEditingProcessors(settings.get('componentId'), configurationId, rowId),
 
-      isParsableConfiguration: isParsableConfiguration(Store.getConfiguration(componentId, configurationId, rowId), parseConfiguration, createConfiguration),
-      isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, rowId),
+      isParsableConfiguration: isParsableConfiguration(Store.getConfiguration(settings.get('componentId'), configurationId, rowId), parseConfiguration, createConfiguration),
+      isJsonEditorOpen: Store.hasJsonEditor(settings.get('componentId'), configurationId, rowId),
 
-      configuration: Store.getEditingConfiguration(componentId, configurationId, rowId, parseConfiguration),
-      isSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-configuration'),
-      isChanged: Store.isEditingConfiguration(componentId, configurationId, rowId),
+      configuration: Store.getEditingConfiguration(settings.get('componentId'), configurationId, rowId, parseConfiguration),
+      isSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-configuration'),
+      isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId, rowId),
 
-      isDeletePending: Store.getPendingActions(componentId, configurationId, rowId).has('delete'),
-      isEnableDisablePending: Store.getPendingActions(componentId, configurationId, rowId).has('enable') || Store.getPendingActions(componentId, configurationId, rowId).has('disable')
+      isDeletePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('delete'),
+      isEnableDisablePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('enable') || Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('disable')
     };
   },
 

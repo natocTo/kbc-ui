@@ -6,17 +6,21 @@ import versionsActions from '../components/VersionsActionCreators';
 import jobsActions from '../jobs/ActionCreators';
 import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../components/stores/ConfigurationRowsStore';
+import { createConfiguration as rowCreateConfiguration, parseConfiguration as rowParseConfiguration } from './adapters/row';
+import { createConfiguration as credentialsCreateConfiguration, parseConfiguration as credentialsParseConfiguration } from './adapters/credentials';
+import ConfigurationForm from './react/components/Configuration';
+import CredentialsForm from './react/components/Credentials';
 
 const routeCreator = function(settings) {
-  return {
+  let route = {
     name: settings.componentId,
+    settings: settings,
     path: ':config',
     title: (routerState) => {
       const configId = routerState.getIn(['params', 'config']);
       return InstalledComponentsStore.getConfig(settings.componentId, configId).get('name');
     },
     isComponent: true,
-    componentId: settings.componentId,
     defaultRouteHandler: Index,
     poll: {
       interval: 10,
@@ -29,16 +33,15 @@ const routeCreator = function(settings) {
     childRoutes: [
       {
         name: settings.componentId + '-credentials',
-        path: ':config/credentials',
+        settings: settings,
+        path: 'credentials',
         title: 'Credentials',
-        defaultRouteHandler: Credentials,
-        componentId: settings.componentId
-
+        defaultRouteHandler: Credentials
       },
       {
         name: settings.componentId + '-row',
-        componentId: settings.componentId,
-        path: ':config/:row',
+        settings: settings,
+        path: ':row',
         title: (routerState) => {
           const configId = routerState.getIn(['params', 'config']);
           const rowId = routerState.getIn(['params', 'row']);
@@ -49,10 +52,33 @@ const routeCreator = function(settings) {
       }
     ]
   };
+  if (settings.hasCredentials) {
+    // route.childRoutes.push();
+  }
+  return route;
 };
 
 const routeSettings = {
-  componentId: 'keboola.ex-aws-s3'
+  componentId: 'keboola.ex-aws-s3',
+  hasCredentials: true,
+  rowItem: {
+    singular: 'Table',
+    plural: 'Tables'
+  },
+  adapters: {
+    credentials: {
+      create: credentialsCreateConfiguration,
+      parse: credentialsParseConfiguration
+    },
+    row: {
+      create: rowCreateConfiguration,
+      parse: rowParseConfiguration
+    }
+  },
+  components: {
+    row: ConfigurationForm,
+    credentials: CredentialsForm
+  }
 };
 
 export default routeCreator(routeSettings);

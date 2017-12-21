@@ -60,10 +60,9 @@ getRouteTitle = (store, routeName) ->
   else
     title
 
-getRouteComponentId = (store, routeName) ->
+getRouteSettings = (store, routeName) ->
   route = getRoute(store, routeName)
-  if route then route.get 'componentId' else ''
-
+  if route then route.get 'settings' else Map()
 
 getRouteIsRunning = (store, routeName) ->
   route = getRoute(store, routeName)
@@ -139,9 +138,9 @@ RoutesStore = StoreUtils.createStore
     currentRouteName = getCurrentRouteName(_store)
     getRouteIsRunning(_store, currentRouteName)
 
-  getRouteComponentId: ->
+  getRouteSettings: ->
     currentRouteName = getCurrentRouteName(_store)
-    getRouteComponentId(_store, currentRouteName)
+    getRouteSettings(_store, currentRouteName)
 
 
   ###

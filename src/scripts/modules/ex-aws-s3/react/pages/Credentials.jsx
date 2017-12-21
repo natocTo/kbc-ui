@@ -27,16 +27,17 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
 
   getStateFromStores() {
-    const componentId = RoutesStore.getRouteComponentId();
+    const settings = RoutesStore.getRouteSettings();
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const component = ComponentStore.getComponent(componentId);
+    const component = ComponentStore.getComponent(settings.get('componentId'));
     return {
-      componentId: componentId,
+      componentId: settings.get('componentId'),
+      settings: settings,
       component: component,
       configurationId: configurationId,
-      configuration: Store.getEditingConfiguration(componentId, configurationId, parseConfiguration),
-      isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
-      isChanged: Store.isEditingConfiguration(componentId, configurationId)
+      configuration: Store.getEditingConfiguration(settings.get('componentId'), configurationId, parseConfiguration),
+      isSaving: Store.getPendingActions(settings.get('componentId'), configurationId).has('save-configuration'),
+      isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId)
     };
   },
 

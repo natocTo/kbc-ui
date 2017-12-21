@@ -28,13 +28,14 @@ export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
-    const componentId = RoutesStore.getRouteComponentId();
     const configurationId = RoutesStore.getCurrentRouteParam('config');
+    const settings = RoutesStore.getRouteSettings();
     return {
-      componentId: componentId,
+      componentId: settings.get('componentId'),
+      settings: settings,
       configurationId: configurationId,
-      latestJobs: LatestJobsStore.getJobs(componentId, configurationId),
-      rows: ConfigurationRowsStore.getRows(componentId, configurationId)
+      latestJobs: LatestJobsStore.getJobs(settings.get('componentId'), configurationId),
+      rows: ConfigurationRowsStore.getRows(settings.get('componentId'), configurationId)
     };
   },
 
@@ -104,6 +105,19 @@ export default React.createClass({
     }
   },
 
+  renderCredentialsLink() {
+    if (this.state.settings.get('hasCredentials')) {
+      return (
+        <li>
+          <Link to={this.state.componentId + '-credentials'} params={{config: this.state.configurationId}}>
+            <span className="fa fa-user fa-fw" />
+            &nbsp;Credentials
+          </Link>
+        </li>
+      );
+    }
+  },
+
   render() {
     return (
       <div className="container-fluid">
@@ -141,13 +155,7 @@ export default React.createClass({
                 type="link"
               />
             </li>
-            <li>
-              <Link to={this.state.componentId + '-credentials'} params={{config: this.state.configurationId}}>
-                <span className="fa fa-user fa-fw" />
-                &nbsp;Credentials
-              </Link>
-            </li>
-
+            {this.renderCredentialsLink()}
             <li>
               <DeleteConfigurationButton
                 componentId={this.state.componentId}
