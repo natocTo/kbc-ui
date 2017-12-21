@@ -2,6 +2,7 @@ React = require 'react'
 EventsServiceFactory = require('../../../../sapi-events/EventsService').factory
 GoodDataStats = React.createFactory(require './GoodDataStats')
 _ = require 'underscore'
+underscoreString = require 'underscore.string'
 Immutable = require 'immutable'
 
 module.exports = React.createClass
@@ -46,6 +47,6 @@ module.exports = React.createClass
     _.map tasks, (task, taskId) ->
       msg = "Task #{taskId} "
       event = _.find _.values(events), (event) ->
-        _.str.startsWith event.message, msg
+        underscoreString.startsWith event.message, msg
       task.event = event
       task
