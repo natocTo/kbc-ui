@@ -10,6 +10,8 @@ import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 import AsynchActionError from './AsynchActionError';
 import TableLoader from './TableLoaderQueryEditor';
 
+import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates/helpAndHints';
+
 import editorMode from '../../templates/editorMode';
 
 export default React.createClass({
@@ -360,7 +362,7 @@ export default React.createClass({
           {this.renderQueryHelpBlock()}
           <CodeEditor
             readOnly={false}
-            placeholder="e.g. SELECT `id`, `name` FROM `myTable`"
+            placeholder={getQueryEditorPlaceholder(this.props.componentId)}
             value={this.getQuery()}
             mode={editorMode(this.props.componentId)}
             onChange={this.handleQueryChange}
@@ -429,10 +431,11 @@ export default React.createClass({
   },
 
   renderQueryHelpBlock() {
-    if (this.props.componentId === 'keboola.ex-db-oracle') {
+    const helpText = getQueryEditorHelpText(this.props.componentId);
+    if (helpText) {
       return (
         <div className="help-block">
-          Please do not put semicolons at the end of the query.
+          {helpText}
         </div>
       );
     } else if (this.props.componentId === 'keboola.ex-db-mysql' && !this.props.credentialsHasDatabase) {
