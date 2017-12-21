@@ -24,18 +24,17 @@ import {Link} from 'react-router';
 import CreateConfigurationRowButton from '../../../components/react/components/CreateConfigurationRowButton';
 import ConfigurationRowsTable from '../../../components/react/components/ConfigurationRowsTable';
 
-// CONSTS
-const COMPONENT_ID = 'keboola.ex-aws-s3';
-
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
+    const componentId = RoutesStore.getRouteComponentId();
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     return {
+      componentId: componentId,
       configurationId: configurationId,
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configurationId),
-      rows: ConfigurationRowsStore.getRows(COMPONENT_ID, configurationId)
+      latestJobs: LatestJobsStore.getJobs(componentId, configurationId),
+      rows: ConfigurationRowsStore.getRows(componentId, configurationId)
     };
   },
 
@@ -67,34 +66,34 @@ export default React.createClass({
         (<ConfigurationRowsTable
             key="rows"
             rows={this.state.rows.toList()}
-            componentId={COMPONENT_ID}
+            componentId={this.state.componentId}
             configurationId={this.state.configurationId}
             rowDelete={function(rowId) {
-              return configurationRowsActions.delete(COMPONENT_ID, state.configurationId, rowId);
+              return configurationRowsActions.delete(state.componentId, state.configurationId, rowId);
             }}
             rowDeletePending={function(rowId) {
-              return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configurationId, rowId).has('delete');
+              return ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('delete');
             }}
             rowEnableDisable={function(rowId) {
               if (state.rows.get(rowId).get('isDisabled', false)) {
-                return configurationRowsActions.enable(COMPONENT_ID, state.configurationId, rowId);
+                return configurationRowsActions.enable(state.componentId, state.configurationId, rowId);
               } else {
-                return configurationRowsActions.disable(COMPONENT_ID, state.configurationId, rowId);
+                return configurationRowsActions.disable(state.componentId, state.configurationId, rowId);
               }
             }}
             rowEnableDisablePending={function(rowId) {
-              return ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configurationId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(COMPONENT_ID, state.configurationId, rowId).has('enable');
+              return ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('enable');
             }}
-            rowLinkTo={COMPONENT_ID + '-row'}
+            rowLinkTo={this.state.componentId + '-row'}
             onOrder={function(rowIds) {
-              return configurationsActions.orderRows(COMPONENT_ID, state.configurationId, rowIds);
+              return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds);
             }}
-            orderPending={ConfigurationsStore.getPendingActions(COMPONENT_ID, state.configurationId).has('order-rows')}
+            orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).has('order-rows')}
           />),
         (<div className="text-center" key="create">
           <CreateConfigurationRowButton
             key="create"
-            componentId={COMPONENT_ID}
+            componentId={this.state.componentId}
             configId={this.state.configurationId}
             onRowCreated={function() { return; }}
             emptyConfig={function() { return {};}}
@@ -111,7 +110,7 @@ export default React.createClass({
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-content-padding-fix with-bottom-border">
             <ComponentDescription
-              componentId={COMPONENT_ID}
+              componentId={this.state.componentId}
               configId={this.state.configurationId}
             />
           </div>
@@ -119,14 +118,14 @@ export default React.createClass({
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata
-            componentId={COMPONENT_ID}
+            componentId={this.state.componentId}
             configId={this.state.configurationId}
           />
           <ul className="nav nav-stacked">
             <li>
               <RunComponentButton
                   title="Run"
-                  component={COMPONENT_ID}
+                  component={this.state.componentId}
                   mode="link"
                   runParams={() => ({config: this.state.configurationId})}
               >
@@ -135,7 +134,7 @@ export default React.createClass({
             </li>
             <li>
               <CreateConfigurationRowButton
-                componentId={COMPONENT_ID}
+                componentId={this.state.componentId}
                 configId={this.state.configurationId}
                 onRowCreated={function() { return; }}
                 emptyConfig={function() { return {};}}
@@ -143,7 +142,7 @@ export default React.createClass({
               />
             </li>
             <li>
-              <Link to={COMPONENT_ID + '-credentials'} params={{config: this.state.configurationId}}>
+              <Link to={this.state.componentId + '-credentials'} params={{config: this.state.configurationId}}>
                 <span className="fa fa-user fa-fw" />
                 &nbsp;Credentials
               </Link>
@@ -151,7 +150,7 @@ export default React.createClass({
 
             <li>
               <DeleteConfigurationButton
-                componentId={COMPONENT_ID}
+                componentId={this.state.componentId}
                 configId={this.state.configurationId}
               />
             </li>
@@ -161,7 +160,7 @@ export default React.createClass({
             limit={3}
           />
           <LatestVersions
-            componentId={COMPONENT_ID}
+            componentId={this.state.componentId}
           />
         </div>
       </div>

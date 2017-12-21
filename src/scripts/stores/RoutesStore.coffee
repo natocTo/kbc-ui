@@ -60,6 +60,10 @@ getRouteTitle = (store, routeName) ->
   else
     title
 
+getRouteComponentId = (store, routeName) ->
+  route = getRoute(store, routeName)
+  if route then route.get 'componentId' else ''
+
 
 getRouteIsRunning = (store, routeName) ->
   route = getRoute(store, routeName)
@@ -134,6 +138,11 @@ RoutesStore = StoreUtils.createStore
   getCurrentRouteIsRunning: ->
     currentRouteName = getCurrentRouteName(_store)
     getRouteIsRunning(_store, currentRouteName)
+
+  getRouteComponentId: ->
+    currentRouteName = getCurrentRouteName(_store)
+    getRouteComponentId(_store, currentRouteName)
+
 
   ###
     If it'is a component route, component id is returned

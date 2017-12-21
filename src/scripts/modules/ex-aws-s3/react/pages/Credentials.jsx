@@ -23,21 +23,20 @@ import ComponentMetadata from '../../../components/react/components/ComponentMet
 import SaveButtons from '../../../../react/common/SaveButtons';
 import {Link} from 'react-router';
 
-// CONSTS
-const COMPONENT_ID = 'keboola.ex-aws-s3';
-
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
 
   getStateFromStores() {
+    const componentId = RoutesStore.getRouteComponentId();
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const component = ComponentStore.getComponent(COMPONENT_ID);
+    const component = ComponentStore.getComponent(componentId);
     return {
+      componentId: componentId,
       component: component,
       configurationId: configurationId,
-      configuration: Store.getEditingConfiguration(COMPONENT_ID, configurationId, parseConfiguration),
-      isSaving: Store.getPendingActions(COMPONENT_ID, configurationId).has('save-configuration'),
-      isChanged: Store.isEditingConfiguration(COMPONENT_ID, configurationId)
+      configuration: Store.getEditingConfiguration(componentId, configurationId, parseConfiguration),
+      isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
+      isChanged: Store.isEditingConfiguration(componentId, configurationId)
     };
   },
 
@@ -49,10 +48,10 @@ export default React.createClass({
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={function() {
-            return Actions.saveConfiguration(COMPONENT_ID, state.configurationId, createConfiguration, parseConfiguration);
+            return Actions.saveConfiguration(state.componentId, state.configurationId, createConfiguration, parseConfiguration);
           }}
           onReset={function() {
-            return Actions.resetConfiguration(COMPONENT_ID, state.configurationId);
+            return Actions.resetConfiguration(state.componentId, state.configurationId);
           }}
         />
       </div>
@@ -64,7 +63,7 @@ export default React.createClass({
     const configuration = this.state.configuration;
     return (<Credentials
       onChange={function(diff) {
-        Actions.updateConfiguration(COMPONENT_ID, state.configurationId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
+        Actions.updateConfiguration(state.componentId, state.configurationId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
       }}
       disabled={this.state.isSaving}
       value={configuration.toJS()}
@@ -77,7 +76,7 @@ export default React.createClass({
         <div className="col-md-9 kbc-main-content">
           <div className="kbc-inner-content-padding-fix with-bottom-border">
             <ComponentDescription
-              componentId={COMPONENT_ID}
+              componentId={this.state.componentId}
               configId={this.state.configurationId}
             />
           </div>
@@ -95,12 +94,12 @@ export default React.createClass({
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata
-            componentId={COMPONENT_ID}
+            componentId={this.state.componentId}
             configId={this.state.configurationId}
           />
           <ul className="nav nav-stacked">
             <li>
-              <Link to={COMPONENT_ID} params={{config: this.state.configurationId}}>
+              <Link to={this.state.componentId} params={{config: this.state.configurationId}}>
                 <span className="fa fa-arrow-left fa-fw" />
                 &nbsp;Back
               </Link>
