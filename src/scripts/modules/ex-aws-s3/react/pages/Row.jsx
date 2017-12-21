@@ -21,7 +21,8 @@ import {Link} from 'react-router';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 
 // adapters
-import {isParsableConfiguration, parseConfiguration, createConfiguration} from '../../adapters/row';
+import {parseConfiguration, createConfiguration} from '../../adapters/row';
+import isParsableConfiguration from '../../adapters/isParsableConfiguration';
 
 // local components
 import Configuration from '../components/Configuration';
@@ -51,7 +52,7 @@ export default React.createClass({
       isProcessorsValid: Store.isEditingProcessorsValid(COMPONENT_ID, configurationId, rowId),
       isProcessorsChanged: Store.isEditingProcessors(COMPONENT_ID, configurationId, rowId),
 
-      isParsableConfiguration: isParsableConfiguration(Store.getConfiguration(COMPONENT_ID, configurationId, rowId)),
+      isParsableConfiguration: isParsableConfiguration(Store.getConfiguration(COMPONENT_ID, configurationId, rowId), parseConfiguration, createConfiguration),
       isJsonEditorOpen: Store.hasJsonEditor(COMPONENT_ID, configurationId, rowId),
 
       configuration: Store.getEditingConfiguration(COMPONENT_ID, configurationId, rowId, parseConfiguration),
@@ -189,23 +190,19 @@ export default React.createClass({
     const state = this.state;
     if (!this.state.isParsableConfiguration) {
       return (
-        <div>
-          <small>Can't switch back to visual form, configuration is not compatible.</small>
-        </div>
+        <small>Can't switch back to visual form, configuration is not compatible.</small>
       );
     }
     return (
-      <div>
-        <small>
-          <a onClick={function() {
-            Actions.closeJsonEditor(COMPONENT_ID, state.configurationId, state.rowId);
-          }}>
-            Close JSON
-          </a>
-          {' '}
-          (discards all unsaved changes)
-        </small>
-      </div>
+      <small>
+        <a onClick={function() {
+          Actions.closeJsonEditor(COMPONENT_ID, state.configurationId, state.rowId);
+        }}>
+          Close JSON
+        </a>
+        {' '}
+        (discards all unsaved changes)
+      </small>
     );
   },
 
@@ -238,7 +235,7 @@ export default React.createClass({
   renderJSONEditors() {
     const state = this.state;
     return [
-      this.renderCloseJSONLink(),
+      (<div key="close">{this.renderCloseJSONLink()}</div>),
       (<Parameters
         key="parameters"
         isSaving={this.state.isParametersSaving}

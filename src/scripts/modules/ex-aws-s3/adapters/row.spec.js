@@ -2,7 +2,6 @@ var assert = require('assert');
 var Immutable = require('immutable');
 var createConfiguration = require('./row').createConfiguration;
 var parseConfiguration = require('./row').parseConfiguration;
-var isParsableConfiguration = require('./row').isParsableConfiguration;
 var cases = require('./row.spec.def').cases;
 
 describe('row', function() {
@@ -25,17 +24,6 @@ describe('row', function() {
       it('should return a correct localState with ' + key + ' configuration', function() {
         assert.deepEqual(cases[key].localState, parseConfiguration(Immutable.fromJS(cases[key].configuration)).toJS());
       });
-    });
-  });
-
-  describe('isParsableConfiguration', function() {
-    Object.keys(cases).forEach(function(key) {
-      it('should return true for ' + key + ' configuration', function() {
-        assert.ok(isParsableConfiguration(Immutable.fromJS(cases[key].configuration)));
-      });
-    });
-    it('should return false for an invalid configuration', function() {
-      assert.ok(!isParsableConfiguration(Immutable.fromJS({invalid: true})));
     });
   });
 });

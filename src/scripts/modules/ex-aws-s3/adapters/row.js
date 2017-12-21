@@ -107,17 +107,7 @@ function parseConfiguration(configuration) {
   });
 }
 
-function isParsableConfiguration(configuration) {
-  if (configuration.isEmpty()) {
-    return true;
-  }
-  const parsed = parseConfiguration(configuration);
-  const reconstructed = createConfiguration(parsed);
-  return Immutable.is(configuration, reconstructed);
-}
-
 module.exports = {
   createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration,
-  isParsableConfiguration: isParsableConfiguration
+  parseConfiguration: parseConfiguration
 };
