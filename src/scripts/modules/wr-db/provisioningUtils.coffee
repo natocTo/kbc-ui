@@ -4,6 +4,7 @@ Promise = require 'bluebird'
 wrDbProvStore = require '../provisioning/stores/WrDbCredentialsStore'
 provisioningActions = require '../provisioning/ActionCreators'
 _ = require 'underscore'
+underscoreString = require 'underscore.string'
 OLD_WR_REDSHIFT_COMPONENT_ID = 'wr-db-redshift'
 NEW_WR_REDSHIFT_COMPONENT_ID = ['keboola.wr-redshift-v2', 'keboola.wr-qlik', 'keboola.wr-looker']
 WR_SNOWFLAKE_COMPONENT_ID = 'keboola.wr-db-snowflake'
@@ -88,10 +89,10 @@ module.exports =
     if driver == 'mysql'
       return host == 'wr-db-aws.keboola.com'
     if driver == 'redshift'
-      return _.str.include(host,'redshift.amazonaws.com') and _.str.include(host, 'sapi')
+      return underscoreString.include(host,'redshift.amazonaws.com') and underscoreString.include(host, 'sapi')
     if driver == 'snowflake'
-      return _.str.include(host,'keboola.snowflakecomputing.com') or
-          _.str.include(host,'keboola.eu-central-1.snowflakecomputing.com')
+      return underscoreString.include(host,'keboola.snowflakecomputing.com') or
+          underscoreString.include(host,'keboola.eu-central-1.snowflakecomputing.com')
     return false
 
   getCredentials: (isReadOnly, driver, componentId, configId) ->

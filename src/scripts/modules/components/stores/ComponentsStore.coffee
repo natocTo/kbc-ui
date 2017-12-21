@@ -3,6 +3,7 @@ Constants = require '../Constants'
 Immutable = require('immutable')
 {Map, List} = Immutable
 _ = require 'underscore'
+underscoreString = require 'underscore.string'
 camelize = require 'underscore.string/camelize'
 fuzzy = require 'fuzzy'
 StoreUtils = require '../../../utils/StoreUtils'
@@ -63,7 +64,7 @@ ComponentsStore = StoreUtils.createStore
       templateName = 'legacyWriterDetail'
 
     recipeId = id
-    isRecipe = _.str.startsWith(recipeId, 'rcp-')
+    isRecipe = underscoreString.startsWith(recipeId, 'rcp-')
     if isRecipe
       return @getRecipeAppUrl(recipeId, configurationId)
     else

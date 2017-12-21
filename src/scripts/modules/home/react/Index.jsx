@@ -1,7 +1,7 @@
 import React from 'react';
 import ApplicationStore from '../../../stores/ApplicationStore';
 import filesize from 'filesize';
-import string from 'underscore.string';
+import underscoreString from 'underscore.string';
 import LimitsOverQuota from './LimitsOverQuota';
 import Expiration from './Expiration';
 import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
@@ -126,7 +126,7 @@ export default React.createClass({
                 <div className="td">
                   <h2>Storage</h2>
                   <h3 style={ {fontSize: '42px'} }>{filesize(this.state.data.sizeBytes)}</h3>
-                  <h3 style={ {fontSize: '24px'} }>{string.numberFormat(this.state.data.rowsCount)} <small>Rows</small>
+                  <h3 style={ {fontSize: '24px'} }>{underscoreString.numberFormat(this.state.data.rowsCount)} <small>Rows</small>
                   </h3>
                 </div>
                 <div className="td">
