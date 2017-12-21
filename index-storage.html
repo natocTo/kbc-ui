@@ -264,7 +264,8 @@
       var ReactDOM = kbcApp.helpers.ReactDOM;
       console.log('guide mode', kbcApp.parts.GuideMode.Wizard);
       var element = React.createElement(kbcApp.parts.GuideMode.Wizard, {
-        projectBaseUrl: 'project-base-url' // no effect
+        projectBaseUrl: 'project-base-url',
+        scriptsBasePath: ''
       });
       ReactDOM.render(element, document.getElementById("guide-mode-container"));
 
