@@ -2,30 +2,26 @@ import React from 'react';
 import Immutable from 'immutable';
 
 // stores
-import Store from '../../../components/stores/ConfigurationRowsStore';
-import RoutesStore from '../../../../stores/RoutesStore';
-import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import Store from '../../../modules/components/stores/ConfigurationRowsStore';
+import RoutesStore from '../../../stores/RoutesStore';
+import createStoreMixin from '../../mixins/createStoreMixin';
 
 // actions
-import Actions from '../../../components/ConfigurationRowsActionCreators';
+import Actions from '../../../modules/components/ConfigurationRowsActionCreators';
 
 // global components
-import RunComponentButton from '../../../components/react/components/RunComponentButton';
-import ConfigurationRowDescription from '../../../components/react/components/ConfigurationRowDescription';
-import ConfigurationRowMetadata from '../../../components/react/components/ConfigurationRowMetadata';
-import DeleteConfigurationRowButton from '../../../components/react/components/DeleteConfigurationRowButton';
-import Parameters from '../../../components/react/components/Parameters';
-import Processors from '../../../components/react/components/Processors';
-import SaveButtons from '../../../../react/common/SaveButtons';
-import {Link} from 'react-router';
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import RunComponentButton from '../../../modules/components/react/components/RunComponentButton';
+import ConfigurationRowDescription from '../../../modules/components/react/components/ConfigurationRowDescription';
+import ConfigurationRowMetadata from '../../../modules/components/react/components/ConfigurationRowMetadata';
+import DeleteConfigurationRowButton from '../../../modules/components/react/components/DeleteConfigurationRowButton';
+import Parameters from '../../../modules/components/react/components/Parameters';
+import Processors from '../../../modules/components/react/components/Processors';
+import SaveButtons from '../SaveButtons';
+import { Link } from 'react-router';
+import ActivateDeactivateButton from '../ActivateDeactivateButton';
 
 // adapters
-import {parseConfiguration, createConfiguration} from '../../adapters/row';
-import isParsableConfiguration from '../../adapters/isParsableConfiguration';
-
-// local components
-import Configuration from '../components/Configuration';
+import isParsableConfiguration from '../../../utils/isParsableConfiguration';
 
 export default React.createClass({
   mixins: [createStoreMixin(Store)],
@@ -52,10 +48,19 @@ export default React.createClass({
       isProcessorsValid: Store.isEditingProcessorsValid(settings.get('componentId'), configurationId, rowId),
       isProcessorsChanged: Store.isEditingProcessors(settings.get('componentId'), configurationId, rowId),
 
-      isParsableConfiguration: isParsableConfiguration(Store.getConfiguration(settings.get('componentId'), configurationId, rowId), parseConfiguration, createConfiguration),
+      isParsableConfiguration: isParsableConfiguration(
+        Store.getConfiguration(settings.get('componentId'), configurationId, rowId),
+        settings.getIn(['adapters', 'row', 'parse']),
+        settings.getIn(['adapters', 'row', 'create'])
+      ),
       isJsonEditorOpen: Store.hasJsonEditor(settings.get('componentId'), configurationId, rowId),
 
-      configuration: Store.getEditingConfiguration(settings.get('componentId'), configurationId, rowId, parseConfiguration),
+      configuration: Store.getEditingConfiguration(
+        settings.get('componentId'),
+        configurationId,
+        rowId,
+        settings.getIn(['adapters', 'row', 'parse'])
+      ),
       isSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-configuration'),
       isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId, rowId),
 
@@ -119,9 +124,9 @@ export default React.createClass({
                 isPending={this.state.isEnableDisablePending}
                 onChange={function() {
                   if (state.row.get('isDisabled', false)) {
-                    return Actions.enable(this.state.componentId, state.configurationId, state.rowId);
+                    return Actions.enable(state.componentId, state.configurationId, state.rowId);
                   } else {
-                    return Actions.disable(this.state.componentId, state.configurationId, state.rowId);
+                    return Actions.disable(state.componentId, state.configurationId, state.rowId);
                   }
                 }}
                 mode="link"
@@ -130,7 +135,7 @@ export default React.createClass({
             <li>
               <DeleteConfigurationRowButton
                 onClick={function() {
-                  return Actions.delete(this.state.componentId, state.configurationId, state.rowId, true);
+                  return Actions.delete(state.componentId, state.configurationId, state.rowId, true);
                 }}
                 isPending={this.state.isDeletePending}
                 mode="link"
@@ -159,10 +164,16 @@ export default React.createClass({
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={function() {
-            return Actions.saveConfiguration(this.state.componentId, state.configurationId, state.rowId, createConfiguration, parseConfiguration);
+            return Actions.saveConfiguration(
+              state.componentId,
+              state.configurationId,
+              state.rowId,
+              state.settings.getIn(['adapters', 'row', 'create']),
+              state.settings.getIn(['adapters', 'row', 'parse'])
+            );
           }}
           onReset={function() {
-            return Actions.resetConfiguration(this.state.componentId, state.configurationId, state.rowId);
+            return Actions.resetConfiguration(state.componentId, state.configurationId, state.rowId);
           }}
             />
       </div>
@@ -175,7 +186,7 @@ export default React.createClass({
       <span style={{marginLeft: '10px'}}>
         <small>
           <a onClick={function() {
-            Actions.openJsonEditor(this.state.componentId, state.configurationId, state.rowId);
+            Actions.openJsonEditor(state.componentId, state.configurationId, state.rowId);
           }}>
             Open JSON
           </a>
@@ -196,7 +207,7 @@ export default React.createClass({
     return (
       <small>
         <a onClick={function() {
-          Actions.closeJsonEditor(this.state.componentId, state.configurationId, state.rowId);
+          Actions.closeJsonEditor(state.componentId, state.configurationId, state.rowId);
         }}>
           Close JSON
         </a>
@@ -223,9 +234,10 @@ export default React.createClass({
   renderFormFields() {
     const state = this.state;
     const configuration = this.state.configuration;
+    const Configuration = this.state.settings.getIn(['components', 'row']);
     return (<Configuration
       onChange={function(diff) {
-        Actions.updateConfiguration(this.state.componentId, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)));
+        Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)));
       }}
       disabled={this.state.isSaving}
       value={configuration.toJS()}
@@ -243,13 +255,13 @@ export default React.createClass({
         isEditingValid={this.state.isParametersValid}
         isChanged={this.state.isParametersChanged}
         onEditCancel={function() {
-          return Actions.resetParameters(this.state.componentId, state.configurationId, state.rowId);
+          return Actions.resetParameters(state.componentId, state.configurationId, state.rowId);
         }}
         onEditChange={function(parameters) {
-          return Actions.updateParameters(this.state.componentId, state.configurationId, state.rowId, parameters);
+          return Actions.updateParameters(state.componentId, state.configurationId, state.rowId, parameters);
         }}
         onEditSubmit={function() {
-          return Actions.saveParameters(this.state.componentId, state.configurationId, state.rowId);
+          return Actions.saveParameters(state.componentId, state.configurationId, state.rowId);
         }}
       />),
       (<Processors
@@ -259,13 +271,13 @@ export default React.createClass({
         isEditingValid={this.state.isProcessorsValid}
         isChanged={this.state.isProcessorsChanged}
         onEditCancel={function() {
-          return Actions.resetProcessors(this.state.componentId, state.configurationId, state.rowId);
+          return Actions.resetProcessors(state.componentId, state.configurationId, state.rowId);
         }}
         onEditChange={function(parameters) {
-          return Actions.updateProcessors(this.state.componentId, state.configurationId, state.rowId, parameters);
+          return Actions.updateProcessors(state.componentId, state.configurationId, state.rowId, parameters);
         }}
         onEditSubmit={function() {
-          return Actions.saveProcessors(this.state.componentId, state.configurationId, state.rowId);
+          return Actions.saveProcessors(state.componentId, state.configurationId, state.rowId);
         }}
       />)
     ];

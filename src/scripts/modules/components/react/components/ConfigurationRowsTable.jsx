@@ -15,7 +15,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
     rows: React.PropTypes.object.isRequired,
     configurationId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string.isRequired,
-    headers: React.PropTypes.array,
+    header: React.PropTypes.array,
     columns: React.PropTypes.array,
     filter: React.PropTypes.func,
     rowDelete: React.PropTypes.func.isRequired,
@@ -29,7 +29,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
 
   getDefaultProps() {
     return {
-      headers: ['Name', 'Description'],
+      header: ['Name', 'Description'],
       columns: [
         function(row) {
           return row.get('name') !== '' ? row.get('name') : 'Untitled';
@@ -64,11 +64,11 @@ export default DragDropContext(HTML5Backend)(React.createClass({
     });
   },
 
-  renderHeaders() {
-    return this.props.headers.map(function(header, index) {
+  renderHeader() {
+    return this.props.header.map(function(headerName, index) {
       return (
         <span className="th" key={index}>
-          <strong>{header}</strong>
+          <strong>{headerName}</strong>
         </span>
       );
     });
@@ -147,7 +147,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
           <div className="thead" key="table-header">
             <div className="tr">
               <span className="th" key="dummy" />
-              {this.renderHeaders()}
+              {this.renderHeader()}
             </div>
           </div>
           <div className="tbody">

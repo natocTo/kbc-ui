@@ -2,26 +2,20 @@ import React from 'react';
 import Immutable from 'immutable';
 
 // stores
-import ComponentStore from '../../../components/stores/ComponentsStore';
-import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
-import RoutesStore from '../../../../stores/RoutesStore';
-import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import Store from '../../../components/stores/ConfigurationsStore';
+import ComponentStore from '../../../modules/components/stores/ComponentsStore';
+import InstalledComponentsStore from '../../../modules/components/stores/InstalledComponentsStore';
+import RoutesStore from '../../../stores/RoutesStore';
+import createStoreMixin from '../../mixins/createStoreMixin';
+import Store from '../../../modules/components/stores/ConfigurationsStore';
 
 // actions
-import Actions from '../../../components/ConfigurationsActionCreators';
-
-// specific components
-import Credentials from '../components/Credentials';
-
-// adapters
-import {parseConfiguration, createConfiguration} from '../../adapters/credentials';
+import Actions from '../../../modules/components/ConfigurationsActionCreators';
 
 // global components
-import ComponentDescription from '../../../components/react/components/ComponentDescription';
-import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
-import SaveButtons from '../../../../react/common/SaveButtons';
-import {Link} from 'react-router';
+import ComponentDescription from '../../../modules/components/react/components/ComponentDescription';
+import ComponentMetadata from '../../../modules/components/react/components/ComponentMetadata';
+import SaveButtons from '../SaveButtons';
+import { Link } from 'react-router';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
@@ -35,7 +29,7 @@ export default React.createClass({
       settings: settings,
       component: component,
       configurationId: configurationId,
-      configuration: Store.getEditingConfiguration(settings.get('componentId'), configurationId, parseConfiguration),
+      configuration: Store.getEditingConfiguration(settings.get('componentId'), configurationId, settings.getIn(['adapters', 'credentials', 'parse'])),
       isSaving: Store.getPendingActions(settings.get('componentId'), configurationId).has('save-configuration'),
       isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId)
     };
@@ -49,7 +43,12 @@ export default React.createClass({
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={function() {
-            return Actions.saveConfiguration(state.componentId, state.configurationId, createConfiguration, parseConfiguration);
+            return Actions.saveConfiguration(
+              state.componentId,
+              state.configurationId,
+              state.settings.getIn(['adapters', 'credentials', 'create']),
+              state.settings.getIn(['adapters', 'credentials', 'parse'])
+            );
           }}
           onReset={function() {
             return Actions.resetConfiguration(state.componentId, state.configurationId);
@@ -62,6 +61,7 @@ export default React.createClass({
   renderCredentials() {
     const state = this.state;
     const configuration = this.state.configuration;
+    const Credentials = this.state.settings.getIn(['components', 'credentials']);
     return (<Credentials
       onChange={function(diff) {
         Actions.updateConfiguration(state.componentId, state.configurationId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
@@ -85,7 +85,7 @@ export default React.createClass({
             <h3>TODO</h3>
             <ul>
               <li>Content of the right bar</li>
-              <li>Back button? Navigation back?</li>
+              <li>Hide description here?</li>
             </ul>
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">

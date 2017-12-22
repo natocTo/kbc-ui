@@ -24,7 +24,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'link',
-      label: 'New Row'
+      label: 'Create Row'
     };
   },
 

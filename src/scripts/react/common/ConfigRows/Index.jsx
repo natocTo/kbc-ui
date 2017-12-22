@@ -1,28 +1,28 @@
 import React from 'react';
 
 // stores
-import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
-import ConfigurationRowsStore from '../../../components/stores/ConfigurationRowsStore';
-import ConfigurationsStore from '../../../components/stores/ConfigurationsStore';
-import RoutesStore from '../../../../stores/RoutesStore';
-import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
-import VersionsStore from '../../../components/stores/VersionsStore';
-import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import InstalledComponentsStore from '../../../modules/components/stores/InstalledComponentsStore';
+import ConfigurationRowsStore from '../../../modules/components/stores/ConfigurationRowsStore';
+import ConfigurationsStore from '../../../modules/components/stores/ConfigurationsStore';
+import RoutesStore from '../../../stores/RoutesStore';
+import LatestJobsStore from '../../../modules/jobs/stores/LatestJobsStore';
+import VersionsStore from '../../../modules/components/stores/VersionsStore';
+import createStoreMixin from '../../mixins/createStoreMixin';
 
 // actions
-import configurationRowsActions from '../../../components/ConfigurationRowsActionCreators';
-import configurationsActions from '../../../components/ConfigurationsActionCreators';
+import configurationRowsActions from '../../../modules/components/ConfigurationRowsActionCreators';
+import configurationsActions from '../../../modules/components/ConfigurationsActionCreators';
 
 // global components
-import RunComponentButton from '../../../components/react/components/RunComponentButton';
-import ComponentDescription from '../../../components/react/components/ComponentDescription';
-import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
-import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
-import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
-import LatestJobs from '../../../components/react/components/SidebarJobs';
-import {Link} from 'react-router';
-import CreateConfigurationRowButton from '../../../components/react/components/CreateConfigurationRowButton';
-import ConfigurationRowsTable from '../../../components/react/components/ConfigurationRowsTable';
+import RunComponentButton from '../../../modules/components/react/components/RunComponentButton';
+import ComponentDescription from '../../../modules/components/react/components/ComponentDescription';
+import ComponentMetadata from '../../../modules/components/react/components/ComponentMetadata';
+import DeleteConfigurationButton from '../../../modules/components/react/components/DeleteConfigurationButton';
+import LatestVersions from '../../../modules/components/react/components/SidebarVersionsWrapper';
+import LatestJobs from '../../../modules/components/react/components/SidebarJobs';
+import { Link } from 'react-router';
+import CreateConfigurationRowButton from '../../../modules/components/react/components/CreateConfigurationRowButton';
+import ConfigurationRowsTable from '../../../modules/components/react/components/ConfigurationRowsTable';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
@@ -54,6 +54,16 @@ export default React.createClass({
         </div>)
       ];
     } else {
+      let header, columns, filter;
+      if (this.state.settings.hasIn(['list', 'header'])) {
+        header = this.state.settings.getIn(['list', 'header']).toJS();
+      }
+      if (this.state.settings.hasIn(['list', 'columns'])) {
+        columns = this.state.settings.getIn(['list', 'columns']).toJS();
+      }
+      if (this.state.settings.hasIn(['list', 'filter'])) {
+        filter = this.state.settings.getIn(['list', 'filter']);
+      }
       return [
         (<div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
           <h3>TODO</h3>
@@ -90,10 +100,14 @@ export default React.createClass({
               return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds);
             }}
             orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).has('order-rows')}
+            header={header}
+            columns={columns}
+            filter={filter}
           />),
         (<div className="text-center" key="create">
           <CreateConfigurationRowButton
             key="create"
+            label={'Create ' + this.state.settings.getIn(['rowItem', 'singular'])}
             componentId={this.state.componentId}
             configId={this.state.configurationId}
             onRowCreated={function() { return; }}
@@ -143,11 +157,12 @@ export default React.createClass({
                   mode="link"
                   runParams={() => ({config: this.state.configurationId})}
               >
-                <span>You are about to run an extraction.</span>
+                <span>You are about to run the configuration.</span>
               </RunComponentButton>
             </li>
             <li>
               <CreateConfigurationRowButton
+                label={'Create ' + this.state.settings.getIn(['rowItem', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}
                 onRowCreated={function() { return; }}
