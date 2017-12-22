@@ -32,13 +32,6 @@ const routeCreator = function(settings) {
     ],
     childRoutes: [
       {
-        name: settings.componentId + '-credentials',
-        settings: settings,
-        path: 'credentials',
-        title: 'Credentials',
-        defaultRouteHandler: Credentials
-      },
-      {
         name: settings.componentId + '-row',
         settings: settings,
         path: ':row',
@@ -53,7 +46,13 @@ const routeCreator = function(settings) {
     ]
   };
   if (settings.hasCredentials) {
-    // route.childRoutes.push();
+    route.childRoutes.push({
+      name: settings.componentId + '-credentials',
+      settings: settings,
+      path: 'credentials',
+      title: 'Credentials',
+      defaultRouteHandler: Credentials
+    });
   }
   return route;
 };
