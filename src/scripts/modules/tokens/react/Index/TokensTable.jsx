@@ -34,7 +34,7 @@ export default React.createClass({
         {this.renderTokenSendModal()}
         <div className="kbc-inner-content-padding-fix with-bottom-border">
           <p>
-            Create new token and limit access to specific buckets or components in you project.
+            Create new <a target="_blank" href="https://help.keboola.com/storage/tokens/">token</a> and limit access to specific buckets or components in you project.
             <Link to="tokens-detail" params={{tokenId: 'new-token'}} className="btn btn-success pull-right">
               + New Token
             </Link>
