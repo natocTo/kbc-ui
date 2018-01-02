@@ -17,7 +17,7 @@ const SettingsTabs = ({active}) => {
         <a href={projectPageUrl('settings')}>Settings</a>
       </li>
       <li role="presentation" className={getClassName('tokens')}>
-        <Link to="tokens">Tokens</Link>
+        <Link to="tokens">API Tokens</Link>
       </li>
       <li role="presentation" className={getClassName('settings-limits')}>
         <Link to="settings-limits">Limits</Link>
