@@ -43,7 +43,7 @@ export default function(settings) {
     {
       name: settings.componentId + '-row',
       settings: settings,
-      path: ':row',
+      path: 'rows/:row',
       title: (routerState) => {
         const configId = routerState.getIn(['params', 'config']);
         const rowId = routerState.getIn(['params', 'row']);
