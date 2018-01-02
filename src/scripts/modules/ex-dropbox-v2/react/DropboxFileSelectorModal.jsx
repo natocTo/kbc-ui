@@ -58,6 +58,7 @@ export default React.createClass({
         <Modal.Body>
           <Tabs activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}
             id="ex-dropbox-v2-dropbox-file-selector-modal-tabs"
+            className="indigo-ui-tabs"
           >
             <Tab eventKey="instant" title="Choose From Dropbox">
               <div style={{padding: '1.5em'}}>

@@ -73,6 +73,7 @@ export default React.createClass({
         defaultActiveEventKey={1}
         animation={false}
         id="modules-ex-s3-react-pages-index-index-tabbed-area"
+        className="indigo-ui-tabs"
       >
         <Tab title="General" eventKey={1}>
           <Settings
