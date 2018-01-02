@@ -104,7 +104,7 @@ export default function(COMPONENT_ID, configId) {
       }
     });
     if (!found) {
-      action = 'Create query';
+      action = 'Add query';
       newQueries = newQueries.push(query);
     }
     return saveQueries(newQueries, savingPath || store.getSavingQueryPath(qid), changeDescription || `${action} ${query.get('name')}`);

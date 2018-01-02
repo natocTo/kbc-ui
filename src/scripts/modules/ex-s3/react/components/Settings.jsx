@@ -61,9 +61,9 @@ export default React.createClass({
 
   primaryKeyPlaceholder() {
     if (this.isExistingTable()) {
-      return 'Cannot select a column';
+      return 'Cannot add a column';
     }
-    return 'Select columns';
+    return 'Add a columns';
   },
 
   createGetSuggestions() {
