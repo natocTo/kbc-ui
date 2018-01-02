@@ -75,7 +75,7 @@ module.exports = (componentId) ->
       return React.createElement(InputMappingModal,
         mode: 'create'
         buttonBsStyle: 'success'
-        buttonLabel: 'Create Table'
+        buttonLabel: 'Add New Table'
         mapping: mapping
         tables: tables
         onChange: @_mappingEditingOnChangeFn

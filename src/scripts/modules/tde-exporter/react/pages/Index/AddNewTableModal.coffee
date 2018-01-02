@@ -21,7 +21,7 @@ module.exports = React.createClass
       onHide: =>
         @props.onHideFn()
       React.createElement ModalHeader, {closeButton: true},
-        React.createElement  ModalTitle, null, 'New Table'
+        React.createElement  ModalTitle, null, 'Add Table'
       React.createElement ModalBody, null,
         React.createElement SapiTableSelector,
           autoFocus: true

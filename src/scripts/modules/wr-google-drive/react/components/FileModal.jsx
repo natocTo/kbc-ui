@@ -30,7 +30,7 @@ export default React.createClass({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {this.localState(['cleanFile', 'title'], false) ? 'Edit File' : 'New File'}
+            {this.localState(['cleanFile', 'title'], false) ? 'Edit File' : 'Add File'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
