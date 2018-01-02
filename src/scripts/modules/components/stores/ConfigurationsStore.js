@@ -51,6 +51,10 @@ Dispatcher.register(function(payload) {
       });
       return ConfigurationsStore.emitChange();
 
+    case InstalledComponentsConstants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS:
+      _store = _store.setIn(['configurations', action.componentId, action.configId], Immutable.fromJS(action.data));
+      return ConfigurationsStore.emitChange();
+
     case Constants.ActionTypes.CONFIGURATIONS_UPDATE_CONFIGURATION:
       _store = _store.setIn(
         ['editing', action.componentId, action.configurationId, 'configuration'],
