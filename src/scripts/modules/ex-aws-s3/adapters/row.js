@@ -76,6 +76,26 @@ function createConfiguration(localState) {
     processors = processors.push(skipLinesProcessor);
   }
 
+  if (localState.get('addRowNumberColumn')) {
+    processors = processors.push(Immutable.fromJS(
+      {
+        definition: {
+          component: 'keboola.processor-add-row-number-column'
+        }
+      }
+    ));
+  }
+
+  if (localState.get('addFilenameColumn')) {
+    processors = processors.push(Immutable.fromJS(
+      {
+        definition: {
+          component: 'keboola.processor-add-filename-column'
+        }
+      }
+    ));
+  }
+
   config = config.setIn(['processors', 'after'], processors);
 
   return config;
@@ -90,6 +110,15 @@ function parseConfiguration(configuration) {
   const processorDecompress = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-decompress';
   });
+  const processorAddRowNumberColumn = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+    return processor.getIn(['definition', 'component']) === 'keboola.processor-add-row-number-column' &&
+      !processor.has('parameters');
+  });
+  const processorAddFilenameColumn = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+    return processor.getIn(['definition', 'component']) === 'keboola.processor-add-filename-column' &&
+      !processor.has('parameters');
+  });
+
   return Immutable.fromJS({
     bucket: configuration.getIn(['parameters', 'bucket'], ''),
     key: isWildcard ? key.substring(0, key.length - 1) : key,
@@ -103,7 +132,9 @@ function parseConfiguration(configuration) {
     enclosure: processorCreateManifest.getIn(['parameters', 'enclosure'], '"'),
     columns: processorCreateManifest.getIn(['parameters', 'columns'], Immutable.List()).toJS(),
     columnsFrom: processorCreateManifest.getIn(['parameters', 'columns_from'], 'manual'),
-    decompress: processorDecompress ? true : false
+    decompress: processorDecompress ? true : false,
+    addRowNumberColumn: processorAddRowNumberColumn ? true : false,
+    addFilenameColumn: processorAddFilenameColumn ? true : false
   });
 }
 
