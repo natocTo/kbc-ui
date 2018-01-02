@@ -69,8 +69,6 @@ export default React.createClass({
           <h3>TODO</h3>
           <ul>
             <li>Documentation?</li>
-            <li>New Table a table mít parametrizovatelný</li>
-            <li>Search bar styling</li>
             <li>Empty search result styling</li>
           </ul>
         </div>),
