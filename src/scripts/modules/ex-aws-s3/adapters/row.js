@@ -81,6 +81,9 @@ function createConfiguration(localState) {
       {
         definition: {
           component: 'keboola.processor-add-row-number-column'
+        },
+        parameters: {
+          column_name: 's3_row_number'
         }
       }
     ));
@@ -91,6 +94,9 @@ function createConfiguration(localState) {
       {
         definition: {
           component: 'keboola.processor-add-filename-column'
+        },
+        parameters: {
+          column_name: 's3_filename'
         }
       }
     ));
@@ -112,11 +118,11 @@ function parseConfiguration(configuration) {
   });
   const processorAddRowNumberColumn = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-add-row-number-column' &&
-      !processor.has('parameters');
+      processor.getIn(['parameters', 'column_name']) === 's3_row_number';
   });
   const processorAddFilenameColumn = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-add-filename-column' &&
-      !processor.has('parameters');
+      processor.getIn(['parameters', 'column_name']) === 's3_filename';
   });
 
   return Immutable.fromJS({

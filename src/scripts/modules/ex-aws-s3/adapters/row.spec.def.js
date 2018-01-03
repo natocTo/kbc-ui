@@ -826,6 +826,9 @@ const cases = {
           {
             definition: {
               component: 'keboola.processor-add-row-number-column'
+            },
+            parameters: {
+              column_name: 's3_row_number'
             }
           }
         ]
@@ -894,6 +897,9 @@ const cases = {
           {
             definition: {
               component: 'keboola.processor-add-filename-column'
+            },
+            parameters: {
+              column_name: 's3_filename'
             }
           }
         ]
