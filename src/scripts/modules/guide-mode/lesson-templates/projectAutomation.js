@@ -19,7 +19,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Orchestration',
-      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-sm">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., My orchestration, and click <span class="btn btn-success btn-sm">Create Orchestration</span>.',
+      'markdown': 'To create the orchestration of your tasks, click <span class="btn btn-success btn-sm">+ New Orchestration</span>. Then type in the orchestration’s name, e.g., *Guide orchestration*, and click <span class="btn btn-success btn-sm">Create Orchestration</span>.',
       'route': {
         'name': 'orchestrations',
         'params': []
@@ -71,7 +71,7 @@ Then click <span class="btn btn-success btn-sm">Save</span> in the upper right c
       'title': 'Schedule Orchestration',
       'markdown': 'Now return to the orchestration overview and choose how often, on what days and at what time you want the configured tasks to run:' +
       `
-- Click on the name of your orchestration in the top navigation (Orchestrations > **My orchestration** > Tasks). 
+- Click on the name of your orchestration in the top navigation (Orchestrations > **Guide orchestration** > Tasks). 
 - Then click on <span class="btn btn-link btn-sm"> <i class="fa fa-edit"></i> Edit schedule</span>.
 - Choose whether you want to run the tasks every hour, every day, month, etc. Notice the generated **Next Schedules** below, telling you when the next orchestrations will run in your local time.
 - Click on <span class="btn btn-success btn-sm">Save</span>.
