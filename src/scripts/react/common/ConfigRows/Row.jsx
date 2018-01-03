@@ -53,7 +53,13 @@ export default React.createClass({
         settings.getIn(['adapters', 'row', 'parse']),
         settings.getIn(['adapters', 'row', 'create'])
       ),
-      isJsonEditorOpen: Store.hasJsonEditor(settings.get('componentId'), configurationId, rowId),
+      isJsonEditorOpen: Store.hasJsonEditor(
+        settings.get('componentId'),
+        configurationId,
+        rowId,
+        settings.getIn(['adapters', 'row', 'parse']),
+        settings.getIn(['adapters', 'row', 'create'])
+      ),
 
       configuration: Store.getEditingConfiguration(
         settings.get('componentId'),
