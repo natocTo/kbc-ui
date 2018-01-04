@@ -12,6 +12,7 @@ let _store = Map({
   isLoading: false,
   deletingTokens: Map(),
   refreshingTokens: Map(),
+  sendingTokens: Map(),
   localState: Map()
 });
 
@@ -21,6 +22,7 @@ const StorageTokensStore = StoreUtils.createStore({
   getIsLoaded: () =>  _store.get('isLoaded'),
   isDeletingToken: (tokenId) => _store.getIn(['deletingTokens', tokenId], false),
   isRefreshingToken: (tokenId) => _store.getIn(['refreshingTokens', tokenId], false),
+  isSendingToken: (tokenId) => _store.getIn(['sendingTokens', tokenId], false),
   localState: () => _store.get('localState')
 });
 
@@ -92,6 +94,18 @@ Dispatcher.register( (payload) => {
       break;
     case ActionTypes.STORAGE_TOKEN_UPDATE_LOCALSTATE:
       _store = _store.set('localState', action.localState);
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_SEND:
+      _store = _store.setIn(['sendingTokens', action.tokenId], true);
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_SEND_SUCCESS:
+      _store = _store.setIn(['sendingTokens', action.tokenId], false);
+      StorageTokensStore.emitChange();
+      break;
+    case ActionTypes.STORAGE_TOKEN_SEND_ERROR:
+      _store = _store.setIn(['sendingTokens', action.tokenId], false);
       StorageTokensStore.emitChange();
       break;
     case ActionTypes.STORAGE_TOKEN_API_ERROR:

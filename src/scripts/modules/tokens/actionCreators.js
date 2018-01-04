@@ -61,6 +61,28 @@ export default {
     });
   },
 
+  sendToken(tokenId, params) {
+    const {email, message} = params;
+    dispatcher.handleViewAction({
+      type: ActionTypes.STORAGE_TOKEN_SEND,
+      tokenId: tokenId
+    });
+    return storageApi.shareToken(tokenId, email, message).then(() => {
+      dispatcher.handleViewAction({
+        type: ActionTypes.STORAGE_TOKEN_SEND_SUCCESS,
+        tokenId: tokenId
+      });
+    }).catch(function(error) {
+      dispatcher.handleViewAction({
+        type: ActionTypes.STORAGE_TOKEN_SEND_ERROR,
+        error: error,
+        tokenId: tokenId
+      });
+      throw error;
+    });
+  },
+
+
   loadTokensForce() {
     dispatcher.handleViewAction({
       type: ActionTypes.STORAGE_TOKENS_LOAD

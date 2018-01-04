@@ -70,6 +70,17 @@ var storageApi = {
     });
   },
 
+  shareToken: function(tokenId, email, message) {
+    const params = {
+      recipientEmail: email,
+      message: message
+    };
+    return createRequest('POST', 'tokens/' + tokenId + '/share')
+      .type('form')
+      .send(params)
+      .promise().then(response => response.body);
+  },
+
   getTokens: function() {
     return createRequest('GET', 'tokens').promise().then(function(response) {
       return response.body;
