@@ -23,8 +23,8 @@ export default {
       'isNavigationVisible': true,
       'title': 'Extract data',
       'markdown': 'Every project in Keboola Connection starts by loading data. It is done with **Extractors** &ndash; components for importing data from your company’s internal databases, external sources, such as Facebook or YouTube, and from your own computer.',
-      'media': 'https://www.youtube.com/embed/g-VBfkV4xfc',
-      'mediaType': 'video',
+      'media': 'kbc_scheme_light_blue-gen.svg',
+      'mediaType': 'img',
       'route': {
         'name': 'extractors',
         'params': []
@@ -36,8 +36,8 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Store data',
-      'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage**, where they can be accessed at any time. <br/><br/> Being sorted into buckets, your tables can always be easily found.',
-      'media': 'kbc_scheme_light_blue.svg',
+      'markdown': 'All data you upload to your project, as well as all the tables your project creates, are stored in **Storage**, where they can be accessed at any time. <br/><br/> Sorted into buckets, your tables can always be easily found.',
+      'media': 'kbc_scheme_light_blue-gen.svg',
       'mediaType': 'img',
       'route': {
         'name': 'storage',
@@ -53,8 +53,8 @@ export default {
       'isNavigationVisible': true,
       'title': 'Manipulate data',
       'markdown': 'Now it’s time to mix, clean and work with the extracted data. In **Transformations**, use your own script (SQL, Python, R or OpenRefine) for manipulation with the data. <br/><br/> Apart from Transformations, ready-to-use **Applications** created by Keboola or third parties are also available.',
-      'media': '',
-      'mediaType': '',
+      'media': 'kbc_scheme_light_blue-gen.svg',
+      'mediaType': 'img',
       'route': {
         'name': 'transformations',
         'params': []
@@ -67,8 +67,8 @@ export default {
       'isNavigationVisible': true,
       'title': 'Write results',
       'markdown': 'Once you’re happy with your results, let **Writers** deliver them to their final destination –  the systems and applications where the output data gets used or consumed, for instance, visualizing tools or databases.',
-      'media': '',
-      'mediaType': '',
+      'media': 'kbc_scheme_light_blue-gen.svg',
+      'mediaType': 'img',
       'route': {
         'name': 'writers',
         'params': []
@@ -81,8 +81,8 @@ export default {
       'isNavigationVisible': true,
       'title': 'Automate',
       'markdown': 'If you want to work with the latest data available, the whole sequence must be done over and over again. This is where full automation of your projects comes in. <br/><br/> **Orchestrations** allow you to specify at what time or how often your tasks should be executed and in what order.',
-      'media': '',
-      'mediaType': '',
+      'media': 'kbc_scheme_light_blue-gen.svg',
+      'mediaType': 'img',
       'route': {
         'name': 'orchestrations',
         'params': []
