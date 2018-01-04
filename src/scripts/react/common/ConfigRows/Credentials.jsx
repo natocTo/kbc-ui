@@ -12,10 +12,7 @@ import Store from '../../../modules/components/stores/ConfigurationsStore';
 import Actions from '../../../modules/components/ConfigurationsActionCreators';
 
 // global components
-import ComponentDescription from '../../../modules/components/react/components/ComponentDescription';
-import ComponentMetadata from '../../../modules/components/react/components/ComponentMetadata';
 import SaveButtons from '../SaveButtons';
-import { Link } from 'react-router';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
@@ -33,6 +30,14 @@ export default React.createClass({
       isSaving: Store.getPendingActions(settings.get('componentId'), configurationId).has('save-configuration'),
       isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId)
     };
+  },
+
+  renderTitle() {
+    return (
+      <h2 style={{lineHeight: '32px'}}>
+        {this.state.settings.get('credentialsTitle')}
+      </h2>
+    );
   },
 
   renderButtons() {
@@ -72,41 +77,14 @@ export default React.createClass({
   },
 
   render() {
+    if (!this.state.settings.get('hasCredentials')) {
+      return null;
+    }
     return (
-      <div className="container-fluid">
-        <div className="col-md-9 kbc-main-content">
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <ComponentDescription
-              componentId={this.state.componentId}
-              configId={this.state.configurationId}
-            />
-          </div>
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
-            <h3>TODO</h3>
-            <ul>
-              <li>Content of the right bar</li>
-              <li>Hide description here?</li>
-            </ul>
-          </div>
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
-            {this.renderButtons()}
-            {this.renderCredentials()}
-          </div>
-        </div>
-        <div className="col-md-3 kbc-main-sidebar">
-          <ComponentMetadata
-            componentId={this.state.componentId}
-            configId={this.state.configurationId}
-          />
-          <ul className="nav nav-stacked">
-            <li>
-              <Link to={this.state.componentId} params={{config: this.state.configurationId}}>
-                <span className="fa fa-arrow-left fa-fw" />
-                &nbsp;Back
-              </Link>
-            </li>
-          </ul>
-        </div>
+      <div className="kbc-inner-content-padding-fix with-bottom-border">
+        {this.renderTitle()}
+        {this.renderButtons()}
+        {this.renderCredentials()}
       </div>
     );
   }

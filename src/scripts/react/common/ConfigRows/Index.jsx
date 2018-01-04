@@ -20,9 +20,9 @@ import ComponentMetadata from '../../../modules/components/react/components/Comp
 import DeleteConfigurationButton from '../../../modules/components/react/components/DeleteConfigurationButton';
 import LatestVersions from '../../../modules/components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../modules/components/react/components/SidebarJobs';
-import { Link } from 'react-router';
 import CreateConfigurationRowButton from '../../../modules/components/react/components/CreateConfigurationRowButton';
 import ConfigurationRowsTable from '../../../modules/components/react/components/ConfigurationRowsTable';
+import Credentials from './Credentials';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
@@ -46,9 +46,7 @@ export default React.createClass({
         (<div className="kbc-inner-content-padding-fix with-bottom-border">
           <h3>TODO (Empty state)</h3>
           <ul>
-            <li><strong>Copy from DB Extractor</strong></li>
-            <li>Create credentials button</li>
-            <li>Add rows button</li>
+            <li>Create table button</li>
             <li>Link to documentation</li>
           </ul>
         </div>)
@@ -64,69 +62,36 @@ export default React.createClass({
       if (this.state.settings.hasIn(['list', 'filter'])) {
         filter = this.state.settings.getIn(['list', 'filter']);
       }
-      return [
-        (<div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
-          <h3>TODO</h3>
-          <ul>
-            <li>Documentation?</li>
-            <li>Empty search result styling</li>
-          </ul>
-        </div>),
-        (<ConfigurationRowsTable
-            key="rows"
-            rows={this.state.rows.toList()}
-            componentId={this.state.componentId}
-            configurationId={this.state.configurationId}
-            rowDelete={function(rowId) {
-              return configurationRowsActions.delete(state.componentId, state.configurationId, rowId);
-            }}
-            rowDeletePending={function(rowId) {
-              return ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('delete');
-            }}
-            rowEnableDisable={function(rowId) {
-              if (state.rows.get(rowId).get('isDisabled', false)) {
-                return configurationRowsActions.enable(state.componentId, state.configurationId, rowId);
-              } else {
-                return configurationRowsActions.disable(state.componentId, state.configurationId, rowId);
-              }
-            }}
-            rowEnableDisablePending={function(rowId) {
-              return ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('enable');
-            }}
-            rowLinkTo={this.state.componentId + '-row'}
-            onOrder={function(rowIds) {
-              return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds);
-            }}
-            orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).has('order-rows')}
-            header={header}
-            columns={columns}
-            filter={filter}
-          />),
-        (<div className="text-center" key="create">
-          <CreateConfigurationRowButton
-            key="create"
-            label={'Create ' + this.state.settings.getIn(['rowItem', 'singular'])}
-            componentId={this.state.componentId}
-            configId={this.state.configurationId}
-            onRowCreated={function() { return; }}
-            emptyConfig={function() { return {};}}
-            type="button"
-          />
-        </div>)
-      ];
-    }
-  },
-
-  renderCredentialsLink() {
-    if (this.state.settings.get('hasCredentials')) {
-      return (
-        <li>
-          <Link to={this.state.componentId + '-credentials'} params={{config: this.state.configurationId}}>
-            <span className="fa fa-user fa-fw" />
-            &nbsp;Credentials
-          </Link>
-        </li>
-      );
+      return (<ConfigurationRowsTable
+        key="rows"
+        rows={this.state.rows.toList()}
+        componentId={this.state.componentId}
+        configurationId={this.state.configurationId}
+        rowDelete={function(rowId) {
+          return configurationRowsActions.delete(state.componentId, state.configurationId, rowId);
+        }}
+        rowDeletePending={function(rowId) {
+          return ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('delete');
+        }}
+        rowEnableDisable={function(rowId) {
+          if (state.rows.get(rowId).get('isDisabled', false)) {
+            return configurationRowsActions.enable(state.componentId, state.configurationId, rowId);
+          } else {
+            return configurationRowsActions.disable(state.componentId, state.configurationId, rowId);
+          }
+        }}
+        rowEnableDisablePending={function(rowId) {
+          return ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('enable');
+        }}
+        rowLinkTo={this.state.componentId + '-row'}
+        onOrder={function(rowIds) {
+          return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds);
+        }}
+        orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).has('order-rows')}
+        header={header}
+        columns={columns}
+        filter={filter}
+      />);
     }
   },
 
@@ -140,6 +105,16 @@ export default React.createClass({
               configId={this.state.configurationId}
             />
           </div>
+          <div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
+            <h3>TODO</h3>
+            <ul>
+              <li>Documentation?</li>
+              <li>Empty search result styling</li>
+              <li>Search bar styling</li>
+              <li>Credentials hiding when completed</li>
+            </ul>
+          </div>
+          <Credentials/>
           {this.renderRowsTable()}
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -160,7 +135,7 @@ export default React.createClass({
             </li>
             <li>
               <CreateConfigurationRowButton
-                label={'Create ' + this.state.settings.getIn(['rowItem', 'singular'])}
+                label={'Add ' + this.state.settings.getIn(['rowItem', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}
                 onRowCreated={function() { return; }}
@@ -168,7 +143,6 @@ export default React.createClass({
                 type="link"
               />
             </li>
-            {this.renderCredentialsLink()}
             <li>
               <DeleteConfigurationButton
                 componentId={this.state.componentId}

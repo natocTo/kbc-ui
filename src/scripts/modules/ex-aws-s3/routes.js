@@ -10,6 +10,7 @@ import fuzzy from 'fuzzy';
 const routeSettings = {
   componentId: 'keboola.ex-aws-s3',
   hasCredentials: true,
+  credentialsTitle: 'AWS Credentials',
   rowItem: {
     singular: 'Table',
     plural: 'Tables'

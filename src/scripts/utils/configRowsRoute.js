@@ -1,6 +1,5 @@
 import Index from '../react/common/ConfigRows/Index';
 import Row from '../react/common/ConfigRows/Row';
-import Credentials from '../react/common/ConfigRows/Credentials';
 import installedComponentsActions from '../modules/components/InstalledComponentsActionCreators';
 import versionsActions from '../modules/components/VersionsActionCreators';
 import jobsActions from '../modules/jobs/ActionCreators';
@@ -28,17 +27,6 @@ export default function(settings) {
     ],
     childRoutes: []
   };
-  if (settings.hasCredentials) {
-    route.childRoutes.push(
-      {
-        name: settings.componentId + '-credentials',
-        settings: settings,
-        path: 'credentials',
-        title: 'Credentials',
-        defaultRouteHandler: Credentials
-      }
-    );
-  }
   route.childRoutes.push(
     {
       name: settings.componentId + '-row',
