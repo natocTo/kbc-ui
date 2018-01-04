@@ -176,7 +176,7 @@ export default React.createClass({
         onClick={onClickButton}
         className="btn btn-link">
         <Tooltip placement="top" tooltip="Send token">
-          <i className="fa fa-send-o" />
+          <i className="fa fa-share" />
         </Tooltip>
       </button>
     );
