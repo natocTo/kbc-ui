@@ -61,6 +61,7 @@ const TableRow = React.createClass({
     componentId: React.PropTypes.string.isRequired,
     configurationId: React.PropTypes.string.isRequired,
     row: React.PropTypes.object.isRequired,
+    rowNumber: React.PropTypes.number.isRequired,
     columns: React.PropTypes.array.isRequired,
     linkTo: React.PropTypes.string.isRequired,
     isDeletePending: React.PropTypes.bool.isRequired,
@@ -108,6 +109,9 @@ const TableRow = React.createClass({
         >
           <div className="td" key="dnd-handle">
             {this.renderDragSource()}
+          </div>
+          <div className="td" key="row-number">
+            {this.props.rowNumber}
           </div>
           {this.props.columns.map(function(columnFunction, columnIndex) {
             return (

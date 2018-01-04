@@ -86,6 +86,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
           componentId={props.componentId}
           configurationId={props.configurationId}
           key={rowIndex}
+          rowNumber={rowIndex + 1}
           linkTo={props.rowLinkTo}
           isDeletePending={props.rowDeletePending(row.get('id'))}
           onDelete={function() {
@@ -147,6 +148,7 @@ export default DragDropContext(HTML5Backend)(React.createClass({
           <div className="thead" key="table-header">
             <div className="tr">
               <span className="th" key="dummy" />
+              <span className="th" key="row-number">#</span>
               {this.renderHeader()}
             </div>
           </div>
