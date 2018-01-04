@@ -6,6 +6,7 @@ import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
 import {Loader} from '@keboola/indigo-ui';
 import RefreshTokenModal from './RefreshTokenModal';
+import SendTokenModal from './SendTokenModal';
 import ExpiresInfo from '../tokenEditor/ExpiresInfo';
 import {Link} from 'react-router';
 import CreatedDate from './CreatedDate';
@@ -20,6 +21,8 @@ export default React.createClass({
     isDeletingFn: PropTypes.func.isRequired,
     localState: PropTypes.object.isRequired,
     updateLocalState: PropTypes.func.isRequired,
+    onSendTokenFn: PropTypes.func.isRequired,
+    isSendingTokenFn: PropTypes.func.isRequired,
     onRefreshFn: PropTypes.func.isRequired,
     isRefreshingFn: PropTypes.func.isRequired
   },
@@ -28,6 +31,7 @@ export default React.createClass({
     return (
       <div>
         {this.renderTokenRefreshModal()}
+        {this.renderTokenSendModal()}
         <div className="kbc-inner-content-padding-fix with-bottom-border">
           <p>
             Create new token and limit access to specific buckets or components in you project.
@@ -146,6 +150,38 @@ export default React.createClass({
     );
   },
 
+  renderTokenSendModal() {
+    const token = this.props.localState.get('sendToken', Map());
+    const isSending = this.props.isSendingTokenFn(token.get('id'));
+    return (
+      <SendTokenModal
+        token={token}
+        show={!!token.get('id')}
+        onHideFn={() => this.updateLocalState('sendToken', Map())}
+        onSendFn={(params) => this.props.onSendTokenFn(token, params)}
+        isSending={!!isSending}
+      />
+    );
+  },
+
+
+  renderTokenSendButton(token) {
+    const onClickButton = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.updateLocalState('sendToken', token);
+    };
+    return (
+      <button
+        onClick={onClickButton}
+        className="btn btn-link">
+        <Tooltip placement="top" tooltip="Send token">
+          <i className="fa fa-send-o" />
+        </Tooltip>
+      </button>
+    );
+  },
+
   renderTokenRefreshButton(token) {
     const onClickButton = (e) => {
       e.preventDefault();
@@ -214,8 +250,8 @@ export default React.createClass({
           {this.renderBucketsAccess(token)}
         </div>
         <div className="td text-right kbc-no-wrap">
-
           {!token.has('admin') && this.renderTokenDelete(token)}
+          {this.renderTokenSendButton(token)}
           {this.renderTokenRefreshButton(token)}
         </div>
       </Link>
