@@ -103,12 +103,6 @@ export default React.createClass({
           />
           <ul className="nav nav-stacked">
             <li>
-              <Link to={this.state.componentId} params={{config: this.state.configurationId}}>
-                <span className="fa fa-arrow-left fa-fw" />
-                &nbsp;Back
-              </Link>
-            </li>
-            <li>
               <RunComponentButton
                   title="Run"
                   component={this.state.componentId}
