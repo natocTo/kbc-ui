@@ -17,7 +17,6 @@ import DeleteConfigurationRowButton from '../../../modules/components/react/comp
 import Parameters from '../../../modules/components/react/components/Parameters';
 import Processors from '../../../modules/components/react/components/Processors';
 import SaveButtons from '../SaveButtons';
-import { Link } from 'react-router';
 import ActivateDeactivateButton from '../ActivateDeactivateButton';
 
 // adapters
