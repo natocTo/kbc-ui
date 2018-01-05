@@ -17,6 +17,7 @@ module.exports = React.createClass
     excludeTableFn: React.PropTypes.func
     allowedBuckets: React.PropTypes.array
     disabled: React.PropTypes.bool
+    clearable: React.PropTypes.bool
     autoFocus: React.PropTypes.bool
 
   getDefaultProps: ->
@@ -25,6 +26,7 @@ module.exports = React.createClass
     allowedBuckets: ['in','out']
     disabled: false
     autoFocus: false
+    clearable: false
 
   getStateFromStores: ->
     isTablesLoading = storageTablesStore.getIsLoading()
@@ -45,7 +47,7 @@ module.exports = React.createClass
     Select
       disabled: @props.disabled
       name: 'source'
-      clearable: false
+      clearable: @props.clearable
       autofocus: @props.autoFocus
       value: @props.value
       isLoading: @state.isTablesLoading
@@ -53,7 +55,7 @@ module.exports = React.createClass
       valueRenderer: @valueRenderer
       optionRenderer: @valueRenderer
       onChange: (selectedOption) =>
-        tableId = selectedOption.value
+        tableId = selectedOption && selectedOption.value
         table = @state.tables.find (t) ->
           t.get('id') == tableId
         @props.onSelectTableFn(tableId, table)
