@@ -2,7 +2,7 @@ import React from 'react';
 
 import route from '../../utils/configRowsRoute';
 import { createConfiguration as rowCreateConfiguration, parseConfiguration as rowParseConfiguration } from './adapters/row';
-import { createConfiguration as credentialsCreateConfiguration, parseConfiguration as credentialsParseConfiguration } from './adapters/credentials';
+import { createConfiguration as credentialsCreateConfiguration, parseConfiguration as credentialsParseConfiguration, isCompleted as credentialsIsCompleted } from './adapters/credentials';
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import fuzzy from 'fuzzy';
@@ -18,7 +18,8 @@ const routeSettings = {
   adapters: {
     credentials: {
       create: credentialsCreateConfiguration,
-      parse: credentialsParseConfiguration
+      parse: credentialsParseConfiguration,
+      isCompleted: credentialsIsCompleted
     },
     row: {
       create: rowCreateConfiguration,

@@ -13,31 +13,29 @@ import Actions from '../../../modules/components/ConfigurationsActionCreators';
 
 // global components
 import SaveButtons from '../SaveButtons';
+import { PanelGroup, Panel } from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
+    const componentId = settings.get('componentId');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const component = ComponentStore.getComponent(settings.get('componentId'));
+    const component = ComponentStore.getComponent(componentId);
+    const parseFn = settings.getIn(['adapters', 'credentials', 'parse']);
+    const isCompletedFn = settings.getIn(['adapters', 'credentials', 'isCompleted']);
+    const isChanged = Store.isEditingConfiguration(componentId, configurationId);
     return {
       componentId: settings.get('componentId'),
       settings: settings,
       component: component,
       configurationId: configurationId,
-      configuration: Store.getEditingConfiguration(settings.get('componentId'), configurationId, settings.getIn(['adapters', 'credentials', 'parse'])),
-      isSaving: Store.getPendingActions(settings.get('componentId'), configurationId).has('save-configuration'),
-      isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId)
+      configuration: Store.getEditingConfiguration(componentId, configurationId, parseFn),
+      isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
+      isChanged: isChanged,
+      credentialsOpen: !isCompletedFn(parseFn(Store.getConfiguration(componentId, configurationId))) || isChanged
     };
-  },
-
-  renderTitle() {
-    return (
-      <h2 style={{lineHeight: '32px'}}>
-        {this.state.settings.get('credentialsTitle')}
-      </h2>
-    );
   },
 
   renderButtons() {
@@ -76,16 +74,56 @@ export default React.createClass({
     />);
   },
 
+  accordionArrow(isActive) {
+    if (isActive) {
+      return (<span className="fa fa-fw fa-angle-down" />);
+    }
+    return (<span className="fa fa-fw fa-angle-right" />);
+  },
+
+  accordionHeader(label, isActive) {
+    return (
+      <span>
+        <span className="table">
+          <span className="tbody">
+            <span className="tr">
+              <span className="td">
+                <h4>
+                  {this.accordionArrow(isActive)}
+                  {label}
+                </h4>
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    );
+  },
+
   render() {
     if (!this.state.settings.get('hasCredentials')) {
       return null;
     }
+    const component = this;
     return (
-      <div className="kbc-inner-content-padding-fix with-bottom-border">
-        {this.renderTitle()}
-        {this.renderButtons()}
-        {this.renderCredentials()}
-      </div>
+      <PanelGroup
+        accordion={true}
+        className="kbc-accordion kbc-panel-heading-with-table"
+        activeKey={this.state.credentialsOpen ? 'credentials' : ''}
+        onSelect={function(activeTab) {
+          if (activeTab === 'credentials') {
+            component.setState({credentialsOpen: !component.state.credentialsOpen});
+          }
+        }}
+      >
+        <Panel
+          header={this.accordionHeader(this.state.settings.get('credentialsTitle'), component.state.credentialsOpen)}
+          eventKey="credentials"
+        >
+          {this.renderButtons()}
+          {this.renderCredentials()}
+        </Panel>
+      </PanelGroup>
     );
   }
 });

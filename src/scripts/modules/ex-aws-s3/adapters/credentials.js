@@ -16,7 +16,12 @@ function parseConfiguration(configuration) {
   });
 }
 
+function isCompleted(localState) {
+  return localState.get('awsAccessKeyId', '') !== '' && localState.get('awsSecretAccessKey', '') !== '';
+}
+
 module.exports = {
   createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration
+  parseConfiguration: parseConfiguration,
+  isCompleted: isCompleted
 };

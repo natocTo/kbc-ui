@@ -2,6 +2,7 @@ var assert = require('assert');
 var Immutable = require('immutable');
 var createConfiguration = require('./credentials').createConfiguration;
 var parseConfiguration = require('./credentials').parseConfiguration;
+var isCompleted = require('./credentials').isCompleted;
 var cases = require('./credentials.spec.def').cases;
 
 describe('credentials', function() {
@@ -26,4 +27,18 @@ describe('credentials', function() {
       });
     });
   });
+
+  describe('isCompleted()', function() {
+    it('should return false with empty localState', function() {
+      assert.equal(isCompleted(Immutable.fromJS({})), false);
+    });
+    it('should return false with only one parameter filled', function() {
+      assert.equal(isCompleted(Immutable.fromJS({awsAccessKeyId: 'a'})), false);
+      assert.equal(isCompleted(Immutable.fromJS({awsSecretAccessKey: 'a'})), false);
+    });
+    it('should return true when both paramaeters are filled', function() {
+      assert.equal(isCompleted(Immutable.fromJS({awsAccessKeyId: 'a', awsSecretAccessKey: 'a'})), true);
+    });
+  });
+
 });

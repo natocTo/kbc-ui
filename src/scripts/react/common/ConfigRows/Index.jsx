@@ -108,9 +108,10 @@ export default React.createClass({
           <div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
             <h3>TODO</h3>
             <ul>
-              <li>Documentation?</li>
+              <li>Link to Documentation?</li>
               <li>Empty search result styling</li>
               <li>Search bar styling</li>
+              <li>Credentials form styling</li>
               <li>Credentials hiding when completed</li>
             </ul>
           </div>
