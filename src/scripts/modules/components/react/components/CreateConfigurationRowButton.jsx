@@ -24,7 +24,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       type: 'link',
-      label: 'Create Row'
+      label: 'Add Row'
     };
   },
 
@@ -69,7 +69,7 @@ export default React.createClass({
           <ConfirmButtons
             isSaving={this.state.isSaving}
             isDisabled={!this.isValid()}
-            saveLabel={this.props.label}
+            saveLabel="Create"
             onCancel={this.close}
             onSave={this.handleCreate}
             />
