@@ -11,6 +11,7 @@ export default React.createClass({
     show: PropTypes.bool.isRequired,
     localState: PropTypes.object.isRequired,
     parameters: PropTypes.object.isRequired,
+    inputTableId: PropTypes.string,
     updateLocalState: PropTypes.func.isRequired,
     prepareLocalState: PropTypes.func.isRequired,
     loadCrawlers: PropTypes.func.isRequired,
@@ -53,6 +54,10 @@ export default React.createClass({
     );
   },
 
+  getInputTableId() {
+    return this.localState('inputTableId', this.props.inputTableId);
+  },
+
   handleSave() {
     let crawlerSettings = JSON.parse(this.getSettings());
     crawlerSettings = _.isEmpty(crawlerSettings) ? null : fromJS(crawlerSettings);
@@ -67,7 +72,7 @@ export default React.createClass({
         .set('crawlerSettings', crawlerSettings)
         .delete('executionId');
     }
-    this.props.onSave(paramsToSave.delete('action'));
+    this.props.onSave(paramsToSave.delete('action'), this.getInputTableId());
   },
 
   canNext() {
@@ -172,6 +177,8 @@ export default React.createClass({
         selectTab={(s) => this.updateLocalState('step', s)}
         localState={this.props.localState}
         updateLocalState={this.props.updateLocalState}
+        inputTableId={this.getInputTableId()}
+        updateInputTableId={(tableId) => this.updateLocalState('inputTableId', tableId)}
         parameters={this.parameters()}
         updateParameters={(parameters) => this.updateLocalState('parameters', parameters)}
         settings={this.getSettings()}

@@ -3,6 +3,7 @@ import {List} from 'immutable';
 import {InputGroup, FormControl, Tab, Tabs} from 'react-bootstrap';
 import RadioGroup from 'react-radio-group';
 import {Input} from '../../../../react/common/KbcBootstrap';
+import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 
 import Select from 'react-select';
 import {RefreshIcon} from '@keboola/indigo-ui';
@@ -25,6 +26,8 @@ export default React.createClass({
     action: PropTypes.string.isRequired,
     updateSettings: PropTypes.func.isRequired,
     crawlers: PropTypes.object.isRequired,
+    inputTableId: PropTypes.string,
+    updateInputTableId: PropTypes.func.isRequired,
     step: PropTypes.number.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     parameters: PropTypes.object.isRequired,
@@ -124,6 +127,7 @@ export default React.createClass({
       :
       <div className="row form form-horizontal">
         {this.renderCrawlerSelector()}
+        {this.renderInputTableIdSelector()}
         <div className="form-group">
           <div className="col-xs-2 control-label">
             Crawler Settings
@@ -134,6 +138,30 @@ export default React.createClass({
               Optional <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">crawler settings</a> JSON object which overrides default crawler settings for current run.
             </div>
           </div>
+        </div>
+      </div>
+    );
+  },
+
+  renderInputTableIdSelector() {
+    const error = false;
+    // const isLoading = this.props.crawlers.get('loading', false);
+
+    return (
+      <div className={error ? 'form-group has-error' : 'form-group'}>
+        <div className="col-xs-2 control-label">
+          Input Table
+        </div>
+        <div className="col-xs-8">
+          <SapiTableSelector
+            clearable={true}
+            onSelectTableFn={this.props.updateInputTableId}
+            placeholder="Select table"
+            value={this.props.inputTableId || ''}
+          />
+          <span className="help-block">
+            Optional parameter. Data from input table will be pushed to crawler, where you can access them through Apify keyvalue store. Keyvalue store ID will be save to customData attribute.
+          </span>
         </div>
       </div>
     );
@@ -219,7 +247,6 @@ export default React.createClass({
       </div>
     );
   },
-
 
   // this.renderFormControl('User Crawlers', isLoading || error ? staticElement : selectControl, '', !!error);
 

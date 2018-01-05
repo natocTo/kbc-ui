@@ -48,6 +48,7 @@ export default React.createClass({
       actions: actions,
       component: component,
       configId: configId,
+      inputTableId: store.inputTable && store.inputTable.get('source'),
       localState: store.getLocalState()
     };
   },
@@ -123,12 +124,13 @@ export default React.createClass({
     };
     return (
       <SetupModal
+        inputTableId={this.state.inputTableId}
         parameters={store.parameters}
         show={localState.getIn(showPath, false)}
         onHideFn={closeFn}
         {...actions.prepareLocalState(path.concat('data'))}
         loadCrawlers={actions.loadCrawlers}
-        onSave={(params) => actions.saveParams(params).then(closeFn)}
+        onSave={(params, inputTable) => actions.saveConfig(params, inputTable).then(closeFn)}
         isSaving={localState.get('saving') || false}
       />
     );
@@ -160,6 +162,15 @@ export default React.createClass({
     const tableId = `${bucketId}.crawlerResult`;
     const resultsTable = <p className="form-control-static"><SapiTableLinkEx tableId={tableId} /></p>;
     const executionId = parameters.get('executionId');
+    const inputTableId = this.state.inputTableId;
+    const inputTableElement = (
+      <p className="form-control-static">
+        {inputTableId ?
+         <SapiTableLinkEx tableId={inputTableId} />
+         : 'N/A'
+        }
+      </p>
+    );
     return (
       <div className="form-horizontal">
         {executionId ? this.renderStaticFormGroup('Execution ID', <p className="form-control-static">{executionId}</p>)
@@ -167,6 +178,7 @@ export default React.createClass({
          <span>
            {this.renderStaticFormGroup('User ID', user)}
            {this.renderStaticFormGroup('Crawler', crawler)}
+           {this.renderStaticFormGroup('Input Table', inputTableElement)}
            {this.renderStaticFormGroup('Crawler Settings', settings)}
          </span>
 

@@ -2,6 +2,7 @@ import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import _ from 'underscore';
 import callDockerAction from '../components/DockerActionsApi';
+import {Map, List} from 'immutable';
 
 const COMPONENT_ID = 'apify.apify';
 export default function(configId) {
@@ -38,15 +39,21 @@ export default function(configId) {
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription).then(() => updateLocalState(waitingPath, false));
   }
 
-  function saveParameters(newParams) {
-    const data = store.configData.set('parameters', newParams);
+  function saveConfig(newParams, inputTableId) {
+    let data = store.configData.set('parameters', newParams);
+    if (inputTableId) {
+      const newTable = Map({source: inputTableId});
+      data = data.setIn(['storage', 'input', 'tables'], List().push(newTable));
+    } else {
+      data = data.delete('storage');
+    }
     return saveConfigData(data, 'saving', 'Setup crawler');
   }
 
   return {
     updateLocalState: updateLocalState,
     prepareLocalState: prepareLocalState,
-    saveParams: saveParameters,
+    saveConfig: saveConfig,
     loadCrawlers(settings) {
       const runData = store.configData.setIn(['parameters'], settings);
       const params = {
