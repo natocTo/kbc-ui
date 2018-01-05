@@ -87,10 +87,6 @@ export default React.createClass({
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            TODO
-            <ul><li>Reset State button</li></ul>
-          </div>
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
             {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration ? this.renderJSONEditors() : this.renderForm()}
           </div>
         </div>

@@ -42,15 +42,10 @@ export default React.createClass({
   renderRowsTable() {
     const state = this.state;
     if (this.state.rows.count() === 0) {
-      return [
-        (<div className="kbc-inner-content-padding-fix with-bottom-border">
+      return (
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
           <h3>TODO (Empty state)</h3>
-          <ul>
-            <li>Create table button</li>
-            <li>Link to documentation</li>
-          </ul>
-        </div>)
-      ];
+        </div>);
     } else {
       let header, columns, filter;
       if (this.state.settings.hasIn(['list', 'header'])) {
@@ -104,16 +99,6 @@ export default React.createClass({
               componentId={this.state.componentId}
               configId={this.state.configurationId}
             />
-          </div>
-          <div className="kbc-inner-content-padding-fix with-bottom-border" key="list">
-            <h3>TODO</h3>
-            <ul>
-              <li>Link to Documentation?</li>
-              <li>Empty search result styling</li>
-              <li>Search bar styling</li>
-              <li>Credentials form styling</li>
-              <li>Credentials hiding when completed</li>
-            </ul>
           </div>
           <Credentials/>
           {this.renderRowsTable()}
