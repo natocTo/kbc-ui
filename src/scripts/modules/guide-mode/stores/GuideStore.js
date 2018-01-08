@@ -3,7 +3,7 @@ import objectAssign from 'object-assign';
 import Dispatcher from '../../../Dispatcher';
 import StoreUtils from '../../../utils/StoreUtils';
 import { ActionTypes } from './ActionCreators';
-import wizardLessons from '../WizardLessons';
+import wizardLessons from '../GuideLessons';
 
 import { ActionTypes as componentsActionTypes } from '../../components/Constants';
 import { ActionTypes as jobActionTypes } from '../../jobs/Constants';

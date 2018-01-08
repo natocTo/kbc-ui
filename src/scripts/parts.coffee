@@ -9,7 +9,7 @@ global.kbcApp =
   parts:
     ProjectSelect: require('./react/layout/project-select/ProjectSelect').default
     GuideMode:
-      Wizard: require('./modules/guide-mode/react/Wizard').default
+      GuideWizard: require('./modules/guide-mode/react/GuideWizard').default
     CurrentUser: require('./react/layout/CurrentUser').default
     ProjectsList: require './react/layout/project-select/List'
     NewProjectModal: require './react/layout/NewProjectModal'

@@ -7,14 +7,6 @@ export const ActionTypes = {
   GUIDE_MODE_SET_ACHIEVED_LESSON: 'GUIDE_MODE_SET_ACHIEVED_LESSON'
 };
 
-export const hideWizardModalFn = () => {
-  Dispatcher.handleViewAction({
-    type: ActionTypes.GUIDE_MODE_UPDATE_MODAL_STATE,
-    showLessonModal: false,
-    lessonNumber: 0
-  });
-};
-
 export const setStep = (newStep) => {
   Dispatcher.handleViewAction({
     type: ActionTypes.GUIDE_MODE_SET_STEP,
@@ -36,11 +28,19 @@ export const setAchievedLesson = (lessonId) => {
   });
 };
 
-export const showWizardModalFn = (lessonNumber) => {
+export const showGuideModalFn = (lessonNumber) => {
   return Dispatcher.handleViewAction({
     type: ActionTypes.GUIDE_MODE_UPDATE_MODAL_STATE,
     showLessonModal: true,
     step: 0,
     lessonNumber: lessonNumber
+  });
+};
+
+export const hideGuideModalFn = () => {
+  Dispatcher.handleViewAction({
+    type: ActionTypes.GUIDE_MODE_UPDATE_MODAL_STATE,
+    showLessonModal: false,
+    lessonNumber: 0
   });
 };

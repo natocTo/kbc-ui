@@ -13,15 +13,15 @@ import DeprecatedComponents from './DeprecatedComponents';
 import DeprecatedTransformations from './DeprecatedTransformations';
 import DeprecatedStorage from './DeprecatedStorage';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
-import WizardStore from '../../guide-mode/stores/WizardStore';
-import Desk from '../../guide-mode/react/Desk';
-import lessons from '../../guide-mode/WizardLessons';
+import { showGuideModalFn } from '../../guide-mode/stores/ActionCreators.js';
+import GuideStore from '../../guide-mode/stores/GuideStore';
+import GuideDesk from '../../guide-mode/react/GuideDesk';
+import lessons from '../../guide-mode/GuideLessons';
 import { List } from 'immutable';
 
 export default React.createClass({
   mixins: [
-    createStoreMixin(InstalledComponentStore, TransformationsStore, StorageBucketsStore, WizardStore)
+    createStoreMixin(InstalledComponentStore, TransformationsStore, StorageBucketsStore, GuideStore)
   ],
 
   getStateFromStores() {
@@ -49,7 +49,7 @@ export default React.createClass({
       installedComponents: InstalledComponentStore.getAll(),
       transformations: TransformationsStore.getAllTransformations(),
       projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn'),
-      guideModeAchievedLessonId: WizardStore.getAchievedLessonId()
+      guideModeAchievedLessonId: GuideStore.getAchievedLessonId()
     };
   },
 
@@ -62,7 +62,7 @@ export default React.createClass({
   },
 
   openLessonModal(lessonNumber) {
-    showWizardModalFn(lessonNumber);
+    showGuideModalFn(lessonNumber);
   },
 
   countOverviewComponent() {
@@ -96,7 +96,7 @@ export default React.createClass({
         {this.countOverviewComponent() > 0  &&
         <div className="kbc-overview-component-container">
           {this.state.projectHasGuideModeOn && (
-            <Desk
+            <GuideDesk
               linkToSettings={ApplicationStore.getProjectPageUrl('settings')}
               lessons={lessons}
               achievedLessonId={this.state.guideModeAchievedLessonId}
@@ -144,3 +144,4 @@ export default React.createClass({
     );
   }
 });
+

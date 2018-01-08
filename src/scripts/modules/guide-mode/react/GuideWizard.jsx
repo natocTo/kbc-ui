@@ -1,7 +1,7 @@
 import React from 'react';
-import WizardModal from './WizardModal';
-import WizardStore from '../stores/WizardStore';
-import { setDirection, setStep, setAchievedLesson, hideWizardModalFn } from '../stores/ActionCreators';
+import GuideModal from './GuideModal';
+import GuideStore from '../stores/GuideStore';
+import { setDirection, setStep, setAchievedLesson, hideGuideModalFn } from '../stores/ActionCreators';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
@@ -12,12 +12,12 @@ export default React.createClass({
     scriptsBasePath: React.PropTypes.string.isRequired
   },
 
-  mixins: [createStoreMixin(WizardStore)],
+  mixins: [createStoreMixin(GuideStore)],
 
   getStateFromStores() {
     return {
-      wizard: WizardStore.getState(),
-      currentLesson: WizardStore.getCurrentLesson()
+      wizard: GuideStore.getState(),
+      currentLesson: GuideStore.getCurrentLesson()
     };
   },
 
@@ -44,7 +44,7 @@ export default React.createClass({
       return null;
     } else {
       return (
-        <WizardModal
+        <GuideModal
           projectBaseUrl={this.props.projectBaseUrl}
           step={this.state.wizard.step}
           achievedStep={this.state.wizard.achievedStep}
@@ -53,7 +53,7 @@ export default React.createClass({
           direction={this.state.wizard.direction}
           setAchievedLessonFn={setAchievedLesson}
           show={this.state.wizard.showLessonModal}
-          onHide={hideWizardModalFn}
+          onHide={hideGuideModalFn}
           position="aside"
           lesson={this.state.currentLesson}
           backdrop={true}

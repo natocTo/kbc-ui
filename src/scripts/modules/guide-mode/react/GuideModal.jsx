@@ -1,8 +1,8 @@
 import React from 'react';
 import {Modal, ResponsiveEmbed, ListGroupItem, ListGroup, Button} from 'react-bootstrap';
 import RoutesStore from '../../../stores/RoutesStore';
-import { hideWizardModalFn, showWizardModalFn } from '../stores/ActionCreators.js';
-import GuideModeImage from './GuideModeImage';
+import { hideGuideModalFn, showGuideModalFn } from '../stores/ActionCreators.js';
+import GuideImage from './GuideImage';
 import Remarkable from 'react-remarkable';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -29,21 +29,6 @@ export default React.createClass({
     scriptsBasePath: React.PropTypes.string.isRequired
   },
 
-  getProjectPageUrlHref(path) {
-    let delimiter = '/';
-    if (process.env.NODE_ENV === 'production') {
-      if (path === '') {
-        delimiter = '';
-      }
-      return this.props.projectBaseUrl + delimiter + path;
-    }
-    // development
-    if (path === ROUTE_PATH_STORAGE) {
-      return '/index-storage.html';
-    } else {
-      return '/?token=TOKEN#/' + path;
-    }
-  },
 
   render: function() {
     return (
@@ -77,6 +62,7 @@ export default React.createClass({
       </div>
     );
   },
+
   getModalBody() {
     this.scrollBodyToTop();
     return (
@@ -98,6 +84,24 @@ export default React.createClass({
       </div>
     );
   },
+
+
+  getProjectPageUrlHref(path) {
+    let delimiter = '/';
+    if (process.env.NODE_ENV === 'production') {
+      if (path === '') {
+        delimiter = '';
+      }
+      return this.props.projectBaseUrl + delimiter + path;
+    }
+    // development
+    if (path === ROUTE_PATH_STORAGE) {
+      return '/index-storage.html';
+    } else {
+      return '/?token=TOKEN#/' + path;
+    }
+  },
+
   hasNextStep() {
     return this.props.step + 1 < this.getStepsCount();
   },
@@ -182,7 +186,7 @@ export default React.createClass({
   },
   getImageLink() {
     return (
-      <GuideModeImage
+      <GuideImage
         scriptsBasePath={this.props.scriptsBasePath}
         imageName={this.getStepMedia()}
       />
@@ -308,7 +312,7 @@ export default React.createClass({
     return (
         <Button bsStyle="link" onClick={(e) => {
           e.preventDefault();
-          showWizardModalFn(this.getLessonId() + 1);
+          showGuideModalFn(this.getLessonId() + 1);
         }}>
           Lesson {this.getLessonId() + 1}
         </Button>
@@ -320,7 +324,7 @@ export default React.createClass({
     } else {
       RoutesStore.getRouter().transitionTo('app');
     }
-    hideWizardModalFn();
+    hideGuideModalFn();
   },
   handleStep(direction) {
     this.props.setDirection(direction);
