@@ -25,6 +25,7 @@ exS3Routes = require('../ex-s3/routes').default
 goodDataWriterRoutes = require '../gooddata-writer/routes'
 dropoxExtractorRoutes = require('../ex-dropbox/routes').default
 dropoxExtractorRoutesV2 = require('../ex-dropbox-v2/routes').default
+pigeonExtractorRoutes = '../ex-pigeon/routes'
 dropoxWriterRoutes = require '../wr-dropbox/routes'
 wrPortalCreateRouteFn = require('../wr-portal/Routes').default
 createDbWriterRoutes = require('../wr-db-generic/routes').default
@@ -127,6 +128,8 @@ routes =
       createComponentRoute 'keboola.csv-import', [csvImportRoutes]
       createComponentRoute 'keboola.ex-s3', [exS3Routes]
       createComponentRoute 'apify.apify', [exApifyRoutes]
+    ,
+      createComponentRoute 'keboola.ex-pigeon', [pigeonExtractorRoutes]
     ,
       createGenericDetailRoute 'extractor'
 
