@@ -1,7 +1,5 @@
 import Index from './react/Index';
 
-import jobsActionCreators from '../jobs/ActionCreators';
-
 export default {
   name: 'ex-pigeon',
   path: ':config',
@@ -10,10 +8,7 @@ export default {
 
   ],
   poll: {
-    interval: 7,
-    action: (params) => jobsActionCreators.loadComponentConfigurationLatestJobs('ex-pigeon', params.config)
+    interval: 7
   },
-  defaultRouteHandler: Index,
-  childRoutes: [
-  ]
+  defaultRouteHandler: Index
 };
