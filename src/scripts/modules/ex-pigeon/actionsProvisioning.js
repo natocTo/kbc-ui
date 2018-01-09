@@ -2,8 +2,22 @@ import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import _ from 'underscore';
 
+import ApplicationStore from '../../stores/ApplicationStore';
+
+import request from '../../utils/request';
+
 const COMPONENT_ID = 'keboola.ex-pigeon';
 export default function(configId) {
+  const requestEmail = function() {
+    const sapiToken = ApplicationStore.getSapiTokenString();
+    console.log(sapiToken);
+    return request('POST', 'https://docker-runner.keboola.com/docker/keboola.ex-pigeon/action/add')
+        .set('X-StorageApi-Token', sapiToken)
+        .send('{"configData": {"parameters": {}}}')
+        .promise()
+        .then(response => response.email);
+  };
+
   const store = storeProvisioning(configId);
 
   function updateLocalState(path, data) {
@@ -46,7 +60,7 @@ export default function(configId) {
   return {
     updateLocalState: updateLocalState,
     prepareLocalState: prepareLocalState,
-    saveParams: saveParameters
-
+    saveParams: saveParameters,
+    requestEmail: requestEmail
   };
 }

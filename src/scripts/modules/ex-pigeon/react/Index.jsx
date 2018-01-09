@@ -39,6 +39,7 @@ export default React.createClass({
   },
   render() {
     return (
+
         <div className="container-fluid">
             <div className="col-md-9 kbc-main-content">
                 <div className="kbc-inner-content-padding-fix with-bottom-border">
@@ -47,6 +48,7 @@ export default React.createClass({
                         configId={this.state.configId}
                     />
                 </div>
+                {this.getEmail()}
             </div>
             <div className="col-md-3 kbc-main-sidebar">
                 <ComponentMetadata
@@ -60,5 +62,8 @@ export default React.createClass({
             </div>
         </div>
     );
+  },
+  getEmail() {
+    return this.state.store.requestEmail();
   }
 });
