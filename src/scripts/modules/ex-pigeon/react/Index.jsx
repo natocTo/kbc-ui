@@ -40,7 +40,6 @@ export default React.createClass({
   render() {
     return (
         <div className="container-fluid">
-            {console.log(this.state.configId)}
             <div className="col-md-9 kbc-main-content">
                 <div className="kbc-inner-content-padding-fix with-bottom-border">
                     <ComponentDescription
