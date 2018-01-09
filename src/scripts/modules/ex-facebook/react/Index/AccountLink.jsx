@@ -8,15 +8,16 @@ export default React.createClass({
   },
 
   render() {
+    if (this.props.componentId === 'keboola.ex-instagram') return this.renderFbPageLink('fb_page_id');
     if (this.props.componentId === 'keboola.ex-facebook') return this.renderFbPageLink();
     if (this.props.componentId === 'keboola.ex-facebook-ads') return this.renderFbAdAccountLink();
 
     return 'Unknown component ' + this.props.componentId;
   },
 
-  renderFbPageLink() {
+  renderFbPageLink(idProperty) {
     const {account} = this.props;
-    const pageId = account.get('id');
+    const pageId = account.get(idProperty || 'id');
     const pageName = account.get('name');
 
     if (pageId) {

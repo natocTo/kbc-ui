@@ -1,4 +1,9 @@
 export default {
+  'keboola.ex-instagram': {
+    'name': 'feed',
+    'path': 'e.g. feed or empty string',
+    'fields': 'caption,message,created_time,type,description'
+  },
   'keboola.ex-facebook': {
     'name': 'feed',
     'path': 'e.g. feed or empty string',

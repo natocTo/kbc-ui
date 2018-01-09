@@ -173,6 +173,7 @@ export default function(COMPONENT_ID, configId) {
       updateLocalState(path.concat('isLoading'), true);
       let actionName = 'accounts';
       if (COMPONENT_ID === 'keboola.ex-facebook-ads') actionName = 'adaccounts';
+      if (COMPONENT_ID === 'keboola.ex-instagram') actionName = 'igaccounts';
       return callDockerAction(COMPONENT_ID, actionName, params)
         .then((response) => {
           const isError = response.code >= 400;

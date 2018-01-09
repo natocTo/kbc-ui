@@ -260,5 +260,6 @@ const exfbAdsTemplates = [
 
 export default fromJS({
   'keboola.ex-facebook': exfbtemplates,
+  'keboola.ex-instagram': exfbtemplates,
   'keboola.ex-facebook-ads': exfbAdsTemplates
 });
