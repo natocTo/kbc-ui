@@ -2,7 +2,7 @@ import storeProvisioning from './storeProvisioning';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import _ from 'underscore';
 
-const COMPONENT_ID = 'ex-pigeon';
+const COMPONENT_ID = 'keboola.ex-pigeon';
 export default function(configId) {
   const store = storeProvisioning(configId);
 

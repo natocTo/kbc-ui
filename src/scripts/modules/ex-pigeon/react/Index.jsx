@@ -16,7 +16,7 @@ import ComponentDescription from '../../components/react/components/ComponentDes
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 
 
-const COMPONENT_ID = 'ex-pigeon';
+const COMPONENT_ID = 'keboola.ex-pigeon';
 
 export default React.createClass({
   mixins: [createStoreMixin(...storeMixins, LatestJobsStore)],
