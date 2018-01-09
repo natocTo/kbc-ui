@@ -14,6 +14,7 @@ import RunComponentButton from '../../../modules/components/react/components/Run
 import ConfigurationRowDescription from '../../../modules/components/react/components/ConfigurationRowDescription';
 import ConfigurationRowMetadata from '../../../modules/components/react/components/ConfigurationRowMetadata';
 import DeleteConfigurationRowButton from '../../../modules/components/react/components/DeleteConfigurationRowButton';
+import ResetStateButton from '../../../modules/components/react/components/ResetStateButton';
 import Parameters from '../../../modules/components/react/components/Parameters';
 import Processors from '../../../modules/components/react/components/Processors';
 import SaveButtons from '../SaveButtons';
@@ -70,12 +71,21 @@ export default React.createClass({
       isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId, rowId),
 
       isDeletePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('delete'),
-      isEnableDisablePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('enable') || Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('disable')
+      isEnableDisablePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('enable') || Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('disable'),
+
+      hasState: !Store.get(settings.get('componentId'), configurationId, rowId).get('state', Immutable.Map()).isEmpty(),
+      isResetStatePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('reset-state')
     };
   },
 
   render() {
     const state = this.state;
+    let resetStateModalBody;
+    if (this.state.hasState) {
+      resetStateModalBody = 'Deletes the current stored state of the configuration, eg. progress of an incremental processes.';
+    } else {
+      resetStateModalBody = 'This configuration does not have a stored state.';
+    }
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -130,6 +140,15 @@ export default React.createClass({
                 }}
                 mode="link"
               />
+            </li>
+            <li>
+              <ResetStateButton
+                onClick={function() {
+                  return Actions.resetState(state.componentId, state.configurationId, state.rowId);
+                }}
+                isPending={this.state.isResetStatePending}
+                disabled={!this.state.hasState}
+              >{resetStateModalBody}</ResetStateButton>
             </li>
             <li>
               <DeleteConfigurationRowButton

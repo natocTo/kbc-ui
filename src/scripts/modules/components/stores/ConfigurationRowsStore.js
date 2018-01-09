@@ -313,6 +313,20 @@ Dispatcher.register(function(payload) {
       });
       return ConfigurationRowsStore.emitChange();
 
+    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'reset-state'], true);
+      return ConfigurationRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'reset-state']);
+      return ConfigurationRowsStore.emitChange();
+
+    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_SUCCESS:
+      _store = _store
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'reset-state'])
+        .setIn(['rows', action.componentId, action.configurationId, action.rowId], Immutable.fromJS(action.row));
+      return ConfigurationRowsStore.emitChange();
+
     default:
       break;
   }

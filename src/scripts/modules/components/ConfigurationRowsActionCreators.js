@@ -344,6 +344,34 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-  }
+  },
 
+  resetState: function(componentId, configurationId, rowId) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {state: '{}'})
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          row: response
+        });
+      }).catch(function(e) {
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
+  }
 };
