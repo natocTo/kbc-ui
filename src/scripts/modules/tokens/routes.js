@@ -6,7 +6,7 @@ import TokensStore from './StorageTokensStore';
 
 export default {
   name: 'tokens',
-  title: 'Tokens',
+  title: 'API Tokens',
   defaultRouteHandler: Index,
   requireData: [
     () => tokensActions.loadTokens(),
