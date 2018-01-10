@@ -5,7 +5,6 @@ import ComponentStore from '../../components/stores/ComponentsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import LatestJobsStore from '../../jobs/stores/LatestJobsStore';
-import storageTablesStore from '../../components/stores/StorageTablesStore';
 
 // actions
 import actionsProvisioning from '../actionsProvisioning';
@@ -26,20 +25,16 @@ export default React.createClass({
     const actions = actionsProvisioning(configId);
     const component = ComponentStore.getComponent(COMPONENT_ID);
 
-
     return {
       configId: configId,
       store: store,
       actions: actions,
       component: component,
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
-      allTables: storageTablesStore.getAll(),
-      localState: store.getLocalState()
+      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId)
     };
   },
   render() {
     return (
-
         <div className="container-fluid">
             <div className="col-md-9 kbc-main-content">
                 <div className="kbc-inner-content-padding-fix with-bottom-border">
@@ -64,6 +59,6 @@ export default React.createClass({
     );
   },
   getEmail() {
-    return this.state.store.requestEmail();
+    // return this.state.actions.requestEmail();
   }
 });
