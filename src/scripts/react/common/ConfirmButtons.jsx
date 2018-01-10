@@ -41,6 +41,7 @@ export default React.createClass({
         <div className="kbc-buttons">
           {this._saveButton()}
           {this._cancelButton()}
+          {' '}
           {this._loader()}
         </div>
       );
@@ -48,6 +49,7 @@ export default React.createClass({
       return (
         <div className="kbc-buttons">
           {this._loader()}
+          {' '}
           {this._cancelButton()}
           {this._saveButton()}
         </div>
