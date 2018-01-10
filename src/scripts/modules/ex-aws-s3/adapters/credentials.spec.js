@@ -29,16 +29,15 @@ describe('credentials', function() {
   });
 
   describe('isCompleted()', function() {
-    it('should return false with empty localState', function() {
+    it('should return false with empty configuration', function() {
       assert.equal(isCompleted(Immutable.fromJS({})), false);
     });
     it('should return false with only one parameter filled', function() {
-      assert.equal(isCompleted(Immutable.fromJS({awsAccessKeyId: 'a'})), false);
-      assert.equal(isCompleted(Immutable.fromJS({awsSecretAccessKey: 'a'})), false);
+      assert.equal(isCompleted(Immutable.fromJS({parameters: {accessKeyId: 'a'}})), false);
+      assert.equal(isCompleted(Immutable.fromJS({parameters: {'#secretAccessKey': 'a'}})), false);
     });
-    it('should return true when both paramaeters are filled', function() {
-      assert.equal(isCompleted(Immutable.fromJS({awsAccessKeyId: 'a', awsSecretAccessKey: 'a'})), true);
+    it('should return true when both parameters are filled', function() {
+      assert.equal(isCompleted(Immutable.fromJS({parameters: {'accessKeyId': 'a', '#secretAccessKey': 'a'}})), true);
     });
   });
-
 });

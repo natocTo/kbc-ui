@@ -34,7 +34,7 @@ export default React.createClass({
       configuration: Store.getEditingConfiguration(componentId, configurationId, parseFn),
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged,
-      credentialsOpen: !isCompletedFn(parseFn(Store.getConfiguration(componentId, configurationId))) || isChanged
+      credentialsOpen: !isCompletedFn(Store.getConfiguration(componentId, configurationId)) || isChanged
     };
   },
 

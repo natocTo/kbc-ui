@@ -16,8 +16,8 @@ function parseConfiguration(configuration) {
   });
 }
 
-function isCompleted(localState) {
-  return localState.get('awsAccessKeyId', '') !== '' && localState.get('awsSecretAccessKey', '') !== '';
+function isCompleted(configuration) {
+  return configuration.getIn(['parameters', 'accessKeyId'], '') !== '' && configuration.getIn(['parameters', '#secretAccessKey'], '') !== '';
 }
 
 module.exports = {
