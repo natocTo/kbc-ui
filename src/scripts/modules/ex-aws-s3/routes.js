@@ -1,7 +1,7 @@
 import React from 'react';
 
 import route from '../../utils/configRowsRoute';
-import { createConfiguration as rowCreateConfiguration, parseConfiguration as rowParseConfiguration } from './adapters/row';
+import { createConfiguration as rowCreateConfiguration, parseConfiguration as rowParseConfiguration, isCompleted as rowIsCompleted } from './adapters/row';
 import { createConfiguration as credentialsCreateConfiguration, parseConfiguration as credentialsParseConfiguration, isCompleted as credentialsIsCompleted } from './adapters/credentials';
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
@@ -23,7 +23,8 @@ const routeSettings = {
     },
     row: {
       create: rowCreateConfiguration,
-      parse: rowParseConfiguration
+      parse: rowParseConfiguration,
+      isCompleted: rowIsCompleted
     }
   },
   components: {

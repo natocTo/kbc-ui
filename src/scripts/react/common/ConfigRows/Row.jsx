@@ -31,6 +31,7 @@ export default React.createClass({
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const rowId = RoutesStore.getCurrentRouteParam('row');
     const row = Store.get(settings.get('componentId'), configurationId, rowId);
+    const isCompletedFn = settings.getIn(['adapters', 'row', 'isCompleted']);
     return {
       componentId: settings.get('componentId'),
       settings: settings,
@@ -74,7 +75,13 @@ export default React.createClass({
       isEnableDisablePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('enable') || Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('disable'),
 
       hasState: !Store.get(settings.get('componentId'), configurationId, rowId).get('state', Immutable.Map()).isEmpty(),
-      isResetStatePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('reset-state')
+      isResetStatePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('reset-state'),
+
+      isConfigurationCompleted: isCompletedFn(Store.getConfiguration(
+        settings.get('componentId'),
+        configurationId,
+        rowId
+      ))
     };
   },
 
@@ -101,7 +108,7 @@ export default React.createClass({
             rowId={this.state.rowId}
           />
           <ul className="nav nav-stacked">
-            <li>
+            <li className={!this.state.isConfigurationCompleted ? 'disabled' : ''}>
               <RunComponentButton
                   title="Run"
                   component={this.state.componentId}
@@ -112,6 +119,8 @@ export default React.createClass({
                       row: state.rowId
                     };
                   }}
+                  disabled={!this.state.isConfigurationCompleted}
+                  disabledReason="Configuration not completed"
               >
                 {this.renderRunModalContent()}
               </RunComponentButton>

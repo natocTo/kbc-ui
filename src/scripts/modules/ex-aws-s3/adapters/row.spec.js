@@ -2,6 +2,7 @@ var assert = require('assert');
 var Immutable = require('immutable');
 var createConfiguration = require('./row').createConfiguration;
 var parseConfiguration = require('./row').parseConfiguration;
+var isCompleted = require('./row').isCompleted;
 var cases = require('./row.spec.def').cases;
 
 describe('row', function() {
@@ -24,6 +25,19 @@ describe('row', function() {
       it('should return a correct localState with ' + key + ' configuration', function() {
         assert.deepEqual(cases[key].localState, parseConfiguration(Immutable.fromJS(cases[key].configuration)).toJS());
       });
+    });
+  });
+
+  describe('isCompleted()', function() {
+    it('should return false with empty configuration', function() {
+      assert.equal(isCompleted(Immutable.fromJS({})), false);
+    });
+    it('should return false with only one parameter filled', function() {
+      assert.equal(isCompleted(Immutable.fromJS({parameters: {bucket: 'a'}})), false);
+      assert.equal(isCompleted(Immutable.fromJS({parameters: {key: 'a'}})), false);
+    });
+    it('should return true when both parameters are filled', function() {
+      assert.equal(isCompleted(Immutable.fromJS({parameters: {bucket: 'a', key: 'a'}})), true);
     });
   });
 });

@@ -144,7 +144,12 @@ function parseConfiguration(configuration) {
   });
 }
 
+function isCompleted(configuration) {
+  return configuration.getIn(['parameters', 'bucket'], '') !== '' && configuration.getIn(['parameters', 'key'], '') !== '';
+}
+
 module.exports = {
   createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration
+  parseConfiguration: parseConfiguration,
+  isCompleted: isCompleted
 };
