@@ -41,7 +41,7 @@ export default React.createClass({
         <div className="kbc-buttons">
           {this._saveButton()}
           {this._cancelButton()}
-          {' '}
+          {!this.props.showCancel && ' '}
           {this._loader()}
         </div>
       );
@@ -49,7 +49,7 @@ export default React.createClass({
       return (
         <div className="kbc-buttons">
           {this._loader()}
-          {' '}
+          {!this.props.showCancel && ' '}
           {this._cancelButton()}
           {this._saveButton()}
         </div>
