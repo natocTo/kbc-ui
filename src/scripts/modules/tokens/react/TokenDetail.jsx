@@ -180,6 +180,7 @@ export default React.createClass({
     const cancelSaving = () => this.updateLocalState('isSaving', false);
     return TokensActions.createToken(token.toJS()).then((createdToken) => {
       cancelSaving();
+      this.resetDirtyToken();
       this.setState({ createdToken: createdToken});
       return createdToken;
     }).catch((e) => {
