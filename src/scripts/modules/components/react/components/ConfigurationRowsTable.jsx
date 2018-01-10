@@ -5,6 +5,7 @@ import SearchRow from '../../../../react/common/SearchRow';
 import Row from './ConfigurationRowsTableRow';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import Immutable from 'immutable';
 
 export default DragDropContext(HTML5Backend)(React.createClass({
   displayName: 'ConfigurationRowsTable',
@@ -51,16 +52,20 @@ export default DragDropContext(HTML5Backend)(React.createClass({
   getInitialState() {
     return {
       query: '',
-      rows: this.props.rows
+      rows: Immutable.OrderedSet()
     };
   },
 
   componentWillReceiveProps(nextProps) {
     const state = this.state;
     this.setState({
-      rows: nextProps.rows.filter(function(row) {
-        return nextProps.filter(row, state.query);
-      }, this)
+      rows: nextProps.rows
+        .map(function(row, rowIndex) {
+          return row.set('index', rowIndex);
+        })
+        .filter(function(row) {
+          return nextProps.filter(row, state.query);
+        })
     });
   },
 
@@ -78,15 +83,15 @@ export default DragDropContext(HTML5Backend)(React.createClass({
     const props = this.props;
     const state = this.state;
     const component = this;
-    return rows.map(function(row, rowIndex) {
+    return rows.map(function(row) {
       return (
         <Row
           columns={props.columns}
           row={row}
           componentId={props.componentId}
           configurationId={props.configurationId}
-          key={rowIndex}
-          rowNumber={rowIndex + 1}
+          key={row.get('index')}
+          rowNumber={row.get('index') + 1}
           linkTo={props.rowLinkTo}
           isDeletePending={props.rowDeletePending(row.get('id'))}
           onDelete={function() {
