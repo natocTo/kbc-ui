@@ -1,6 +1,6 @@
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 
-import {Map} from 'immutable';
+import {Map, List} from 'immutable';
 
 import * as credentialsTemplate from './templates/credentials';
 import _ from 'underscore';
@@ -21,6 +21,14 @@ export default function(componentId, configId) {
 
     isSplashEnabled() {
       return localState.get('isSplashEnabled', false);
+    },
+
+    getTables() {
+      return parameters.get('tables', List());
+    },
+
+    isTableConfigured(tableId) {
+      return !!this.getTables().find((table) => tableId === table.get('id'));
     },
 
     getCredentials() {

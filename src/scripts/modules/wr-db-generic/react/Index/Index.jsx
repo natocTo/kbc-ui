@@ -20,6 +20,7 @@ import SidebarVersions from '../../../components/react/components/SidebarVersion
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import ProvisioningButton from './ProvisioningButton';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
+import TablesByBucketsPanel from '../../../components/react/components/TablesByBucketsPanel';
 
 
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
@@ -32,8 +33,13 @@ import VersionsStore from '../../../components/stores/VersionsStore';
 import storeProvisioning from '../../storeProvisioning';
 import actionsProvisioning from '../../actionsProvisioning';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
+import SearchRow from '../../../../react/common/SearchRow';
+
+import TableRow from './TableRow';
+
 import getDriverName from '../../templates/driverNames';
 
+const allowedBuckets = ['out', 'in'];
 
 export default function(componentId, driver, isProvisioning) {
   const WrDbActions = actionsProvisioning(componentId, driver);
@@ -55,7 +61,9 @@ export default function(componentId, driver, isProvisioning) {
         hasCredentials: WrDbStore.hasCredentials(),
         isSplashEnabled: WrDbStore.isSplashEnabled(),
         isSavingCredentials: WrDbStore.isSavingCredentials(),
-        queries: new List()
+        queries: new List(),
+        tables: WrDbStore.getTables(),
+        tablesFilter: null
       };
     },
 
@@ -75,6 +83,20 @@ export default function(componentId, driver, isProvisioning) {
       );
     },
 
+    handleFilterChange() {
+
+    },
+
+    renderNewQueryLink() {
+      return (
+        <Button
+          bsStyle="success"
+        >
+          <i className="kbc-icon-plus"/> New Table
+        </Button>
+      );
+    },
+
     render() {
       return (
         <div className="container-fluid">
@@ -88,14 +110,17 @@ export default function(componentId, driver, isProvisioning) {
               </div>
             </div>
             sourceTableErrorComponent
-            {this.state.hasCredentials && this.state.queries.count() > 0 ? (
+            {this.state.hasCredentials && this.state.tables.count() > 0 ? (
               <div className="row">
                 <div className="col-sm-9" style={{padding: '0px'}}>
-                  searchRowComponent
+                  <SearchRow
+                    onChange={this.handleFilterChange}
+                    query={this.state.tablesFilter}
+                  />
                 </div>
                 <div className="col-sm-3">
                   <div className="text-right" style={{marginTop: '16px'}}>
-                    new querys
+                    {this.renderNewQueryLink()}
                   </div>
                 </div>
               </div>
@@ -199,9 +224,47 @@ export default function(componentId, driver, isProvisioning) {
     },
 
     renderQueriesMain() {
+      const configuredIds = this.state.tables.map((table) => table.get('id')).toJS();
+
       return (
-        <div>tady budou queries</div>
+        <TablesByBucketsPanel
+          filterFn={this.filterAllowedBuckets}
+          renderHeaderRowFn={this.renderHeaderRow}
+          renderTableRowFn={(table) => this.renderTableRow(table, true)}
+          isTableExportedFn={(tableId) => tableId === 'tableIdtableId' ? false : true}
+          isBucketToggledFn={(bucketId) => bucketId === 'tableIdtableId' ? false : true}
+          renderDeletedTableRowFn={(table) => this.renderTableRow(table, false)}
+          showAllTables={false}
+          configuredTables={configuredIds}
+        />
       );
+    },
+
+    renderHeaderRow() {
+      return (
+        <div className="tr">
+          <div className="th">Table name</div>
+          <div className="th">Database name</div>
+          <div className="th">Incremental</div>
+        </div>
+      );
+    },
+
+    renderTableRow(sapiTable, tableExists) {
+      const configTable = this.state.tables.find((table) => table.get('tableId') === sapiTable.get('id'));
+
+      return (
+        <TableRow
+          tableExists={tableExists}
+          isTableExported={configTable && configTable.get('export') === true}
+          table={sapiTable}
+          tableDbName={sapiTable.get('name')}
+        />
+      );
+    },
+
+    filterAllowedBuckets(buckets) {
+      return buckets.filter((bucket) => allowedBuckets.indexOf(bucket.get('stage')) > -1);
     }
   });
 }
