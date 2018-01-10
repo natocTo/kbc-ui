@@ -35,7 +35,7 @@ export default React.createClass({
         <Modal.Body>
           {this.state.newToken ?
            this.renderRefreshed()
-           : <p> You are about to refresh token {token.get('description')}({token.get('id')}) </p>
+           : <p> You are about to refresh token {token.get('description')}({token.get('id')}). A new token will be generated and the old token becomes immediately invalid. </p>
           }
         </Modal.Body>
         <Modal.Footer>
