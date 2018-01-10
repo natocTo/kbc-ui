@@ -20,9 +20,12 @@ import genericIndex from './react/Index/Index';
 import genericTable from './react/Table/Table';
 import genericCredentials from './react/Creadentials/Credentials';
 import InstalledComponentsActions from '../components/InstalledComponentsActionCreators';
+import provisioningUtils from './provisioningUtils';
 
 import * as credentialsTemplate from './templates/credentials';
 import hasSshTunnel from './templates/hasSshTunnel';
+
+import {Map} from 'immutable';
 
 const GENERIC_WR_DB_FEATURE = 'ui-wr-db-generic';
 const hasWrDbGenericFeature = () => ApplicationStore.hasCurrentAdminFeature(GENERIC_WR_DB_FEATURE);
@@ -43,6 +46,8 @@ const createProxyRouteHandler = (oldWrDbHandler, newWrDbHandler) => {
 
 export default function(componentId, driver, isProvisioning) {
   const dbWrdockerProxyActions = dbWrDockerProxyApi(componentId);
+  const dbWrProvisioning = provisioningUtils(componentId, driver);
+
   return {
     name: componentId,
     path: ':config',
@@ -56,7 +61,7 @@ export default function(componentId, driver, isProvisioning) {
       interval: 5,
       action: params => JobsActionCreators.loadComponentConfigurationLatestJobs(componentId, params.config)
     },
-    defaultRouteHandler: createProxyRouteHandler(dbwrIndex(componentId), genericIndex(componentId)),
+    defaultRouteHandler: createProxyRouteHandler(dbwrIndex(componentId), genericIndex(componentId, driver, isProvisioning)),
     requireData: [
       (params) => {
         if (hasWrDbGenericFeature()) {
@@ -98,7 +103,15 @@ export default function(componentId, driver, isProvisioning) {
         path: 'credentials',
         handler: createProxyRouteHandler(dbWrCredentialsDetail(componentId, driver, isProvisioning), genericCredentials(componentId, driver, credentialsTemplate, isProvisioning, hasSshTunnel(componentId))),
         headerButtonsHandler: createProxyRouteHandler(dbWrCredentialsHeader(componentId, driver, isProvisioning), null),
-        title: () => 'Credentials'
+        title: (routerState) => {
+          var configId = routerState.getIn(['params', 'config']);
+          var credentials = InstalledComponentsStore.getConfigData(componentId, configId).getIn(['parameters', 'db'], Map());
+          if (!dbWrProvisioning.isProvisioningCredentials(credentials)) {
+            return 'Credentials';
+          } else {
+            return 'Keboola provided database credentials';
+          }
+        }
       }
     ]
   };

@@ -31,11 +31,11 @@ export default React.createClass({
     if (['port'].indexOf(propName) >= 0) {
       value = parseInt(event.target.value, 10);
     }
-    return this.props.onChange(this.props.credentials.set(propName, value));
+    return this.props.onChange(this.props.editingCredentials.set(propName, value));
   },
 
   sshRowOnChange(sshObject) {
-    return this.props.onChange(this.props.credentials.set('ssh', sshObject));
+    return this.props.onChange(this.props.editingCredentials.set('ssh', sshObject));
   },
 
   renderProtectedLabel(labelValue, alreadyEncrypted) {

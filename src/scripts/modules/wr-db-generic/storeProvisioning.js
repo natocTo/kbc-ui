@@ -5,10 +5,11 @@ import {Map} from 'immutable';
 import * as credentialsTemplate from './templates/credentials';
 import _ from 'underscore';
 
-
 export const connectionErrorPath = ['connection', 'error'];
 export const connectionValidPath = ['connection', 'valid'];
 export const connectionTestedPath = ['connection', 'tested'];
+
+export const provisionedCredentialsPath = ['credentials', 'o'];
 
 export default function(componentId, configId) {
   const config = InstalledComponentStore.getConfigData(componentId, configId);
@@ -17,6 +18,10 @@ export default function(componentId, configId) {
 
   return {
     configData: config,
+
+    isSplashEnabled() {
+      return localState.get('isSplashEnabled', false);
+    },
 
     getCredentials() {
       return parameters.get('db', Map());
@@ -36,6 +41,10 @@ export default function(componentId, configId) {
 
     hasEditingCredentials() {
       return !!localState.get('editingCredentials');
+    },
+
+    isProvCredentialsLoaded(token) {
+      return localState.getIn(['provCredentials', token, 'isLoaded'], false);
     },
 
     isValidCredentials(credentials) {

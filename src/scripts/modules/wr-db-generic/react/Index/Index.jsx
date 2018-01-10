@@ -1,6 +1,8 @@
 import React from 'react';
 
-import {List} from 'immutable';
+import {Button} from 'react-bootstrap';
+
+import {Map, List} from 'immutable';
 import {Link} from 'react-router';
 import {Navigation} from 'react-router';
 
@@ -16,6 +18,7 @@ import SidebarJobs from '../../../components/react/components/SidebarJobs';
 import SidebarVersions from '../../../components/react/components/SidebarVersionsWrapper';
 
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
+import ProvisioningButton from './ProvisioningButton';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 
 
@@ -27,9 +30,14 @@ import InstalledComponentsStore from '../../../components/stores/InstalledCompon
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import storeProvisioning from '../../storeProvisioning';
+import actionsProvisioning from '../../actionsProvisioning';
+import ComponentIcon from '../../../../react/common/ComponentIcon';
+import getDriverName from '../../templates/driverNames';
 
 
-export default function(componentId) {
+export default function(componentId, driver, isProvisioning) {
+  const WrDbActions = actionsProvisioning(componentId, driver);
+
   return React.createClass({
     displayName: 'genericIndex',
     mixins: [createStoreMixin(VersionsStore, StorageTablesStore, InstalledComponentsStore, LatestJobsStore), Navigation],
@@ -40,16 +48,27 @@ export default function(componentId) {
 
       return {
         configId: configId,
+        component: InstalledComponentsStore.getComponent(componentId),
         versions: VersionsStore.getVersions(componentId, configId),
         latestJobs: LatestJobsStore.getJobs(componentId, configId),
         hasEnabledQueries: false,
         hasCredentials: WrDbStore.hasCredentials(),
+        isSplashEnabled: WrDbStore.isSplashEnabled(),
+        isSavingCredentials: WrDbStore.isSavingCredentials(),
         queries: new List()
       };
     },
 
+    handleGenerate() {
+      WrDbActions.prepareCredentials(this.state.configId);
+    },
+
     handleCredentialsSetup() {
-      // actionsCreators.updateEditingCredentials(this.state.configId, this.state.newCredentials);
+      if (this.state.isSplashEnabled) {
+        WrDbActions.updateEditingCredentials(this.state.configId, Map());
+        WrDbActions.disableSplash();
+      }
+
       this.transitionTo(
         componentId + '-credentials',
         {config: this.state.configId}
@@ -81,7 +100,7 @@ export default function(componentId) {
                 </div>
               </div>
             ) : null}
-            {this.state.hasCredentials ? this.renderQueriesMain() : this.renderCredentialsSetup()}
+            {this.state.hasCredentials && !this.state.isSplashEnabled ? this.renderQueriesMain() : this.renderCredentialsSetup()}
           </div>
           <div className="col-md-3 kbc-main-sidebar">
             <div className="kbc-buttons kbc-text-light">
@@ -135,7 +154,7 @@ export default function(componentId) {
     },
 
     renderCredentialsSetup() {
-      if (!this.state.hasCredentials) {
+      if (!isProvisioning) {
         return (
           <div className="row component-empty-state text-center">
             <p>Please setup database credentials for this writer</p>
@@ -143,6 +162,37 @@ export default function(componentId) {
               className="btn btn-success"
               onClick={this.handleCredentialsSetup}
             >Setup Database Credentials</button>
+          </div>
+        );
+      } else {
+        return (
+          <div className="kbc-components-list">
+            <div className="table kbc-table-border-vertical kbc-components-overview kbc-layout-table">
+              <div className="tbody">
+                <div className="tr">
+                  <div className="td">
+                    <ComponentIcon component={this.state.component} size="64"/>
+                    <h2>Own {getDriverName(driver)} database</h2>
+                    <p>User has own {getDriverName(driver)} database and will provide credentials</p>
+                    <Button
+                      className="btn btn-success"
+                      disabled={this.state.isSavingCredentials}
+                      onClick={this.handleCredentialsSetup}
+                    >Setup Database Credentials</Button>
+                  </div>
+                  <div className="td">
+                    <ComponentIcon component={this.state.component} size="64"/>
+                    <h2>Keboola {getDriverName(driver)} database</h2>
+                    <p>Keboola will provide and setup dedicated {getDriverName(driver)} database. Any {getDriverName(driver)} database previously provided for this configuration will be dropped.</p>
+                    <ProvisioningButton
+                      isSaving={this.state.isSavingCredentials}
+                      disabled={this.state.isSavingCredentials}
+                      onGenerate={this.handleGenerate}/>
+                  </div>
+                  <div className="td" />
+                </div>
+              </div>
+            </div>
           </div>
         );
       }
