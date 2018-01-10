@@ -6,6 +6,7 @@ import Row from './ConfigurationRowsTableRow';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Immutable from 'immutable';
+import classnames from 'classnames';
 
 export default DragDropContext(HTML5Backend)(React.createClass({
   displayName: 'ConfigurationRowsTable',
@@ -52,7 +53,8 @@ export default DragDropContext(HTML5Backend)(React.createClass({
   getInitialState() {
     return {
       query: '',
-      rows: Immutable.OrderedSet()
+      rows: Immutable.OrderedSet(),
+      dragging: false
     };
   },
 
@@ -112,7 +114,8 @@ export default DragDropContext(HTML5Backend)(React.createClass({
               return findRow.get('id') === hoverId;
             });
             component.setState({
-              rows: state.rows.splice(draggedIndex, 1).splice(hoverIndex, 0, draggedRow)
+              rows: state.rows.splice(draggedIndex, 1).splice(hoverIndex, 0, draggedRow),
+              dragging: true
             });
           }}
           onMoveFinished={function() {
@@ -125,6 +128,9 @@ export default DragDropContext(HTML5Backend)(React.createClass({
             if (!newRowsOrder.equals(currentRowsOrder)) {
               return props.onOrder(newRowsOrder.toJS());
             }
+            component.setState({
+              dragging: false
+            });
             return;
           }}
           disabledMove={state.query !== '' || props.orderPending}
@@ -149,7 +155,13 @@ export default DragDropContext(HTML5Backend)(React.createClass({
       );
     } else {
       return (
-        <div className="table table-striped table-hover">
+        <div className={classnames(
+          'table',
+          'table-striped',
+          {
+            'table-hover': !this.state.dragging
+          }
+        )}>
           <div className="thead" key="table-header">
             <div className="tr">
               <span className="th" key="dummy" />

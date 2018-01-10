@@ -88,17 +88,16 @@ const TableRow = React.createClass({
 
   render() {
     const { isDragging, connectDragPreview, connectDropTarget } = this.props;
-    let style = {
-      opacity: isDragging ? 0.5 : 1 // ,
-      // 'backgroundColor': isDragging ? '#ffc' : null
-    };
+    let className = 'tr';
+    if (isDragging) {
+      className += ' dragging';
+    }
     const props = this.props;
     return (
         <Link
           to={this.props.linkTo}
           params={{config: this.props.configurationId, row: this.props.row.get('id')}}
-          className="tr"
-          style={style}
+          className={className}
           ref={function(instance) {
             const node = findDOMNode(instance);
             if (!props.disabledMove) {
