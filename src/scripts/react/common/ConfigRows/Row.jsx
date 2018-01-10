@@ -120,7 +120,7 @@ export default React.createClass({
                     };
                   }}
                   disabled={!this.state.isConfigurationCompleted}
-                  disabledReason="Configuration not completed"
+                  disabledReason="Configuration not complete"
               >
                 {this.renderRunModalContent()}
               </RunComponentButton>
