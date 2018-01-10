@@ -1,5 +1,6 @@
 import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
+import Tooltip from './../../../../react/common/Tooltip';
 import Modal from './ResetStateButtonModal';
 
 export default React.createClass({
@@ -8,13 +9,17 @@ export default React.createClass({
     onClick: React.PropTypes.func.isRequired,
     isPending: React.PropTypes.bool.isRequired,
     disabled: React.PropTypes.bool.isRequired,
+    children: React.PropTypes.node.isRequired,
+    disabledTooltip: React.PropTypes.string,
     label: React.PropTypes.string,
-    children: React.PropTypes.node.isRequired
+    tooltipPlacement: React.PropTypes.string
   },
 
   getDefaultProps() {
     return {
-      label: 'Reset State'
+      label: 'Reset State',
+      disabledTooltip: 'No stored state',
+      tooltipPlacement: 'top'
     };
   },
 
@@ -41,18 +46,51 @@ export default React.createClass({
   },
 
   render() {
-    const component = this;
-    return (
-      <a onClick={function() {
-        component.setState({showModal: true});
-      }}>
-        {this.renderModal()}
+    const body = (
+      <span>
         {this.renderIcon()}
         {' '}
         {this.props.label}
+      </span>
+    );
+    return (
+      <a onClick={this.onModalOpen}>
+        {this.renderModal()}
+        {this.tooltipWrapper(body)}
       </a>
     );
   },
+
+  onModalOpen() {
+    if (!this.props.disabled) {
+      this.setState({showModal: true});
+    }
+  },
+
+  tooltipWrapper(body) {
+    if (this.props.disabled) {
+      return (
+        <Tooltip
+          tooltip={this.props.disabledTooltip}
+          placement={this.props.tooltipPlacement}
+        >
+          {body}
+        </Tooltip>
+      );
+    }
+    if (this.props.isPending) {
+      return (
+        <Tooltip
+          tooltip="Resetting state"
+          placement={this.props.tooltipPlacement}
+        >
+          {body}
+        </Tooltip>
+      );
+    }
+    return body;
+  },
+
 
   onClick(e) {
     if (!this.props.disabled) {

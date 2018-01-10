@@ -80,12 +80,6 @@ export default React.createClass({
 
   render() {
     const state = this.state;
-    let resetStateModalBody;
-    if (this.state.hasState) {
-      resetStateModalBody = 'Deletes the current stored state of the configuration, eg. progress of an incremental processes.';
-    } else {
-      resetStateModalBody = 'This configuration does not have a stored state.';
-    }
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -141,14 +135,14 @@ export default React.createClass({
                 mode="link"
               />
             </li>
-            <li>
+            <li className={this.state.isResetStatePending || !this.state.hasState ? 'disabled' : ''}>
               <ResetStateButton
                 onClick={function() {
                   return Actions.resetState(state.componentId, state.configurationId, state.rowId);
                 }}
                 isPending={this.state.isResetStatePending}
                 disabled={!this.state.hasState}
-              >{resetStateModalBody}</ResetStateButton>
+              >Delete the current stored state of the configuration, eg. progress of an incremental processes.</ResetStateButton>
             </li>
             <li>
               <DeleteConfigurationRowButton
