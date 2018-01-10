@@ -85,11 +85,8 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
-    const tooltipDisabled = this.state.isLoading ? 'Component is running' : this.props.disabledReason;
-    const tooltip = this.props.tooltip;
-
-    const modal = (
+  renderModal() {
+    return (
       <RunModal
         onHide={() => this.setState({showModal: false})}
         show={this.state.showModal}
@@ -99,50 +96,67 @@ module.exports = React.createClass({
         disabled={this.props.modalRunButtonDisabled}
       />
     );
+  },
 
-    if (this.props.disabled || this.state.isLoading) {
-      return (
-        <Tooltip
-          tooltip={tooltipDisabled}
-          placement={this.props.tooltipPlacement}
-        >
-          {this.props.mode === 'button' ? this._renderButton() : this._renderLink()}
-        </Tooltip>
-      );
-    } else if (this.props.mode === 'button') {
-      return (
-        <Tooltip
-          tooltip={tooltip}
-          placement={this.props.tooltipPlacement}
-        >
-            {this._renderButton(modal)}
-        </Tooltip>
-      );
+  render() {
+    if (this.props.mode === 'button') {
+      return this.tooltipWrapper(this._renderButton());
     } else {
-      return this._renderLink(modal);
+      return this._renderLink();
     }
   },
 
   onOpenButtonClick(e) {
     e.stopPropagation();
     e.preventDefault();
+    if (this.props.disabled || this.state.isLoading) {
+      return;
+    }
     this.setState({showModal: true});
   },
 
-  _renderButton: function(modalComponent) {
+  tooltipWrapper(body) {
+    if (this.props.disabled || this.state.isLoading) {
+      return (
+        <Tooltip
+          tooltip={this.state.isLoading ? 'Component is running' : this.props.disabledReason}
+          placement={this.props.tooltipPlacement}
+        >
+          {body}
+        </Tooltip>
+      );
+    } else if (this.props.mode === 'button') {
+      return (
+        <Tooltip
+          tooltip={this.props.tooltip}
+          placement={this.props.tooltipPlacement}
+        >
+          {body}
+        </Tooltip>
+      );
+    }
+    return body;
+  },
+
+  _renderButton: function() {
     return (
       <Button
         className="btn btn-link"
         disabled={this.props.disabled || this.state.isLoading}
         onClick={this.onOpenButtonClick}
       >
-        {modalComponent}
+        {this.renderModal()}
         {this._renderIcon()} {this.props.label ? ' ' + this.props.label : void 0}
       </Button>
     );
   },
 
-  _renderLink: function(modalComponent) {
+  _renderLink: function() {
+    const body = (
+      <span>
+        {this._renderIcon()} {this.props.title}
+      </span>
+    );
     return (
       <a className={
         classnames({
@@ -150,8 +164,8 @@ module.exports = React.createClass({
         })}
         onClick={this.onOpenButtonClick}
       >
-        {modalComponent}
-        {this._renderIcon()} {this.props.title}
+        {this.renderModal()}
+        {this.tooltipWrapper(body)}
       </a>
     );
   },
