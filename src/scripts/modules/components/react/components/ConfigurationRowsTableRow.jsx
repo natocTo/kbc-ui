@@ -4,53 +4,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
 import { Link } from 'react-router';
-import { DragSource, DropTarget } from 'react-dnd';
-import flow from 'lodash/flow';
-import { findDOMNode } from 'react-dom';
 
-const ItemType = 'TableRow';
-
-const rowSource = {
-  beginDrag: function(props) {
-    return {
-      id: props.row.get('id')
-    };
-  }
-};
-
-const rowTarget = {
-  canDrop: function(props, monitor) {
-    const draggedId = monitor.getItem().id;
-    return draggedId === props.row.get('id');
-  },
-  hover: function(props, monitor) {
-    const draggedId = monitor.getItem().id;
-    const hoverId = props.row.get('id');
-
-    if (draggedId === hoverId) {
-      return;
-    }
-    props.onMoveProgress(hoverId, draggedId);
-  },
-  drop: function(props) {
-    props.onMoveFinished();
-  }
-};
-
-function collectForDragSource(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    connectDragPreview: connect.dragSource(),
-    isDragging: monitor.isDragging()
-  };
-}
-
-
-function collectForDropTarget(connect) {
-  return {
-    connectDropTarget: connect.dropTarget()
-  };
-}
 
 const TableRow = React.createClass({
   displayName: 'ConfigurationRowsTableRow',
@@ -68,61 +22,42 @@ const TableRow = React.createClass({
     onDelete: React.PropTypes.func.isRequired,
     isEnableDisablePending: React.PropTypes.bool.isRequired,
     onEnableDisable: React.PropTypes.func.isRequired,
-    onMoveProgress: React.PropTypes.func.isRequired,
-    onMoveFinished: React.PropTypes.func.isRequired,
-    disabledMove: React.PropTypes.bool.isRequired,
-
-    // react-dnd
-    isDragging: React.PropTypes.bool.isRequired,
-    connectDragPreview: React.PropTypes.func.isRequired,
-    connectDragSource: React.PropTypes.func.isRequired,
-    connectDropTarget: React.PropTypes.func.isRequired
+    disabledMove: React.PropTypes.bool.isRequired
   },
 
   renderDragSource() {
     if (this.props.disabledMove) {
       return (<span className="fa fa-bars fa-fw" style={{cursor: 'not-allowed'}} />);
     }
-    return this.props.connectDragSource(<span className="fa fa-bars fa-fw" style={{cursor: 'move'}} />);
+    return ((<span className="fa fa-bars fa-fw" style={{cursor: 'move'}} />));
   },
 
   render() {
-    const { isDragging, connectDragPreview, connectDropTarget } = this.props;
     let className = 'tr';
-    if (isDragging) {
-      className += ' dragging';
-    }
     const props = this.props;
     return (
-        <Link
-          to={this.props.linkTo}
-          params={{config: this.props.configurationId, row: this.props.row.get('id')}}
-          className={className}
-          ref={function(instance) {
-            const node = findDOMNode(instance);
-            if (!props.disabledMove) {
-              connectDragPreview(node);
-              connectDropTarget(node);
-            }
-          }}
-        >
-          <div className="td" key="dnd-handle">
-            {this.renderDragSource()}
-          </div>
-          <div className="td" key="row-number">
-            {this.props.rowNumber}
-          </div>
-          {this.props.columns.map(function(columnFunction, columnIndex) {
-            return (
-              <div className="td kbc-break-all" key={columnIndex}>
-                {columnFunction(props.row)}
-              </div>
-            );
-          })}
-          <div className="td text-right kbc-no-wrap">
-            {this.renderRowActionButtons()}
-          </div>
-        </Link>
+      <Link
+        to={this.props.linkTo}
+        params={{config: this.props.configurationId, row: this.props.row.get('id')}}
+        className={className}
+      >
+        <div className="td" key="dnd-handle">
+          {this.renderDragSource()}
+        </div>
+        <div className="td" key="row-number">
+          {this.props.rowNumber}
+        </div>
+        {this.props.columns.map(function(columnFunction, columnIndex) {
+          return (
+            <div className="td kbc-break-all" key={columnIndex}>
+              {columnFunction(props.row)}
+            </div>
+          );
+        })}
+        <div className="td text-right kbc-no-wrap">
+          {this.renderRowActionButtons()}
+        </div>
+      </Link>
     );
   },
 
@@ -169,7 +104,4 @@ const TableRow = React.createClass({
   }
 });
 
-export default flow(
-  DragSource(ItemType, rowSource, collectForDragSource),
-  DropTarget(ItemType, rowTarget, collectForDropTarget)
-)(TableRow);
+export default TableRow;

@@ -3,12 +3,10 @@ import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixi
 import fuzzy from 'fuzzy';
 import SearchRow from '../../../../react/common/SearchRow';
 import Row from './ConfigurationRowsTableRow';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 import Immutable from 'immutable';
 import classnames from 'classnames';
 
-export default DragDropContext(HTML5Backend)(React.createClass({
+export default React.createClass({
   displayName: 'ConfigurationRowsTable',
 
   mixins: [ImmutableRenderMixin],
@@ -62,9 +60,6 @@ export default DragDropContext(HTML5Backend)(React.createClass({
     const state = this.state;
     this.setState({
       rows: nextProps.rows
-        .map(function(row, rowIndex) {
-          return row.set('index', rowIndex);
-        })
         .filter(function(row) {
           return nextProps.filter(row, state.query);
         })
@@ -81,19 +76,18 @@ export default DragDropContext(HTML5Backend)(React.createClass({
     });
   },
 
-  renderTableRows(rows) {
+  renderTableRows() {
     const props = this.props;
     const state = this.state;
-    const component = this;
-    return rows.map(function(row) {
+    return this.state.rows.map(function(row, rowIndex) {
       return (
         <Row
           columns={props.columns}
           row={row}
           componentId={props.componentId}
           configurationId={props.configurationId}
-          key={row.get('index')}
-          rowNumber={row.get('index') + 1}
+          key={rowIndex}
+          rowNumber={rowIndex + 1}
           linkTo={props.rowLinkTo}
           isDeletePending={props.rowDeletePending(row.get('id'))}
           onDelete={function() {
@@ -103,38 +97,8 @@ export default DragDropContext(HTML5Backend)(React.createClass({
           onEnableDisable={function() {
             return props.rowEnableDisable(row.get('id'));
           }}
-          onMoveProgress={function(hoverId, draggedId) {
-            const draggedRow = state.rows.find(function(findRow) {
-              return findRow.get('id') === draggedId;
-            });
-            const draggedIndex = state.rows.findIndex(function(findRow) {
-              return findRow.get('id') === draggedId;
-            });
-            const hoverIndex = state.rows.findIndex(function(findRow) {
-              return findRow.get('id') === hoverId;
-            });
-            component.setState({
-              rows: state.rows.splice(draggedIndex, 1).splice(hoverIndex, 0, draggedRow),
-              dragging: true
-            });
-          }}
-          onMoveFinished={function() {
-            const newRowsOrder = state.rows.map(function(mapRow) {
-              return mapRow.get('id');
-            });
-            const currentRowsOrder = props.rows.map(function(mapRow) {
-              return mapRow.get('id');
-            });
-            if (!newRowsOrder.equals(currentRowsOrder)) {
-              return props.onOrder(newRowsOrder.toJS());
-            }
-            component.setState({
-              dragging: false
-            });
-            return;
-          }}
           disabledMove={state.query !== '' || props.orderPending}
-          />
+        />
       );
     });
   },
@@ -148,8 +112,8 @@ export default DragDropContext(HTML5Backend)(React.createClass({
     });
   },
 
-  renderTable(rows) {
-    if (rows.size === 0) {
+  renderTable() {
+    if (this.state.rows.size === 0) {
       return (
         <div>No result found.</div>
       );
@@ -170,8 +134,9 @@ export default DragDropContext(HTML5Backend)(React.createClass({
             </div>
           </div>
           <div className="tbody">
-            {this.renderTableRows(rows)}
+            {this.renderTableRows()}
           </div>
+
         </div>
       );
     }
@@ -187,8 +152,8 @@ export default DragDropContext(HTML5Backend)(React.createClass({
             onSubmit={this.onChangeSearch}
           />
         </div>
-        {this.renderTable(this.state.rows)}
+        {this.renderTable()}
       </div>
     );
   }
-}));
+});
