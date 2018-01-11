@@ -22,6 +22,7 @@ import ProvisioningButton from './ProvisioningButton';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import TablesByBucketsPanel from '../../../components/react/components/TablesByBucketsPanel';
 
+import Quickstart from '../../components/Quickstart';
 
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
 
@@ -62,6 +63,7 @@ export default function(componentId, driver, isProvisioning) {
         isSplashEnabled: WrDbStore.isSplashEnabled(),
         isSavingCredentials: WrDbStore.isSavingCredentials(),
         tables: WrDbStore.getTables(),
+        sapiTables: StorageTablesStore.getAll(),
         tablesFilter: WrDbStore.getTablesFilter(),
         bucketToggles: WrDbStore.getToggles()
       };
@@ -101,6 +103,7 @@ export default function(componentId, driver, isProvisioning) {
       return (
         <div className="container-fluid">
           <div className="col-md-9 kbc-main-content">
+            {this.renderQuickstart()}
             <div className="row kbc-header">
               <div>
                 <ComponentDescription
@@ -268,6 +271,24 @@ export default function(componentId, driver, isProvisioning) {
           table={sapiTable}
           isDeleting={false}
         />
+      );
+    },
+
+    renderQuickstart() {
+      return (
+        <div className="row component-empty-state text-center">
+          <div className="col-md-12">
+            <Quickstart
+              componentId={componentId}
+              configId={this.state.configId}
+              isLoadingSourceTables={false}
+              sourceTables={this.state.sapiTables}
+              quickstart={Map()}
+              onChange={() => false}
+              onSubmit={() => false}
+            />
+          </div>
+        </div>
       );
     },
 
