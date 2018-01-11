@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Button} from 'react-bootstrap';
 
-import {Map, List} from 'immutable';
+import {Map} from 'immutable';
 import {Link} from 'react-router';
 import {Navigation} from 'react-router';
 
@@ -61,9 +61,8 @@ export default function(componentId, driver, isProvisioning) {
         hasCredentials: WrDbStore.hasCredentials(),
         isSplashEnabled: WrDbStore.isSplashEnabled(),
         isSavingCredentials: WrDbStore.isSavingCredentials(),
-        queries: new List(),
         tables: WrDbStore.getTables(),
-        tablesFilter: null,
+        tablesFilter: WrDbStore.getTablesFilter(),
         bucketToggles: WrDbStore.getToggles()
       };
     },
@@ -84,8 +83,8 @@ export default function(componentId, driver, isProvisioning) {
       );
     },
 
-    handleFilterChange() {
-
+    handleFilterChange(query) {
+      return WrDbActions.setTablesFilter(this.state.configId, query);
     },
 
     renderNewQueryLink() {
@@ -233,6 +232,7 @@ export default function(componentId, driver, isProvisioning) {
           renderTableRowFn={(table) => this.renderTableRow(table, true)}
           renderDeletedTableRowFn={(table) => this.renderTableRow(table, false)}
           filterFn={this.filterAllowedBuckets}
+          searchQuery={this.state.tablesFilter}
           isTableExportedFn={this.isTableExportedFn}
           isTableShownFn={this.isTableInConfig}
           onToggleBucketFn={this.handleToggleBucket}

@@ -43,6 +43,10 @@ export default function(componentId, configId) {
       return localState;
     },
 
+    getTablesFilter() {
+      return localState.get('tablesFilter', '');
+    },
+
     getToggles() {
       return localState.get('bucketToggles', Map());
     },

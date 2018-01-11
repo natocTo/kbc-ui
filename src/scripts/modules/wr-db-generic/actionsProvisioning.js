@@ -131,6 +131,9 @@ export default function(componentId, driver) {
         configData: runData.toJS()
       };
       return callDockerAction(componentId, 'testConnection', params);
+    },
+    setTablesFilter(configId, query) {
+      updateLocalState(configId, 'tablesFilter', query);
     }
   };
 }
