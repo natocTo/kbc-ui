@@ -18,10 +18,8 @@ function getProjectCreationDate() {
 }
 
 function getDatesForMonthlyUsage() {
-  const collectingStartDate = '2017-01-01';
-
   return computeDatesForMonthlyUsage(
-    moment(collectingStartDate),
+    moment().subtract(2, 'months').startOf('month'),
     moment(),
     moment(getProjectCreationDate())
   );
