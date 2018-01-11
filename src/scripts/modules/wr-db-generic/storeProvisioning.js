@@ -43,6 +43,10 @@ export default function(componentId, configId) {
       return localState;
     },
 
+    getToggles() {
+      return localState.get('bucketToggles', Map());
+    },
+
     getEditingCredentials() {
       return localState.get('editingCredentials', Map());
     },

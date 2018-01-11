@@ -63,7 +63,8 @@ export default function(componentId, driver, isProvisioning) {
         isSavingCredentials: WrDbStore.isSavingCredentials(),
         queries: new List(),
         tables: WrDbStore.getTables(),
-        tablesFilter: null
+        tablesFilter: null,
+        bucketToggles: WrDbStore.getToggles()
       };
     },
 
@@ -109,7 +110,7 @@ export default function(componentId, driver, isProvisioning) {
                 />
               </div>
             </div>
-            sourceTableErrorComponent
+            {/* sourceTableErrorComponent */}
             {this.state.hasCredentials && this.state.tables.count() > 0 ? (
               <div className="row">
                 <div className="col-sm-9" style={{padding: '0px'}}>
@@ -224,18 +225,20 @@ export default function(componentId, driver, isProvisioning) {
     },
 
     renderQueriesMain() {
-      const configuredIds = this.state.tables.map((table) => table.get('id')).toJS();
+      const configuredIds = this.state.tables.map((table) => table.get('id')).toArray();
 
       return (
         <TablesByBucketsPanel
-          filterFn={this.filterAllowedBuckets}
           renderHeaderRowFn={this.renderHeaderRow}
           renderTableRowFn={(table) => this.renderTableRow(table, true)}
-          isTableExportedFn={(tableId) => tableId === 'tableIdtableId' ? false : true}
-          isBucketToggledFn={(bucketId) => bucketId === 'tableIdtableId' ? false : true}
           renderDeletedTableRowFn={(table) => this.renderTableRow(table, false)}
-          showAllTables={false}
+          filterFn={this.filterAllowedBuckets}
+          isTableExportedFn={this.isTableExportedFn}
+          isTableShownFn={this.isTableInConfig}
+          onToggleBucketFn={this.handleToggleBucket}
+          isBucketToggledFn={this.isBucketToggled}
           configuredTables={configuredIds}
+          showAllTables={false}
         />
       );
     },
@@ -251,16 +254,38 @@ export default function(componentId, driver, isProvisioning) {
     },
 
     renderTableRow(sapiTable, tableExists) {
-      const configTable = this.state.tables.find((table) => table.get('tableId') === sapiTable.get('id'));
+      let configTable = this.state.tables.find((table) => table.get('tableId') === sapiTable.get('id'));
+      if (!configTable) {
+        configTable = Map();
+      }
 
       return (
         <TableRow
           tableExists={tableExists}
-          isTableExported={configTable && configTable.get('export') === true}
+          isTableExported={configTable.get('export') === true}
+          isIncremental={configTable.get('incremental') === true}
+          tableDbName={configTable.get('dbName')}
           table={sapiTable}
-          tableDbName={sapiTable.get('name')}
+          isDeleting={false}
         />
       );
+    },
+
+    handleToggleBucket(bucketId) {
+      WrDbActions.toggleBucket(this.state.configId, bucketId);
+    },
+
+    isBucketToggled(bucketId) {
+      return !!this.state.bucketToggles.get(bucketId);
+    },
+
+    isTableInConfig(tableId) {
+      return !!this.state.tables.find((table) => table.get('tableId') === tableId);
+    },
+
+    isTableExportedFn(tableId) {
+      const configTable = this.state.tables.find((table) => table.get('tableId') === tableId);
+      return configTable && configTable.get('export') === true;
     },
 
     filterAllowedBuckets(buckets) {

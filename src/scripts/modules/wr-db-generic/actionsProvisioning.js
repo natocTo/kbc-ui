@@ -68,6 +68,10 @@ export default function(componentId, driver) {
   }
 
   return {
+    toggleBucket(configId, bucketId) {
+      const newValue = !getLocalState(configId).getIn(['bucketToggles', bucketId], false);
+      updateLocalState(configId, ['bucketToggles', bucketId], newValue);
+    },
     enableSplash(configId) {
       updateLocalState(configId, 'isSplashEnabled', true);
     },
