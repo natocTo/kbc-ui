@@ -69,6 +69,7 @@
     "react-remarkable": "^1.1.1",
     "react-router": "~0.13.3",
     "react-select": "^1.0.0-rc.3",
+    "react-sortable-hoc": "^0.6.8",
     "react-textarea-autosize": "^2.3.1",
     "remarkable": "^1.6.2",
     "remove-markdown": "^0.1.0",
@@ -97,6 +98,7 @@
     "babel-eslint": "7.0.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^1.0.7",
+    "deep-diff": "^0.3.8",
     "enzyme": "^2.6.0",
     "enzyme-to-json": "^1.4.5",
     "eslint": "^3.12.2",
@@ -104,8 +106,7 @@
     "eslint-plugin-react": "6.4.1",
     "exports-loader": "^0.6.3",
     "jest": "^18.0.0",
-    "mocha": "^2.4.5",
-    "deep-diff": "^0.3.8"
+    "mocha": "^2.4.5"
   },
   "jest": {
     "cacheDirectory": "<rootDir>/node_modules/.cache/jest",

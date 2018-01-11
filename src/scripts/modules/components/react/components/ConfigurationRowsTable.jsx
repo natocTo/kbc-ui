@@ -136,7 +136,6 @@ export default React.createClass({
           <div className="tbody">
             {this.renderTableRows()}
           </div>
-
         </div>
       );
     }

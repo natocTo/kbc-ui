@@ -1,5 +1,6 @@
 import Index from '../react/common/ConfigRows/Index';
 import Row from '../react/common/ConfigRows/Row';
+import Sortable from '../react/common/ConfigRows/Sortable';
 import installedComponentsActions from '../modules/components/InstalledComponentsActionCreators';
 import versionsActions from '../modules/components/VersionsActionCreators';
 import jobsActions from '../modules/jobs/ActionCreators';
@@ -28,6 +29,13 @@ export default function(settings) {
     childRoutes: []
   };
   route.childRoutes.push(
+    {
+      name: settings.componentId + '-sortable',
+      settings: settings,
+      path: 'sortable',
+      title: 'Sortable',
+      defaultRouteHandler: Sortable
+    },
     {
       name: settings.componentId + '-row',
       settings: settings,
