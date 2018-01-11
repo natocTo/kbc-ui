@@ -13,10 +13,10 @@ User interface for Keboola Connection
   * Choose [installation](https://yarnpkg.com/en/docs/install) option for your platform
 * Install dependencies `yarn` (or `yarn install`)
 * Serve, watch and test with live reload `yarn start`
-* Open this url in your browser `http://localhost:3000/?token=YOUR_STORAGE_API_TOKEN`
+* Open this url in your browser `https://localhost:3000/?token=YOUR_STORAGE_API_TOKEN`
   * By default UI is connected to `https://connection.keboola.com`.
   If you want to connect it to another host, you can use `host` parameter
-  `http://localhost:3000/?token=YOUR_STORAGE_API_TOKEN&host=http://kbc.local`
+  `https://localhost:3000/?token=YOUR_STORAGE_API_TOKEN&host=http://kbc.local`
 
 Application will be opened in your browser and will be hot reloaded after each change in source files.
 
