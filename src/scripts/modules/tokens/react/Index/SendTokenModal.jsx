@@ -94,7 +94,7 @@ export default React.createClass({
     return (
       <div>
         <p className="alert alert-info">
-          Recipient will receive email containing link to token retrieval page, link will expire in 24 hours.
+          The recipient will receive an email with a link to retrieve the token. The link will expire in 24 hours.
         </p>
       </div>
     );
