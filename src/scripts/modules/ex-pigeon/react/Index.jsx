@@ -13,15 +13,19 @@ import actionsProvisioning from '../actionsProvisioning';
 import ComponentMetadata from '../../components/react/components/ComponentMetadata';
 import ComponentDescription from '../../components/react/components/ComponentDescription';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
+import {RefreshIcon} from '@keboola/indigo-ui';
+
+// import ConfigurationForm from './ConfigurationForm';
 
 
 const COMPONENT_ID = 'keboola.ex-pigeon';
 
 export default React.createClass({
   mixins: [createStoreMixin(...storeMixins, LatestJobsStore)],
+
   getStateFromStores() {
-    const store = storeProvisioning(configId);
     const configId = RoutesStore.getCurrentRouteParam('config');
+    const store = storeProvisioning(configId);
     const actions = actionsProvisioning(configId);
     const component = ComponentStore.getComponent(COMPONENT_ID);
 
@@ -30,8 +34,13 @@ export default React.createClass({
       store: store,
       actions: actions,
       component: component,
-      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId)
+      latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
+      localState: store.getLocalState()
     };
+  },
+
+  componentDidMount() {
+    this.state.actions.requestEmail();
   },
   render() {
     return (
@@ -43,7 +52,7 @@ export default React.createClass({
                         configId={this.state.configId}
                     />
                 </div>
-                {this.getEmail()}
+                {this.resolveEmail()}
             </div>
             <div className="col-md-3 kbc-main-sidebar">
                 <ComponentMetadata
@@ -58,7 +67,12 @@ export default React.createClass({
         </div>
     );
   },
-  getEmail() {
-    // return this.state.actions.requestEmail();
+  resolveEmail() {
+    const isLoading = this.state.localState.get('isLoading', true);
+    if (isLoading) {
+      return <RefreshIcon isLoading={isLoading}/>;
+    } else {
+      return this.state.localState.get('requestedEmail');
+    }
   }
 });
