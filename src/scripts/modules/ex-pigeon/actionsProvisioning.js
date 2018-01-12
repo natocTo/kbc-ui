@@ -1,18 +1,12 @@
-import ApplicationStore from '../../stores/ApplicationStore';
+import callDockerAction from '../components/DockerActionsApi';
 
-import request from '../../utils/request';
+const COMPONENT_ID = 'keboola.ex-pigeon';
 
 export default function() {
-  const requestEmail = function() {
-    const sapiToken = ApplicationStore.getSapiTokenString();
-    return request('POST', 'https://docker-runner.keboola.com/docker/keboola.ex-pigeon/action/add')
-        .set('X-StorageApi-Token', sapiToken)
-        .send('{"configData": {"parameters": {}}}')
-        .promise()
-        .then(response => response.email);
-  };
 
   return {
-    requestEmail: requestEmail
+    requestEmail() {
+      return callDockerAction(COMPONENT_ID, 'get', '{"configData": {"parameters": {"config": "test"}}}');
+    }
   };
 }

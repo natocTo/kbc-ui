@@ -1,4 +1,4 @@
-const COMPONENT_ID = 'ex-pigeon';
+const COMPONENT_ID = 'keboola.ex-pigeon';
 
 import {Map} from 'immutable';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
