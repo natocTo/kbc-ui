@@ -47,6 +47,10 @@ export default function(componentId, configId) {
       return localState.get('tablesFilter', '');
     },
 
+    getQuickstart() {
+      return localState.getIn(['quickstart', 'tables'], List());
+    },
+
     getToggles() {
       return localState.get('bucketToggles', Map());
     },

@@ -134,6 +134,9 @@ export default function(componentId, driver) {
     },
     setTablesFilter(configId, query) {
       updateLocalState(configId, 'tablesFilter', query);
+    },
+    quickstartSelected(configId, selected) {
+      updateLocalState(configId, ['quickstart', 'tables'], selected);
     }
   };
 }

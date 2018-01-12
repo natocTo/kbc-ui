@@ -65,7 +65,8 @@ export default function(componentId, driver, isProvisioning) {
         tables: WrDbStore.getTables(),
         sapiTables: StorageTablesStore.getAll(),
         tablesFilter: WrDbStore.getTablesFilter(),
-        bucketToggles: WrDbStore.getToggles()
+        bucketToggles: WrDbStore.getToggles(),
+        quickstartSelected: WrDbStore.getQuickstart()
       };
     },
 
@@ -283,8 +284,8 @@ export default function(componentId, driver, isProvisioning) {
               configId={this.state.configId}
               isLoadingSourceTables={false}
               sourceTables={this.state.sapiTables}
-              quickstart={Map()}
-              onChange={() => false}
+              quickstartValues={this.state.quickstartSelected}
+              onChange={WrDbActions.quickstartSelected}
               onSubmit={() => false}
             />
           </div>

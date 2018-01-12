@@ -11,13 +11,13 @@ export default React.createClass({
     componentId: React.PropTypes.string,
     isLoadingSourceTables: React.PropTypes.bool.isRequired,
     sourceTables: React.PropTypes.object,
-    quickstart: React.PropTypes.object,
+    quickstartValues: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func.isRequired
   },
 
   quickstart() {
-    this.props.onSubmit(this.props.configId, this.props.quickstart.get('tables'));
+    this.props.onSubmit(this.props.configId, this.props.sourceTables);
   },
 
   handleSelectChange(selected) {
@@ -36,7 +36,8 @@ export default React.createClass({
           children: groupedTables.get(group).map(function(table) {
             return {
               value: {
-                tableId: table.get('id')
+                tableId: table.get('id'),
+                tableName: table.get('name')
               },
               label: table.get('name')
             };
@@ -56,7 +57,7 @@ export default React.createClass({
       }
       return jsTables.map(function(table) {
         return {
-          label: table.tableName,
+          label: table.tableId,
           value: table
         };
       });
@@ -70,7 +71,7 @@ export default React.createClass({
       <div>
         <div className="row text-left">
           <div className="col-md-8 col-md-offset-2 help-block">
-          Select the tables you'd like to import to autogenerate your configuration. <br/>
+          Select the tables you'd like to export to autogenerate your configuration. <br/>
           You can edit them later at any time.
           </div>
         </div>
@@ -80,7 +81,7 @@ export default React.createClass({
               multi={true}
               matchProp="label"
               name="quickstart"
-              value={this.getQuickstartValue(this.props.quickstart.get('tables'))}
+              value={this.getQuickstartValue(this.props.quickstartValues)}
               placeholder="Select tables to copy"
               onChange={this.handleSelectChange}
               filterOptions={this.filterOptions}
@@ -91,7 +92,7 @@ export default React.createClass({
             <button
               className="btn btn-success"
               onClick={this.quickstart}
-              disabled={!this.props.quickstart.get('tables') || this.props.quickstart.get('tables').count() === 0}
+              disabled={!this.props.quickstartValues || this.props.quickstartValues.count() === 0}
             > Create
             </button>
           </div>
@@ -134,15 +135,16 @@ export default React.createClass({
       newOptions.push({
         value: bucket.value,
         label: bucket.label,
-        render: (<strong style={{color: '#000'}}>{bucket.label}</strong>),
+        render: (<strong style={{color: '#000'}}>Bucket: {bucket.label}</strong>),
         disabled: true
       });
 
       fromJS(bucket.children).forEach((item) => {
         newOptions.push({
-          value: item.getIn(['value', 'tableId']),
+          value: item.getIn(['value']),
           label: item.get('label'),
-          render: (<div>{item.get('label')}</div>)
+          render: (<div>{item.get('label')}</div>),
+          disabled: false
         });
       });
     });
