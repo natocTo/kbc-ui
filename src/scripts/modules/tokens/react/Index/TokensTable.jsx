@@ -166,20 +166,33 @@ export default React.createClass({
 
 
   renderTokenSendButton(token) {
+    const isMaster = token.get('isMasterToken', false);
     const onClickButton = (e) => {
       e.preventDefault();
       e.stopPropagation();
       this.updateLocalState('sendToken', token);
     };
-    return (
-      <button
-        onClick={onClickButton}
-        className="btn btn-link">
-        <Tooltip placement="top" tooltip="Send token">
-          <i className="fa fa-share" />
-        </Tooltip>
-      </button>
-    );
+    if (isMaster) {
+      return (
+        <button
+          onClick={function() {}}
+          className="btn btn-link disabled">
+          <Tooltip placement="top" tooltip="Master token cannot be shared">
+            <i className="fa fa-share" />
+          </Tooltip>
+        </button>
+      );
+    } else {
+      return (
+        <button
+          onClick={onClickButton}
+          className="btn btn-link">
+          <Tooltip placement="top" tooltip="Send token via email">
+            <i className="fa fa-share"/>
+          </Tooltip>
+        </button>
+      );
+    }
   },
 
   renderTokenRefreshButton(token) {
