@@ -45,6 +45,8 @@ export default React.createClass({
             onCancel={this.handleClose}
             placement="right"
             saveLabel="Refresh"
+            showSave={!this.state.newToken}
+            cancelLabel="Close"
           />
         </Modal.Footer>
       </Modal>
