@@ -17,7 +17,9 @@ export default React.createClass({
   },
 
   quickstart() {
-    this.props.onSubmit(this.props.configId, this.props.sourceTables);
+    const tableIds = this.props.quickstartValues.map((value) => value.get('tableId'));
+    const selectedTables = this.props.sourceTables.filter((table) => tableIds.contains(table.get('id')));
+    this.props.onSubmit(this.props.configId, selectedTables);
   },
 
   handleSelectChange(selected) {

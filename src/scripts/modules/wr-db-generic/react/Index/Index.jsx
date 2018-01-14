@@ -285,8 +285,8 @@ export default function(componentId, driver, isProvisioning) {
               isLoadingSourceTables={false}
               sourceTables={this.state.sapiTables}
               quickstartValues={this.state.quickstartSelected}
-              onChange={WrDbActions.quickstartSelected}
-              onSubmit={() => false}
+              onChange={WrDbActions.quickstarSelect}
+              onSubmit={WrDbActions.quickstartSave}
             />
           </div>
         </div>

@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-import {Map, List} from 'immutable';
+import {Map, List, fromJS} from 'immutable';
 
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../stores/RoutesStore';
@@ -13,6 +13,7 @@ import provisioningUtils from './provisioningUtils';
 import {connectionTestedPath} from './storeProvisioning';
 import {getProtectedProperties} from './templates/credentials';
 import provisioningTemplate from './templates/provisioning';
+import componentDataTypes from './templates/dataTypes';
 
 function convertProvCredentialsToEditing(credentials, driver) {
   let newCredentials, len, i;
@@ -31,6 +32,8 @@ function convertProvCredentialsToEditing(credentials, driver) {
 }
 
 export default function(componentId, driver) {
+  const dataTypes = componentDataTypes(componentId);
+
   function getLocalState(configId) {
     return InstalledComponentStore.getLocalState(componentId, configId);
   }
@@ -59,6 +62,40 @@ export default function(componentId, driver) {
       }
       return memo;
     }, newCredentials);
+  }
+
+  function prepareColumnsDefaultTypes(tableColumns) {
+    const defaultType = fromJS(dataTypes.getDefaultDataType());
+
+    return tableColumns.map((column) => {
+      return Map({
+        'name': column,
+        'dbName': column,
+        'nullable': false,
+        'default': '',
+        'size': '',
+        'type': ''
+      }).merge(defaultType);
+    });
+  }
+
+  function generateTablesMapping(tables) {
+    let tablesMapping = List();
+
+    tables.forEach((table) => {
+      const tableId = table.get('tableId');
+      const columns = table.get('items').filter((item) => item.get('type') !== 'IGNORE').map((item) => item.get('name'));
+
+      let tableMapping = fromJS({
+        source: tableId,
+        destination: tableId + '.csv'
+      });
+
+      tableMapping = tableMapping.set('columns', columns);
+      tablesMapping = tablesMapping.push(tableMapping);
+    });
+
+    return tablesMapping;
   }
 
   function saveConfigData(configId, data, waitingPath, changeDescription) {
@@ -135,8 +172,31 @@ export default function(componentId, driver) {
     setTablesFilter(configId, query) {
       updateLocalState(configId, 'tablesFilter', query);
     },
-    quickstartSelected(configId, selected) {
-      updateLocalState(configId, ['quickstart', 'tables'], selected);
+    quickstartSave(configId, tableList) {
+      const tablesPath = ['parameters', 'tables'];
+      const mappingPath = ['storage', 'input', 'tables'];
+      let tables = List();
+      const store = storeProvisioning(componentId, configId);
+
+      tableList.forEach((sapiTable) => {
+        let items = prepareColumnsDefaultTypes(sapiTable.get('columns'));
+        let table = fromJS({
+          tableId: sapiTable.get('id'),
+          dbName: sapiTable.get('name'),
+          export: true,
+          items: []
+        }).set('items', items);
+
+        tables = tables.push(table);
+      });
+
+      const tablesMapping = generateTablesMapping(tables);
+      const newConfigData = store.configData.setIn(tablesPath, tables).setIn(mappingPath, tablesMapping);
+      const diffMsg = 'Quickstart config creation';
+      saveConfigData(configId, newConfigData, ['isSavingQuickstart'], diffMsg);
+    },
+    quickstarSelect(configId, tableList) {
+      updateLocalState(configId, ['quickstart', 'tables'], tableList);
     }
   };
 }
