@@ -130,6 +130,9 @@ export default React.createClass({
   },
 
   renderTokenDelete(token) {
+    if (token.has('admin')) {
+      return null;
+    }
     if (this.props.isDeletingFn(token)) {
       return <span className="btn btn-link"><Loader/></span>;
     }
@@ -255,7 +258,7 @@ export default React.createClass({
           {this.renderBucketsAccess(token)}
         </div>
         <div className="td text-right kbc-no-wrap">
-          {!token.has('admin') && this.renderTokenDelete(token)}
+          {this.renderTokenDelete(token)}
           {this.renderTokenSendButton(token)}
           {this.renderTokenRefreshButton(token)}
         </div>
