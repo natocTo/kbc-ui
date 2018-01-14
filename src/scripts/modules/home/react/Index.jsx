@@ -12,6 +12,7 @@ import storageActions from '../../components/StorageActionCreators';
 import DeprecatedComponents from './DeprecatedComponents';
 import DeprecatedTransformations from './DeprecatedTransformations';
 import DeprecatedStorage from './DeprecatedStorage';
+import EncryptionMigration from './EncryptionMigration';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
 import WizardStore from '../../guide-mode/stores/WizardStore';
@@ -109,6 +110,7 @@ export default React.createClass({
           <DeprecatedStorage
             buckets={this.state.buckets}
           />
+          <EncryptionMigration />
           <DeprecatedComponents
             components={this.state.installedComponents}
           />
