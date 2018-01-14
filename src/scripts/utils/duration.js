@@ -16,7 +16,7 @@ module.exports = function(duration, round) {
     if (minutes > 0) {
       result.push(minutes + ' min');
     }
-    if (seconds > 0 && (!round || hours === 0)) {
+    if (seconds >= 0 && (!round || hours === 0)) {
       result.push(seconds + ' sec');
     }
     if (result.length > 0) {
