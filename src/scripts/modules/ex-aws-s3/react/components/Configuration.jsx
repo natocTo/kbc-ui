@@ -72,7 +72,7 @@ export default React.createClass({
           }}
           placeholder="myfolder/myfile.csv"
           disabled={this.props.disabled}
-          help={(<span>Filename including folders or a prefix.</span>)}
+          help={(<span>Filename including folders or a prefix. Do not type <code>*</code> or <code>%</code> wildcards, use <strong>Wildcard</strong> checkbox instead.</span>)}
           />
         <h3>Download Settings</h3>
         <Input
