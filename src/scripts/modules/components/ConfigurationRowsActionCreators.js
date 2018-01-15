@@ -194,7 +194,7 @@ module.exports = {
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited';
+    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited manually';
     let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
     let parameters = ConfigurationRowsStore.getEditingParametersString(componentId, configurationId, rowId);
     configuration = configuration.set('parameters', Immutable.fromJS(JSON.parse(parameters)));
@@ -248,7 +248,7 @@ module.exports = {
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' processors edited';
+    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' processors edited manually';
     let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
     let processors = ConfigurationRowsStore.getEditingProcessorsString(componentId, configurationId, rowId);
     configuration = configuration.set('processors', Immutable.fromJS(JSON.parse(processors)));
