@@ -130,6 +130,9 @@ export default React.createClass({
   },
 
   renderTokenDelete(token) {
+    if (token.has('admin')) {
+      return null;
+    }
     if (this.props.isDeletingFn(token)) {
       return <span className="btn btn-link"><Loader/></span>;
     }
@@ -166,20 +169,25 @@ export default React.createClass({
 
 
   renderTokenSendButton(token) {
-    const onClickButton = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.updateLocalState('sendToken', token);
-    };
-    return (
-      <button
-        onClick={onClickButton}
-        className="btn btn-link">
-        <Tooltip placement="top" tooltip="Send token">
-          <i className="fa fa-share" />
-        </Tooltip>
-      </button>
-    );
+    const isMaster = token.get('isMasterToken', false);
+    if (isMaster) {
+      return null;
+    } else {
+      const onClickButton = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.updateLocalState('sendToken', token);
+      };
+      return (
+        <button
+          onClick={onClickButton}
+          className="btn btn-link">
+          <Tooltip placement="top" tooltip="Send token via email">
+            <i className="fa fa-share"/>
+          </Tooltip>
+        </button>
+      );
+    }
   },
 
   renderTokenRefreshButton(token) {
@@ -250,7 +258,7 @@ export default React.createClass({
           {this.renderBucketsAccess(token)}
         </div>
         <div className="td text-right kbc-no-wrap">
-          {!token.has('admin') && this.renderTokenDelete(token)}
+          {this.renderTokenDelete(token)}
           {this.renderTokenSendButton(token)}
           {this.renderTokenRefreshButton(token)}
         </div>
