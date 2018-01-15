@@ -100,6 +100,10 @@ export default function(componentId, configId) {
 
     isSavingCredentials() {
       return localState.get('isSavingCredentials', false);
+    },
+
+    getPendingActions() {
+      return localState.get('pending', List());
     }
   };
 }

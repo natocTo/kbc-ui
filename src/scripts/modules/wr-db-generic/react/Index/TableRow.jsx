@@ -3,27 +3,23 @@ import React from 'react';
 import {Button} from 'react-bootstrap';
 
 import {Check, Loader} from 'kbc-react-components';
-import {ActivateDeactivateButton, Confirm, Tooltip} from '../../../../react/common/common';
+import {ActivateDeactivateButton, Tooltip} from '../../../../react/common/common';
 
 import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
 import SapiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 
 export default React.createClass({
-
+  displayName: 'TableRow',
   mixins: [ImmutableRenderMixin],
-
   propTypes: {
     tableExists: React.PropTypes.bool.isRequired,
     isTableExported: React.PropTypes.bool.isRequired,
     isIncremental: React.PropTypes.bool,
     tableDbName: React.PropTypes.string,
     table: React.PropTypes.object.isRequired,
-    isDeleting: React.PropTypes.bool.isRequired
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
+    isDeleting: React.PropTypes.bool.isRequired,
+    onDelete: React.PropTypes.func.isRequired
   },
 
   render() {
@@ -31,7 +27,7 @@ export default React.createClass({
       <div className="tr">
         <div className="td">
           <SapiTableLinkEx
-            tableId={this.props.table.get('id')}
+            tableId={this.props.table.get('tableId')}
           >{this.props.table.get('name')}</SapiTableLinkEx>
         </div>
         <div className="td">
@@ -54,9 +50,11 @@ export default React.createClass({
     );
   },
 
-  renderDeleteButton() {
-    const tableId = this.props.table.get('id');
+  deleteTable() {
+    this.props.onDelete(this.props.table.get('id'));
+  },
 
+  renderDeleteButton() {
     if (this.props.isDeleting) {
       return (
         <div className="btn btn-link">
@@ -65,20 +63,11 @@ export default React.createClass({
       );
     } else {
       return (
-        <Confirm
-          key={tableId}
-          title={'Remove ' + tableId}
-          text="You are about to remove the table from the configuration."
-          buttonLabel="Remove"
-          onConfirm={() => false}
+        <Tooltip
+          tooltip="Delete table"
         >
-          <Tooltip
-            tooltip="Remove table from configuration"
-            placement="top"
-          >
-            <Button bsStyle="link"><i className="kbc-icon-cup" /></Button>
-          </Tooltip>
-        </Confirm>
+          <Button bsStyle="link" onClick={this.deleteTable}><i className="kbc-icon-cup" /></Button>
+        </Tooltip>
       );
     }
   }

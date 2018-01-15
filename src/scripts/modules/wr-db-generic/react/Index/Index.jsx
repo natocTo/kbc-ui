@@ -66,7 +66,8 @@ export default function(componentId, driver, isProvisioning) {
         sapiTables: StorageTablesStore.getAll(),
         tablesFilter: WrDbStore.getTablesFilter(),
         bucketToggles: WrDbStore.getToggles(),
-        quickstartSelected: WrDbStore.getQuickstart()
+        quickstartSelected: WrDbStore.getQuickstart(),
+        pendingActions: WrDbStore.getPendingActions()
       };
     },
 
@@ -263,6 +264,7 @@ export default function(componentId, driver, isProvisioning) {
         configTable = Map();
       }
 
+      const isDeleting = this.state.pendingActions.getIn([configTable.get('tableId', false), 'isDeleting'], false);
       return (
         <TableRow
           tableExists={tableExists}
@@ -270,7 +272,8 @@ export default function(componentId, driver, isProvisioning) {
           isIncremental={configTable.get('incremental') === true}
           tableDbName={configTable.get('dbName')}
           table={sapiTable}
-          isDeleting={false}
+          isDeleting={isDeleting}
+          onDelete={(tableId) => WrDbActions.tableDelete(this.state.configId, tableId)}
         />
       );
     },

@@ -33,6 +33,8 @@ function convertProvCredentialsToEditing(credentials, driver) {
 
 export default function(componentId, driver) {
   const dataTypes = componentDataTypes(componentId);
+  const tablesPath = ['parameters', 'tables'];
+  const mappingPath = ['storage', 'input', 'tables'];
 
   function getLocalState(configId) {
     return InstalledComponentStore.getLocalState(componentId, configId);
@@ -173,8 +175,6 @@ export default function(componentId, driver) {
       updateLocalState(configId, 'tablesFilter', query);
     },
     quickstartSave(configId, tableList) {
-      const tablesPath = ['parameters', 'tables'];
-      const mappingPath = ['storage', 'input', 'tables'];
       let tables = List();
       const store = storeProvisioning(componentId, configId);
 
@@ -197,6 +197,23 @@ export default function(componentId, driver) {
     },
     quickstarSelect(configId, tableList) {
       updateLocalState(configId, ['quickstart', 'tables'], tableList);
+    },
+    tableDelete(configId, tableId) {
+      const store = storeProvisioning(componentId, configId);
+      const configData = store.configData;
+
+      const newTables = configData.getIn(tablesPath, List()).filter((table) => {
+        return tableId !== table.get('tableId');
+      });
+
+      const newTablesMapping = configData.getIn(mappingPath, List()).filter((table) => {
+        return tableId !== table.get('source');
+      });
+
+      const newConfigData = store.configData.setIn(tablesPath, newTables).setIn(mappingPath, newTablesMapping);
+      const diffMsg = 'Delete table ' + tableId;
+
+      saveConfigData(configId, newConfigData, ['pending', tableId, 'isDeleting'], diffMsg);
     }
   };
 }
