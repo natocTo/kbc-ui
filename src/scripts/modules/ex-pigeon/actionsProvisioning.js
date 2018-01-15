@@ -11,7 +11,6 @@ export default function(configId) {
   function updateLocalState(path, data) {
     const ls = store.getLocalState();
     const newLocalState = ls.setIn([].concat(path), data);
-    console.log('updating local state', path);
     componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
   }
 
