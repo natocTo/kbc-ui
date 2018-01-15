@@ -250,7 +250,7 @@ export default function(componentId, driver, isProvisioning) {
 
     renderTables() {
       if (this.state.hasCredentials && this.state.tables.count() > 0) {
-        const configuredIds = this.state.tables.map((table) => table.get('id')).toArray();
+        const configuredIds = this.state.tables.map((table) => table.get('tableId')).toArray();
 
         return (
           <TablesByBucketsPanel
@@ -287,6 +287,7 @@ export default function(componentId, driver, isProvisioning) {
       }
 
       const isDeleting = this.state.pendingActions.getIn([configTable.get('tableId', false), 'isDeleting'], false);
+      const isSaving = this.state.pendingActions.getIn([configTable.get('tableId', false), 'isSaving'], false);
       return (
         <TableRow
           tableExists={tableExists}
@@ -296,6 +297,8 @@ export default function(componentId, driver, isProvisioning) {
           table={sapiTable}
           isDeleting={isDeleting}
           onDelete={(tableId) => WrDbActions.tableDelete(this.state.configId, tableId)}
+          isSaving={isSaving}
+          onChange={(tableId, isExported) => WrDbActions.setTableToExport(this.state.configId, tableId, isExported)}
         />
       );
     },

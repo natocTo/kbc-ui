@@ -19,7 +19,9 @@ export default React.createClass({
     tableDbName: React.PropTypes.string,
     table: React.PropTypes.object.isRequired,
     isDeleting: React.PropTypes.bool.isRequired,
-    onDelete: React.PropTypes.func.isRequired
+    onDelete: React.PropTypes.func.isRequired,
+    isSaving: React.PropTypes.bool.isRequired,
+    onChange: React.PropTypes.func.isRequired
   },
 
   render() {
@@ -27,7 +29,7 @@ export default React.createClass({
       <div className="tr">
         <div className="td">
           <SapiTableLinkEx
-            tableId={this.props.table.get('tableId')}
+            tableId={this.props.table.get('id')}
           >{this.props.table.get('name')}</SapiTableLinkEx>
         </div>
         <div className="td">
@@ -41,13 +43,17 @@ export default React.createClass({
           <ActivateDeactivateButton
             activateTooltip={'Select table to upload'}
             deactivateTooltip={'Deselect table from upload'}
-            isActive={false}
-            isPending={false}
-            onChange={() => false}
+            isActive={this.props.isTableExported}
+            isPending={this.props.isSaving}
+            onChange={this.toggleTable}
           />
         </div>
       </div>
     );
+  },
+
+  toggleTable(isExported) {
+    this.props.onChange(this.props.table.get('id'), isExported);
   },
 
   deleteTable() {

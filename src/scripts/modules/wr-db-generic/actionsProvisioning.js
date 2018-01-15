@@ -94,7 +94,10 @@ export default function(componentId, driver) {
       });
 
       tableMapping = tableMapping.set('columns', columns);
-      tablesMapping = tablesMapping.push(tableMapping);
+
+      if (!!table.get('export')) {
+        tablesMapping = tablesMapping.push(tableMapping);
+      }
     });
 
     return tablesMapping;
@@ -217,6 +220,30 @@ export default function(componentId, driver) {
       const diffMsg = 'Delete table ' + tableId;
 
       saveConfigData(configId, newConfigData, ['pending', tableId, 'isDeleting'], diffMsg);
+    },
+    setTableToExport(configId, tableId, isExported) {
+      const store = storeProvisioning(componentId, configId);
+      const configData = store.configData;
+
+      const newTables = configData.getIn(tablesPath, List()).map((table) => {
+        if (table.get('tableId') === tableId) {
+          return table.set('export', !!isExported);
+        } else {
+          return table;
+        }
+      });
+
+      const newTablesMapping = generateTablesMapping(newTables);
+      const newConfigData = store.configData.setIn(tablesPath, newTables).setIn(mappingPath, newTablesMapping);
+
+      let diffMsg;
+      if (!!isExported) {
+        diffMsg = 'Enable table ' + tableId + ' for export';
+      } else {
+        diffMsg = 'Disable table ' + tableId + ' for export';
+      }
+
+      saveConfigData(configId, newConfigData, ['pending', tableId, 'isSaving'], diffMsg);
     }
   };
 }
