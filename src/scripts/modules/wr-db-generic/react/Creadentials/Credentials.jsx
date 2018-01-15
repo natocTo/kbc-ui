@@ -128,7 +128,7 @@ export default function(componentId, driver, credentialsTemplate, isProvisioning
             <div className="form-group">
               <div className="col-xs-8 col-xs-offset-4">
                 <Button
-                  bsStyle="btn btn-link"
+                  bsStyle="link"
                   onClick={this.handleSplash}>
                   <span className="fa fa-fw fa-times" /> Reset Credentials
                 </Button>
@@ -139,7 +139,7 @@ export default function(componentId, driver, credentialsTemplate, isProvisioning
               configId={this.state.configId}
               isEditing={this.state.isEditing}
               testCredentialsFn={this.testCredentials}
-              disabled={this.state.isSaving || !this.state.isValidCredentials}
+              disabled={this.state.isSaving || (!this.state.isValidCredentials && !this.state.isProvisionedCredentilas)}
             />
           </div>
         </div>
