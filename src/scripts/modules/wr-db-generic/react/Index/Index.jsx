@@ -27,7 +27,6 @@ import Quickstart from '../../components/Quickstart';
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
 
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
-// import StorageActions from '../../components/StorageActionCreators';
 
 // @FIXME mixin from storeProvisioning
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
@@ -148,6 +147,10 @@ export default function(componentId, driver, isProvisioning) {
     },
 
     render() {
+      const renderSetup = !this.state.hasCredentials || this.state.isSplashEnabled;
+      const renderQuickstart = !renderSetup && this.state.tables.count() < 1;
+      const renderTables = !renderSetup && !renderQuickstart;
+
       return (
         <div className="container-fluid">
           <div className="col-md-9 kbc-main-content">
@@ -159,24 +162,30 @@ export default function(componentId, driver, isProvisioning) {
                 />
               </div>
             </div>
-            {this.state.hasCredentials && this.state.tables.count() > 0 ? (
-              <div className="row">
-                <div className="col-sm-9" style={{padding: '0px'}}>
-                  <SearchRow
-                    onChange={this.handleFilterChange}
-                    query={this.state.tablesFilter}
-                  />
-                </div>
-                <div className="col-sm-3">
-                  <div className="text-right" style={{marginTop: '16px'}}>
-                    {this.renderNewQueryLink()}
-                  </div>
-                </div>
-              </div>
-            ) : this.renderQuickstart()}
-            {this.state.hasCredentials && !this.state.isSplashEnabled ? this.renderTables() : this.renderCredentialsSetup()}
+            {renderSetup ? this.renderCredentialsSetup() : null}
+            {renderQuickstart ? this.renderQuickstart() : null}
+            {renderTables ? this.renderFilter() : null}
+            {renderTables ? this.renderTables() : null}
           </div>
           <div className="col-md-3 kbc-main-sidebar">{this.renderSideBar()}</div>
+        </div>
+      );
+    },
+
+    renderFilter() {
+      return (
+        <div className="row">
+          <div className="col-sm-9" style={{padding: '0px'}}>
+            <SearchRow
+              onChange={this.handleFilterChange}
+              query={this.state.tablesFilter}
+            />
+          </div>
+          <div className="col-sm-3">
+            <div className="text-right" style={{marginTop: '16px'}}>
+              {this.renderNewQueryLink()}
+            </div>
+          </div>
         </div>
       );
     },

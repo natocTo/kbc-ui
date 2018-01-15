@@ -39,6 +39,7 @@ export default function(componentId, driver, credentialsTemplate, isProvisioning
         isProvisioning: isProvisioning,
         isSaving: WrDbStore.isSavingCredentials(),
         isChangedCredentials: WrDbStore.isChangedCredentials(),
+        isSplashEnabled: WrDbStore.isSplashEnabled(),
         isValidCredentials: WrDbStore.isValidCredentials(WrDbStore.hasEditingCredentials() ? WrDbStore.getEditingCredentials() : WrDbStore.getCredentials())
       };
     },
@@ -92,7 +93,7 @@ export default function(componentId, driver, credentialsTemplate, isProvisioning
                   (
                     <SaveButtons
                       isSaving={this.state.isSaving}
-                      isChanged={this.state.isChangedCredentials}
+                      isChanged={this.state.isChangedCredentials || this.state.isSplashEnabled}
                       disabled={this.state.isSaving || !this.state.isValidCredentials}
                       onReset={this.handleReset}
                       onSave={this.handleSave}

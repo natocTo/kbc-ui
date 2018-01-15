@@ -127,6 +127,7 @@ export default function(componentId, driver) {
     cancelCredentialsEdit(configId) {
       removeFromLocalState(configId, ['isChangedCredentials']);
       removeFromLocalState(configId, ['editingCredentials']);
+      removeFromLocalState(configId, ['isSplashEnabled']);
     },
     prepareCredentials(configId) {
       updateLocalState(configId, 'isSavingCredentials', true);
