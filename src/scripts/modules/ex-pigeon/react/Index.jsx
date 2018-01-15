@@ -15,6 +15,7 @@ import ComponentDescription from '../../components/react/components/ComponentDes
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 
 import ConfigurationForm from './ConfigurationForm';
+import Configuration from '../../../modules/components/react/components/Configuration';
 
 
 const COMPONENT_ID = 'keboola.ex-pigeon';
@@ -48,6 +49,10 @@ export default React.createClass({
                     />
                 </div>
                 <ConfigurationForm/>
+                        <Configuration
+                            schema={this.state.component.get('configurationSchema')}
+                            data={JSON.stringify(this.state.store.configData.get('parameters'))}
+              />
             </div>
             <div className="col-md-3 kbc-main-sidebar">
                 <ComponentMetadata

@@ -3,6 +3,7 @@ import installedComponentsActions from '../components/InstalledComponentsActionC
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 import {createTablesRoute} from '../table-browser/routes';
+// import schemasActionsCreators from '../../modules/components/TemplatesActionCreators';
 
 const componentId = 'keboola.ex-pigeon';
 
@@ -14,6 +15,7 @@ export default {
   requireData: [
     (params) => installedComponentsActions.loadComponentConfigData(componentId, params.config),
     (params) => versionsActions.loadVersions(componentId, params.config)
+    // (params) => schemasActionsCreators.loadSchema(componentId, params.component)
   ],
   poll: {
     interval: 7,
