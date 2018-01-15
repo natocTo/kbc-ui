@@ -1,4 +1,5 @@
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';
+import StorageTablesStore from '../components/stores/StorageTablesStore';
 
 import {Map, List} from 'immutable';
 
@@ -45,6 +46,10 @@ export default function(componentId, configId) {
 
     getTablesFilter() {
       return localState.get('tablesFilter', '');
+    },
+
+    getQuickstartOptions() {
+      return localState.getIn(['quickstart', 'options'], StorageTablesStore.getAll());
     },
 
     getQuickstart() {
@@ -100,6 +105,10 @@ export default function(componentId, configId) {
 
     isSavingCredentials() {
       return localState.get('isSavingCredentials', false);
+    },
+
+    isSavingQuickstart() {
+      return localState.get('isSavingQuickstart', false);
     },
 
     getPendingActions() {

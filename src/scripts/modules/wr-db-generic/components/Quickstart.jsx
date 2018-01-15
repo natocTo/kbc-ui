@@ -2,13 +2,17 @@ import React from 'react';
 
 import {fromJS} from 'immutable';
 import Select from 'react-select';
+import {Loader} from 'kbc-react-components';
 import TableLoader from './TableLoaderQuickStart';
+
+require('./Quickstart.less');
 
 export default React.createClass({
   displayName: 'Quickstart',
   propTypes: {
     configId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string,
+    isSaving: React.PropTypes.bool.isRequired,
     isLoadingSourceTables: React.PropTypes.bool.isRequired,
     sourceTables: React.PropTypes.object,
     quickstartValues: React.PropTypes.object,
@@ -30,7 +34,10 @@ export default React.createClass({
 
   getTableOptions() {
     if (this.props.sourceTables && this.props.sourceTables.count() > 0) {
-      const groupedTables = this.props.sourceTables.groupBy(table => table.getIn(['bucket', 'id']));
+      const tableIds = this.props.quickstartValues.map((value) => value.get('tableId'));
+      let sourceTables = this.props.sourceTables.filter((table) => !tableIds.contains(table.get('id')));
+
+      const groupedTables = sourceTables.groupBy(table => table.getIn(['bucket', 'id']));
       return groupedTables.keySeq().map(function(group) {
         return {
           value: group,
@@ -81,10 +88,11 @@ export default React.createClass({
           <div className="col-md-8 col-md-offset-2">
             <Select
               multi={true}
+              disabled={this.props.isSaving}
               matchProp="label"
               name="quickstart"
               value={this.getQuickstartValue(this.props.quickstartValues)}
-              placeholder="Select tables to copy"
+              placeholder="Select tables to export"
               onChange={this.handleSelectChange}
               filterOptions={this.filterOptions}
               optionRenderer={this.optionRenderer}
@@ -92,10 +100,10 @@ export default React.createClass({
           </div>
           <div className="col-md-2">
             <button
-              className="btn btn-success"
+              className="btn btn-success create-button"
               onClick={this.quickstart}
               disabled={!this.props.quickstartValues || this.props.quickstartValues.count() === 0}
-            > Create
+            > {this.createButtonText()}
             </button>
           </div>
         </div>
@@ -156,6 +164,14 @@ export default React.createClass({
 
   optionRenderer(option) {
     return option.render;
+  },
+
+  createButtonText() {
+    if (this.props.isSaving) {
+      return (<Loader />);
+    }
+
+    return 'Create';
   }
 
 });

@@ -193,7 +193,9 @@ export default function(componentId, driver) {
       const tablesMapping = generateTablesMapping(tables);
       const newConfigData = store.configData.setIn(tablesPath, tables).setIn(mappingPath, tablesMapping);
       const diffMsg = 'Quickstart config creation';
-      saveConfigData(configId, newConfigData, ['isSavingQuickstart'], diffMsg);
+      saveConfigData(configId, newConfigData, ['isSavingQuickstart'], diffMsg).then(() => {
+        removeFromLocalState(configId, ['quickstart', 'tables']);
+      });
     },
     quickstarSelect(configId, tableList) {
       updateLocalState(configId, ['quickstart', 'tables'], tableList);

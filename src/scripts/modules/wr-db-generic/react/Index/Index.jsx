@@ -27,6 +27,8 @@ import Quickstart from '../../components/Quickstart';
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
 
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
+// import StorageActions from '../../components/StorageActionCreators';
+
 // @FIXME mixin from storeProvisioning
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
@@ -62,13 +64,19 @@ export default function(componentId, driver, isProvisioning) {
         hasCredentials: WrDbStore.hasCredentials(),
         isSplashEnabled: WrDbStore.isSplashEnabled(),
         isSavingCredentials: WrDbStore.isSavingCredentials(),
+        isSavingQuickstart: WrDbStore.isSavingQuickstart(),
         tables: WrDbStore.getTables(),
-        sapiTables: StorageTablesStore.getAll(),
+        sapiTables: this.filterAllowedTables(StorageTablesStore.getAll()),
         tablesFilter: WrDbStore.getTablesFilter(),
         bucketToggles: WrDbStore.getToggles(),
         quickstartSelected: WrDbStore.getQuickstart(),
         pendingActions: WrDbStore.getPendingActions()
       };
+    },
+
+    handleRefreshSapi() {
+      // StorageActions.loadTablesForce(true)
+      StorageTablesStore.getAll();
     },
 
     handleGenerate() {
@@ -101,11 +109,48 @@ export default function(componentId, driver, isProvisioning) {
       );
     },
 
+    renderSideBar() {
+      return (
+        <div>
+          <div className="kbc-buttons kbc-text-light">
+            <ComponentMetadata
+              componentId={componentId}
+              configId={this.state.configId}
+            />
+            <LastUpdateInfo lastVersion={this.state.versions.get(0)}/>
+          </div>
+          <ul className="nav nav-stacked">
+            {this.renderCredentialsLink()}
+            <li className={classnames({ disabled: !this.state.hasEnabledQueries })}>
+              <RunComponentButton
+                title="Run Extraction"
+                component={componentId}
+                mode="link"
+                disabled={!this.state.hasEnabledQueries}
+                disabledReason="There are no tables configured"
+                runParams={function() { return { config: this.state.configId }; }}
+              >
+                You are about to run the extraction
+              </RunComponentButton>
+            </li>
+            <li>
+              <DeleteConfigurationButton
+                componentId={componentId}
+                configId={this.state.configId}
+              />
+            </li>
+          </ul>
+          <SidebarJobs limit={3} jobs={this.state.latestJobs}/>
+
+          <SidebarVersions limit={3} componentId={componentId}/>
+        </div>
+      );
+    },
+
     render() {
       return (
         <div className="container-fluid">
           <div className="col-md-9 kbc-main-content">
-            {this.renderQuickstart()}
             <div className="row kbc-header">
               <div>
                 <ComponentDescription
@@ -114,7 +159,6 @@ export default function(componentId, driver, isProvisioning) {
                 />
               </div>
             </div>
-            {/* sourceTableErrorComponent */}
             {this.state.hasCredentials && this.state.tables.count() > 0 ? (
               <div className="row">
                 <div className="col-sm-9" style={{padding: '0px'}}>
@@ -129,43 +173,10 @@ export default function(componentId, driver, isProvisioning) {
                   </div>
                 </div>
               </div>
-            ) : null}
-            {this.state.hasCredentials && !this.state.isSplashEnabled ? this.renderQueriesMain() : this.renderCredentialsSetup()}
+            ) : this.renderQuickstart()}
+            {this.state.hasCredentials && !this.state.isSplashEnabled ? this.renderTables() : this.renderCredentialsSetup()}
           </div>
-          <div className="col-md-3 kbc-main-sidebar">
-            <div className="kbc-buttons kbc-text-light">
-              <ComponentMetadata
-                componentId={componentId}
-                configId={this.state.configId}
-              />
-              <LastUpdateInfo lastVersion={this.state.versions.get(0)}/>
-            </div>
-            <ul className="nav nav-stacked">
-              {this.renderCredentialsLink()}
-              <li className={classnames({ disabled: !this.state.hasEnabledQueries })}>
-                <RunComponentButton
-                  title="Run Extraction"
-                  component={componentId}
-                  mode="link"
-                  disabled={!this.state.hasEnabledQueries}
-                  disabledReason="There are no tables configured"
-                  runParams={function() { return { config: this.state.configId }; }}
-                >
-                  You are about to run the extraction
-                </RunComponentButton>
-              </li>
-              <li>
-                <DeleteConfigurationButton
-                  componentId={componentId}
-                  configId={this.state.configId}
-                />
-              </li>
-            </ul>
-            <SidebarJobs limit={3} jobs={this.state.latestJobs}/>
-
-            <SidebarVersions limit={3} componentId={componentId}/>
-
-          </div>
+          <div className="col-md-3 kbc-main-sidebar">{this.renderSideBar()}</div>
         </div>
       );
     },
@@ -228,24 +239,26 @@ export default function(componentId, driver, isProvisioning) {
       }
     },
 
-    renderQueriesMain() {
-      const configuredIds = this.state.tables.map((table) => table.get('id')).toArray();
+    renderTables() {
+      if (this.state.hasCredentials && this.state.tables.count() > 0) {
+        const configuredIds = this.state.tables.map((table) => table.get('id')).toArray();
 
-      return (
-        <TablesByBucketsPanel
-          renderHeaderRowFn={this.renderHeaderRow}
-          renderTableRowFn={(table) => this.renderTableRow(table, true)}
-          renderDeletedTableRowFn={(table) => this.renderTableRow(table, false)}
-          filterFn={this.filterAllowedBuckets}
-          searchQuery={this.state.tablesFilter}
-          isTableExportedFn={this.isTableExportedFn}
-          isTableShownFn={this.isTableInConfig}
-          onToggleBucketFn={this.handleToggleBucket}
-          isBucketToggledFn={this.isBucketToggled}
-          configuredTables={configuredIds}
-          showAllTables={false}
-        />
-      );
+        return (
+          <TablesByBucketsPanel
+            renderHeaderRowFn={this.renderHeaderRow}
+            renderTableRowFn={(table) => this.renderTableRow(table, true)}
+            renderDeletedTableRowFn={(table) => this.renderTableRow(table, false)}
+            filterFn={this.filterAllowedBuckets}
+            searchQuery={this.state.tablesFilter}
+            isTableExportedFn={this.isTableExportedFn}
+            isTableShownFn={this.isTableInConfig}
+            onToggleBucketFn={this.handleToggleBucket}
+            isBucketToggledFn={this.isBucketToggled}
+            configuredTables={configuredIds}
+            showAllTables={false}
+          />
+        );
+      }
     },
 
     renderHeaderRow() {
@@ -285,6 +298,7 @@ export default function(componentId, driver, isProvisioning) {
             <Quickstart
               componentId={componentId}
               configId={this.state.configId}
+              isSaving={this.state.isSavingQuickstart}
               isLoadingSourceTables={false}
               sourceTables={this.state.sapiTables}
               quickstartValues={this.state.quickstartSelected}
@@ -311,6 +325,10 @@ export default function(componentId, driver, isProvisioning) {
     isTableExportedFn(tableId) {
       const configTable = this.state.tables.find((table) => table.get('tableId') === tableId);
       return configTable && configTable.get('export') === true;
+    },
+
+    filterAllowedTables(tables) {
+      return tables.filter((table) => allowedBuckets.indexOf(table.getIn(['bucket', 'stage'])) > -1);
     },
 
     filterAllowedBuckets(buckets) {
