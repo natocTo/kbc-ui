@@ -86,6 +86,7 @@ export default React.createClass({
         header={header}
         columns={columns}
         filter={filter}
+        isCompletedFn={state.settings.getIn(['adapters', 'row', 'isCompleted'])}
       />);
     }
   },

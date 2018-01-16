@@ -22,7 +22,8 @@ const TableRow = React.createClass({
     onDelete: React.PropTypes.func.isRequired,
     isEnableDisablePending: React.PropTypes.bool.isRequired,
     onEnableDisable: React.PropTypes.func.isRequired,
-    disabledMove: React.PropTypes.bool.isRequired
+    disabledMove: React.PropTypes.bool.isRequired,
+    disabledRun: React.PropTypes.bool.isRequired
   },
 
   renderDragSource() {
@@ -87,6 +88,7 @@ const TableRow = React.createClass({
             row: props.row.get('id')
           };
         }}
+        disabled={this.props.disabledRun}
       >
           {this.renderRunModalContent()}
         </RunComponentButton>
