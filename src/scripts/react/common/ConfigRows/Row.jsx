@@ -87,6 +87,7 @@ export default React.createClass({
 
   render() {
     const state = this.state;
+    const settings = this.state.settings;
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -136,9 +137,11 @@ export default React.createClass({
                 isPending={this.state.isEnableDisablePending}
                 onChange={function() {
                   if (state.row.get('isDisabled', false)) {
-                    return Actions.enable(state.componentId, state.configurationId, state.rowId);
+                    const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' enabled';
+                    return Actions.enable(state.componentId, state.configurationId, state.rowId, changeDescription);
                   } else {
-                    return Actions.disable(state.componentId, state.configurationId, state.rowId);
+                    const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' disabled';
+                    return Actions.disable(state.componentId, state.configurationId, state.rowId, changeDescription);
                   }
                 }}
                 mode="link"
@@ -156,7 +159,8 @@ export default React.createClass({
             <li>
               <DeleteConfigurationRowButton
                 onClick={function() {
-                  return Actions.delete(state.componentId, state.configurationId, state.rowId, true);
+                  const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' deleted';
+                  return Actions.delete(state.componentId, state.configurationId, state.rowId, true, changeDescription);
                 }}
                 isPending={this.state.isDeletePending}
                 mode="link"
@@ -179,18 +183,21 @@ export default React.createClass({
 
   renderButtons() {
     const state = this.state;
+    const settings = this.state.settings;
     return (
       <div className="text-right">
         <SaveButtons
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={function() {
+            const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' edited';
             return Actions.saveConfiguration(
               state.componentId,
               state.configurationId,
               state.rowId,
               state.settings.getIn(['row', 'detail', 'onSave']),
-              state.settings.getIn(['row', 'detail', 'onLoad'])
+              state.settings.getIn(['row', 'detail', 'onLoad']),
+              changeDescription
             );
           }}
           onReset={function() {
@@ -267,6 +274,7 @@ export default React.createClass({
 
   renderJSONEditors() {
     const state = this.state;
+    const settings = this.state.settings;
     return [
       (<div key="close">{this.renderCloseJSONLink()}</div>),
       (<Parameters
@@ -282,7 +290,8 @@ export default React.createClass({
           return Actions.updateParameters(state.componentId, state.configurationId, state.rowId, parameters);
         }}
         onEditSubmit={function() {
-          return Actions.saveParameters(state.componentId, state.configurationId, state.rowId);
+          const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' parameters edited manually';
+          return Actions.saveParameters(state.componentId, state.configurationId, state.rowId, changeDescription);
         }}
       />),
       (<Processors
@@ -298,7 +307,8 @@ export default React.createClass({
           return Actions.updateProcessors(state.componentId, state.configurationId, state.rowId, parameters);
         }}
         onEditSubmit={function() {
-          return Actions.saveProcessors(state.componentId, state.configurationId, state.rowId);
+          const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' processors edited manually';
+          return Actions.saveProcessors(state.componentId, state.configurationId, state.rowId, changeDescription);
         }}
       />)
     ];

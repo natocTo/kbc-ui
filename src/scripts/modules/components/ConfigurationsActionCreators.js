@@ -75,15 +75,14 @@ module.exports = {
       });
   },
 
-  orderRows: function(componentId, configurationId, rowIds) {
+  orderRows: function(componentId, configurationId, rowIds, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_START,
       componentId: componentId,
       configurationId: configurationId,
       rowIds: rowIds
     });
-    const changeDescription = 'Rows order changed';
-    return InstalledComponentsApi.orderRows(componentId, configurationId, rowIds, changeDescription)
+    return InstalledComponentsApi.orderRows(componentId, configurationId, rowIds, changeDescription ? changeDescription : 'Rows order changed')
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({

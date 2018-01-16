@@ -18,13 +18,17 @@ export default React.createClass({
     onRowCreated: PropTypes.func.isRequired,
     emptyConfig: PropTypes.func.isRequired,
     label: PropTypes.string,
-    type: PropTypes.string
+    type: PropTypes.string,
+    createChangeDescription: PropTypes.func
   },
 
   getDefaultProps() {
     return {
       type: 'link',
-      label: 'Add Row'
+      label: 'Add Row',
+      createChangeDescription: function(name) {
+        return 'Row ' + name + ' added';
+      }
     };
   },
 
@@ -150,7 +154,8 @@ export default React.createClass({
       this.props.configId,
       this.state.form.get('name'),
       this.state.form.get('description'),
-      this.props.emptyConfig(this.state.form.toJS())
+      this.props.emptyConfig(this.state.form.toJS()),
+      this.props.createChangeDescription(this.state.form.get('name'))
     ).then(
       this.onRowCreated
     ).catch(() => {

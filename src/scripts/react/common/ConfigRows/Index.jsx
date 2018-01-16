@@ -41,6 +41,7 @@ export default React.createClass({
 
   renderRowsTable() {
     const state = this.state;
+    const settings = this.state.settings;
     if (this.state.rows.count() === 0) {
       return (
         <div className="kbc-inner-content-padding-fix with-bottom-border">
@@ -56,16 +57,19 @@ export default React.createClass({
         componentId={this.state.componentId}
         configurationId={this.state.configurationId}
         rowDelete={function(rowId) {
-          return configurationRowsActions.delete(state.componentId, state.configurationId, rowId);
+          const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.rows.get(rowId).get('name') + ' deleted';
+          return configurationRowsActions.delete(state.componentId, state.configurationId, rowId, false, changeDescription);
         }}
         rowDeletePending={function(rowId) {
           return ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('delete');
         }}
         rowEnableDisable={function(rowId) {
           if (state.rows.get(rowId).get('isDisabled', false)) {
-            return configurationRowsActions.enable(state.componentId, state.configurationId, rowId);
+            const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.rows.get(rowId).get('name') + ' enabled';
+            return configurationRowsActions.enable(state.componentId, state.configurationId, rowId, changeDescription);
           } else {
-            return configurationRowsActions.disable(state.componentId, state.configurationId, rowId);
+            const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.rows.get(rowId).get('name') + ' disabled';
+            return configurationRowsActions.disable(state.componentId, state.configurationId, rowId, changeDescription);
           }
         }}
         rowEnableDisablePending={function(rowId) {
@@ -73,7 +77,8 @@ export default React.createClass({
         }}
         rowLinkTo={this.state.componentId + '-row'}
         onOrder={function(rowIds) {
-          return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds);
+          const changeDescription = settings.getIn(['row', 'name', 'plural']) + ' order changed';
+          return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds, changeDescription);
         }}
         orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).has('order-rows')}
         header={header}
@@ -85,6 +90,7 @@ export default React.createClass({
   },
 
   render() {
+    const settings = this.state.settings;
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -121,6 +127,9 @@ export default React.createClass({
                 onRowCreated={function() { return; }}
                 emptyConfig={function() { return {};}}
                 type="link"
+                createChangeDescription={function(name) {
+                  return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
+                }}
               />
             </li>
             <li>

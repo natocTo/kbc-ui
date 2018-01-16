@@ -34,7 +34,7 @@ const storeEncodedConfigurationRow = function(componentId, configurationId, rowI
 };
 
 module.exports = {
-  create: function(componentId, configurationId, name, description, config) {
+  create: function(componentId, configurationId, name, description, config, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START,
       componentId: componentId,
@@ -45,8 +45,7 @@ module.exports = {
       description: description,
       configuration: config
     };
-    const changeDescription = 'Row ' + name + ' added';
-    return InstalledComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription)
+    return InstalledComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription ? changeDescription : 'Row ' + name + ' added')
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         return Dispatcher.handleViewAction({
@@ -66,7 +65,7 @@ module.exports = {
       });
   },
 
-  delete: function(componentId, configurationId, rowId, transition) {
+  delete: function(componentId, configurationId, rowId, transition, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_DELETE_START,
       componentId: componentId,
@@ -74,7 +73,6 @@ module.exports = {
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' deleted';
     if (transition) {
       const transitionParams = {
         component: componentId,
@@ -83,7 +81,7 @@ module.exports = {
       RoutesStore.getRouter().transitionTo(componentId, transitionParams);
     }
 
-    return InstalledComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
+    return InstalledComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' deleted'))
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
@@ -93,7 +91,7 @@ module.exports = {
           rowId: rowId
         });
         return ApplicationActionCreators.sendNotification({
-          message: configurationRowDeleted(row)
+          message: configurationRowDeleted(row, changeDescription + '.')
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({
@@ -107,7 +105,7 @@ module.exports = {
       });
   },
 
-  disable: function(componentId, configurationId, rowId) {
+  disable: function(componentId, configurationId, rowId, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_DISABLE_START,
       componentId: componentId,
@@ -115,8 +113,7 @@ module.exports = {
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' disabled';
-    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 1}, changeDescription)
+    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 1}, changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' disabled'))
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
@@ -137,7 +134,7 @@ module.exports = {
       });
   },
 
-  enable: function(componentId, configurationId, rowId) {
+  enable: function(componentId, configurationId, rowId, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_ENABLE_START,
       componentId: componentId,
@@ -145,8 +142,7 @@ module.exports = {
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' enabled';
-    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 0}, changeDescription)
+    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, {isDisabled: 0}, changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' enabled'))
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
@@ -186,20 +182,19 @@ module.exports = {
     });
   },
 
-  saveParameters: function(componentId, configurationId, rowId) {
+  saveParameters: function(componentId, configurationId, rowId, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
     });
-    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited manually';
+    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId, changeDescription);
     let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
     let parameters = ConfigurationRowsStore.getEditingParametersString(componentId, configurationId, rowId);
     configuration = configuration.set('parameters', Immutable.fromJS(JSON.parse(parameters)));
 
-    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription)
+    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited manually'))
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
@@ -240,7 +235,7 @@ module.exports = {
     });
   },
 
-  saveProcessors: function(componentId, configurationId, rowId) {
+  saveProcessors: function(componentId, configurationId, rowId, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_START,
       componentId: componentId,
@@ -248,11 +243,10 @@ module.exports = {
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' processors edited manually';
     let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
     let processors = ConfigurationRowsStore.getEditingProcessorsString(componentId, configurationId, rowId);
     configuration = configuration.set('processors', Immutable.fromJS(JSON.parse(processors)));
-    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription)
+    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' processors edited manually'))
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
@@ -293,7 +287,7 @@ module.exports = {
     });
   },
 
-  saveConfiguration: function(componentId, configurationId, rowId, createFn, parseFn) {
+  saveConfiguration: function(componentId, configurationId, rowId, createFn, parseFn, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_START,
       componentId: componentId,
@@ -301,9 +295,8 @@ module.exports = {
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const changeDescription = 'Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited';
     const configuration = createFn(ConfigurationRowsStore.getEditingConfiguration(componentId, configurationId, rowId, parseFn));
-    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription)
+    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited'))
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
