@@ -9,8 +9,10 @@ export const storeMixins = [InstalledComponentStore];
 export default function(configId) {
   const localState = () => InstalledComponentStore.getLocalState(COMPONENT_ID, configId) || Map();
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId) || Map();
-  const dirtyParameters = localState().get('dirtyParameters', configData.get('parameters'));
+  const dirtyParameters = localState().get('dirtyParameters', configData.get('parameters')) || Map();
+  const isSaving = InstalledComponentStore.isSavingConfigData(COMPONENT_ID, configId);
   return {
+    isSaving: isSaving,
     configData: configData,
     requestedEmail: localState().get('requestedEmail'),
     dirtyParameters: dirtyParameters,

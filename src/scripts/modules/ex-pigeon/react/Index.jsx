@@ -1,7 +1,6 @@
 import React from 'react';
 
 import storeProvisioning, {storeMixins} from '../storeProvisioning';
-import ComponentStore from '../../components/stores/ComponentsStore';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
@@ -29,14 +28,11 @@ export default React.createClass({
     const configId = RoutesStore.getCurrentRouteParam('config');
     const store = storeProvisioning(configId);
     const actions = actionsProvisioning(configId);
-    const component = ComponentStore.getComponent(COMPONENT_ID);
 
     return {
       configId: configId,
       store: store,
       actions: actions,
-      component: component,
-      isSaving: InstalledComponentStore.isSavingConfigData(COMPONENT_ID, configId),
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
       localState: store.getLocalState(),
       dirtyParameters: store.dirtyParameters
@@ -150,8 +146,8 @@ export default React.createClass({
       <div className="text-right">
         <SaveButtons
           isSaving={this.state.localState.get('isSaving', false)}
-          isChanged={!this.state.dirtyParameters.equals(this.state.store.configData.get('parameters'))}
-          onSave={this.state.actions.editSave}
+          isChanged={!(this.state.dirtyParameters.equals(this.state.store.configData.get('parameters')))}
+          onSave={this.state.actions.saveDirtyParameters}
           onReset={this.state.actions.resetDirtyParameters}
             />
       </div>

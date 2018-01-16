@@ -44,6 +44,14 @@ export default function(configId) {
     updateLocalState('dirtyParameters', defaultParameters);
   }
 
+  function saveDirtyParameters() {
+    updateLocalState('isSaving', true);
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, store.dirtyParameters).then(() => {
+      updateLocalState('isSaving', false);
+      resetDirtyParameters();
+    });
+  }
+
   return {
     updateLocalState: updateLocalState,
     prepareLocalState: prepareLocalState,
@@ -53,6 +61,7 @@ export default function(configId) {
       });
     },
     updateDirtyParameters,
-    resetDirtyParameters
+    resetDirtyParameters,
+    saveDirtyParameters
   };
 }
