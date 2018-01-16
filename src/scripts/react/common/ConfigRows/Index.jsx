@@ -47,16 +47,9 @@ export default React.createClass({
           <h3>TODO (Empty state)</h3>
         </div>);
     } else {
-      let header, columns, filter;
-      if (this.state.settings.hasIn(['list', 'header'])) {
-        header = this.state.settings.getIn(['list', 'header']).toJS();
-      }
-      if (this.state.settings.hasIn(['list', 'columns'])) {
-        columns = this.state.settings.getIn(['list', 'columns']).toJS();
-      }
-      if (this.state.settings.hasIn(['list', 'filter'])) {
-        filter = this.state.settings.getIn(['list', 'filter']);
-      }
+      const header = this.state.settings.getIn(['row', 'header']).toJS();
+      const columns = this.state.settings.getIn(['row', 'columns']).toJS();
+      const filter = this.state.settings.getIn(['row', 'searchFilter']);
       return (<ConfigurationRowsTable
         key="rows"
         rows={this.state.rows.toList()}
@@ -86,7 +79,7 @@ export default React.createClass({
         header={header}
         columns={columns}
         filter={filter}
-        isCompletedFn={state.settings.getIn(['adapters', 'row', 'isCompleted'])}
+        isCompletedFn={state.settings.getIn(['row', 'detail', 'isCompleted'])}
       />);
     }
   },
@@ -122,7 +115,7 @@ export default React.createClass({
             </li>
             <li>
               <CreateConfigurationRowButton
-                label={'Add ' + this.state.settings.getIn(['rowItem', 'singular'])}
+                label={'Add ' + this.state.settings.getIn(['row', 'name', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}
                 onRowCreated={function() { return; }}

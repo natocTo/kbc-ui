@@ -31,7 +31,7 @@ export default React.createClass({
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const rowId = RoutesStore.getCurrentRouteParam('row');
     const row = Store.get(settings.get('componentId'), configurationId, rowId);
-    const isCompletedFn = settings.getIn(['adapters', 'row', 'isCompleted']);
+    const isCompletedFn = settings.getIn(['row', 'detail', 'isCompleted']);
     return {
       componentId: settings.get('componentId'),
       settings: settings,
@@ -51,22 +51,22 @@ export default React.createClass({
 
       isParsableConfiguration: isParsableConfiguration(
         Store.getConfiguration(settings.get('componentId'), configurationId, rowId),
-        settings.getIn(['adapters', 'row', 'parse']),
-        settings.getIn(['adapters', 'row', 'create'])
+        settings.getIn(['row', 'detail', 'onLoad']),
+        settings.getIn(['row', 'detail', 'onSave'])
       ),
       isJsonEditorOpen: Store.hasJsonEditor(
         settings.get('componentId'),
         configurationId,
         rowId,
-        settings.getIn(['adapters', 'row', 'parse']),
-        settings.getIn(['adapters', 'row', 'create'])
+        settings.getIn(['row', 'detail', 'onLoad']),
+        settings.getIn(['row', 'detail', 'onSave'])
       ),
 
       configuration: Store.getEditingConfiguration(
         settings.get('componentId'),
         configurationId,
         rowId,
-        settings.getIn(['adapters', 'row', 'parse'])
+        settings.getIn(['row', 'detail', 'onLoad'])
       ),
       isSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-configuration'),
       isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId, rowId),
@@ -189,8 +189,8 @@ export default React.createClass({
               state.componentId,
               state.configurationId,
               state.rowId,
-              state.settings.getIn(['adapters', 'row', 'create']),
-              state.settings.getIn(['adapters', 'row', 'parse'])
+              state.settings.getIn(['row', 'detail', 'onSave']),
+              state.settings.getIn(['row', 'detail', 'onLoad'])
             );
           }}
           onReset={function() {
@@ -255,7 +255,7 @@ export default React.createClass({
   renderFormFields() {
     const state = this.state;
     const configuration = this.state.configuration;
-    const Configuration = this.state.settings.getIn(['components', 'row']);
+    const Configuration = this.state.settings.getIn(['row', 'detail', 'render']);
     return (<Configuration
       onChange={function(diff) {
         Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)));

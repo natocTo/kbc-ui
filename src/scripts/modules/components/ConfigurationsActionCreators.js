@@ -47,16 +47,15 @@ module.exports = {
     });
   },
 
-  saveConfiguration: function(componentId, configurationId, createFn, parseFn) {
+  saveConfiguration: function(componentId, configurationId, createFn, parseFn, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_START,
       componentId: componentId,
       configurationId: configurationId
     });
-    const changeDescription = 'Configuration edited';
     const configuration = createFn(ConfigurationsStore.getEditingConfiguration(componentId, configurationId, parseFn));
 
-    return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription)
+    return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({

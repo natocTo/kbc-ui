@@ -23,8 +23,8 @@ export default React.createClass({
     const componentId = settings.get('componentId');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const component = ComponentStore.getComponent(componentId);
-    const parseFn = settings.getIn(['adapters', 'credentials', 'parse']);
-    const isCompletedFn = settings.getIn(['adapters', 'credentials', 'isCompleted']);
+    const parseFn = settings.getIn(['credentials', 'detail', 'onLoad']);
+    const isCompletedFn = settings.getIn(['credentials', 'detail', 'isCompleted']);
     const isChanged = Store.isEditingConfiguration(componentId, configurationId);
     return {
       componentId: settings.get('componentId'),
@@ -49,8 +49,9 @@ export default React.createClass({
             return Actions.saveConfiguration(
               state.componentId,
               state.configurationId,
-              state.settings.getIn(['adapters', 'credentials', 'create']),
-              state.settings.getIn(['adapters', 'credentials', 'parse'])
+              state.settings.getIn(['credentials', 'detail', 'onSave']),
+              state.settings.getIn(['credentials', 'detail', 'onLoad']),
+              state.settings.getIn(['credentials', 'detail', 'title']) + ' edited'
             );
           }}
           onReset={function() {
@@ -64,7 +65,7 @@ export default React.createClass({
   renderCredentials() {
     const state = this.state;
     const configuration = this.state.configuration;
-    const Credentials = this.state.settings.getIn(['components', 'credentials']);
+    const Credentials = this.state.settings.getIn(['credentials', 'detail', 'render']);
     return (<Credentials
       onChange={function(diff) {
         Actions.updateConfiguration(state.componentId, state.configurationId, Immutable.fromJS(configuration.mergeDeep(Immutable.fromJS(diff))));
@@ -101,7 +102,7 @@ export default React.createClass({
   },
 
   render() {
-    if (!this.state.settings.get('hasCredentials')) {
+    if (!this.state.settings.has('credentials')) {
       return null;
     }
     const component = this;
@@ -117,7 +118,7 @@ export default React.createClass({
         }}
       >
         <Panel
-          header={this.accordionHeader(this.state.settings.get('credentialsTitle'), component.state.credentialsOpen)}
+          header={this.accordionHeader(this.state.settings.getIn(['credentials', 'detail', 'title']), component.state.credentialsOpen)}
           eventKey="credentials"
         >
           {this.renderButtons()}
