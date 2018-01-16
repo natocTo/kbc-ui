@@ -27,6 +27,7 @@ import Quickstart from '../../components/Quickstart';
 import LastUpdateInfo from '../../../../react/common/LastUpdateInfo';
 
 import StorageTablesStore from '../../../components/stores/StorageTablesStore';
+import StorageTables from '../../../components/StorageActionCreators';
 
 // @FIXME mixin from storeProvisioning
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
@@ -74,8 +75,7 @@ export default function(componentId, driver, isProvisioning) {
     },
 
     handleRefreshSapi() {
-      // StorageActions.loadTablesForce(true)
-      StorageTablesStore.getAll();
+      StorageTables.loadTablesForce(true);
     },
 
     handleGenerate() {
@@ -311,11 +311,12 @@ export default function(componentId, driver, isProvisioning) {
               componentId={componentId}
               configId={this.state.configId}
               isSaving={this.state.isSavingQuickstart}
-              isLoadingSourceTables={false}
+              isLoadingSourceTables={StorageTablesStore.getIsLoading()}
               sourceTables={this.state.sapiTables}
               quickstartValues={this.state.quickstartSelected}
               onChange={WrDbActions.quickstarSelect}
               onSubmit={WrDbActions.quickstartSave}
+              onRefresh={this.handleRefreshSapi}
             />
           </div>
         </div>

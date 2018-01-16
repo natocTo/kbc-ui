@@ -17,6 +17,7 @@ export default React.createClass({
     sourceTables: React.PropTypes.object,
     quickstartValues: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
+    onRefresh: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func.isRequired
   },
 
@@ -113,10 +114,9 @@ export default React.createClass({
     return (
       <div className="row text-center">
         <TableLoader
-          componentId={this.props.componentId}
-          configId={this.props.configId}
           isLoadingSourceTables={this.props.isLoadingSourceTables}
           tableSelectorElement={tableSelector}
+          onRefresh={this.props.onRefresh}
         />
       </div>
     );
