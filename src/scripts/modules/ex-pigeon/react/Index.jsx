@@ -87,7 +87,6 @@ export default React.createClass({
                     componentId={COMPONENT_ID}
                 />
             </div>
-
         </div>
     );
   },
@@ -96,7 +95,7 @@ export default React.createClass({
       <div className="text-right">
         <SaveButtons
           isSaving={this.state.localState.get('isSaving', false)}
-          isChanged={this.state.dirtyParameters.equals(this.state.store.configData.get('parameters'))}
+          isChanged={!this.state.dirtyParameters.equals(this.state.store.configData.get('parameters'))}
           onSave={this.state.actions.editSave}
           onReset={this.state.actions.editReset}
             />
