@@ -3,6 +3,8 @@ import componentsActions from '../components/InstalledComponentsActionCreators';
 import _ from 'underscore';
 import storeProvisioning from './storeProvisioning';
 
+
+// utils
 const COMPONENT_ID = 'keboola.ex-pigeon';
 
 export default function(configId) {
@@ -31,15 +33,18 @@ export default function(configId) {
       prepareLocalState: (newSubPath) => prepareLocalState([].concat(path).concat(newSubPath))
     };
   }
-
+  function updateDirtyParameters(field, value) {
+    const newDirtyParameters =  store.dirtyParameters.set(field, value);
+    updateLocalState('dirtyParameters', newDirtyParameters);
+  }
   return {
     updateLocalState: updateLocalState,
     prepareLocalState: prepareLocalState,
     requestEmail() {
-      return callDockerAction(COMPONENT_ID, 'get', '{"configData": {"parameters": {"config": "test"}}}').then((result) => {
+      return callDockerAction(COMPONENT_ID, 'get',  `{"configData": {"parameters": {"config": "${configId}"}}}`).then((result) => {
         updateLocalState('requestedEmail', result.email);
-        updateLocalState('isLoading', false);
       });
-    }
+    },
+    updateDirtyParameters
   };
 }
