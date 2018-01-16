@@ -48,7 +48,7 @@ export default function(configId) {
     updateLocalState('isSaving', true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, store.dirtyParameters).then(() => {
       updateLocalState('isSaving', false);
-      resetDirtyParameters();
+      // resetDirtyParameters();
     });
   }
 

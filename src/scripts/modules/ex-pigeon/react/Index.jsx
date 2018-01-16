@@ -148,7 +148,7 @@ export default React.createClass({
       <div className="text-right">
         <SaveButtons
           isSaving={this.state.localState.get('isSaving', false)}
-          isChanged={!(this.state.dirtyParameters.equals(this.state.store.configData.get('parameters')))}
+          isChanged={this.isConfigurationChanged()}
           onSave={this.state.actions.saveDirtyParameters}
           onReset={this.state.actions.resetDirtyParameters}
             />
@@ -157,6 +157,9 @@ export default React.createClass({
   },
   updateDirtyState(event, parameter) {
     this.state.actions.updateDirtyParameters(parameter, event.target.value);
+  },
+  isConfigurationChanged() {
+    return !(this.state.dirtyParameters.equals(this.state.store.configData.get('parameters')));
   }
 
 });
