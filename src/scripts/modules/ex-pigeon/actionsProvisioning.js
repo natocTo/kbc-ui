@@ -33,10 +33,17 @@ export default function(configId) {
       prepareLocalState: (newSubPath) => prepareLocalState([].concat(path).concat(newSubPath))
     };
   }
+
   function updateDirtyParameters(field, value) {
     const newDirtyParameters =  store.dirtyParameters.set(field, value);
     updateLocalState('dirtyParameters', newDirtyParameters);
   }
+
+  function resetDirtyParameters() {
+    const defaultParameters =  store.configData.get('parameters');
+    updateLocalState('dirtyParameters', defaultParameters);
+  }
+
   return {
     updateLocalState: updateLocalState,
     prepareLocalState: prepareLocalState,
@@ -45,6 +52,7 @@ export default function(configId) {
         updateLocalState('requestedEmail', result.email);
       });
     },
-    updateDirtyParameters
+    updateDirtyParameters,
+    resetDirtyParameters
   };
 }
