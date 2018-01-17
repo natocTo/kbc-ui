@@ -22,6 +22,5 @@ export default function(configId) {
       }
       return localState().getIn([].concat(path), Map());
     }
-
   };
 }
