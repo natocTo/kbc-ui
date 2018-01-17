@@ -111,7 +111,7 @@ export default React.createClass({
               type="text"
               placeholder="Field delimeter used in CSV files"
               value={this.state.dirtyParameters.get('delimiter')}
-              onChange={(e) => this.updateDirtyState(e, 'delimiter')}/>
+              onChange={(e) => this.state.actions.updateDirtyParameters('delimiter', e.target.value)}/>
         </Col>
       </FormGroup>
       <FormGroup>
@@ -123,7 +123,7 @@ export default React.createClass({
               type="text"
               placeholder="Field enclosure used in CSV files"
               value={this.state.dirtyParameters.get('enclosure')}
-              onChange={(e) => this.updateDirtyState(e, 'enclosure')}/>
+              onChange={(e) => this.state.actions.updateDirtyParameters('enclosure', e.target.value)}/>
         </Col>
       </FormGroup>
       <FormGroup>
@@ -134,7 +134,7 @@ export default React.createClass({
           <Checkbox
               value={this.state.dirtyParameters.get('incremental')}
               checked={this.state.dirtyParameters.get('incremental')}
-              onChange={(e) => this.updateDirtyState(e, 'incremental')}>
+              onChange={(e) => this.state.actions.updateDirtyParameters('incremental', e.target.value)}>
               Incremental load
           </Checkbox>
         </Col>
@@ -149,13 +149,15 @@ export default React.createClass({
         <SaveButtons
           isSaving={this.state.localState.get('isSaving', false)}
           isChanged={this.isConfigurationChanged()}
-          onSave={this.state.actions.saveDirtyParameters}
+          onSave={this.state.actions.saveConfigData}
           onReset={this.state.actions.resetDirtyParameters}
             />
       </div>
     );
   },
   updateDirtyState(event, parameter) {
+    console.log(parameter, 'parameter');
+    console.log(event.target.value, 'event.target.value');
     this.state.actions.updateDirtyParameters(parameter, event.target.value);
   },
   isConfigurationChanged() {

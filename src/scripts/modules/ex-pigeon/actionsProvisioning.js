@@ -2,7 +2,7 @@ import callDockerAction from '../components/DockerActionsApi';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import _ from 'underscore';
 import storeProvisioning from './storeProvisioning';
-
+import {Map} from 'immutable';
 
 // utils
 const COMPONENT_ID = 'keboola.ex-pigeon';
@@ -44,11 +44,13 @@ export default function(configId) {
     updateLocalState('dirtyParameters', defaultParameters);
   }
 
-  function saveDirtyParameters() {
+  function saveConfigData() {
     updateLocalState('isSaving', true);
-    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, store.dirtyParameters).then(() => {
+    const dataToSave = new Map([['parameters', store.dirtyParameters]]);
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave).then(() => {
       updateLocalState('isSaving', false);
-      // resetDirtyParameters();
+      store.configData.set('parameters', dataToSave);
+      resetDirtyParameters();
     });
   }
 
@@ -60,8 +62,8 @@ export default function(configId) {
         updateLocalState('requestedEmail', result.email);
       });
     },
-    updateDirtyParameters,
+    updateDirtyParameters: updateDirtyParameters,
     resetDirtyParameters,
-    saveDirtyParameters
+    saveConfigData: saveConfigData
   };
 }
