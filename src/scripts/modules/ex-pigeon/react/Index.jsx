@@ -87,7 +87,6 @@ export default React.createClass({
     );
   },
   renderConfigurationForm() {
-    console.log('this.state Index', this.state);
     const formInstance = (
     <Form horizontal>
       <FormGroup>
@@ -133,9 +132,8 @@ export default React.createClass({
         </Col>
         <Col sm={8}>
           <Checkbox
-              value={this.state.dirtyParameters.get('incremental')}
               checked={this.state.dirtyParameters.get('incremental')}
-              onChange={(e) => this.state.actions.updateDirtyParameters('incremental', e.target.value)}>
+              onChange={(e) => this.state.actions.updateDirtyParameters('incremental', e.target.checked)}>
               Incremental load
           </Checkbox>
         </Col>
@@ -156,13 +154,7 @@ export default React.createClass({
       </div>
     );
   },
-  updateDirtyState(event, parameter) {
-    console.log(parameter, 'parameter');
-    console.log(event.target.value, 'event.target.value');
-    this.state.actions.updateDirtyParameters(parameter, event.target.value);
-  },
   isConfigurationChanged() {
     return !(this.state.dirtyParameters.equals(this.state.store.configData.get('parameters')));
   }
-
 });
