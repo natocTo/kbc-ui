@@ -16,6 +16,8 @@ import LatestVersions from '../../components/react/components/SidebarVersionsWra
 import RunComponentButton from '../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
 import SaveButtons from '../../../react/common/SaveButtons';
+import LatestJobs from '../../components/react/components/SidebarJobs';
+
 
 import {FormGroup, FormControl, Form, ControlLabel, Col, Checkbox, InputGroup, Button} from 'react-bootstrap';
 import ClipboardButton from '../../../react/common/Clipboard';
@@ -79,8 +81,11 @@ export default React.createClass({
                />
              </li>
             </ul>
-              <LatestVersions
+              <LatestJobs
+                jobs={this.state.latestJobs}
                 limit={3}
+                />
+              <LatestVersions
                 componentId={COMPONENT_ID}
               />
           </div>
