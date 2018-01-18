@@ -28,8 +28,7 @@ export default function(configId) {
   function saveConfigData() {
     const dataToSave = new Map([['parameters', store.dirtyParameters]]);
     updateLocalState('isSaving', true);
-    updateLocalState('configData', dataToSave);
-    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave).then(() => {
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave, 'update parameters').then(() => {
       updateLocalState('isSaving', false);
     });
   }

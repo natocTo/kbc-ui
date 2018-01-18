@@ -18,7 +18,6 @@ import DeleteConfigurationButton from '../../components/react/components/DeleteC
 import SaveButtons from '../../../react/common/SaveButtons';
 import LatestJobs from '../../components/react/components/SidebarJobs';
 
-
 import {FormGroup, FormControl, Form, ControlLabel, Col, Checkbox, InputGroup, Button} from 'react-bootstrap';
 import ClipboardButton from '../../../react/common/Clipboard';
 
@@ -163,8 +162,7 @@ export default React.createClass({
           isChanged={this.isConfigurationChanged()}
           onSave={this.state.actions.saveConfigData}
           onReset={this.state.actions.resetDirtyParameters}
-            />
-
+          />
       </div>
     );
   },
