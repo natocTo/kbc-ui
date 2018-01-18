@@ -1,6 +1,5 @@
 import callDockerAction from '../components/DockerActionsApi';
 import componentsActions from '../components/InstalledComponentsActionCreators';
-import _ from 'underscore';
 import storeProvisioning from './storeProvisioning';
 import {Map} from 'immutable';
 
@@ -14,24 +13,6 @@ export default function(configId) {
     const ls = store.getLocalState();
     const newLocalState = ls.setIn([].concat(path), data);
     componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
-  }
-
-  // returns localState for @path and function to update local state
-  // on @path+@subPath
-  function prepareLocalState(path) {
-    const ls = store.getLocalState(path);
-    const updateLocalSubstateFn = (subPath, newData)  =>  {
-      if (_.isEmpty(subPath)) {
-        return updateLocalState([].concat(path), newData);
-      } else {
-        return updateLocalState([].concat(path).concat(subPath), newData);
-      }
-    };
-    return {
-      localState: ls,
-      updateLocalState: updateLocalSubstateFn,
-      prepareLocalState: (newSubPath) => prepareLocalState([].concat(path).concat(newSubPath))
-    };
   }
 
   function updateDirtyParameters(field, value) {
@@ -55,7 +36,6 @@ export default function(configId) {
 
   return {
     updateLocalState: updateLocalState,
-    prepareLocalState: prepareLocalState,
     requestEmail() {
       return callDockerAction(COMPONENT_ID, 'get',  `{"configData": {"parameters": {"config": "${configId}"}}}`).then((result) => {
         updateLocalState('requestedEmail', result.email);
