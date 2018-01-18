@@ -72,6 +72,8 @@ export default React.createClass({
                  component={COMPONENT_ID}
                  mode="link"
                  runParams={() => ({config: this.state.configId})}
+                 disabled={!!this.invalidToRun()}
+                 disabledReason={this.invalidToRun()}
                >
                  <span>You are about to run an extraction.</span>
                </RunComponentButton>
@@ -105,6 +107,12 @@ export default React.createClass({
           />
       </div>
     );
+  },
+  invalidToRun() {
+    if (this.state.dirtyParameters.get('enclosure') +  this.state.dirtyParameters.get('delimiter') === '') {
+      return 'Configuration has missing values';
+    }
+    return false;
   },
   isConfigurationChanged() {
     return !(this.state.dirtyParameters.equals(this.state.store.configData.get('parameters')));
