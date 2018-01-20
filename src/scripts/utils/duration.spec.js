@@ -12,8 +12,8 @@ describe('duration', function() {
     it('59 seconds should return "59 sec"', function() {
       assert.equal('59 sec', duration(59));
     });
-    it('60 seconds should return "1 min 0 sec"', function() {
-      assert.equal('1 min 0 sec', duration(60));
+    it('60 seconds should return "1 min"', function() {
+      assert.equal('1 min', duration(60));
     });
     it('61 seconds should return "1 min 1 sec"', function() {
       assert.equal('1 min 1 sec', duration(61));
@@ -21,14 +21,14 @@ describe('duration', function() {
     it('3599 seconds should return "59 min 59 sec"', function() {
       assert.equal('59 min 59 sec', duration(3599));
     });
-    it('3600 seconds should return "1 hr 0 sec"', function() {
-      assert.equal('1 hr 0 sec', duration(3600));
+    it('3600 seconds should return "1 hr"', function() {
+      assert.equal('1 hr', duration(3600));
     });
     it('3601 seconds should return "1 hr 1 sec"', function() {
       assert.equal('1 hr 1 sec', duration(3601));
     });
-    it('3660 seconds should return "1 hr 1 min 0 sec"', function() {
-      assert.equal('1 hr 1 min 0 sec', duration(3660));
+    it('3660 seconds should return "1 hr 1 min"', function() {
+      assert.equal('1 hr 1 min', duration(3660));
     });
     it('3661 seconds should return "1 hr 1 min 1 sec"', function() {
       assert.equal('1 hr 1 min 1 sec', duration(3661));
@@ -51,8 +51,8 @@ describe('duration', function() {
     it('59 seconds should return "59 sec"', function() {
       assert.equal('59 sec', duration(59, true));
     });
-    it('60 seconds should return "1 min 0 sec"', function() {
-      assert.equal('1 min 0 sec', duration(60, true));
+    it('60 seconds should return "1 min"', function() {
+      assert.equal('1 min', duration(60, true));
     });
     it('61 seconds should return "1 min 1 sec"', function() {
       assert.equal('1 min 1 sec', duration(61, true));
