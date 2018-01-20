@@ -6,6 +6,9 @@ module.exports = function(duration, round) {
   if (days > 0) {
     return 'more than 24 hrs';
   } else {
+    if (duration === 0) {
+      return  '0 sec';
+    }
     let result = [];
     if (hours === 1) {
       result.push(hours + ' hr');
