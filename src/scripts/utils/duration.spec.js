@@ -11,7 +11,7 @@ describe('duration', function() {
     });
     it('should return "59 sec"', function() {
       assert.equal('59 sec', duration(59));
-    });
+    }); 
     it('should return "1 min 0 sec"', function() {
       assert.equal('1 min 0 sec', duration(60));
     });
