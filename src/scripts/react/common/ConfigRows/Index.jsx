@@ -21,7 +21,7 @@ import DeleteConfigurationButton from '../../../modules/components/react/compone
 import LatestVersions from '../../../modules/components/react/components/SidebarVersionsWrapper';
 import LatestJobs from '../../../modules/components/react/components/SidebarJobs';
 import CreateConfigurationRowButton from '../../../modules/components/react/components/CreateConfigurationRowButton';
-import ConfigurationRowsTable from '../../../modules/components/react/components/ConfigurationRowsTable';
+import ConfigurationRows from '../../../modules/components/react/components/ConfigurationRows';
 import Credentials from './Credentials';
 
 export default React.createClass({
@@ -51,7 +51,7 @@ export default React.createClass({
       const header = this.state.settings.getIn(['row', 'header']).toJS();
       const columns = this.state.settings.getIn(['row', 'columns']).toJS();
       const filter = this.state.settings.getIn(['row', 'searchFilter']);
-      return (<ConfigurationRowsTable
+      return (<ConfigurationRows
         key="rows"
         rows={this.state.rows.toList()}
         componentId={this.state.componentId}

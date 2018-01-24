@@ -26,24 +26,23 @@ const TableRow = React.createClass({
     disabledRun: React.PropTypes.bool.isRequired
   },
 
-  renderDragSource() {
+  renderDragHandle() {
     if (this.props.disabledMove) {
       return (<span className="fa fa-bars fa-fw" style={{cursor: 'not-allowed'}} />);
     }
-    return ((<span className="fa fa-bars fa-fw" style={{cursor: 'move'}} />));
+    return ((<span className="fa fa-bars fa-fw drag-handle" style={{cursor: 'move'}} />));
   },
 
   render() {
-    let className = 'tr';
     const props = this.props;
     return (
       <Link
         to={this.props.linkTo}
         params={{config: this.props.configurationId, row: this.props.row.get('id')}}
-        className={className}
+        className="tr"
       >
-        <div className="td" key="dnd-handle">
-          {this.renderDragSource()}
+        <div className="td" key="handle">
+          {this.renderDragHandle()}
         </div>
         <div className="td" key="row-number">
           {this.props.rowNumber}
