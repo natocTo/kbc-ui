@@ -2,6 +2,7 @@ import React from 'react';
 import Index from '../react/common/ConfigRows/Index';
 import Row from '../react/common/ConfigRows/Row';
 import Sortable from '../react/common/ConfigRows/Sortable';
+import Sortable2 from '../react/common/ConfigRows/Sortable2';
 import installedComponentsActions from '../modules/components/InstalledComponentsActionCreators';
 import versionsActions from '../modules/components/VersionsActionCreators';
 import jobsActions from '../modules/jobs/ActionCreators';
@@ -75,6 +76,13 @@ export default function(settings) {
       path: 'sortable',
       title: 'Sortable',
       defaultRouteHandler: Sortable
+    },
+    {
+      name: settingsWithDefaults.componentId + '-sortable2',
+      settings: settingsWithDefaults,
+      path: 'sortable2',
+      title: 'Sortable2',
+      defaultRouteHandler: Sortable2
     },
     {
       name: settingsWithDefaults.componentId + '-row',
