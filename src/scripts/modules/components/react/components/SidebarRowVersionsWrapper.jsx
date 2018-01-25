@@ -4,8 +4,8 @@ import SidebarVesions from './SidebarVersions';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentStore from '../../stores/InstalledComponentsStore';
 import ComponentStore from '../../stores/ComponentsStore';
-import VersionsStore from '../../stores/VersionsStore';
-import VersionsActionCreators from '../../VersionsActionCreators';
+import VersionsStore from '../../stores/RowVersionsStore';
+import VersionsActionCreators from '../../RowVersionsActionCreators';
 
 export default React.createClass({
   displayName: 'LatestRowVersionsWrapper',
@@ -21,23 +21,21 @@ export default React.createClass({
     };
 
     return {
-      versions: VersionsStore.getVersions(this.props.componentId, this.props.configId),
-      componentId: this.props.componentId,
-      configId: this.props.configId,
+      versions: VersionsStore.getVersions(this.props.componentId, this.props.configId, this.props.rowId),
       isLoading: false,
       versionsLinkTo: versionsLinkTo,
       versionsLinkParams: versionsLinkParams,
-      versionsConfigs: VersionsStore.getVersionsConfigs(this.props.componentId, this.props.configId),
-      pendingMultiLoad: VersionsStore.getPendingMultiLoad(this.props.componentId, this.props.configId),
-      isPending: VersionsStore.isPendingConfig(this.props.componentId, this.props.configId)
+      versionsConfigs: VersionsStore.getVersionsConfigs(this.props.componentId, this.props.configId, this.props.rowId),
+      pendingMultiLoad: VersionsStore.getPendingMultiLoad(this.props.componentId, this.props.configId, this.props.rowId),
+      isPending: VersionsStore.isPendingConfig(this.props.componentId, this.props.configId, this.props.rowId)
     };
   },
 
   propTypes: {
     limit: React.PropTypes.number,
-    componentId: React.PropTypes.string,
-    configId: React.PropTypes.string,
-    rowId: React.PropTypes.string
+    componentId: React.PropTypes.string.isRequired,
+    configId: React.PropTypes.string.isRequired,
+    rowId: React.PropTypes.string.isRequired
   },
 
   getDefaultProps: function() {
@@ -47,15 +45,13 @@ export default React.createClass({
   },
 
   render: function() {
-    if (!this.state.versionsLinkTo) {
-      return null;
-    }
     return (
       <SidebarVesions
         versions={this.state.versions}
         isLoading={this.state.isLoading}
-        configId={this.state.configId}
-        componentId={this.state.componentId}
+        configId={this.props.configId}
+        componentId={this.props.componentId}
+        rowId={this.props.rowId}
         versionsLinkTo={this.state.versionsLinkTo}
         versionsLinkParams={this.state.versionsLinkParams}
         limit={this.props.limit}
@@ -69,8 +65,9 @@ export default React.createClass({
 
   prepareVersionsDiffData(version1, version2) {
     const configId = this.props.configId;
+    const rowId = this.props.rowId;
     return VersionsActionCreators.loadTwoComponentConfigVersions(
-      this.props.componentId, configId, version1.get('version'), version2.get('version'));
+      this.props.componentId, configId, rowId, version1.get('version'), version2.get('version'));
   }
 
 });

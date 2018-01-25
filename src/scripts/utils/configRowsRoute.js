@@ -4,6 +4,7 @@ import Row from '../react/common/ConfigRows/Row';
 import Versions from '../react/common/ConfigRows/Versions';
 import installedComponentsActions from '../modules/components/InstalledComponentsActionCreators';
 import versionsActions from '../modules/components/VersionsActionCreators';
+import rowVersionsActions from '../modules/components/RowVersionsActionCreators';
 import jobsActions from '../modules/jobs/ActionCreators';
 import InstalledComponentsStore from '../modules/components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../modules/components/stores/ConfigurationRowsStore';
@@ -79,6 +80,10 @@ export default function(settings) {
         const configurationRow = ConfigurationRowsStore.get(settingsWithDefaults.componentId, configId, rowId);
         return configurationRow.get('name') !== '' ? configurationRow.get('name') : 'Untitled ' + settingsWithDefaults.row.name.singular;
       },
+      requireData: [
+        (params) => rowVersionsActions.loadVersions(settingsWithDefaults.componentId, params.config, params.row)
+      ],
+
       defaultRouteHandler: Row,
       childRoutes: [
         {

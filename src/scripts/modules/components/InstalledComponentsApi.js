@@ -72,18 +72,40 @@ const installedComponentsApi = {
       return response.body;
     });
   },
+  getComponentConfigRowVersions: function(componentId, configId, rowId) {
+    const url = 'components/' + componentId + '/configs/' + configId + '/rows/' + rowId + '/versions';
+    return createRequest('GET', url).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getComponentConfigByVersion: function(componentId, configId, versionId) {
     const url = 'components/' + componentId + '/configs/' + configId + '/versions/' + versionId;
     return createRequest('GET', url).promise().then(function(response) {
       return response.body;
     });
   },
+  getComponentConfigRowByVersion: function(componentId, configId, rowId, versionId) {
+    const url = 'components/' + componentId + '/configs/' + configId + '/rows/' + rowId + '/versions/' + versionId;
+    return createRequest('GET', url).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   rollbackVersion: function(componentId, configId, version) {
     const url = 'components/' + componentId + '/configs/' + configId + '/versions/' + version + '/rollback';
     return createRequest('POST', url).promise().then(function(response) {
       return response.body;
     });
   },
+  rollbackRowVersion: function(componentId, configId, rowId, version) {
+    const url = 'components/' + componentId + '/configs/' + configId + '/rows/' + rowId + '/versions/' + version + '/rollback';
+    return createRequest('POST', url).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+
   createConfigCopy: function(componentId, configId, version, name) {
     var config, description;
     if (componentId === 'transformation') {
