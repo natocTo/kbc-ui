@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import Clipboard from '../../../../react/common/Clipboard';
 
-const TokenString = ({token}) => {
+const TokenString = ({token, children}) => {
   const tokenString = token.get('token');
   return (
     <pre>
@@ -9,12 +9,14 @@ const TokenString = ({token}) => {
         {tokenString}
       </div>
       <Clipboard text={tokenString} label="Copy token to clipboard"/>
+      {children}
     </pre>
   );
 };
 
 TokenString.propTypes = {
-  token: PropTypes.object.isRequired
+  token: PropTypes.object.isRequired,
+  children: PropTypes.any
 };
 
 
