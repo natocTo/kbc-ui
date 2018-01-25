@@ -30,13 +30,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      dragging: false
+      dragging: false,
+      sortableKeyPrefix: Math.random()
     };
   },
 
   componentDidMount() {
     const component = this;
     const sortableOptions = {
+      sort: true,
       disabled: this.props.disabledMove || this.props.orderPending,
       handle: '.drag-handle',
       forceFallback: true,
@@ -44,9 +46,23 @@ export default React.createClass({
       onStart: function() {
         component.setState({dragging: true});
       },
-      onEnd: function(e) {
+      onEnd: function() {
         component.setState({dragging: false});
-        component.props.onOrder(e.oldIndex, e.newIndex);
+      },
+      store: {
+        get: function() {
+          return component.props.rows.map(function(row) {
+            return row.get('id');
+          }).toJS();
+        },
+        set: function(sortable) {
+          component.props.onOrder(sortable.toArray());
+          // to avoid resorting after re-render
+          // https://github.com/RubaXa/Sortable/issues/844#issuecomment-219180426
+          component.setState({
+            sortableKeyPrefix: Math.random()
+          });
+        }
       }
     };
     Sortable.create(this.refs.list, sortableOptions);
@@ -64,6 +80,7 @@ export default React.createClass({
 
   renderTableRows() {
     const props = this.props;
+    const state = this.state;
     return this.props.rows.map(function(row, rowIndex) {
       return (
         <Row
@@ -71,7 +88,7 @@ export default React.createClass({
           row={row}
           componentId={props.componentId}
           configurationId={props.configurationId}
-          key={rowIndex}
+          key={state.sortableKeyPrefix + '_' + row.get('id')}
           rowNumber={rowIndex + 1}
           linkTo={props.rowLinkTo}
           isDeletePending={props.rowDeletePending(row.get('id'))}
@@ -87,7 +104,7 @@ export default React.createClass({
           orderPending={props.orderPending}
         />
       );
-    });
+    }).toList().toJS();
   },
 
   render() {

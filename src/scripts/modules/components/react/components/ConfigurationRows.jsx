@@ -51,7 +51,7 @@ export default React.createClass({
   getInitialState() {
     return {
       query: '',
-      rows: Immutable.OrderedSet()
+      rows: Immutable.List()
     };
   },
 
@@ -61,7 +61,7 @@ export default React.createClass({
       rows: nextProps.rows
         .filter(function(row) {
           return nextProps.filter(row, state.query);
-        })
+        }).toList()
     });
   },
 
@@ -70,20 +70,24 @@ export default React.createClass({
       query: query,
       rows: this.props.rows.filter(function(row) {
         return this.props.filter(row, query);
-      }, this)
+      }, this).toList()
     });
   },
 
-  onOrder(oldIndex, newIndex) {
-    const draggedRow = this.props.rows.get(oldIndex);
-    const newOrder = this.props.rows.splice(oldIndex, 1).splice(newIndex, 0, draggedRow).toOrderedSet();
-    this.setState({
-      rows: newOrder
+  onOrder(orderedIds) {
+    const orderedItems = this.props.rows.sort(function(a, b) {
+      if (orderedIds.indexOf(a.get('id')) < orderedIds.indexOf(b.get('id'))) {
+        return -1;
+      }
+      if (orderedIds.indexOf(a.get('id')) > orderedIds.indexOf(b.get('id'))) {
+        return 1;
+      }
+      return 0;
     });
-    const newOrderIds = newOrder.map(function(row) {
-      return row.get('id');
-    }).toJS();
-    return this.props.onOrder(newOrderIds);
+    this.setState({
+      rows: orderedItems
+    });
+    return this.props.onOrder(orderedIds);
   },
 
   renderTable() {

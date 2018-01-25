@@ -45,6 +45,7 @@ const TableRow = React.createClass({
         to={this.props.linkTo}
         params={{config: this.props.configurationId, row: this.props.row.get('id')}}
         className="tr"
+        data-id={props.row.get('id')}
       >
         <div className="td" key="handle">
           {this.renderDragHandle()}
