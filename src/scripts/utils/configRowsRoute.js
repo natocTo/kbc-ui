@@ -71,20 +71,6 @@ export default function(settings) {
   };
   route.childRoutes.push(
     {
-      name: settingsWithDefaults.componentId + '-sortable',
-      settings: settingsWithDefaults,
-      path: 'sortable',
-      title: 'Sortable',
-      defaultRouteHandler: Sortable
-    },
-    {
-      name: settingsWithDefaults.componentId + '-sortable2',
-      settings: settingsWithDefaults,
-      path: 'sortable2',
-      title: 'Sortable2',
-      defaultRouteHandler: Sortable2
-    },
-    {
       name: settingsWithDefaults.componentId + '-row',
       settings: settingsWithDefaults,
       path: 'rows/:row',
