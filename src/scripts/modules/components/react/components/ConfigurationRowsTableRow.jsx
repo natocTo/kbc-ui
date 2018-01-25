@@ -4,6 +4,7 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
 import { Link } from 'react-router';
+import { Loader } from '@keboola/indigo-ui';
 
 
 const TableRow = React.createClass({
@@ -23,10 +24,14 @@ const TableRow = React.createClass({
     isEnableDisablePending: React.PropTypes.bool.isRequired,
     onEnableDisable: React.PropTypes.func.isRequired,
     disabledMove: React.PropTypes.bool.isRequired,
-    disabledRun: React.PropTypes.bool.isRequired
+    disabledRun: React.PropTypes.bool.isRequired,
+    orderPending: React.PropTypes.bool.isRequired
   },
 
   renderDragHandle() {
+    if (this.props.orderPending) {
+      return (<Loader className="fa-fw" style={{cursor: 'not-allowed'}} />);
+    }
     if (this.props.disabledMove) {
       return (<span className="fa fa-bars fa-fw" style={{cursor: 'not-allowed'}} />);
     }

@@ -109,6 +109,7 @@ export default React.createClass({
           isCompletedFn={props.isCompletedFn}
           onOrder={this.onOrder}
           rows={this.state.rows}
+          orderPending={this.props.orderPending}
         />
       );
     }

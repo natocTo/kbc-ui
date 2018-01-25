@@ -82,8 +82,9 @@ export default React.createClass({
           onEnableDisable={function() {
             return props.rowEnableDisable(row.get('id'));
           }}
-          disabledMove={props.disabledMove || props.orderPending}
+          disabledMove={props.disabledMove}
           disabledRun={!props.isCompletedFn(row.get('configuration'))}
+          orderPending={props.orderPending}
         />
       );
     });
