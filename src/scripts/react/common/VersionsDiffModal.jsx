@@ -9,7 +9,7 @@ import date from '../../utils/date';
 const COLOR_ADD = '#cfc';
 const COLOR_REMOVE = '#fcc';
 
-const PROPS_TO_COMPARE = ['configuration', 'description', 'name'];
+const PROPS_TO_COMPARE = ['configuration', 'description', 'name', 'rowsSortOrder'];
 
 function prepareDiffObject(versionObj) {
   if (!versionObj) {
