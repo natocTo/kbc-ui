@@ -9,7 +9,7 @@ export const storeMixins = [InstalledComponentStore, OauthStore];
 const DEFAULT_VERSIONS_MAP = {
   'keboola.ex-instagram': 'v2.11',
   'keboola.ex-facebook-ads': 'v2.10',
-  'keboola.ex-facebook': 'v2.9'
+  'keboola.ex-facebook': 'v2.11'
 };
 
 const DEFAULT_BACKEND_VERSION = 'v2.8';
