@@ -145,7 +145,7 @@ export default React.createClass({
         className="btnf btn-linkf">
         <span className="fa fa-fw fa-share"/>
         {' '}
-        Send Token via Email
+        Send token via email
       </div>
     );
   },
