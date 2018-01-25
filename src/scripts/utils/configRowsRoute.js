@@ -1,6 +1,7 @@
 import React from 'react';
 import Index from '../react/common/ConfigRows/Index';
 import Row from '../react/common/ConfigRows/Row';
+import Versions from '../react/common/ConfigRows/Versions';
 import installedComponentsActions from '../modules/components/InstalledComponentsActionCreators';
 import versionsActions from '../modules/components/VersionsActionCreators';
 import jobsActions from '../modules/jobs/ActionCreators';
@@ -78,7 +79,16 @@ export default function(settings) {
         const configurationRow = ConfigurationRowsStore.get(settingsWithDefaults.componentId, configId, rowId);
         return configurationRow.get('name') !== '' ? configurationRow.get('name') : 'Untitled ' + settingsWithDefaults.row.name.singular;
       },
-      defaultRouteHandler: Row
+      defaultRouteHandler: Row,
+      childRoutes: [
+        {
+          name: settingsWithDefaults.componentId + '-row-versions',
+          settings: settingsWithDefaults,
+          path: 'rows/:row/versions',
+          title: 'Versions',
+          defaultRouteHandler: Versions
+        }
+      ]
     }
   );
   return route;

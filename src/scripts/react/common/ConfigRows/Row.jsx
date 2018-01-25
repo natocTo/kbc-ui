@@ -19,6 +19,7 @@ import Parameters from '../../../modules/components/react/components/Parameters'
 import Processors from '../../../modules/components/react/components/Processors';
 import SaveButtons from '../SaveButtons';
 import ActivateDeactivateButton from '../ActivateDeactivateButton';
+import LatestRowVersions from '../../../modules/components/react/components/SidebarRowVersionsWrapper';
 
 // adapters
 import isParsableConfiguration from '../../../utils/isParsableConfiguration';
@@ -167,6 +168,11 @@ export default React.createClass({
               />
             </li>
           </ul>
+          <LatestRowVersions
+            componentId={this.state.componentId}
+            configId={this.state.configurationId}
+            rowId={this.state.rowId}
+          />
         </div>
       </div>
     );
