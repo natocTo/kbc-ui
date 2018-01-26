@@ -27,7 +27,7 @@ export default React.createClass({
     isDiffDisabled: React.PropTypes.bool,
     onPrepareVersionsDiffData: React.PropTypes.func,
     isLast: React.PropTypes.bool.isRequired,
-    onChangeName: React.PropTypes.func.isRequired,
+    onChangeName: React.PropTypes.func,
     onCopy: React.PropTypes.func,
     onRollback: React.PropTypes.func
   },
