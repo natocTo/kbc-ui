@@ -89,7 +89,7 @@ export default function(settings) {
         {
           name: settingsWithDefaults.componentId + '-row-versions',
           settings: settingsWithDefaults,
-          path: 'rows/:row/versions',
+          path: 'versions',
           title: 'Versions',
           defaultRouteHandler: Versions
         }
