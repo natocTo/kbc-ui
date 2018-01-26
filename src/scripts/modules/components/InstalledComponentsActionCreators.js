@@ -116,14 +116,15 @@ module.exports = {
       componentId: componentId,
       configId: configId
     });
-    return installedComponentsApi.getComponentConfigData(componentId, configId).then(function(configData) {
+    return installedComponentsApi.getComponentConfiguration(componentId, configId).then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS,
         componentId: componentId,
         configId: configId,
-        configData: configData
+        configData: response.configuration,
+        configuration: response
       });
-      return configData;
+      return response.configuration;
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_ERROR,

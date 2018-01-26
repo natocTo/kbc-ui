@@ -403,6 +403,8 @@ Dispatcher.register (payload) ->
       _store = _store.deleteIn ['configDataLoading', action.componentId, action.configId]
       storePath = ['configData', action.componentId, action.configId]
       _store = _store.setIn storePath, fromJSOrdered(action.configData)
+      storePath = ['components', action.componentId, 'configurations', action.configId]
+      _store = _store.setIn storePath, fromJSOrdered(action.configuration)
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_ERROR

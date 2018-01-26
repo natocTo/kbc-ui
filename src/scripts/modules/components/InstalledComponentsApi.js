@@ -20,6 +20,12 @@ const installedComponentsApi = {
       return ref !== null ? ref.configuration : null;
     });
   },
+  getComponentConfiguration: function(componentId, configId) {
+    const url = 'components/' + componentId + '/configs/' + configId;
+    return createRequest('GET', url).promise().then(function(response) {
+      return response.body;
+    });
+  },
   getComponents: function() {
     return createRequest('GET', 'components').promise().then(function(response) {
       return response.body;
