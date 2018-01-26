@@ -13,13 +13,6 @@ const createRequest = function(method, path) {
 };
 
 const installedComponentsApi = {
-  getComponentConfigData: function(componentId, configId) {
-    const url = 'components/' + componentId + '/configs/' + configId;
-    return createRequest('GET', url).promise().then(function(response) {
-      const ref = response.body;
-      return ref !== null ? ref.configuration : null;
-    });
-  },
   getComponentConfiguration: function(componentId, configId) {
     const url = 'components/' + componentId + '/configs/' + configId;
     return createRequest('GET', url).promise().then(function(response) {
