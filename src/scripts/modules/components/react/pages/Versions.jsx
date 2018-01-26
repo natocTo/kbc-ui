@@ -10,6 +10,9 @@ import VersionsActionCreators from '../../VersionsActionCreators';
 import fuzzy from 'fuzzy';
 import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import {Map} from 'immutable';
+import createVersionOnRollback from '../../../../utils/createVersionOnRollback';
+import createVersionOnCopy from '../../../../utils/createVersionOnCopy';
+
 
 function simpleMatch(query, test) {
   return test.toLocaleLowerCase().indexOf(query.toLowerCase()) >= 0;
@@ -88,8 +91,11 @@ export default function(componentIdValue, configIdParam = 'config') {
             isDiffDisabled={this.state.isPending || isMultiPending}
             previousVersion={previousVersion}
             previousVersionConfig={previousVersionConfig}
-            onPrepareVersionsDiffData= {() => this.prepareVersionsDiffData(version, previousVersion)}
+            onPrepareVersionsDiffData={() => this.prepareVersionsDiffData(version, previousVersion)}
             isLast={allVersions.first().get('version') === version.get('version')}
+            onChangeName={(name) => VersionsActionCreators.changeNewVersionName(this.state.componentId, this.state.configId, version.get('version'), name)}
+            onCopy={createVersionOnCopy(this.state.componentId, this.state.configId, version.get('version'), this.state.newVersionNames.get(version.get('version')))}
+            onRollback={createVersionOnRollback(this.state.componentId, this.state.configId, version.get('version'))}
           />
         );
       }, this).toArray();
