@@ -6,7 +6,7 @@ Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 Input = React.createFactory(require('./KbcBootstrap').Input)
 
-{div, span, i, textarea} = React.DOM
+{div, span, form} = React.DOM
 
 StaticInput = React.createFactory React.createClass
   displayName: 'InlineEditAreaStatic'
@@ -16,7 +16,6 @@ StaticInput = React.createFactory React.createClass
     editTooltip: React.PropTypes.string
     onCancel: React.PropTypes.func
     tooltipPlacement: React.PropTypes.string
-
 
   render: ->
     props = _.omit @props, 'text'
@@ -51,37 +50,36 @@ EditInput = React.createFactory React.createClass
 
   render: ->
     div className: 'form-inline kbc-inline-edit',
-      Input
-        ref: 'valueInput'
-        type: 'text'
-        bsStyle: if !@props.isValid then 'error' else ''
-        value: @props.text
-        disabled: @props.isSaving
-        placeholder: @props.placeholder
-        onChange: @_onChange
-        autoFocus: true
-      div className: 'kbc-inline-edit-buttons',
-        Button
-          className: 'kbc-inline-edit-cancel'
-          bsStyle: 'link'
+      form style: {display: 'inline'},
+        Input
+          ref: 'valueInput'
+          type: 'text'
+          bsStyle: if !@props.isValid then 'error' else ''
+          value: @props.text
           disabled: @props.isSaving
-          onClick: @props.onCancel
-        ,
-          span className: 'kbc-icon-cross'
-        Button
-          className: 'kbc-inline-edit-submit'
-          bsStyle: 'info'
-          disabled: @props.isSaving || !@props.isValid
-          onClick: @props.onSave
-        ,
-          'Save'
-        if @props.isSaving
-          span null,
-            ' '
-            Loader()
-
-
-
+          placeholder: @props.placeholder
+          onChange: @_onChange
+          autoFocus: true
+        div className: 'kbc-inline-edit-buttons',
+          Button
+            className: 'kbc-inline-edit-cancel'
+            bsStyle: 'link'
+            disabled: @props.isSaving
+            onClick: @props.onCancel
+          ,
+            span className: 'kbc-icon-cross'
+          Button
+            className: 'kbc-inline-edit-submit'
+            bsStyle: 'info'
+            disabled: @props.isSaving || !@props.isValid
+            onClick: @props.onSave
+            type: 'submit'
+          ,
+            'Save'
+          if @props.isSaving
+            span null,
+              ' '
+              Loader()
 
 module.exports = React.createClass
   displayName: 'InlineEditTextInput'
@@ -94,7 +92,6 @@ module.exports = React.createClass
     isSaving: React.PropTypes.bool
     isEditing: React.PropTypes.bool
     isValid: React.PropTypes.bool
-
     editTooltip: React.PropTypes.string
     tooltipPlacement: React.PropTypes.string
     placeholder: React.PropTypes.string
