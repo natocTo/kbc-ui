@@ -30,6 +30,7 @@
     "file-loader": "~0.8.1",
     "filesize": "~2.0.4",
     "flux": "^2.0.0",
+    "fuzzaldrin": "^2.1.0",
     "fuzzy": "~0.1.0",
     "immutable": "~3.7.3",
     "intl": "^0.1.4",
