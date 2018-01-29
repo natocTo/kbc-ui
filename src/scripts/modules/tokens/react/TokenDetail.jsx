@@ -125,9 +125,8 @@ export default React.createClass({
       <div>
         {this.renderTokenSendModal()}
         <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. </p>
-        <TokenString token={this.state.createdToken}>
-          {this.renderTokenSendButton(this.state.createdToken)}
-        </TokenString>
+        <TokenString token={this.state.createdToken}
+          sendTokenComponent={this.renderTokenSendButton(this.state.createdToken)}/>
       </div>
     );
   },
