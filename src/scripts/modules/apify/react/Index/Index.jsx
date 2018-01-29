@@ -159,7 +159,7 @@ export default React.createClass({
     const user = <p className="form-control-static">{parameters.get('userId')}</p>;
     const settings = <div className="form-control-static"> {this.renderStaticCralwerSettings(crawlerSettings.toJS())}</div>;
     const bucketId = this.state.store.outputBucket;
-    const tableId = `${bucketId}.crawlerResult`;
+    const tableId = `${bucketId}.crawler-result`;
     const resultsTable = <p className="form-control-static"><SapiTableLinkEx tableId={tableId} /></p>;
     const executionId = parameters.get('executionId');
     const inputTableId = this.state.inputTableId;
