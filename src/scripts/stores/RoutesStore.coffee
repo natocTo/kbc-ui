@@ -246,8 +246,12 @@ Dispatcher.register (payload) ->
       breadcrumbs = _store.get('breadcrumbs').map((bc) ->
         linkParams = bc.getIn(['link', 'params'])
         routeName = bc.get('name')
-        isConfigLink = linkParams.get('component') == componentId and linkParams.get('config') == configId
-        if isConfigLink and routeName in genericDetailRoutesNames
+        isConfigLink = linkParams.get('config') == configId
+        isComponentLink = linkParams.get('component') == componentId
+        isGenericComponentRoute = isConfigLink and isComponentLink and routeName in genericDetailRoutesNames
+        isComponentRoute = isConfigLink and routeName == componentId
+        isTransformationRoute = isConfigLink and routeName == 'transformationBucket'
+        if isGenericComponentRoute or isComponentRoute or isTransformationRoute
           bc.set('title', configName)
         else
           bc
