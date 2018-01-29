@@ -8,7 +8,7 @@ ApplicationStore = require '../../stores/ApplicationStore'
 flattenBreadcrumbs = (breadcrumbs) ->
   breadcrumbs
   .map (page) ->
-    page.get('title')()
+    page.get 'title'
   .join ' / '
 
 module.exports = React.createClass

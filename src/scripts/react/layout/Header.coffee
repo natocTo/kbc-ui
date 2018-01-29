@@ -3,7 +3,6 @@ createStoreMixin = require '../mixins/createStoreMixin'
 Immutable = require 'immutable'
 
 RoutesStore = require '../../stores/RoutesStore'
-InstalledComponentsStore = require '../../modules/components/stores/InstalledComponentsStore'
 ComponentsStore = require '../../modules/components/stores/ComponentsStore'
 immutableMixin = require '../../react/mixins/ImmutableRendererMixin'
 
@@ -15,9 +14,10 @@ NotificationsAccess = require('../../react/common/NotificationsAccess').default
 
 {div, nav, span, a, h1} = React.DOM
 
+
 Header = React.createClass
   displayName: 'Header'
-  mixins: [createStoreMixin(RoutesStore, ComponentsStore, InstalledComponentsStore), immutableMixin]
+  mixins: [createStoreMixin(RoutesStore), immutableMixin]
   propTypes:
     homeUrl: React.PropTypes.string.isRequired
     notifications: React.PropTypes.object.isRequired
@@ -25,23 +25,14 @@ Header = React.createClass
   getStateFromStores: ->
     componentId = RoutesStore.getCurrentRouteComponentId()
     component = ComponentsStore.getComponent componentId
-    currentRouteParams = RoutesStore.getRouterState().get 'params'
-
-    # include configurationName in state to trigger re-render on InstalledComponentsStore change
-    configurationName = 'Untitled'
-    if (currentRouteParams)
-      configId = currentRouteParams.get('config')
-      if (configId)
-        configurationName = InstalledComponentsStore.getConfig(componentId, configId).get('name')
 
     breadcrumbs: RoutesStore.getBreadcrumbs()
     currentRouteConfig: RoutesStore.getCurrentRouteConfig()
     isRoutePending: RoutesStore.getIsPending()
     currentRouteComponentId: RoutesStore.getCurrentRouteComponentId()
     component: component
-    currentRouteParams: currentRouteParams
+    currentRouteParams: RoutesStore.getRouterState().get 'params'
     currentRouteQuery: RoutesStore.getRouterState().get 'query'
-    configurationName: configurationName
 
   render: ->
     nav {className: 'navbar navbar-fixed-top kbc-navbar', role: 'navigation'},
@@ -95,7 +86,7 @@ Header = React.createClass
           params: part.getIn(['link', 'params']).toJS()
           query: @_getCurrentRouteQueryParams() # persist chosen query params
         ,
-          part.get('title')()
+          part.get 'title'
         breadcrumbs.push partElement
         breadcrumbs.push(span className: 'kbc-icon-arrow-right', key: 'arrow-' + part.get('name'))
       else if @state.component && part.getIn(['link', 'to']) == @state.component.get('id')
@@ -114,7 +105,7 @@ Header = React.createClass
       else
         # last breadcrumb in all other cases
         # just h1 element with text
-        partElement = h1 key: part.get('name'), part.get('title')()
+        partElement = h1 key: part.get('name'), part.get('title')
         breadcrumbs.push partElement
     , @)
     breadcrumbs
@@ -130,5 +121,6 @@ Header = React.createClass
       null
     else
       React.createElement(@state.currentRouteConfig.get 'headerButtonsHandler')
+
 
 module.exports = Header

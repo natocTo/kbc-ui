@@ -80,7 +80,7 @@ generateBreadcrumbs = (store) ->
     List.of(
       Map(
         name: 'error'
-        title: -> store.get('error').getTitle()
+        title: store.get('error').getTitle()
       )
     )
   else
@@ -90,7 +90,7 @@ generateBreadcrumbs = (store) ->
       .filter((route) -> !!route.get 'name')
       .map((route) ->
         Map(
-          title: -> getRouteTitle(store, route.get 'name')
+          title: getRouteTitle(store, route.get 'name')
           name: route.get 'name'
           link: Map(
             to: route.get 'name'
