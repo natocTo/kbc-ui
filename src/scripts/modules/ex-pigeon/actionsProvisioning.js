@@ -1,7 +1,10 @@
+import Immutable from 'immutable';
+
+import {createConfiguration} from './utils';
+import installedComponentsStore from '../components/stores/InstalledComponentsStore';
 import callDockerAction from '../components/DockerActionsApi';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import storeProvisioning from './storeProvisioning';
-import {Map} from 'immutable';
 
 // utils
 const COMPONENT_ID = 'keboola.ex-pigeon';
@@ -15,21 +18,38 @@ export default function(configId) {
     componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
   }
 
-  function updateDirtyParameters(field, value) {
-    const newDirtyParameters =  store.dirtyParameters.set(field, value);
-    updateLocalState('dirtyParameters', newDirtyParameters);
+  function getLocalState() {
+    return installedComponentsStore.getLocalState(COMPONENT_ID, configId);
   }
 
-  function resetDirtyParameters() {
-    const defaultParameters =  store.configData.get('parameters');
-    updateLocalState('dirtyParameters', defaultParameters);
+  function removeFromLocalState(path) {
+    const ls = installedComponentsStore.getLocalState(COMPONENT_ID, configId);
+    const newLocalState = ls.deleteIn([].concat(path));
+    componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
   }
 
-  function saveConfigData() {
-    const dataToSave = new Map([['parameters', store.dirtyParameters]]);
-    updateLocalState('isSaving', true);
-    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, dataToSave, 'update parameters').then(() => {
-      updateLocalState('isSaving', false);
+  function editReset() {
+    removeFromLocalState(['settings']);
+    removeFromLocalState(['isChanged']);
+  }
+
+  function editChange(field, newValue) {
+    let settings = store.settings;
+    settings = settings.set(field, newValue);
+    updateLocalState(['settings'], settings);
+    if (!getLocalState().get('isChanged', false)) {
+      updateLocalState(['isChanged'], true);
+    }
+  }
+
+  function editSave() {
+    const localState = getLocalState();
+    const config = Immutable.fromJS(createConfiguration(localState.get('settings', Immutable.Map()), configId));
+    updateLocalState(['isSaving'], true);
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config).then(() => {
+      removeFromLocalState(['settings']);
+      removeFromLocalState(['isSaving']);
+      removeFromLocalState(['isChanged']);
     });
   }
 
@@ -40,8 +60,8 @@ export default function(configId) {
         updateLocalState('requestedEmail', result.email);
       });
     },
-    updateDirtyParameters: updateDirtyParameters,
-    resetDirtyParameters,
-    saveConfigData: saveConfigData
+    editReset: editReset,
+    editSave: editSave,
+    editChange: editChange
   };
 }

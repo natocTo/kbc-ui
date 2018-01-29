@@ -36,7 +36,7 @@ export default React.createClass({
       actions: actions,
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
       localState: store.getLocalState(),
-      dirtyParameters: store.dirtyParameters
+      settings: store.settings
     };
   },
   render() {
@@ -54,8 +54,10 @@ export default React.createClass({
             <br/>
             <h2>Pigeon configuration</h2>
             <ConfigurationForm
-             updateDirtyParameters={this.state.actions.updateDirtyParameters}
-             dirtyParameters={this.state.dirtyParameters}
+             incremental={this.state.settings.get('incremental')}
+             delimiter={this.state.settings.get('delimiter')}
+             enclosure={this.state.settings.get('enclosure')}
+             onChange={this.state.actions.editChange}
              requestedEmail={this.state.store.requestedEmail}
             />
           </div>
@@ -101,20 +103,17 @@ export default React.createClass({
       <div className="text-right">
         <SaveButtons
           isSaving={this.state.localState.get('isSaving', false)}
-          isChanged={this.isConfigurationChanged()}
-          onSave={this.state.actions.saveConfigData}
-          onReset={this.state.actions.resetDirtyParameters}
+          isChanged={this.state.localState.get('isChanged', false)}
+          onSave={this.state.actions.editSave}
+          onReset={this.state.actions.editReset}
           />
       </div>
     );
   },
   invalidToRun() {
-    if (this.state.dirtyParameters.get('enclosure') +  this.state.dirtyParameters.get('delimiter') === '') {
+    if (this.state.settings.get('enclosure') +  this.state.settings.get('delimiter') === '') {
       return 'Configuration has missing values';
     }
     return false;
-  },
-  isConfigurationChanged() {
-    return !(this.state.dirtyParameters.equals(this.state.store.configData.get('parameters')));
   }
 });

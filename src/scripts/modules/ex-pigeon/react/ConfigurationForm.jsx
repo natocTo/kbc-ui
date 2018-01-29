@@ -6,10 +6,25 @@ import ClipboardButton from '../../../react/common/Clipboard';
 export default React.createClass({
 
   propTypes: {
-    updateDirtyParameters: PropTypes.func.isRequired,
-    dirtyParameters: PropTypes.object.isRequired,
-    requestedEmail: PropTypes.string.isRequired
+    requestedEmail: PropTypes.string.isRequired,
+    incremental: PropTypes.bool.isRequired,
+    delimiter: PropTypes.string.isRequired,
+    enclosure: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
   },
+
+  onChangeDelimiter(e) {
+    this.props.onChange('delimiter', e.target.value);
+  },
+
+  onChangeEnclosure(e) {
+    this.props.onChange('enclosure', e.target.value);
+  },
+
+  onChangeIncremental() {
+    this.props.onChange('incremental', !this.props.incremental);
+  },
+
   render()  {
     return (
     <Form horizontal>
@@ -41,8 +56,8 @@ export default React.createClass({
           <FormControl
               type="text"
               placeholder="Field delimeter used in CSV files"
-              value={this.props.dirtyParameters.get('delimiter')}
-              onChange={(e) => this.props.updateDirtyParameters('delimiter', e.target.value)}/>
+              value={this.props.delimiter}
+              onChange={this.onChangeDelimiter}/>
         </Col>
       </FormGroup>
       <FormGroup>
@@ -53,8 +68,8 @@ export default React.createClass({
           <FormControl
               type="text"
               placeholder="Field enclosure used in CSV files"
-              value={this.props.dirtyParameters.get('enclosure')}
-              onChange={(e) => this.props.updateDirtyParameters('enclosure', e.target.value)}/>
+              value={this.props.enclosure}
+              onChange={this.onChangeEnclosure}/>
         </Col>
       </FormGroup>
       <FormGroup>
@@ -63,8 +78,8 @@ export default React.createClass({
         </Col>
         <Col sm={8}>
           <Checkbox
-              checked={this.props.dirtyParameters.get('incremental')}
-              onChange={(e) => this.props.updateDirtyParameters('incremental', e.target.checked)}>
+              checked={this.props.incremental}
+              onChange={this.onChangeIncremental}>
               Incremental load
           </Checkbox>
         </Col>
