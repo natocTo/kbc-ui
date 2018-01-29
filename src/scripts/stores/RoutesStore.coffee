@@ -6,7 +6,8 @@ Error = require '../utils/Error'
 StoreUtils = require '../utils/StoreUtils'
 _ = require 'underscore'
 JobsStore = require '../modules/jobs/stores/JobsStore'
-
+ComponentsConstants = require('../modules/components/Constants').ActionTypes
+{GENERIC_DETAIL_PREFIX} = require('../modules/components/Constants').Routes
 Immutable = require('immutable')
 Constants = require '../constants/KbcConstants'
 
@@ -18,7 +19,10 @@ _store = Map(
   breadcrumbs: List()
 )
 
-
+genericDetailRoutesNames = ['extractor', 'writer', 'application']
+  .map((componentType) ->
+    GENERIC_DETAIL_PREFIX + componentType + '-config'
+  )
 
 
 ###
@@ -232,6 +236,26 @@ Dispatcher.register (payload) ->
 
     when Constants.ActionTypes.ROUTER_ROUTER_CREATED
       _store = _store.set 'router', action.router
+
+    when ComponentsConstants.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS
+      componentId = action.componentId
+      configId = action.configId
+      configName = action.configuration.name
+
+      # update breadcrumb title for generic-detail component route
+      breadcrumbs = _store.get('breadcrumbs').map((bc) ->
+        linkParams = bc.getIn(['link', 'params'])
+        routeName = bc.get('name')
+        isConfigLink = linkParams.get('component') == componentId and linkParams.get('config') == configId
+        if isConfigLink and routeName in genericDetailRoutesNames
+          bc.set('title', configName)
+        else
+          bc
+        )
+      _store = _store.set('breadcrumbs', breadcrumbs)
+
+
+
 
   # Emit change on events
   # for example orchestration is loaed asynchronously while breadcrumbs are already rendered so it has to be rendered again
