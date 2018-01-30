@@ -58,7 +58,7 @@ export default function(configId) {
   function generateDefaultParameters(email) {
     return Map({
       'email': email,
-      'delimiter': ';',
+      'delimiter': ',',
       'enclosure': '"',
       'incremental': false
     });
