@@ -2,33 +2,17 @@ import React, {PropTypes} from 'react';
 
 import {FormGroup, FormControl, Form, ControlLabel, Col, Checkbox, InputGroup, Button} from 'react-bootstrap';
 import ClipboardButton from '../../../react/common/Clipboard';
-import actionsProvisioning from '../actionsProvisioning';
-import storeProvisioning, {storeMixins} from '../storeProvisioning';
-import RoutesStore from '../../../stores/RoutesStore';
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import {RefreshIcon} from '@keboola/indigo-ui';
 
 export default React.createClass({
-
-  mixins: [createStoreMixin(...storeMixins)],
-
-  getStateFromStores() {
-    const componentId = 'keboola.ex-pigeon';
-    const configId = RoutesStore.getCurrentRouteParam('config');
-    const actions = actionsProvisioning(configId, componentId);
-    const store = storeProvisioning(configId, componentId);
-    return {
-      actions: actions,
-      store: store
-    };
-  },
 
   propTypes: {
     requestedEmail: PropTypes.string.isRequired,
     incremental: PropTypes.bool.isRequired,
     delimiter: PropTypes.string.isRequired,
     enclosure: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    isLoadingEmail: PropTypes.bool.isRequired
   },
 
   onChangeDelimiter(e) {
@@ -43,20 +27,20 @@ export default React.createClass({
     this.props.onChange('incremental', !this.props.incremental);
   },
 
-  componentDidMount() {
-    this.state.actions.requestEmail();
-  },
-
   renderClipboardButton() {
-    const isLoading = typeof this.props.requestedEmail === 'undefined' ? true : false;
-    if (isLoading) {
-      return <RefreshIcon isLoading={isLoading}/>;
-    } else {
-      return (<ClipboardButton text={this.props.requestedEmail} label="Copy email" />);
-    }
+    return (<ClipboardButton text={this.props.requestedEmail} label="Copy email" />);
   },
 
   render()  {
+    if (this.props.isLoadingEmail) {
+      return (
+        <p>
+          <RefreshIcon isLoading={true}/>
+          Generating email...
+        </p>
+      );
+    }
+
     return (
     <Form horizontal>
       <FormGroup>

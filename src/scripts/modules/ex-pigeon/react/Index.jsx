@@ -39,6 +39,11 @@ export default React.createClass({
       settings: store.settings
     };
   },
+
+  componentDidMount() {
+    this.state.actions.requestEmailAndInitConfig();
+  },
+
   render() {
     return (
       <div className="container-fluid">
@@ -59,6 +64,7 @@ export default React.createClass({
              enclosure={this.state.settings.get('enclosure')}
              onChange={this.state.actions.editChange}
              requestedEmail={this.state.store.requestedEmail}
+             isLoadingEmail={this.state.store.requestingEmail}
             />
           </div>
         </div>

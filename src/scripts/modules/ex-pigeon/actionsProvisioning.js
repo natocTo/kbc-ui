@@ -1,6 +1,5 @@
-import Immutable from 'immutable';
+import {Map} from 'immutable';
 
-import {createConfiguration} from './utils';
 import installedComponentsStore from '../components/stores/InstalledComponentsStore';
 import callDockerAction from '../components/DockerActionsApi';
 import componentsActions from '../components/InstalledComponentsActionCreators';
@@ -43,8 +42,7 @@ export default function(configId) {
   }
 
   function editSave() {
-    const localState = getLocalState();
-    const config = Immutable.fromJS(createConfiguration(localState.get('settings', Immutable.Map()), configId));
+    const config = store.configData.set('parameters', store.settings);
     updateLocalState(['isSaving'], true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config).then(() => {
       removeFromLocalState(['settings']);
@@ -53,13 +51,32 @@ export default function(configId) {
     });
   }
 
+  function saveConfigData(data, changeDescription) {
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription);
+  }
+
+
+  function requestEmailAndInitConfig() {
+    const email = store.requestedEmail;
+    if (!email) {
+      updateLocalState('requestingEmail', true);
+      return callDockerAction(COMPONENT_ID, 'get', {configData: {parameters: {config: configId}}})
+        .then((result) => {
+          const config = store.configData.set('parameters', Map({
+            'email': result.email,
+            'delimiter': ';',
+            'enclosure': '"',
+            'incremental': false
+          }));
+          return saveConfigData(config, 'Setup email')
+            .then(() => updateLocalState('requestingEmail', false));
+        });
+    }
+  }
+
   return {
     updateLocalState: updateLocalState,
-    requestEmail() {
-      return callDockerAction(COMPONENT_ID, 'get',  `{"configData": {"parameters": {"config": "${configId}"}}}`).then((result) => {
-        updateLocalState('requestedEmail', result.email);
-      });
-    },
+    requestEmailAndInitConfig: requestEmailAndInitConfig,
     editReset: editReset,
     editSave: editSave,
     editChange: editChange
