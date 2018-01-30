@@ -148,16 +148,18 @@ export default React.createClass({
 
 
   renderButtons() {
-    return (
-      <div className="text-right">
-        <SaveButtons
-          isSaving={this.state.localState.get('isSaving', false)}
-          isChanged={this.state.localState.get('isChanged', false)}
-          onSave={this.state.actions.editSave}
-          onReset={this.state.actions.editReset}
-        />
-      </div>
-    );
+    if (this.state.store.requestedEmail) {
+      return (
+        <div className="text-right">
+          <SaveButtons
+            isSaving={this.state.localState.get('isSaving', false)}
+            isChanged={this.state.localState.get('isChanged', false)}
+            onSave={this.state.actions.editSave}
+            onReset={this.state.actions.editReset}
+          />
+        </div>
+      );
+    }
   },
 
   invalidToRun() {
