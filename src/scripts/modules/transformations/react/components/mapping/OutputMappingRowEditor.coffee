@@ -5,6 +5,7 @@ Immutable = require('immutable')
 Input = React.createFactory require('./../../../../../react/common/KbcBootstrap').Input
 AutosuggestWrapper = require('./AutoSuggestWrapper').default
 Select = React.createFactory require('../../../../../react/common/Select').default
+DestinationTableSelector = require('./DestinationTableSelector').default
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
@@ -134,6 +135,7 @@ module.exports = React.createClass
             else
               Input
                 type: 'text'
+                help: 'Source table is generated inside transformation DB (inside SQL you write to query section)'
                 name: 'source'
                 label: 'Source'
                 autoFocus: true
@@ -147,11 +149,15 @@ module.exports = React.createClass
           React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Destination'
             React.DOM.div className: 'col-xs-10',
-              React.createElement AutosuggestWrapper,
-                suggestions: @_getTablesAndBuckets()
+              React.createElement DestinationTableSelector,
                 value: @props.value.get("destination", "")
-                onChange: @_handleChangeDestination
-                placeholder: 'Destination table in Storage'
+                onSelect: @_handleChangeDestination
+                disabled: false
+              # React.createElement AutosuggestWrapper,
+              #   suggestions: @_getTablesAndBuckets()
+              #   value: @props.value.get("destination", "")
+              #   onChange: @_handleChangeDestination
+              #   placeholder: 'Destination table in Storage'
               if @state.showDetails
                 Input
                   standalone: true
