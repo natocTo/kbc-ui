@@ -2,7 +2,6 @@ import Index from './react/Index';
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
-import actionsProvisioning from './actionsProvisioning';
 
 const componentId = 'keboola.ex-pigeon';
 
@@ -13,8 +12,7 @@ export default {
   defaultRouteHandler: Index,
   requireData: [
     (params) => installedComponentsActions.loadComponentConfigData(componentId, params.config),
-    (params) => versionsActions.loadVersions(componentId, params.config),
-    (params) => actionsProvisioning(params.config).requestEmail()
+    (params) => versionsActions.loadVersions(componentId, params.config)
   ],
   poll: {
     interval: 7,
