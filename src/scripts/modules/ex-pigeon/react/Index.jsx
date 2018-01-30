@@ -166,6 +166,10 @@ export default React.createClass({
     if (!this.state.settings.get('enclosure') || !this.state.settings.get('delimiter') || !this.state.settings.get('email')) {
       return 'Configuration has missing values';
     }
+    if (this.state.localState.get('isChanged', false)) {
+      return 'Configuration is not saved';
+    }
+
     return false;
   }
 });
