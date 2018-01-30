@@ -111,7 +111,7 @@ export default React.createClass({
     );
   },
   invalidToRun() {
-    if (this.state.settings.get('enclosure') +  this.state.settings.get('delimiter') === '') {
+    if (this.state.settings.get('enclosure') || this.state.settings.get('delimiter') === '') {
       return 'Configuration has missing values';
     }
     return false;
