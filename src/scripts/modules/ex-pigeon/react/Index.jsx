@@ -79,7 +79,7 @@ export default React.createClass({
             componentId={COMPONENT_ID}
           />
           <ul className="nav nav-stacked">
-            <li>
+            <li className={!!this.invalidToRun() ? 'disabled' : null}>
               <RunComponentButton
                 title="Run"
                 component={COMPONENT_ID}
@@ -159,8 +159,9 @@ export default React.createClass({
       </div>
     );
   },
+
   invalidToRun() {
-    if (this.state.settings.get('enclosure') || this.state.settings.get('delimiter') === '') {
+    if (!this.state.settings.get('enclosure') || !this.state.settings.get('delimiter') || !this.state.settings.get('email')) {
       return 'Configuration has missing values';
     }
     return false;
