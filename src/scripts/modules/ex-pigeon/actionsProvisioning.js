@@ -13,7 +13,7 @@ export default function(configId) {
   const store = storeProvisioning(configId);
 
   function updateLocalState(path, data) {
-    const ls = store.getLocalState();
+    const ls = installedComponentsStore.getLocalState(COMPONENT_ID, configId);
     const newLocalState = ls.setIn([].concat(path), data);
     componentsActions.updateLocalState(COMPONENT_ID, configId, newLocalState, path);
   }
