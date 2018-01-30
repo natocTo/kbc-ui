@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-import {FormGroup, FormControl, Form, ControlLabel, Col, Checkbox, InputGroup, Button} from 'react-bootstrap';
+import {FormGroup, FormControl, Form, ControlLabel, Col, Alert, Checkbox, InputGroup, Button} from 'react-bootstrap';
 import ClipboardButton from '../../../react/common/Clipboard';
 import {RefreshIcon} from '@keboola/indigo-ui';
 
@@ -99,6 +99,11 @@ export default React.createClass({
           </Checkbox>
         </Col>
       </FormGroup>
-    </Form>);
+      <br/>
+      <Alert bsStyle="info">
+        44 tables extracted. View the result in <a href="">out-c.pigeon.12345</a> bucket.
+      </Alert>
+    </Form>
+    );
   }
 });
