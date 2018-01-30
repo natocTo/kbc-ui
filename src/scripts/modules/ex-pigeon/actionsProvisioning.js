@@ -55,22 +55,27 @@ export default function(configId) {
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, data, changeDescription);
   }
 
+  function generateDefaultParameters(email) {
+    return Map({
+      'email': email,
+      'delimiter': ';',
+      'enclosure': '"',
+      'incremental': false
+    });
+  }
 
   function requestEmailAndInitConfig() {
     const email = store.requestedEmail;
     if (!email) {
-      updateLocalState('requestingEmail', true);
       return callDockerAction(COMPONENT_ID, 'get', {configData: {parameters: {config: configId}}})
         .then((result) => {
-          const config = store.configData.set('parameters', Map({
-            'email': result.email,
-            'delimiter': ';',
-            'enclosure': '"',
-            'incremental': false
-          }));
-          return saveConfigData(config, 'Setup email')
-            .then(() => updateLocalState('requestingEmail', false));
-        });
+          if (result.status === 'error') {
+            updateLocalState('error', result);
+          } else {
+            const config = store.configData.set('parameters', generateDefaultParameters(result.email));
+            return saveConfigData(config, 'Setup email');
+          }
+        }).catch((error) => updateLocalState('error', error));
     }
   }
 

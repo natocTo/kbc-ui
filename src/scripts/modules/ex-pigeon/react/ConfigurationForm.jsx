@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 import {FormGroup, FormControl, Form, ControlLabel, Col, Alert, Checkbox, InputGroup, Button} from 'react-bootstrap';
 import ClipboardButton from '../../../react/common/Clipboard';
-import {RefreshIcon} from '@keboola/indigo-ui';
+
 
 export default React.createClass({
 
@@ -11,8 +11,7 @@ export default React.createClass({
     incremental: PropTypes.bool.isRequired,
     delimiter: PropTypes.string.isRequired,
     enclosure: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    isLoadingEmail: PropTypes.bool.isRequired
+    onChange: PropTypes.func.isRequired
   },
 
   onChangeDelimiter(e) {
@@ -31,25 +30,17 @@ export default React.createClass({
     return (<ClipboardButton text={this.props.requestedEmail} label="Copy email" />);
   },
 
-  render()  {
-    if (this.props.isLoadingEmail) {
-      return (
-        <p>
-          <RefreshIcon isLoading={true}/>
-          Generating email...
-        </p>
-      );
-    }
 
+  render()  {
     return (
-    <Form horizontal>
-      <FormGroup>
-        <Col componentClass={ControlLabel} sm={4}>
-          Email
-        </Col>
-        <Col sm={8}>
-          <InputGroup>
-            <FormControl
+      <Form horizontal>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Email
+          </Col>
+          <Col sm={8}>
+            <InputGroup>
+              <FormControl
                 type="email"
                 placeholder="Creating email, please wait"
                 readOnly
@@ -61,49 +52,44 @@ export default React.createClass({
                 </Button>
               </InputGroup.Button>
             </InputGroup>
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col componentClass={ControlLabel} sm={4}>
-          Delimeter
-        </Col>
-        <Col sm={8}>
-          <FormControl
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Delimeter
+          </Col>
+          <Col sm={8}>
+            <FormControl
               type="text"
               placeholder="Field delimeter used in CSV files"
               value={this.props.delimiter}
               onChange={this.onChangeDelimiter}/>
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col componentClass={ControlLabel} sm={4}>
-          Enclosure
-        </Col>
-        <Col sm={8}>
-          <FormControl
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Enclosure
+          </Col>
+          <Col sm={8}>
+            <FormControl
               type="text"
               placeholder="Field enclosure used in CSV files"
               value={this.props.enclosure}
               onChange={this.onChangeEnclosure}/>
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col componentClass={ControlLabel} sm={4}>
-          Incremental
-        </Col>
-        <Col sm={8}>
-          <Checkbox
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Incremental
+          </Col>
+          <Col sm={8}>
+            <Checkbox
               checked={this.props.incremental}
               onChange={this.onChangeIncremental}>
               Incremental load
-          </Checkbox>
-        </Col>
-      </FormGroup>
-      <br/>
-      <Alert bsStyle="info">
-        44 tables extracted. View the result in <a href="">out-c.pigeon.12345</a> bucket.
-      </Alert>
-    </Form>
-    );
+            </Checkbox>
+          </Col>
+        </FormGroup>
+      </Form>);
   }
 });

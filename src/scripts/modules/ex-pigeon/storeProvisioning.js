@@ -14,7 +14,7 @@ export default function(configId) {
   return {
     settings: settings,
     configData: configData,
-    requestingEmail: localState.get('requestingEmail', false),
+    error: localState.get('error'),
     requestedEmail: settings.get('email'),
     getLocalState(path) {
       if (_.isEmpty(path)) {
