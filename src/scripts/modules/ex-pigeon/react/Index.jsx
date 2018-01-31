@@ -21,6 +21,7 @@ import LatestJobs from '../../components/react/components/SidebarJobs';
 import ConfigurationForm from './ConfigurationForm';
 import StorageTablesStore from '../../components/stores/StorageTablesStore';
 import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
+import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
 
 
 const COMPONENT_ID = 'keboola.ex-pigeon';
@@ -48,6 +49,25 @@ export default React.createClass({
     this.state.actions.requestEmailAndInitConfig();
   },
 
+  getDefaultBucketName() {
+    return 'in.c-keboola-ex-pigeon-' + this.state.configId + '.data';
+  },
+
+  isTableImported() {
+    return this.state.tables.has(this.getDefaultBucketName());
+  },
+
+  renderImportedResult() {
+    if (this.isTableImported()) {
+      return (
+        <div>
+          <h2>Imported Table</h2>
+          <SapiTableLinkEx className="col-sm-4" tableId={this.getDefaultBucketName()}/>
+        </div>
+      );
+    }
+  },
+
   render() {
     return (
       <div className="container-fluid">
@@ -70,12 +90,11 @@ export default React.createClass({
                enclosure={this.state.settings.get('enclosure')}
                onChange={this.state.actions.editChange}
                requestedEmail={this.state.store.requestedEmail}
-               configId={this.state.configId}
-               tables={this.state.tables}
              />
              :
              this.renderInitConfig()
             }
+            {this.renderImportedResult()}
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -124,7 +143,7 @@ export default React.createClass({
         <p>
           <RefreshIcon isLoading={true}/>
           {' '}
-          Generating email, please wait.
+          Generating email address, please wait.
         </p>
       );
     }
