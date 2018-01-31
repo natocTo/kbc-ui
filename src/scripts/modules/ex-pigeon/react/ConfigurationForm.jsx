@@ -13,7 +13,8 @@ export default React.createClass({
     delimiter: PropTypes.string.isRequired,
     enclosure: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    configId: PropTypes.string.isRequired
+    configId: PropTypes.string.isRequired,
+    tables: PropTypes.object.isRequired
   },
 
   onChangeDelimiter(e) {
@@ -33,27 +34,35 @@ export default React.createClass({
   },
 
   renderResultInfo() {
-    return (
-      <Alert bsStyle="info">
-         44 tables extracted. View the result in {this.renderBucketLink()} bucket.
-      </Alert>
-    );
+    let tableCount = this.getExtractedTables().count;
+    if (tableCount === 0) {
+      return (
+        <Alert bsStyle="warning">
+          {tableCount} tables extracted. Please check configuration and try run extraction again
+        </Alert>
+      );
+    } else {
+      return (
+        <Alert bsStyle="info">
+          {tableCount} tables extracted. View the result in {this.renderBucketLink()} bucket.
+        </Alert>
+      );
+    }
   },
 
-  renderBucketLink() {
-    let bucket =  'in.c-keboola-ex-pigeon-' + this.props.configId;
-    let link = 'https://connection.keboola.com/v2/storage/buckets/' + bucket;
-    return (<a href={link}>{bucket}</a>);
-  },
-
-  getDefaultBucket() {
+  getDefaultBucketName() {
     return 'in.c-keboola-ex-pigeon-' + this.props.configId;
   },
 
-  // getDefaultTable(configId) {
-  //   return getDefaultBucket(configId) + '.data';
-  // },
+  renderBucketLink() {
+    let bucketName =  this.getDefaultBucketName();
+    let link = 'https://connection.keboola.com/v2/storage/buckets/' + bucketName;
+    return (<a href={link}>{bucketName}</a>);
+  },
 
+  getExtractedTables() {
+    return this.props.tables.has(this.getDefaultBucketName());
+  },
 
   render()  {
     return (

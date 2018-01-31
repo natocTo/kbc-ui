@@ -19,12 +19,14 @@ import DeleteConfigurationButton from '../../components/react/components/DeleteC
 import SaveButtons from '../../../react/common/SaveButtons';
 import LatestJobs from '../../components/react/components/SidebarJobs';
 import ConfigurationForm from './ConfigurationForm';
+import StorageTablesStore from '../../components/stores/StorageTablesStore';
+import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
 
 
 const COMPONENT_ID = 'keboola.ex-pigeon';
 
 export default React.createClass({
-  mixins: [createStoreMixin(...storeMixins, InstalledComponentStore, LatestJobsStore)],
+  mixins: [createStoreMixin(...storeMixins, InstalledComponentStore, StorageTablesStore, StorageBucketsStore, LatestJobsStore)],
 
   getStateFromStores() {
     const configId = RoutesStore.getCurrentRouteParam('config');
@@ -35,6 +37,7 @@ export default React.createClass({
       configId: configId,
       store: store,
       actions: actions,
+      tables: StorageTablesStore.getAll(),
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
       localState: store.getLocalState(),
       settings: store.settings
@@ -68,6 +71,7 @@ export default React.createClass({
                onChange={this.state.actions.editChange}
                requestedEmail={this.state.store.requestedEmail}
                configId={this.state.configId}
+               tables={this.state.tables}
              />
              :
              this.renderInitConfig()
