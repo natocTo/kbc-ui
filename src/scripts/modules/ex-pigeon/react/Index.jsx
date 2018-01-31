@@ -124,7 +124,7 @@ export default React.createClass({
         <p>
           <RefreshIcon isLoading={true}/>
           {' '}
-          Generating email...
+          Generating email, please wait.
         </p>
       );
     }
