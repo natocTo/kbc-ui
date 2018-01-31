@@ -11,7 +11,8 @@ export default React.createClass({
     incremental: PropTypes.bool.isRequired,
     delimiter: PropTypes.string.isRequired,
     enclosure: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    configId: PropTypes.string.isRequired
   },
 
   onChangeDelimiter(e) {
@@ -29,6 +30,28 @@ export default React.createClass({
   renderClipboardButton() {
     return (<ClipboardButton text={this.props.requestedEmail} label="Copy email" />);
   },
+
+  renderResultInfo() {
+    return (
+      <Alert bsStyle="info">
+         44 tables extracted. View the result in {this.renderBucketLink()} bucket.
+      </Alert>
+    );
+  },
+
+  renderBucketLink() {
+    let bucket =  'in.c-keboola-ex-pigeon-' + this.props.configId;
+    let link = 'https://connection.keboola.com/v2/storage/buckets/' + bucket;
+    return (<a href={link}>{bucket}</a>);
+  },
+
+  getDefaultBucket() {
+    return 'in.c-keboola-ex-pigeon-' + this.props.configId;
+  },
+
+  // getDefaultTable(configId) {
+  //   return getDefaultBucket(configId) + '.data';
+  // },
 
 
   render()  {
@@ -87,9 +110,12 @@ export default React.createClass({
               checked={this.props.incremental}
               onChange={this.onChangeIncremental}>
               Incremental load
-            </Checkbox>
-          </Col>
-        </FormGroup>
-      </Form>);
+          </Checkbox>
+        </Col>
+      </FormGroup>
+      <br/>
+      {this.renderResultInfo()}
+    </Form>
+    );
   }
 });

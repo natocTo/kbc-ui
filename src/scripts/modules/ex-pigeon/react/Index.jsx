@@ -67,6 +67,7 @@ export default React.createClass({
                enclosure={this.state.settings.get('enclosure')}
                onChange={this.state.actions.editChange}
                requestedEmail={this.state.store.requestedEmail}
+               configId={this.state.configId}
              />
              :
              this.renderInitConfig()
