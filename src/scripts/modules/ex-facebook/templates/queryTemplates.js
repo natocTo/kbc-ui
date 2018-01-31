@@ -38,6 +38,18 @@ const exfbtemplates = [
   },
 
   {
+    'id': 'reviews',
+    'name': 'Page Reviews',
+    'template': {
+      'name': 'ratings',
+      'query': {
+        'path': 'ratings',
+        'fields': 'created_time,reviewer,rating,review_text,has_review,has_rating'
+      }
+    }
+  },
+
+  {
     'id': 'onlycommnetsposts',
     'name': 'Only comments of posts',
     'template': {
