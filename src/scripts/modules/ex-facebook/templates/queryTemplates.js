@@ -270,8 +270,71 @@ const exfbAdsTemplates = [
 
 ];
 
+const exInstagramTemplates = [
+  {
+    'id': 'pageinfo',
+    'name': 'Page Info',
+    'template': {
+      'name': 'page',
+      'query': {
+        'path': '',
+        'fields': 'id,biography,followers_count,media_count,username,website'
+      }
+    }
+
+  },
+
+  {
+    'id': 'pageaudienceinsights',
+    'name': 'Page Audience Insights',
+    'template': {
+      'name': 'page_audience',
+      'query': {
+        'path': '',
+        'fields': 'insights.period(lifetime).metric(audience_gender_age, audience_locale, audience_country, audience_city, online_followers)'
+      }
+    }
+  },
+
+  {
+    'id': 'pagedailyinsights',
+    'name': 'Page Daily Insights',
+    'template': {
+      'name': 'page_daily_insights',
+      'query': {
+        'path': '',
+        'fields': 'insights.since(30 days ago).period(day).metric(reach,impressions,follower_count,email_contacts,text_message_clicks,get_directions_clicks,phone_call_clicks,website_clicks,profile_views)'
+      }
+    }
+  },
+
+  {
+    'id': 'medialifetimeinsights',
+    'name': 'Media Lifetime Insights',
+    'template': {
+      'name': 'media_lifetime_insights',
+      'query': {
+        'path': 'media',
+        'fields': 'insights.metric(impressions,reach,engagement,saved)'
+      }
+    }
+  },
+
+  {
+    'id': 'media',
+    'name': 'Media',
+    'template': {
+      'name': 'media',
+      'query': {
+        'path': 'media',
+        'fields': 'id,caption,media_type,like_count,ig_id,comments_count,is_comment_enabled,media_url,owner,permalink,shortcode,timestamp,thumbnail_url,comments,from_id,from_full_name'
+      }
+    }
+  }
+];
+
 export default fromJS({
   'keboola.ex-facebook': exfbtemplates,
-  'keboola.ex-instagram': exfbtemplates,
+  'keboola.ex-instagram': exInstagramTemplates,
   'keboola.ex-facebook-ads': exfbAdsTemplates
 });
