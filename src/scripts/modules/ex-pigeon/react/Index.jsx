@@ -22,6 +22,7 @@ import ConfigurationForm from './ConfigurationForm';
 import StorageTablesStore from '../../components/stores/StorageTablesStore';
 import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
+import getDefaultBucket from '../../../utils/getDefaultBucket';
 
 
 const COMPONENT_ID = 'keboola.ex-pigeon';
@@ -50,7 +51,7 @@ export default React.createClass({
   },
 
   getDefaultBucketName() {
-    return 'in.c-keboola-ex-pigeon-' + this.state.configId + '.data';
+    return getDefaultBucket('in', COMPONENT_ID, this.state.configId) + '.data';
   },
 
   isTableImported() {
