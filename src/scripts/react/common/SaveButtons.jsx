@@ -30,7 +30,7 @@ export default React.createClass({
     return {
       saveStyle: 'success',
       disabled: false,
-      showModal: true,
+      showModal: false,
       modalTitle: '',
       modalBody: (<span />)
     };
