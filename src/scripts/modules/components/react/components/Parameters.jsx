@@ -14,7 +14,10 @@ export default React.createClass({
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
-    isChanged: PropTypes.bool.isRequired
+    isChanged: PropTypes.bool.isRequired,
+    showSaveModal: PropTypes.bool,
+    saveModalTitle: PropTypes.string,
+    saveModalBody: PropTypes.any
   },
 
   getDefaultProps() {
@@ -52,6 +55,9 @@ export default React.createClass({
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
+          showModal={this.props.showSaveModal}
+          modalTitle={this.props.saveModalTitle}
+          modalBody={this.props.saveModalBody}
         />
       </span>
     );

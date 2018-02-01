@@ -47,6 +47,13 @@ let ConfigurationRowsStore = StoreUtils.createStore({
     );
   },
 
+  getEditingParameters: function(componentId, configId, rowId) {
+    if (!this.isEditingParametersValid(componentId, configId, rowId)) {
+      return null;
+    }
+    return JSON.parse(this.getEditingParametersString(componentId, configId, rowId));
+  },
+
   isEditingParameters: function(componentId, configId, rowId) {
     return _store.hasIn(['editing', componentId, configId, rowId, 'parameters']);
   },
@@ -67,6 +74,13 @@ let ConfigurationRowsStore = StoreUtils.createStore({
       ['editing', componentId, configId, rowId, 'processors'],
       JSON.stringify(this.getConfiguration(componentId, configId, rowId).get('processors', Immutable.Map()).toJS(), null, '  ')
     );
+  },
+
+  getEditingProcessors: function(componentId, configId, rowId) {
+    if (!this.isEditingProcessorsValid(componentId, configId, rowId)) {
+      return null;
+    }
+    return JSON.parse(this.getEditingProcessorsString(componentId, configId, rowId));
   },
 
   isEditingProcessors: function(componentId, configId, rowId) {

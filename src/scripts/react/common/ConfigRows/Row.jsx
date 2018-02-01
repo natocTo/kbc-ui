@@ -44,11 +44,21 @@ export default React.createClass({
       isParametersSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-parameters'),
       isParametersValid: Store.isEditingParametersValid(settings.get('componentId'), configurationId, rowId),
       isParametersChanged: Store.isEditingParameters(settings.get('componentId'), configurationId, rowId),
+      isParametersParsable: isParsableConfiguration(
+        Store.getConfiguration(settings.get('componentId'), configurationId, rowId).set('parameters', Immutable.fromJS(Store.getEditingParameters(settings.get('componentId'), configurationId, rowId))),
+        settings.getIn(['row', 'detail', 'onLoad']),
+        settings.getIn(['row', 'detail', 'onSave'])
+      ),
 
       processorsValue: Store.getEditingProcessorsString(settings.get('componentId'), configurationId, rowId),
       isProcessorsSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-processors'),
       isProcessorsValid: Store.isEditingProcessorsValid(settings.get('componentId'), configurationId, rowId),
       isProcessorsChanged: Store.isEditingProcessors(settings.get('componentId'), configurationId, rowId),
+      isProcessorsParsable: isParsableConfiguration(
+        Store.getConfiguration(settings.get('componentId'), configurationId, rowId).set('processors', Immutable.fromJS(Store.getEditingProcessors(settings.get('componentId'), configurationId, rowId))),
+        settings.getIn(['row', 'detail', 'onLoad']),
+        settings.getIn(['row', 'detail', 'onSave'])
+      ),
 
       isParsableConfiguration: isParsableConfiguration(
         Store.getConfiguration(settings.get('componentId'), configurationId, rowId),
@@ -209,7 +219,7 @@ export default React.createClass({
           onReset={function() {
             return Actions.resetConfiguration(state.componentId, state.configurationId, state.rowId);
           }}
-            />
+        />
       </div>
     );
   },
@@ -299,6 +309,9 @@ export default React.createClass({
           const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' parameters edited manually';
           return Actions.saveParameters(state.componentId, state.configurationId, state.rowId, changeDescription);
         }}
+        showSaveModal={this.state.isParsableConfiguration && !this.state.isParametersParsable}
+        saveModalTitle="Save Parameters"
+        saveModalBody={(<div>The changes in configuration parameters are not compatible with the original visual form. Saving these parameters will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON only.</div>)}
       />),
       (<Processors
         key="processors"
@@ -316,6 +329,9 @@ export default React.createClass({
           const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' processors edited manually';
           return Actions.saveProcessors(state.componentId, state.configurationId, state.rowId, changeDescription);
         }}
+        showSaveModal={this.state.isParsableConfiguration && !this.state.isProcessorsParsable}
+        saveModalTitle="Save Processors"
+        saveModalBody={(<div>The changes in processors configuration are not compatible with the original visual form. Saving these processors configuration will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON only.</div>)}
       />)
     ];
   }
