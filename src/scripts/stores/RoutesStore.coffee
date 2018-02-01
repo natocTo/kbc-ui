@@ -243,18 +243,18 @@ Dispatcher.register (payload) ->
       configName = action.configuration.name
 
       # update breadcrumb title for generic-detail component route
-      breadcrumbs = _store.get('breadcrumbs').map((bc) ->
-        linkParams = bc.getIn(['link', 'params'])
-        routeName = bc.get('name')
+      breadcrumbs = _store.get('breadcrumbs').map((breadcrumb) ->
+        linkParams = breadcrumb.getIn(['link', 'params'])
+        routeName = breadcrumb.get('name')
         isConfigLink = linkParams.get('config') == configId
         isComponentLink = linkParams.get('component') == componentId
         isGenericComponentRoute = isConfigLink and isComponentLink and routeName in genericDetailRoutesNames
         isComponentRoute = isConfigLink and routeName == componentId
         isTransformationRoute = isConfigLink and routeName == 'transformationBucket'
         if isGenericComponentRoute or isComponentRoute or isTransformationRoute
-          bc.set('title', configName)
+          breadcrumb.set('title', configName)
         else
-          bc
+          breadcrumb
         )
       _store = _store.set('breadcrumbs', breadcrumbs)
 
