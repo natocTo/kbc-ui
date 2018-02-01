@@ -63,6 +63,7 @@ export default React.createClass({
           value={this.props.delimiter}
           onChange={this.onChangeDelimiter}
           help={(<span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
+          disabled={false}
         />
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
