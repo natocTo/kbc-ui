@@ -54,19 +54,13 @@ export default React.createClass({
     return getDefaultBucket('in', COMPONENT_ID, this.state.configId) + '.data';
   },
 
-  isTableImported() {
-    return this.state.tables.has(this.getDefaultBucketName());
-  },
-
   renderImportedResult() {
-    if (this.isTableImported()) {
-      return (
-        <div>
-          <h2>Imported Table</h2>
-          <SapiTableLinkEx className="col-sm-4" tableId={this.getDefaultBucketName()}/>
-        </div>
-      );
-    }
+    return (
+      <div>
+        <h2>Imported Table</h2>
+        <SapiTableLinkEx tableId={this.getDefaultBucketName()}/>
+      </div>
+    );
   },
 
   render() {
