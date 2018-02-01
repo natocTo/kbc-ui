@@ -105,7 +105,7 @@ export default React.createClass({
                 mode="link"
                 runParams={() => ({config: this.state.configId})}
                 disabled={!!this.invalidToRun()}
-                disabledReason={this.invalidToRun()}
+                disabledReason={this.invalidToRun() ? this.invalidToRun() : null}
               >
                 <span>You are about to run an extraction.</span>
               </RunComponentButton>
