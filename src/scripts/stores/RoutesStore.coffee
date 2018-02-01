@@ -258,9 +258,6 @@ Dispatcher.register (payload) ->
         )
       _store = _store.set('breadcrumbs', breadcrumbs)
 
-
-
-
   # Emit change on events
   # for example orchestration is loaed asynchronously while breadcrumbs are already rendered so it has to be rendered again
   RoutesStore.emitChange()
