@@ -15,8 +15,8 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired
   },
 
-  onChangeDelimiter(e) {
-    this.props.onChange('delimiter', e.target.value);
+  onChangeDelimiter(value) {
+    this.props.onChange('delimiter', value);
   },
 
   onChangeEnclosure(e) {
