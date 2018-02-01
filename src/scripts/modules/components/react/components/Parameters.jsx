@@ -2,8 +2,11 @@ import React, {PropTypes} from 'react';
 import Input from './ParametersInput';
 import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
+import immutableRendererMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
 export default React.createClass({
+  mixins: [immutableRendererMixin],
+
   propTypes: {
     value: PropTypes.string,
     isEditingValid: PropTypes.bool.isRequired,
