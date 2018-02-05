@@ -21,8 +21,6 @@ import LatestJobs from '../../components/react/components/SidebarJobs';
 import ConfigurationForm from './ConfigurationForm';
 import StorageTablesStore from '../../components/stores/StorageTablesStore';
 import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
-import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
-import getDefaultBucket from '../../../utils/getDefaultBucket';
 
 
 const COMPONENT_ID = 'keboola.ex-pigeon';
@@ -50,18 +48,6 @@ export default React.createClass({
     this.state.actions.requestEmailAndInitConfig();
   },
 
-  getDefaultBucketName() {
-    return getDefaultBucket('in', COMPONENT_ID, this.state.configId) + '.data';
-  },
-
-  renderImportedResult() {
-    return (
-      <div>
-        <h2>Imported Table</h2>
-        <SapiTableLinkEx tableId={this.getDefaultBucketName()}/>
-      </div>
-    );
-  },
 
   render() {
     return (
@@ -85,11 +71,13 @@ export default React.createClass({
                enclosure={this.state.settings.get('enclosure')}
                onChange={this.state.actions.editChange}
                requestedEmail={this.state.store.requestedEmail}
+               componentId={COMPONENT_ID}
+               configId={this.state.configId}
              />
              :
              this.renderInitConfig()
             }
-            {this.renderImportedResult()}
+
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
