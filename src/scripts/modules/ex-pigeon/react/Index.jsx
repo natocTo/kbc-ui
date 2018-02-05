@@ -88,7 +88,9 @@ export default React.createClass({
                 configId={this.state.configId}
             />
           </div>
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
+            {this.state.store.requestedEmail ?
+                <div>
+                <div className="kbc-inner-content-padding-fix with-bottom-border">
             <Form horizontal>
               <FormGroup>
                 <Col componentClass={ControlLabel} sm={4}>
@@ -121,8 +123,6 @@ export default React.createClass({
                 {this.renderImportedResult()}
             </Form>
           </div>
-
-            {this.state.store.requestedEmail ?
                 <ConfigurationForm
                     incremental={this.state.settings.get('incremental')}
                     delimiter={this.state.settings.get('delimiter')}
@@ -133,10 +133,10 @@ export default React.createClass({
                     actions={this.state.actions}
                     localState={this.state.localState}
                 />
+            </div>
                 :
                 this.renderInitConfig()
             }
-
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata
@@ -181,11 +181,11 @@ export default React.createClass({
     } else {
       // if we either have email or it is being generated
       return (
-        <p>
-          <RefreshIcon isLoading={true}/>
-          {' '}
-          Generating email address, please wait.
-        </p>
+         <div className="kbc-inner-content-padding-fix with-bottom-border">
+           <p>
+             <RefreshIcon isLoading={true}/> Generating email address, please wait.
+           </p>
+         </div>
       );
     }
   },
