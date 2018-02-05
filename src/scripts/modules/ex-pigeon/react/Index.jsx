@@ -62,10 +62,19 @@ export default React.createClass({
 
   renderImportedResult() {
     return (
-      <Col componentClass={ControlLabel} sm={12}>
-        <h2>Imported Table</h2>
-        <SapiTableLinkEx tableId={this.getDefaultBucketName()}/>
-      </Col>
+      <FormGroup>
+        <Col componentClass={ControlLabel} sm={4}>
+          Imported Table
+        </Col>
+        <Col sm={8}>
+          <InputGroup>
+            <SapiTableLinkEx tableId={this.getDefaultBucketName()}/>
+          </InputGroup>
+          <HelpBlock>
+            Table in Storage, where the .csv attachments will be imported. If the table or bucket does not exist, it will be created.
+          </HelpBlock>
+        </Col>
+      </FormGroup>
     );
   },
 
@@ -108,10 +117,8 @@ export default React.createClass({
                     </ul>
                   </HelpBlock>
                 </Col>
-              </FormGroup>
-              <FormGroup>
-                  {this.renderImportedResult()}
-              </FormGroup>
+                </FormGroup>
+                {this.renderImportedResult()}
             </Form>
           </div>
 
