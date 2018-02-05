@@ -47,66 +47,66 @@ export default React.createClass({
   render()  {
     return (
       <Accordion className="kbc-accordion">
-          <Panel header="Import Settings" eventKey="1">
-            <Form horizontal>
-                {this.renderButtons()}
-              <br/>
-              <CsvDelimiterInput
-                  placeholder="Field delimeter used in CSV files"
-                  label="Delimiter"
-                  labelClassName="col-sm-4"
-                  wrapperClassName="col-sm-8"
-                  value={this.props.delimiter}
-                  onChange={this.onChangeDelimiter}
-                  help={(
-                      <span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
-                  disabled={false}
-              />
-              <FormGroup>
-                <Col componentClass={ControlLabel} sm={4}>
-                  Enclosure
-                </Col>
-                <Col sm={8}>
-                  <FormControl
-                      type="text"
-                      placeholder="Field enclosure used in CSV files"
-                      value={this.props.enclosure}
-                      onChange={this.onChangeEnclosure}
-                  />
-                  <HelpBlock>Field enclosure used in CSV file. Default value is <code>"</code>.</HelpBlock>
-                </Col>
-              </FormGroup>
-              <FormGroup>
-                <Col componentClass={ControlLabel} sm={4}>
-                  Primary Key
-                </Col>
-                <Col sm={8}>
-                  <FormControl
-                      type="text"
-                      placeholder="Primary key"
-                      value={this.props.primaryKey}
-                      onChange={this.onChangePrimaryKey}
-                  />
-                  <HelpBlock>Primary key</HelpBlock>
-                </Col>
-              </FormGroup>
-              <FormGroup>
-                <Col componentClass={ControlLabel} sm={4}>
-                  Incremental
-                </Col>
-                <Col sm={8}>
-                  <Checkbox
-                      checked={this.props.incremental}
-                      onChange={this.onChangeIncremental}>
-                    Incremental load
-                  </Checkbox>
-                  <HelpBlock>If incremental load is turned on, table will be updated instead of rewritten. Tables with
-                    primary key will update rows, tables without primary key will append rows.</HelpBlock>
-                </Col>
-              </FormGroup>
-            </Form>
-          </Panel>
-        </Accordion>
+        <Panel header="Import Settings" eventKey="1">
+          <Form horizontal>
+              {this.renderButtons()}
+            <br/>
+            <CsvDelimiterInput
+                placeholder="Field delimeter used in CSV files"
+                label="Delimiter"
+                labelClassName="col-sm-4"
+                wrapperClassName="col-sm-8"
+                value={this.props.delimiter}
+                onChange={this.onChangeDelimiter}
+                help={(
+                    <span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
+                disabled={false}
+            />
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={4}>
+                Enclosure
+              </Col>
+              <Col sm={8}>
+                <FormControl
+                    type="text"
+                    placeholder="Field enclosure used in CSV files"
+                    value={this.props.enclosure}
+                    onChange={this.onChangeEnclosure}
+                />
+                <HelpBlock>Field enclosure used in CSV file. Default value is <code>"</code>.</HelpBlock>
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={4}>
+                Primary Key
+              </Col>
+              <Col sm={8}>
+                <FormControl
+                    type="text"
+                    placeholder="Primary key"
+                    value={this.props.primaryKey}
+                    onChange={this.onChangePrimaryKey}
+                />
+                <HelpBlock>Primary key</HelpBlock>
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={4}>
+                Incremental
+              </Col>
+              <Col sm={8}>
+                <Checkbox
+                    checked={this.props.incremental}
+                    onChange={this.onChangeIncremental}>
+                  Incremental load
+                </Checkbox>
+                <HelpBlock>If incremental load is turned on, table will be updated instead of rewritten. Tables with
+                  primary key will update rows, tables without primary key will append rows.</HelpBlock>
+              </Col>
+            </FormGroup>
+          </Form>
+        </Panel>
+      </Accordion>
     );
   }
 });
