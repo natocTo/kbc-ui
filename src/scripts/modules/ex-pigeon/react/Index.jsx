@@ -118,6 +118,7 @@ export default React.createClass({
                incremental={this.state.settings.get('incremental')}
                delimiter={this.state.settings.get('delimiter')}
                enclosure={this.state.settings.get('enclosure')}
+               primaryKey={this.state.settings.get('primaryKey')}
                onChange={this.state.actions.editChange}
                requestedEmail={this.state.store.requestedEmail}
                actions={this.state.actions}

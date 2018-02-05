@@ -11,6 +11,7 @@ export default React.createClass({
     incremental: PropTypes.bool.isRequired,
     delimiter: PropTypes.string.isRequired,
     enclosure: PropTypes.string.isRequired,
+    primaryKey: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     actions: PropTypes.object.isRequired,
     localState: PropTypes.object.isRequired
@@ -73,6 +74,20 @@ export default React.createClass({
                       onChange={this.onChangeEnclosure}
                   />
                   <HelpBlock>Field enclosure used in CSV file. Default value is <code>"</code>.</HelpBlock>
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={4}>
+                  Primary Key
+                </Col>
+                <Col sm={8}>
+                  <FormControl
+                      type="text"
+                      placeholder="Primary key"
+                      value={this.props.primaryKey}
+                      onChange={this.onChangePrimaryKey}
+                  />
+                  <HelpBlock>Primary key</HelpBlock>
                 </Col>
               </FormGroup>
               <FormGroup>
