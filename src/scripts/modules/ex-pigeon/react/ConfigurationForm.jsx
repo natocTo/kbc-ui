@@ -47,7 +47,7 @@ export default React.createClass({
   render()  {
     return (
       <Accordion className="kbc-accordion">
-        <Panel header="Import Settings" eventKey="1">
+        <Panel header={<h3><span className="fa fa-fw fa-angle-down"/>Import Settings</h3>} eventKey="1">
           <Form horizontal>
               {this.renderButtons()}
             <br/>
