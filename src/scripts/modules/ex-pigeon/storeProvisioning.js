@@ -10,7 +10,6 @@ export default function(configId) {
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId);
 
   settings = localState.get('settings', configData.get('parameters', Map()));
-  console.log(settings);
   return {
     settings: settings,
     configData: configData,
