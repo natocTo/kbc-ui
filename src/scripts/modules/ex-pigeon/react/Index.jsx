@@ -111,7 +111,7 @@ export default React.createClass({
                   <HelpBlock>
                     <ul>
                       <li>Please send emails with .csv attachment to this email address.</li>
-                      <li>Recieved attachments will be imported after configuration execution. Only new emails are
+                      <li>Received attachments will be imported after configuration execution. Only new emails are
                         imported on subsequent executions.
                       </li>
                     </ul>
