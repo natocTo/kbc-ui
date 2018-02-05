@@ -16,7 +16,6 @@ import {RefreshIcon} from '@keboola/indigo-ui';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 import RunComponentButton from '../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../components/react/components/DeleteConfigurationButton';
-import SaveButtons from '../../../react/common/SaveButtons';
 import LatestJobs from '../../components/react/components/SidebarJobs';
 import ConfigurationForm from './ConfigurationForm';
 import StorageTablesStore from '../../components/stores/StorageTablesStore';
@@ -60,9 +59,6 @@ export default React.createClass({
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            {this.renderButtons()}
-            <br/>
-            <h2>Pigeon configuration</h2>
 
             {this.state.store.requestedEmail ?
              <ConfigurationForm
@@ -73,6 +69,8 @@ export default React.createClass({
                requestedEmail={this.state.store.requestedEmail}
                componentId={COMPONENT_ID}
                configId={this.state.configId}
+               actions={this.state.actions}
+               localState={this.state.localState}
              />
              :
              this.renderInitConfig()
@@ -151,22 +149,6 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
-
-
-  renderButtons() {
-    if (this.state.store.requestedEmail) {
-      return (
-        <div className="text-right">
-          <SaveButtons
-            isSaving={this.state.localState.get('isSaving', false)}
-            isChanged={this.state.localState.get('isChanged', false)}
-            onSave={this.state.actions.editSave}
-            onReset={this.state.actions.editReset}
-          />
-        </div>
-      );
-    }
   },
 
   invalidToRun() {

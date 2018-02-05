@@ -5,7 +5,7 @@ import ClipboardButton from '../../../react/common/Clipboard';
 import CsvDelimiterInput from '../../../react/common/CsvDelimiterInput';
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
 import getDefaultBucket from '../../../utils/getDefaultBucket';
-
+import SaveButtons from '../../../react/common/SaveButtons';
 
 export default React.createClass({
 
@@ -16,7 +16,9 @@ export default React.createClass({
     enclosure: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     componentId: PropTypes.string.isRequired,
-    configId: PropTypes.string.isRequired
+    configId: PropTypes.string.isRequired,
+    actions: PropTypes.object.isRequired,
+    localState: PropTypes.object.isRequired
   },
 
   onChangeDelimiter(value) {
@@ -46,6 +48,21 @@ export default React.createClass({
         <SapiTableLinkEx tableId={this.getDefaultBucketName()}/>
       </Col>
     );
+  },
+
+  renderButtons() {
+    if (this.props.requestedEmail) {
+      return (
+        <div className="text-right">
+          <SaveButtons
+            isSaving={this.props.localState.get('isSaving', false)}
+            isChanged={this.props.localState.get('isChanged', false)}
+            onSave={this.props.actions.editSave}
+            onReset={this.props.actions.editReset}
+          />
+        </div>
+      );
+    }
   },
 
   render()  {
@@ -85,6 +102,8 @@ export default React.createClass({
           <Accordion>
             <Panel header="Import Settings" eventKey="1">
             <Form horizontal>
+            {this.renderButtons()}
+              <br/>
               <CsvDelimiterInput
                   placeholder="Field delimeter used in CSV files"
                   label="Delimiter"
