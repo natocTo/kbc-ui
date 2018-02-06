@@ -17,6 +17,7 @@ const routeSettings = {
     }
   },
   row: {
+    hasState: true,
     detail: {
       render: ConfigurationForm,
       onSave: rowCreateConfiguration,

@@ -96,9 +96,82 @@ export default React.createClass({
     };
   },
 
-  render() {
+  renderActions() {
     const state = this.state;
     const settings = this.state.settings;
+    let actions = [];
+    actions.push((
+      <li className={!this.state.isConfigurationCompleted ? 'disabled' : ''}>
+        <RunComponentButton
+            title="Run"
+            component={this.state.componentId}
+            mode="link"
+            runParams={function() {
+              return {
+                config: state.configurationId,
+                row: state.rowId
+              };
+            }}
+            disabled={!this.state.isConfigurationCompleted}
+            disabledReason="Configuration not complete"
+        >
+          {this.renderRunModalContent()}
+        </RunComponentButton>
+      </li>
+    ));
+    actions.push((
+      <li>
+        <ActivateDeactivateButton
+          key="activate"
+          activateTooltip="Enable"
+          deactivateTooltip="Disable"
+          activateLabel="Enable"
+          deactivateLabel="Disable"
+          isActive={!this.state.row.get('isDisabled', false)}
+          isPending={this.state.isEnableDisablePending}
+          onChange={function() {
+            if (state.row.get('isDisabled', false)) {
+              const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' enabled';
+              return Actions.enable(state.componentId, state.configurationId, state.rowId, changeDescription);
+            } else {
+              const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' disabled';
+              return Actions.disable(state.componentId, state.configurationId, state.rowId, changeDescription);
+            }
+          }}
+          mode="link"
+        />
+      </li>
+    ));
+    if (settings.getIn(['row', 'hasState'])) {
+      actions.push((
+        <li className={this.state.isResetStatePending || !this.state.hasState ? 'disabled' : ''}>
+          <ResetStateButton
+            onClick={function() {
+              return Actions.resetState(state.componentId, state.configurationId, state.rowId);
+            }}
+            isPending={this.state.isResetStatePending}
+            disabled={!this.state.hasState}
+          >Delete the current stored state of the configuration, eg. progress of an incremental
+            processes.</ResetStateButton>
+        </li>
+      ));
+    }
+    actions.push((
+      <li>
+        <DeleteConfigurationRowButton
+          onClick={function() {
+            const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' deleted';
+            return Actions.delete(state.componentId, state.configurationId, state.rowId, true, changeDescription);
+          }}
+          isPending={this.state.isDeletePending}
+          mode="link"
+        />
+      </li>
+    ));
+    return actions;
+  },
+
+  render() {
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -120,63 +193,7 @@ export default React.createClass({
             rowId={this.state.rowId}
           />
           <ul className="nav nav-stacked">
-            <li className={!this.state.isConfigurationCompleted ? 'disabled' : ''}>
-              <RunComponentButton
-                  title="Run"
-                  component={this.state.componentId}
-                  mode="link"
-                  runParams={function() {
-                    return {
-                      config: state.configurationId,
-                      row: state.rowId
-                    };
-                  }}
-                  disabled={!this.state.isConfigurationCompleted}
-                  disabledReason="Configuration not complete"
-              >
-                {this.renderRunModalContent()}
-              </RunComponentButton>
-            </li>
-            <li>
-              <ActivateDeactivateButton
-                key="activate"
-                activateTooltip="Enable"
-                deactivateTooltip="Disable"
-                activateLabel="Enable"
-                deactivateLabel="Disable"
-                isActive={!this.state.row.get('isDisabled', false)}
-                isPending={this.state.isEnableDisablePending}
-                onChange={function() {
-                  if (state.row.get('isDisabled', false)) {
-                    const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' enabled';
-                    return Actions.enable(state.componentId, state.configurationId, state.rowId, changeDescription);
-                  } else {
-                    const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' disabled';
-                    return Actions.disable(state.componentId, state.configurationId, state.rowId, changeDescription);
-                  }
-                }}
-                mode="link"
-              />
-            </li>
-            <li className={this.state.isResetStatePending || !this.state.hasState ? 'disabled' : ''}>
-              <ResetStateButton
-                onClick={function() {
-                  return Actions.resetState(state.componentId, state.configurationId, state.rowId);
-                }}
-                isPending={this.state.isResetStatePending}
-                disabled={!this.state.hasState}
-              >Delete the current stored state of the configuration, eg. progress of an incremental processes.</ResetStateButton>
-            </li>
-            <li>
-              <DeleteConfigurationRowButton
-                onClick={function() {
-                  const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' deleted';
-                  return Actions.delete(state.componentId, state.configurationId, state.rowId, true, changeDescription);
-                }}
-                isPending={this.state.isDeletePending}
-                mode="link"
-              />
-            </li>
+            {this.renderActions()}
           </ul>
           <LatestRowVersions
             componentId={this.state.componentId}

@@ -19,6 +19,7 @@ const defaults = {
     }
   },
   row: {
+    hasState: false,
     name: {
       singular: 'Table',
       plural: 'Tables'
