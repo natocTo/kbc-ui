@@ -3,6 +3,7 @@ import React, {PropTypes} from 'react';
 import {FormGroup, FormControl, Form, ControlLabel, Col, Checkbox, HelpBlock, Accordion, Panel} from 'react-bootstrap';
 import CsvDelimiterInput from '../../../react/common/CsvDelimiterInput';
 import SaveButtons from '../../../react/common/SaveButtons';
+import Select from '../../../react/common/Select';
 
 export default React.createClass({
 
@@ -27,6 +28,10 @@ export default React.createClass({
 
   onChangeIncremental() {
     this.props.onChange('incremental', !this.props.incremental);
+  },
+
+  onChangePrimaryKey(value) {
+    this.props.onChange('primaryKey', value);
   },
 
   renderButtons() {
@@ -81,13 +86,17 @@ export default React.createClass({
                 Primary Key
               </Col>
               <Col sm={8}>
-                <FormControl
-                    type="text"
-                    placeholder="Primary key"
-                    value={this.props.primaryKey}
-                    onChange={this.onChangePrimaryKey}
+                <Select
+                  name="primaryKey"
+                  value={''}
+                  multi={true}
+                  allowCreate={true}
+                  delimiter=","
+                  placeholder="Add a column"
+                  emptyStrings={false}
+                  onChange={this.onChangePrimaryKey}
                 />
-                <HelpBlock>Primary key</HelpBlock>
+                <HelpBlock>Primary key of the table. If primary key is set, updates can be done on table by selecting <strong>incremental loads</strong>. Primary key can consist of multiple columns.</HelpBlock>
               </Col>
             </FormGroup>
             <FormGroup>
