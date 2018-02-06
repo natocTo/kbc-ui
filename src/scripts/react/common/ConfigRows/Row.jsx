@@ -232,7 +232,7 @@ export default React.createClass({
           <a onClick={function() {
             Actions.openJsonEditor(state.componentId, state.configurationId, state.rowId);
           }}>
-            Open JSON
+            Open JSON editor
           </a>
           {' '}
           (discards all unsaved changes)
@@ -245,7 +245,7 @@ export default React.createClass({
     const state = this.state;
     if (!this.state.isParsableConfiguration) {
       return (
-        <small>Can't switch back to visual form, configuration is not compatible.</small>
+        <small>Can't close JSON editor, configuration is not compatible.</small>
       );
     }
     return (
@@ -253,7 +253,7 @@ export default React.createClass({
         <a onClick={function() {
           Actions.closeJsonEditor(state.componentId, state.configurationId, state.rowId);
         }}>
-          Close JSON
+          Close JSON editor
         </a>
         {' '}
         (discards all unsaved changes)
