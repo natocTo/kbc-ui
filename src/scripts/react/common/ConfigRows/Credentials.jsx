@@ -41,7 +41,7 @@ export default React.createClass({
   renderButtons() {
     const state = this.state;
     return (
-      <div className="text-right">
+      <div className="text-right" style={{marginBottom: '20px'}}>
         <SaveButtons
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
