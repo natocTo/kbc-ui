@@ -121,7 +121,7 @@ export default React.createClass({
             </li>
             <li>
               <CreateConfigurationRowButton
-                label={'Add ' + this.state.settings.getIn(['row', 'name', 'singular'])}
+                label={'New ' + this.state.settings.getIn(['row', 'name', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}
                 onRowCreated={function() { return; }}
