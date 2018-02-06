@@ -3,7 +3,7 @@ import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixi
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
-import ChangeOrderButton from './ChangeOrderButton';
+import ChangeOrderHandle from './ChangeOrderHandle';
 import { Link } from 'react-router';
 
 const TableRow = React.createClass({
@@ -29,7 +29,7 @@ const TableRow = React.createClass({
 
   renderDragHandle() {
     return (
-      <ChangeOrderButton
+      <ChangeOrderHandle
         isPending={this.props.orderPending}
         disabled={this.props.disabledMove}
       />
