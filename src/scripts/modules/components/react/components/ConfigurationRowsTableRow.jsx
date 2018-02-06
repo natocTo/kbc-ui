@@ -84,6 +84,7 @@ const TableRow = React.createClass({
       (<RunComponentButton
         key="run"
         title="Run"
+        disabledReason="Configuration not complete"
         component={this.props.componentId}
         runParams={function() {
           return {
