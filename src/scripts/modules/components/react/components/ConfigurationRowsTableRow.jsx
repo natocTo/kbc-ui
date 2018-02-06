@@ -3,9 +3,8 @@ import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixi
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
+import ChangeOrderButton from './ChangeOrderButton';
 import { Link } from 'react-router';
-import { Loader } from '@keboola/indigo-ui';
-
 
 const TableRow = React.createClass({
   displayName: 'ConfigurationRowsTableRow',
@@ -29,13 +28,12 @@ const TableRow = React.createClass({
   },
 
   renderDragHandle() {
-    if (this.props.orderPending) {
-      return (<Loader className="fa-fw" style={{cursor: 'not-allowed'}} />);
-    }
-    if (this.props.disabledMove) {
-      return (<span className="fa fa-bars fa-fw" style={{cursor: 'not-allowed'}} />);
-    }
-    return ((<span className="fa fa-bars fa-fw drag-handle" style={{cursor: 'move'}} />));
+    return (
+      <ChangeOrderButton
+        isPending={this.props.orderPending}
+        disabled={this.props.disabledMove}
+      />
+    );
   },
 
   render() {
