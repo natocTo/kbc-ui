@@ -101,7 +101,7 @@ export default React.createClass({
     const settings = this.state.settings;
     let actions = [];
     actions.push((
-      <li className={!this.state.isConfigurationCompleted ? 'disabled' : ''}>
+      <li className={!this.state.isConfigurationCompleted ? 'disabled' : ''} key="run">
         <RunComponentButton
             title="Run"
             component={this.state.componentId}
@@ -120,7 +120,7 @@ export default React.createClass({
       </li>
     ));
     actions.push((
-      <li>
+      <li key="activate">
         <ActivateDeactivateButton
           key="activate"
           activateTooltip="Enable"
@@ -144,7 +144,7 @@ export default React.createClass({
     ));
     if (settings.getIn(['row', 'hasState'])) {
       actions.push((
-        <li className={this.state.isResetStatePending || !this.state.hasState ? 'disabled' : ''}>
+        <li className={this.state.isResetStatePending || !this.state.hasState ? 'disabled' : ''} key="reset-state">
           <ResetStateButton
             onClick={function() {
               return Actions.resetState(state.componentId, state.configurationId, state.rowId);
@@ -157,7 +157,7 @@ export default React.createClass({
       ));
     }
     actions.push((
-      <li>
+      <li key="delete">
         <DeleteConfigurationRowButton
           onClick={function() {
             const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' deleted';
