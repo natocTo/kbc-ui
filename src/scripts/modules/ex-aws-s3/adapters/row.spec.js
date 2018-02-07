@@ -47,5 +47,4 @@ describe('row', function() {
       assert.deepEqual(createEmptyConfiguration('My Test', 'my-test').toJS(), createConfiguration(Immutable.fromJS({name: 'my-test'})).toJS());
     });
   });
-
 });
