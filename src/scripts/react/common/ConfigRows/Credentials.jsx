@@ -41,7 +41,7 @@ export default React.createClass({
   renderButtons() {
     const state = this.state;
     return (
-      <div className="text-right" style={{marginBottom: '20px'}}>
+      <div className="text-right">
         <SaveButtons
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
@@ -58,6 +58,7 @@ export default React.createClass({
             return Actions.resetConfiguration(state.componentId, state.configurationId);
           }}
         />
+        <br />
       </div>
     );
   },
