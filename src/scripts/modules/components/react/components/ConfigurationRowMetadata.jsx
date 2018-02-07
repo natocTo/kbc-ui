@@ -15,7 +15,6 @@ module.exports = React.createClass({
   },
   getStateFromStores: function() {
     return {
-      configuration: ConfigurationsStore.get(this.props.componentId, this.props.configurationId),
       row: RowsStore.get(this.props.componentId, this.props.configurationId, this.props.rowId)
     };
   },
@@ -23,14 +22,7 @@ module.exports = React.createClass({
     return (
       <div>
         <div>
-          Configuration created by
-          {' '}
-          <strong>{this.state.configuration.getIn(['creatorToken', 'description'])}</strong>
-          {' '}
-          <small>on <strong>{date.format(this.state.configuration.get('created'))}</strong></small>
-        </div>
-        <div>
-          Row created by
+          Created by
           {' '}
           <strong>{this.state.row.getIn(['creatorToken', 'description'])}</strong>
           {' '}
