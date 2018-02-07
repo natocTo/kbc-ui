@@ -1,6 +1,15 @@
 import route from '../../utils/configRowsRoute';
-import { createConfiguration as rowCreateConfiguration, parseConfiguration as rowParseConfiguration, isCompleted as rowIsCompleted } from './adapters/row';
-import { createConfiguration as credentialsCreateConfiguration, parseConfiguration as credentialsParseConfiguration, isCompleted as credentialsIsCompleted } from './adapters/credentials';
+import {
+  createConfiguration as rowCreateConfiguration,
+  parseConfiguration as rowParseConfiguration,
+  isCompleted as rowIsCompleted,
+  createEmptyConfiguration as rowCreateEmptyConfiguration
+} from './adapters/row';
+import {
+  createConfiguration as credentialsCreateConfiguration,
+  parseConfiguration as credentialsParseConfiguration,
+  isCompleted as credentialsIsCompleted
+} from './adapters/credentials';
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 
@@ -21,6 +30,7 @@ const routeSettings = {
     detail: {
       render: ConfigurationForm,
       onSave: rowCreateConfiguration,
+      onCreate: rowCreateEmptyConfiguration,
       onLoad: rowParseConfiguration,
       isCompleted: rowIsCompleted
     }

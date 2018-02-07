@@ -8,7 +8,6 @@ import ConfigurationRowsActions from '../../ConfigurationRowsActionCreators';
 
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
-
 export default React.createClass({
   mixins: [immutableMixin],
 
@@ -154,7 +153,7 @@ export default React.createClass({
       this.props.configId,
       this.state.form.get('name'),
       this.state.form.get('description'),
-      this.props.emptyConfig(this.state.form.toJS()),
+      this.props.emptyConfig,
       this.onRowCreated,
       this.props.createChangeDescription(this.state.form.get('name'))
     ).catch(() => {

@@ -11,6 +11,8 @@ import configurationRowDeleted from './react/components/notifications/configurat
 import Immutable from 'immutable';
 import removeEmptyEncryptAttributes from './utils/removeEmptyEncryptAttributes';
 import preferEncryptedAttributes from './utils/preferEncryptedAttributes';
+import stringUtils from '../../utils/string';
+const { webalize } = stringUtils;
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
   let component = InstalledComponentsStore.getComponent(componentId);
@@ -34,7 +36,7 @@ const storeEncodedConfigurationRow = function(componentId, configurationId, rowI
 };
 
 module.exports = {
-  create: function(componentId, configurationId, name, description, config, createCallback, changeDescription) {
+  create: function(componentId, configurationId, name, description, emptyConfigFn, createCallback, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START,
       componentId: componentId,
@@ -43,7 +45,7 @@ module.exports = {
     const data = {
       name: name,
       description: description,
-      configuration: config
+      configuration: JSON.stringify(emptyConfigFn(name, webalize(name)).toJS())
     };
     return InstalledComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription ? changeDescription : 'Row ' + name + ' added')
       .then(function(response) {

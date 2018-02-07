@@ -3,6 +3,7 @@ var Immutable = require('immutable');
 var createConfiguration = require('./row').createConfiguration;
 var parseConfiguration = require('./row').parseConfiguration;
 var isCompleted = require('./row').isCompleted;
+var createEmptyConfiguration = require('./row').createEmptyConfiguration;
 var cases = require('./row.spec.def').cases;
 
 describe('row', function() {
@@ -40,4 +41,11 @@ describe('row', function() {
       assert.equal(isCompleted(Immutable.fromJS({parameters: {bucket: 'a', key: 'a'}})), true);
     });
   });
+
+  describe('createEmptyConfiguration()', function() {
+    it('should return a default config with the webalized name filled in', function() {
+      assert.deepEqual(createEmptyConfiguration('My Test', 'my-test').toJS(), createConfiguration(Immutable.fromJS({name: 'my-test'})).toJS());
+    });
+  });
+
 });

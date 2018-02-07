@@ -10,6 +10,7 @@ import InstalledComponentsStore from '../modules/components/stores/InstalledComp
 import ConfigurationRowsStore from '../modules/components/stores/ConfigurationRowsStore';
 import _ from 'lodash';
 import fuzzy from 'fuzzy';
+var Immutable = require('immutable');
 
 // defaults
 const defaults = {
@@ -27,6 +28,9 @@ const defaults = {
     detail: {
       isCompleted: function() {
         return true;
+      },
+      onCreate: function() {
+        return Immutable.fromJS({});
       }
     },
     header: ['Name', 'Description'],

@@ -59,7 +59,7 @@ export default React.createClass({
               label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
               componentId={state.componentId}
               configId={state.configurationId}
-              emptyConfig={function() { return {};}}
+              emptyConfig={settings.getIn(['row', 'detail', 'onCreate'])}
               onRowCreated={this.onRowCreated}
               createChangeDescription={function(name) {
                 return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
@@ -145,7 +145,7 @@ export default React.createClass({
                 label={'New ' + this.state.settings.getIn(['row', 'name', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}
-                emptyConfig={function() { return {};}}
+                emptyConfig={settings.getIn(['row', 'detail', 'onCreate'])}
                 onRowCreated={this.onRowCreated}
                 type="link"
                 createChangeDescription={function(name) {
