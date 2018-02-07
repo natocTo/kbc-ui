@@ -91,7 +91,7 @@ module.exports = {
           rowId: rowId
         });
         return ApplicationActionCreators.sendNotification({
-          message: configurationRowDeleted(row, changeDescription + '.')
+          message: configurationRowDeleted(row, changeDescription + '.', componentId, configurationId)
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({
