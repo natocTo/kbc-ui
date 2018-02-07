@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Immutable from 'immutable';
 // stores
 import InstalledComponentsStore from '../../../modules/components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../../../modules/components/stores/ConfigurationRowsStore';
@@ -89,11 +89,11 @@ export default React.createClass({
           return ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('disable') || ConfigurationRowsStore.getPendingActions(state.componentId, state.configurationId, rowId).has('enable');
         }}
         rowLinkTo={this.state.componentId + '-row'}
-        onOrder={function(rowIds) {
+        onOrder={function(rowIds, movedRowId) {
           const changeDescription = settings.getIn(['row', 'name', 'plural']) + ' order changed';
-          return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds, changeDescription);
+          return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds, movedRowId, changeDescription);
         }}
-        orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).has('order-rows')}
+        orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).get('order-rows', Immutable.Map())}
         header={header}
         columns={columns}
         filter={filter}

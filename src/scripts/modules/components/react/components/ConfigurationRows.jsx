@@ -23,7 +23,7 @@ export default React.createClass({
     rowEnableDisablePending: React.PropTypes.func.isRequired,
     rowLinkTo: React.PropTypes.string.isRequired,
     onOrder: React.PropTypes.func.isRequired,
-    orderPending: React.PropTypes.bool.isRequired,
+    orderPending: React.PropTypes.object.isRequired,
     isCompletedFn: React.PropTypes.func.isRequired
   },
 
@@ -74,7 +74,7 @@ export default React.createClass({
     });
   },
 
-  onOrder(orderedIds) {
+  onOrder(orderedIds, movedRowId) {
     const orderedItems = this.props.rows.sort(function(a, b) {
       if (orderedIds.indexOf(a.get('id')) < orderedIds.indexOf(b.get('id'))) {
         return -1;
@@ -87,7 +87,7 @@ export default React.createClass({
     this.setState({
       rows: orderedItems
     });
-    return this.props.onOrder(orderedIds);
+    return this.props.onOrder(orderedIds, movedRowId);
   },
 
   renderTable() {

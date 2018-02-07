@@ -75,11 +75,12 @@ module.exports = {
       });
   },
 
-  orderRows: function(componentId, configurationId, rowIds, changeDescription) {
+  orderRows: function(componentId, configurationId, rowIds, movedRowId, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_START,
       componentId: componentId,
       configurationId: configurationId,
+      rowId: movedRowId,
       rowIds: rowIds
     });
     return InstalledComponentsApi.orderRows(componentId, configurationId, rowIds, changeDescription ? changeDescription : 'Rows order changed')

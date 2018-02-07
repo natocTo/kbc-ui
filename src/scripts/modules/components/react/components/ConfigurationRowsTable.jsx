@@ -23,7 +23,7 @@ export default React.createClass({
     rowEnableDisablePending: React.PropTypes.func.isRequired,
     rowLinkTo: React.PropTypes.string.isRequired,
     onOrder: React.PropTypes.func.isRequired,
-    orderPending: React.PropTypes.bool.isRequired,
+    orderPending: React.PropTypes.object.isRequired,
     isCompletedFn: React.PropTypes.func.isRequired,
     disabledMove: React.PropTypes.bool.isRequired
   },
@@ -31,6 +31,7 @@ export default React.createClass({
   getInitialState() {
     return {
       dragging: false,
+      draggedIndex: null,
       sortableKeyPrefix: Math.random()
     };
   },
@@ -39,15 +40,21 @@ export default React.createClass({
     const component = this;
     const sortableOptions = {
       sort: true,
-      disabled: this.props.disabledMove || this.props.orderPending,
+      disabled: this.props.disabledMove || this.props.orderPending.count() > 0,
       handle: '.drag-handle',
       forceFallback: true,
       animation: 100,
       onStart: function() {
-        component.setState({dragging: true});
+        component.setState({
+          dragging: true,
+          draggedIndex: null
+        });
       },
-      onEnd: function() {
-        component.setState({dragging: false});
+      onEnd: function(e) {
+        component.setState({
+          dragging: false,
+          draggedIndex: e.newIndex
+        });
       },
       store: {
         get: function() {
@@ -56,11 +63,13 @@ export default React.createClass({
           }).toJS();
         },
         set: function(sortable) {
-          component.props.onOrder(sortable.toArray());
+          const orderedIds = sortable.toArray();
+          component.props.onOrder(orderedIds, orderedIds[component.state.draggedIndex]);
           // to avoid resorting after re-render
           // https://github.com/RubaXa/Sortable/issues/844#issuecomment-219180426
           component.setState({
-            sortableKeyPrefix: Math.random()
+            sortableKeyPrefix: Math.random(),
+            draggedIndex: null
           });
         }
       }
@@ -82,6 +91,14 @@ export default React.createClass({
     const props = this.props;
     const state = this.state;
     return this.props.rows.map(function(row, rowIndex) {
+      const thisRowOrderPending = props.orderPending.get(row.get('id'), false);
+      const rowsOrderPending = props.orderPending.count() > 0;
+      let disabledMoveLabel;
+      if (rowsOrderPending) {
+        disabledMoveLabel = 'Order saving';
+      } else {
+        disabledMoveLabel = 'Clear search query to allow changing order';
+      }
       return (
         <Row
           columns={props.columns}
@@ -99,9 +116,10 @@ export default React.createClass({
           onEnableDisable={function() {
             return props.rowEnableDisable(row.get('id'));
           }}
-          disabledMove={props.disabledMove}
+          disabledMove={props.disabledMove || rowsOrderPending}
+          disabledMoveLabel={disabledMoveLabel}
           disabledRun={!props.isCompletedFn(row.get('configuration'))}
-          orderPending={props.orderPending}
+          orderPending={thisRowOrderPending}
         />
       );
     }).toList().toJS();

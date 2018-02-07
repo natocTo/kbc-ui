@@ -84,7 +84,7 @@ Dispatcher.register(function(payload) {
       return ConfigurationsStore.emitChange();
 
     case Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_START:
-      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'order-rows'], true);
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'order-rows', action.rowId], true);
       return ConfigurationsStore.emitChange();
 
     case Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_ERROR:

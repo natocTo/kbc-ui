@@ -23,6 +23,7 @@ const TableRow = React.createClass({
     isEnableDisablePending: React.PropTypes.bool.isRequired,
     onEnableDisable: React.PropTypes.func.isRequired,
     disabledMove: React.PropTypes.bool.isRequired,
+    disabledMoveLabel: React.PropTypes.string.isRequired,
     disabledRun: React.PropTypes.bool.isRequired,
     orderPending: React.PropTypes.bool.isRequired
   },
@@ -32,6 +33,7 @@ const TableRow = React.createClass({
       <ChangeOrderHandle
         isPending={this.props.orderPending}
         disabled={this.props.disabledMove}
+        disabledLabel={this.props.disabledMoveLabel}
       />
     );
   },
