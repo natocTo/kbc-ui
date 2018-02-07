@@ -51,9 +51,9 @@ export default React.createClass({
     this.setState(this.getInitialState());
   },
 
-  onRowCreated() {
+  onRowCreated(rowId) {
     this.close();
-    this.props.onRowCreated();
+    this.props.onRowCreated(rowId);
   },
 
   renderModal() {
@@ -155,9 +155,8 @@ export default React.createClass({
       this.state.form.get('name'),
       this.state.form.get('description'),
       this.props.emptyConfig(this.state.form.toJS()),
+      this.onRowCreated,
       this.props.createChangeDescription(this.state.form.get('name'))
-    ).then(
-      this.onRowCreated
     ).catch(() => {
       this.setState({isSaving: false});
     });

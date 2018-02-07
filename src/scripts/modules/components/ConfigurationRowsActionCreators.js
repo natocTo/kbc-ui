@@ -34,7 +34,7 @@ const storeEncodedConfigurationRow = function(componentId, configurationId, rowI
 };
 
 module.exports = {
-  create: function(componentId, configurationId, name, description, config, changeDescription) {
+  create: function(componentId, configurationId, name, description, config, createCallback, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START,
       componentId: componentId,
@@ -48,6 +48,7 @@ module.exports = {
     return InstalledComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription ? changeDescription : 'Row ' + name + ' added')
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        createCallback(response.id);
         return Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_SUCCESS,
           componentId: componentId,

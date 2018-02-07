@@ -39,6 +39,14 @@ export default React.createClass({
     };
   },
 
+  onRowCreated(rowId) {
+    const transitionParams = {
+      config: this.state.configurationId,
+      row: rowId
+    };
+    RoutesStore.getRouter().transitionTo(this.state.componentId + '-row', transitionParams);
+  },
+
   renderRowsTable() {
     const state = this.state;
     const settings = this.state.settings;
@@ -51,8 +59,8 @@ export default React.createClass({
               label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
               componentId={state.componentId}
               configId={state.configurationId}
-              onRowCreated={function() { return; }}
               emptyConfig={function() { return {};}}
+              onRowCreated={this.onRowCreated}
               createChangeDescription={function(name) {
                 return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
               }}
@@ -137,8 +145,8 @@ export default React.createClass({
                 label={'New ' + this.state.settings.getIn(['row', 'name', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}
-                onRowCreated={function() { return; }}
                 emptyConfig={function() { return {};}}
+                onRowCreated={this.onRowCreated}
                 type="link"
                 createChangeDescription={function(name) {
                   return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
