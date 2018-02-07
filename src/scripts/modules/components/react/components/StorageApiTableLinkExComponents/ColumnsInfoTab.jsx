@@ -67,13 +67,11 @@ export default React.createClass({
 
   renderNameColumnCell(column) {
     const {table} = this.props,
-      indexed = table.get('indexedColumns'),
       primary = table.get('primaryKey');
     return (
       <span>
         {column}
         <div>
-          {indexed.indexOf(column) > -1 ? ( <small><span className="label label-info">index</span></small>) : '' }
           {primary.indexOf(column) > -1 ? ( <small><span className="label label-info">PK</span></small>) : '' }
         </div>
       </span>
