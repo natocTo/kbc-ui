@@ -18,7 +18,7 @@ export default React.createClass({
     return {
       tooltipPlacement: 'top',
       label: 'Drag to change order',
-      disabledLabel: 'Changing order not allowed',
+      disabledLabel: 'Clear search query to allow changing order',
       isPendingLabel: 'Ordering in progress'
     };
   },
