@@ -45,7 +45,20 @@ export default React.createClass({
     if (this.state.rows.count() === 0) {
       return (
         <div className="kbc-inner-content-padding-fix with-bottom-border">
-          <h3>TODO (Empty state)</h3>
+          <div className="component-empty-state text-center">
+            <p>No {settings.getIn(['row', 'name', 'plural']).toLowerCase()} created yet.</p>
+            <CreateConfigurationRowButton
+              label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
+              componentId={state.componentId}
+              configId={state.configurationId}
+              onRowCreated={function() { return; }}
+              emptyConfig={function() { return {};}}
+              createChangeDescription={function(name) {
+                return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
+              }}
+              type="button"
+            />
+          </div>
         </div>);
     } else {
       const header = this.state.settings.getIn(['row', 'header']).toJS();
