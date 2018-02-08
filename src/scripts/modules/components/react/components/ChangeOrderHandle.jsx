@@ -46,9 +46,9 @@ export default React.createClass({
       return (<Loader className="fa-fw" style={{cursor: 'not-allowed'}}/>);
     }
     if (this.props.disabled) {
-      return (<span className="fa fa-bars fa-fw" style={{cursor: 'not-allowed', opacity: 0.65}}/>);
+      return (<span className="fa fa-ellipsis-v fa-fw" style={{cursor: 'not-allowed', opacity: 0.65}}/>);
     }
-    return ((<span className="fa fa-bars fa-fw drag-handle" style={{cursor: 'move'}}/>));
+    return ((<span className="fa fa-ellipsis-v fa-fw drag-handle" style={{cursor: 'move'}}/>));
   }
 });
 
