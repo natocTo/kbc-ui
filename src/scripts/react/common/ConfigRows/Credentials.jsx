@@ -24,7 +24,7 @@ export default React.createClass({
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const component = ComponentStore.getComponent(componentId);
     const parseFn = settings.getIn(['credentials', 'detail', 'onLoad']);
-    const isCompletedFn = settings.getIn(['credentials', 'detail', 'isCompleted']);
+    const isCompleteFn = settings.getIn(['credentials', 'detail', 'isComplete']);
     const isChanged = Store.isEditingConfiguration(componentId, configurationId);
     return {
       componentId: settings.get('componentId'),
@@ -34,7 +34,7 @@ export default React.createClass({
       configuration: Store.getEditingConfiguration(componentId, configurationId, parseFn),
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged,
-      credentialsOpen: !isCompletedFn(Store.getConfiguration(componentId, configurationId)) || isChanged
+      credentialsOpen: !isCompleteFn(Store.getConfiguration(componentId, configurationId)) || isChanged
     };
   },
 

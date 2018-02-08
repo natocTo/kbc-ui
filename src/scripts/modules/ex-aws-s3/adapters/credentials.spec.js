@@ -2,7 +2,7 @@ var assert = require('assert');
 var Immutable = require('immutable');
 var createConfiguration = require('./credentials').createConfiguration;
 var parseConfiguration = require('./credentials').parseConfiguration;
-var isCompleted = require('./credentials').isCompleted;
+var isComplete = require('./credentials').isComplete;
 var cases = require('./credentials.spec.def').cases;
 
 describe('credentials', function() {
@@ -28,16 +28,16 @@ describe('credentials', function() {
     });
   });
 
-  describe('isCompleted()', function() {
+  describe('isComplete()', function() {
     it('should return false with empty configuration', function() {
-      assert.equal(isCompleted(Immutable.fromJS({})), false);
+      assert.equal(isComplete(Immutable.fromJS({})), false);
     });
     it('should return false with only one parameter filled', function() {
-      assert.equal(isCompleted(Immutable.fromJS({parameters: {accessKeyId: 'a'}})), false);
-      assert.equal(isCompleted(Immutable.fromJS({parameters: {'#secretAccessKey': 'a'}})), false);
+      assert.equal(isComplete(Immutable.fromJS({parameters: {accessKeyId: 'a'}})), false);
+      assert.equal(isComplete(Immutable.fromJS({parameters: {'#secretAccessKey': 'a'}})), false);
     });
     it('should return true when both parameters are filled', function() {
-      assert.equal(isCompleted(Immutable.fromJS({parameters: {'accessKeyId': 'a', '#secretAccessKey': 'a'}})), true);
+      assert.equal(isComplete(Immutable.fromJS({parameters: {'accessKeyId': 'a', '#secretAccessKey': 'a'}})), true);
     });
   });
 });

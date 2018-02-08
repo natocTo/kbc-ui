@@ -2,13 +2,12 @@ import route from '../../utils/configRowsRoute';
 import {
   createConfiguration as rowCreateConfiguration,
   parseConfiguration as rowParseConfiguration,
-  isCompleted as rowIsCompleted,
   createEmptyConfiguration as rowCreateEmptyConfiguration
 } from './adapters/row';
 import {
   createConfiguration as credentialsCreateConfiguration,
   parseConfiguration as credentialsParseConfiguration,
-  isCompleted as credentialsIsCompleted
+  isComplete as credentialsIsComplete
 } from './adapters/credentials';
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
@@ -22,7 +21,7 @@ const routeSettings = {
       render: CredentialsForm,
       onSave: credentialsCreateConfiguration,
       onLoad: credentialsParseConfiguration,
-      isCompleted: credentialsIsCompleted
+      isComplete: credentialsIsComplete
     }
   },
   row: {
@@ -31,8 +30,7 @@ const routeSettings = {
       render: ConfigurationForm,
       onSave: rowCreateConfiguration,
       onCreate: rowCreateEmptyConfiguration,
-      onLoad: rowParseConfiguration,
-      isCompleted: rowIsCompleted
+      onLoad: rowParseConfiguration
     }
   }
 };

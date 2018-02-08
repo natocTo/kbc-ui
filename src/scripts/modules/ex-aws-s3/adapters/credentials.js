@@ -16,12 +16,12 @@ function parseConfiguration(configuration) {
   });
 }
 
-function isCompleted(configuration) {
+function isComplete(configuration) {
   return configuration.getIn(['parameters', 'accessKeyId'], '') !== '' && configuration.getIn(['parameters', '#secretAccessKey'], '') !== '';
 }
 
 module.exports = {
   createConfiguration: createConfiguration,
   parseConfiguration: parseConfiguration,
-  isCompleted: isCompleted
+  isComplete: isComplete
 };
