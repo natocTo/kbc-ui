@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 const inputTypes = {
   TYPE_CHECKBOX: 'checkbox',
+  TYPE_CHECKBOX_WITH_LABEL: 'checkbox-with-label',
   TYPE_RADIO: 'radio',
   TYPE_SELECT: 'select',
   TYPE_TEXTAREA: 'textarea'
@@ -29,6 +30,20 @@ export default React.createClass({
       case inputTypes.TYPE_CHECKBOX:
         return (
           <FormGroup bsSize={this.props.bsSize}>
+            <div className={this.props.wrapperClassName} key="wrapper">
+              <Checkbox {...this.props}>
+                {this.props.children}
+                {this.props.label}
+              </Checkbox>
+              {this.props.help && <HelpBlock>{this.props.help}</HelpBlock>}
+            </div>
+          </FormGroup>
+        );
+      // checkbox
+      case inputTypes.TYPE_CHECKBOX_WITH_LABEL:
+        return (
+          <FormGroup bsSize={this.props.bsSize}>
+            {this.renderLabel()}
             <div className={this.props.wrapperClassName} key="wrapper">
               <Checkbox {...this.props}>
                 {this.props.children}
