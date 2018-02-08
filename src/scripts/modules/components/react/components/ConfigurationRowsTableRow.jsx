@@ -24,7 +24,6 @@ const TableRow = React.createClass({
     onEnableDisable: React.PropTypes.func.isRequired,
     disabledMove: React.PropTypes.bool.isRequired,
     disabledMoveLabel: React.PropTypes.string.isRequired,
-    disabledRun: React.PropTypes.bool.isRequired,
     orderPending: React.PropTypes.bool.isRequired
   },
 
@@ -86,7 +85,6 @@ const TableRow = React.createClass({
       (<RunComponentButton
         key="run"
         title="Run"
-        disabledReason="Configuration not complete"
         component={this.props.componentId}
         runParams={function() {
           return {
@@ -94,7 +92,6 @@ const TableRow = React.createClass({
             row: props.row.get('id')
           };
         }}
-        disabled={this.props.disabledRun}
       >
           {this.renderRunModalContent()}
         </RunComponentButton>

@@ -24,7 +24,6 @@ export default React.createClass({
     rowLinkTo: React.PropTypes.string.isRequired,
     onOrder: React.PropTypes.func.isRequired,
     orderPending: React.PropTypes.object.isRequired,
-    isCompletedFn: React.PropTypes.func.isRequired,
     disabledMove: React.PropTypes.bool.isRequired
   },
 
@@ -118,7 +117,6 @@ export default React.createClass({
           }}
           disabledMove={props.disabledMove || rowsOrderPending}
           disabledMoveLabel={disabledMoveLabel}
-          disabledRun={!props.isCompletedFn(row.get('configuration'))}
           orderPending={thisRowOrderPending}
         />
       );

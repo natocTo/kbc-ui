@@ -105,7 +105,6 @@ export default React.createClass({
         header={header}
         columns={columns}
         filter={filter}
-        isCompletedFn={state.settings.getIn(['row', 'detail', 'isCompleted'])}
       />);
     }
   },

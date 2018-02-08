@@ -26,9 +26,6 @@ const defaults = {
       plural: 'Tables'
     },
     detail: {
-      isCompleted: function() {
-        return true;
-      },
       onCreate: function() {
         return Immutable.fromJS({});
       }

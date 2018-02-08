@@ -23,8 +23,7 @@ export default React.createClass({
     rowEnableDisablePending: React.PropTypes.func.isRequired,
     rowLinkTo: React.PropTypes.string.isRequired,
     onOrder: React.PropTypes.func.isRequired,
-    orderPending: React.PropTypes.object.isRequired,
-    isCompletedFn: React.PropTypes.func.isRequired
+    orderPending: React.PropTypes.object.isRequired
   },
 
   getDefaultProps() {
@@ -112,7 +111,6 @@ export default React.createClass({
           rowEnableDisablePending={props.rowEnableDisablePending}
           rowEnableDisable={props.rowEnableDisable}
           disabledMove={state.query !== ''}
-          isCompletedFn={props.isCompletedFn}
           onOrder={this.onOrder}
           rows={this.state.rows}
           orderPending={this.props.orderPending}

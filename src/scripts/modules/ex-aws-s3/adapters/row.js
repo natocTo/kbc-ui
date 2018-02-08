@@ -144,10 +144,6 @@ function parseConfiguration(configuration) {
   });
 }
 
-function isCompleted(configuration) {
-  return configuration.getIn(['parameters', 'bucket'], '') !== '' && configuration.getIn(['parameters', 'key'], '') !== '';
-}
-
 function createEmptyConfiguration(name, webalizedName) {
   return createConfiguration(Immutable.fromJS({name: webalizedName}));
 }
@@ -155,6 +151,5 @@ function createEmptyConfiguration(name, webalizedName) {
 module.exports = {
   createConfiguration: createConfiguration,
   parseConfiguration: parseConfiguration,
-  isCompleted: isCompleted,
   createEmptyConfiguration: createEmptyConfiguration
 };
