@@ -253,7 +253,7 @@ export default React.createClass({
     const state = this.state;
     if (!this.state.isParsableConfiguration) {
       return (
-        <small>Can't close JSON editor, configuration is not compatible.</small>
+        <small>Can't close JSON editor, configuration is not compatible. Revert your changes to allow switching back to the visual form.</small>
       );
     }
     return (
@@ -319,7 +319,7 @@ export default React.createClass({
         }}
         showSaveModal={this.state.isParsableConfiguration && !this.state.isParametersParsable}
         saveModalTitle="Save Parameters"
-        saveModalBody={(<div>The changes in configuration parameters are not compatible with the original visual form. Saving these parameters will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON only.</div>)}
+        saveModalBody={(<div>The changes in configuration parameters are not compatible with the original visual form. Saving these parameters will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON editor only.</div>)}
       />),
       (<Processors
         key="processors"
@@ -339,7 +339,7 @@ export default React.createClass({
         }}
         showSaveModal={this.state.isParsableConfiguration && !this.state.isProcessorsParsable}
         saveModalTitle="Save Processors"
-        saveModalBody={(<div>The changes in processors configuration are not compatible with the original visual form. Saving these processors configuration will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON only.</div>)}
+        saveModalBody={(<div>The changes in processors configuration are not compatible with the original visual form. Saving these processors configuration will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON editor only.</div>)}
       />)
     ];
   }
