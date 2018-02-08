@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
-import {Input} from './../../../../react/common/KbcBootstrap';
+import { Input } from './../../../../react/common/KbcBootstrap';
 import CsvDelimiterInput from '../../../../react/common/CsvDelimiterInput';
 import Select from '../../../../react/common/Select';
 
@@ -76,9 +76,10 @@ export default React.createClass({
           />
         <h3>Download Settings</h3>
         <Input
-          type="checkbox"
+          type="checkbox-with-label"
           label="Wildcard"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8"
           checked={this.props.value.wildcard}
           onChange={function(e) {
             props.onChange({wildcard: e.target.checked});
@@ -87,9 +88,10 @@ export default React.createClass({
           help={(<span>Match all files beginning with the specified key.</span>)}
           />
         <Input
-          type="checkbox"
+          type="checkbox-with-label"
           label="Subfolders"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8"
           checked={this.props.value.subfolders}
           onChange={function(e) {
             props.onChange({subfolders: e.target.checked});
@@ -98,9 +100,10 @@ export default React.createClass({
           help={(<span>Download subfolders recursively.</span>)}
           />
         <Input
-          type="checkbox"
+          type="checkbox-with-label"
           label="New Files Only"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8"
           checked={this.props.value.newFilesOnly}
           onChange={function(e) {
             props.onChange({newFilesOnly: e.target.checked});
@@ -109,9 +112,10 @@ export default React.createClass({
           help={(<span>Every job stores the timestamp of the last downloaded file and a subsequent job can pick up from there.</span>)}
           />
         <Input
-          type="checkbox"
+          type="checkbox-with-label"
           label="Decompress"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8"
           checked={this.props.value.decompress}
           onChange={function(e) {
             props.onChange({decompress: e.target.checked});
@@ -134,9 +138,10 @@ export default React.createClass({
           help={(<span>Name of the table stored in Storage.</span>)}
           />
         <Input
-          type="checkbox"
+          type="checkbox-with-label"
           label="Incremental Load"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8"
           checked={this.props.value.incremental}
           onChange={function(e) {
             props.onChange({incremental: e.target.checked});
@@ -232,9 +237,10 @@ export default React.createClass({
         </div>
         <h3>Audit</h3>
         <Input
-          type="checkbox"
+          type="checkbox-with-label"
           label="Filename"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8"
           checked={this.props.value.addFilenameColumn}
           onChange={function(e) {
             props.onChange({addFilenameColumn: e.target.checked});
@@ -243,9 +249,10 @@ export default React.createClass({
           disabled={this.props.disabled}
           />
         <Input
-          type="checkbox"
+          type="checkbox-with-label"
           label="Row Number"
-          wrapperClassName="col-xs-8 col-xs-offset-4"
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8"
           checked={this.props.value.addRowNumberColumn}
           onChange={function(e) {
             props.onChange({addRowNumberColumn: e.target.checked});
@@ -253,7 +260,6 @@ export default React.createClass({
           help={(<span>Add a <code>s3_row_number</code> column that will store the row number from the processed file.</span>)}
           disabled={this.props.disabled}
           />
-
       </div>
     );
   }
