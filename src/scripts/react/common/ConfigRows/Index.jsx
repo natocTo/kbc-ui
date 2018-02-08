@@ -8,6 +8,7 @@ import RoutesStore from '../../../stores/RoutesStore';
 import LatestJobsStore from '../../../modules/jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../modules/components/stores/VersionsStore';
 import createStoreMixin from '../../mixins/createStoreMixin';
+import ComponentsStore from '../../../modules/components/stores/ComponentsStore';
 
 // actions
 import configurationRowsActions from '../../../modules/components/ConfigurationRowsActionCreators';
@@ -30,8 +31,10 @@ export default React.createClass({
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const settings = RoutesStore.getRouteSettings();
+    const componentId = settings.get('componentId');
     return {
-      componentId: settings.get('componentId'),
+      componentId: componentId,
+      component: ComponentsStore.getComponent(componentId),
       settings: settings,
       configurationId: configurationId,
       latestJobs: LatestJobsStore.getJobs(settings.get('componentId'), configurationId),
@@ -69,13 +72,13 @@ export default React.createClass({
           </div>
         </div>);
     } else {
-      const header = this.state.settings.getIn(['row', 'header']).toJS();
-      const columns = this.state.settings.getIn(['row', 'columns']).toJS();
+      const columns = this.state.settings.getIn(['row', 'columns']);
       const filter = this.state.settings.getIn(['row', 'searchFilter']);
       return (<ConfigurationRows
         key="rows"
         rows={this.state.rows.toList()}
         componentId={this.state.componentId}
+        component={this.state.component}
         configurationId={this.state.configurationId}
         rowDelete={function(rowId) {
           const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.rows.get(rowId).get('name') + ' deleted';
@@ -102,7 +105,6 @@ export default React.createClass({
           return configurationsActions.orderRows(state.componentId, state.configurationId, rowIds, movedRowId, changeDescription);
         }}
         orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).get('order-rows', Immutable.Map())}
-        header={header}
         columns={columns}
         filter={filter}
       />);

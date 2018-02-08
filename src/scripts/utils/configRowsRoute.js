@@ -30,17 +30,31 @@ const defaults = {
         return Immutable.fromJS({});
       }
     },
-    header: ['Name', 'Description'],
     columns: [
-      function(row) {
-        return row.get('name') !== '' ? row.get('name') : 'Untitled';
+      {
+        name: 'Name',
+        type: 'value',
+        value: function(row) {
+          return row.get('name') !== '' ? row.get('name') : 'Untitled';
+        }
       },
-      function(row) {
-        return (
-          <small>
-            {row.get('description') !== '' ? row.get('description') : 'No description'}
-          </small>
-        );
+      {
+        name: 'Storage',
+        type: 'storage-link',
+        value: function(row) {
+          return row.getIn(['configuration', 'parameters', 'saveAs'], 'untitled');
+        }
+      },
+      {
+        name: 'Description',
+        type: 'value',
+        value: function(row) {
+          return (
+            <small>
+              {row.get('description') !== '' ? row.get('description') : 'No description'}
+            </small>
+          );
+        }
       }
     ],
     searchFilter: function(row, query) {

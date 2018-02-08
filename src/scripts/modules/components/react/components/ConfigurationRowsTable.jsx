@@ -15,8 +15,8 @@ export default React.createClass({
     rows: React.PropTypes.object.isRequired,
     configurationId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string.isRequired,
-    header: React.PropTypes.array,
-    columns: React.PropTypes.array,
+    component: React.PropTypes.object.isRequired,
+    columns: React.PropTypes.object,
     rowDelete: React.PropTypes.func.isRequired,
     rowEnableDisable: React.PropTypes.func.isRequired,
     rowDeletePending: React.PropTypes.func.isRequired,
@@ -77,10 +77,10 @@ export default React.createClass({
   },
 
   renderHeader() {
-    return this.props.header.map(function(headerName, index) {
+    return this.props.columns.map(function(columnDefinition, index) {
       return (
         <span className="th" key={index}>
-          <strong>{headerName}</strong>
+          <strong>{columnDefinition.get('name')}</strong>
         </span>
       );
     });
@@ -103,6 +103,7 @@ export default React.createClass({
           columns={props.columns}
           row={row}
           componentId={props.componentId}
+          component={props.component}
           configurationId={props.configurationId}
           key={state.sortableKeyPrefix + '_' + row.get('id')}
           rowNumber={rowIndex + 1}

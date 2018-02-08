@@ -5,6 +5,7 @@ import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
 import ChangeOrderHandle from './ChangeOrderHandle';
 import { Link } from 'react-router';
+import ConfigurationRowsTableCell from './ConfigurationRowsTableCell';
 
 const TableRow = React.createClass({
   displayName: 'ConfigurationRowsTableRow',
@@ -13,10 +14,11 @@ const TableRow = React.createClass({
 
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
+    component: React.PropTypes.object.isRequired,
     configurationId: React.PropTypes.string.isRequired,
     row: React.PropTypes.object.isRequired,
     rowNumber: React.PropTypes.number.isRequired,
-    columns: React.PropTypes.array.isRequired,
+    columns: React.PropTypes.object.isRequired,
     linkTo: React.PropTypes.string.isRequired,
     isDeletePending: React.PropTypes.bool.isRequired,
     onDelete: React.PropTypes.func.isRequired,
@@ -52,10 +54,17 @@ const TableRow = React.createClass({
         <div className="td" key="row-number">
           {this.props.rowNumber}
         </div>
-        {this.props.columns.map(function(columnFunction, columnIndex) {
+        {this.props.columns.map(function(columnDefinition, index) {
           return (
-            <div className="td kbc-break-all" key={columnIndex}>
-              {columnFunction(props.row)}
+            <div className="td kbc-break-all" key={index}>
+              <ConfigurationRowsTableCell
+                type={columnDefinition.get('type', 'value')}
+                valueFn={columnDefinition.get('value')}
+                row={props.row}
+                component={props.component}
+                componentId={props.componentId}
+                configurationId={props.configurationId}
+              />
             </div>
           );
         })}

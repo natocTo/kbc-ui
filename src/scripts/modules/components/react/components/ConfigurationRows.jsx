@@ -14,8 +14,9 @@ export default React.createClass({
     rows: React.PropTypes.object.isRequired,
     configurationId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string.isRequired,
+    component: React.PropTypes.object.isRequired,
     header: React.PropTypes.array,
-    columns: React.PropTypes.array,
+    columns: React.PropTypes.object,
     filter: React.PropTypes.func,
     rowDelete: React.PropTypes.func.isRequired,
     rowEnableDisable: React.PropTypes.func.isRequired,
@@ -104,6 +105,7 @@ export default React.createClass({
           columns={props.columns}
           header={props.header}
           componentId={props.componentId}
+          component={props.component}
           configurationId={props.configurationId}
           rowLinkTo={props.rowLinkTo}
           rowDeletePending={props.rowDeletePending}
