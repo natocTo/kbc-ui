@@ -12,14 +12,16 @@ export default React.createClass({
     children: React.PropTypes.node.isRequired,
     disabledTooltip: React.PropTypes.string,
     label: React.PropTypes.string,
-    tooltipPlacement: React.PropTypes.string
+    tooltipPlacement: React.PropTypes.string,
+    tooltip: React.PropTypes.string
   },
 
   getDefaultProps() {
     return {
       label: 'Reset State',
       disabledTooltip: 'No stored state',
-      tooltipPlacement: 'top'
+      tooltipPlacement: 'top',
+      tooltip: 'State stores information from the previous run(s) and allows eg. incremental loads.'
     };
   },
 
@@ -88,7 +90,14 @@ export default React.createClass({
         </Tooltip>
       );
     }
-    return body;
+    return (
+      <Tooltip
+        tooltip={this.props.tooltip}
+        placement={this.props.tooltipPlacement}
+      >
+        {body}
+      </Tooltip>
+    );
   },
 
 
