@@ -95,7 +95,7 @@ export default React.createClass({
     if (this.state.rows.size === 0) {
       return (
         <div className="kbc-inner-content-padding-fix">
-          No result found.
+          No results found.
         </div>
       );
     } else {
