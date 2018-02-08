@@ -5,6 +5,7 @@ import SaveButtons from '../../../../react/common/SaveButtons';
 import immutableRendererMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
 export default React.createClass({
+  displayName: 'Processors',
   mixins: [immutableRendererMixin],
 
   propTypes: {
@@ -30,14 +31,14 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px'}}>
+        <h2 style={{lineHeight: '32px', marginBottom: '10px'}}>
           Processors
           {' '}
           <small>
             <Clipboard text={this.props.value}/>
           </small>
-          {this.renderButtons()}
         </h2>
+        {this.renderButtons()}
         <Input
           value={this.getValue()}
           disabled={this.props.isSaving}
