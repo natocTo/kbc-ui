@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import Input from './ParametersInput';
+import Input from './JsonConfigurationInput';
 import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import immutableRendererMixin from '../../../../react/mixins/ImmutableRendererMixin';
 
 export default React.createClass({
+  displayName: 'JsonConfiguration',
   mixins: [immutableRendererMixin],
 
   propTypes: {
@@ -29,14 +30,14 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px'}}>
-          Parameters
+        <h2 style={{lineHeight: '32px', marginBottom: '10px'}}>
+          Configuration
           {' '}
           <small>
             <Clipboard text={this.props.value}/>
           </small>
-          {this.renderButtons()}
         </h2>
+        {this.renderButtons()}
         <Input
           value={this.props.value}
           disabled={this.props.isSaving}
@@ -48,7 +49,7 @@ export default React.createClass({
 
   renderButtons() {
     return (
-      <span className="pull-right">
+      <div className="text-right">
         <SaveButtons
           isSaving={this.props.isSaving}
           disabled={!this.props.isEditingValid}
@@ -59,7 +60,7 @@ export default React.createClass({
           modalTitle={this.props.saveModalTitle}
           modalBody={this.props.saveModalBody}
         />
-      </span>
+      </div>
     );
   }
 });

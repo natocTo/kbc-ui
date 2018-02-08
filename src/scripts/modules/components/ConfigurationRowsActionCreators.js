@@ -166,9 +166,9 @@ module.exports = {
       });
   },
 
-  updateParameters: function(componentId, configurationId, rowId, value) {
+  updateJsonConfiguration: function(componentId, configurationId, rowId, value) {
     Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PARAMETERS,
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_JSON_CONFIGURATION,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId,
@@ -176,32 +176,30 @@ module.exports = {
     });
   },
 
-  resetParameters: function(componentId, configurationId, rowId) {
+  resetJsonConfiguration: function(componentId, configurationId, rowId) {
     Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_PARAMETERS,
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_JSON_CONFIGURATION,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
     });
   },
 
-  saveParameters: function(componentId, configurationId, rowId, changeDescription) {
+  saveJsonConfiguration: function(componentId, configurationId, rowId, changeDescription) {
     Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_START,
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
     });
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId, changeDescription);
-    let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
-    let parameters = ConfigurationRowsStore.getEditingParametersString(componentId, configurationId, rowId);
-    configuration = configuration.set('parameters', Immutable.fromJS(JSON.parse(parameters)));
+    const configuration = Immutable.fromJS(JSON.parse(ConfigurationRowsStore.getEditingJsonConfigurationString(componentId, configurationId, rowId)));
 
     return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited manually'))
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_SUCCESS,
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -209,59 +207,7 @@ module.exports = {
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_ERROR,
-          componentId: componentId,
-          configurationId: configurationId,
-          rowId: rowId,
-          error: e
-        });
-        throw e;
-      });
-  },
-
-  updateProcessors: function(componentId, configurationId, rowId, value) {
-    Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PROCESSORS,
-      componentId: componentId,
-      configurationId: configurationId,
-      rowId: rowId,
-      value: value
-    });
-  },
-
-  resetProcessors: function(componentId, configurationId, rowId) {
-    Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_PROCESSORS,
-      componentId: componentId,
-      configurationId: configurationId,
-      rowId: rowId
-    });
-  },
-
-  saveProcessors: function(componentId, configurationId, rowId, changeDescription) {
-    Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_START,
-      componentId: componentId,
-      configurationId: configurationId,
-      rowId: rowId
-    });
-    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    let configuration = ConfigurationRowsStore.getConfiguration(componentId, configurationId, rowId);
-    let processors = ConfigurationRowsStore.getEditingProcessorsString(componentId, configurationId, rowId);
-    configuration = configuration.set('processors', Immutable.fromJS(JSON.parse(processors)));
-    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' processors edited manually'))
-      .then(function() {
-        VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_SUCCESS,
-          componentId: componentId,
-          configurationId: configurationId,
-          rowId: rowId,
-          value: configuration
-        });
-      }).catch(function(e) {
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_ERROR,
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -332,8 +278,7 @@ module.exports = {
   },
 
   closeJsonEditor: function(componentId, configurationId, rowId) {
-    this.resetParameters(componentId, configurationId, rowId);
-    this.resetProcessors(componentId, configurationId, rowId);
+    this.resetJsonConfiguration(componentId, configurationId, rowId);
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_JSON_EDITOR_CLOSE,
       componentId: componentId,

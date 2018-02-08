@@ -29,9 +29,9 @@ let ConfigurationRowsStore = StoreUtils.createStore({
     return _store.getIn(['rows', componentId, configId], Map());
   },
 
-  isEditingParametersValid: function(componentId, configId, rowId) {
+  isEditingJsonConfigurationValid: function(componentId, configId, rowId) {
     var value;
-    value = this.getEditingParametersString(componentId, configId, rowId);
+    value = this.getEditingJsonConfigurationString(componentId, configId, rowId);
     try {
       JSON.parse(value);
       return true;
@@ -40,51 +40,23 @@ let ConfigurationRowsStore = StoreUtils.createStore({
     }
   },
 
-  getEditingParametersString: function(componentId, configId, rowId) {
+  getEditingJsonConfigurationString: function(componentId, configId, rowId) {
+    const storedConfiguration = this.getConfiguration(componentId, configId, rowId);
     return _store.getIn(
-      ['editing', componentId, configId, rowId, 'parameters'],
-      JSON.stringify(this.getConfiguration(componentId, configId, rowId).get('parameters', Immutable.Map()), null, '  ')
+      ['editing', componentId, configId, rowId, 'json'],
+      JSON.stringify(storedConfiguration.toJS(), null, '  ')
     );
   },
 
-  getEditingParameters: function(componentId, configId, rowId) {
-    if (!this.isEditingParametersValid(componentId, configId, rowId)) {
+  getEditingJsonConfiguration: function(componentId, configId, rowId) {
+    if (!this.isEditingJsonConfigurationValid(componentId, configId, rowId)) {
       return null;
     }
-    return JSON.parse(this.getEditingParametersString(componentId, configId, rowId));
+    return JSON.parse(this.getEditingJsonConfigurationString(componentId, configId, rowId));
   },
 
-  isEditingParameters: function(componentId, configId, rowId) {
-    return _store.hasIn(['editing', componentId, configId, rowId, 'parameters']);
-  },
-
-  isEditingProcessorsValid: function(componentId, configId, rowId) {
-    var value;
-    value = this.getEditingProcessorsString(componentId, configId, rowId);
-    try {
-      JSON.parse(value);
-      return true;
-    } catch (exception) {
-      return false;
-    }
-  },
-
-  getEditingProcessorsString: function(componentId, configId, rowId) {
-    return _store.getIn(
-      ['editing', componentId, configId, rowId, 'processors'],
-      JSON.stringify(this.getConfiguration(componentId, configId, rowId).get('processors', Immutable.Map()).toJS(), null, '  ')
-    );
-  },
-
-  getEditingProcessors: function(componentId, configId, rowId) {
-    if (!this.isEditingProcessorsValid(componentId, configId, rowId)) {
-      return null;
-    }
-    return JSON.parse(this.getEditingProcessorsString(componentId, configId, rowId));
-  },
-
-  isEditingProcessors: function(componentId, configId, rowId) {
-    return _store.hasIn(['editing', componentId, configId, rowId, 'processors']);
+  isEditingJsonConfiguration: function(componentId, configId, rowId) {
+    return _store.hasIn(['editing', componentId, configId, rowId, 'json']);
   },
 
   getPendingActions: function(componentId, configId, rowId) {
@@ -204,59 +176,31 @@ Dispatcher.register(function(payload) {
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'isDisabled'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PARAMETERS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_JSON_CONFIGURATION:
       _store = _store.setIn(
-        ['editing', action.componentId, action.configurationId, action.rowId, 'parameters'],
+        ['editing', action.componentId, action.configurationId, action.rowId, 'json'],
         action.value
       );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_PARAMETERS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_JSON_CONFIGURATION:
       _store = _store.deleteIn(
-        ['editing', action.componentId, action.configurationId, action.rowId, 'parameters']
+        ['editing', action.componentId, action.configurationId, action.rowId, 'json']
       );
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_START:
-      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-parameters'], true);
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-json'], true);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_ERROR:
-      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-parameters']);
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-json']);
       return ConfigurationRowsStore.emitChange();
 
-    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PARAMETERS_SUCCESS:
+    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_SUCCESS:
       _store = _store
-        .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-parameters'])
-        .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'parameters'])
-        .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
-      return ConfigurationRowsStore.emitChange();
-
-    case constants.ActionTypes.CONFIGURATION_ROWS_UPDATE_PROCESSORS:
-      _store = _store.setIn(
-        ['editing', action.componentId, action.configurationId, action.rowId, 'processors'],
-        action.value
-      );
-      return ConfigurationRowsStore.emitChange();
-
-    case constants.ActionTypes.CONFIGURATION_ROWS_RESET_PROCESSORS:
-      _store = _store.deleteIn(
-        ['editing', action.componentId, action.configurationId, action.rowId, 'processors']
-      );
-      return ConfigurationRowsStore.emitChange();
-
-    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_START:
-      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-processors'], true);
-      return ConfigurationRowsStore.emitChange();
-
-    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_ERROR:
-      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-processors']);
-      return ConfigurationRowsStore.emitChange();
-
-    case constants.ActionTypes.CONFIGURATION_ROWS_SAVE_PROCESSORS_SUCCESS:
-      _store = _store
-        .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-processors'])
-        .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'processors'])
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, action.rowId, 'save-json'])
+        .deleteIn(['editing', action.componentId, action.configurationId, action.rowId, 'json'])
         .setIn(['rows', action.componentId, action.configurationId, action.rowId, 'configuration'], action.value);
       return ConfigurationRowsStore.emitChange();
 

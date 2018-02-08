@@ -15,8 +15,7 @@ import ConfigurationRowDescription from '../../../modules/components/react/compo
 import ConfigurationRowMetadata from '../../../modules/components/react/components/ConfigurationRowMetadata';
 import DeleteConfigurationRowButton from '../../../modules/components/react/components/DeleteConfigurationRowButton';
 import ResetStateButton from '../../../modules/components/react/components/ResetStateButton';
-import Parameters from '../../../modules/components/react/components/Parameters';
-import Processors from '../../../modules/components/react/components/Processors';
+import JsonConfiguration from '../../../modules/components/react/components/JsonConfiguration';
 import SaveButtons from '../SaveButtons';
 import ActivateDeactivateButton from '../ActivateDeactivateButton';
 import LatestRowVersions from '../../../modules/components/react/components/SidebarRowVersionsWrapper';
@@ -32,6 +31,7 @@ export default React.createClass({
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const rowId = RoutesStore.getCurrentRouteParam('row');
     const row = Store.get(settings.get('componentId'), configurationId, rowId);
+    const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(settings.get('componentId'), configurationId, rowId);
     return {
       componentId: settings.get('componentId'),
       settings: settings,
@@ -39,22 +39,12 @@ export default React.createClass({
       rowId: rowId,
       row: row,
 
-      parametersValue: Store.getEditingParametersString(settings.get('componentId'), configurationId, rowId),
-      isParametersSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-parameters'),
-      isParametersValid: Store.isEditingParametersValid(settings.get('componentId'), configurationId, rowId),
-      isParametersChanged: Store.isEditingParameters(settings.get('componentId'), configurationId, rowId),
-      isParametersParsable: isParsableConfiguration(
-        Store.getConfiguration(settings.get('componentId'), configurationId, rowId).set('parameters', Immutable.fromJS(Store.getEditingParameters(settings.get('componentId'), configurationId, rowId))),
-        settings.getIn(['row', 'detail', 'onLoad']),
-        settings.getIn(['row', 'detail', 'onSave'])
-      ),
-
-      processorsValue: Store.getEditingProcessorsString(settings.get('componentId'), configurationId, rowId),
-      isProcessorsSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-processors'),
-      isProcessorsValid: Store.isEditingProcessorsValid(settings.get('componentId'), configurationId, rowId),
-      isProcessorsChanged: Store.isEditingProcessors(settings.get('componentId'), configurationId, rowId),
-      isProcessorsParsable: isParsableConfiguration(
-        Store.getConfiguration(settings.get('componentId'), configurationId, rowId).set('processors', Immutable.fromJS(Store.getEditingProcessors(settings.get('componentId'), configurationId, rowId))),
+      jsonConfigurationValue: Store.getEditingJsonConfigurationString(settings.get('componentId'), configurationId, rowId),
+      isJsonConfigurationSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-json'),
+      isJsonConfigurationValid: isJsonConfigurationValid,
+      isJsonConfigurationChanged: Store.isEditingJsonConfiguration(settings.get('componentId'), configurationId, rowId),
+      isJsonConfigurationParsable: isJsonConfigurationValid && isParsableConfiguration(
+        Immutable.fromJS(Store.getEditingJsonConfiguration(settings.get('componentId'), configurationId, rowId)),
         settings.getIn(['row', 'detail', 'onLoad']),
         settings.getIn(['row', 'detail', 'onSave'])
       ),
@@ -235,17 +225,15 @@ export default React.createClass({
   renderOpenJSONLink() {
     const state = this.state;
     return (
-      <span style={{marginLeft: '10px'}}>
-        <small>
-          <a onClick={function() {
-            Actions.openJsonEditor(state.componentId, state.configurationId, state.rowId);
-          }}>
-            Open JSON editor
-          </a>
-          {' '}
-          (discards all unsaved changes)
-        </small>
-      </span>
+      <small>
+        <a onClick={function() {
+          Actions.openJsonEditor(state.componentId, state.configurationId, state.rowId);
+        }}>
+          Open JSON editor
+        </a>
+        {' '}
+        (discards all unsaved changes)
+      </small>
     );
   },
 
@@ -273,11 +261,11 @@ export default React.createClass({
   renderForm() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px'}}>
+        {this.renderOpenJSONLink()}
+        <h2 style={{lineHeight: '32px', marginBottom: '10px'}}>
           Configuration
-          {this.renderOpenJSONLink()}
-          {this.renderButtons()}
         </h2>
+        {this.renderButtons()}
         {this.renderFormFields()}
       </div>
     );
@@ -301,45 +289,25 @@ export default React.createClass({
     const settings = this.state.settings;
     return [
       (<div key="close">{this.renderCloseJSONLink()}</div>),
-      (<Parameters
-        key="parameters"
-        isSaving={this.state.isParametersSaving}
-        value={this.state.parametersValue}
-        isEditingValid={this.state.isParametersValid}
-        isChanged={this.state.isParametersChanged}
+      (<JsonConfiguration
+        key="json-configuration"
+        isSaving={this.state.isJsonConfigurationSaving}
+        value={this.state.jsonConfigurationValue}
+        isEditingValid={this.state.isJsonConfigurationValid}
+        isChanged={this.state.isJsonConfigurationChanged}
         onEditCancel={function() {
-          return Actions.resetParameters(state.componentId, state.configurationId, state.rowId);
+          return Actions.resetJsonConfiguration(state.componentId, state.configurationId, state.rowId);
         }}
         onEditChange={function(parameters) {
-          return Actions.updateParameters(state.componentId, state.configurationId, state.rowId, parameters);
+          return Actions.updateJsonConfiguration(state.componentId, state.configurationId, state.rowId, parameters);
         }}
         onEditSubmit={function() {
-          const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' parameters edited manually';
-          return Actions.saveParameters(state.componentId, state.configurationId, state.rowId, changeDescription);
+          const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' configuration edited manually';
+          return Actions.saveJsonConfiguration(state.componentId, state.configurationId, state.rowId, changeDescription);
         }}
-        showSaveModal={this.state.isParsableConfiguration && !this.state.isParametersParsable}
+        showSaveModal={this.state.isParsableConfiguration && !this.state.isJsonConfigurationParsable}
         saveModalTitle="Save Parameters"
-        saveModalBody={(<div>The changes in configuration parameters are not compatible with the original visual form. Saving these parameters will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON editor only.</div>)}
-      />),
-      (<Processors
-        key="processors"
-        isSaving={this.state.isProcessorsSaving}
-        value={this.state.processorsValue}
-        isEditingValid={this.state.isProcessorsValid}
-        isChanged={this.state.isProcessorsChanged}
-        onEditCancel={function() {
-          return Actions.resetProcessors(state.componentId, state.configurationId, state.rowId);
-        }}
-        onEditChange={function(parameters) {
-          return Actions.updateProcessors(state.componentId, state.configurationId, state.rowId, parameters);
-        }}
-        onEditSubmit={function() {
-          const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' processors edited manually';
-          return Actions.saveProcessors(state.componentId, state.configurationId, state.rowId, changeDescription);
-        }}
-        showSaveModal={this.state.isParsableConfiguration && !this.state.isProcessorsParsable}
-        saveModalTitle="Save Processors"
-        saveModalBody={(<div>The changes in processors configuration are not compatible with the original visual form. Saving these processors configuration will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON editor only.</div>)}
+        saveModalBody={(<div>The changes in the configuration are not compatible with the original visual form. Saving this configuration will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON editor only.</div>)}
       />)
     ];
   }
