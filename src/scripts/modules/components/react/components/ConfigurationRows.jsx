@@ -95,7 +95,9 @@ export default React.createClass({
     const state = this.state;
     if (this.state.rows.size === 0) {
       return (
-        <div>No result found.</div>
+        <div className="kbc-inner-content-padding-fix">
+          No result found.
+        </div>
       );
     } else {
       return (
@@ -122,7 +124,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div>
+        <div className="kbc-inner-content-padding-fix">
           <SearchRow
             query={this.state.query}
             onChange={this.onChangeSearch}
