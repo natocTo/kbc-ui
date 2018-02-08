@@ -11,6 +11,7 @@ import {
 } from './adapters/credentials';
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
+import React from 'react';
 
 const routeSettings = {
   componentId: 'keboola.ex-aws-s3',
@@ -31,7 +32,34 @@ const routeSettings = {
       onSave: rowCreateConfiguration,
       onCreate: rowCreateEmptyConfiguration,
       onLoad: rowParseConfiguration
-    }
+    },
+    columns: [
+      {
+        name: 'Name',
+        type: 'value',
+        value: function(row) {
+          return row.get('name') !== '' ? row.get('name') : 'Untitled';
+        }
+      },
+      {
+        name: 'Storage',
+        type: 'storage-link-default-bucket',
+        value: function(row) {
+          return row.getIn(['configuration', 'parameters', 'saveAs']);
+        }
+      },
+      {
+        name: 'Description',
+        type: 'value',
+        value: function(row) {
+          return (
+            <small>
+              {row.get('description') !== '' ? row.get('description') : 'No description'}
+            </small>
+          );
+        }
+      }
+    ]
   }
 };
 
