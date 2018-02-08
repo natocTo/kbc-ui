@@ -17,7 +17,7 @@ const TableCell = React.createClass({
   },
 
   render() {
-    if (this.props.type === 'storage-link') {
+    if (this.props.type === 'storage-link-default-bucket') {
       const defaultBucketStage = this.props.component.getIn(['data', 'default_bucket_stage']);
       const sanitizedComponentId = this.props.component.get('id').replace(/[^a-zA-Z0-9-]/i, '-');
       const tableId = defaultBucketStage + '.c-' + sanitizedComponentId + '-' + this.props.configurationId + '.' + this.props.valueFn(this.props.row);

@@ -40,9 +40,9 @@ const defaults = {
       },
       {
         name: 'Storage',
-        type: 'storage-link',
+        type: 'storage-link-default-bucket',
         value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'saveAs'], 'untitled');
+          return row.getIn(['configuration', 'parameters', 'name'], 'untitled');
         }
       },
       {
