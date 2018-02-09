@@ -23,7 +23,8 @@ OutputMappingRow = React.createClass(
     buckets: React.PropTypes.object.isRequired
     bucket: React.PropTypes.object.isRequired
     pendingActions: React.PropTypes.object.isRequired
-    definition: React.PropTypes.object
+    definition: React.PropTypes.object,
+    otherOutputMappings: React.PropTypes.object
 
   getDefaultProps: ->
     definition: Immutable.Map()
@@ -98,6 +99,7 @@ OutputMappingRow = React.createClass(
               onCancel: @_handleCancel
               onSave: @_handleSave
               definition: @props.definition
+              otherOutputMappings: @props.otherOutputMappings
 
   _handleChange: (newMapping) ->
     actionCreators.updateTransformationEditingField(@props.bucket.get('id'),

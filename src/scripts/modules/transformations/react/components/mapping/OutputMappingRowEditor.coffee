@@ -20,6 +20,7 @@ module.exports = React.createClass
     type: React.PropTypes.string.isRequired
     initialShowDetails: React.PropTypes.bool.isRequired
     definition: React.PropTypes.object
+    isNameAlreadyInUse: React.PropTypes.bool.isRequired
 
   getDefaultProps: ->
     definition: Immutable.Map()
@@ -125,8 +126,11 @@ module.exports = React.createClass
                 labelClassName: 'col-xs-2'
                 wrapperClassName: 'col-xs-10'
                 help: React.DOM.span {},
-                  "File will be uploaded from"
-                  React.DOM.code {}, "/data/out/tables/" + @props.value.get("source", "")
+                  "File will be uploaded from "
+                  React.DOM.code {},
+                    "/data/out/tables/" + @props.value.get("source", "")
+                  "."
+                  (if @props.isNameAlreadyInUse then " Filename already in use.")
             else
               Input
                 type: 'text'

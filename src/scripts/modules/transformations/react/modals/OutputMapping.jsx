@@ -20,6 +20,7 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
+    otherOutputMappings: PropTypes.object.isRequired,
     definition: PropTypes.object
   },
 
@@ -29,10 +30,20 @@ export default React.createClass({
     };
   },
 
+  isNameAlreadyInUse() {
+    if (this.props.backend === 'docker') {
+      return this.props.otherOutputMappings.map(function(outputMapping) {
+        return outputMapping.get('source');
+      }).includes(this.props.mapping.get('source'));
+    }
+    return false;
+  },
+
   isValid() {
     return !!this.props.mapping.get('source') &&
       !!this.props.mapping.get('destination') &&
-      validateStorageTableId(this.props.mapping.get('destination', ''));
+      validateStorageTableId(this.props.mapping.get('destination', '')) &&
+      !this.isNameAlreadyInUse();
   },
 
   getInitialState() {
@@ -82,6 +93,7 @@ export default React.createClass({
               type={this.props.type}
               initialShowDetails={resolveOutputShowDetails(this.props.mapping)}
               definition={this.props.definition}
+              isNameAlreadyInUse={this.isNameAlreadyInUse()}
               />
           </Modal.Body>
           <Modal.Footer>
