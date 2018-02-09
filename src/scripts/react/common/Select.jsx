@@ -13,7 +13,7 @@ export default React.createClass({
     labelKey: PropTypes.string,
     valueKey: PropTypes.string,
     matchPos: PropTypes.string,
-    help: PropTypes.string,
+    help: PropTypes.any,
     delimiter: PropTypes.string,
     trimMultiCreatedValues: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
