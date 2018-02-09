@@ -15,6 +15,7 @@ export default React.createClass({
     matchPos: PropTypes.string,
     help: PropTypes.string,
     delimiter: PropTypes.string,
+    trimMultiCreatedValues: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     optionRenderer: PropTypes.func,
     filterOption: PropTypes.func
@@ -22,6 +23,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
+      trimMultiCreatedValues: false,
       value: '',
       emptyStrings: false,
       allowCreate: false,
@@ -32,6 +34,24 @@ export default React.createClass({
       valueKey: 'value',
       delimiter: ','
     };
+  },
+
+  isOptionUnique({ option, options, labelKey, valueKey }) {
+    const {trimMultiCreatedValues} = this.props;
+    return options
+      .filter((existingOption) => {
+        const la = existingOption[labelKey];
+        const lb = option[labelKey];
+        const va = existingOption[valueKey];
+        const vb = option[valueKey];
+
+        if (trimMultiCreatedValues) {
+          return la.trim() === lb.trim() || va.trim() === vb.trim();
+        } else {
+          return la === lb || va === vb;
+        }
+      })
+      .length === 0;
   },
 
   valueRenderer(value) {
@@ -100,6 +120,7 @@ export default React.createClass({
       return (
         <span>
           <Select.Creatable
+            isOptionUnique={this.isOptionUnique}
             {...this.props}
             value={this.props.value.toJS ? this.mapValues(this.props.value.toJS()) : this.mapValues(this.props.value)}
             valueRenderer={this.valueRenderer}
@@ -126,6 +147,7 @@ export default React.createClass({
   },
 
   onChange(selected) {
+    const {trimMultiCreatedValues} = this.props;
     if (this.props.multi) {
       this.props.onChange(Immutable.fromJS(selected.map(function(value) {
         if (value.value === '%_EMPTY_STRING_%') {
@@ -133,6 +155,9 @@ export default React.createClass({
         }
         if (value.value === '%_SPACE_CHARACTER_%') {
           return ' ';
+        }
+        if (trimMultiCreatedValues) {
+          return value.value.trim();
         }
         return value.value;
       })));
