@@ -188,10 +188,28 @@ export default React.createClass({
 
   renderRunModalContent() {
     const rowName = this.state.row.get('name', 'Untitled');
+    let changedMessage = '';
+    if (this.state.isJsonConfigurationChanged || this.state.isChanged) {
+      changedMessage = (<p><strong>{'The configuration has unsaved changes.'}</strong></p>);
+    }
     if (this.state.row.get('isDisabled')) {
-      return 'You are about to run ' + rowName + '. Configuration ' + rowName + ' is disabled and will be forced to run ';
+      return (
+        <span>
+          {changedMessage}
+          <p>
+            You are about to run {rowName}. Configuration {rowName} is disabled and will be forced to run.
+          </p>
+        </span>
+      );
     } else {
-      return 'You are about to run ' + rowName + '.';
+      return (
+        <span>
+          {changedMessage}
+          <p>
+            You are about to run {rowName}.
+          </p>
+        </span>
+      );
     }
   },
 

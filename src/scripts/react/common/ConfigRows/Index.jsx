@@ -37,8 +37,10 @@ export default React.createClass({
       component: ComponentsStore.getComponent(componentId),
       settings: settings,
       configurationId: configurationId,
-      latestJobs: LatestJobsStore.getJobs(settings.get('componentId'), configurationId),
-      rows: ConfigurationRowsStore.getRows(settings.get('componentId'), configurationId)
+      configuration: ConfigurationsStore.get(componentId, configurationId),
+      latestJobs: LatestJobsStore.getJobs(componentId, configurationId),
+      rows: ConfigurationRowsStore.getRows(componentId, configurationId),
+      isChanged: ConfigurationsStore.isEditingConfiguration(componentId, configurationId)
     };
   },
 
@@ -111,6 +113,22 @@ export default React.createClass({
     }
   },
 
+  renderRunModalContent() {
+    const configurationName = this.state.configuration.get('name', 'Untitled');
+    let changedMessage = '';
+    if (this.state.isChanged) {
+      changedMessage = (<p><strong>{'The configuration has unsaved changes.'}</strong></p>);
+    }
+    return (
+      <span>
+        {changedMessage}
+        <p>
+          You are about to run {configurationName}.
+        </p>
+      </span>
+    );
+  },
+
   render() {
     const settings = this.state.settings;
     return (
@@ -138,7 +156,7 @@ export default React.createClass({
                   mode="link"
                   runParams={() => ({config: this.state.configurationId})}
               >
-                <span>You are about to run the configuration.</span>
+                {this.renderRunModalContent()}
               </RunComponentButton>
             </li>
             <li>
