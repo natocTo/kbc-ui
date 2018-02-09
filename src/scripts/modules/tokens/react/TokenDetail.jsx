@@ -12,6 +12,9 @@ import createTokenEventsApi from '../TokenEventsApi';
 import SaveButtons from '../../../react/common/SaveButtons';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import TokenString from './Index/TokenString';
+import SendTokenModal from '../react/Index/SendTokenModal';
+// import Tooltip from '../../../react/common/Tooltip';
+import ApplicationActionCreators from '../../../actions/ApplicationActionCreators';
 
 const makeDetailPath = (tokenId) => (rest) => ['TokenDetail', tokenId].concat(rest || []);
 
@@ -28,17 +31,20 @@ export default React.createClass({
     const tokenDetailState = localState.getIn(path(), Map());
     const dirtyToken = tokenDetailState.get('dirtyToken', token || Map());
     const isSaving = tokenDetailState.get('isSaving', false);
+    const tokenToSend = tokenDetailState.get('sendToken', Map());
     const eventsApi = !isNew && createTokenEventsApi(tokenId);
 
     return {
       localState: localState,
+      tokenToSend: tokenToSend,
       isNew: isNew,
       token: token,
       tokenId: tokenId,
       dirtyToken: dirtyToken,
       isSaving: isSaving,
       allBuckets: BucketsStore.getAll(),
-      eventsApi: eventsApi
+      eventsApi: eventsApi,
+      isSendingToken: TokensStore.isSendingToken
     };
   },
 
@@ -117,10 +123,52 @@ export default React.createClass({
   renderTokenCreated() {
     return (
       <div>
-        <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. Make sure to copy it. You won't be able to see it again. </p>
-        <TokenString token={this.state.createdToken} />
+        {this.renderTokenSendModal()}
+        <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. </p>
+        <TokenString token={this.state.createdToken}
+          sendTokenComponent={this.renderTokenSendButton(this.state.createdToken)}/>
       </div>
     );
+  },
+
+  renderTokenSendButton(token) {
+    const onClickButton = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.updateLocalState('sendToken', token);
+    };
+    return (
+      <div
+        style={{cursor: 'pointer'}}
+        onClick={onClickButton}
+        className="btnf btn-linkf">
+        <span className="fa fa-fw fa-share"/>
+        {' '}
+        Send token via email
+      </div>
+    );
+  },
+
+
+  renderTokenSendModal() {
+    const token = this.state.tokenToSend;
+    const isSending = this.state.isSendingToken(token.get('id'));
+    return (
+      <SendTokenModal
+        token={token}
+        show={!!token.get('id')}
+        onHideFn={() => this.updateLocalState('sendToken', Map())}
+        onSendFn={(params) => this.sendToken(token, params)}
+        isSending={!!isSending}
+      />
+    );
+  },
+
+  sendToken(token, params) {
+    return TokensActions.sendToken(token.get('id'), params).then(() =>
+      ApplicationActionCreators.sendNotification({
+        message: `Token ${token.get('description')} sent to ${params.email}`
+      }));
   },
 
 
@@ -136,21 +184,21 @@ export default React.createClass({
       <div className="kbc-inner-content-padding-fix">
         <div className="form form-horizontal">
           {this.state.createdToken
-            ? this.renderTokenCreated()
-            : (
-              <div className="form-group">
-                <div className="col-sm-12 text-right">
-                  <ConfirmButtons
-                    isSaving={this.state.isSaving}
-                    isDisabled={!this.isValid()}
-                    onSave={this.handleSaveToken}
-                    onCancel={this.handleClose}
-                    saveLabel="Create"
-                    showCancel={false}
-                  />
-                </div>
-              </div>
-            )
+           ? this.renderTokenCreated()
+           : (
+             <div className="form-group">
+               <div className="col-sm-12 text-right">
+                 <ConfirmButtons
+                   isSaving={this.state.isSaving}
+                   isDisabled={!this.isValid()}
+                   onSave={this.handleSaveToken}
+                   onCancel={this.handleClose}
+                   saveLabel="Create"
+                   showCancel={false}
+                 />
+               </div>
+             </div>
+           )
           }
           {this.renderTokenEditor(false)}
         </div>
