@@ -13,7 +13,6 @@ InstalledComponentsActionsCreators = require './InstalledComponentsActionCreator
 ComponentsActionCreators = require './ComponentsActionCreators'
 
 exApifyRoutes = require('../apify/routes').default
-exDbRoutes = require '../ex-db/exDbRoutes'
 exDbGenericRoutes = require('../ex-db-generic/routes').default
 exMongoDbRoutes = require '../ex-mongodb/routes'
 exGoogleBigqueryRoutes = require('../ex-google-bigquery/routes').default
@@ -90,8 +89,6 @@ routes =
       name: 'new-extractor'
       title: 'New Extractor'
       defaultRouteHandler: extractor(NewComponent)
-    ,
-      createComponentRoute 'ex-db', [exDbRoutes]
     ,
       createComponentRoute 'keboola.ex-google-analytics-v4', [exGaV4Routes('keboola.ex-google-analytics-v4')]
       createComponentRoute 'keboola.ex-google-analytics', [exGaV4Routes('keboola.ex-google-analytics')]
