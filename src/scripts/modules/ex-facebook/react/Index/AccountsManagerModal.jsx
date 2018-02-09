@@ -106,11 +106,12 @@ export default React.createClass({
 
   renderError(error, code) {
     let message = 'Unexpected error';
+    const errorBody = error.get('error');
     try {
-      const jsError = JSON.parse(error).error;
+      const jsError = JSON.parse(errorBody).error;
       message = jsError.message || jsError;
     } catch (e) {
-      message = error;
+      message = error.get('message') || error;
     }
 
     return (
