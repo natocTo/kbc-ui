@@ -263,9 +263,9 @@ templateFn = (componentId) ->
   _renderHeaderRow: ->
     div className: 'tr',
       span className: 'th',
-        strong null, 'Table name'
+        strong null, 'Source Table'
       span className: 'th',
-        strong null, 'Database name'
+        strong null, 'Destination Table'
       if @isV2()
         span className: 'th',
           strong null, 'Incremental'
