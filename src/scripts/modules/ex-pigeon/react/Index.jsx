@@ -111,12 +111,8 @@ export default React.createClass({
                     </InputGroup.Button>
                   </InputGroup>
                   <HelpBlock>
-                    <ul>
-                      <li>Please send emails with .csv attachment to this email address.</li>
-                      <li>Received attachments will be imported after configuration execution. Only new emails are
-                        imported on subsequent executions.
-                      </li>
-                    </ul>
+                      Please send emails with .csv attachment to this email address.
+                      Received attachments will be imported after configuration execution. Only new emails are imported on subsequent executions.
                   </HelpBlock>
                 </Col>
                 </FormGroup>
