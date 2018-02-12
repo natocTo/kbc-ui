@@ -100,10 +100,7 @@ export default React.createClass({
               </Col>
             </FormGroup>
             <FormGroup>
-              <Col componentClass={ControlLabel} sm={4}>
-                Incremental
-              </Col>
-              <Col sm={8}>
+              <Col sm={8} smPush={4}>
                 <Checkbox
                     checked={this.props.incremental}
                     onChange={this.onChangeIncremental}>
