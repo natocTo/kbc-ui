@@ -116,7 +116,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <i className="fa fa-fw fa-fast-backward"/>
+        <i className="fa fa-fw fa-undo"/>
       );
     }
   }
