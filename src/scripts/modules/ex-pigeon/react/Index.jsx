@@ -64,7 +64,7 @@ export default React.createClass({
     return (
       <FormGroup>
         <Col componentClass={ControlLabel} sm={4}>
-          Imported Table
+          Output Table
         </Col>
         <Col sm={8}>
           <InputGroup>
