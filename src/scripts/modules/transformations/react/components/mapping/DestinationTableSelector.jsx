@@ -1,29 +1,20 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
-import {FormControl} from 'react-bootstrap';
-import storageActions from '../../../../components/StorageActionCreators';
-import BucketsStore from '../../../../components/stores/StorageBucketsStore';
-import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
+// import {FormControl} from 'react-bootstrap';
+// import storageActions from '../../../../components/StorageActionCreators';
 
 export default React.createClass({
   propTypes: {
     onSelect: PropTypes.func.isRequired,
     value: PropTypes.string,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    tables: React.PropTypes.object.isRequired,
+    buckets: React.PropTypes.object.isRequired
   },
 
-  mixins: [createStoreMixin(BucketsStore)],
-
-  getStateFromStores() {
-    return {
-      isLoadingBuckets: BucketsStore.getIsLoading(),
-      buckets: BucketsStore.getAll()
-    };
-  },
-
-  componentDidMount() {
-    storageActions.loadBuckets();
-  },
+  /* componentDidMount() {
+   *   storageActions.loadTablesForce();
+   * },*/
 
   parseValue() {
     const value = this.props.value || '';
@@ -37,54 +28,78 @@ export default React.createClass({
 
   prepareBucketsOptions() {
     const stage = this.parseValue().stage;
-    return this.state.buckets
+    return this.props.buckets
                .filter(b => b.get('stage') === stage)
                .map(b => ({label: b.get('name'), value: b.get('name')}))
+               .toList();
+  },
+
+  prepareTablesOptions() {
+    const parsed = this.parseValue();
+    const bucketId = parsed.stage + '.' + parsed.bucket;
+    return this.props.tables
+               .filter(t => t.getIn(['bucket', 'id']) === bucketId)
+               .map(t => ({label: t.get('name'), value: t.get('name')}))
                .toList();
   },
 
   render() {
     const parsed = this.parseValue();
     return (
-      <span className="col-sm-12">
-        <Select
-          searchable={false}
-          disabled={this.props.disabled}
-          clearable={false}
-          value={parsed.stage}
-          onChange={({value}) => this.selectState(value)}
-          options={['out', 'in'].map(v => ({label: v, value: v}))}
-        />
-        <span>.</span>
-        <Select.Creatable
-          isLoading={this.state.isLoadingBuckets}
-          clearable={true}
-          disabled={this.props.disabled}
-          placeholder="Select bucket or create new"
-          value={parsed.bucket}
-          onChange={({value}) => this.selectBucket(value)}
-          options={this.prepareBucketsOptions().toJS()}
-        />
-        <span>.</span>
-        <FormControl
-          type="text"
-          componentClass="input"
-          value={parsed.table}
-          onChange={({target})=> this.changeTable(target.value)}
-        />
-      </span>
+      <div className="dcol-sm-12">
+        {this.props.value}
+        <span className="col-sm-3">
+          <Select
+            searchable={false}
+            key="stage-select"
+            name="stage-select"
+            disabled={this.props.disabled}
+            clearable={false}
+            value={parsed.stage}
+            onChange={({value}) => this.selectStage(value)}
+            options={['out', 'in'].map(v => ({label: v, value: v}))}
+          />
+        </span>
+        <span className="col-sm-4">
+          <Select.Creatable
+            clearable={true}
+            key="bucket-select"
+            name="bucket-select"
+            disabled={this.props.disabled}
+            placeholder="Select bucket or create new"
+            value={parsed.bucket}
+            onChange={this.selectBucket}
+            options={this.prepareBucketsOptions().toJS()}
+          />
+        </span>
+        <span className="col-sm-5">
+          <Select.Creatable
+            clearable={true}
+            key="table-select"
+            name="table-select"
+            disabled={this.props.disabled}
+            placeholder="Select table or create new"
+            value={parsed.table}
+            onChange={this.selectTable}
+            options={this.prepareTablesOptions().toJS()}
+          />
+        </span>
+
+      </div>
     );
   },
 
-  selectState(stage) {
+  selectStage(stage) {
     this.updateValue('stage', stage);
   },
 
-  selectBucket(bucket) {
+  selectBucket(selection) {
+    const bucket = selection ? selection.value : '';
     this.updateValue('bucket', bucket);
   },
 
-  changeTable(tableName) {
+  selectTable(selection) {
+    const tableName = selection ? selection.value : '';
     this.updateValue('table', tableName);
   },
 

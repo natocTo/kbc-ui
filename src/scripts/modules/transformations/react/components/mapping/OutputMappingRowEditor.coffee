@@ -153,6 +153,8 @@ module.exports = React.createClass
                 value: @props.value.get("destination", "")
                 onSelect: @_handleChangeDestination
                 disabled: false
+                tables: @props.tables
+                buckets: @props.buckets
               # React.createElement AutosuggestWrapper,
               #   suggestions: @_getTablesAndBuckets()
               #   value: @props.value.get("destination", "")
