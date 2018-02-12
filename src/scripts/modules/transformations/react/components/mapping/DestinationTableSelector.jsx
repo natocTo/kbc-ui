@@ -1,13 +1,28 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
 import {FormControl} from 'react-bootstrap';
-
+import storageActions from '../../../../components/StorageActionCreators';
+import BucketsStore from '../../../../components/stores/StorageBucketsStore';
+import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
   propTypes: {
     onSelect: PropTypes.func.isRequired,
     value: PropTypes.string,
     disabled: PropTypes.bool.isRequired
+  },
+
+  mixins: [createStoreMixin(BucketsStore)],
+
+  getStateFromStores() {
+    return {
+      isLoadingBuckets: BucketsStore.getIsLoading(),
+      buckets: BucketsStore.getAll()
+    };
+  },
+
+  componentDidMount() {
+    storageActions.loadBuckets();
   },
 
   parseValue() {
@@ -18,6 +33,14 @@ export default React.createClass({
       bucket: parts ? (parts[2] || '') : '',
       table: parts ? (parts[3] || '') : ''
     };
+  },
+
+  prepareBucketsOptions() {
+    const stage = this.parseValue().stage;
+    return this.state.buckets
+               .filter(b => b.get('stage') === stage)
+               .map(b => ({label: b.get('name'), value: b.get('name')}))
+               .toList();
   },
 
   render() {
@@ -34,12 +57,13 @@ export default React.createClass({
         />
         <span>.</span>
         <Select.Creatable
+          isLoading={this.state.isLoadingBuckets}
           clearable={true}
           disabled={this.props.disabled}
           placeholder="Select bucket or create new"
           value={parsed.bucket}
           onChange={({value}) => this.selectBucket(value)}
-          options={[]}
+          options={this.prepareBucketsOptions().toJS()}
         />
         <span>.</span>
         <FormControl
