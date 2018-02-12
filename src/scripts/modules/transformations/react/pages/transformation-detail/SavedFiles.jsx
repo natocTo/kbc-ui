@@ -17,7 +17,7 @@ export default React.createClass({
         <div className="form-group">
           <Select.Creatable
             name="tags"
-            value={this.props.value}
+            value={this.props.tags}
             multi={true}
             disabled={this.props.isSaving}
             onChange={this.props.onEditChange}
