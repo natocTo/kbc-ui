@@ -34,8 +34,24 @@ export default React.createClass({
       configuration: Store.getEditingConfiguration(componentId, configurationId, parseFn),
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged,
-      credentialsOpen: !isCompleteFn(Store.getConfiguration(componentId, configurationId)) || isChanged
+      isComplete: isCompleteFn(Store.getConfiguration(componentId, configurationId))
     };
+  },
+
+  getInitialState() {
+    return {
+      credentialsManuallyOpen: null
+    };
+  },
+
+  isAccordionOpen() {
+    if (this.state.credentialsManuallyOpen !== null) {
+      return this.state.credentialsManuallyOpen;
+    }
+    if (this.state.isChanged) {
+      return true;
+    }
+    return !this.state.isComplete;
   },
 
   renderButtons() {
@@ -111,15 +127,15 @@ export default React.createClass({
       <PanelGroup
         accordion={true}
         className="kbc-accordion kbc-panel-heading-with-table"
-        activeKey={this.state.credentialsOpen ? 'credentials' : ''}
+        activeKey={this.isAccordionOpen() ? 'credentials' : ''}
         onSelect={function(activeTab) {
           if (activeTab === 'credentials') {
-            component.setState({credentialsOpen: !component.state.credentialsOpen});
+            component.setState({credentialsManuallyOpen: !component.state.credentialsManuallyOpen});
           }
         }}
       >
         <Panel
-          header={this.accordionHeader(this.state.settings.getIn(['credentials', 'detail', 'title']), component.state.credentialsOpen)}
+          header={this.accordionHeader(this.state.settings.getIn(['credentials', 'detail', 'title']), component.isAccordionOpen())}
           eventKey="credentials"
         >
           {this.renderButtons()}
