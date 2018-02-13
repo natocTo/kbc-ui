@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
 import {FormGroup, HelpBlock} from 'react-bootstrap';
+import tableIdParser from '../../../../../utils/tableIdParser';
 // import storageActions from '../../../../components/StorageActionCreators';
 
 export default React.createClass({
@@ -17,19 +18,13 @@ export default React.createClass({
    *   storageActions.loadTablesForce();
    * },*/
 
-  parseValue() {
-    const value = this.props.value || '';
-    const parts = value.match(/^(in|out)\.(.+)?\.(.+)?$/);
-    return {
-      stage: parts ? parts[1] : 'out',
-      bucket: parts ? (parts[2] || '') : '',
-      table: parts ? (parts[3] || '') : this.props.prefillTableValue
-    };
+  parse() {
+    return tableIdParser.parse(this.props.value, {defaultStage: 'out'});
   },
 
   prepareBucketsOptions() {
-    const stage = this.parseValue().stage;
-    const bucket = this.parseValue().bucket;
+    const stage = this.parse().parts.stage;
+    const bucket = this.parse().parts.bucket;
     const buckets = this.props.buckets
                         .filter(b => b.get('stage') === stage)
                         .map(b => ({label: b.get('name'), value: b.get('name')}))
@@ -42,7 +37,7 @@ export default React.createClass({
   },
 
   prepareTablesOptions() {
-    const parsed = this.parseValue();
+    const parsed = this.parse().parts;
     const bucketId = parsed.stage + '.' + parsed.bucket;
     const table = parsed.table;
     const tables = this.props.tables
@@ -57,7 +52,7 @@ export default React.createClass({
   },
 
   render() {
-    const parsed = this.parseValue();
+    const parsed = this.parse().parts;
     return (
       <FormGroup>
         <span className="col-sm-2" style={{paddingLeft: '0px'}}>
@@ -112,11 +107,8 @@ export default React.createClass({
   },
 
   updateValue(partNameToUpdate, value) {
-    const parsedParts = this.parseValue();
-    const result = ['stage', 'bucket', 'table']
-      .reduce((memo, partName) =>
-        partName === partNameToUpdate ? `${memo}.${value}` : `${memo}.${parsedParts[partName]}`, '').slice(1);
-    this.props.onSelect(result);
+    const result = this.parse().setPart(partNameToUpdate, value);
+    this.props.onSelect(result.tableId);
   }
 
 });
