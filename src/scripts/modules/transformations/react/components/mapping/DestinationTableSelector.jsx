@@ -9,7 +9,8 @@ export default React.createClass({
     value: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
     tables: React.PropTypes.object.isRequired,
-    buckets: React.PropTypes.object.isRequired
+    buckets: React.PropTypes.object.isRequired,
+    prefillTableValue: React.PropTypes.string
   },
 
   /* componentDidMount() {
@@ -22,25 +23,37 @@ export default React.createClass({
     return {
       stage: parts ? parts[1] : 'out',
       bucket: parts ? (parts[2] || '') : '',
-      table: parts ? (parts[3] || '') : ''
+      table: parts ? (parts[3] || '') : this.props.prefillTableValue
     };
   },
 
   prepareBucketsOptions() {
     const stage = this.parseValue().stage;
-    return this.props.buckets
-               .filter(b => b.get('stage') === stage)
-               .map(b => ({label: b.get('name'), value: b.get('name')}))
-               .toList();
+    const bucket = this.parseValue().bucket;
+    const buckets = this.props.buckets
+                        .filter(b => b.get('stage') === stage)
+                        .map(b => ({label: b.get('name'), value: b.get('name')}))
+                        .toList();
+    if (!!bucket && !buckets.find(b => b.label === bucket)) {
+      return buckets.push({label: bucket, value: bucket});
+    } else {
+      return buckets;
+    }
   },
 
   prepareTablesOptions() {
     const parsed = this.parseValue();
     const bucketId = parsed.stage + '.' + parsed.bucket;
-    return this.props.tables
-               .filter(t => t.getIn(['bucket', 'id']) === bucketId)
-               .map(t => ({label: t.get('name'), value: t.get('name')}))
-               .toList();
+    const table = parsed.table;
+    const tables = this.props.tables
+                       .filter(t => t.getIn(['bucket', 'id']) === bucketId)
+                       .map(t => ({label: t.get('name'), value: t.get('name')}))
+                       .toList();
+    if (!!table && !tables.find(t => t.label === table)) {
+      return tables.push({label: table, value: table});
+    } else {
+      return tables;
+    }
   },
 
   render() {
