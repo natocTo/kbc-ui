@@ -18,4 +18,31 @@ describe('tableIdParser', () => {
     assert.equal('', bucket);
     assert.equal('', table);
   });
+
+  it('should parse table with missing bucket', function() {
+    const parsed = parse('in..table', {defaultStage: 'out'});
+    assert.equal('in..table', parsed.tableId);
+    const {stage, bucket, table} = parsed.parts;
+    assert.equal('in', stage);
+    assert.equal('', bucket);
+    assert.equal('table', table);
+  });
+
+  it('should parse bucket with missing table', function() {
+    const parsed = parse('in.bucket.', {defaultStage: 'out'});
+    assert.equal('in.bucket.', parsed.tableId);
+    const {stage, bucket, table} = parsed.parts;
+    assert.equal('in', stage);
+    assert.equal('bucket', bucket);
+    assert.equal('', table);
+  });
+
+  it('should parse whole tableId', function() {
+    const parsed = parse('in.bucket.table');
+    assert.equal('in.bucket.table', parsed.tableId);
+    const {stage, bucket, table} = parsed.parts;
+    assert.equal('in', stage);
+    assert.equal('bucket', bucket);
+    assert.equal('table', table);
+  });
 });
