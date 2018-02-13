@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
+import immutableMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
   mixins: [immutableMixin],

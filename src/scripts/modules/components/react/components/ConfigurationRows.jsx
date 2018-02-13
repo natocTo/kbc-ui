@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import fuzzy from 'fuzzy';
 import SearchRow from '../../../../react/common/SearchRow';
 import Immutable from 'immutable';
@@ -8,7 +8,7 @@ import ConfigurationRowsTable from './ConfigurationRowsTable';
 export default React.createClass({
   displayName: 'ConfigurationRows',
 
-  mixins: [ImmutableRenderMixin],
+  mixins: [immutableMixin],
 
   propTypes: {
     rows: React.PropTypes.object.isRequired,

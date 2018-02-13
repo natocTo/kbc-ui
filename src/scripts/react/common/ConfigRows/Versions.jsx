@@ -8,7 +8,7 @@ import { Table } from 'react-bootstrap';
 import SearchRow from '../../../react/common/SearchRow';
 import VersionsActionCreators from '../../../modules/components/RowVersionsActionCreators';
 import fuzzy from 'fuzzy';
-import ImmutableRenderMixin from '../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
 import createRowVersionOnRollback from '../../../utils/createRowVersionOnRollback';
 import { simpleMatch } from '../../../utils/utils';
@@ -16,7 +16,7 @@ import { simpleMatch } from '../../../utils/utils';
 const ITEMS_PER_PAGE = 20;
 
 export default React.createClass({
-  mixins: [createStoreMixin(VersionsStore, RoutesStore), ImmutableRenderMixin],
+  mixins: [createStoreMixin(VersionsStore, RoutesStore), immutableMixin],
 
   getStateFromStores() {
     var versions, filteredVersions, query;

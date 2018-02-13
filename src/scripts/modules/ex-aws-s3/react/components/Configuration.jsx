@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
+import immutableMixin from 'react-immutable-render-mixin';
 import CsvDelimiterInput from '../../../../react/common/CsvDelimiterInput';
 import Select from '../../../../react/common/Select';
 

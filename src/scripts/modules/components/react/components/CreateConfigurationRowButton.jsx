@@ -6,7 +6,7 @@ import {Input} from '../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import ConfigurationRowsActions from '../../ConfigurationRowsActionCreators';
 
-import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
   mixins: [immutableMixin],

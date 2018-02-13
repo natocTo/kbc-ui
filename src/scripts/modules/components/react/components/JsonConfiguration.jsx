@@ -2,11 +2,11 @@ import React, {PropTypes} from 'react';
 import Input from './JsonConfigurationInput';
 import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
-import immutableRendererMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
   displayName: 'JsonConfiguration',
-  mixins: [immutableRendererMixin],
+  mixins: [immutableMixin],
 
   propTypes: {
     value: PropTypes.string,

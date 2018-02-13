@@ -3,11 +3,11 @@ import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import RollbackVersionButton from '../../../../react/common/RollbackVersionButton';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
 import CopyVersionButton from '../../../../react/common/CopyVersionButton';
-import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import VersionIcon from './VersionIcon';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [immutableMixin],
 
   propTypes: {
     componentId: React.PropTypes.string.isRequired,

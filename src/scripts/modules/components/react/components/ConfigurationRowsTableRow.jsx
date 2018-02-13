@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from './RunComponentButton';
@@ -10,7 +10,7 @@ import ConfigurationRowsTableCell from './ConfigurationRowsTableCell';
 const TableRow = React.createClass({
   displayName: 'ConfigurationRowsTableRow',
 
-  mixins: [ImmutableRenderMixin],
+  mixins: [immutableMixin],
 
   propTypes: {
     componentId: React.PropTypes.string.isRequired,

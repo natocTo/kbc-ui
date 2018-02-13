@@ -1,5 +1,5 @@
 import React from 'react';
-import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import Row from './ConfigurationRowsTableRow';
 import classnames from 'classnames';
 import Sortable from 'sortablejs';
@@ -9,7 +9,7 @@ require('./ConfigurationRowsTable.less');
 export default React.createClass({
   displayName: 'ConfigurationRowsTable',
 
-  mixins: [ImmutableRenderMixin],
+  mixins: [immutableMixin],
 
   propTypes: {
     rows: React.PropTypes.object.isRequired,
