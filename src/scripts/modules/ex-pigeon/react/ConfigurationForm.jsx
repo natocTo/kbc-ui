@@ -18,6 +18,12 @@ export default React.createClass({
     localState: PropTypes.object.isRequired
   },
 
+  getInitialState() {
+    return {
+      accordionActiveTab: 'settings'
+    };
+  },
+
   onChangeDelimiter(value) {
     this.props.onChange('delimiter', value);
   },
@@ -49,10 +55,40 @@ export default React.createClass({
     }
   },
 
-  render()  {
+  accordionArrow(isActive) {
+    if (isActive) {
+      return (<span className="fa fa-fw fa-angle-down" />);
+    }
+    return (<span className="fa fa-fw fa-angle-right" />);
+  },
+
+  accordionHeader(label, isActive) {
     return (
-      <Accordion className="kbc-accordion">
-        <Panel header={<h3><span className="fa fa-fw fa-angle-down"/>Import Settings</h3>} eventKey="1">
+      <h4>
+        {this.accordionArrow(isActive)}
+        {label}
+      </h4>
+    );
+  },
+
+  render() {
+    const component = this;
+    return (
+      <Accordion
+        className="kbc-accordion"
+        onSelect={function(activeTab) {
+          if (activeTab === component.state.accordionActiveTab) {
+            component.setState({accordionActiveTab: null});
+          } else {
+            component.setState({accordionActiveTab: activeTab});
+          }
+        }}
+        defaultActiveKey="settings"
+      >
+        <Panel
+          header={this.accordionHeader('Import Settings', this.state.accordionActiveTab === 'settings')}
+          eventKey="settings"
+        >
           <Form horizontal>
               {this.renderButtons()}
             <br/>
