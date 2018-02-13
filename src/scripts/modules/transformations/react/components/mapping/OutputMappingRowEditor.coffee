@@ -28,6 +28,7 @@ module.exports = React.createClass
 
   getInitialState: ->
     showDetails: @props.initialShowDetails
+    prefillTableValue: ''
 
   componentWillReceiveProps: (newProps) ->
     @setState({showDetails: @state.showDetails or newProps.initialShowDetails})
@@ -124,6 +125,8 @@ module.exports = React.createClass
                 disabled: @props.disabled
                 placeholder: "File name"
                 onChange: @_handleChangeSource
+                onBlur: (e) =>
+                  @setState({prefillTableValue: e.target.value})
                 labelClassName: 'col-xs-2'
                 wrapperClassName: 'col-xs-10'
                 help: React.DOM.span {},
@@ -139,6 +142,8 @@ module.exports = React.createClass
                 name: 'source'
                 label: 'Source'
                 autoFocus: true
+                onBlur: (e) =>
+                  @setState({prefillTableValue: e.target.value})
                 value: @props.value.get("source")
                 disabled: @props.disabled
                 placeholder: "Source table in transformation DB"
@@ -155,6 +160,7 @@ module.exports = React.createClass
                 disabled: false
                 tables: @props.tables
                 buckets: @props.buckets
+                prefillTableValue: @state.prefillTableValue
               # React.createElement AutosuggestWrapper,
               #   suggestions: @_getTablesAndBuckets()
               #   value: @props.value.get("destination", "")
