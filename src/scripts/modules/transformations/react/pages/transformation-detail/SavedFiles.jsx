@@ -15,7 +15,7 @@ export default React.createClass({
           Stored Files
         </h2>
         <div className="form-group">
-          <Select.Creatable
+          <Select
             name="tags"
             value={this.props.tags}
             multi={true}
