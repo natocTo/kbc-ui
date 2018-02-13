@@ -46,9 +46,8 @@ export default React.createClass({
   render() {
     const parsed = this.parseValue();
     return (
-      <div className="dcol-sm-12">
-        {this.props.value}
-        <span className="col-sm-3">
+      <div className="form-group">
+        <span className="col-xs-2">
           <Select
             searchable={false}
             key="stage-select"
@@ -60,7 +59,7 @@ export default React.createClass({
             options={['out', 'in'].map(v => ({label: v, value: v}))}
           />
         </span>
-        <span className="col-sm-4">
+        <span className="col-xs-5">
           <Select.Creatable
             clearable={true}
             key="bucket-select"
@@ -72,7 +71,7 @@ export default React.createClass({
             options={this.prepareBucketsOptions().toJS()}
           />
         </span>
-        <span className="col-sm-5">
+        <span className="col-xs-5">
           <Select.Creatable
             clearable={true}
             key="table-select"
