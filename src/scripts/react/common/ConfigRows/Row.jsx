@@ -164,7 +164,7 @@ export default React.createClass({
             />
           </div>
           <div className="kbc-inner-content-padding-fix with-bottom-border">
-            {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration ? this.renderJSONEditors() : this.renderForm()}
+            {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration ? this.renderJsonEditor() : this.renderForm()}
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -240,7 +240,7 @@ export default React.createClass({
     );
   },
 
-  renderOpenJSONLink() {
+  renderOpenJsonLink() {
     const state = this.state;
     return (
       <small>
@@ -255,7 +255,7 @@ export default React.createClass({
     );
   },
 
-  renderCloseJSONLink() {
+  renderCloseJsonLink() {
     const state = this.state;
     if (!this.state.isParsableConfiguration) {
       return (
@@ -279,7 +279,7 @@ export default React.createClass({
   renderForm() {
     return (
       <div>
-        {this.renderOpenJSONLink()}
+        {this.renderOpenJsonLink()}
         <h2 style={{lineHeight: '32px', marginBottom: '10px'}}>
           Configuration
         </h2>
@@ -302,11 +302,11 @@ export default React.createClass({
     />);
   },
 
-  renderJSONEditors() {
+  renderJsonEditor() {
     const state = this.state;
     const settings = this.state.settings;
     return [
-      (<div key="close">{this.renderCloseJSONLink()}</div>),
+      (<div key="close">{this.renderCloseJsonLink()}</div>),
       (<JsonConfiguration
         key="json-configuration"
         isSaving={this.state.isJsonConfigurationSaving}
