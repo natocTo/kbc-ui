@@ -4,7 +4,6 @@ import Tooltip from './../../../../react/common/Tooltip';
 import Modal from './ResetStateButtonModal';
 
 export default React.createClass({
-  displayName: 'ResetStateButton',
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
     isPending: React.PropTypes.bool.isRequired,

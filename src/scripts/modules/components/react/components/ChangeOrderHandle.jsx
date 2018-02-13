@@ -4,7 +4,6 @@ import Tooltip from '../../../../react/common/Tooltip';
 import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({
-  displayName: 'ChangeOrderHandle',
   propTypes: {
     isPending: React.PropTypes.bool.isRequired,
     isPendingLabel: React.PropTypes.string,

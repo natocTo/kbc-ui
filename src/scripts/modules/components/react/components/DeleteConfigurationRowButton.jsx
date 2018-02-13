@@ -6,7 +6,6 @@ import {Loader} from '@keboola/indigo-ui';
 const MODE_BUTTON = 'button', MODE_LINK = 'link';
 
 export default React.createClass({
-  displayName: 'DeleteConfigurationRowButton',
   propTypes: {
     onClick: React.PropTypes.func.isRequired,
     isPending: React.PropTypes.bool.isRequired,

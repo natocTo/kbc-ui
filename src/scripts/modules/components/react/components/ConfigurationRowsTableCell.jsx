@@ -3,8 +3,6 @@ import immutableMixin from 'react-immutable-render-mixin';
 import StorageApiTableLinkEx from './StorageApiTableLinkEx';
 
 const TableCell = React.createClass({
-  displayName: 'ConfigurationRowsTableCell',
-
   mixins: [immutableMixin],
 
   propTypes: {

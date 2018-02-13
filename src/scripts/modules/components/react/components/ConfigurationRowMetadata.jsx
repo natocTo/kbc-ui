@@ -6,7 +6,6 @@ import RowsStore  from '../../stores/ConfigurationRowsStore';
 import date from '../../../../utils/date';
 
 module.exports = React.createClass({
-  displayName: 'ConfigurationRowMetadata',
   mixins: [createStoreMixin(RowsStore, ConfigurationsStore), immutableMixin],
   propTypes: {
     componentId: React.PropTypes.string.isRequired,

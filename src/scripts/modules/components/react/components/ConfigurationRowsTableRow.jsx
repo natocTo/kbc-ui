@@ -8,8 +8,6 @@ import { Link } from 'react-router';
 import ConfigurationRowsTableCell from './ConfigurationRowsTableCell';
 
 const TableRow = React.createClass({
-  displayName: 'ConfigurationRowsTableRow',
-
   mixins: [immutableMixin],
 
   propTypes: {

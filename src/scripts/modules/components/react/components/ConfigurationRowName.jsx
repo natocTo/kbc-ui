@@ -3,7 +3,6 @@ import InlineEditTextInput from '../../../../react/common/InlineEditTextInput';
 import ConfigurationRowEditField from './ConfigurationRowEditField';
 
 module.exports = React.createClass({
-  displayName: 'ComponentName',
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,

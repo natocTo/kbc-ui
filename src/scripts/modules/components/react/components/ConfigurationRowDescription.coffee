@@ -3,7 +3,6 @@ InlineEditTextArea = require '../../../../react/common/InlineEditArea'
 ConfigurationRowEditField = require './ConfigurationRowEditField'
 
 module.exports = React.createClass
-  displayName: 'ConfigurationRowDescription'
   propTypes:
     componentId: React.PropTypes.string.isRequired
     configId: React.PropTypes.string.isRequired

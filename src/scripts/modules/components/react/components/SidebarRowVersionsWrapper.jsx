@@ -8,8 +8,6 @@ import VersionsStore from '../../stores/RowVersionsStore';
 import VersionsActionCreators from '../../RowVersionsActionCreators';
 
 export default React.createClass({
-  displayName: 'LatestRowVersionsWrapper',
-
   mixins: [createStoreMixin(InstalledComponentStore, ComponentStore, VersionsStore)],
 
   getStateFromStores: function() {

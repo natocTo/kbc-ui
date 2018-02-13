@@ -6,8 +6,6 @@ import Immutable from 'immutable';
 import ConfigurationRowsTable from './ConfigurationRowsTable';
 
 export default React.createClass({
-  displayName: 'ConfigurationRows',
-
   mixins: [immutableMixin],
 
   propTypes: {

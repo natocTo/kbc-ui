@@ -2,7 +2,6 @@ import React from 'react';
 import {Modal, ButtonToolbar, Button} from 'react-bootstrap';
 
 module.exports = React.createClass({
-  displayName: 'SaveButtonsModal',
   propTypes: {
     onHide: React.PropTypes.func.isRequired,
     onSave: React.PropTypes.func.isRequired,

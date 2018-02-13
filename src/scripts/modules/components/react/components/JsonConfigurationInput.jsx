@@ -5,7 +5,6 @@ import CodeMirror from 'react-code-mirror';
 require('./JsonConfigurationInput.less');
 
 export default React.createClass({
-  displayName: 'JsonConfigurationInput',
   propTypes: {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,

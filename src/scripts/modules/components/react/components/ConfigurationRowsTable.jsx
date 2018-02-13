@@ -7,8 +7,6 @@ import Sortable from 'sortablejs';
 require('./ConfigurationRowsTable.less');
 
 export default React.createClass({
-  displayName: 'ConfigurationRowsTable',
-
   mixins: [immutableMixin],
 
   propTypes: {

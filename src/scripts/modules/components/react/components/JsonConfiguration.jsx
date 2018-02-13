@@ -5,7 +5,6 @@ import SaveButtons from '../../../../react/common/SaveButtons';
 import immutableMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
-  displayName: 'JsonConfiguration',
   mixins: [immutableMixin],
 
   propTypes: {
