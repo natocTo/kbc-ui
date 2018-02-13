@@ -1,7 +1,7 @@
 function parseTableId(tableId, defaultStage) {
-  const parts = tableId.match(/^(in|out)\.(.+)?\.(.+)?$/);
+  const parts = tableId.match(/^(in|out)?\.(.+)?\.(.+)?$/);
   return {
-    stage: parts ? parts[1]  : defaultStage,
+    stage: parts ? (parts[1] || defaultStage)  : defaultStage,
     bucket: parts ? (parts[2] || '') : '',
     table: parts ? (parts[3]  || '') : ''
   };
@@ -9,8 +9,9 @@ function parseTableId(tableId, defaultStage) {
 
 export function parse(tableId, options = {}) {
   const parts = parseTableId(tableId || '', options.defaultStage || '');
+  const {stage, bucket, table} = parts;
   return {
-    tableId: tableId,
+    tableId: `${stage}.${bucket}.${table}`,
     parts,
     setPart: (partNameToSet, value) => {
       const result = ['stage', 'bucket', 'table'].reduce((memo, partName) =>
