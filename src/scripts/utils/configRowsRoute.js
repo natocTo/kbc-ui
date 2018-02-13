@@ -15,8 +15,10 @@ var Immutable = require('immutable');
 // defaults
 const defaults = {
   credentials: {
-    isComplete: function() {
-      return true;
+    detail: {
+      isComplete: function () {
+        return true;
+      }
     }
   },
   row: {
