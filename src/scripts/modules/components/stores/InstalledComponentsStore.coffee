@@ -38,7 +38,6 @@ _store = Map(
   deletedComponents: Map()
   editingConfigurations: Map()
   editingConfigurationRows: Map()
-  editingConfigurationRowJSONDataString: Map()
   savingConfigurations: Map()
   savingConfigurationRows: Map()
   deletingConfigurations: Map()
