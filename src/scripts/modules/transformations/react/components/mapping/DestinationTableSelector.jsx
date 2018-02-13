@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
-import {FormGroup} from 'react-bootstrap';
-// import {FormControl} from 'react-bootstrap';
+import {FormGroup, HelpBlock} from 'react-bootstrap';
 // import storageActions from '../../../../components/StorageActionCreators';
 
 export default React.createClass({
@@ -51,8 +50,6 @@ export default React.createClass({
         <span className="col-sm-2" style={{paddingLeft: '0px'}}>
           <Select
             searchable={false}
-            key="stage-select"
-            name="stage-select"
             disabled={this.props.disabled}
             clearable={false}
             value={parsed.stage}
@@ -62,9 +59,8 @@ export default React.createClass({
         </span>
         <span className="col-sm-6" style={{paddingLeft: '0px'}}>
           <Select.Creatable
+            promptTextCreator={label => `Create new bucket ${label}`}
             clearable={true}
-            key="bucket-select"
-            name="bucket-select"
             disabled={this.props.disabled}
             placeholder="Select bucket or create new"
             value={parsed.bucket}
@@ -74,9 +70,8 @@ export default React.createClass({
         </span>
         <span className="col-sm-4" style={{paddingLeft: '0px', paddingRight: '0px'}}>
           <Select.Creatable
+            promptTextCreator={label => `Create new table ${label}`}
             clearable={true}
-            key="table-select"
-            name="table-select"
             disabled={this.props.disabled}
             placeholder="Select table or create new"
             value={parsed.table}
@@ -84,6 +79,7 @@ export default React.createClass({
             options={this.prepareTablesOptions().toJS()}
           />
         </span>
+        <HelpBlock> Destination is table in storage - you can create new one or use existing.</HelpBlock>
       </FormGroup>
     );
   },
