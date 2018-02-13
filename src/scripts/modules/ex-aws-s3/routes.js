@@ -1,4 +1,4 @@
-import route from '../../utils/configRowsRoute';
+import { columnTypes, createRoute }  from '../../utils/configRowsRoute';
 import {
   createConfiguration as rowCreateConfiguration,
   parseConfiguration as rowParseConfiguration,
@@ -36,21 +36,21 @@ const routeSettings = {
     columns: [
       {
         name: 'Name',
-        type: 'value',
+        type: columnTypes.VALUE,
         value: function(row) {
           return row.get('name') !== '' ? row.get('name') : 'Untitled';
         }
       },
       {
         name: 'Storage',
-        type: 'storage-link-default-bucket',
+        type: columnTypes.STORAGE_LINK_DEFAULT_BUCKET,
         value: function(row) {
           return row.getIn(['configuration', 'parameters', 'saveAs']);
         }
       },
       {
         name: 'Description',
-        type: 'value',
+        type: columnTypes.VALUE,
         value: function(row) {
           return (
             <small>
@@ -63,4 +63,4 @@ const routeSettings = {
   }
 };
 
-export default route(routeSettings);
+export default createRoute(routeSettings);
