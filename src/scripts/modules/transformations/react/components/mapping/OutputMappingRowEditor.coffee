@@ -6,6 +6,7 @@ Input = React.createFactory require('./../../../../../react/common/KbcBootstrap'
 AutosuggestWrapper = require('./AutoSuggestWrapper').default
 Select = React.createFactory require('../../../../../react/common/Select').default
 DestinationTableSelector = require('./DestinationTableSelector').default
+tableIdParser = require('../../../../../utils/tableIdParser').default
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
@@ -28,7 +29,6 @@ module.exports = React.createClass
 
   getInitialState: ->
     showDetails: @props.initialShowDetails
-    prefillTableValue: ''
 
   componentWillReceiveProps: (newProps) ->
     @setState({showDetails: @state.showDetails or newProps.initialShowDetails})
@@ -37,6 +37,13 @@ module.exports = React.createClass
     @setState(
       showDetails: e.target.checked
     )
+  _handleBlurSource: (e) ->
+    sourceValue = e.target.value
+    destination = @props.value.get('destination')
+    dstParser = tableIdParser.parse(destination, {defaultState: 'out'})
+    if !dstParser.parts.table
+      newDestination = dstParser.setPart('table', sourceValue)
+      @_handleChangeDestination(newDestination.tableId)
 
   _handleChangeSource: (e) ->
     immutable = @props.value.withMutations (mapping) ->
@@ -125,8 +132,7 @@ module.exports = React.createClass
                 disabled: @props.disabled
                 placeholder: "File name"
                 onChange: @_handleChangeSource
-                onBlur: (e) =>
-                  @setState({prefillTableValue: e.target.value})
+                onBlur: @_handleBlurSource
                 labelClassName: 'col-xs-2'
                 wrapperClassName: 'col-xs-10'
                 help: React.DOM.span {},
@@ -142,11 +148,10 @@ module.exports = React.createClass
                 name: 'source'
                 label: 'Source'
                 autoFocus: true
-                onBlur: (e) =>
-                  @setState({prefillTableValue: e.target.value})
                 value: @props.value.get("source")
                 disabled: @props.disabled
                 placeholder: "Source table in transformation DB"
+                onBlur: @_handleBlurSource
                 onChange: @_handleChangeSource
                 labelClassName: 'col-xs-2'
                 wrapperClassName: 'col-xs-10'
@@ -160,7 +165,6 @@ module.exports = React.createClass
                 disabled: false
                 tables: @props.tables
                 buckets: @props.buckets
-                prefillTableValue: @state.prefillTableValue
               # React.createElement AutosuggestWrapper,
               #   suggestions: @_getTablesAndBuckets()
               #   value: @props.value.get("destination", "")
