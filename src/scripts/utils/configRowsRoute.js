@@ -16,7 +16,7 @@ var Immutable = require('immutable');
 const defaults = {
   credentials: {
     detail: {
-      isComplete: function () {
+      isComplete: function() {
         return true;
       }
     }
