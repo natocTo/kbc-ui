@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
+import {FormGroup} from 'react-bootstrap';
 // import {FormControl} from 'react-bootstrap';
 // import storageActions from '../../../../components/StorageActionCreators';
 
@@ -46,8 +47,8 @@ export default React.createClass({
   render() {
     const parsed = this.parseValue();
     return (
-      <div className="form-group">
-        <span className="col-xs-2">
+      <FormGroup>
+        <span className="col-sm-2" style={{paddingLeft: '0px'}}>
           <Select
             searchable={false}
             key="stage-select"
@@ -59,7 +60,7 @@ export default React.createClass({
             options={['out', 'in'].map(v => ({label: v, value: v}))}
           />
         </span>
-        <span className="col-xs-5">
+        <span className="col-sm-6" style={{paddingLeft: '0px'}}>
           <Select.Creatable
             clearable={true}
             key="bucket-select"
@@ -71,7 +72,7 @@ export default React.createClass({
             options={this.prepareBucketsOptions().toJS()}
           />
         </span>
-        <span className="col-xs-5">
+        <span className="col-sm-4" style={{paddingLeft: '0px', paddingRight: '0px'}}>
           <Select.Creatable
             clearable={true}
             key="table-select"
@@ -83,8 +84,7 @@ export default React.createClass({
             options={this.prepareTablesOptions().toJS()}
           />
         </span>
-
-      </div>
+      </FormGroup>
     );
   },
 
