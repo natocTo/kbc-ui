@@ -67,8 +67,9 @@ export default React.createClass({
         </span>
         <span className="col-sm-6" style={{paddingLeft: '0px'}}>
           <Select.Creatable
-            promptTextCreator={label => `Create new bucket ${label}`}
+            promptTextCreator={label => `Create new bucket ${label.startsWith('c-') ? '' : 'c-'}${label}`}
             clearable={true}
+            newOptionCreator={this.checkBucketPrefix}
             disabled={this.props.disabled}
             placeholder="Select bucket or create new"
             value={parsed.bucket}
@@ -90,6 +91,15 @@ export default React.createClass({
         <HelpBlock> Destination is table in storage - you can create new one or use existing.</HelpBlock>
       </FormGroup>
     );
+  },
+
+  checkBucketPrefix(op) {
+    const bucketId = op.label;
+    if (!bucketId.startsWith('c-')) {
+      return {label: 'c-' + bucketId, value: 'c-' + bucketId};
+    } else {
+      return {label: bucketId, value: bucketId};
+    }
   },
 
   selectStage(stage) {
