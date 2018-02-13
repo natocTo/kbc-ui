@@ -119,7 +119,7 @@ export default React.createClass({
   },
 
   render() {
-    if (!this.state.settings.has('credentials')) {
+    if (!this.state.settings.getIn(['credentials', 'show'])) {
       return null;
     }
     const component = this;

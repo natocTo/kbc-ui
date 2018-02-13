@@ -20,6 +20,7 @@ const columnTypeConstants = {
 // defaults
 const defaults = {
   credentials: {
+    show: false,
     detail: {
       isComplete: function() {
         return true;

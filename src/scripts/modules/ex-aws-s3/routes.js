@@ -17,6 +17,7 @@ const routeSettings = {
   componentId: 'keboola.ex-aws-s3',
   componentType: 'extractor',
   credentials: {
+    show: true,
     detail: {
       title: 'AWS Credentials',
       render: CredentialsForm,
