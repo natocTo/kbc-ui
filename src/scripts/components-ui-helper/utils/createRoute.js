@@ -7,7 +7,7 @@ import versionsActions from '../../modules/components/VersionsActionCreators';
 import rowVersionsActions from '../RowVersionsActionCreators';
 import jobsActions from '../../modules/jobs/ActionCreators';
 import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
-import ConfigurationRowsStore from '../react/ConfigurationRowsStore';
+import ConfigurationRowsStore from '../ConfigurationRowsStore';
 import _ from 'lodash';
 import fuzzy from 'fuzzy';
 var Immutable = require('immutable');

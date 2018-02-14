@@ -2,7 +2,7 @@ import React from 'react';
 import Immutable from 'immutable';
 
 // stores
-import Store from '../ConfigurationRowsStore';
+import Store from '../../ConfigurationRowsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
@@ -280,7 +280,7 @@ export default React.createClass({
     return (
       <div>
         {this.renderOpenJsonLink()}
-        <h2 style={{lineHeight: '32px', marginBottom: '10px'}}>
+        <h2>
           Configuration
         </h2>
         {this.renderButtons()}

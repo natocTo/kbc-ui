@@ -2,7 +2,7 @@ import React from 'react';
 import Immutable from 'immutable';
 // stores
 import InstalledComponentsStore from '../../../modules/components/stores/InstalledComponentsStore';
-import ConfigurationRowsStore from '../ConfigurationRowsStore';
+import ConfigurationRowsStore from '../../ConfigurationRowsStore';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import RoutesStore from '../../../stores/RoutesStore';
 import LatestJobsStore from '../../../modules/jobs/stores/LatestJobsStore';

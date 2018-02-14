@@ -2,7 +2,7 @@ import React from 'react';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import immutableMixin from 'react-immutable-render-mixin';
 import ConfigurationsStore  from '../../ConfigurationsStore';
-import RowsStore  from '../ConfigurationRowsStore';
+import RowsStore  from '../../ConfigurationRowsStore';
 import date from '../../../utils/date';
 
 module.exports = React.createClass({
