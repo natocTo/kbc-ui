@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
-import Select from 'react-select';
-import {fromJS} from 'immutable';
+import Select from '../../../../../react/common/Select';
 
 export default React.createClass({
   propTypes: {
@@ -16,14 +15,16 @@ export default React.createClass({
           Stored Files
         </h2>
         <div className="form-group">
-          <Select.Creatable
+          <Select
             name="tags"
-            value={this.getValue()}
+            value={this.props.tags}
             multi={true}
             disabled={this.props.isSaving}
-            onChange={this.handleValueChange}
+            onChange={this.props.onEditChange}
             placeholder="Add tags..."
             isLoading={this.props.isSaving}
+            allowCreate={true}
+            trimMultiCreatedValues={true}
             />
           <span className="help-block">
             The latest file with a given tag will be saved to <code>/data/in/user/&#123;tag&#125;</code>.
@@ -31,16 +32,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
-
-  handleValueChange(newArray) {
-    const values = fromJS(newArray).map((item) => item.get('value'));
-    this.props.onEditChange(values);
-  },
-
-  getValue() {
-    return this.props.tags.map((item) => {
-      return {label: item, value: item};
-    }).toJS();
   }
 });
