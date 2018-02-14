@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import Select from 'react-select';
 // import {HelpBlock} from 'react-bootstrap';
 // import storageActions from '../../../../components/StorageActionCreators';
+import './DestinationTableSelector.less';
 
 export default React.createClass({
   propTypes: {
@@ -83,22 +84,22 @@ export default React.createClass({
     );
 
     return (
-      <span>
+      <span className="kbc-dst-table-selector">
         <div>
-          <span className="col-md-1" style={{paddingLeft: '0px', paddingRight: '0px'}}>
+          <span className="col-md-1 kbc-select">
             {stageSelect}
           </span>
-          <span className="col-md-1" style={{paddingLeft: '5px', paddingRight: '5px', width: 'auto', top: '0.5em'}}>
+          <span className="col-md-1 kbc-dot-separator">
             {/* <i className="fa fa-circle" /> */}
             .
           </span>
-          <span className="col-md-5" style={{paddingLeft: '0px', paddingRight: '0px'}}>
+          <span className="col-md-5 kbc-select">
             {bucketSelect}
           </span>
-          <span className="col-md-1" style={{paddingLeft: '5px', paddingRight: '5px', width: 'auto', top: '0.5em'}}>
+          <span className="col-md-1 kbc-dot-separator">
             .
           </span>
-          <span className="col-md-5" style={{paddingLeft: '0px', paddingRight: '0px', width: '22.77em'}}>
+          <span className="col-md-5 kbc-select-table" >
             {tableSelect}
           </span>
         </div>
