@@ -5,14 +5,14 @@ import Immutable from 'immutable';
 import ComponentStore from '../../../modules/components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../modules/components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../stores/RoutesStore';
-import createStoreMixin from '../../mixins/createStoreMixin';
-import Store from '../../../modules/components/stores/ConfigurationsStore';
+import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import Store from '../../ConfigurationsStore';
 
 // actions
 import Actions from '../../../modules/components/ConfigurationsActionCreators';
 
 // global components
-import SaveButtons from '../SaveButtons';
+import SaveButtons from '../../../react/common/SaveButtons';
 import { PanelGroup, Panel } from 'react-bootstrap';
 
 export default React.createClass({

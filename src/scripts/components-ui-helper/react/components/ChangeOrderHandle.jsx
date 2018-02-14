@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tooltip from '../../../../react/common/Tooltip';
+import Tooltip from '../../../react/common/Tooltip';
 import { Loader } from '@keboola/indigo-ui';
 
 export default React.createClass({

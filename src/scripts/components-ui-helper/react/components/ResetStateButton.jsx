@@ -1,6 +1,6 @@
 import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
-import Tooltip from './../../../../react/common/Tooltip';
+import Tooltip from '../../../react/common/Tooltip';
 import Modal from './ResetStateButtonModal';
 
 export default React.createClass({

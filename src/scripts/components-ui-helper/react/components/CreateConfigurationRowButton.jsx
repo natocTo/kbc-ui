@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Immutable from 'immutable';
 
-import { Input } from '../../../../react/common/KbcBootstrap';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import { Input } from '../../../react/common/KbcBootstrap';
+import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import ConfigurationRowsActions from '../../ConfigurationRowsActionCreators';
 
 import immutableMixin from 'react-immutable-render-mixin';

@@ -1,7 +1,7 @@
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils from '../utils/StoreUtils';
 import Immutable from 'immutable';
-import dispatcher from '../../../Dispatcher';
-import Constants from '../RowVersionsConstants';
+import dispatcher from '../Dispatcher';
+import Constants from './RowVersionsConstants';
 
 var Map = Immutable.Map, List = Immutable.List;
 

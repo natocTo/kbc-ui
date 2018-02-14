@@ -1,8 +1,8 @@
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
+import ActivateDeactivateButton from '../../../react/common/ActivateDeactivateButton';
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
-import RunComponentButton from './RunComponentButton';
+import RunComponentButton from '../../../modules/components/react/components/RunComponentButton';
 import ChangeOrderHandle from './ChangeOrderHandle';
 import { Link } from 'react-router';
 import ConfigurationRowsTableCell from './ConfigurationRowsTableCell';

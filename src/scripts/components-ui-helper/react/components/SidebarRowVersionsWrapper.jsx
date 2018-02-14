@@ -1,10 +1,10 @@
 import React from 'react';
-import SidebarVesions from './SidebarVersions';
+import SidebarVesions from '../../../modules/components/react/components/SidebarVersions';
 
-import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import InstalledComponentStore from '../../stores/InstalledComponentsStore';
-import ComponentStore from '../../stores/ComponentsStore';
-import VersionsStore from '../../stores/RowVersionsStore';
+import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import InstalledComponentStore from '../../../modules/components/stores/InstalledComponentsStore';
+import ComponentStore from '../../../modules/components/stores/ComponentsStore';
+import VersionsStore from '../../RowVersionsStore';
 import VersionsActionCreators from '../../RowVersionsActionCreators';
 
 export default React.createClass({

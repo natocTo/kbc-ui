@@ -1,6 +1,6 @@
 import Dispatcher from '../../Dispatcher';
 import Constants from './ConfigurationsConstants';
-import ConfigurationsStore from './stores/ConfigurationsStore';
+import ConfigurationsStore from '../../components-ui-helper/ConfigurationsStore';
 import InstalledComponentsApi from './InstalledComponentsApi';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import InstalledComponentsStore from './stores/InstalledComponentsStore';

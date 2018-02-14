@@ -1,7 +1,7 @@
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import fuzzy from 'fuzzy';
-import SearchRow from '../../../../react/common/SearchRow';
+import SearchRow from '../../../react/common/SearchRow';
 import Immutable from 'immutable';
 import ConfigurationRowsTable from './ConfigurationRowsTable';
 

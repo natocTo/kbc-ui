@@ -1,9 +1,9 @@
-import dispatcher from '../../Dispatcher';
+import dispatcher from '../Dispatcher';
 import Promise from 'bluebird';
-import Store from './stores/RowVersionsStore';
-import Api from './InstalledComponentsApi';
+import Store from './RowVersionsStore';
+import Api from '../modules/components/InstalledComponentsApi';
 import Constants from './RowVersionsConstants';
-import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
+import ApplicationActionCreators from '../actions/ApplicationActionCreators';
 
 module.exports = {
   loadVersions: function(componentId, configId, rowId) {

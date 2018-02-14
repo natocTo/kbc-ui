@@ -2,26 +2,26 @@ import React from 'react';
 import Immutable from 'immutable';
 
 // stores
-import Store from '../../../modules/components/stores/ConfigurationRowsStore';
+import Store from '../ConfigurationRowsStore';
 import RoutesStore from '../../../stores/RoutesStore';
-import createStoreMixin from '../../mixins/createStoreMixin';
+import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
 // actions
-import Actions from '../../../modules/components/ConfigurationRowsActionCreators';
+import Actions from '../../ConfigurationRowsActionCreators';
 
 // global components
 import RunComponentButton from '../../../modules/components/react/components/RunComponentButton';
 import ConfigurationRowDescription from '../../../modules/components/react/components/ConfigurationRowDescription';
-import ConfigurationRowMetadata from '../../../modules/components/react/components/ConfigurationRowMetadata';
-import DeleteConfigurationRowButton from '../../../modules/components/react/components/DeleteConfigurationRowButton';
-import ResetStateButton from '../../../modules/components/react/components/ResetStateButton';
-import JsonConfiguration from '../../../modules/components/react/components/JsonConfiguration';
-import SaveButtons from '../SaveButtons';
-import ActivateDeactivateButton from '../ActivateDeactivateButton';
-import LatestRowVersions from '../../../modules/components/react/components/SidebarRowVersionsWrapper';
+import ConfigurationRowMetadata from '../components/ConfigurationRowMetadata';
+import DeleteConfigurationRowButton from '../components/DeleteConfigurationRowButton';
+import ResetStateButton from '../components/ResetStateButton';
+import JsonConfiguration from '../components/JsonConfiguration';
+import SaveButtons from '../../../react/common/SaveButtons';
+import ActivateDeactivateButton from '../../../react/common/ActivateDeactivateButton';
+import LatestRowVersions from '../components/SidebarRowVersionsWrapper';
 
 // adapters
-import isParsableConfiguration from '../../../utils/isParsableConfiguration';
+import isParsableConfiguration from '../../utils/isParsableConfiguration';
 
 export default React.createClass({
   mixins: [createStoreMixin(Store)],
