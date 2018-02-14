@@ -1,30 +1,25 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
 import {FormGroup, HelpBlock} from 'react-bootstrap';
-import tableIdParser from '../../../../../utils/tableIdParser';
 // import storageActions from '../../../../components/StorageActionCreators';
 
 export default React.createClass({
   propTypes: {
-    onSelect: PropTypes.func.isRequired,
     value: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
     tables: React.PropTypes.object.isRequired,
     buckets: React.PropTypes.object.isRequired,
-    prefillTableValue: React.PropTypes.string
+    parts: React.PropTypes.object.isRequired,
+    updatePart: PropTypes.func.isRequired
   },
 
   /* componentDidMount() {
    *   storageActions.loadTablesForce();
    * },*/
 
-  parse() {
-    return tableIdParser.parse(this.props.value, {defaultStage: 'out'});
-  },
-
   prepareBucketsOptions() {
-    const stage = this.parse().parts.stage;
-    const bucket = this.parse().parts.bucket;
+    const stage = this.props.parts.stage;
+    const bucket = this.props.parts.bucket;
     const buckets = this.props.buckets
                         .filter(b => b.get('stage') === stage)
                         .map(b => ({label: b.get('name'), value: b.get('name')}))
@@ -37,9 +32,9 @@ export default React.createClass({
   },
 
   prepareTablesOptions() {
-    const parsed = this.parse().parts;
-    const bucketId = parsed.stage + '.' + parsed.bucket;
-    const table = parsed.table;
+    const parts = this.props.parts;
+    const bucketId = parts.stage + '.' + parts.bucket;
+    const table = parts.table;
     const tables = this.props.tables
                        .filter(t => t.getIn(['bucket', 'id']) === bucketId)
                        .map(t => ({label: t.get('name'), value: t.get('name')}))
@@ -52,7 +47,7 @@ export default React.createClass({
   },
 
   render() {
-    const parsed = this.parse().parts;
+    const parts = this.props.parts;
     return (
       <FormGroup>
         <span className="col-sm-2" style={{paddingLeft: '0px'}}>
@@ -60,7 +55,7 @@ export default React.createClass({
             searchable={false}
             disabled={this.props.disabled}
             clearable={false}
-            value={parsed.stage}
+            value={parts.stage}
             onChange={({value}) => this.selectStage(value)}
             options={['out', 'in'].map(v => ({label: v, value: v}))}
           />
@@ -72,7 +67,7 @@ export default React.createClass({
             newOptionCreator={this.checkBucketPrefix}
             disabled={this.props.disabled}
             placeholder="Select bucket or create new"
-            value={parsed.bucket}
+            value={parts.bucket}
             onChange={this.selectBucket}
             options={this.prepareBucketsOptions().toJS()}
           />
@@ -83,7 +78,7 @@ export default React.createClass({
             clearable={true}
             disabled={this.props.disabled}
             placeholder="Select table or create new"
-            value={parsed.table}
+            value={parts.table}
             onChange={this.selectTable}
             options={this.prepareTablesOptions().toJS()}
           />
@@ -117,8 +112,7 @@ export default React.createClass({
   },
 
   updateValue(partNameToUpdate, value) {
-    const result = this.parse().setPart(partNameToUpdate, value);
-    this.props.onSelect(result.tableId);
+    this.props.updatePart(partNameToUpdate, value);
   }
 
 });

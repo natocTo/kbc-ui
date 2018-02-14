@@ -37,10 +37,14 @@ module.exports = React.createClass
     @setState(
       showDetails: e.target.checked
     )
+
+  _parseDestination: ->
+    destination = @props.value.get('destination')
+    tableIdParser.parse(destination, {defaultStage: 'out'})
+
   _handleBlurSource: (e) ->
     sourceValue = e.target.value
-    destination = @props.value.get('destination')
-    dstParser = tableIdParser.parse(destination, {defaultState: 'out'})
+    dstParser = @_parseDestination()
     if !dstParser.parts.table
       newDestination = dstParser.setPart('table', sourceValue)
       @_handleChangeDestination(newDestination.tableId)
@@ -52,14 +56,16 @@ module.exports = React.createClass
 
   _handleChangeDestination: (newValue) ->
     value = @props.value.set("destination", newValue.trim())
-
     if @props.tables.get(value.get("destination"))
       value = value.set(
         "primaryKey",
         @props.tables.getIn([value.get("destination"), "primaryKey"], Immutable.List())
       )
-
     @props.onChange(value)
+
+  _updateDestinationPart: (partName, value) ->
+    @_handleChangeDestination(@_parseDestination().setPart(partName,value).tableId)
+
 
   _handleChangeIncremental: (e) ->
     value = @props.value.set("incremental", e.target.checked)
@@ -161,8 +167,9 @@ module.exports = React.createClass
             React.DOM.div className: 'col-xs-10',
               React.createElement DestinationTableSelector,
                 value: @props.value.get("destination", "")
-                onSelect: @_handleChangeDestination
+                updatePart: @_updateDestinationPart
                 disabled: false
+                parts: @_parseDestination().parts
                 tables: @props.tables
                 buckets: @props.buckets
               # React.createElement AutosuggestWrapper,
