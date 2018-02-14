@@ -5,7 +5,7 @@ import ConfigurationsStore  from '../../ConfigurationsStore';
 import RowsStore  from '../../ConfigurationRowsStore';
 import date from '../../../utils/date';
 
-module.exports = React.createClass({
+export default React.createClass({
   mixins: [createStoreMixin(RowsStore, ConfigurationsStore), immutableMixin],
   propTypes: {
     componentId: React.PropTypes.string.isRequired,

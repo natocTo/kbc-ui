@@ -10,7 +10,9 @@ Link = React.createFactory(require('react-router').Link)
 RoutePendingIndicator = React.createFactory(require './RoutePendingIndicator')
 ComponentIcon = React.createFactory(require('../common/ComponentIcon').default)
 ComponentNameEdit = React.createFactory(require '../../modules/components/react/components/ComponentName')
-ConfiguratinRowName = React.createFactory(require '../../modules/components/react/components/ConfigurationRowName')
+ConfiguratinRowName = React.createFactory(
+  require('../../components-ui-helper/react/components/ConfigurationRowName').default
+)
 NotificationsAccess = require('../../react/common/NotificationsAccess').default
 
 {div, nav, span, a, h1} = React.DOM

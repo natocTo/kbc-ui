@@ -1,8 +1,8 @@
 import React from 'react';
-import InlineEditTextInput from '../../../../react/common/InlineEditTextInput';
-import ConfigurationRowEditField from './ConfigurationRowEditField';
+import InlineEditTextInput from '../../../react/common/InlineEditTextInput';
+import ConfigurationRowEditField from '../../../modules/components/react/components/ConfigurationRowEditField';
 
-module.exports = React.createClass({
+export default React.createClass({
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,

@@ -11,7 +11,7 @@ import Actions from '../../ConfigurationRowsActionCreators';
 
 // global components
 import RunComponentButton from '../../../modules/components/react/components/RunComponentButton';
-import ConfigurationRowDescription from '../../../modules/components/react/components/ConfigurationRowDescription';
+import ConfigurationRowDescription from '../components/ConfigurationRowDescription';
 import ConfigurationRowMetadata from '../components/ConfigurationRowMetadata';
 import DeleteConfigurationRowButton from '../components/DeleteConfigurationRowButton';
 import ResetStateButton from '../components/ResetStateButton';
