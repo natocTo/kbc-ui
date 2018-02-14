@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
-import {FormGroup, HelpBlock} from 'react-bootstrap';
+// import {HelpBlock} from 'react-bootstrap';
 // import storageActions from '../../../../components/StorageActionCreators';
 
 export default React.createClass({
@@ -83,7 +83,7 @@ export default React.createClass({
     );
 
     return (
-      <FormGroup>
+      <span>
         <div>
           <span className="col-md-1" style={{paddingLeft: '0px', paddingRight: '0px'}}>
             {stageSelect}
@@ -98,13 +98,12 @@ export default React.createClass({
           <span className="col-md-1" style={{paddingLeft: '5px', paddingRight: '5px', width: 'auto', top: '0.5em'}}>
             .
           </span>
-          <span className="col-md-5" style={{paddingLeft: '0px', paddingRight: '0px'}}>
+          <span className="col-md-5" style={{paddingLeft: '0px', paddingRight: '0px', width: '22.77em'}}>
             {tableSelect}
           </span>
         </div>
-          <HelpBlock> Destination is table in storage - you can create new one or use existing.</HelpBlock>
-
-      </FormGroup>
+          <div className="help-block"> Destination is table in storage - you can create new one or use existing.</div>
+      </span>
     );
   },
 
