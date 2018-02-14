@@ -12,7 +12,7 @@ export default React.createClass({
     incremental: PropTypes.bool.isRequired,
     delimiter: PropTypes.string.isRequired,
     enclosure: PropTypes.string.isRequired,
-    primaryKey: PropTypes.string.isRequired,
+    primaryKey: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     actions: PropTypes.object.isRequired,
     localState: PropTypes.object.isRequired
@@ -124,7 +124,7 @@ export default React.createClass({
               <Col sm={8}>
                 <Select
                   name="primaryKey"
-                  value={''}
+                  value={this.props.primaryKey}
                   multi={true}
                   allowCreate={true}
                   delimiter=","

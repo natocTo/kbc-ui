@@ -60,7 +60,7 @@ export default function(configId) {
       'email': email,
       'delimiter': ',',
       'enclosure': '"',
-      'primaryKey': ' ',
+      'primaryKey': [],
       'incremental': false
     });
   }
