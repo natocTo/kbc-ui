@@ -1,9 +1,6 @@
 import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
 
-/* global require */
-require('./JsonConfigurationInput.less');
-
 export default React.createClass({
   propTypes: {
     value: PropTypes.string.isRequired,

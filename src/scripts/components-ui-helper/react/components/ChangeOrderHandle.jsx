@@ -42,12 +42,12 @@ export default React.createClass({
 
   renderIcon() {
     if (this.props.isPending) {
-      return (<Loader className="fa-fw" style={{cursor: 'not-allowed'}}/>);
+      return (<Loader className="fa-fw drag-handle-pending"/>);
     }
     if (this.props.disabled) {
-      return (<span className="fa fa-ellipsis-v fa-fw" style={{cursor: 'not-allowed', opacity: 0.65}}/>);
+      return (<span className="fa fa-ellipsis-v fa-fw drag-handle-disabled"/>);
     }
-    return ((<span className="fa fa-ellipsis-v fa-fw drag-handle" style={{cursor: 'move'}}/>));
+    return ((<span className="fa fa-ellipsis-v fa-fw drag-handle drag-handle"/>));
   }
 });
 

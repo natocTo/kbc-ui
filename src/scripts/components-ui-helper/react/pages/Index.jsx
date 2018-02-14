@@ -25,6 +25,9 @@ import CreateConfigurationRowButton from '../components/CreateConfigurationRowBu
 import ConfigurationRows from '../components/ConfigurationRows';
 import Credentials from '../components/Credentials';
 
+// styles
+import '../../styles.less';
+
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 

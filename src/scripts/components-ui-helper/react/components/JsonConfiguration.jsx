@@ -29,7 +29,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px', marginBottom: '10px'}}>
+        <h2>
           Configuration
           {' '}
           <small>
