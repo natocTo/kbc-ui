@@ -8,6 +8,8 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 DestinationTableSelector = require('./DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
 
+{span, i} = React.DOM
+
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
   mixins: [ImmutableRenderMixin]
@@ -152,7 +154,9 @@ module.exports = React.createClass
                 type: 'text'
                 help: 'Source table is generated inside transformation DB (inside SQL you write to query section)'
                 name: 'source'
-                label: 'Source'
+                label: span className: 'pull-right',
+                  'Source '
+                  i className: 'fa fa-table'
                 autoFocus: true
                 value: @props.value.get("source")
                 disabled: @props.disabled
@@ -161,9 +165,17 @@ module.exports = React.createClass
                 onChange: @_handleChangeSource
                 labelClassName: 'col-xs-2'
                 wrapperClassName: 'col-xs-10'
+        #ARROW-DOWN React.DOM.div {className: ''},
+        #   React.DOM.div className: 'form-group',
+        #     React.DOM.label className: 'col-xs-2 control-label',
+        #       span className: 'pull-right',
+        #         i className: 'fa fa-long-arrow-down'
         React.DOM.div {className: "row col-md-12"},
           React.DOM.div className: 'form-group',
-            React.DOM.label className: 'col-xs-2 control-label', 'Destination'
+            React.DOM.label className: 'col-xs-2 control-label',
+                span className: 'pull-right',
+                  'Destination '
+                  i className: 'fa fa-table'
             React.DOM.div className: 'col-xs-10',
               React.createElement DestinationTableSelector,
                 value: @props.value.get("destination", "")
@@ -194,7 +206,7 @@ module.exports = React.createClass
           React.DOM.div {className: "row col-md-12"},
             React.DOM.div {className: "form-group form-group-sm"},
               React.DOM.label {className: "control-label col-xs-2"},
-                React.DOM.span null,
+                React.DOM.span className: 'pull-right',
                   "Primary key"
               React.DOM.div {className: "col-xs-10"},
                 Select
@@ -221,7 +233,8 @@ module.exports = React.createClass
         if @state.showDetails
           React.DOM.div {className: "row col-md-12"},
             React.DOM.div className: 'form-group form-group-sm',
-              React.DOM.label className: 'col-xs-2 control-label', 'Delete rows'
+              React.DOM.label className: 'col-xs-2 control-label',
+                span className: 'pull-right', 'Delete rows'
               React.DOM.div className: 'col-xs-4',
                 React.createElement AutosuggestWrapper,
                   suggestions: @_getColumns()
