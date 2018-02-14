@@ -48,41 +48,62 @@ export default React.createClass({
 
   render() {
     const parts = this.props.parts;
+    const stageSelect = (
+      <Select
+        searchable={false}
+        disabled={this.props.disabled}
+        clearable={false}
+        value={parts.stage}
+        onChange={({value}) => this.selectStage(value)}
+        options={['out', 'in'].map(v => ({label: v, value: v}))}
+      />
+    );
+    const bucketSelect = (
+      <Select.Creatable
+        promptTextCreator={label => `Create new bucket ${label.startsWith('c-') ? '' : 'c-'}${label}`}
+        clearable={true}
+        disabled={this.props.disabled}
+        placeholder="Select bucket or create new"
+        value={parts.bucket}
+        onChange={this.selectBucket}
+        options={this.prepareBucketsOptions().toJS()}
+      />
+    );
+
+    const tableSelect = (
+      <Select.Creatable
+        promptTextCreator={label => `Create new table ${label}`}
+        clearable={true}
+        disabled={this.props.disabled}
+        placeholder="Select table or create new"
+        value={parts.table}
+        onChange={this.selectTable}
+        options={this.prepareTablesOptions().toJS()}
+      />
+    );
+
     return (
       <FormGroup>
-        <span className="col-sm-2" style={{paddingLeft: '0px'}}>
-          <Select
-            searchable={false}
-            disabled={this.props.disabled}
-            clearable={false}
-            value={parts.stage}
-            onChange={({value}) => this.selectStage(value)}
-            options={['out', 'in'].map(v => ({label: v, value: v}))}
-          />
-        </span>
-        <span className="col-sm-6" style={{paddingLeft: '0px'}}>
-          <Select.Creatable
-            promptTextCreator={label => `Create new bucket ${label.startsWith('c-') ? '' : 'c-'}${label}`}
-            clearable={true}
-            disabled={this.props.disabled}
-            placeholder="Select bucket or create new"
-            value={parts.bucket}
-            onChange={this.selectBucket}
-            options={this.prepareBucketsOptions().toJS()}
-          />
-        </span>
-        <span className="col-sm-4" style={{paddingLeft: '0px', paddingRight: '0px'}}>
-          <Select.Creatable
-            promptTextCreator={label => `Create new table ${label}`}
-            clearable={true}
-            disabled={this.props.disabled}
-            placeholder="Select table or create new"
-            value={parts.table}
-            onChange={this.selectTable}
-            options={this.prepareTablesOptions().toJS()}
-          />
-        </span>
-        <HelpBlock> Destination is table in storage - you can create new one or use existing.</HelpBlock>
+        <div>
+          <span className="col-md-1" style={{paddingLeft: '0px', paddingRight: '0px'}}>
+            {stageSelect}
+          </span>
+          <span className="col-md-1" style={{paddingLeft: '5px', paddingRight: '5px', width: 'auto', top: '0.5em'}}>
+            {/* <i className="fa fa-circle" /> */}
+            .
+          </span>
+          <span className="col-md-5" style={{paddingLeft: '0px', paddingRight: '0px'}}>
+            {bucketSelect}
+          </span>
+          <span className="col-md-1" style={{paddingLeft: '5px', paddingRight: '5px', width: 'auto', top: '0.5em'}}>
+            .
+          </span>
+          <span className="col-md-5" style={{paddingLeft: '0px', paddingRight: '0px'}}>
+            {tableSelect}
+          </span>
+        </div>
+          <HelpBlock> Destination is table in storage - you can create new one or use existing.</HelpBlock>
+
       </FormGroup>
     );
   },
