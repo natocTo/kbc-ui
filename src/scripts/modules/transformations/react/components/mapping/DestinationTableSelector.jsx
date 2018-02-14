@@ -64,7 +64,6 @@ export default React.createClass({
           <Select.Creatable
             promptTextCreator={label => `Create new bucket ${label.startsWith('c-') ? '' : 'c-'}${label}`}
             clearable={true}
-            newOptionCreator={this.checkBucketPrefix}
             disabled={this.props.disabled}
             placeholder="Select bucket or create new"
             value={parts.bucket}
@@ -88,22 +87,19 @@ export default React.createClass({
     );
   },
 
-  checkBucketPrefix(op) {
-    const bucketId = op.label;
-    if (!bucketId.startsWith('c-')) {
-      return {label: 'c-' + bucketId, value: 'c-' + bucketId};
-    } else {
-      return {label: bucketId, value: bucketId};
-    }
-  },
-
   selectStage(stage) {
     this.updateValue('stage', stage);
   },
 
   selectBucket(selection) {
     const bucket = selection ? selection.value : '';
-    this.updateValue('bucket', bucket);
+    if (!!bucket &&
+        !bucket.startsWith('c-') &&
+        !this.prepareBucketsOptions().find(b => b.label === bucket)) {
+      this.updateValue('bucket', 'c-' + bucket);
+    } else {
+      this.updateValue('bucket', bucket);
+    }
   },
 
   selectTable(selection) {
