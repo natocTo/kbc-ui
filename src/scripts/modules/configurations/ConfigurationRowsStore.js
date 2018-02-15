@@ -1,10 +1,10 @@
-import Dispatcher from '../Dispatcher';
+import Dispatcher from '../../Dispatcher';
 import constants from './ConfigurationRowsConstants';
 import Immutable from 'immutable';
 import {Map} from 'immutable';
-import StoreUtils from '../utils/StoreUtils';
-import fromJSOrdered from '../utils/fromJSOrdered';
-import InstalledComponentsConstants from '../modules/components/Constants';
+import StoreUtils from '../../utils/StoreUtils';
+import fromJSOrdered from '../../utils/fromJSOrdered';
+import InstalledComponentsConstants from '../components/Constants';
 import ConfigurationsConstants from './ConfigurationsConstants';
 import isParsableConfiguration from './utils/isParsableConfiguration';
 

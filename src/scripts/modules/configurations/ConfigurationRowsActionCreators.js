@@ -1,17 +1,17 @@
-import ApplicationActionCreators from '../actions/ApplicationActionCreators';
-import Dispatcher from '../Dispatcher';
+import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
+import Dispatcher from '../../Dispatcher';
 import Constants from './ConfigurationRowsConstants';
 import ConfigurationRowsStore from './ConfigurationRowsStore';
-import InstalledComponentsApi from '../modules/components/InstalledComponentsApi';
-import InstalledComponentsStore from '../modules/components/stores/InstalledComponentsStore';
-import VersionActionCreators from '../modules/components/VersionsActionCreators';
-import ApplicationStore from '../stores/ApplicationStore';
-import RoutesStore from '../stores/RoutesStore';
-import configurationRowDeleted from '../modules/components/react/components/notifications/configurationRowDeleted';
+import InstalledComponentsApi from '../components/InstalledComponentsApi';
+import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
+import VersionActionCreators from '../components/VersionsActionCreators';
+import ApplicationStore from '../../stores/ApplicationStore';
+import RoutesStore from '../../stores/RoutesStore';
+import configurationRowDeleted from '../components/react/components/notifications/configurationRowDeleted';
 import Immutable from 'immutable';
-import removeEmptyEncryptAttributes from '../modules/components/utils/removeEmptyEncryptAttributes';
-import preferEncryptedAttributes from '../modules/components/utils/preferEncryptedAttributes';
-import stringUtils from '../utils/string';
+import removeEmptyEncryptAttributes from '../components/utils/removeEmptyEncryptAttributes';
+import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
+import stringUtils from '../../utils/string';
 const { webalize } = stringUtils;
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {

@@ -1,9 +1,9 @@
-import Dispatcher from '../Dispatcher';
+import Dispatcher from '../../Dispatcher';
 import Constants from './ConfigurationsConstants';
 import Immutable from 'immutable';
 import {Map} from 'immutable';
-import StoreUtils from '../utils/StoreUtils';
-import InstalledComponentsConstants from '../modules/components/Constants';
+import StoreUtils from '../../utils/StoreUtils';
+import InstalledComponentsConstants from '../components/Constants';
 
 var _store = Map({
   configurations: Map(),
