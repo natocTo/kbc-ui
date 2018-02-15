@@ -6,7 +6,7 @@ import './DestinationTableSelector.less';
 
 export default React.createClass({
   propTypes: {
-    value: PropTypes.string,
+    currentSource: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
     tables: React.PropTypes.object.isRequired,
     buckets: React.PropTypes.object.isRequired,
@@ -36,15 +36,19 @@ export default React.createClass({
     const parts = this.props.parts;
     const bucketId = parts.stage + '.' + parts.bucket;
     const table = parts.table;
-    const tables = this.props.tables
+    let tables = this.props.tables
                        .filter(t => t.getIn(['bucket', 'id']) === bucketId)
                        .map(t => ({label: t.get('name'), value: t.get('name')}))
                        .toList();
     if (!!table && !tables.find(t => t.label === table)) {
-      return tables.push({label: table, value: table});
-    } else {
-      return tables;
+      tables = tables.push({label: table, value: table});
     }
+    const {currentSource} = this.props;
+    if (!!currentSource && !tables.find(t => t.label === currentSource)) {
+      tables = tables.push({label: `Create table ${currentSource}`, value: currentSource});
+    }
+
+    return tables;
   },
 
   render() {

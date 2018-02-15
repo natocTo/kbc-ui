@@ -167,7 +167,7 @@ module.exports = React.createClass
             React.DOM.label className: 'col-xs-2 control-label', 'Destination'
             React.DOM.div className: 'col-xs-10',
               React.createElement DestinationTableSelector,
-                value: @props.value.get("destination", "")
+                currentSource: @props.value.get("source")
                 updatePart: @_updateDestinationPart
                 disabled: false
                 parts: @_parseDestination().parts
