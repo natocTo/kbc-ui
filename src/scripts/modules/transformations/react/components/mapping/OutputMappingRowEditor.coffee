@@ -151,7 +151,7 @@ module.exports = React.createClass
             else
               Input
                 type: 'text'
-                help: 'Source table is generated inside transformation DB (inside SQL you write to query section)'
+                help: 'Name of a source table generated from run of the transformation query script'
                 name: 'source'
                 label: 'Source'
                 autoFocus: true
@@ -173,11 +173,8 @@ module.exports = React.createClass
                 parts: @_parseDestination().parts
                 tables: @props.tables
                 buckets: @props.buckets
-              # React.createElement AutosuggestWrapper,
-              #   suggestions: @_getTablesAndBuckets()
-              #   value: @props.value.get("destination", "")
-              #   onChange: @_handleChangeDestination
-              #   placeholder: 'Destination table in Storage'
+                placeholder: 'Storage table where \
+                data from the source table will be loaded to - you can create new one or use existing.'
               if @state.showDetails
                 Input
                   standalone: true

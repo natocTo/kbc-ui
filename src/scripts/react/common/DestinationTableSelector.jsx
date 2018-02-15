@@ -11,7 +11,8 @@ export default React.createClass({
     tables: React.PropTypes.object.isRequired,
     buckets: React.PropTypes.object.isRequired,
     parts: React.PropTypes.object.isRequired,
-    updatePart: PropTypes.func.isRequired
+    updatePart: PropTypes.func.isRequired,
+    placeholder: PropTypes.string.isRequired
   },
 
   /* componentDidMount() {
@@ -107,7 +108,7 @@ export default React.createClass({
             {tableSelect}
           </span>
         </div>
-          <div className="help-block"> Destination is table in storage - you can create new one or use existing.</div>
+        <div className="help-block">{this.props.placeholder}</div>
       </span>
     );
   },

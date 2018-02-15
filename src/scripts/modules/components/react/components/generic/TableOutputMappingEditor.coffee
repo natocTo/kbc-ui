@@ -153,11 +153,8 @@ module.exports = React.createClass
                 parts: @_parseDestination().parts
                 tables: @props.tables
                 buckets: @props.buckets
-              # React.createElement AutosuggestWrapper,
-              #   suggestions: @_getTablesAndBuckets()
-              #   value: @props.value.get("destination", "")
-              #   onChange: @_handleChangeDestination
-              #   placeholder: 'Destination table in Storage'
+                placeholder: 'Storage table where \
+                data from the source file will be loaded to - you can create new one or use existing.'
               if @state.showDetails
                 Input
                   standalone: true
