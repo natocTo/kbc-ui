@@ -137,6 +137,7 @@ module.exports = React.createClass
                 value: @props.value.get("source")
                 disabled: @props.disabled
                 placeholder: "File name"
+                onBlur: @_handleBlurSource
                 onChange: @_handleChangeSource
                 onBlur: @_handleBlurSource
                 labelClassName: 'col-xs-2'

@@ -5,6 +5,9 @@ Immutable = require('immutable')
 Input = React.createFactory require('./../../../../../react/common/KbcBootstrap').Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 AutosuggestWrapper = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
+DestinationTableSelector = require('../../../../transformations/react/components/mapping/DestinationTableSelector')
+DestinationTableSelector = DestinationTableSelector.default
+tableIdParser = require('../../../../../utils/tableIdParser').default
 
 module.exports = React.createClass
   displayName: 'TableOutputMappingEditor'
@@ -31,6 +34,17 @@ module.exports = React.createClass
       showDetails: e.target.checked
     )
 
+  _parseDestination: ->
+    destination = @props.value.get('destination')
+    tableIdParser.parse(destination, {defaultStage: 'out'})
+
+  _handleBlurSource: (e) ->
+    sourceValue = e.target.value
+    dstParser = @_parseDestination()
+    if !dstParser.parts.table
+      newDestination = dstParser.setPart('table', sourceValue)
+      @_handleChangeDestination(newDestination.tableId)
+
   _handleChangeSource: (e) ->
     immutable = @props.value.withMutations (mapping) ->
       mapping = mapping.set("source", e.target.value.trim())
@@ -46,6 +60,10 @@ module.exports = React.createClass
       )
 
     @props.onChange(value)
+
+  _updateDestinationPart: (partName, value) ->
+    @_handleChangeDestination(@_parseDestination().setPart(partName,value).tableId)
+
 
   _handleChangeIncremental: (e) ->
     value = @props.value.set("incremental", e.target.checked)
@@ -116,6 +134,7 @@ module.exports = React.createClass
               value: @props.value.get("source")
               disabled: @props.disabled
               placeholder: "File name"
+              onBlur: @_handleBlurSource
               onChange: @_handleChangeSource
               labelClassName: 'col-xs-2'
               wrapperClassName: 'col-xs-10'
@@ -127,11 +146,18 @@ module.exports = React.createClass
           React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Destination'
             React.DOM.div className: 'col-xs-10',
-              React.createElement AutosuggestWrapper,
-                suggestions: @_getTablesAndBuckets()
+              React.createElement DestinationTableSelector,
                 value: @props.value.get("destination", "")
-                onChange: @_handleChangeDestination
-                placeholder: 'Destination table in Storage'
+                updatePart: @_updateDestinationPart
+                disabled: false
+                parts: @_parseDestination().parts
+                tables: @props.tables
+                buckets: @props.buckets
+              # React.createElement AutosuggestWrapper,
+              #   suggestions: @_getTablesAndBuckets()
+              #   value: @props.value.get("destination", "")
+              #   onChange: @_handleChangeDestination
+              #   placeholder: 'Destination table in Storage'
               if @state.showDetails
                 Input
                   standalone: true
