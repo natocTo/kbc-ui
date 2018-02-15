@@ -154,7 +154,7 @@ module.exports = React.createClass
                 tables: @props.tables
                 buckets: @props.buckets
                 placeholder: 'Storage table where \
-                data from the source file will be loaded to - you can create new one or use existing.'
+                the source file data will be loaded to - you can create a new table or use an existing one.'
               if @state.showDetails
                 Input
                   standalone: true
