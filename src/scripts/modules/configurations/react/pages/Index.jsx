@@ -1,26 +1,26 @@
 import React from 'react';
 import Immutable from 'immutable';
 // stores
-import InstalledComponentsStore from '../../../modules/components/stores/InstalledComponentsStore';
+import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../../ConfigurationRowsStore';
 import ConfigurationsStore from '../../ConfigurationsStore';
-import RoutesStore from '../../../stores/RoutesStore';
-import LatestJobsStore from '../../../modules/jobs/stores/LatestJobsStore';
-import VersionsStore from '../../../modules/components/stores/VersionsStore';
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import ComponentsStore from '../../../modules/components/stores/ComponentsStore';
+import RoutesStore from '../../../../stores/RoutesStore';
+import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
+import VersionsStore from '../../../components/stores/VersionsStore';
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import ComponentsStore from '../../../components/stores/ComponentsStore';
 
 // actions
 import configurationRowsActions from '../../ConfigurationRowsActionCreators';
 import configurationsActions from '../../ConfigurationsActionCreators';
 
 // global components
-import RunComponentButton from '../../../modules/components/react/components/RunComponentButton';
-import ComponentDescription from '../../../modules/components/react/components/ComponentDescription';
-import ComponentMetadata from '../../../modules/components/react/components/ComponentMetadata';
-import DeleteConfigurationButton from '../../../modules/components/react/components/DeleteConfigurationButton';
-import LatestVersions from '../../../modules/components/react/components/SidebarVersionsWrapper';
-import LatestJobs from '../../../modules/components/react/components/SidebarJobs';
+import RunComponentButton from '../../../components/react/components/RunComponentButton';
+import ComponentDescription from '../../../components/react/components/ComponentDescription';
+import ComponentMetadata from '../../../components/react/components/ComponentMetadata';
+import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
+import LatestVersions from '../../../components/react/components/SidebarVersionsWrapper';
+import LatestJobs from '../../../components/react/components/SidebarJobs';
 import CreateConfigurationRowButton from '../components/CreateConfigurationRowButton';
 import ConfigurationRows from '../components/ConfigurationRows';
 import Credentials from '../components/Credentials';

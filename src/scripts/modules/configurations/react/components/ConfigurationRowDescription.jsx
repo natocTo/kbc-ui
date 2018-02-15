@@ -1,6 +1,6 @@
 import React from 'react';
-import InlineEditTextArea from '../../../react/common/InlineEditArea';
-import ConfigurationRowEditField from '../../../modules/components/react/components/ConfigurationRowEditField';
+import InlineEditTextArea from '../../../../react/common/InlineEditArea';
+import ConfigurationRowEditField from '../../../components/react/components/ConfigurationRowEditField';
 
 export default React.createClass({
   propTypes: {

@@ -1,5 +1,5 @@
 import VersionsActionCreators from '../RowVersionsActionCreators';
-import InstalledComponentsActionCreators from '../../modules/components/InstalledComponentsActionCreators';
+import InstalledComponentsActionCreators from '../../components/InstalledComponentsActionCreators';
 
 export default function(componentId, configId, rowId, versionId) {
   return function() {

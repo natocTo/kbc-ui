@@ -2,17 +2,17 @@ import React from 'react';
 import Immutable from 'immutable';
 
 // stores
-import ComponentStore from '../../../modules/components/stores/ComponentsStore';
-import InstalledComponentsStore from '../../../modules/components/stores/InstalledComponentsStore';
-import RoutesStore from '../../../stores/RoutesStore';
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import ComponentStore from '../../../components/stores/ComponentsStore';
+import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
+import RoutesStore from '../../../../stores/RoutesStore';
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import Store from '../../ConfigurationsStore';
 
 // actions
 import Actions from '../../ConfigurationsActionCreators';
 
 // global components
-import SaveButtons from '../../../react/common/SaveButtons';
+import SaveButtons from '../../../../react/common/SaveButtons';
 import { PanelGroup, Panel } from 'react-bootstrap';
 
 export default React.createClass({

@@ -1,17 +1,17 @@
 import React from 'react';
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../RowVersionsStore';
-import VersionRow from '../../../modules/components/react/components/VersionRow';
-import RoutesStore from '../../../stores/RoutesStore';
-import { getPreviousVersion } from '../../../utils/VersionsDiffUtils';
+import VersionRow from '../../../components/react/components/VersionRow';
+import RoutesStore from '../../../../stores/RoutesStore';
+import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
 import { Table } from 'react-bootstrap';
-import SearchRow from '../../../react/common/SearchRow';
+import SearchRow from '../../../../react/common/SearchRow';
 import VersionsActionCreators from '../../RowVersionsActionCreators';
 import fuzzy from 'fuzzy';
 import immutableMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
 import createRowVersionOnRollback from '../../utils/createRowVersionOnRollback';
-import { simpleMatch } from '../../../utils/utils';
+import { simpleMatch } from '../../../../utils/utils';
 
 // styles
 import '../../styles.less';

@@ -1,9 +1,9 @@
 import React from 'react';
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import immutableMixin from 'react-immutable-render-mixin';
 import ConfigurationsStore  from '../../ConfigurationsStore';
 import RowsStore  from '../../ConfigurationRowsStore';
-import date from '../../../utils/date';
+import date from '../../../../utils/date';
 
 export default React.createClass({
   mixins: [createStoreMixin(RowsStore, ConfigurationsStore), immutableMixin],

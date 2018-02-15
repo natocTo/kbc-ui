@@ -1,9 +1,9 @@
 import React from 'react';
-import SidebarVesions from '../../../modules/components/react/components/SidebarVersions';
+import SidebarVesions from '../../../components/react/components/SidebarVersions';
 
-import createStoreMixin from '../../../react/mixins/createStoreMixin';
-import InstalledComponentStore from '../../../modules/components/stores/InstalledComponentsStore';
-import ComponentStore from '../../../modules/components/stores/ComponentsStore';
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import InstalledComponentStore from '../../../components/stores/InstalledComponentsStore';
+import ComponentStore from '../../../components/stores/ComponentsStore';
 import VersionsStore from '../../RowVersionsStore';
 import VersionsActionCreators from '../../RowVersionsActionCreators';
 

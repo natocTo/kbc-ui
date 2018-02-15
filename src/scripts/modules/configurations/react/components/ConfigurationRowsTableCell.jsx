@@ -1,6 +1,6 @@
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import StorageApiTableLinkEx from '../../../modules/components/react/components/StorageApiTableLinkEx';
+import StorageApiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 
 const TableCell = React.createClass({
   mixins: [immutableMixin],

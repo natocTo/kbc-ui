@@ -1,4 +1,4 @@
-import { columnTypes, createRoute }  from '../../components-ui-helper/utils/createRoute';
+import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
 import {
   createConfiguration as rowCreateConfiguration,
   parseConfiguration as rowParseConfiguration,
