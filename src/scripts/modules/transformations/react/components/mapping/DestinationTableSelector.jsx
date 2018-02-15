@@ -45,7 +45,7 @@ export default React.createClass({
     }
     const {currentSource} = this.props;
     if (!!currentSource && !tables.find(t => t.label === currentSource)) {
-      tables = tables.push({label: `Create table ${currentSource}`, value: currentSource});
+      tables = tables.insert(0, {label: `Create new table ${currentSource}`, value: currentSource});
     }
 
     return tables;
