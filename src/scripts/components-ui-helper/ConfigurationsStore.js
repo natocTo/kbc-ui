@@ -1,5 +1,5 @@
 import Dispatcher from '../Dispatcher';
-import Constants from '../modules/components/ConfigurationsConstants';
+import Constants from './ConfigurationsConstants';
 import Immutable from 'immutable';
 import {Map} from 'immutable';
 import StoreUtils from '../utils/StoreUtils';

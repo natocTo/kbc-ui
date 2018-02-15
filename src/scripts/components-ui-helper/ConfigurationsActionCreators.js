@@ -1,12 +1,12 @@
-import Dispatcher from '../../Dispatcher';
+import Dispatcher from '../Dispatcher';
 import Constants from './ConfigurationsConstants';
-import ConfigurationsStore from '../../components-ui-helper/ConfigurationsStore';
-import InstalledComponentsApi from './InstalledComponentsApi';
-import VersionActionCreators from '../components/VersionsActionCreators';
-import InstalledComponentsStore from './stores/InstalledComponentsStore';
-import ApplicationStore from '../../stores/ApplicationStore';
-import removeEmptyEncryptAttributes from './utils/removeEmptyEncryptAttributes';
-import preferEncryptedAttributes from './utils/preferEncryptedAttributes';
+import ConfigurationsStore from './ConfigurationsStore';
+import InstalledComponentsApi from '../modules/components/InstalledComponentsApi';
+import VersionActionCreators from '../modules/components/VersionsActionCreators';
+import InstalledComponentsStore from '../modules/components/stores/InstalledComponentsStore';
+import ApplicationStore from '../stores/ApplicationStore';
+import removeEmptyEncryptAttributes from '../modules/components/utils/removeEmptyEncryptAttributes';
+import preferEncryptedAttributes from '../modules/components/utils/preferEncryptedAttributes';
 
 const storeEncodedConfiguration = function(componentId, configurationId, configuration, changeDescription) {
   let component = InstalledComponentsStore.getComponent(componentId);

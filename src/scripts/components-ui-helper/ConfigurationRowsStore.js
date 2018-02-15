@@ -5,7 +5,7 @@ import {Map} from 'immutable';
 import StoreUtils from '../utils/StoreUtils';
 import fromJSOrdered from '../utils/fromJSOrdered';
 import InstalledComponentsConstants from '../modules/components/Constants';
-import ConfigurationsConstants from '../modules/components/ConfigurationsConstants';
+import ConfigurationsConstants from './ConfigurationsConstants';
 import isParsableConfiguration from './utils/isParsableConfiguration';
 
 var _store = Map({

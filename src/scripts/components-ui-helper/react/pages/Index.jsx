@@ -12,7 +12,7 @@ import ComponentsStore from '../../../modules/components/stores/ComponentsStore'
 
 // actions
 import configurationRowsActions from '../../ConfigurationRowsActionCreators';
-import configurationsActions from '../../../modules/components/ConfigurationsActionCreators';
+import configurationsActions from '../../ConfigurationsActionCreators';
 
 // global components
 import RunComponentButton from '../../../modules/components/react/components/RunComponentButton';

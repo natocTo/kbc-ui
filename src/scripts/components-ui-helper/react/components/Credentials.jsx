@@ -9,7 +9,7 @@ import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import Store from '../../ConfigurationsStore';
 
 // actions
-import Actions from '../../../modules/components/ConfigurationsActionCreators';
+import Actions from '../../ConfigurationsActionCreators';
 
 // global components
 import SaveButtons from '../../../react/common/SaveButtons';
