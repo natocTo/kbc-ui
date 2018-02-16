@@ -46,7 +46,8 @@ export default React.createClass({
 
     const componentName = component.get('type') !== 'transformation' ? `${component.get('name')} ${component.get('type')}` : `${component.get('type')}`;
     const config = InstalledComponentsStore.getConfig(componentId, configId);
-    const configName = config ? config.get('name', configId) : configId;
+    const unknownConfigName = `Unknown configuration (${configId})`;
+    const configName = config ? config.get('name', unknownConfigName) : unknownConfigName;
 
     return (
       <span>
