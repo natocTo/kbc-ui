@@ -7,6 +7,7 @@ import ComponentsStore from '../../modules/components/stores/ComponentsStore';
 import ComponentIcon from './ComponentIcon';
 import ComponentConfigurationLink from '../../modules/components/react/components/ComponentConfigurationLink';
 import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
+import InstalledComponentsActions from '../../modules/components/InstalledComponentsActionCreators';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ComponentsStore)],
@@ -17,8 +18,15 @@ export default React.createClass({
 
   getStateFromStores() {
     return {
-      isLoading: InstalledComponentsStore.getIsLoading()
+      isConfigsLoading: InstalledComponentsStore.getIsLoading(),
+      isConfigsLoaded: InstalledComponentsStore.getIsLoaded()
     };
+  },
+
+  componentDidMount() {
+    if (!!this.state.isConfigsLoading && this.state.isConfigsLoaded) {
+      InstalledComponentsActions.loadComponentsForce();
+    }
   },
 
   render() {
@@ -29,7 +37,7 @@ export default React.createClass({
       return 'N/A';
     }
 
-    if (this.state.isLoading) {
+    if (this.state.isConfigsLoading) {
       return <Loader />;
     }
 
