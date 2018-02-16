@@ -72,13 +72,21 @@ export default React.createClass({
   },
 
   getLastUpdatedInfo() {
-    const metadata = this.props.table.get('metadata');
-    const componentFound = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.component.id');
-    const configFound = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.configuration.id');
+    let componentFound = this.metadataLookup('KBC.lastUpdatedBy.component.id');
+    let configFound = this.metadataLookup('KBC.lastUpdatedBy.configuration.id');
+    if (!componentFound || configFound) {
+      componentFound = this.metadataLookup('KBC.createdBy.component.id');
+      configFound = this.metadataLookup('KBC.createdBy.configuration.id');
+    }
     const componentId = componentFound && componentFound.get('value');
     const configId = configFound && configFound.get('value');
     const timestamp = configFound && configFound.get('timestamp');
     return {componentId, configId, timestamp};
+  },
+
+  metadataLookup(key) {
+    const metadata = this.props.table.get('metadata');
+    return metadata.find(m => m.get('key') === key);
   }
 
 });
