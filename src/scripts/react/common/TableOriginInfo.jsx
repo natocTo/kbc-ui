@@ -3,6 +3,9 @@ import {fromJS} from 'immutable';
 import createStoreMixin from '../mixins/createStoreMixin';
 import {Loader} from '@keboola/indigo-ui';
 
+import date from '../../utils/date';
+import moment from 'moment';
+
 import ComponentsStore from '../../modules/components/stores/ComponentsStore';
 import ComponentIcon from './ComponentIcon';
 import ComponentConfigurationLink from '../../modules/components/react/components/ComponentConfigurationLink';
@@ -30,7 +33,7 @@ export default React.createClass({
   },
 
   render() {
-    const {componentId, configId} = this.getLastUpdatedInfo();
+    const {componentId, configId, timestamp} = this.getLastUpdatedInfo();
     const component = componentId && ComponentsStore.getComponent(componentId);
 
     if (!component) {
@@ -47,10 +50,24 @@ export default React.createClass({
 
     return (
       <span>
+        {this.renderTimefromNow(timestamp)}
         <ComponentIcon component={fromJS(component)}/>
         <ComponentConfigurationLink componentId={componentId} configId={configId}>{componentName} / {configName}
         </ComponentConfigurationLink>
+
       </span>
+    );
+  },
+
+  renderTimefromNow(value) {
+    if (value === null) {
+      return 'N/A';
+    }
+    const fromNow = moment(value).fromNow();
+    return (
+      <div> {date.format(value)}
+        <small> {fromNow} </small>
+      </div>
     );
   },
 
@@ -60,7 +77,8 @@ export default React.createClass({
     const configFound = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.configuration.id');
     const componentId = componentFound && componentFound.get('value');
     const configId = configFound && configFound.get('value');
-    return {componentId, configId};
+    const timestamp = configFound && configFound.get('timestamp');
+    return {componentId, configId, timestamp};
   }
 
 });
