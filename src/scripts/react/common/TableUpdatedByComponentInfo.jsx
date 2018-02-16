@@ -33,7 +33,7 @@ export default React.createClass({
   },
 
   render() {
-    const {componentId, configId, timestamp} = this.getLastUpdatedInfo();
+    const {componentId, configId/* , timestamp*/} = this.getLastUpdatedInfo();
     const component = componentId && ComponentsStore.getComponent(componentId);
 
     if (!component) {
@@ -50,7 +50,7 @@ export default React.createClass({
 
     return (
       <span>
-        {this.renderTimefromNow(timestamp)}
+        {/* {this.renderTimefromNow(timestamp)} */}
         <ComponentIcon component={fromJS(component)}/>
         <ComponentConfigurationLink componentId={componentId} configId={configId}>{componentName} / {configName}
         </ComponentConfigurationLink>
