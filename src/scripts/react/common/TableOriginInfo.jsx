@@ -34,7 +34,7 @@ export default React.createClass({
     const component = componentId && ComponentsStore.getComponent(componentId);
 
     if (!component) {
-      return 'N/A';
+      return <span>N/A</span>;
     }
 
     if (this.state.isConfigsLoading) {
@@ -56,8 +56,10 @@ export default React.createClass({
 
   getLastUpdatedInfo() {
     const metadata = this.props.table.get('metadata');
-    const componentId = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.component.id').get('value');
-    const configId = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.configuration.id').get('value');
+    const componentFound = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.component.id');
+    const configFound = metadata.find(m => m.get('key') === 'KBC.lastUpdatedBy.configuration.id');
+    const componentId = componentFound && componentFound.get('value');
+    const configId = configFound && configFound.get('value');
     return {componentId, configId};
   }
 
