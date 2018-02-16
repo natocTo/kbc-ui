@@ -75,7 +75,7 @@ export default React.createClass({
   getLastUpdatedInfo() {
     let componentFound = this.metadataLookup('KBC.lastUpdatedBy.component.id');
     let configFound = this.metadataLookup('KBC.lastUpdatedBy.configuration.id');
-    if (!componentFound || configFound) {
+    if (!componentFound || !configFound) {
       componentFound = this.metadataLookup('KBC.createdBy.component.id');
       configFound = this.metadataLookup('KBC.createdBy.configuration.id');
     }
