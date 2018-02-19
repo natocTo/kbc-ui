@@ -199,6 +199,7 @@ module.exports =
     default:
       type: 'TEXT'
   'keboola.wr-thoughtspot':
+    disabledFields: ['nullable', 'default']
     typesList: thoughtspot
     default:
       type: 'varchar'
