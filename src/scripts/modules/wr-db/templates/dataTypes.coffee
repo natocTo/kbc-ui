@@ -136,6 +136,18 @@ pgsql = [
   'json'
   'jsonb'
 ]
+thoughtspot = [
+  'int'
+  'bigint'
+  'double'
+  'float'
+  'bool'
+  {'varchar': defaultSize: '255'}
+  'timestamp'
+  'date'
+  'time'
+  'datetime'
+]
 
 module.exports =
   'keboola.wr-db-snowflake':
@@ -186,3 +198,8 @@ module.exports =
     typesList: mysql
     default:
       type: 'TEXT'
+  'keboola.wr-thoughtspot':
+    typesList: thoughtspot
+    default:
+      type: 'varchar'
+      size: '255'

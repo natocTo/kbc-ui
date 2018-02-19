@@ -187,6 +187,10 @@ routes =
         'keboola.wr-db-snowflake',
         [createDbWriterRoutes('keboola.wr-db-snowflake', 'snowflake', true)]
       )
+      createComponentRoute(
+        'keboola.wr-thoughtspot',
+        [createDbWriterRoutes('keboola.wr-thoughtspot', 'thoughtspot', false)]
+      )
     ,
       createComponentRoute 'wr-portal-sas', [wrPortalCreateRouteFn('wr-portal-sas')]
     ,

@@ -8,7 +8,8 @@ const dockerComponents = [
   'keboola.wr-db-snowflake',
   'keboola.wr-db-pgsql',
   'keboola.wr-qlik',
-  'keboola.wr-looker'
+  'keboola.wr-looker',
+  'keboola.wr-thoughtspot'
 ];
 import {List, Map, fromJS} from 'immutable';
 import Promise from 'bluebird';
