@@ -36,6 +36,7 @@ export default React.createClass({
     getPKColumns: React.PropTypes.func.isRequired,
     queryNameExists: React.PropTypes.bool.isRequired,
     credentialsHasDatabase: React.PropTypes.bool,
+    credentialsHasSchema: React.PropTypes.bool,
     refreshMethod: React.PropTypes.func.isRequired
   },
 
@@ -443,6 +444,13 @@ export default React.createClass({
         <div className="help-block">
           <i className="fa fa-exclamation-triangle"/> This connection does not have a database specified so please be sure to prefix table names with the schema
           <br/>(e.g. `schemaName`.`tableName`)
+        </div>
+      );
+    } else if (this.props.componentId === 'keboola.ex-db-snowflake' && !this.props.credentialsHasSchema) {
+      return (
+        <div className="help-block">
+          <i className="fa fa-exclamation-triangle"/> This connection does not have a schema specified so please be sure to prefix table names with the schema
+          <br/>(e.g. "schemaName"."tableName")
         </div>
       );
     }

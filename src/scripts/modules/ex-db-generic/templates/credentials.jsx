@@ -38,7 +38,7 @@ const snowflakeFields = [
   ['Username', 'user', 'text', false, true],
   ['Password', '#password', 'password', true, true],
   ['Database', 'database', 'text', false, true],
-  ['Schema', 'schema', 'text', false, true],
+  ['Schema', 'schema', 'text', false, false],
   ['Warehouse', 'warehouse', 'text', false, false]
 ];
 
