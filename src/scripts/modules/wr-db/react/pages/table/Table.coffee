@@ -145,6 +145,7 @@ templateFn = (componentId) ->
           dataPreview: @state.dataPreview
           editButtons: @_renderEditButtons()
           setAllColumnsType: @_renderSetColumnsType()
+          disabledColumnFields: @_getDisabledColumnFields()
           onSetAllColumnsNull: (e) =>
             value = if e.target.checked then '1' else '0'
             @state.editingColumns.map (ec) =>
@@ -286,6 +287,9 @@ templateFn = (componentId) ->
 
   _getComponentDataTypes: ->
     DataTypes[componentId]?.typesList or defaultDataTypes
+
+  _getDisabledColumnFields: ->
+    DataTypes[componentId]?.disabledFields or []
 
   _getSizeParam: (dataType) ->
     dtypes = @_getComponentDataTypes()

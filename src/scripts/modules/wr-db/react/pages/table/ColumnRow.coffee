@@ -17,6 +17,7 @@ module.exports = React.createClass
     isSaving: React.PropTypes.bool
     dataPreview: React.PropTypes.array
     isValid: React.PropTypes.bool
+    disabledFields: React.PropTypes.array
 
   render: ->
     if @props.editingColumn
@@ -86,6 +87,8 @@ module.exports = React.createClass
         opKey
 
   _createCheckbox: (property) ->
+    if property == 'null' and 'nullable' in @props.disabledFields
+      return ''
     if @props.editingColumn.get('type') == 'IGNORE'
       return ''
     isChecked = @props.editingColumn.get(property) == '1'
@@ -100,6 +103,8 @@ module.exports = React.createClass
 
 
   _createInput: (property, type = 'text') ->
+    if property == 'default' and 'default' in @props.disabledFields
+      return ''
     if @props.editingColumn.get('type') == 'IGNORE'
       return ''
     Input
@@ -132,6 +137,8 @@ module.exports = React.createClass
     val = @props.column.get 'default'
     if @_isIgnored()
       val = 'N/A'
+    if 'default' in @props.disabledFields
+      val = ''
     return td className: 'kbc-static-cell', val
 
 
@@ -147,6 +154,8 @@ module.exports = React.createClass
     nullVal = Check({isChecked: isChecked})
     if @_isIgnored()
       nullVal = 'N/A'
+    if 'nullable' in @props.disabledFields
+      nullVal = ''
     return td className: 'kbc-static-cell', nullVal
 
   _isIgnored: ->

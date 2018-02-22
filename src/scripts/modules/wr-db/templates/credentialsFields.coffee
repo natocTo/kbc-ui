@@ -113,6 +113,17 @@ fields =
     [ 'Schema', 'schema', 'text', false, 'public', [], true, null]
   ]
 
+  'keboola.wr-thoughtspot': [
+    [ 'Host name', 'host', 'text', false, null, [], true, null]
+    [ 'Port', 'port', 'number', false, '12345', [], true, null]
+    [ 'Username', 'user', 'text', false, null, [], true, null]
+    [ 'Password', '#password', 'password', true, null, [], true, null]
+    [ 'Database Name', 'database', 'text', false, null, [], true, null]
+    [ 'Schema', 'schema', 'text', false, null, [], false, null]
+    [ 'SSH User', 'sshUser', 'text', false, null, [], true, null]
+    [ 'SSH Password', '#sshPassword', 'password', true, null, [], true, null]
+  ]
+
 
 module.exports = (componentId) ->
   fields[componentId] or defaultFields
