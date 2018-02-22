@@ -87,7 +87,6 @@ module.exports = React.createClass
         opKey
 
   _createCheckbox: (property) ->
-    console.log(@props.disabledFields)
     if property == 'null' and 'nullable' in @props.disabledFields
       return ''
     if @props.editingColumn.get('type') == 'IGNORE'

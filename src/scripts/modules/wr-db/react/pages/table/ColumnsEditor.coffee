@@ -71,7 +71,7 @@ module.exports = React.createClass
               if @props.editingColumns
                 @props.setAllColumnsType
             @_renderNullableHeader()
-
+            @_renderDefaultHeader()
             th null, @props.editButtons
         tbody null,
           if rows.count() > 0
