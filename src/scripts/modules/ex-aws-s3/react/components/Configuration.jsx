@@ -81,7 +81,11 @@ export default React.createClass({
           wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={this.props.value.wildcard}
           onChange={function(e) {
-            props.onChange({wildcard: e.target.checked});
+            let change = {wildcard: e.target.checked};
+            if (change.wildcard === false) {
+              change.subfolders = false;
+            }
+            props.onChange(change);
           }}
           disabled={this.props.disabled}
           help={(<span>Match all files beginning with the specified key.</span>)}
@@ -94,7 +98,7 @@ export default React.createClass({
           onChange={function(e) {
             props.onChange({subfolders: e.target.checked});
           }}
-          disabled={this.props.disabled}
+          disabled={this.props.disabled || !this.props.value.wildcard}
           help={(<span>Download subfolders recursively.</span>)}
           />
         <Input
