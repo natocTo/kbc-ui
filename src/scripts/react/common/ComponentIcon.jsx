@@ -22,29 +22,14 @@ export default React.createClass({
   propTypes: {
     component: React.PropTypes.object,
     size: React.PropTypes.string,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    resizeToSize: React.PropTypes.string
   },
 
   getDefaultProps() {
     return {
       size: '32'
     };
-  },
-
-  is3rdParty() {
-    var component = this.props.component;
-    if (!component) {
-      return false;
-    }
-    return !!component.get('flags').contains('3rdParty');
-  },
-
-  get3rdPartyLabel() {
-    if (this.is3rdParty()) {
-      return null;
-    } else {
-      return null;
-    }
   },
 
   render() {
@@ -64,10 +49,12 @@ export default React.createClass({
   },
 
   imageIcon(url) {
+    const { size, resizeToSize, className } = this.props;
+    const imgSize = resizeToSize ? resizeToSize : size;
+
     return (
-      <span className={classNames('kb-sapi-component-icon', this.props.className)}>
-        <img src={ url } width={this.props.size} height={this.props.size}/>
-        { this.get3rdPartyLabel() }
+      <span className={classNames('kb-sapi-component-icon', className)}>
+        <img src={url} width={imgSize} height={imgSize}/>
       </span>
     );
   }

@@ -7,6 +7,7 @@ import {Table} from 'react-bootstrap';
 import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import filesize from 'filesize';
+import TableUpdatedByComponentInfo from '../../../../../react/common/TableUpdatedByComponentInfo';
 
 export default React.createClass({
 
@@ -52,7 +53,7 @@ export default React.createClass({
             {this.renderTableRow('Primary Key', _.isEmpty(primaryKey) ? 'N/A' : primaryKey.join(', '))}
             {this.renderTableRow('Last Import', this.renderTimefromNow(table.get('lastImportDate')))}
             {this.renderTableRow('Last Change', this.renderTimefromNow(table.get('lastChangeDate')))}
-
+            {this.renderTableRow('Last updated by', <TableUpdatedByComponentInfo table={table}/>)}
             {this.renderTableRow('Rows Count', this.renderRowsCount(table.get('rowsCount')))}
             {this.renderTableRow('Data Size', this.renderDataSize(table.get('dataSizeBytes')))}
             {this.renderTableRow('Columns', table.get('columns').count() + ' columns: ' + table.get('columns').join(', '))}
