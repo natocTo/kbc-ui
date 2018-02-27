@@ -102,5 +102,4 @@ Dispatcher.register (payload) ->
       )
       ComponentsStore.emitChange()
 
-
 module.exports = ComponentsStore
