@@ -1,24 +1,17 @@
 React = require('react')
 Link = React.createFactory(require('react-router').Link)
-Router = require 'react-router'
 Immutable = require('immutable')
 {Map, List} = Immutable
-Clipboard = React.createFactory(require '../../../../../react/common/Clipboard')
 _ = require('underscore')
-OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
-Popover = React.createFactory(require('react-bootstrap').Popover)
 
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 TransformationsActionCreators = require '../../../ActionCreators'
 
-DeleteButton = React.createFactory(require '../../../../../react/common/DeleteButton')
 
 InputMappingRow = React.createFactory(require './InputMappingRow')
 InputMappingDetail = React.createFactory(require './InputMappingDetail')
 OutputMappingRow = React.createFactory(require './OutputMappingRow')
 OutputMappingDetail = React.createFactory(require './OutputMappingDetail')
-RunComponentButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
-ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
 {Panel} = require('react-bootstrap')
 Panel  = React.createFactory Panel
 TransformationTypeLabel = React.createFactory(require '../../components/TransformationTypeLabel')
@@ -272,6 +265,7 @@ module.exports = React.createClass
                   transformation: @props.transformation
                   bucket: @props.bucket
                   mapping: @props.editingFields.get('new-output-mapping', Map())
+                  transformation: @props.transformation
           if @_getOutputMappingValue().count()
             div {className: 'mapping-rows'},
               @_getOutputMappingValue().map((output, key) ->
@@ -299,6 +293,10 @@ module.exports = React.createClass
                         pendingActions: @props.pendingActions
                         buckets: @props.buckets
                         definition: definition
+                        otherOutputMappings: @props.transformation.get('output')
+                          .filter((otherOutputMapping, otherOutputMappingKey) ->
+                            return otherOutputMappingKey != key
+                          )
                 ,
                   OutputMappingDetail
                     fill: true
