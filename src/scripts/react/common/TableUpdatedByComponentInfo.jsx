@@ -52,7 +52,7 @@ export default React.createClass({
     return (
       <span>
         {/* {this.renderTimefromNow(timestamp)} */}
-        <ComponentIcon component={fromJS(component)}/>
+        <ComponentIcon component={fromJS(component)} resizeToSize="16" />
         <ComponentConfigurationLink componentId={componentId} configId={configId}>{componentName} / {configName}
         </ComponentConfigurationLink>
 
