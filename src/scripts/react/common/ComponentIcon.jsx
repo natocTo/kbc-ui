@@ -32,22 +32,6 @@ export default React.createClass({
     };
   },
 
-  is3rdParty() {
-    var component = this.props.component;
-    if (!component) {
-      return false;
-    }
-    return !!component.get('flags').contains('3rdParty');
-  },
-
-  get3rdPartyLabel() {
-    if (this.is3rdParty()) {
-      return null;
-    } else {
-      return null;
-    }
-  },
-
   render() {
     const component = this.props.component;
     if (!component) {
@@ -71,7 +55,6 @@ export default React.createClass({
     return (
       <span className={classNames('kb-sapi-component-icon', className)}>
         <img src={url} width={imgSize} height={imgSize}/>
-        { this.get3rdPartyLabel() }
       </span>
     );
   }
