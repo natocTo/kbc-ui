@@ -53,8 +53,7 @@ export default React.createClass({
             {this.renderTableRow('Primary Key', _.isEmpty(primaryKey) ? 'N/A' : primaryKey.join(', '))}
             {this.renderTableRow('Last Import', this.renderTimefromNow(table.get('lastImportDate')))}
             {this.renderTableRow('Last Change', this.renderTimefromNow(table.get('lastChangeDate')))}
-      {this.renderTableRow('Last Component Update', <TableUpdatedByComponentInfo table={table}/>)}
-
+            {this.renderTableRow('Last updated by', <TableUpdatedByComponentInfo table={table}/>)}
             {this.renderTableRow('Rows Count', this.renderRowsCount(table.get('rowsCount')))}
             {this.renderTableRow('Data Size', this.renderDataSize(table.get('dataSizeBytes')))}
             {this.renderTableRow('Columns', table.get('columns').count() + ' columns: ' + table.get('columns').join(', '))}
