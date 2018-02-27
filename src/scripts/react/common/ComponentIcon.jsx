@@ -22,7 +22,8 @@ export default React.createClass({
   propTypes: {
     component: React.PropTypes.object,
     size: React.PropTypes.string,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    resizeToSize: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -64,9 +65,12 @@ export default React.createClass({
   },
 
   imageIcon(url) {
+    const { size, resizeToSize, className } = this.props;
+    const imgSize = resizeToSize ? resizeToSize : size;
+
     return (
-      <span className={classNames('kb-sapi-component-icon', this.props.className)}>
-        <img src={ url } width={this.props.size} height={this.props.size}/>
+      <span className={classNames('kb-sapi-component-icon', className)}>
+        <img src={url} width={imgSize} height={imgSize}/>
         { this.get3rdPartyLabel() }
       </span>
     );
