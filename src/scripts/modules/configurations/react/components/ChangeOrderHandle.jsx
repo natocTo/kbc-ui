@@ -47,7 +47,7 @@ export default React.createClass({
     if (this.props.disabled) {
       return (<span className="fa fa-ellipsis-v fa-fw drag-handle-disabled"/>);
     }
-    return ((<span className="fa fa-ellipsis-v fa-fw drag-handle drag-handle"/>));
+    return ((<span className="fa fa-ellipsis-v fa-fw drag-handle"/>));
   }
 });
 
