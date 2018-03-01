@@ -308,7 +308,6 @@ const mentionsTemplate = {
   'params': {
     'include_entities': true,
     'contributor_details': false,
-    'trim_user': true,
     'include_rts': false
   },
   'dataMapping': tweetDataMapping
