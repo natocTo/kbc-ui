@@ -736,7 +736,7 @@ const cases = {
               component: 'keboola.processor-flatten-folders'
             },
             parameters: {
-              depth: 1
+              starting_depth: 1
             }
           },
           {
