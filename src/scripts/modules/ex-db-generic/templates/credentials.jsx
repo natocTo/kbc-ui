@@ -48,7 +48,8 @@ const mysqlFields = [
   ['Port', 'port', 'number', false, true],
   ['Username', 'user', 'text', false, true],
   ['Password', '#password', 'password', true, true],
-  ['Database', 'database', 'text', false, false]
+  ['Database', 'database', 'text', false, false],
+  ['Enable Network Compression', 'networkCompression', 'checkbox', false, false]
 ];
 
 

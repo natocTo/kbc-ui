@@ -53,6 +53,10 @@ export default React.createClass({
     return this.props.onChange(this.props.credentials.set(propName, value));
   },
 
+  handleCheckboxChange(propName, e) {
+    return this.props.onChange(this.props.credentials.set(propName, e.target.checked));
+  },
+
   renderProtectedLabel(labelValue, alreadyEncrypted) {
     let msg = labelValue + 'will be stored securely encrypted.';
     if (alreadyEncrypted) {
@@ -72,7 +76,6 @@ export default React.createClass({
 
   createProtectedInput(labelValue, propName) {
     let savedValue = this.props.savedCredentials.get(propName);
-
     return (
           <Input
             key={propName}
@@ -96,10 +99,16 @@ export default React.createClass({
             key={propName}
             label={labelValue}
             type={type}
-            labelClassName="col-xs-4"
-            wrapperClassName="col-xs-8"
+            labelClassName={(type === 'checkbox') ? '' : 'col-xs-4'}
+            wrapperClassName={(type === 'checkbox') ? 'col-xs-8 col-xs-offset-4' : 'col-xs-8'}
             value={this.props.credentials.get(propName)}
-            onChange={this.handleChange.bind(this, propName)}/>
+            checked={(type === 'checkbox') ? this.props.credentials.get(propName) : false}
+            onChange={
+              (type === 'checkbox') ?
+                this.handleCheckboxChange.bind(this, propName) :
+                this.handleChange.bind(this, propName)
+            }
+          />
         );
       }
     } else if (isProtected) {
