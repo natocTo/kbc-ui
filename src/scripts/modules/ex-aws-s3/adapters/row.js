@@ -3,6 +3,7 @@ var Immutable = require('immutable');
 function createConfiguration(localState) {
   let skipLinesProcessor;
   let decompressProcessor;
+  let flattenFoldersProcessor;
   let createManifestProcessor = Immutable.fromJS({
     definition: {
       component: 'keboola.processor-create-manifest'
@@ -38,6 +39,14 @@ function createConfiguration(localState) {
         component: 'keboola.processor-decompress'
       }
     });
+    flattenFoldersProcessor = Immutable.fromJS({
+      definition: {
+        component: 'keboola.processor-flatten-folders'
+      },
+      parameters: {
+        depth: 1
+      }
+    });
   }
 
   let config = Immutable.fromJS({
@@ -58,7 +67,9 @@ function createConfiguration(localState) {
   if (decompressProcessor) {
     processors = processors.push(decompressProcessor);
   }
-
+  if (flattenFoldersProcessor) {
+    processors = processors.push(flattenFoldersProcessor);
+  }
   processors = processors.push(Immutable.fromJS(
     {
       definition: {

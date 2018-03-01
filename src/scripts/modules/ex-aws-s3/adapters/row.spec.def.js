@@ -733,6 +733,14 @@ const cases = {
           },
           {
             definition: {
+              component: 'keboola.processor-flatten-folders'
+            },
+            parameters: {
+              depth: 1
+            }
+          },
+          {
+            definition: {
               component: 'keboola.processor-move-files'
             },
             parameters: {
