@@ -38,7 +38,11 @@ module.exports = React.createClass
     tableIdParser.parse(destination, {defaultStage: 'out'})
 
   _handleBlurSource: (e) ->
+    isFileMapping = !@props.definition.has('source')
     sourceValue = e.target.value
+    lastDotIdx = sourceValue.lastIndexOf('.')
+    if isFileMapping and lastDotIdx > 0
+      sourceValue = sourceValue.substring(0, lastDotIdx)
     dstParser = @_parseDestination()
     if !dstParser.parts.table
       newDestination = dstParser.setPart('table', sourceValue)
