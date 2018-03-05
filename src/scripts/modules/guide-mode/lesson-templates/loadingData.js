@@ -66,7 +66,7 @@ export default {
       'markdown':
       'Once you have access to the database, it’s time to actually extract the data about the number of cars and population in different countries.'
       + `
-- Select the tables *CARS* and *POPULATION* from the drop-down list on the left.
+- Select the tables *cars* and *countries* from the drop-down list on the left.
 - Click <span class="btn btn-success btn-sm">Create</span>. Your extractor will be automatically configured.
 
 `,

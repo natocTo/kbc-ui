@@ -44,8 +44,8 @@ export default {
       'markdown': 'Now add the table you want to send to Tableau. For each of its columns, you also need to specify whether it contains text or a number.'
       + `
 - Click on <span class="btn btn-success btn-sm">+ New Table</span>.
-- Select  *out.c-snowflake.CARS_POPULATION* as the source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>.
-- Specify a data type for each of the table's columns under TDE Data Type (COUNTRY -> string, CARS -> number, POPULATION -> number, PERSON_PER_CAR -> decimal). 
+- Select  *out.c-snowflake.cars_population* as the source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>.
+- Specify a data type for each of the table's columns under TDE Data Type (name -> string, total_cars -> number, population -> number, cars_per_capita -> decimal). 
 - <span class="btn btn-success btn-sm">Save</span> the configuration.
 - To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.
 `,

@@ -61,9 +61,18 @@ export default {
       + `<br><br>
 **Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.cars* as the source table. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. <br> Repeat the steps for the second table *in.c-keboola-ex-db-snowflake.population*.
 <br/><br/>
-**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and enter \`CARS_POPULATION\` as the source table. This table will be created in the transformation. Then set the destination to \`out.c-snowflake.CARS_POPULATION\`. It’s the name the new table *CARS_POPULATION* will have in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
+**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and enter \`cars_population\` as the source table. This table will be created in the transformation. Then set the destination to \`out.c-snowflake.cars_population\`. It’s the name the new table *CARS_POPULATION* will have in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
 <br/><br/>
-**Queries** — to create your output table, copy the following code and replace the default text with it: <br/> \`CREATE TABLE "CARS_POPULATION" AS SELECT "cars".*, "population"."Population", ("population"."Population" / "cars"."Cars") AS "PERSON_PER_CAR" FROM "cars" JOIN "population" ON "cars"."Country" = "population"."Country"\`.<br/> Then <span class="btn btn-success btn-sm">Save</span> it.
+**Queries** — to create your output table, copy the following code and replace the default text with it: <br/> <pre><code>CREATE TABLE "cars_population" 
+AS SELECT 
+&nbsp;&nbsp;&nbsp;&nbsp;"countries"."name", 
+&nbsp;&nbsp;&nbsp;&nbsp;"cars"."total_cars", 
+&nbsp;&nbsp;&nbsp;&nbsp;"countries"."population", 
+&nbsp;&nbsp;&nbsp;&nbsp;("cars"."total_cars" / "countries"."population") AS "cars_per_capita" 
+FROM "cars" 
+JOIN "countries" 
+&nbsp;&nbsp;&nbsp;&nbsp;ON "cars"."country" = "countries"."name"
+</code></pre>.<br/> Then <span class="btn btn-success btn-sm">Save</span> it.
 <br/><br/>
 To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.
 
