@@ -40,7 +40,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Setup Connection',
-      'markdown': 'To access the source database where the data about cars and population is stored, provide database credentials:'
+      'markdown': 'To access the source database where the data about cars and countries is stored, provide database credentials:'
                 + `
 - Click on <span class="btn btn-success btn-sm">Setup Database Credentials</span>.
 - Set Host Name to \`kebooladev.snowflakecomputing.com\`
