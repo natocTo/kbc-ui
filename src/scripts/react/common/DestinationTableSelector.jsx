@@ -104,7 +104,7 @@ export default React.createClass({
           <span className="col-md-1 kbc-dot-separator">
             .
           </span>
-          <span className="col-md-5 kbc-select-table" >
+          <span className="col-md-4 kbc-select-table" >
             {tableSelect}
           </span>
         </div>
