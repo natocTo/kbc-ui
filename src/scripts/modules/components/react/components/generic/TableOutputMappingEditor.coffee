@@ -5,8 +5,7 @@ Immutable = require('immutable')
 Input = React.createFactory require('./../../../../../react/common/KbcBootstrap').Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 AutosuggestWrapper = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
-DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector')
-DestinationTableSelector = DestinationTableSelector.default
+DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
 
 module.exports = React.createClass
