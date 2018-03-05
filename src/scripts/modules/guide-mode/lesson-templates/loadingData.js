@@ -40,7 +40,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Setup Connection',
-      'markdown': 'To access the source database where the data about cars and population is stored, provide database credentials:'
+      'markdown': 'To access the source database where the data about cars and countries is stored, provide database credentials:'
                 + `
 - Click on <span class="btn btn-success btn-sm">Setup Database Credentials</span>.
 - Set Host Name to \`kebooladev.snowflakecomputing.com\`
@@ -66,7 +66,7 @@ export default {
       'markdown':
       'Once you have access to the database, it’s time to actually extract the data about the number of cars and population in different countries.'
       + `
-- Select the tables *CARS* and *POPULATION* from the drop-down list on the left.
+- Select the tables *cars* and *countries* from the drop-down list on the left.
 - Click <span class="btn btn-success btn-sm">Create</span>. Your extractor will be automatically configured.
 
 `,
