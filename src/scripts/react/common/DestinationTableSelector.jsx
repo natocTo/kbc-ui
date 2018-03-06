@@ -89,27 +89,26 @@ export default React.createClass({
     );
 
     return (
-      <span className="kbc-dst-table-selector">
-        <div>
-          <span className="col-md-1 kbc-select">
+      <div>
+        <div className="kbc-dst-table-selector">
+          <span className="kbc-select-stage">
             {stageSelect}
           </span>
-          <span className="col-md-1 kbc-dot-separator">
-            {/* <i className="fa fa-circle" /> */}
+          <span className="kbc-dot-separator">
             .
           </span>
-          <span className="col-md-5 kbc-select">
+          <span className="kbc-select">
             {bucketSelect}
           </span>
-          <span className="col-md-1 kbc-dot-separator">
+          <span className="kbc-dot-separator">
             .
           </span>
-          <span className="col-md-4 kbc-select-table" >
+          <span className="kbc-select-table" >
             {tableSelect}
           </span>
         </div>
         <div className="help-block">{this.props.placeholder}</div>
-      </span>
+      </div>
     );
   },
 
