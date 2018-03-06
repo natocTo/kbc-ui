@@ -33,10 +33,9 @@ import geneeaGeneralRoutes from '../app-geneea-nlp-analysis/routes';
 import geneeaV2Routes from '../geneea-nlp-analysis-v2/routes';
 import customScienceRoutes from '../custom-science/Routes';
 
-const extractor = injectProps({type: 'extractor'});
-const writer = injectProps({type: 'writer'});
-const application = injectProps({type: 'application'});
-
+const extractor = injectProps({ type: 'extractor' });
+const writer = injectProps({ type: 'writer' });
+const application = injectProps({ type: 'application' });
 
 module.exports = {
   applications: {
@@ -147,22 +146,19 @@ module.exports = {
       createComponentRoute('wr-tableau', [createDbWriterRoutes('wr-tableau', 'mysql', false)]),
       createComponentRoute('wr-db-mssql', [createDbWriterRoutes('wr-db-mssql', 'mssql', false)]),
       createComponentRoute('keboola.wr-db-mssql-v2', [createDbWriterRoutes('keboola.wr-db-mssql-v2', 'mssql', false)]),
-      createComponentRoute(
-        'keboola.wr-redshift-v2',
-        [createDbWriterRoutes('keboola.wr-redshift-v2', 'redshift', true)]
-      ),
+      createComponentRoute('keboola.wr-redshift-v2', [
+        createDbWriterRoutes('keboola.wr-redshift-v2', 'redshift', true)
+      ]),
       createComponentRoute('keboola.wr-db-impala', [createDbWriterRoutes('keboola.wr-db-impala', 'impala', false)]),
       createComponentRoute('keboola.wr-db-mysql', [createDbWriterRoutes('keboola.wr-db-mysql', 'mysql', false)]),
       createComponentRoute('keboola.wr-db-oracle', [createDbWriterRoutes('keboola.wr-db-oracle', 'oracle', false)]),
       createComponentRoute('keboola.wr-db-pgsql', [createDbWriterRoutes('keboola.wr-db-pgsql', 'pgsql', false)]),
-      createComponentRoute(
-        'keboola.wr-db-snowflake',
-        [createDbWriterRoutes('keboola.wr-db-snowflake', 'snowflake', true)]
-      ),
-      createComponentRoute(
-        'keboola.wr-thoughtspot',
-        [createDbWriterRoutes('keboola.wr-thoughtspot', 'thoughtspot', false)]
-      ),
+      createComponentRoute('keboola.wr-db-snowflake', [
+        createDbWriterRoutes('keboola.wr-db-snowflake', 'snowflake', true)
+      ]),
+      createComponentRoute('keboola.wr-thoughtspot', [
+        createDbWriterRoutes('keboola.wr-thoughtspot', 'thoughtspot', false)
+      ]),
       createComponentRoute('wr-portal-sas', [wrPortalCreateRouteFn('wr-portal-sas')]),
       createComponentRoute('keboola.wr-portal-periscope', [wrPortalCreateRouteFn('keboola.wr-portal-periscope')]),
       createGenericDetailRoute('writer')
