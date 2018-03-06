@@ -97,7 +97,7 @@ export default React.createClass({
           <span className="kbc-dot-separator">
             .
           </span>
-          <span className="kbc-select">
+          <span className="kbc-select-bucket">
             {bucketSelect}
           </span>
           <span className="kbc-dot-separator">
