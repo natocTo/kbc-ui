@@ -91,6 +91,7 @@ routes =
       title: 'New Extractor'
       defaultRouteHandler: extractor(NewComponent)
     ,
+      createComponentRoute 'keboola.ex-google-analytics-v5', [exGaV4Routes('keboola.ex-google-analytics-v5')]
       createComponentRoute 'keboola.ex-google-analytics-v4', [exGaV4Routes('keboola.ex-google-analytics-v4')]
       createComponentRoute 'keboola.ex-google-analytics', [exGaV4Routes('keboola.ex-google-analytics')]
       createComponentRoute 'keboola.ex-facebook', [exFacebookRoutes('keboola.ex-facebook')]
