@@ -117,7 +117,7 @@ export default React.createClass({
   },
 
   selectBucket(selection) {
-    const bucket = selection ? selection.value : '';
+    const bucket = selection ? selection.value || '' : '';
     if (!!bucket &&
         !bucket.startsWith('c-') &&
         !this.prepareBucketsOptions().find(b => b.label === bucket)) {
@@ -128,7 +128,7 @@ export default React.createClass({
   },
 
   selectTable(selection) {
-    const tableName = selection ? selection.value : '';
+    const tableName = selection ? selection.value || '' : '';
     this.updateValue('table', tableName);
   },
 
