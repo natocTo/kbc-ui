@@ -11,6 +11,7 @@ export default React.createClass({
   propTypes: {
     data: PropTypes.string.isRequired,
     isEditing: PropTypes.bool.isRequired,
+    isChanged: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditStart: PropTypes.func.isRequired,
     onEditCancel: PropTypes.func.isRequired,
@@ -83,7 +84,7 @@ export default React.createClass({
   },
 
   scripts() {
-    if (this.props.isEditing) {
+    if (this.props.isEditing || true) {
       return this.renderEditor();
     } else {
       return (
@@ -103,6 +104,7 @@ export default React.createClass({
         data={this.props.data}
         schema={this.props.schema}
         isSaving={this.props.isSaving}
+        isChanged={this.props.isChanged}
         onSave={this.props.onEditSubmit}
         onChange={this.props.onEditChange}
         onCancel={this.props.onEditCancel}

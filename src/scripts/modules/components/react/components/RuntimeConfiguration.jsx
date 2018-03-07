@@ -37,7 +37,7 @@ export default React.createClass({
   },
 
   renderEditor() {
-    if (this.props.isEditing) {
+    if (this.props.isEditing || true) {
       return (
         <Edit
           data={this.props.data}

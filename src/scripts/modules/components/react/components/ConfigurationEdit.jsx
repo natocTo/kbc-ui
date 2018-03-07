@@ -3,6 +3,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import CodeMirror from 'react-code-mirror';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import Immutable from 'immutable';
+import SaveButtons from '../../../../react/common/SaveButtons';
 
 /* global require */
 require('codemirror/addon/lint/lint');
@@ -17,6 +18,7 @@ export default React.createClass({
     schema: PropTypes.object,
     isSaving: PropTypes.bool.isRequired,
     isValid: PropTypes.bool.isRequired,
+    isChanged: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
@@ -36,6 +38,11 @@ export default React.createClass({
     return (
       <div className="edit kbc-configuration-editor">
         <div className="text-right">
+          <SaveButtons
+            isSaving={this.props.isSaving}
+            isChanged={this.props.isChanged}
+            onSave={this.handleSave}
+            onReset={this.props.onCancel} />
           <ConfirmButtons
             isSaving={this.props.isSaving}
             onSave={this.handleSave}
@@ -43,7 +50,7 @@ export default React.createClass({
             placement="right"
             saveLabel={this.props.saveLabel}
             isDisabled={!this.props.isValid}
-            />
+          />
         </div>
         {this.renderJSONSchemaEditor()}
         {this.renderCodeMirror()}
@@ -86,7 +93,7 @@ export default React.createClass({
           readOnly={this.props.isSaving}
           lint={true}
           gutters={['CodeMirror-lint-markers']}
-          />
+        />
       </span>
     );
   },
