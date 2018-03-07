@@ -26,7 +26,7 @@ import getDefaultBucket from '../../../utils/getDefaultBucket';
 import {FormGroup, FormControl, Form, ControlLabel, Col, InputGroup, Button, HelpBlock} from 'react-bootstrap';
 
 
-const COMPONENT_ID = 'keboola.ex-pigeon';
+const COMPONENT_ID = 'keboola.ex-email-attachments';
 
 export default React.createClass({
   mixins: [createStoreMixin(...storeMixins, InstalledComponentStore, StorageTablesStore, StorageBucketsStore, LatestJobsStore)],

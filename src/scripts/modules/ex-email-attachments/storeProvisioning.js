@@ -1,4 +1,4 @@
-const COMPONENT_ID = 'keboola.ex-pigeon';
+const COMPONENT_ID = 'keboola.ex-email-attachments';
 import {Map} from 'immutable';
 import _ from 'underscore';
 import InstalledComponentStore from '../components/stores/InstalledComponentsStore';

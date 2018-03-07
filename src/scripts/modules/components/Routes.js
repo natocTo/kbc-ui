@@ -17,7 +17,7 @@ import exAwsS3Routes from '../ex-aws-s3/routes';
 import goodDataWriterRoutes from '../gooddata-writer/routes';
 import dropoxExtractorRoutes from '../ex-dropbox/routes';
 import dropoxExtractorRoutesV2 from '../ex-dropbox-v2/routes';
-import pigeonExtractorRoutes from '../ex-pigeon/routes';
+import emailAttachmentsExtractorRoutes from '../ex-email-attachments/routes';
 import dropoxWriterRoutes from '../wr-dropbox/routes';
 import wrPortalCreateRouteFn from '../wr-portal/Routes';
 import createDbWriterRoutes from '../wr-db-generic/routes';
@@ -108,7 +108,7 @@ module.exports = {
       createComponentRoute('keboola.ex-s3', [exS3Routes]),
       createComponentRoute('apify.apify', [exApifyRoutes]),
       createComponentRoute('keboola.ex-aws-s3', [exAwsS3Routes]),
-      createComponentRoute('keboola.ex-pigeon', [pigeonExtractorRoutes]),
+      createComponentRoute('keboola.ex-email-attachments', [emailAttachmentsExtractorRoutes]),
       createGenericDetailRoute('extractor')
     ]
   },
