@@ -6,7 +6,7 @@ import componentsActions from '../components/InstalledComponentsActionCreators';
 import storeProvisioning from './storeProvisioning';
 
 // utils
-const COMPONENT_ID = 'keboola.ex-pigeon';
+const COMPONENT_ID = 'keboola.ex-email-attachments';
 
 export default function(configId) {
   const store = storeProvisioning(configId);

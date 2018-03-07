@@ -3,7 +3,7 @@ import installedComponentsActions from '../components/InstalledComponentsActionC
 import jobsActionCreators from '../jobs/ActionCreators';
 import versionsActions from '../components/VersionsActionCreators';
 
-const componentId = 'keboola.ex-pigeon';
+const componentId = 'keboola.ex-email-attachments';
 
 export default {
   name: componentId,
