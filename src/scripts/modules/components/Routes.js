@@ -14,6 +14,7 @@ import exGdriveNewRoutes from '../ex-google-drive/routes';
 import csvImportRoutes from '../csv-import/routes';
 import exS3Routes from '../ex-s3/routes';
 import exAwsS3Routes from '../ex-aws-s3/routes';
+import exHttpRoutes from '../ex-http/routes';
 import goodDataWriterRoutes from '../gooddata-writer/routes';
 import dropoxExtractorRoutes from '../ex-dropbox/routes';
 import dropoxExtractorRoutesV2 from '../ex-dropbox-v2/routes';
@@ -109,6 +110,7 @@ module.exports = {
       createComponentRoute('apify.apify', [exApifyRoutes]),
       createComponentRoute('keboola.ex-aws-s3', [exAwsS3Routes]),
       createComponentRoute('keboola.ex-email-attachments', [emailAttachmentsExtractorRoutes]),
+      createComponentRoute('keboola.ex-http', [exHttpRoutes]),
       createGenericDetailRoute('extractor')
     ]
   },
