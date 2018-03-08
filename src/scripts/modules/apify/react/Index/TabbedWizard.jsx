@@ -36,12 +36,6 @@ export default React.createClass({
     selectTab: PropTypes.func.isRequired
   },
 
-  /* getInitialState() {
-   *   return {
-   *     step: AUTH_KEY
-   *   };
-   * },*/
-
   render() {
     return (
       <span>
@@ -145,7 +139,6 @@ export default React.createClass({
 
   renderInputTableIdSelector() {
     const error = false;
-    // const isLoading = this.props.crawlers.get('loading', false);
 
     return (
       <div className={error ? 'form-group has-error' : 'form-group'}>
@@ -186,14 +179,6 @@ export default React.createClass({
         {this.renderInput('Token', '#token', tokenHelp, 'Enter token')}
       </div>
 
-    );
-  },
-
-  renderCrawlersForm() {
-    return (
-      <div className="row form-horizontal clearfix">
-        {this.renderCrawlerSelector()}
-      </div>
     );
   },
 
@@ -247,9 +232,6 @@ export default React.createClass({
       </div>
     );
   },
-
-  // this.renderFormControl('User Crawlers', isLoading || error ? staticElement : selectControl, '', !!error);
-
 
   renderInputControl(propertyPath, placeholder) {
     const propValue = this.parameter(propertyPath, '');
