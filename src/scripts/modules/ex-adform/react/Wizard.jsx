@@ -26,76 +26,68 @@ export default React.createClass({
       <Tabs activeKey={this.props.step} onSelect={this.goToStep} animation={false} id="wizardtab" className="indigo-ui-tabs">
         <Tab eventKey={Steps.STEP_CREDENTIALS} title="1. Credentials">
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-sm-8">
               <CredentialsForm
                 credentials={this.props.credentials}
                 onChange={this.props.onCredentialsChange}
-                />
-            </div>
-          </div>
-          <div className="row">
-            <div className="form-horizontal">
-              <div className="form-group">
-                  <div className="pull-right">
-                    <DeleteConfigurationButton
-                      componentId={this.props.componentId}
-                      configId={this.props.configurationId}
-                      />
-                    <Button
-                      style={{marginLeft: '20px'}}
-                      bsStyle="primary"
-                      disabled={!this.isCredentialsValid()}
-                      onClick={this.goToTemplate}
-                      >
-                      Next: Select Template
-                    </Button>
-                </div>
+              />
+              <div className="text-right">
+                <DeleteConfigurationButton
+                  componentId={this.props.componentId}
+                  configId={this.props.configurationId}
+                  />
+                <Button
+                  style={{marginLeft: '20px'}}
+                  bsStyle="primary"
+                  disabled={!this.isCredentialsValid()}
+                  onClick={this.goToTemplate}
+                >
+                  Next: Select Template
+                </Button>
               </div>
             </div>
           </div>
         </Tab>
         <Tab eventKey={Steps.STEP_TEMPLATE} title="2. Template" disabled={!this.isCredentialsValid()}>
           <div className="row">
-            <div className="col-sm-10">
+            <div className="col-sm-8">
               <p>Please select from the predefined templates to initialize the Adform configuration:</p>
-              <p>
+              <div className="form-group">
                 <Select
                   name="jobTemplates"
                   value={this.props.template}
                   options={this.props.templates}
                   onChange={this.props.onTemplateChange}
                   placeholder="Select template"
-                  />
-              </p>
-              <p className="help-block">
-                You can change or extend it to fetch more or other data later.
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="pull-right">
-              {this.props.isSaving ? <Loader/> : null}
-              &nbsp;
-              &nbsp;
-              <DeleteConfigurationButton
-                componentId={this.props.componentId}
-                configId={this.props.configurationId}
                 />
-              <Button
-                bsStyle="link"
-                style={{marginLeft: '10px'}}
-                onClick={this.goToCredentials}
-                disabled={this.props.isSaving}
+                <p className="help-block">
+                  You can change or extend it to fetch more or other data later.
+                </p>
+              </div>
+              <div className="text-right">
+                {this.props.isSaving ? <Loader/> : null}
+                &nbsp;
+                &nbsp;
+                <DeleteConfigurationButton
+                  componentId={this.props.componentId}
+                  configId={this.props.configurationId}
+                />
+                <Button
+                  bsStyle="link"
+                  style={{marginLeft: '10px'}}
+                  onClick={this.goToCredentials}
+                  disabled={this.props.isSaving}
                 >
-                Previous
-              </Button>
-              <Button
-                bsStyle="success"
-                disabled={!this.props.template || this.props.isSaving}
-                onClick={this.props.onSave}
+                  Previous
+                </Button>
+                <Button
+                  bsStyle="success"
+                  disabled={!this.props.template || this.props.isSaving}
+                  onClick={this.props.onSave}
                 >
-                Create Extractor
-              </Button>
+                  Create Extractor
+                </Button>
+              </div>
             </div>
           </div>
         </Tab>
