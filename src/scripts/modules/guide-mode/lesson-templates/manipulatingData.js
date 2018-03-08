@@ -59,9 +59,9 @@ export default {
       'markdown':
       'Next you need to specify what tables will be used in the transformation, what tables will be written to Storage as results, and what will happen with the data in the transformation:'
       + `<br><br>
-**Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.cars* as the source table. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. <br> Repeat the steps for the second table *in.c-keboola-ex-db-snowflake.countries*.
+**Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.cars* as the Source. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. <br> Click again on <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.countries* as the Source. Accept the suggested destination. Click <span class="btn btn-success btn-sm">Create Input</span>.
 <br/><br/>
-**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and enter \`cars_population\` as the source table. This table will be created in the transformation. Then set the destination to \`out.c-snowflake.cars_population\`. It’s the name the new table *CARS_POPULATION* will have in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
+**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and type \`cars_population\` as the Source. This table will be created in the transformation. Then set the Destination. Set \`out\` stage. Type in \`c-snowflake\` and create new option for bucket. Accept \`cars_population\` as a table. It’s a name for the new table *cars_population* that will be created in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
 <br/><br/>
 **Queries** — to create your output table, copy the following code and replace the default text with it: <br/> <pre><code>CREATE TABLE "cars_population" 
 AS SELECT 
