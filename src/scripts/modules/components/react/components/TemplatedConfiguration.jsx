@@ -44,6 +44,7 @@ export default React.createClass({
       supportsEncryption: component.get('flags').includes('encrypt'),
 
       isEditing: InstalledComponentsStore.isEditingTemplatedConfig(componentId, configId),
+      isChanged: InstalledComponentsStore.isChangedTemplatedConfig(componentId, configId),
       isSaving: InstalledComponentsStore.isSavingConfigData(componentId, configId),
       isEditingString: InstalledComponentsStore.isTemplatedConfigEditingString(componentId, configId),
 
@@ -82,7 +83,7 @@ export default React.createClass({
   },
 
   scripts() {
-    if (this.state.isEditing) {
+    if (this.state.isEditing || true) {
       return this.renderEditor();
     } else {
       return (
@@ -94,7 +95,7 @@ export default React.createClass({
           paramsSchema={this.state.configSchema}
           onEditStart={this.onEditStart}
           editLabel={this.props.editLabel}
-          />
+        />
       );
     }
   },
@@ -112,6 +113,7 @@ export default React.createClass({
 
         isValid={this.isValid()}
         isSaving={this.state.isSaving}
+        isChanged={this.state.isChanged}
 
         onSave={this.onEditSubmit}
         onChangeTemplate={this.onEditChangeTemplate}
@@ -121,7 +123,7 @@ export default React.createClass({
         onCancel={this.onEditCancel}
         saveLabel={this.props.saveLabel}
 
-        />
+      />
     );
   },
 
@@ -174,7 +176,7 @@ export default React.createClass({
       <Markdown
         source={this.state.component.get('configurationDescription')}
         height="small"
-        />
+      />
     );
   }
 });

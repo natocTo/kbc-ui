@@ -3,6 +3,7 @@ import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import TemplateSelector from './ConfigurationTemplateSelector';
 import CodeMirror from 'react-code-mirror';
+import SaveButtons from '../../../../react/common/SaveButtons';
 
 /* global require */
 require('./configuration-json.less');
@@ -22,6 +23,7 @@ export default React.createClass({
 
     isValid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    isChanged: PropTypes.bool.isRequired,
 
     onChangeTemplate: PropTypes.func.isRequired,
     onChangeParams: PropTypes.func.isRequired,
@@ -46,6 +48,7 @@ export default React.createClass({
     return (
       <JSONSchemaEditor
         ref="paramsEditor"
+        isChanged={this.props.isChanged}
         schema={this.props.paramsSchema}
         value={this.props.editingParams}
         onChange={this.handleParamsChange}
@@ -60,47 +63,54 @@ export default React.createClass({
     return (
       <div className="kbc-templated-configuration-edit">
         <div className="edit kbc-configuration-editor">
-            <div className="text-right">
-              <ConfirmButtons
-                isSaving={this.props.isSaving}
-                onSave={this.handleSave}
-                onCancel={this.props.onCancel}
-                placement="right"
-                saveLabel={this.props.saveLabel}
-                isDisabled={!this.props.isValid}
-                />
-            </div>
+          <div className="text-right">
+            <SaveButtons
+              isSaving={this.props.isSaving}
+              isChanged={this.props.isChanged}
+              onSave={this.handleSave}
+              disabled={!this.props.isValid}
+              onReset={this.props.onCancel} />
+
+            <ConfirmButtons
+              isSaving={this.props.isSaving}
+              onSave={this.handleSave}
+              onCancel={this.props.onCancel}
+              placement="right"
+              saveLabel={this.props.saveLabel}
+              isDisabled={!this.props.isValid}
+            />
+          </div>
           {this.props.isEditingString ? (
-            <span>
-              <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
-              <p>JSON configuration uses <a href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</a> format.</p>
-              <CodeMirror
-                ref="string"
-                value={this.props.editingString}
-                theme="solarized"
-                lineNumbers={true}
-                mode="application/json"
-                lineWrapping={true}
-                autofocus={true}
-                onChange={this.handleStringChange}
-                readOnly={this.props.isSaving ? 'nocursor' : false}
-                lint={true}
-                gutters={['CodeMirror-lint-markers']}
-                placeholder="{}"
-                />
-            </span>
+             <span>
+               <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
+               <p>JSON configuration uses <a href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</a> format.</p>
+               <CodeMirror
+                 ref="string"
+                 value={this.props.editingString}
+                 theme="solarized"
+                 lineNumbers={true}
+                 mode="application/json"
+                 lineWrapping={true}
+                 autofocus={true}
+                 onChange={this.handleStringChange}
+                 readOnly={this.props.isSaving ? 'nocursor' : false}
+                 lint={true}
+                 gutters={['CodeMirror-lint-markers']}
+                 placeholder="{}"
+               />
+             </span>
           ) : (
-            <span>
-              <p className="kbc-template-editor-toggle"><a onClick={this.switchToJsonEditor}><small>Switch to JSON editor</small></a></p>
-              {this.renderJSONSchemaEditor()}
-              <h3>Template</h3>
-              <TemplateSelector
-                templates={this.props.templates}
-                value={this.props.editingTemplate}
-                onChange={this.handleTemplateChange}
-                readOnly={this.props.isSaving}
-                />
-              </span>
+             <span>
+               <p className="kbc-template-editor-toggle"><a onClick={this.switchToJsonEditor}><small>Switch to JSON editor</small></a></p>
+               {this.renderJSONSchemaEditor()}
+               <h3>Template</h3>
+               <TemplateSelector
+                 templates={this.props.templates}
+                 value={this.props.editingTemplate}
+                 onChange={this.handleTemplateChange}
+                 readOnly={this.props.isSaving}
+               />
+             </span>
           )}
         </div>
       </div>
@@ -116,7 +126,9 @@ export default React.createClass({
   },
 
   handleParamsChange(value) {
-    this.props.onChangeParams(value);
+    if (!value.equals(this.props.editingParams.toMap())) {
+      this.props.onChangeParams(value);
+    }
   },
 
   switchToJsonEditor() {
