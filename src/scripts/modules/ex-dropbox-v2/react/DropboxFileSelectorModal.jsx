@@ -61,32 +61,28 @@ export default React.createClass({
             className="indigo-ui-tabs"
           >
             <Tab eventKey="instant" title="Choose From Dropbox">
-              <div style={{padding: '1.5em'}}>
-                <p>Please choose a CSV file you want to extract via Dropbox Chooser that uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
-                <div className="dropbox-button">
-                  <DropboxChooser
-                    appKey={'2is8jmvnwbchcyr'}
-                    cancel={() => {}}
-                    success={files => this.onSelectFiles(files)}
-                    multiselect={false}
-                    extensions={['.csv']} >
-                    <Button bsStyle="success">
-                      <i className={Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 ?
-                                    'fa fa-fw fa-check-circle-o'
-                                  : 'fa fa-fw fa-dropbox'} />
-                      Choose from Dropbox
-                    </Button>
-                  </DropboxChooser>
-                </div>
-                {Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 &&
+              <p>Please choose a CSV file you want to extract via Dropbox Chooser that uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
+              <DropboxChooser
+                appKey={'2is8jmvnwbchcyr'}
+                cancel={() => {}}
+                success={files => this.onSelectFiles(files)}
+                multiselect={false}
+                extensions={['.csv']} >
+                <Button bsStyle="success">
+                  <i className={Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 ?
+                                'fa fa-fw fa-check-circle-o'
+                              : 'fa fa-fw fa-dropbox'} />
+                  Choose from Dropbox
+                </Button>
+              </DropboxChooser>
+              {Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 &&
+               <div>
+                 <br />
                  <div>
-                   <br />
-                   <div>
-                     <h4>Selected: {first(this.props.selectedDropboxFiles).name}</h4>
-                   </div>
+                   <h4>Selected: {first(this.props.selectedDropboxFiles).name}</h4>
                  </div>
-                }
-              </div>
+               </div>
+              }
             </Tab>
             <Tab eventKey="external" title="Insert Link Manually">
               {this.renderManualInsert()}
@@ -125,42 +121,40 @@ export default React.createClass({
   renderManualInsert() {
     return (
       <div className="form form-horizontal">
-        <div style={{'padding-top': '20px'}} className="form-group">
-          <div className="col-xs-12">
-            <label className="control-label col-xs-2">
-              Link
-            </label>
-            <div className="col-xs-9">
-              <input
-                className="form-control"
-                type="text"
-                name="link"
-                value={this.state.link}
-                onChange={this.onInsertLink}
-                autoFocus={true}
-              />
-              <span className="help-block">
-                Link to a csv file shared by a dropbox account
-              </span>
-            </div>
+        <div className="form-group">
+          <label className="control-label col-xs-3">
+            Link
+          </label>
+          <div className="col-xs-9">
+            <input
+              className="form-control"
+              type="text"
+              name="link"
+              value={this.state.link}
+              onChange={this.onInsertLink}
+              autoFocus={true}
+            />
+            <span className="help-block">
+              Link to a csv file shared by a Dropbox account
+            </span>
           </div>
-          <div className="col-xs-12">
-            <label className="control-label col-xs-2">
-              Name
-            </label>
-            <div className="col-xs-9">
-              <input
-                className="form-control"
-                type="text"
-                name="name"
-                value={this.state.name}
-                onChange={(e) => this.setState({name: e.target.value})}
-                autoFocus={true}
-              />
-              <span className="help-block">
-                Name of the csv file and output table
-              </span>
-            </div>
+        </div>
+        <div className="form-group">
+          <label className="control-label col-xs-3">
+            Name
+          </label>
+          <div className="col-xs-9">
+            <input
+              className="form-control"
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={(e) => this.setState({name: e.target.value})}
+              autoFocus={true}
+            />
+            <span className="help-block">
+              Name of the csv file and output table
+            </span>
           </div>
         </div>
       </div>
