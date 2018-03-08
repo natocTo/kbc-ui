@@ -24,36 +24,34 @@ export default React.createClass({
   render() {
     return (
       <div className="form-horizontal">
-        <div className="row">
-          <div className="form-group">
-            <div className="col-xs-10 col-xs-offset-2">
-              <Input
-                standalone={true}
-                type="checkbox"
-                label="Show details"
-                checked={this.state.showDetails}
-                onChange={this.handleToggleShowDetails}
-              />
-            </div>
+        <div className="form-group">
+          <div className="col-xs-10 col-xs-offset-2">
+            <Input
+              standalone={true}
+              type="checkbox"
+              label="Show details"
+              checked={this.state.showDetails}
+              onChange={this.handleToggleShowDetails}
+            />
           </div>
-          <div className="form-group">
-            <label className="col-md-2 control-label">
-              Input Table
-            </label>
-            <div className="col-md-10">
-              <Select
-                name="Input table"
-                value={this.props.mapping.get('source', '')}
-                disabled={this.props.disabled}
-                placeholder="Source table"
-                onChange={this.handleChangeSource}
-                options={this.getTables()}
-                autofocus
-              />
-              <span className="help-block">
-                Select source table from Storage
-              </span>
-            </div>
+        </div>
+        <div className="form-group">
+          <label className="col-md-2 control-label">
+            Input Table
+          </label>
+          <div className="col-md-10">
+            <Select
+              name="Input table"
+              value={this.props.mapping.get('source', '')}
+              disabled={this.props.disabled}
+              placeholder="Source table"
+              onChange={this.handleChangeSource}
+              options={this.getTables()}
+              autofocus
+            />
+            <span className="help-block">
+              Select source table from Storage
+            </span>
           </div>
         </div>
         {this.renderColumnFilter()}
@@ -66,14 +64,12 @@ export default React.createClass({
   renderColumnFilter() {
     if (this.state.showDetails) {
       return (
-        <div className="row">
-          <ColumnsSelectRow
-            value={this.props.mapping}
-            disabled={this.props.disabled}
-            onChange={this.props.onChange}
-            allTables={this.props.tables}
-          />
-        </div>
+        <ColumnsSelectRow
+          value={this.props.mapping}
+          disabled={this.props.disabled}
+          onChange={this.props.onChange}
+          allTables={this.props.tables}
+        />
       );
     }
     return null;
@@ -82,13 +78,11 @@ export default React.createClass({
   renderChangedSinceFilter() {
     if (this.state.showDetails) {
       return (
-        <div className="row">
-          <ChangedSinceFilterInput
-            mapping={this.props.mapping}
-            disabled={this.props.disabled}
-            onChange={this.props.onChange}
-          />
-        </div>
+        <ChangedSinceFilterInput
+          mapping={this.props.mapping}
+          disabled={this.props.disabled}
+          onChange={this.props.onChange}
+        />
       );
     }
     return null;
@@ -97,14 +91,12 @@ export default React.createClass({
   renderDataFilter() {
     if (this.state.showDetails) {
       return (
-        <div className="row">
-          <DataFilterRow
-            value={this.props.mapping}
-            disabled={this.props.disabled}
-            onChange={this.props.onChange}
-            allTables={this.props.tables}
-          />
-        </div>
+        <DataFilterRow
+          value={this.props.mapping}
+          disabled={this.props.disabled}
+          onChange={this.props.onChange}
+          allTables={this.props.tables}
+        />
       );
     }
     return null;
