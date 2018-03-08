@@ -230,6 +230,17 @@ InstalledComponentsStore = StoreUtils.createStore
   isEditingTemplatedConfig: (componentId, configId) ->
     _store.getIn(['templatedConfigEditing', componentId, configId], false)
 
+  isChangedTemplatedConfig: (componentId, configId) ->
+    pathValues = ['templatedConfigValuesEditingValues',
+    'templatedConfigValuesEditingString',
+    'templatedConfigEditingString',
+    'templatedConfigEditing']
+    isChanged = pathValues.reduce((memo, path) ->
+      memo || _store.hasIn([path, componentId, configId], false)
+    , false)
+    isChanged
+
+
   getEditingConfig: (componentId, configId, field) ->
     _store.getIn ['editingConfigurations', componentId, configId, field]
 
@@ -330,13 +341,19 @@ InstalledComponentsStore = StoreUtils.createStore
     return config
 
   getTemplatedConfigEditingValueParams: (componentId, configId) ->
-    _store.getIn(['templatedConfigValuesEditingValues', componentId, configId, 'params'], Immutable.Map())
+    config = InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+    matchingTemplate = TemplatesStore.getMatchingTemplate(componentId, config)
+    params = InstalledComponentsStore.getTemplatedConfigValueUserParams(componentId, configId)
+    _store.getIn(['templatedConfigValuesEditingValues', componentId, configId, 'params'], params)
 
   getTemplatedConfigEditingValueTemplate: (componentId, configId) ->
-    _store.getIn(['templatedConfigValuesEditingValues', componentId, configId, 'template'], Immutable.Map())
+    config = InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+    matchingTemplate = TemplatesStore.getMatchingTemplate(componentId, config)
+    _store.getIn(['templatedConfigValuesEditingValues', componentId, configId, 'template'], matchingTemplate)
 
   getTemplatedConfigEditingValueString: (componentId, configId) ->
-    _store.getIn(['templatedConfigValuesEditingString', componentId, configId], '{}')
+    config = InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+    _store.getIn(['templatedConfigValuesEditingString', componentId, configId], JSON.stringify(config.toJS(), null, 2))
 
   isTemplatedConfigEditingString: (componentId, configId) ->
     _store.getIn(['templatedConfigEditingString', componentId, configId]) || false
