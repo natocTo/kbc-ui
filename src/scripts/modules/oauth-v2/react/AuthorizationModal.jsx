@@ -63,7 +63,7 @@ export default React.createClass({
               activeKey={this.state.activeTab}
               onSelect={this.goToTab}
               animation={false}
-              className="kbc-wrapper-tabs-margin-fix"
+              className="kbc-wrapper-tabs-margin-fix indigo-ui-tabs"
             >
               <Tab eventKey="instant" title="Instant authorization">
                 {this.renderInstant()}

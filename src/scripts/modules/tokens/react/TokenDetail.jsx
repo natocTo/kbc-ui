@@ -74,7 +74,7 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           {this.state.token ?
-           <Tabs id="token-detail-tabs" animation={false}>
+           <Tabs className="indigo-ui-tabs" id="token-detail-tabs" animation={false}>
              <Tab title="Overview" eventKey="overview" style={{paddingTop: 0}}>
                <div className="kbc-inner-content-padding-fix">
                  <div className="form form-horizontal" style={{marginLeft: 0, marginRight: 0}}>
