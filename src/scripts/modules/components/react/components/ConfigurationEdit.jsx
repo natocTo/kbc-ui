@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+// import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import CodeMirror from 'react-code-mirror';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import Immutable from 'immutable';
@@ -42,15 +42,8 @@ export default React.createClass({
             isSaving={this.props.isSaving}
             isChanged={this.props.isChanged}
             onSave={this.handleSave}
+            disabled={!this.props.isValid}
             onReset={this.props.onCancel} />
-          <ConfirmButtons
-            isSaving={this.props.isSaving}
-            onSave={this.handleSave}
-            onCancel={this.props.onCancel}
-            placement="right"
-            saveLabel={this.props.saveLabel}
-            isDisabled={!this.props.isValid}
-          />
         </div>
         {this.renderJSONSchemaEditor()}
         {this.renderCodeMirror()}

@@ -224,6 +224,9 @@ InstalledComponentsStore = StoreUtils.createStore
   isEditingRawConfigDataParameters: (componentId, configId) ->
     _store.hasIn ['rawConfigDataParametersEditing', componentId, configId]
 
+  isChangedRawConfigDataParameters: (componentId, configId) ->
+    _store.hasIn ['rawConfigDataParametersEditing', componentId, configId]
+
   isEditingTemplatedConfig: (componentId, configId) ->
     _store.getIn(['templatedConfigEditing', componentId, configId], false)
 

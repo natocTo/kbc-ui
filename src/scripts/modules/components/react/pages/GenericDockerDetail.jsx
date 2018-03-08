@@ -53,6 +53,7 @@ export default React.createClass({
       config: InstalledComponentStore.getConfig(componentId, configId),
       latestJobs: LatestJobsStore.getJobs(componentId, configId),
       isParametersEditing: InstalledComponentStore.isEditingRawConfigDataParameters(componentId, configId),
+      isParametersChanged: InstalledComponentStore.isChangedRawConfigDataParameters(componentId, configId),
       isParametersSaving: InstalledComponentStore.isSavingConfigDataParameters(componentId, configId),
       editingConfigDataParameters: InstalledComponentStore.getEditingRawConfigDataParameters(componentId, configId, '{}'),
       isValidEditingConfigDataParameters: InstalledComponentStore.isValidEditingConfigDataParameters(componentId, configId),
@@ -95,7 +96,7 @@ export default React.createClass({
             onEditSubmit={this.onEditRuntimeSubmit}
             isValid={this.state.isValidEditingConfigDataRuntime}
             supportsEncryption={false}
-            />
+          />
         </div>
       );
     } else {
@@ -114,7 +115,7 @@ export default React.createClass({
           tables={this.state.tables}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-          />
+        />
       );
     } else {
       return null;
@@ -131,7 +132,7 @@ export default React.createClass({
           editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'files'], List())}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-          />
+        />
       );
     } else {
       return null;
@@ -150,7 +151,7 @@ export default React.createClass({
           buckets={this.state.buckets}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-          />
+        />
       );
     } else {
       return null;
@@ -167,7 +168,7 @@ export default React.createClass({
           editingValue={this.state.editingConfigData.getIn(['storage', 'output', 'files'], List())}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-          />
+        />
       );
     } else {
       return null;
@@ -213,7 +214,7 @@ export default React.createClass({
             <ComponentDescription
               componentId={this.state.componentId}
               configId={this.state.config.get('id')}
-              />
+            />
           </div>
           <div className="row">
             <div classNmae="col-xs-4">
@@ -223,31 +224,32 @@ export default React.createClass({
               {this.tableOutputMapping()}
               {this.fileOutputMapping()}
               {this.isTemplatedComponent() ? (
-                <TemplatedConfiguration
-                  headerText="Configuration"
-                  editLabel="Edit configuration"
-                  saveLabel="Save configuration"
-                  />
+                 <TemplatedConfiguration
+                   headerText="Configuration"
+                   editLabel="Edit configuration"
+                   saveLabel="Save configuration"
+                 />
               ) : (
-                <span>
-                  <Configuration
-                    data={this.getConfigDataParameters()}
-                    isEditing={this.state.isParametersEditing}
-                    isSaving={this.state.isParametersSaving}
-                    onEditStart={this.onEditParametersStart}
-                    onEditCancel={this.onEditParametersCancel}
-                    onEditChange={this.onEditParametersChange}
-                    onEditSubmit={this.onEditParametersSubmit}
-                    isValid={this.state.isValidEditingConfigDataParameters}
-                    headerText="Configuration"
-                    editLabel="Edit configuration"
-                    saveLabel="Save configuration"
-                    supportsEncryption={this.state.component.get('flags').includes('encrypt')}
-                    schema={this.state.component.get('configurationSchema', Map())}
-                    editHelp={this.state.component.get('configurationDescription')}
-                    documentationUrl={this.state.component.get('documentationUrl')}
-                    />
-                </span>
+                 <span>
+                   <Configuration
+                     data={this.getConfigDataParameters()}
+                     isEditing={this.state.isParametersEditing}
+                     isChanged={this.state.isParametersChanged}
+                     isSaving={this.state.isParametersSaving}
+                     onEditStart={this.onEditParametersStart}
+                     onEditCancel={this.onEditParametersCancel}
+                     onEditChange={this.onEditParametersChange}
+                     onEditSubmit={this.onEditParametersSubmit}
+                     isValid={this.state.isValidEditingConfigDataParameters}
+                     headerText="Configuration"
+                     editLabel="Edit configuration"
+                     saveLabel="Save configuration"
+                     supportsEncryption={this.state.component.get('flags').includes('encrypt')}
+                     schema={this.state.component.get('configurationSchema', Map())}
+                     editHelp={this.state.component.get('configurationDescription')}
+                     documentationUrl={this.state.component.get('documentationUrl')}
+                   />
+                 </span>
               )}
               {this.runtimeConfiguration()}
               {this.processorsConfiguration()}
@@ -272,7 +274,7 @@ export default React.createClass({
                 component={this.state.componentId}
                 mode="link"
                 runParams={this.runParams()}
-                >
+              >
                 You are about to run component.
               </RunComponentButton>
             </li>
@@ -280,7 +282,7 @@ export default React.createClass({
               <DeleteConfigurationButton
                 componentId={this.state.componentId}
                 configId={this.state.config.get('id')}
-                />
+              />
             </li>
           </ul>
           <LatestJobs
