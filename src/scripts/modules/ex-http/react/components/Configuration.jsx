@@ -64,7 +64,7 @@ export default React.createClass({
             props.onChange({decompress: e.target.checked});
           }}
           disabled={this.props.disabled}
-          help={(<span>Decompress downloaded file(s). Please note, ZIP files can contain multiple files, which can lead to ambiguity. We recommend using GZIP only.</span>)}
+          help={(<span>Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.</span>)}
           />
         <h3>Save Settings</h3>
         <Input

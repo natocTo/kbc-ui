@@ -30,7 +30,7 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(
             <span>
-              Base URL is common for all files downloaded from a certain domain.
+              Base URL is common for all files downloaded from a certain site/domain.
             </span>
           )}
           />
