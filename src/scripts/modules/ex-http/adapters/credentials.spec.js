@@ -1,9 +1,7 @@
-var assert = require('assert');
-var Immutable = require('immutable');
-var createConfiguration = require('./credentials').createConfiguration;
-var parseConfiguration = require('./credentials').parseConfiguration;
-var isComplete = require('./credentials').isComplete;
-var cases = require('./credentials.spec.def').cases;
+import assert from 'assert';
+import Immutable from 'immutable';
+import { createConfiguration, parseConfiguration, isComplete } from './credentials';
+import { cases } from './credentials.spec.def';
 
 describe('credentials', function() {
   describe('createConfiguration()', function() {

@@ -1,4 +1,5 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
+
 function createConfiguration(localState) {
   const config = Immutable.fromJS({
     parameters: {
