@@ -86,6 +86,7 @@ export default React.createClass({
       return (
         <div>
           <RuntimeConfiguration
+            isChanged={this.state.localState.hasIn(['runtime', 'editing'])}
             data={this.getConfigDataRuntime()}
             isEditing={this.state.localState.getIn(['runtime', 'isEditing'], false)}
             isSaving={this.state.localState.getIn(['runtime', 'saving'], false)}
@@ -309,11 +310,8 @@ export default React.createClass({
   },
 
   getConfigDataRuntime() {
-    if (this.state.localState.getIn(['runtime', 'isEditing'])) {
-      return this.state.localState.getIn(['runtime', 'editing']);
-    } else {
-      return this.state.configData.get('runtime', Map());
-    }
+    const savedData =  this.state.configData.get('runtime', Map());
+    return this.state.localState.getIn(['runtime', 'editing'], savedData);
   },
 
   onEditRuntimeStart() {

@@ -1,11 +1,13 @@
 import React, {PropTypes} from 'react';
-import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+// import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {Input} from './../../../../react/common/KbcBootstrap';
+import SaveButtons from '../../../../react/common/SaveButtons';
 
 export default React.createClass({
   propTypes: {
     data: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    isChanged: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
@@ -47,13 +49,11 @@ export default React.createClass({
       <div>
         <p className="help-block">This information should be provided by the application developer.</p>
         <div className="text-right" style={{padding: '1em 0'}}>
-          <ConfirmButtons
+          <SaveButtons
             isSaving={this.props.isSaving}
+            isChanged={this.props.isChanged}
             onSave={this.props.onSave}
-            onCancel={this.props.onCancel}
-            placement="right"
-            saveLabel={this.props.saveLabel}
-          />
+            onReset={this.props.onCancel} />
         </div>
         <div className="form-horizontal">
           <Input
@@ -85,7 +85,7 @@ export default React.createClass({
             checked={this.props.data.get('network', 'bridge') === 'bridge'}
             onChange={this.onChangeNetwork}
             help="Preventing access to the Internet may cause the application to fail. Please consult with the application author(s)."
-            />
+          />
 
           <Input
             type="text"
