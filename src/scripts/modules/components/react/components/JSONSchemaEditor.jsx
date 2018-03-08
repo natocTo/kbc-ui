@@ -13,6 +13,7 @@ export default React.createClass({
     schema: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     readOnly: PropTypes.bool.isRequired,
+    isChanged: PropTypes.bool,
     disableProperties: PropTypes.bool,
     disableCollapse: PropTypes.bool
   },
@@ -29,18 +30,21 @@ export default React.createClass({
   jsoneditor: null,
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.schema.equals(nextProps.schema)) {
-      this.initJsonEditor();
+    // workaround to update editor internal value after reset of this.props.value
+    const resetValue = this.props.isChanged && !nextProps.isChanged;
+    const nextValue = resetValue ? nextProps.value || this.props.value : this.props.value;
+    if (!this.props.schema.equals(nextProps.schema) || resetValue) {
+      this.initJsonEditor(nextValue);
     }
   },
 
-  initJsonEditor() {
+  initJsonEditor(nextValue) {
     if (this.jsoneditor) {
       this.jsoneditor.destroy();
     }
     var options =       {
       schema: this.props.schema.toJS(),
-      startval: this.props.value.toJS(),
+      startval: nextValue.toJS(),
       theme: 'bootstrap3',
       iconlib: 'fontawesome4',
       custom_validators: [],
@@ -100,7 +104,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this.initJsonEditor();
+    this.initJsonEditor(this.props.value);
   },
 
   getCurrentValue() {
