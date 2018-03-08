@@ -121,7 +121,7 @@ export default React.createClass({
             props.onChange({decompress: e.target.checked});
           }}
           disabled={this.props.disabled}
-          help={(<span>Decompress downloaded file(s). Please note, ZIP files can contain multiple files, which can lead to ambiguity. We recommend using GZIP only.</span>)}
+          help={(<span>Decompress downloaded file(s). All files in all archives will be imported into a single Storage table.</span>)}
           />
         <h3>Save Settings</h3>
         <Input
@@ -243,7 +243,7 @@ export default React.createClass({
           onChange={function(e) {
             props.onChange({addFilenameColumn: e.target.checked});
           }}
-          help={(<span>Add a <code>s3_filename</code> column that will store the processed file name.</span>)}
+          help={(<span>Add an <code>s3_filename</code> column that will store the processed file name.</span>)}
           disabled={this.props.disabled}
           />
         <Input
@@ -254,7 +254,7 @@ export default React.createClass({
           onChange={function(e) {
             props.onChange({addRowNumberColumn: e.target.checked});
           }}
-          help={(<span>Add a <code>s3_row_number</code> column that will store the row number from the processed file.</span>)}
+          help={(<span>Add an <code>s3_row_number</code> column that will store the row number from the processed file.</span>)}
           disabled={this.props.disabled}
           />
 
