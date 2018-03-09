@@ -21,7 +21,6 @@ export const cases = {
       parameters: {
         bucket: '',
         key: '',
-        saveAs: '',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -33,7 +32,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: ''
             }
           },
           {
@@ -74,7 +74,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -86,7 +85,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -127,7 +127,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey*',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -139,7 +138,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -180,7 +180,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: true,
         newFilesOnly: false
       },
@@ -192,7 +191,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -233,7 +233,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -245,7 +244,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -286,7 +286,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: true
       },
@@ -298,7 +297,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -339,7 +339,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -351,7 +350,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -392,7 +392,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -404,7 +403,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -445,7 +445,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -457,7 +456,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -498,7 +498,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -510,7 +509,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -551,7 +551,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -563,7 +562,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -604,7 +604,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -616,7 +615,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -658,7 +658,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -670,7 +669,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -720,7 +720,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -733,19 +732,20 @@ export const cases = {
           },
           {
             definition: {
-              component: 'keboola.processor-flatten-folders'
-            },
-            parameters: {
-              starting_depth: 1
-            }
-          },
-          {
-            definition: {
               component: 'keboola.processor-move-files'
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-flatten-folders'
+            },
+            parameters: {
+              starting_depth: 1
             }
           },
           {
@@ -795,7 +795,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -807,7 +806,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
@@ -866,7 +866,6 @@ export const cases = {
       parameters: {
         bucket: 'mybucket',
         key: 'mykey',
-        saveAs: 'mytable',
         includeSubfolders: false,
         newFilesOnly: false
       },
@@ -878,7 +877,8 @@ export const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              addCsvSuffix: true,
+              folder: 'mytable'
             }
           },
           {
