@@ -13,8 +13,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: '',
-        saveAs: ''
+        path: ''
       },
       processors: {
         after: [
@@ -24,7 +23,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: ''
             }
           },
           {
@@ -57,8 +56,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -68,7 +66,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -101,8 +99,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -112,7 +109,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -145,8 +142,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -156,7 +152,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -189,8 +185,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -200,7 +195,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -233,8 +228,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -244,7 +238,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -277,8 +271,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -288,7 +281,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -321,8 +314,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -332,7 +324,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -365,8 +357,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -376,7 +367,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -410,8 +401,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -421,7 +411,7 @@ const cases = {
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
             }
           },
           {
@@ -463,8 +453,7 @@ const cases = {
     },
     configuration: {
       parameters: {
-        path: 'mykey',
-        saveAs: 'mytable'
+        path: 'mykey'
       },
       processors: {
         after: [
@@ -475,19 +464,19 @@ const cases = {
           },
           {
             definition: {
-              component: 'keboola.processor-flatten-folders'
-            },
-            parameters: {
-              starting_depth: 1
-            }
-          },
-          {
-            definition: {
               component: 'keboola.processor-move-files'
             },
             parameters: {
               direction: 'tables',
-              addCsvSuffix: true
+              folder: 'mytable'
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-flatten-folders'
+            },
+            parameters: {
+              starting_depth: 1
             }
           },
           {

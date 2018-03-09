@@ -51,8 +51,7 @@ function createConfiguration(localState) {
 
   let config = Immutable.fromJS({
     parameters: {
-      path: localState.get('path', ''),
-      saveAs: localState.get('name', '')
+      path: localState.get('path', '')
     },
     processors: {
       after: []
@@ -64,9 +63,6 @@ function createConfiguration(localState) {
   if (decompressProcessor) {
     processors = processors.push(decompressProcessor);
   }
-  if (flattenFoldersProcessor) {
-    processors = processors.push(flattenFoldersProcessor);
-  }
   processors = processors.push(Immutable.fromJS(
     {
       definition: {
@@ -74,11 +70,14 @@ function createConfiguration(localState) {
       },
       parameters: {
         direction: 'tables',
-        addCsvSuffix: true
+        folder: localState.get('name', '')
       }
     }
-  ))
-    .push(createManifestProcessor);
+  ));
+  if (flattenFoldersProcessor) {
+    processors = processors.push(flattenFoldersProcessor);
+  }
+  processors = processors.push(createManifestProcessor);
 
   if (skipLinesProcessor) {
     processors = processors.push(skipLinesProcessor);
@@ -96,10 +95,13 @@ function parseConfiguration(configuration) {
   const processorDecompress = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-decompress';
   });
+  const moveFilesProcessor = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+    return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
+  }, null, Immutable.Map());
 
   return Immutable.fromJS({
     path: configuration.getIn(['parameters', 'path'], ''),
-    name: configuration.getIn(['parameters', 'saveAs'], ''),
+    name: moveFilesProcessor.getIn(['parameters', 'folder'], ''),
     incremental: processorCreateManifest.getIn(['parameters', 'incremental'], false),
     primaryKey: processorCreateManifest.getIn(['parameters', 'primary_key'], Immutable.List()).toJS(),
     delimiter: processorCreateManifest.getIn(['parameters', 'delimiter'], ','),
