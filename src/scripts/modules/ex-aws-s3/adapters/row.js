@@ -53,7 +53,6 @@ export function createConfiguration(localState) {
     parameters: {
       bucket: localState.get('bucket', ''),
       key: localState.get('key', '') + (localState.get('wildcard', false) ? '*' : ''),
-      saveAs: localState.get('name', ''),
       includeSubfolders: localState.get('subfolders', false),
       newFilesOnly: localState.get('newFilesOnly', false)
     },
@@ -67,9 +66,6 @@ export function createConfiguration(localState) {
   if (decompressProcessor) {
     processors = processors.push(decompressProcessor);
   }
-  if (flattenFoldersProcessor) {
-    processors = processors.push(flattenFoldersProcessor);
-  }
   processors = processors.push(Immutable.fromJS(
     {
       definition: {
@@ -77,11 +73,16 @@ export function createConfiguration(localState) {
       },
       parameters: {
         direction: 'tables',
-        addCsvSuffix: true
+        addCsvSuffix: true,
+        folder: localState.get('name', '')
       }
     }
-  ))
-    .push(createManifestProcessor);
+  ));
+  if (flattenFoldersProcessor) {
+    processors = processors.push(flattenFoldersProcessor);
+  }
+
+  processors = processors.push(createManifestProcessor);
 
   if (skipLinesProcessor) {
     processors = processors.push(skipLinesProcessor);
@@ -135,11 +136,14 @@ export function parseConfiguration(configuration) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-add-filename-column' &&
       processor.getIn(['parameters', 'column_name']) === 's3_filename';
   });
+  const processorMoveFiles = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+    return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
+  }, null, Immutable.Map());
 
   return Immutable.fromJS({
     bucket: configuration.getIn(['parameters', 'bucket'], ''),
     key: isWildcard ? key.substring(0, key.length - 1) : key,
-    name: configuration.getIn(['parameters', 'saveAs'], ''),
+    name: processorMoveFiles.getIn(['parameters', 'folder'], ''),
     wildcard: isWildcard,
     subfolders: configuration.getIn(['parameters', 'includeSubfolders'], false),
     incremental: processorCreateManifest.getIn(['parameters', 'incremental'], false),
