@@ -32,13 +32,15 @@ export default React.createClass({
   componentWillReceiveProps(nextProps) {
     // workaround to update editor internal value after reset of this.props.value
     const resetValue = this.props.isChanged && !nextProps.isChanged;
+    const resetReadOnly = this.props.readOnly !== nextProps.readOnly;
+    const nextReadOnly = resetReadOnly ? nextProps.readOnly : this.props.readOnly;
     const nextValue = resetValue ? nextProps.value || this.props.value : this.props.value;
-    if (!this.props.schema.equals(nextProps.schema) || resetValue) {
-      this.initJsonEditor(nextValue);
+    if (!this.props.schema.equals(nextProps.schema) || resetValue || resetReadOnly) {
+      this.initJsonEditor(nextValue, nextReadOnly);
     }
   },
 
-  initJsonEditor(nextValue) {
+  initJsonEditor(nextValue, nextReadOnly) {
     if (this.jsoneditor) {
       this.jsoneditor.destroy();
     }
@@ -62,7 +64,7 @@ export default React.createClass({
       show_errors: 'interaction'
     };
 
-    if (this.props.readOnly) {
+    if (nextReadOnly) {
       options.disable_array_add = true;
       options.disable_collapse = true;
       options.disable_edit_json = true;
@@ -98,13 +100,13 @@ export default React.createClass({
       props.onChange(Immutable.fromJS(json));
     });
 
-    if (this.props.readOnly) {
+    if (nextReadOnly) {
       jsoneditor.disable();
     }
   },
 
   componentDidMount() {
-    this.initJsonEditor(this.props.value);
+    this.initJsonEditor(this.props.value, this.props.readOnly);
   },
 
   getCurrentValue() {
