@@ -1,9 +1,7 @@
-var assert = require('assert');
-var Immutable = require('immutable');
-var createConfiguration = require('./row').createConfiguration;
-var parseConfiguration = require('./row').parseConfiguration;
-var createEmptyConfiguration = require('./row').createEmptyConfiguration;
-var cases = require('./row.spec.def').cases;
+import assert from 'assert';
+import Immutable from 'immutable';
+import { createConfiguration, parseConfiguration, createEmptyConfiguration } from './row';
+import { cases } from './row.spec.def';
 
 describe('row', function() {
   describe('createConfiguration()', function() {

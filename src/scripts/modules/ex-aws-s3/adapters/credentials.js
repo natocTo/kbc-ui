@@ -1,5 +1,6 @@
-var Immutable = require('immutable');
-function createConfiguration(localState) {
+import Immutable from 'immutable';
+
+export function createConfiguration(localState) {
   const config = Immutable.fromJS({
     parameters: {
       accessKeyId: localState.get('awsAccessKeyId', ''),
@@ -9,19 +10,14 @@ function createConfiguration(localState) {
   return config;
 }
 
-function parseConfiguration(configuration) {
+export function parseConfiguration(configuration) {
   return Immutable.fromJS({
     awsAccessKeyId: configuration.getIn(['parameters', 'accessKeyId'], ''),
     awsSecretAccessKey: configuration.getIn(['parameters', '#secretAccessKey'], '')
   });
 }
 
-function isComplete(configuration) {
+export function isComplete(configuration) {
   return configuration.getIn(['parameters', 'accessKeyId'], '') !== '' && configuration.getIn(['parameters', '#secretAccessKey'], '') !== '';
 }
 
-module.exports = {
-  createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration,
-  isComplete: isComplete
-};

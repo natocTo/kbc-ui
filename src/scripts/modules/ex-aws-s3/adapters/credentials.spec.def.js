@@ -1,4 +1,4 @@
-const cases = {
+export const cases = {
   emptyWithDefaults: {
     localState: {
       awsAccessKeyId: '',
@@ -24,8 +24,4 @@ const cases = {
       }
     }
   }
-};
-
-module.exports = {
-  cases: cases
 };
