@@ -337,14 +337,6 @@ a .kbcComponentIcon-3rdParty-64px {
     border-bottom: 1px solid #e8e8ef;
   }
 }
-// wrapper class to add margin to tablist
-.kbc-wrapper-tabs-margin-fix {
-  .nav {
-    &.nav-tabs {
-      margin-bottom: 1em;
-    }
-  }
-}
 // universal margin classes
 .bottom-margin-20px {
   margin-bottom: 20px;
@@ -356,10 +348,9 @@ a .kbcComponentIcon-3rdParty-64px {
   overflow: auto;
 }
 
-.kbc-main .tab-pane {
-  padding-top: 15px;
-}
 
-.kbc-main .kb-orchestrations-main .tab-pane {
-  padding-top: 0;
+.tab-pane {
+  .row {
+    margin: auto;
+  }
 }

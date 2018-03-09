@@ -3,8 +3,8 @@
 
 
 "@keboola/indigo-ui@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-2.1.2.tgz#56885b6fd7431d70bcb47ee6932cb11ffc20bfe3"
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-2.1.3.tgz#4cfb17c70440e471cf4a19d55e49518251d74e29"
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
@@ -1053,13 +1053,13 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames@^2.1.0, classnames@~2.1.0:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.1.5.tgz#9c9a9cea3e2ff3ffd9b575442e3bd86d88dddf3e"
-
-classnames@^2.2.1, classnames@^2.2.4, classnames@^2.2.5:
+classnames@^2.1.0, classnames@^2.2.1, classnames@^2.2.4, classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
+
+classnames@~2.1.0:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.1.5.tgz#9c9a9cea3e2ff3ffd9b575442e3bd86d88dddf3e"
 
 cli-cursor@^1.0.1:
   version "1.0.2"
@@ -2692,9 +2692,13 @@ image-size@~0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.3.5.tgz#83240eab2fb5b00b04aab8c74b0471e9cba7ad8c"
 
-immutable@^3.3.0, immutable@^3.7.3, immutable@^3.7.4, immutable@~3.7.3:
+immutable@^3.3.0, immutable@^3.7.4, immutable@~3.7.3:
   version "3.7.6"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.7.6.tgz#13b4d3cb12befa15482a26fe1b2ebae640071e4b"
+
+immutable@^3.7.3:
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
 
 imurmurhash@^0.1.4:
   version "0.1.4"

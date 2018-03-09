@@ -71,9 +71,9 @@ OrchestrationJobDetail = React.createClass
                 animation: false
                 id: 'orchestration-job-detail-tabs'
                 className: 'indigo-ui-tabs',
-                  Tab eventKey: 'overview', title: 'Overview',
+                  Tab eventKey: 'overview', title: 'Overview', className: 'no-top-padding',
                     JobOverview(job: @state.job)
-                  Tab eventKey: 'log', title: 'Log',
+                  Tab eventKey: 'log', title: 'Log', className: 'no-top-padding',
                     Events
                       link:
                         to: 'orchestrationJob'

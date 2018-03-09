@@ -36,12 +36,6 @@ export default React.createClass({
     selectTab: PropTypes.func.isRequired
   },
 
-  /* getInitialState() {
-   *   return {
-   *     step: AUTH_KEY
-   *   };
-   * },*/
-
   render() {
     return (
       <span>
@@ -69,34 +63,24 @@ export default React.createClass({
 
   renderActionForm() {
     return (
-      <div className="row form-horizontal clearfix">
-        <div className="form-group">
-          <div className="col-md-12">
-            <RadioGroup
-              name="Action"
-              value={this.props.action}
-              onChange={(e) => this.updateParameter('action', e.target.value)}
-            >
-              <div className="form-horizontal">
-                <Input
-                  type="radio"
-                  label="Run Crawler"
-                  help="Will run specified crawler or wait if it is already running, and eventually retrieve its results if it finishes succesfully"
-                  wrapperClassName="col-sm-8"
-                  value="crawler"
-                />
-                <Input
-                  type="radio"
-                  label="Retrieve results only"
-                  help="Retrieve results of a crawler run specified by executionId"
-                  wrapperClassName="col-sm-8"
-                  value="executionId"
-                />
-              </div>
-            </RadioGroup>
-          </div>
-        </div>
-      </div>
+      <RadioGroup
+        name="Action"
+        value={this.props.action}
+        onChange={(e) => this.updateParameter('action', e.target.value)}
+      >
+        <Input
+          type="radio"
+          label="Run Crawler"
+          help="Will run specified crawler or wait if it is already running, and eventually retrieve its results if it finishes succesfully"
+          value="crawler"
+        />
+        <Input
+          type="radio"
+          label="Retrieve results only"
+          help="Retrieve results of a crawler run specified by executionId"
+          value="executionId"
+        />
+      </RadioGroup>
     );
   },
 
@@ -117,7 +101,7 @@ export default React.createClass({
     );
     const eidHelp = 'Execution id of a crawler run to retrieve results from';
     const executionIdControl = (
-      <div className="row form form-horizontal">
+      <div className="form-horizontal">
         {this.renderInput('Execution ID', 'executionId', eidHelp, 'Enter Execution ID')}
       </div>
     );
@@ -125,14 +109,14 @@ export default React.createClass({
     return (
       action === 'executionId' ? executionIdControl
       :
-      <div className="row form form-horizontal">
+      <div className="form-horizontal">
         {this.renderCrawlerSelector()}
         {this.renderInputTableIdSelector()}
         <div className="form-group">
           <div className="col-xs-2 control-label">
             Crawler Settings
           </div>
-          <div className="col-xs-8">
+          <div className="col-xs-10">
             {editor}
             <div className="help-text">
               Optional <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">crawler settings</a> JSON object which overrides default crawler settings for current run.
@@ -145,14 +129,13 @@ export default React.createClass({
 
   renderInputTableIdSelector() {
     const error = false;
-    // const isLoading = this.props.crawlers.get('loading', false);
 
     return (
       <div className={error ? 'form-group has-error' : 'form-group'}>
         <div className="col-xs-2 control-label">
           Input Table
         </div>
-        <div className="col-xs-8">
+        <div className="col-xs-10">
           <SapiTableSelector
             clearable={true}
             onSelectTableFn={this.props.updateInputTableId}
@@ -181,19 +164,11 @@ export default React.createClass({
     const userHelp = <span>User ID from your <a href="https://my.apify.com/account#/integrations" target="_blank" rel="noopener noreferrer">account page</a>.</span>;
     const tokenHelp = <span>API token from your <a href="https://my.apify.com/account#/integrations" target="_blank" rel="noopener noreferrer">account page</a>.</span>;
     return (
-      <div className="row form-horizontal clearfix">
+      <div className="form-horizontal">
         {this.renderInput('User ID', 'userId', userHelp, 'Enter User ID')}
         {this.renderInput('Token', '#token', tokenHelp, 'Enter token')}
       </div>
 
-    );
-  },
-
-  renderCrawlersForm() {
-    return (
-      <div className="row form-horizontal clearfix">
-        {this.renderCrawlerSelector()}
-      </div>
     );
   },
 
@@ -241,15 +216,12 @@ export default React.createClass({
         <div className="col-xs-2 control-label">
           Crawler
         </div>
-        <div className="col-xs-8">
+        <div className="col-xs-10">
           {isLoading || error ? staticElement : selectControl}
         </div>
       </div>
     );
   },
-
-  // this.renderFormControl('User Crawlers', isLoading || error ? staticElement : selectControl, '', !!error);
-
 
   renderInputControl(propertyPath, placeholder) {
     const propValue = this.parameter(propertyPath, '');

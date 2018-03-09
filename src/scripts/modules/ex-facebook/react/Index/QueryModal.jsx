@@ -55,7 +55,7 @@ export default React.createClass({
           />
           <Tabs defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs" className="indigo-ui-tabs">
             <Tab title="General" eventKey={1}>
-              <div className="row form-horizontal clearfix">
+              <div className="form-horizontal">
                 {this.renderTemplateSelect()}
                 {this.renderInput('Name', 'name', NAME_HELP, placeholders.name, this.nameInvalidReason)}
                 {this.renderInput('Endpoint', ['query', 'path'], this.enhanceHelp('endpoint', ENDPOINT_HELP), placeholders.path)}
@@ -64,7 +64,7 @@ export default React.createClass({
               </div>
             </Tab>
             <Tab title="Advanced" eventKey={2}>
-              <div className="row form-horizontal clearfix">
+              <div className="form-horizontal">
                 {this.renderDateRangeSelector()}
                 {this.renderInput('Since', ['query', 'since'], SINCE_HELP, 'yyyy-mm-dd or 15 days ago')}
                 {this.renderInput('Until', ['query', 'until'], UNTIL_HELP, 'yyyy-mm-dd or 15 days ago')}
@@ -117,34 +117,29 @@ export default React.createClass({
 
   renderDateRangeSelector() {
     return (
-      <div className="form-group">
-        <div className="col-md-12">
-          <span className="pull-right">
-            <DateRangeSelector
-              query={this.query()}
-              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-            />
-          </span>
+      <div className="text-right">
+        <div className="form-group">
+          <DateRangeSelector
+            query={this.query()}
+            updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+          />
         </div>
       </div>
     );
   },
 
   renderTemplateSelect() {
-    const templateSelector = (
-      <div className="form-group">
-        <div className="col-md-12">
-          <span className="pull-right">
-            <TemplateSelector
-              templates={this.props.queryTemplates}
-              query={this.query()}
-              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-            />
-          </span>
+    return (
+      <div className="text-right">
+        <div className="form-group">
+          <TemplateSelector
+            templates={this.props.queryTemplates}
+            query={this.query()}
+            updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+          />
         </div>
       </div>
     );
-    return templateSelector;
   },
 
   renderFieldsInput(placeholder) {

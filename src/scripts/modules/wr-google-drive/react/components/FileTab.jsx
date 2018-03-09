@@ -33,33 +33,31 @@ export default React.createClass({
 
   renderTypeRadio() {
     return (
-      <div className="row">
-        <div className="form-group">
-          <label className="col-md-2 control-label">
-            File exists?
-          </label>
-          <div className="col-md-10">
-            <RadioGroup
-              name="type"
-              value={this.props.type}
-              onChange={this.props.onSwitchType}
-            >
-              <Input
-                type="radio"
-                label="No"
-                help="Create a new File, that will be updated on each run"
-                wrapperClassName="col-sm-8"
-                value="new"
-              />
-              <Input
-                type="radio"
-                label="Yes"
-                help="Use existing File"
-                wrapperClassName="col-sm-8"
-                value="existing"
-              />
-            </RadioGroup>
-          </div>
+      <div className="form-group">
+        <label className="col-md-2 control-label">
+          File exists?
+        </label>
+        <div className="col-md-10">
+          <RadioGroup
+            name="type"
+            value={this.props.type}
+            onChange={this.props.onSwitchType}
+          >
+            <Input
+              type="radio"
+              label="No"
+              help="Create a new File, that will be updated on each run"
+              wrapperClassName="col-sm-8"
+              value="new"
+            />
+            <Input
+              type="radio"
+              label="Yes"
+              help="Use existing File"
+              wrapperClassName="col-sm-8"
+              value="existing"
+            />
+          </RadioGroup>
         </div>
       </div>
     );
@@ -67,31 +65,29 @@ export default React.createClass({
 
   renderFilePicker() {
     return (
-      <div className="row">
-        <div className="form-group">
-          <label className="col-md-2 control-label">
-            File location
-          </label>
-          <div className="col-md-10">
-            <Picker
-              dialogTitle="Select File"
-              buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select File'}
-              onPickedFn={this.props.onSelectExisting}
-              buttonProps={{
-                bsStyle: 'default',
-                bsSize: 'large'
-              }}
-              views={[
-                ViewTemplates.files,
-                ViewTemplates.sharedFiles,
-                ViewTemplates.starredFiles
-              ]}
-              multiselectEnabled={false}
-            />
-            <span className="help-block">
-              Choose File you wish to update
-            </span>
-          </div>
+      <div className="form-group">
+        <label className="col-md-2 control-label">
+          File location
+        </label>
+        <div className="col-md-10">
+          <Picker
+            dialogTitle="Select File"
+            buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select File'}
+            onPickedFn={this.props.onSelectExisting}
+            buttonProps={{
+              bsStyle: 'default',
+              bsSize: 'large'
+            }}
+            views={[
+              ViewTemplates.files,
+              ViewTemplates.sharedFiles,
+              ViewTemplates.starredFiles
+            ]}
+            multiselectEnabled={false}
+          />
+          <span className="help-block">
+            Choose File you wish to update
+          </span>
         </div>
       </div>
     );
@@ -99,43 +95,41 @@ export default React.createClass({
 
   renderFolderPicker() {
     return (
-      <div className="row">
-        <div className="form-group">
-          <label className="col-md-2 control-label">
-            File location
-          </label>
-          <div className="col-md-10">
-            <div className="input-group">
-              <div className="input-group-btn">
-                <Picker
-                  dialogTitle="Select Folder"
-                  buttonLabel={this.props.valueFolder}
-                  onPickedFn={this.props.onSelectFolder}
-                  buttonProps={{
-                    bsStyle: 'default',
-                    bsSize: 'large'
-                  }}
-                  views={[
-                    ViewTemplates.rootFolder,
-                    ViewTemplates.sharedFolders,
-                    ViewTemplates.starredFolders
-                  ]}
-                  multiselectEnabled={false}
-                />
-              </div>
-              <input
-                placeholder="New File"
-                type="text"
-                value={this.props.valueTitle ? this.props.valueTitle : ''}
-                onChange={this.props.onChangeTitle}
-                className="form-control"
+      <div className="form-group">
+        <label className="col-md-2 control-label">
+          File location
+        </label>
+        <div className="col-md-10">
+          <div className="input-group">
+            <div className="input-group-btn">
+              <Picker
+                dialogTitle="Select Folder"
+                buttonLabel={this.props.valueFolder}
+                onPickedFn={this.props.onSelectFolder}
+                buttonProps={{
+                  bsStyle: 'default',
+                  bsSize: 'large'
+                }}
+                views={[
+                  ViewTemplates.rootFolder,
+                  ViewTemplates.sharedFolders,
+                  ViewTemplates.starredFolders
+                ]}
+                multiselectEnabled={false}
               />
             </div>
-            <span className="help-block">
-              Select Files parent <strong>folder</strong> and enter <strong>title</strong> of the File.<br/>
-              {this.props.valueAction === 'create' ? 'The File will be created on next run. Current date and time will be appended to Files name.' : 'The File will be created upon save.'}
-            </span>
+            <input
+              placeholder="New File"
+              type="text"
+              value={this.props.valueTitle ? this.props.valueTitle : ''}
+              onChange={this.props.onChangeTitle}
+              className="form-control"
+            />
           </div>
+          <span className="help-block">
+            Select Files parent <strong>folder</strong> and enter <strong>title</strong> of the File.<br/>
+            {this.props.valueAction === 'create' ? 'The File will be created on next run. Current date and time will be appended to Files name.' : 'The File will be created upon save.'}
+          </span>
         </div>
       </div>
     );
@@ -143,20 +137,18 @@ export default React.createClass({
 
   renderConvertCheckbox() {
     return (
-      <div className="row">
-        <div className="form-group">
-          <label className="col-md-2 control-label">
-            Format
-          </label>
-          <div className="col-md-10">
-            <Input
-              type="checkbox"
-              checked={this.props.valueConvert}
-              onChange={this.props.onToggleConvert}
-              label="Convert to Google Docs format"
-              help="After upload, file will be converted so it can be edited directly in Google Drive"
-            />
-          </div>
+      <div className="form-group">
+        <label className="col-md-2 control-label">
+          Format
+        </label>
+        <div className="col-md-10">
+          <Input
+            type="checkbox"
+            checked={this.props.valueConvert}
+            onChange={this.props.onToggleConvert}
+            label="Convert to Google Docs format"
+            help="After upload, file will be converted so it can be edited directly in Google Drive"
+          />
         </div>
       </div>
     );
