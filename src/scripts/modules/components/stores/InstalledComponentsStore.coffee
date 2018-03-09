@@ -875,41 +875,33 @@ Dispatcher.register (payload) ->
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_SAVE_START
       configData = InstalledComponentsStore.getConfigData(action.componentId, action.configId) or Map()
+      componentId = action.componentId
+      configId = action.configId
       editingData = configData
-
       editingData = editingData.setIn(
         ['parameters', 'api'],
         TemplatesStore.getApiTemplate(action.componentId)
       )
 
       if (_store.getIn(['templatedConfigEditingString', action.componentId, action.configId], false))
+        editingConfigValueString = InstalledComponentsStore.getTemplatedConfigEditingValueString(componentId, configId)
         editingData = editingData.setIn(
           ['parameters', 'config'],
-          fromJSOrdered(
-            JSON.parse(
-              _store.getIn(
-                ['templatedConfigValuesEditingString', action.componentId, action.configId]
-              )
-            )
-          )
+          fromJSOrdered(JSON.parse(editingConfigValueString))
         )
       else
         # params on the first place
+        editingParams = InstalledComponentsStore.getTemplatedConfigEditingValueParams(componentId, configId)
         editingData = editingData.setIn(
           ['parameters', 'config'],
-          _store.getIn(['templatedConfigValuesEditingValues', action.componentId, action.configId, 'params'], Map())
+          editingParams
         )
 
         # merge the template
+        editingTemplate = InstalledComponentsStore.getTemplatedConfigEditingValueTemplate(componentId, configId)
         editingData = editingData.setIn(
           ['parameters', 'config'],
-          editingData.getIn(['parameters', 'config'], Map()).merge(
-            _store.getIn(
-              ['templatedConfigValuesEditingValues', action.componentId, action.configId, 'template', 'data'],
-              Map()
-            )
-          )
-        )
+          editingData.getIn(['parameters', 'config'], Map()).merge(editingTemplate.get('data')))
 
       _store = _store.setIn ['configDataSaving', action.componentId, action.configId], editingData
       InstalledComponentsStore.emitChange()
@@ -935,22 +927,19 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_STRING_TOGGLE
+      componentId = action.componentId
+      confgiId = action.configId
+
       if action.isStringEditingMode
 
         # params on the first place
-        mergedConfig = _store.getIn(
-          ['templatedConfigValuesEditingValues', action.componentId, action.configId, 'params'],
-          Map()
-        )
+        mergedConfig = InstalledComponentsStore.getTemplatedConfigEditingValueParams(componentId, configId)
 
         # merge the template
+        editingTemplate = InstalledComponentsStore.getTemplatedConfigEditingValueTemplate(componentId, configId)
         mergedConfig = mergedConfig.merge(
-          _store.getIn(
-            ['templatedConfigValuesEditingValues', action.componentId, action.configId, 'template', 'data'],
-            Map()
-          )
+          editingTemplate.get('data', Map())
         )
-
         _store = _store.withMutations (store) ->
           store = store.setIn(
             ["templatedConfigValuesEditingString", action.componentId, action.configId],
