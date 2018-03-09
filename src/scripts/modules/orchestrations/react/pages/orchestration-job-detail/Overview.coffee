@@ -36,7 +36,7 @@ JobDetailOverview = React.createClass
               span className: 'col-md-4', 'Created By '
               strong className: 'col-md-8', @props.job.getIn(['initiatorToken', 'description'])
 
-      h2 null,
+      h2 className: 'mx-2',
         'Tasks',
         ' ',
         @_renderTotalDurationInHeader(),
