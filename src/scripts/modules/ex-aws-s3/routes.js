@@ -12,6 +12,7 @@ import {
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import React from 'react';
+import Immutable from 'immutable';
 
 const routeSettings = {
   componentId: 'keboola.ex-aws-s3',
@@ -46,7 +47,10 @@ const routeSettings = {
         name: 'Storage',
         type: columnTypes.STORAGE_LINK_DEFAULT_BUCKET,
         value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'saveAs']);
+          const processorMoveFiles = row.getIn(['configuration', 'processors', 'after'], Immutable.List()).find(function(processor) {
+            return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
+          }, null, Immutable.Map());
+          return processorMoveFiles.getIn(['parameters', 'folder']);
         }
       },
       {
