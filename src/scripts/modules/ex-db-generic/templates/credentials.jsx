@@ -1,11 +1,36 @@
-// define as [labelValue, propName, type = 'text', isProtected = false, isRequired = false]
 
 const defaultFields = [
-  ['Host Name', 'host', 'text', false, true],
-  ['Port', 'port', 'number', false, true],
-  ['Username', 'user', 'text', false, true],
-  ['Password', '#password', 'password', true, true],
-  ['Database', 'database', 'text', false, true]
+  {
+    'label': 'Host Name',
+    'name': 'host',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Port',
+    'name': 'port',
+    'type': 'number',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Username',
+    'name': 'user',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Password',
+    'name': '#password',
+    'type': 'password',
+    'protected': true,
+    'required': true
+  }, {
+    'label': 'Database',
+    'name': 'database',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }
 ];
 
 /*
@@ -19,37 +44,146 @@ const defaultFields = [
 */
 
 const firebirdFields = [
-  ['Database', 'dbname', 'text', false, true],
-  ['Username', 'user', 'text', false, true],
-  ['Password', '#password', 'password', true, true]
+  {
+    'label': 'Database',
+    'name': 'dbname',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Username',
+    'name': 'user',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Password',
+    'name': '#password',
+    'type': 'password',
+    'protected': true,
+    'required': true
+  }
 ];
 
 const oracleFields = [
-  ['Host Name', 'host', 'text', false, true],
-  ['Port', 'port', 'number', false, true],
-  ['Username', 'user', 'text', false, true],
-  ['Password', '#password', 'password', true, true],
-  ['Service Name/SID', 'database', 'text', false, true]
+  {
+    'label': 'Host Name',
+    'name': 'host',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Port',
+    'name': 'port',
+    'type': 'number',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Username',
+    'name': 'user',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Password',
+    'name': '#password',
+    'type': 'password',
+    'protected': true,
+    'required': true
+  }, {
+    'label': 'Service Name/SID',
+    'name': 'database',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }
 ];
 
 const snowflakeFields = [
-  ['Host Name', 'host', 'text', false, true],
-  ['Port', 'port', 'number', false, true],
-  ['Username', 'user', 'text', false, true],
-  ['Password', '#password', 'password', true, true],
-  ['Database', 'database', 'text', false, true],
-  ['Schema', 'schema', 'text', false, false],
-  ['Warehouse', 'warehouse', 'text', false, false]
+  {
+    'label': 'Host Name',
+    'name': 'host',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Port',
+    'name': 'port',
+    'type': 'number',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Username',
+    'name': 'user',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Password',
+    'name': '#password',
+    'type': 'password',
+    'protected': true,
+    'required': true
+  }, {
+    'label': 'Database',
+    'name': 'database',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Schema',
+    'name': 'schema',
+    'type': 'text',
+    'protected': false,
+    'required': false
+  }, {
+    'label': 'Warehouse',
+    'name': 'warehouse',
+    'type': 'text',
+    'protected': false,
+    'required': false
+  }
 ];
 
 // same as default, but database is optional
 const mysqlFields = [
-  ['Host Name', 'host', 'text', false, true],
-  ['Port', 'port', 'number', false, true],
-  ['Username', 'user', 'text', false, true],
-  ['Password', '#password', 'password', true, true],
-  ['Database', 'database', 'text', false, false],
-  ['Enable Network Compression', 'networkCompression', 'checkbox', false, false]
+  {
+    'label': 'Host Name',
+    'name': 'host',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Port',
+    'name': 'port',
+    'type': 'number',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Username',
+    'name': 'user',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Password',
+    'name': '#password',
+    'type': 'password',
+    'protected': true,
+    'required': true
+  }, {
+    'label': 'Database',
+    'name': 'database',
+    'type': 'text',
+    'protected': false,
+    'required': false
+  }, {
+    'label': 'Enable Network Compression',
+    'name': 'networkCompression',
+    'type': 'checkbox',
+    'protected': false,
+    'required': false
+  }
 ];
 
 
