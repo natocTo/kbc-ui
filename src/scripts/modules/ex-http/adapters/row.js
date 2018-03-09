@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-function createConfiguration(localState) {
+export function createConfiguration(localState) {
   let skipLinesProcessor;
   let decompressProcessor;
   let flattenFoldersProcessor;
@@ -88,7 +88,7 @@ function createConfiguration(localState) {
   return config;
 }
 
-function parseConfiguration(configuration) {
+export function parseConfiguration(configuration) {
   const processorCreateManifest = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-create-manifest';
   }, null, Immutable.Map());
@@ -112,12 +112,7 @@ function parseConfiguration(configuration) {
   });
 }
 
-function createEmptyConfiguration(name, webalizedName) {
+export function createEmptyConfiguration(name, webalizedName) {
   return createConfiguration(Immutable.fromJS({name: webalizedName}));
 }
 
-module.exports = {
-  createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration,
-  createEmptyConfiguration: createEmptyConfiguration
-};

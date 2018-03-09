@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-function createConfiguration(localState) {
+export function createConfiguration(localState) {
   const config = Immutable.fromJS({
     parameters: {
       baseUrl: localState.get('baseUrl', '')
@@ -9,18 +9,12 @@ function createConfiguration(localState) {
   return config;
 }
 
-function parseConfiguration(configuration) {
+export function parseConfiguration(configuration) {
   return Immutable.fromJS({
     baseUrl: configuration.getIn(['parameters', 'baseUrl'], '')
   });
 }
 
-function isComplete(configuration) {
+export function isComplete(configuration) {
   return configuration.getIn(['parameters', 'baseUrl'], '') !== '';
 }
-
-module.exports = {
-  createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration,
-  isComplete: isComplete
-};
