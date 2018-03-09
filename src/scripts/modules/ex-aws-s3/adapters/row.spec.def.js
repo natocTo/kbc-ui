@@ -1,4 +1,4 @@
-const cases = {
+export const cases = {
   emptyWithDefaults: {
     localState: {
       bucket: '',
@@ -916,8 +916,4 @@ const cases = {
 
   }
 
-};
-
-module.exports = {
-  cases: cases
 };

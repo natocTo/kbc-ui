@@ -1,6 +1,6 @@
-var Immutable = require('immutable');
+import Immutable from 'immutable';
 
-function createConfiguration(localState) {
+export function createConfiguration(localState) {
   let skipLinesProcessor;
   let decompressProcessor;
   let flattenFoldersProcessor;
@@ -118,7 +118,7 @@ function createConfiguration(localState) {
   return config;
 }
 
-function parseConfiguration(configuration) {
+export function parseConfiguration(configuration) {
   const key = configuration.getIn(['parameters', 'key'], '');
   const isWildcard = key.slice(-1) === '*' ? true : false;
   const processorCreateManifest = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
@@ -155,12 +155,6 @@ function parseConfiguration(configuration) {
   });
 }
 
-function createEmptyConfiguration(name, webalizedName) {
+export function createEmptyConfiguration(name, webalizedName) {
   return createConfiguration(Immutable.fromJS({name: webalizedName}));
 }
-
-module.exports = {
-  createConfiguration: createConfiguration,
-  parseConfiguration: parseConfiguration,
-  createEmptyConfiguration: createEmptyConfiguration
-};
