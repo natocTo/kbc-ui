@@ -1,8 +1,8 @@
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils from '../../utils/StoreUtils';
 import {Map} from 'immutable';
 import Immutable from 'immutable';
-import dispatcher from '../../../Dispatcher';
-import Constants from '../ServicesConstants';
+import dispatcher from '../../Dispatcher';
+import Constants from './Constants';
 
 var _store = Map({
   services: Map()

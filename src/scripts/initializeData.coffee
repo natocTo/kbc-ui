@@ -1,6 +1,6 @@
 _ = require 'underscore'
 ComponentsActionCreators = require './modules/components/ComponentsActionCreators'
-ServicesActionCreators = require './modules/components/ServicesActionCreators'
+ServicesActionCreators = require './modules/services/ActionCreators'
 InstalledComponentsActionCreators = require './modules/components/InstalledComponentsActionCreators'
 OrchestrationsActionCreators = require './modules/orchestrations/ActionCreators'
 
@@ -11,7 +11,7 @@ module.exports = (initialData) ->
         ComponentsActionCreators.receiveAllComponents(data)
 
       when 'services'
-        ServicesActionCreators.receiveAllServices(data)
+        ServicesActionCreators.receive(data)
 
       when 'installedComponents'
         InstalledComponentsActionCreators.receiveAllComponents(data)
