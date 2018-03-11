@@ -7,8 +7,8 @@ ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
-api = require '../../TransformationsApiAdapter'
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
+SqlDepAnalyzerApi = require '../../../sqldep-analyzer/Api'
 
 {div, p, a, strong, code, span, i} = React.DOM
 
@@ -34,15 +34,12 @@ SqlDepModal = React.createClass
       @setState
         isLoading: true
       component = @
-      api
-      .getSqlDep(
-        configBucketId: @props.bucketId
-        transformations: [@props.transformationId]
-      )
+      SqlDepAnalyzerApi
+      .getGraph(@props.bucketId, @props.transformationId)
       .then((response) ->
         component.setState
           isLoading: false
-          sqlDepUrl: response.url
+          sqlDepUrl: response.get('url')
       )
 
   betaWarning: ->
