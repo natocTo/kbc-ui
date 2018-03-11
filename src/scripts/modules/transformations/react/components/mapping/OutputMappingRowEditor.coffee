@@ -72,7 +72,11 @@ module.exports = React.createClass
 
 
   _handleChangeIncremental: (e) ->
-    value = @props.value.set("incremental", e.target.checked)
+    value = @props.value
+      .set("incremental", e.target.checked)
+      .set("deleteWhereColumn", "")
+      .set("deleteWhereOperator", "")
+      .set("deleteWhereValues", Immutable.List())
     @props.onChange(value)
 
   _handleChangePrimaryKey: (newValue) ->
