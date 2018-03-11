@@ -220,7 +220,7 @@ module.exports = React.createClass
                     }
                   ).toJS()
 
-        if @state.showDetails
+        if @state.showDetails && (@props.value.get("incremental") || @props.value.get("deleteWhereColumn", "") != "")
           React.DOM.div {className: "row col-md-12"},
             React.DOM.div className: 'form-group form-group-sm',
               React.DOM.label className: 'col-xs-2 control-label', 'Delete rows'
