@@ -81,8 +81,12 @@ module.exports = React.createClass
     @props.onChange(value)
 
   _handleChangeDeleteWhereColumn: (newValue) ->
-    value = @props.value.set("delete_where_column", newValue.trim())
-    value = value.set("delete_where_operator", value.get("delete_where_operator", 'eq'))
+    deleteWhereOperator = @props.value.get("delete_where_operator", "")
+    if (deleteWhereOperator == "")
+      deleteWhereOperator = "eq"
+    value = @props.value
+      .set("delete_where_column", newValue.trim())
+      .set("delete_where_operator", deleteWhereOperator)
     @props.onChange(value)
 
   _handleChangeDeleteWhereOperator: (e) ->
