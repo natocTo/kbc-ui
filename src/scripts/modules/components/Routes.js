@@ -103,7 +103,7 @@ module.exports = {
       createComponentRoute('keboola.ex-db-oracle', [exDbGenericRoutes('keboola.ex-db-oracle')]),
       createComponentRoute('keboola.ex-db-snowflake', [exDbGenericRoutes('keboola.ex-db-snowflake')]),
       createComponentRoute('keboola.ex-db-impala', [exDbGenericRoutes('keboola.ex-db-impala')]),
-      createComponentRoute('keboola.ex-mongodb', [exMongoDbRoutes('keboola.ex-mongodb')]),
+      createComponentRoute('keboola.ex-mongodb', [exMongoDbRoutes]),
       createComponentRoute('keboola.ex-google-bigquery', [exGoogleBigqueryRoutes]),
       createComponentRoute('keboola.csv-import', [csvImportRoutes]),
       createComponentRoute('keboola.ex-s3', [exS3Routes]),
