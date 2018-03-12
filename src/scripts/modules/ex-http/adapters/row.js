@@ -51,10 +51,7 @@ export function createConfiguration(localState) {
 
   let config = Immutable.fromJS({
     parameters: {
-      bucket: localState.get('bucket', ''),
-      key: localState.get('key', '') + (localState.get('wildcard', false) ? '*' : ''),
-      includeSubfolders: localState.get('subfolders', false),
-      newFilesOnly: localState.get('newFilesOnly', false)
+      path: localState.get('path', '')
     },
     processors: {
       after: []
@@ -73,7 +70,6 @@ export function createConfiguration(localState) {
       },
       parameters: {
         direction: 'tables',
-        addCsvSuffix: true,
         folder: localState.get('name', '')
       }
     }
@@ -81,37 +77,10 @@ export function createConfiguration(localState) {
   if (flattenFoldersProcessor) {
     processors = processors.push(flattenFoldersProcessor);
   }
-
   processors = processors.push(createManifestProcessor);
 
   if (skipLinesProcessor) {
     processors = processors.push(skipLinesProcessor);
-  }
-
-  if (localState.get('addRowNumberColumn')) {
-    processors = processors.push(Immutable.fromJS(
-      {
-        definition: {
-          component: 'keboola.processor-add-row-number-column'
-        },
-        parameters: {
-          column_name: 's3_row_number'
-        }
-      }
-    ));
-  }
-
-  if (localState.get('addFilenameColumn')) {
-    processors = processors.push(Immutable.fromJS(
-      {
-        definition: {
-          component: 'keboola.processor-add-filename-column'
-        },
-        parameters: {
-          column_name: 's3_filename'
-        }
-      }
-    ));
   }
 
   config = config.setIn(['processors', 'after'], processors);
@@ -120,23 +89,13 @@ export function createConfiguration(localState) {
 }
 
 export function parseConfiguration(configuration) {
-  const key = configuration.getIn(['parameters', 'key'], '');
-  const isWildcard = key.slice(-1) === '*' ? true : false;
   const processorCreateManifest = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-create-manifest';
   }, null, Immutable.Map());
   const processorDecompress = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-decompress';
   });
-  const processorAddRowNumberColumn = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
-    return processor.getIn(['definition', 'component']) === 'keboola.processor-add-row-number-column' &&
-      processor.getIn(['parameters', 'column_name']) === 's3_row_number';
-  });
-  const processorAddFilenameColumn = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
-    return processor.getIn(['definition', 'component']) === 'keboola.processor-add-filename-column' &&
-      processor.getIn(['parameters', 'column_name']) === 's3_filename';
-  });
-  const processorMoveFiles = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
+  const moveFilesProcessor = configuration.getIn(['processors', 'after'], Immutable.List()).find(function(processor) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
   }, null, Immutable.Map());
 
@@ -146,24 +105,19 @@ export function parseConfiguration(configuration) {
   }
 
   return Immutable.fromJS({
-    bucket: configuration.getIn(['parameters', 'bucket'], ''),
-    key: isWildcard ? key.substring(0, key.length - 1) : key,
-    name: processorMoveFiles.getIn(['parameters', 'folder'], ''),
-    wildcard: isWildcard,
-    subfolders: configuration.getIn(['parameters', 'includeSubfolders'], false),
+    path: configuration.getIn(['parameters', 'path'], ''),
+    name: moveFilesProcessor.getIn(['parameters', 'folder'], ''),
     incremental: processorCreateManifest.getIn(['parameters', 'incremental'], false),
-    newFilesOnly: configuration.getIn(['parameters', 'newFilesOnly'], false),
     primaryKey: processorCreateManifest.getIn(['parameters', 'primary_key'], Immutable.List()).toJS(),
     delimiter: processorCreateManifest.getIn(['parameters', 'delimiter'], ','),
     enclosure: processorCreateManifest.getIn(['parameters', 'enclosure'], '"'),
     columns: processorCreateManifest.getIn(['parameters', 'columns'], Immutable.List()).toJS(),
     columnsFrom: columnsFrom,
-    decompress: processorDecompress ? true : false,
-    addRowNumberColumn: processorAddRowNumberColumn ? true : false,
-    addFilenameColumn: processorAddFilenameColumn ? true : false
+    decompress: processorDecompress ? true : false
   });
 }
 
 export function createEmptyConfiguration(name, webalizedName) {
   return createConfiguration(Immutable.fromJS({name: webalizedName}));
 }
+
