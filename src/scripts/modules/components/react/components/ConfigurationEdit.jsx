@@ -62,6 +62,7 @@ export default React.createClass({
         value={Immutable.fromJS(JSON.parse(this.props.data))}
         onChange={this.handleParamsChange}
         readOnly={this.props.isSaving}
+        isChanged={this.props.isChanged}
         disableCollapse={true}
         disableProperties={true}
       />
@@ -96,7 +97,9 @@ export default React.createClass({
   },
 
   handleParamsChange(value) {
-    this.props.onChange(JSON.stringify(value));
+    if (!value.equals(Immutable.fromJS(JSON.parse(this.props.data)))) {
+      this.props.onChange(JSON.stringify(value));
+    }
   },
 
   handleSave() {
