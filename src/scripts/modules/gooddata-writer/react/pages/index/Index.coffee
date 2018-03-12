@@ -204,10 +204,9 @@ module.exports = React.createClass
                   React.createElement Confirm,
                     title: 'Optimize SLI hash'
                     text: div null,
-                      p null, 'Optimizing SLI hashes is partially disabled since this is an advanced
+                      p null, 'Optimizing SLI hashes is an advanced
                       process which might damage your GD project.
-                      We insist on consulting with us before taking any further steps. '
-                      p null, 'Please contact us on: support@keboola.com'
+                      Proceed with caution. '
                     buttonLabel: 'Optimize'
                     buttonType: 'primary'
                     onConfirm: @_handleOptimizeSLI
