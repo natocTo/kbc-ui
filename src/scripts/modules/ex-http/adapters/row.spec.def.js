@@ -8,7 +8,7 @@ export const cases = {
       delimiter: ',',
       enclosure: '"',
       columns: [],
-      columnsFrom: 'manual',
+      columnsFrom: 'header',
       decompress: false
     },
     configuration: {
@@ -35,7 +35,16 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
+              columns_from: 'header',
               columns: []
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-skip-lines'
+            },
+            parameters: {
+              lines: 1
             }
           }
         ]
@@ -93,7 +102,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false
     },
@@ -121,7 +130,7 @@ export const cases = {
               enclosure: '"',
               incremental: true,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -133,10 +142,10 @@ export const cases = {
       path: 'mykey',
       name: 'mytable',
       incremental: false,
-      primaryKey: ['col'],
+      primaryKey: ['col1'],
       delimiter: ',',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false
     },
@@ -163,8 +172,8 @@ export const cases = {
               delimiter: ',',
               enclosure: '"',
               incremental: false,
-              primary_key: ['col'],
-              columns: []
+              primary_key: ['col1'],
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -179,7 +188,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ';',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false
     },
@@ -207,7 +216,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -222,7 +231,7 @@ export const cases = {
       primaryKey: [],
       delimiter: '\t',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false
     },
@@ -250,7 +259,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -265,7 +274,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ',',
       enclosure: '\'',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false
     },
@@ -293,7 +302,7 @@ export const cases = {
               enclosure: '\'',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
