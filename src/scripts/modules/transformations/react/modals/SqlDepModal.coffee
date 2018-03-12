@@ -7,7 +7,6 @@ ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
-Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 SqlDepAnalyzerApi = require '../../../sqldep-analyzer/Api'
 
 {div, p, a, strong, code, span, i} = React.DOM
@@ -17,7 +16,7 @@ SqlDepModal = React.createClass
   displayName: 'SqlDepModal'
 
   getInitialState: ->
-    isLoading: true
+    isLoading: false
     sqlDepUrl: null
     showModal: false
 
@@ -25,22 +24,23 @@ SqlDepModal = React.createClass
     @setState
       showModal: false
       isLoading: false
+      sqlDepUrl: null
+
+  onAnalyze: ->
+    @setState
+      isLoading: true
+    component = @
+    SqlDepAnalyzerApi
+    .getGraph(@props.bucketId, @props.transformationId)
+    .then((response) ->
+      component.setState
+        isLoading: false
+        sqlDepUrl: response.get('url')
+    )
 
   open: ->
     @setState
       showModal: true
-
-    if (@props.backend == 'redshift' || @props.backend == 'snowflake')
-      @setState
-        isLoading: true
-      component = @
-      SqlDepAnalyzerApi
-      .getGraph(@props.bucketId, @props.transformationId)
-      .then((response) ->
-        component.setState
-          isLoading: false
-          sqlDepUrl: response.get('url')
-      )
 
   betaWarning: ->
     if (@props.backend == 'snowflake')
@@ -60,7 +60,7 @@ SqlDepModal = React.createClass
       ,
         ModalHeader closeButton: true,
           ModalTitle null,
-            'SQLDep'
+            'SQLdep'
 
         ModalBody null,
           @_renderBody()
@@ -72,33 +72,44 @@ SqlDepModal = React.createClass
               bsStyle: 'link'
             ,
               'Close'
+            Button
+              disabled: @state.isLoading || !!@state.sqlDepUrl
+              onClick: @onAnalyze
+              className: 'btn-primary'
+            ,
+              if @state.isLoading
+                'Running'
+              else
+                'Run'
+
 
   handleOpenButtonClick: (e) ->
     e.preventDefault()
     @open()
 
+  renderSqlDepUrl: ->
+    if @state.sqlDepUrl
+      span {},
+        p {},
+          'SQLdep is ready at '
+          a {href: @state.sqlDepUrl, target: '_blank'},
+            @state.sqlDepUrl
+          '.'
+
   _renderBody: ->
     if @props.backend == 'redshift' || @props.backend == 'snowflake'
-      if @state.isLoading
+      span null,
         p null,
-          Loader {}
-          ' '
-          'Loading SQLdep data. This may take a minute or two...'
-      else if !@state.isLoading
-        span {},
-          p {},
-            'SQLdep is ready. '
-            a {href: @state.sqlDepUrl, target: '_blank'},
-              'Open SQLDep '
-              i className: 'fa fa-external-link'
+          'Visual SQL analysis will send the SQL queries and table details to '
+          a href: 'https://sqldep.com/',
+            'SQLdep API'
+          '. Although the URL will be only available here, the result is not secured any further.'
+        @renderSqlDepUrl()
+
     else
       [
         p {},
-          'Visual SQL analysis is available for Redshift transformations only. ',
-        p {},
-          'Contact '
-          a {href: 'mailto:support@keboola.com'}, 'support@keboola.com'
-          ' for more information.'
+          'Visual SQL analysis is available for Redshift and Snowflake transformations only.'
       ]
 
   _handleConfirm: ->
