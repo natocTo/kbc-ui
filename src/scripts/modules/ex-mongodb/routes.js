@@ -15,7 +15,6 @@ import * as VersionsActionsCreators from '../components/VersionsActionCreators';
 import { createTablesRoute } from '../table-browser/routes';
 import * as storeProvisioning from './storeProvisioning';
 import * as credentialsTemplate from '../ex-db-generic/templates/credentials';
-import hasSshTunnel from '../ex-db-generic/templates/hasSshTunnel';
 
 const componentId = 'keboola.ex-mongodb';
 
@@ -84,7 +83,7 @@ export default {
       title: function() {
         return 'Credentials';
       },
-      handler: ExDbCredentialsPage(componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, hasSshTunnel)
+      handler: ExDbCredentialsPage(componentId, actionsProvisioning, storeProvisioning, credentialsTemplate, true)
     }
   ]
 };
