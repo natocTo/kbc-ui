@@ -8,7 +8,7 @@ import ExDbQueryDetail from './react/pages/query-detail/QueryDetail';
 import ExDbNewQuery from './react/pages/new-query/NewQuery';
 import ExDbNewQueryHeaderButtons from './react/components/NewQueryHeaderButtons';
 import ExDbQueryHeaderButtons from '../ex-db-generic/react/components/QueryActionButtons';
-import ExDbQueryName from '../ex-db-generic/react/components/QueryName';
+import ExDbQueryName from './react/components/QueryName';
 import JobsActionCreators from '../jobs/ActionCreators';
 import StorageActionCreators from '../components/StorageActionCreators';
 import * as VersionsActionsCreators from '../components/VersionsActionCreators';
@@ -16,7 +16,9 @@ import { createTablesRoute } from '../table-browser/routes';
 import * as storeProvisioning from './storeProvisioning';
 import * as credentialsTemplate from '../ex-db-generic/templates/credentials';
 
-const componentId = 'keboola.ex-mongodb';
+import { COMPONENT_ID } from './constants';
+
+const componentId = COMPONENT_ID;
 
 export default {
   name: componentId,
@@ -51,7 +53,7 @@ export default {
         return 'Query ' + ExDbStore.getConfigQuery(parseInt(queryId, 10)).get('name');
       },
       nameEdit: function(params) {
-        return React.createElement(ExDbQueryName(componentId, storeProvisioning), {
+        return React.createElement(ExDbQueryName(storeProvisioning), {
           configId: params.config,
           queryId: parseInt(params.query, 10)
         });
