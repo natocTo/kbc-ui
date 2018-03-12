@@ -69,7 +69,11 @@ module.exports = React.createClass
 
 
   _handleChangeIncremental: (e) ->
-    value = @props.value.set("incremental", e.target.checked)
+    value = @props.value
+      .set("incremental", e.target.checked)
+      .set("delete_where_column", "")
+      .set("delete_where_operator", "")
+      .set("delete_where_values", Immutable.List())
     @props.onChange(value)
 
   _handleChangePrimaryKey: (newValue) ->
@@ -77,8 +81,12 @@ module.exports = React.createClass
     @props.onChange(value)
 
   _handleChangeDeleteWhereColumn: (newValue) ->
-    value = @props.value.set("delete_where_column", newValue.trim())
-    value = value.set("delete_where_operator", value.get("delete_where_operator", 'eq'))
+    deleteWhereOperator = @props.value.get("delete_where_operator", "")
+    if (deleteWhereOperator == "")
+      deleteWhereOperator = "eq"
+    value = @props.value
+      .set("delete_where_column", newValue.trim())
+      .set("delete_where_operator", deleteWhereOperator)
     @props.onChange(value)
 
   _handleChangeDeleteWhereOperator: (e) ->
@@ -198,7 +206,7 @@ module.exports = React.createClass
                     }
                   ).toJS()
 
-        if @state.showDetails
+        if @state.showDetails && (@props.value.get("incremental") || @props.value.get("deleteWhereColumn", "") != "")
           React.DOM.div {className: "row col-md-12"},
             React.DOM.div className: 'form-group form-group-sm',
               React.DOM.label className: 'col-xs-2 control-label', 'Delete rows'
