@@ -40,7 +40,7 @@ export default React.createClass({
       isChanged: InstalledComponentStore.isChangedRawConfigData(componentId, configId),
       isSaving: InstalledComponentStore.isSavingConfigData(componentId, configId),
 
-      editingConfigData: InstalledComponentStore.getEditingRawConfigData(componentId, configId, '{}'),
+      editingConfigData: InstalledComponentStore.getEditingRawConfigData(componentId, configId),
       isValidEditingConfigData: InstalledComponentStore.isValidEditingConfigData(componentId, configId),
       token: token
     };
@@ -72,7 +72,7 @@ export default React.createClass({
             <div classNmae="col-xs-4">
               {this.renderConfigurationHint()}
               <Configuration
-                data={this.getConfigData()}
+                data={this.state.editingConfigData}
                 isSaving={this.state.isSaving}
                 onEditCancel={this.onEditCancel}
                 onEditChange={this.onEditChange}
@@ -152,16 +152,6 @@ export default React.createClass({
 
   runParams() {
     return () => ({config: this.state.config.get('id')});
-  },
-
-  getConfigData() {
-    return this.state.editingConfigData || JSON.stringify(this.state.configData.toJSON(), null, '  ');
-
-    /* if (this.state.isEditing) {
-     *   return this.state.editingConfigData;
-     * } else {
-     *   return JSON.stringify(this.state.configData.toJSON(), null, '  ');
-     * }*/
   },
 
   /* onEditStart() {
