@@ -54,27 +54,22 @@ export function createStore(componentId, configId) {
       const hasSSH = hasSshTunnel(componentId);
       const fields = templateFields.getFields(componentId);
       const validGeneralCreds = _.reduce(fields, (memo, field) => {
-        const propName = field[1];
-        // const type = field[2];
-        let value = credentials.get(propName, '');
+        let value = credentials.get(field.name, '');
         if (value) {
           value = value.toString();
         }
-        const isProtected = templateFields.getProtectedProperties(componentId).indexOf(propName) > -1;
-        const isRequired = templateFields.getRequiredProperties(componentId).indexOf(propName) > -1;
-        const alreadySaved = !_.isEmpty(configCredentials.get(propName));
-        const isValueValid = !isRequired || !_.isEmpty(value) || (isProtected && alreadySaved);
+        const alreadySaved = !_.isEmpty(configCredentials.get(field.name));
+        const isValueValid = !field.required || !_.isEmpty(value) || (field.protected && alreadySaved);
         return memo && isValueValid;
       }, true);
       const ssh = credentials.get('ssh', Map());
       const sshFields = [
-        ['sshHost', 'text'],
-        ['user', 'text'],
-        ['sshPort', 'number']
+        {'name': 'sshHost', 'type': 'text'},
+        {'name': 'user', 'type': 'text'},
+        {'name': 'sshPort', 'type': 'number'}
       ];
       const isValidSSH = _.reduce(sshFields, (memo, field) => {
-        const propName = field[0];
-        let value = ssh.get(propName, '');
+        let value = ssh.get(field.name, '');
         if (value) {
           value = value.toString();
         }
