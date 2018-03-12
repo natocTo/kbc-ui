@@ -233,7 +233,6 @@ InstalledComponentsStore = StoreUtils.createStore
   isChangedTemplatedConfig: (componentId, configId) ->
     pathValues = ['templatedConfigValuesEditingValues',
     'templatedConfigValuesEditingString',
-    'templatedConfigEditingString',
     'templatedConfigEditing']
     isChanged = pathValues.reduce((memo, path) ->
       memo || _store.hasIn([path, componentId, configId], false)
@@ -928,28 +927,10 @@ Dispatcher.register (payload) ->
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_STRING_TOGGLE
       componentId = action.componentId
-      confgiId = action.configId
+      configId = action.configId
 
       if action.isStringEditingMode
-
-        # params on the first place
-        mergedConfig = InstalledComponentsStore.getTemplatedConfigEditingValueParams(componentId, configId)
-
-        # merge the template
-        editingTemplate = InstalledComponentsStore.getTemplatedConfigEditingValueTemplate(componentId, configId)
-        mergedConfig = mergedConfig.merge(
-          editingTemplate.get('data', Map())
-        )
-        _store = _store.withMutations (store) ->
-          store = store.setIn(
-            ["templatedConfigValuesEditingString", action.componentId, action.configId],
-            JSON.stringify(
-              mergedConfig.toJS(),
-              null,
-              2
-            )
-          )
-          store = store.setIn(["templatedConfigEditingString", action.componentId, action.configId], true)
+        _store = _store.setIn(["templatedConfigEditingString", componentId, configId], true)
       else
         _store = _store.deleteIn(["templatedConfigValuesEditingString", action.componentId, action.configId])
           .deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
