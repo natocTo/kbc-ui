@@ -2,6 +2,7 @@ import * as storeProvisioning from './storeProvisioning';
 import {List, fromJS} from 'immutable';
 import RoutesStore from '../../stores/RoutesStore';
 
+import configRowActions from '../configurations/ConfigurationRowsActionCreators';
 import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 
@@ -48,10 +49,14 @@ export function componentSupportsSimpleSetup(componentId) {
     'keboola.ex-db-db2',
     'keboola.ex-db-pgsql'
   ];
-  if (supportedComponents.indexOf(componentId) > -1) {
-    return true;
-  }
-  return false;
+  return supportedComponents.indexOf(componentId) > -1;
+}
+
+export function componentSupportsConfigRows(componentId) {
+  const supoortedComponents = [
+    'keboola.ex-db-mysql'
+  ];
+  return supoortedComponents.indexOf(componentId) > -1;
 }
 
 export function createActions(componentId) {
@@ -82,6 +87,11 @@ export function createActions(componentId) {
     updateLocalState(configId, waitingPath, true);
     return componentsActions.saveComponentConfigData(componentId, configId, data, changeDescription)
       .then(() => updateLocalState(configId, waitingPath, false));
+  }
+
+  function saveConfigRow(configId, rowId, data, waitingPath, changeDescription) {
+    updateLocalState(configId, waitingPath, true);
+    return configRowActions.saveConfiguration(componentId, configId, rowId, data, changeDescription);
   }
 
   function getLocalState(configId) {
@@ -306,25 +316,30 @@ export function createActions(componentId) {
       }
       newQuery = newQuery.delete('advancedMode');
       newQuery = this.checkTableName(newQuery, store);
-      var newQueries, diffMsg;
-      if (store.getQueries().find((q) => q.get('id') === newQuery.get('id') )) {
-        newQueries = store.getQueries().map((q) => q.get('id') === queryId ? newQuery : q);
-        diffMsg = 'Edit query '  + newQuery.get('name');
-      } else {
-        newQueries = store.getQueries().push(newQuery);
-        diffMsg = 'Create query ' + newQuery.get('name');
-      }
-      const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
-      removeFromLocalState(configId, ['isDestinationEditing', queryId]);
 
-      saveConfigData(configId, newData, ['isSaving', queryId], diffMsg).then(() => {
-        removeFromLocalState(configId, ['editingQueries', queryId]);
-        removeFromLocalState(configId, ['isSaving', queryId]);
-        removeFromLocalState(configId, ['isChanged', queryId]);
-        if (store.isNewQuery(queryId)) {
-          removeFromLocalState(configId, ['newQueries', queryId]);
+      if (componentSupportsConfigRows(componentId)) {
+        saveConfigRow(configId, queryId, newQuery, ['isSaving', queryId], 'Saving row query');
+      } else {
+        var newQueries, diffMsg;
+        if (store.getQueries().find((q) => q.get('id') === newQuery.get('id') )) {
+          newQueries = store.getQueries().map((q) => q.get('id') === queryId ? newQuery : q);
+          diffMsg = 'Edit query '  + newQuery.get('name');
+        } else {
+          newQueries = store.getQueries().push(newQuery);
+          diffMsg = 'Create query ' + newQuery.get('name');
         }
-      });
+        const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
+        removeFromLocalState(configId, ['isDestinationEditing', queryId]);
+
+        saveConfigData(configId, newData, ['isSaving', queryId], diffMsg).then(() => {
+          removeFromLocalState(configId, ['editingQueries', queryId]);
+          removeFromLocalState(configId, ['isSaving', queryId]);
+          removeFromLocalState(configId, ['isChanged', queryId]);
+          if (store.isNewQuery(queryId)) {
+            removeFromLocalState(configId, ['newQueries', queryId]);
+          }
+        });
+      }
     },
 
     quickstart(configId, tableList) {
@@ -343,10 +358,18 @@ export function createActions(componentId) {
         return query;
       });
       const diffMsg = 'Quickstart config creation';
-      const newData = store.configData.setIn(['parameters', 'tables'], queries);
-      saveConfigData(configId, newData, ['quickstartSaving'], diffMsg).then(() => {
-        removeFromLocalState(configId, ['quickstartSaving']);
-      });
+      if (componentSupportsConfigRows(componentId)) {
+        queries.map(function(query) {
+          saveConfigRow(configId, query.id, query, ['quickstartSaving', query.id], diffMsg).then(() => {
+            removeFromLocalState(configId, ['quickstartSaving', query.id]);
+          });
+        });
+      } else {
+        const newData = store.configData.setIn(['parameters', 'tables'], queries);
+        saveConfigData(configId, newData, ['quickstartSaving'], diffMsg).then(() => {
+          removeFromLocalState(configId, ['quickstartSaving']);
+        });
+      }
     },
 
     getDefaultOutputTableId(configId, name) {
