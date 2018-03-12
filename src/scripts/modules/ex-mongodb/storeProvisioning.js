@@ -1,8 +1,7 @@
 import store from '../components/stores/InstalledComponentsStore';
 import {List, Map, fromJS} from 'immutable';
 import fuzzy from 'fuzzy';
-import * as templateFields from '../ex-db-generic/templates/credentials';
-import hasSshTunnel from '../ex-db-generic/templates/hasSshTunnel';
+import * as templateFields from './credentials';
 import _ from 'underscore';
 import string from '../../utils/string';
 import getDefaultPort from '../ex-db-generic/templates/defaultPorts';
@@ -72,7 +71,7 @@ export function createStore(componentId, configId) {
       if (!credentials) {
         return false;
       }
-      const hasSSH = hasSshTunnel(componentId);
+      const hasSSH = true;
       const fields = templateFields.getFields(componentId);
       const validGeneralCreds = _.reduce(fields, (memo, field) => {
         let value = credentials.get(field.name, '');

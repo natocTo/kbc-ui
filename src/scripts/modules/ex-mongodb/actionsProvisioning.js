@@ -5,7 +5,7 @@ import callDockerAction from '../components/DockerActionsApi';
 import RoutesStore from '../../stores/RoutesStore';
 
 import getDefaultPort from '../ex-db-generic/templates/defaultPorts';
-import {getProtectedProperties} from '../ex-db-generic/templates/credentials';
+import {getProtectedProperties} from './credentials';
 
 
 export function loadConfiguration(componentId, configId) {

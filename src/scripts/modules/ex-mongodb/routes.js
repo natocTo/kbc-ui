@@ -14,7 +14,7 @@ import StorageActionCreators from '../components/StorageActionCreators';
 import * as VersionsActionsCreators from '../components/VersionsActionCreators';
 import { createTablesRoute } from '../table-browser/routes';
 import * as storeProvisioning from './storeProvisioning';
-import * as credentialsTemplate from '../ex-db-generic/templates/credentials';
+import * as credentialsTemplate from './credentials';
 
 import { COMPONENT_ID } from './constants';
 
