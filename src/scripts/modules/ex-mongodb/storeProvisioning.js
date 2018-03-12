@@ -4,7 +4,7 @@ import fuzzy from 'fuzzy';
 import * as templateFields from './credentials';
 import _ from 'underscore';
 import string from '../../utils/string';
-import getDefaultPort from '../ex-db-generic/templates/defaultPorts';
+import getDefaultPort from './defaultPorts';
 
 const defaultSshPort = 22;
 

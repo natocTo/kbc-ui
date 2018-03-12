@@ -4,7 +4,7 @@ import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import RoutesStore from '../../stores/RoutesStore';
 
-import getDefaultPort from '../ex-db-generic/templates/defaultPorts';
+import getDefaultPort from './defaultPorts';
 import {getProtectedProperties} from './credentials';
 
 
