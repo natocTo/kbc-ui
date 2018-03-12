@@ -12,7 +12,7 @@ CronScheduler = require '../../../../react/common/CronScheduler'
 OrchestrationsApi = require '../../OrchestrationsApi'
 actionCreators = require '../../ActionCreators'
 
-{div, i, strong, form, input, label} = React.DOM
+{div, i, a, strong, form, input, label} = React.DOM
 
 module.exports = React.createClass
   displayName: 'Schedule'
@@ -29,7 +29,8 @@ module.exports = React.createClass
     @setState
       showModal: false
 
-  open: ->
+  open: (e) ->
+    e.preventDefault()
     @setState
       showModal: true
       crontabRecord: @props.crontabRecord || '0 0 * * *'
@@ -70,9 +71,9 @@ module.exports = React.createClass
                 onSave: @_handleSave
 
   renderOpenButton: ->
-    Button
+    a
       onClick: @open
-      bsStyle: 'link'
+      href: ''
     ,
       i className: 'fa fa-edit'
       ' Edit schedule'
