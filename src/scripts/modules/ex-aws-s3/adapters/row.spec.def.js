@@ -12,7 +12,7 @@ export const cases = {
       delimiter: ',',
       enclosure: '"',
       columns: [],
-      columnsFrom: 'manual',
+      columnsFrom: 'header',
       decompress: false,
       addRowNumberColumn: false,
       addFilenameColumn: false
@@ -45,7 +45,16 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: [],
+              columns_from: 'header'
+            }
+          },
+          {
+            definition: {
+              component: 'keboola.processor-skip-lines'
+            },
+            parameters: {
+              lines: 1
             }
           }
         ]
@@ -117,7 +126,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
@@ -151,7 +160,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -170,7 +179,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
@@ -204,7 +213,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -223,7 +232,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
@@ -257,7 +266,7 @@ export const cases = {
               enclosure: '"',
               incremental: true,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -276,7 +285,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ',',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
@@ -310,7 +319,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -329,7 +338,7 @@ export const cases = {
       primaryKey: ['col'],
       delimiter: ',',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
@@ -363,7 +372,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: ['col'],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -382,7 +391,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ';',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
@@ -416,7 +425,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -435,7 +444,7 @@ export const cases = {
       primaryKey: [],
       delimiter: '\t',
       enclosure: '"',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
@@ -469,7 +478,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -488,7 +497,7 @@ export const cases = {
       primaryKey: [],
       delimiter: ',',
       enclosure: '\'',
-      columns: [],
+      columns: ['col1', 'col2'],
       columnsFrom: 'manual',
       decompress: false,
       addRowNumberColumn: false,
@@ -522,7 +531,7 @@ export const cases = {
               enclosure: '\'',
               incremental: false,
               primary_key: [],
-              columns: []
+              columns: ['col1', 'col2']
             }
           }
         ]
@@ -913,7 +922,5 @@ export const cases = {
         ]
       }
     }
-
   }
-
 };

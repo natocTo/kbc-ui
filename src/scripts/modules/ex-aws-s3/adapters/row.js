@@ -17,11 +17,7 @@ export function createConfiguration(localState) {
     }
   });
 
-  if (localState.get('columnsFrom', 'manual') === 'manual') {
-    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns'], localState.get('columns', Immutable.List()));
-  } else if (localState.get('columnsFrom') === 'auto') {
-    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns_from'], 'auto');
-  } else if (localState.get('columnsFrom') === 'header') {
+  if (localState.get('columnsFrom', 'header') === 'header') {
     createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns_from'], 'header');
     skipLinesProcessor = Immutable.fromJS({
       definition: {
@@ -31,6 +27,10 @@ export function createConfiguration(localState) {
         lines: 1
       }
     });
+  } else if (localState.get('columnsFrom') === 'auto') {
+    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns_from'], 'auto');
+  } else if (localState.get('columnsFrom', 'manual') === 'manual') {
+    createManifestProcessor = createManifestProcessor.setIn(['parameters', 'columns'], localState.get('columns', Immutable.List()));
   }
 
   if (localState.get('decompress', false) === true) {
@@ -140,6 +140,11 @@ export function parseConfiguration(configuration) {
     return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
   }, null, Immutable.Map());
 
+  let columnsFrom = processorCreateManifest.getIn(['parameters', 'columns_from'], 'header');
+  if (processorCreateManifest.getIn(['parameters', 'columns'], Immutable.List()).count() > 0) {
+    columnsFrom = 'manual';
+  }
+
   return Immutable.fromJS({
     bucket: configuration.getIn(['parameters', 'bucket'], ''),
     key: isWildcard ? key.substring(0, key.length - 1) : key,
@@ -152,7 +157,7 @@ export function parseConfiguration(configuration) {
     delimiter: processorCreateManifest.getIn(['parameters', 'delimiter'], ','),
     enclosure: processorCreateManifest.getIn(['parameters', 'enclosure'], '"'),
     columns: processorCreateManifest.getIn(['parameters', 'columns'], Immutable.List()).toJS(),
-    columnsFrom: processorCreateManifest.getIn(['parameters', 'columns_from'], 'manual'),
+    columnsFrom: columnsFrom,
     decompress: processorDecompress ? true : false,
     addRowNumberColumn: processorAddRowNumberColumn ? true : false,
     addFilenameColumn: processorAddFilenameColumn ? true : false
