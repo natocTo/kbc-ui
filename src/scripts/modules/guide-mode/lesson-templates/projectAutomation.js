@@ -47,10 +47,9 @@ export default {
       'title': 'Configure Task',
       'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one.'
                 + `
-- Step 1: After clicking <span class="btn btn-success btn-sm">+ New task</span>, select your Snowflake extractor.
-- Step 2: Click <span class="btn btn-success btn-sm">+ New task</span> again. Then click <span class="btn btn-link btn-sm"> <i class="fa fa-chevron-left"></i> Back</span> on the right, and select your transformation from the list.
-- Step 3: Click <span class="btn btn-success btn-sm">+ New task</span>, then return to the list of your configurations one more time, and select your Tableau writer.
-<br>
+- Click <span class="btn btn-success btn-sm">+ New task</span>, select your Snowflake extractor, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
+- Click <span class="btn btn-success btn-sm">+ New task</span> again. Then click <span class="btn btn-link btn-sm"> <i class="fa fa-chevron-left"></i> Back</span> on the right side to go back to component listing. Select your Transformation from the list, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
+- Click <span class="btn btn-success btn-sm">+ New task</span> again. Then click <span class="btn btn-link btn-sm"> <i class="fa fa-chevron-left"></i> Back</span> on the right side to go back to component listing. Select your Tableau writer from the list, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
 
 Then click <span class="btn btn-success btn-sm">Save</span> in the upper right corner.
 
