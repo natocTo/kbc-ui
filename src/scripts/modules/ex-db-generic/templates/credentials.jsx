@@ -219,14 +219,3 @@ export function getProtectedProperties(componentId) {
   });
   return result;
 }
-
-// returns @array of properties that cannot be empty
-export function getRequiredProperties(componentId) {
-  let result = [];
-  getFields(componentId).forEach(function(f) {
-    if (f.required) {
-      result.push(f.name);
-    }
-  });
-  return result;
-}
