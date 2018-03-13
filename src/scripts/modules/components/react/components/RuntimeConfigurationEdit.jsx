@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-// import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import SaveButtons from '../../../../react/common/SaveButtons';
 

@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import Static from './RuntimeConfigurationStatic';
 import Edit from './RuntimeConfigurationEdit';
 
 /* global require */
@@ -8,22 +7,18 @@ require('codemirror/mode/javascript/javascript');
 export default React.createClass({
   propTypes: {
     data: PropTypes.object.isRequired,
-    isEditing: PropTypes.bool.isRequired,
     isChanged: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    onEditStart: PropTypes.func.isRequired,
     onEditCancel: PropTypes.func.isRequired,
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     headerText: PropTypes.string,
-    editLabel: PropTypes.string,
     saveLabel: PropTypes.string
   },
 
   getDefaultProps() {
     return {
       headerText: 'Runtime',
-      editLabel: 'Edit configuration',
       saveLabel: 'Save configuration'
     };
   },
@@ -38,28 +33,17 @@ export default React.createClass({
   },
 
   renderEditor() {
-    if (this.props.isEditing || true) {
-      return (
-        <Edit
-          data={this.props.data}
-          isSaving={this.props.isSaving}
-          isChanged={this.props.isChanged}
-          onSave={this.props.onEditSubmit}
-          onChange={this.props.onEditChange}
-          onCancel={this.props.onEditCancel}
-          saveLabel={this.props.saveLabel}
-        />
-      );
-    } else {
-      return (
-        <Static
-          data={this.props.data}
-          onEditStart={this.props.onEditStart}
-          editLabel={this.props.editLabel}
-        />
-      );
-    }
+    return (
+      <Edit
+        data={this.props.data}
+        isSaving={this.props.isSaving}
+        isChanged={this.props.isChanged}
+        onSave={this.props.onEditSubmit}
+        onChange={this.props.onEditChange}
+        onCancel={this.props.onEditCancel}
+        saveLabel={this.props.saveLabel}
+      />
+    );
   }
-
 
 });

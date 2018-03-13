@@ -88,9 +88,7 @@ export default React.createClass({
           <RuntimeConfiguration
             isChanged={this.state.localState.hasIn(['runtime', 'editing'])}
             data={this.getConfigDataRuntime()}
-            isEditing={this.state.localState.getIn(['runtime', 'isEditing'], false)}
             isSaving={this.state.localState.getIn(['runtime', 'saving'], false)}
-            onEditStart={this.onEditRuntimeStart}
             onEditCancel={this.onEditRuntimeCancel}
             onEditChange={this.onEditRuntimeChange}
             headerText="Runtime"
@@ -312,14 +310,6 @@ export default React.createClass({
   getConfigDataRuntime() {
     const savedData =  this.state.configData.get('runtime', Map());
     return this.state.localState.getIn(['runtime', 'editing'], savedData);
-  },
-
-  onEditRuntimeStart() {
-    const data = this.state.configData.get('runtime', Map());
-    let runtime = this.state.localState.get('runtime', Map());
-    runtime = runtime.set('editing', data);
-    runtime = runtime.set('isEditing', true);
-    this.updateLocalState(['runtime'], runtime);
   },
 
   onEditRuntimeCancel() {
