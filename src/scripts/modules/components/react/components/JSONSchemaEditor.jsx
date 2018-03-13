@@ -18,6 +18,12 @@ export default React.createClass({
     disableCollapse: PropTypes.bool
   },
 
+  getInitialState() {
+    return {
+      isFirstChange: true
+    };
+  },
+
   getDefaultProps() {
     return {
       readOnly: false,
@@ -93,11 +99,16 @@ export default React.createClass({
     );
     this.jsoneditor = jsoneditor;
     var props = this.props;
+    const self = this;
 
     // When the value of the editor changes, update the JSON output and TODO validation message
     jsoneditor.on('change', function() {
       var json = jsoneditor.getValue();
-      props.onChange(Immutable.fromJS(json));
+      if (!self.state.isFirstChange) {
+        props.onChange(Immutable.fromJS(json));
+      } else {
+        self.setState({isFirstChange: false});
+      }
     });
 
     if (nextReadOnly) {
