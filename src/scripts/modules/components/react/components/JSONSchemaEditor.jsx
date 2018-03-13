@@ -104,6 +104,7 @@ export default React.createClass({
     // When the value of the editor changes, update the JSON output and TODO validation message
     jsoneditor.on('change', function() {
       var json = jsoneditor.getValue();
+      // editor calls onChange after its init causing isChanged = true without any user input. This will prevent calling onChange after editors init
       if (!self.state.isFirstChange) {
         props.onChange(Immutable.fromJS(json));
       } else {

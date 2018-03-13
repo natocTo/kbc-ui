@@ -279,13 +279,6 @@ module.exports = {
       configId: configId
     });
   },
-  startEditComponentRawConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_START,
-      componentId: componentId,
-      configId: configId
-    });
-  },
   updateEditComponentRawConfigData: function(componentId, configId, newData) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_UPDATE,

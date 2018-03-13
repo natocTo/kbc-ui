@@ -36,7 +36,6 @@ export default React.createClass({
       configData: InstalledComponentStore.getConfigData(componentId, configId),
       config: InstalledComponentStore.getConfig(componentId, configId),
       latestJobs: LatestJobsStore.getJobs(componentId, configId),
-      isEditing: InstalledComponentStore.isEditingRawConfigData(componentId, configId),
       isChanged: InstalledComponentStore.isChangedRawConfigData(componentId, configId),
       isSaving: InstalledComponentStore.isSavingConfigData(componentId, configId),
 
@@ -153,10 +152,6 @@ export default React.createClass({
   runParams() {
     return () => ({config: this.state.config.get('id')});
   },
-
-  /* onEditStart() {
-   *   InstalledComponentsActionCreators.startEditComponentRawConfigData(this.state.componentId, this.state.config.get('id'));
-   * },*/
 
   onEditCancel() {
     InstalledComponentsActionCreators.cancelEditComponentRawConfigData(this.state.componentId, this.state.config.get('id'));
