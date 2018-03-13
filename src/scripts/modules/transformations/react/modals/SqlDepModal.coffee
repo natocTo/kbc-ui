@@ -35,7 +35,7 @@ SqlDepModal = React.createClass
     .then((response) ->
       component.setState
         isLoading: false
-        sqlDepUrl: response.get('url')
+        sqlDepUrl: response.url
     )
 
   open: ->
