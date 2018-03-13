@@ -79,12 +79,6 @@ var transformationsApi = {
     return createRequest('GET', path).promise().then(function(response) {
       return response.body;
     });
-  },
-
-  getSqlDep: function(configuration) {
-    return createRequest('POST', 'sqldep').send(configuration).promise().then(function(response) {
-      return response.body;
-    });
   }
 };
 
