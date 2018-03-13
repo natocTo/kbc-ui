@@ -175,8 +175,10 @@ InstalledComponentsStore = StoreUtils.createStore
     path = ['rawConfigDataEditing', componentId, configId]
     _store.getIn path, JSON.stringify(configData, null, ' ')
 
-  getEditingRawConfigDataParameters: (componentId, configId, defaultValue) ->
-    _store.getIn ['rawConfigDataParametersEditing', componentId, configId], defaultValue
+  getEditingRawConfigDataParameters: (componentId, configId) ->
+    configData = InstalledComponentsStore.getConfigDataParameters(componentId, configId)
+    savedParams = JSON.stringify(configData.toJSON(), null, '  ')
+    _store.getIn ['rawConfigDataParametersEditing', componentId, configId], savedParams
 
   getSavingConfigData: (componentId, configId) ->
     _store.getIn ['configDataSaving', componentId, configId]
