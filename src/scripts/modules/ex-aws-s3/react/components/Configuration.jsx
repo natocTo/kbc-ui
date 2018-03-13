@@ -6,15 +6,15 @@ import Select from '../../../../react/common/Select';
 
 const columnsFromOptions = [
   {
-    label: 'Set headers manually',
+    label: 'Set header manually',
     value: 'manual'
   },
   {
-    label: 'Read headers from the file(s) header',
+    label: 'Read header from the file(s) header',
     value: 'header'
   },
   {
-    label: 'Create headers automatically',
+    label: 'Create header automatically',
     value: 'auto'
   }
 ];
@@ -171,9 +171,9 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
           />
-        <h3>Headers &amp; Primary Key</h3>
+        <h3>Header &amp; Primary Key</h3>
         <div className="form-group">
-          <div className="col-xs-4 control-label">Read Headers</div>
+          <div className="col-xs-4 control-label">Read Header</div>
           <div className="col-xs-8">
             <Select
               name="columnsFrom"
@@ -198,7 +198,7 @@ export default React.createClass({
           </div>
         </div>
         <div className="form-group">
-          <div className="col-xs-4 control-label">Set Headers</div>
+          <div className="col-xs-4 control-label">Set Header</div>
           <div className="col-xs-8">
             <Select
               name="columns"
