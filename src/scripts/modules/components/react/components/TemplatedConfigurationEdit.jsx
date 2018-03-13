@@ -13,6 +13,7 @@ require('../../../../utils/codemirror/json-lint');
 export default React.createClass({
 
   propTypes: {
+    isTemplate: PropTypes.bool.isRequired,
     editingTemplate: PropTypes.object.isRequired,
     editingParams: PropTypes.object.isRequired,
     editingString: PropTypes.string.isRequired,
@@ -34,6 +35,12 @@ export default React.createClass({
   getDefaultProps() {
     return {
       saveLabel: 'Save configuration'
+    };
+  },
+
+  getInitialState() {
+    return {
+      showJsonEditor: this.props.isEditingString || !this.props.isTemplate
     };
   },
 
@@ -68,40 +75,52 @@ export default React.createClass({
               disabled={!this.props.isValid}
               onReset={this.props.onCancel} />
           </div>
-          {this.props.isEditingString ? (
-             <span>
-               <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
-               <p>JSON configuration uses <a href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</a> format.</p>
-               <CodeMirror
-                 ref="string"
-                 value={this.props.editingString}
-                 theme="solarized"
-                 lineNumbers={true}
-                 mode="application/json"
-                 lineWrapping={true}
-                 autofocus={true}
-                 onChange={this.handleStringChange}
-                 readOnly={this.props.isSaving ? 'nocursor' : false}
-                 lint={true}
-                 gutters={['CodeMirror-lint-markers']}
-                 placeholder="{}"
-               />
-             </span>
-          ) : (
-             <span>
-               <p className="kbc-template-editor-toggle"><a onClick={this.switchToJsonEditor}><small>Switch to JSON editor</small></a></p>
-               {this.renderJSONSchemaEditor()}
-               <h3>Template</h3>
-               <TemplateSelector
-                 templates={this.props.templates}
-                 value={this.props.editingTemplate}
-                 onChange={this.handleTemplateChange}
-                 readOnly={this.props.isSaving}
-               />
-             </span>
-          )}
+          {
+            this.state.showJsonEditor ?
+            this.renderJsonEditor() :
+            this.renderTemplatesEditor()
+          }
         </div>
       </div>
+    );
+  },
+
+  renderJsonEditor() {
+    return (
+      <span>
+        <p className="kbc-template-editor-toggle"><a onClick={this.switchToTemplateEditor}><small>Switch to templates</small></a></p>
+        <p>JSON configuration uses <a href="https://developers.keboola.com/extend/generic-extractor/">Generic extractor</a> format.</p>
+        <CodeMirror
+          ref="string"
+          value={this.props.editingString}
+          theme="solarized"
+          lineNumbers={true}
+          mode="application/json"
+          lineWrapping={true}
+          autofocus={true}
+          onChange={this.handleStringChange}
+          readOnly={this.props.isSaving ? 'nocursor' : false}
+          lint={true}
+          gutters={['CodeMirror-lint-markers']}
+          placeholder="{}"
+        />
+      </span>
+    );
+  },
+
+  renderTemplatesEditor() {
+    return (
+      <span>
+        <p className="kbc-template-editor-toggle"><a onClick={this.switchToJsonEditor}><small>Switch to JSON editor</small></a></p>
+        {this.renderJSONSchemaEditor()}
+        <h3>Template</h3>
+        <TemplateSelector
+          templates={this.props.templates}
+          value={this.props.editingTemplate}
+          onChange={this.handleTemplateChange}
+          readOnly={this.props.isSaving}
+        />
+      </span>
     );
   },
 
@@ -120,10 +139,12 @@ export default React.createClass({
   },
 
   switchToJsonEditor() {
+    this.setState({showJsonEditor: true});
     this.props.onChangeEditingMode(true);
   },
 
   switchToTemplateEditor() {
+    this.setState({showJsonEditor: false});
     this.props.onChangeEditingMode(false);
   },
 

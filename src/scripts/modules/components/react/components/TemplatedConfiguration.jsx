@@ -21,6 +21,11 @@ export default React.createClass({
       componentId = RoutesStore.getCurrentRouteParam('component'),
       component = ComponentsStore.getComponent(componentId);
 
+    const isTemplate = TemplatesStore.isConfigTemplate(
+      componentId,
+      InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+    ) || InstalledComponentsStore.getTemplatedConfigValueWithoutUserParams(componentId, configId).isEmpty();
+
     return {
       componentId: componentId,
       configId: configId,
@@ -28,6 +33,7 @@ export default React.createClass({
       config: InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId),
       configSchema: component.get('configurationSchema'),
       configTemplates: TemplatesStore.getConfigTemplates(componentId),
+      isTemplate: isTemplate,
       isChanged: InstalledComponentsStore.isChangedTemplatedConfig(componentId, configId),
       isSaving: InstalledComponentsStore.isSavingConfigData(componentId, configId),
       isEditingString: InstalledComponentsStore.isTemplatedConfigEditingString(componentId, configId),
@@ -66,6 +72,7 @@ export default React.createClass({
   renderEditor() {
     return (
       <Edit
+        isTemplate={this.state.isTemplate}
         editingTemplate={this.state.editingTemplate}
         editingParams={this.state.editingParams}
         editingString={this.state.editingString}
