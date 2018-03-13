@@ -153,6 +153,7 @@ export default React.createClass({
   },
 
   onEditChangeEditingMode(isStringEditingMode) {
+    this.onEditCancel();
     InstalledComponentsActionCreators.toggleEditTemplatedComponentConfigDataString(this.state.componentId, this.state.configId, isStringEditingMode);
   },
 
