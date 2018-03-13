@@ -18,7 +18,7 @@ ActivateDeactivateButton = React.createFactory(require('../../../../../react/com
 {Confirm, Loader} = require '../../../../../react/common/common'
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
 
-SqlDepModal = React.createFactory(require './../../modals/SqlDepModal')
+SqlDepModal = React.createFactory(require('../../modals/SqlDepModal').default)
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
 
 sandboxUtils = require('../../../utils/sandboxUtils')
