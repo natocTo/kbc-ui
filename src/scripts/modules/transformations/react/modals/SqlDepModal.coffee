@@ -100,7 +100,7 @@ SqlDepModal = React.createClass
     if @props.backend == 'redshift' || @props.backend == 'snowflake'
       span null,
         p null,
-          'Visual SQL analysis will send the SQL queries and table details to '
+          'Visual SQL analysis will send the SQL queries (including comments) and table details to '
           a href: 'https://sqldep.com/',
             'SQLdep API'
           '. Although the URL will be only available here, the result is not secured any further.'
