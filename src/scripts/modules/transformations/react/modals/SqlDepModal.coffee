@@ -8,7 +8,6 @@ ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 SqlDepAnalyzerApi = require '../../../sqldep-analyzer/Api'
-TransformationsApi = require '../../TransformationsApiAdapter'
 
 {div, p, a, strong, code, span, i} = React.DOM
 
@@ -31,24 +30,12 @@ SqlDepModal = React.createClass
     @setState
       isLoading: true
     component = @
-    ###
     SqlDepAnalyzerApi
     .getGraph(@props.bucketId, @props.transformationId)
     .then((response) ->
       component.setState
         isLoading: false
         sqlDepUrl: response.get('url')
-    )
-    ###
-    TransformationsApi
-    .getSqlDep(
-      configBucketId: @props.bucketId
-      transformations: [@props.transformationId]
-    )
-    .then((response) ->
-      component.setState
-        isLoading: false
-        sqlDepUrl: response.url
     )
 
   open: ->
