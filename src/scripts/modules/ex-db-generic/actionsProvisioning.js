@@ -2,8 +2,11 @@ import * as storeProvisioning from './storeProvisioning';
 import {List, fromJS} from 'immutable';
 import RoutesStore from '../../stores/RoutesStore';
 
-import configRowActions from '../configurations/ConfigurationRowsActionCreators';
+import constants from '../components/Constants';
+import dispatcher from  '../../Dispatcher';
+import VersionActionCreators from '../components/VersionsActionCreators';
 import componentsActions from '../components/InstalledComponentsActionCreators';
+import installedComponentsApi from '../components/InstalledComponentsApi';
 import callDockerAction from '../components/DockerActionsApi';
 
 import getDefaultPort from './templates/defaultPorts';
@@ -59,6 +62,23 @@ export function componentSupportsConfigRows(componentId) {
   return supoortedComponents.indexOf(componentId) > -1;
 }
 
+export function updateConfigRow(componentId, configId, rowId, data, changeDescription) {
+  const dataToSavePrepared = {
+    configuration: JSON.stringify(data),
+    changeDescription: changeDescription
+  };
+  return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSavePrepared);
+}
+
+export function createConfigRow(componentId, configId, data, changeDescription) {
+  const dataToSavePrepared = {
+    configuration: JSON.stringify(data),
+    changeDescription: changeDescription
+  };
+  return installedComponentsApi.createConfigurationRow(componentId, configId, dataToSavePrepared);
+}
+
+
 export function createActions(componentId) {
   function resetProtectedProperties(credentials) {
     const props = List(getProtectedProperties(componentId));
@@ -91,7 +111,34 @@ export function createActions(componentId) {
 
   function saveConfigRow(configId, rowId, data, waitingPath, changeDescription) {
     updateLocalState(configId, waitingPath, true);
-    return configRowActions.saveConfiguration(componentId, configId, rowId, data, changeDescription);
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configId,
+      rowId: rowId,
+      field: 'configuration'
+    });
+    return createConfigRow(componentId, configId, data, changeDescription).then(function(response) {
+      VersionActionCreators.loadVersionsForce(componentId, configId);
+      return dispatcher.handleViewAction({
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS,
+        componentId: componentId,
+        configurationId: configId,
+        rowId: rowId,
+        field: 'configuration',
+        data: response
+      });
+    }).catch(function(e) {
+      dispatcher.handleViewAction({
+        type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_ERROR,
+        componentId: componentId,
+        configurationId: configId,
+        rowId: rowId,
+        field: 'configuration',
+        error: e
+      });
+      throw e;
+    });
   }
 
   function getLocalState(configId) {
@@ -361,7 +408,7 @@ export function createActions(componentId) {
       if (componentSupportsConfigRows(componentId)) {
         queries.map(function(query) {
           saveConfigRow(configId, query.id, query, ['quickstartSaving', query.id], diffMsg).then(() => {
-            removeFromLocalState(configId, ['quickstartSaving', query.id]);
+            removeFromLocalState(configId, ['quickstartSaving', query.get('id')]);
           });
         });
       } else {

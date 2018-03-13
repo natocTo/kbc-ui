@@ -6,6 +6,7 @@ import hasSshTunnel from './templates/hasSshTunnel';
 import _ from 'underscore';
 import string from '../../utils/string';
 import getDefaultPort from './templates/defaultPorts';
+import {componentSupportsConfigRows} from './actionsProvisioning';
 
 const defaultSshPort = 22;
 
@@ -19,6 +20,29 @@ export const connectionTestedPath = ['connection', 'tested'];
 
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
+  if (componentSupportsConfigRows(componentId)) {
+    const rows = store.getConfigRows(componentId, configId);
+    const queries = rows.map((row) => {
+      const rowConfig = row.get('configuration');
+      return Map({
+        id: row.get('id'),
+        name: row.get('name'),
+        enabled: row.get('enabled'),
+        outputTable: rowConfig.get('outputTable'),
+        query: rowConfig.get('query'),
+        table: rowConfig.get('table'),
+        columns: rowConfig.get('columns'),
+        primaryKey: rowConfig.get('primaryKey'),
+        incremental: rowConfig.get('incremental')
+      });
+    }).toList();
+    const setConfig = config.setIn(['parameters', 'tables'], queries);
+    return {
+      config: setConfig || Map(),
+      parameters: setConfig.get('parameters', Map()),
+      localState: store.getLocalState(componentId, configId) || Map()
+    };
+  }
   return {
     config: config || Map(),
     parameters: config.get('parameters', Map()),
