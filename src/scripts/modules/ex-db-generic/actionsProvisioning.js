@@ -141,6 +141,11 @@ export function createActions(componentId) {
     });
   }
 
+  function deleteConfigRow(configId, rowId, waitingPath, changeDescription) {
+    return componentsActions.deleteConfigurationRow(componentId, configId, rowId, changeDescription)
+      .then(() => updateLocalState(configId, waitingPath, false));
+  }
+
   function getLocalState(configId) {
     return getStore(configId).getLocalState();
   }
@@ -305,6 +310,9 @@ export function createActions(componentId) {
       const newQueries = store.getQueries().filter((q) => q.get('id') !== qid);
       const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       const diffMsg = 'Delete query ' + store.getQueryName(qid);
+      if (componentSupportsConfigRows(componentId)) {
+        return deleteConfigRow(configId, qid, ['pending', qid, 'deleteQuery'], diffMsg);
+      }
       return saveConfigData(configId, newData, ['pending', qid, 'deleteQuery'], diffMsg);
     },
 
