@@ -16,15 +16,12 @@ export default React.createClass({
     editingTemplate: PropTypes.object.isRequired,
     editingParams: PropTypes.object.isRequired,
     editingString: PropTypes.string.isRequired,
-
     templates: PropTypes.object.isRequired,
     paramsSchema: PropTypes.object.isRequired,
     isEditingString: PropTypes.bool.isRequired,
-
     isValid: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     isChanged: PropTypes.bool.isRequired,
-
     onChangeTemplate: PropTypes.func.isRequired,
     onChangeParams: PropTypes.func.isRequired,
     onChangeString: PropTypes.func.isRequired,

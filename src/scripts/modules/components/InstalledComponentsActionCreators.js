@@ -257,13 +257,6 @@ module.exports = {
       path: path
     });
   },
-  startEditComponentConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_EDIT_START,
-      componentId: componentId,
-      configId: configId
-    });
-  },
   updateEditComponentConfigData: function(componentId, configId, newData) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_EDIT_UPDATE,
@@ -695,13 +688,6 @@ module.exports = {
         error: e
       });
       throw e;
-    });
-  },
-  startEditTemplatedComponentConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_START,
-      componentId: componentId,
-      configId: configId
     });
   },
   cancelEditTemplatedComponentConfigData: function(componentId, configId) {
