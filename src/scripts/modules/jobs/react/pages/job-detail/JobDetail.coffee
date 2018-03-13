@@ -331,19 +331,18 @@ module.exports = React.createClass
           ComponentName {component: component}
 
   _renderLogRow: (job) ->
-    div {className: 'row'},
-      div {className: 'col-md-12'},
-        h2 null, 'Log'
-        Events
-          link:
-            to: 'jobDetail'
-            params:
-              jobId: @state.job.get('id')
-            query:
-              q: @state.query
+    div null,
+      h2 className: 'mx-4', 'Log'
+      Events
+        link:
+          to: 'jobDetail'
           params:
-            runId: job.get('runId')
-          autoReload: true
+            jobId: @state.job.get('id')
+          query:
+            q: @state.query
+        params:
+          runId: job.get('runId')
+        autoReload: true
 
   _isGoodDataWriter: ->
     getComponentId(@state.job) == 'gooddata-writer'

@@ -91,7 +91,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="mx-2">
+        <div className="mx-4">
           <SearchRow
             query={this.state.searchQuery}
             onSubmit={this._handleQueryChange}
