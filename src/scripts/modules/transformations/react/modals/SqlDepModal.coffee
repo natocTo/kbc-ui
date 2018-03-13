@@ -9,7 +9,7 @@ ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 SqlDepAnalyzerApi = require '../../../sqldep-analyzer/Api'
 
-{div, p, a, strong, code, span, i} = React.DOM
+{p, a, span, i} = React.DOM
 
 
 SqlDepModal = React.createClass
