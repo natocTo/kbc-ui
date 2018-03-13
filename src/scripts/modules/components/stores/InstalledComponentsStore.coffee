@@ -222,9 +222,6 @@ InstalledComponentsStore = StoreUtils.createStore
   isChangedRawConfigData: (componentId, configId) ->
     _store.hasIn ['rawConfigDataEditing', componentId, configId]
 
-  isEditingRawConfigDataParameters: (componentId, configId) ->
-    _store.hasIn ['rawConfigDataParametersEditing', componentId, configId]
-
   isChangedRawConfigDataParameters: (componentId, configId) ->
     _store.hasIn ['rawConfigDataParametersEditing', componentId, configId]
 
@@ -395,12 +392,6 @@ Dispatcher.register (payload) ->
     when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_CANCEL
       path = ['rawConfigDataEditing', action.componentId, action.configId]
       _store = _store.deleteIn path
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_EDIT_START
-      path = ['rawConfigDataParametersEditing', action.componentId, action.configId]
-      configData = InstalledComponentsStore.getConfigDataParameters(action.componentId, action.configId)
-      _store = _store.setIn path, JSON.stringify(configData, null, '  ')
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_EDIT_UPDATE

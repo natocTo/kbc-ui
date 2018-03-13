@@ -47,12 +47,10 @@ export default React.createClass({
       componentId: componentId,
       configId: configId,
       versions: VersionsStore.getVersions(componentId, configId),
-      configDataParameters: InstalledComponentStore.getConfigDataParameters(componentId, configId),
       configData: configData,
       editingConfigData: InstalledComponentStore.getEditingConfigDataObject(componentId, configId),
       config: InstalledComponentStore.getConfig(componentId, configId),
       latestJobs: LatestJobsStore.getJobs(componentId, configId),
-      isParametersEditing: InstalledComponentStore.isEditingRawConfigDataParameters(componentId, configId),
       isParametersChanged: InstalledComponentStore.isChangedRawConfigDataParameters(componentId, configId),
       isParametersSaving: InstalledComponentStore.isSavingConfigDataParameters(componentId, configId),
       editingConfigDataParameters: InstalledComponentStore.getEditingRawConfigDataParameters(componentId, configId, '{}'),
@@ -231,17 +229,14 @@ export default React.createClass({
               ) : (
                  <span>
                    <Configuration
-                     data={this.getConfigDataParameters()}
-                     isEditing={this.state.isParametersEditing}
+                     data={this.state.editingConfigDataParameters}
                      isChanged={this.state.isParametersChanged}
                      isSaving={this.state.isParametersSaving}
-                     onEditStart={this.onEditParametersStart}
                      onEditCancel={this.onEditParametersCancel}
                      onEditChange={this.onEditParametersChange}
                      onEditSubmit={this.onEditParametersSubmit}
                      isValid={this.state.isValidEditingConfigDataParameters}
                      headerText="Configuration"
-                     editLabel="Edit configuration"
                      saveLabel="Save configuration"
                      supportsEncryption={this.state.component.get('flags').includes('encrypt')}
                      schema={this.state.component.get('configurationSchema', Map())}
@@ -390,19 +385,6 @@ export default React.createClass({
 
   onEditProcessorsChange(newValue) {
     this.updateLocalState(['processors', 'editing'], newValue);
-  },
-
-
-  getConfigDataParameters() {
-    if (this.state.isParametersEditing) {
-      return this.state.editingConfigDataParameters;
-    } else {
-      return JSON.stringify(this.state.configDataParameters.toJSON(), null, '  ');
-    }
-  },
-
-  onEditParametersStart() {
-    InstalledComponentsActionCreators.startEditComponentRawConfigDataParameters(this.state.componentId, this.state.config.get('id'));
   },
 
   onEditParametersCancel() {
