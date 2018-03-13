@@ -815,5 +815,32 @@ module.exports = {
       });
       throw e;
     });
+  },
+  deleteConfigurationRow: function(componentId, configurationId, rowId, changeDescription) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    return installedComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription ? changeDescription : ('Row ' + rowId + ' deleted'))
+      .then(function() {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
   }
 };
