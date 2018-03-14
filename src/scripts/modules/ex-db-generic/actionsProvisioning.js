@@ -2,11 +2,7 @@ import * as storeProvisioning from './storeProvisioning';
 import {List, fromJS} from 'immutable';
 import RoutesStore from '../../stores/RoutesStore';
 
-import constants from '../components/Constants';
-import dispatcher from  '../../Dispatcher';
-import VersionActionCreators from '../components/VersionsActionCreators';
 import componentsActions from '../components/InstalledComponentsActionCreators';
-import installedComponentsApi from '../components/InstalledComponentsApi';
 import callDockerAction from '../components/DockerActionsApi';
 
 import getDefaultPort from './templates/defaultPorts';
@@ -62,23 +58,6 @@ export function componentSupportsConfigRows(componentId) {
   return supoortedComponents.indexOf(componentId) > -1;
 }
 
-export function updateConfigRow(componentId, configId, rowId, data, changeDescription) {
-  const dataToSavePrepared = {
-    configuration: JSON.stringify(data),
-    changeDescription: changeDescription
-  };
-  return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSavePrepared);
-}
-
-export function createConfigRow(componentId, configId, data, changeDescription) {
-  const dataToSavePrepared = {
-    configuration: JSON.stringify(data),
-    changeDescription: changeDescription
-  };
-  return installedComponentsApi.createConfigurationRow(componentId, configId, dataToSavePrepared);
-}
-
-
 export function createActions(componentId) {
   function resetProtectedProperties(credentials) {
     const props = List(getProtectedProperties(componentId));
@@ -109,36 +88,16 @@ export function createActions(componentId) {
       .then(() => updateLocalState(configId, waitingPath, false));
   }
 
-  function saveConfigRow(configId, rowId, data, waitingPath, changeDescription) {
+  function createConfigRow(configId, data, waitingPath, changeDescription) {
     updateLocalState(configId, waitingPath, true);
-    dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_START,
-      componentId: componentId,
-      configurationId: configId,
-      rowId: rowId,
-      field: 'configuration'
-    });
-    return createConfigRow(componentId, configId, data, changeDescription).then(function(response) {
-      VersionActionCreators.loadVersionsForce(componentId, configId);
-      return dispatcher.handleViewAction({
-        type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS,
-        componentId: componentId,
-        configurationId: configId,
-        rowId: rowId,
-        field: 'configuration',
-        data: response
-      });
-    }).catch(function(e) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_ERROR,
-        componentId: componentId,
-        configurationId: configId,
-        rowId: rowId,
-        field: 'configuration',
-        error: e
-      });
-      throw e;
-    });
+    return componentsActions.createConfigurationRow(componentId, configId, data, changeDescription)
+      .then(() => updateLocalState(configId, waitingPath, false));
+  }
+
+  function updateConfigRow(configId, rowId, data, waitingPath, changeDescription) {
+    updateLocalState(configId, waitingPath, true);
+    return componentsActions.updateConfigurationRow(componentId, configId, rowId, data, changeDescription)
+      .then(() => updateLocalState(configId, waitingPath, false));
   }
 
   function deleteConfigRow(configId, rowId, waitingPath, changeDescription) {
@@ -373,7 +332,7 @@ export function createActions(componentId) {
       newQuery = this.checkTableName(newQuery, store);
 
       if (componentSupportsConfigRows(componentId)) {
-        saveConfigRow(configId, queryId, newQuery, ['isSaving', queryId], 'Saving row query');
+        updateConfigRow(configId, queryId, newQuery, ['isSaving', queryId], 'Saving row query');
       } else {
         var newQueries, diffMsg;
         if (store.getQueries().find((q) => q.get('id') === newQuery.get('id') )) {
@@ -415,7 +374,12 @@ export function createActions(componentId) {
       const diffMsg = 'Quickstart config creation';
       if (componentSupportsConfigRows(componentId)) {
         queries.map(function(query) {
-          saveConfigRow(configId, query.id, query, ['quickstartSaving', query.id], diffMsg).then(() => {
+          const data = {
+            'rowId': query.get('id'),
+            'name': query.get('name'),
+            'configuration': JSON.stringify(query.toJS())
+          };
+          createConfigRow(configId, data, ['quickstartSaving', query.get('id')], diffMsg).then(() => {
             removeFromLocalState(configId, ['quickstartSaving', query.get('id')]);
           });
         });
