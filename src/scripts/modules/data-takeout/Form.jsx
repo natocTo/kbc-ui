@@ -84,7 +84,7 @@ export default React.createClass({
 
   regionOptions() {
     const regions = OrderedMap({
-      'us-east-1': 'US Standard (N. Virginia)',
+      'us-east-1': 'US East (N. Virginia)',
       'us-east-2': 'US East (Ohio)',
       'us-west-2': 'US West (Oregon)',
       'us-west-1': 'US West (N. California)',
