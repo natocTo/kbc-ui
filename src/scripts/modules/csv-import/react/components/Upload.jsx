@@ -57,10 +57,10 @@ export default React.createClass({
     if (this.props.isFileTooBig) {
       return (
         <div className="help-block">
-          <small>Upload time limit is 10 minutes. The CSV file is larger than 100MB, your upload may not be successful.
+          <small>The CSV file is larger than 100MB, your upload may not be successful.
             Please refer to <a
-              href="http://docs.keboola.apiary.io/#reference/tables/create-table-asynchronously/create-new-table-from-csv-file">documentation</a>
-            to perform a manual upload and import.
+              href="https://developers.keboola.com/integrate/storage/api/importer/">documentation</a>
+            {' '}to perform a manual import using command line or other tools.
           </small>
         </div>
       );

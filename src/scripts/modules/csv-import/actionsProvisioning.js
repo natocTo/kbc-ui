@@ -121,12 +121,12 @@ export default function(configId) {
 
     storageApi.prepareFileUpload(params).then(function(response) {
       var fileId = response.id;
-      // one retry, 10 minutes timeout
+      // no retries, no time limit
       const awsParams = {
         signatureVersion: 'v4',
-        maxRetries: 1,
+        maxRetries: 0,
         httpOptions: {
-          timeout: 10 * 60 * 1000
+          timeout: 0
         }
       };
       const s3params = {
