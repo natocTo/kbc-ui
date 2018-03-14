@@ -94,8 +94,8 @@ export default React.createClass({
         />
         <Input
           type="radio"
-          label="Retrieve results from dataset"
-          help="Retrieve crawler results from specified Apify dataset storage"
+          label="Retrieve items from dataset"
+          help="Retrieve items from specified Apify dataset"
           value="dataset"
         />
       </RadioGroup>
@@ -105,7 +105,7 @@ export default React.createClass({
   renderDatasetSettingsForm() {
     return (
       <div className="form-horizontal">
-        {this.renderInput('Dataset', 'datasetId', 'blablabla', 'Enter dataset id or dataset name')}
+        {this.renderInput('Dataset', 'datasetId', 'DatasetId or DatasetName of dataset you want to get items from', 'Enter dataset id or dataset name')}
       </div>
     );
   },
