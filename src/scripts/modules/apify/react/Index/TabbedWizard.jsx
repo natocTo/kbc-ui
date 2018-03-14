@@ -44,7 +44,7 @@ export default React.createClass({
             eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
             {this.renderActionForm()}
           </Tab>
-          {this.props.action === 'crawler' ?
+          {this.props.action === 'crawler' || this.props.action === 'dataset' ?
            <Tab title="Authentication" eventKey={AUTH_KEY}
              disabled={this.isTabDisabled(AUTH_KEY)}>
              {this.renderTokenForm()}
@@ -53,12 +53,24 @@ export default React.createClass({
           }
           <Tab title="Specification"
             eventKey={OPTIONS_KEY} disabled={this.isTabDisabled(OPTIONS_KEY)} >
-            {this.props.step === OPTIONS_KEY ? this.renderCrawlerSettingsForm() : null}
+            {this.props.step === OPTIONS_KEY ? this.renderOptionsContent() : null}
           </Tab>
         </Tabs>
 
       </span>
     );
+  },
+
+  renderOptionsContent() {
+    switch (this.props.action) {
+      case 'crawler':
+      case 'executionId':
+        return this.renderCrawlerSettingsForm();
+      case 'dataset':
+        return this.renderDatasetSettingsForm();
+      default:
+        return null;
+    }
   },
 
   renderActionForm() {
@@ -80,7 +92,21 @@ export default React.createClass({
           help="Retrieve results of a crawler run specified by executionId"
           value="executionId"
         />
+        <Input
+          type="radio"
+          label="Retrieve results from dataset"
+          help="Retrieve crawler results from specified Apify dataset storage"
+          value="dataset"
+        />
       </RadioGroup>
+    );
+  },
+
+  renderDatasetSettingsForm() {
+    return (
+      <div className="form-horizontal">
+        {this.renderInput('Dataset', 'datasetId', 'blablabla', 'Enter dataset id or dataset name')}
+      </div>
     );
   },
 
