@@ -72,6 +72,16 @@ export default React.createClass({
         .set('crawlerSettings', crawlerSettings)
         .delete('executionId');
     }
+    if (action === 'dataset') {
+      paramsToSave = Map({
+        actionType: 'getDatasetItems',
+        datasetId: paramsToSave.get('datasetId'),
+        '#token': paramsToSave.get('#token'),
+        'userId': paramsToSave.get('userId')
+      });
+    } else {
+      paramsToSave = paramsToSave.delete('actionType').delete('datasetId');
+    }
     this.props.onSave(paramsToSave.delete('action'), this.getInputTableId());
   },
 
@@ -103,7 +113,9 @@ export default React.createClass({
 
   getAction() {
     const params = this.parameters();
-    const action = params.get('action', !!params.get('executionId') ? 'executionId' : 'crawler');
+    const otherAction = params.get('actionType') === 'getDatasetItems' ? 'dataset' : 'crawler';
+    let action = params.get('action', !!params.get('executionId') ? 'executionId' : otherAction);
+
     return action;
   },
 
@@ -118,7 +130,12 @@ export default React.createClass({
     const hasCrawler = this.hasCrawler();
     const hasSettingsValid = this.isSettingsValid();
     const isCrawlerAction = this.getAction() === 'crawler';
+    const isDatasetAction = this.getAction() === 'dataset';
     const isLoadingCrawlers = this.localState(['crawlers', 'loading'], false);
+    const hasDataset = !!this.parameters().get('datasetId');
+    if (isDatasetAction) {
+      return !isLoadingCrawlers && hasAuth && hasDataset;
+    }
     if (isCrawlerAction) {
       return !isLoadingCrawlers && hasAuth && hasCrawler && hasSettingsValid;
     } else {
@@ -130,10 +147,11 @@ export default React.createClass({
     const currentStep = this.step();
     let nextStep = 0;
     const isCrawlerAction = this.getAction() === 'crawler';
+    const isDatasetAction = this.getAction() === 'dataset';
     switch (currentStep) {
       case CRAWLER_KEY:
         if (delta === 1) {
-          if (isCrawlerAction) {
+          if (isCrawlerAction || isDatasetAction) {
             nextStep = AUTH_KEY;
           } else {
             nextStep = OPTIONS_KEY;
@@ -149,7 +167,7 @@ export default React.createClass({
         break;
       case OPTIONS_KEY:
         if (delta === -1) {
-          if (isCrawlerAction) {
+          if (isCrawlerAction || isDatasetAction) {
             nextStep = AUTH_KEY;
           } else {
             nextStep = CRAWLER_KEY;
