@@ -23,18 +23,7 @@ function fetch(componentId, configId) {
   if (componentSupportsConfigRows(componentId)) {
     const rows = store.getConfigRows(componentId, configId);
     const queries = rows.map((row) => {
-      const rowConfig = row.get('configuration');
-      return Map({
-        id: row.get('id'),
-        name: row.get('name'),
-        enabled: row.get('enabled'),
-        outputTable: rowConfig.get('outputTable'),
-        query: rowConfig.get('query'),
-        table: rowConfig.get('table'),
-        columns: rowConfig.get('columns'),
-        primaryKey: rowConfig.get('primaryKey'),
-        incremental: rowConfig.get('incremental')
-      });
+      return queryFromRow(row);
     }).toList();
     const setConfig = config.setIn(['parameters', 'tables'], queries);
     return {
@@ -48,6 +37,24 @@ function fetch(componentId, configId) {
     parameters: config.get('parameters', Map()),
     localState: store.getLocalState(componentId, configId) || Map()
   };
+}
+
+function queryFromRow(row) {
+  const rowConfig = row.get('configuration');
+  let query = Map({
+    id: parseInt(row.get('id'), 10),
+    name: row.get('name'),
+    enabled: !row.get('isDisabled'),
+    outputTable: rowConfig.get('outputTable'),
+    table: rowConfig.get('table'),
+    columns: rowConfig.get('columns'),
+    primaryKey: rowConfig.get('primaryKey'),
+    incremental: rowConfig.get('incremental')
+  });
+  if (rowConfig.get('query')) {
+    query = query.set('query', rowConfig.get('query')).set('advancedMode', true);
+  }
+  return query;
 }
 
 function generateId(existingIds) {
