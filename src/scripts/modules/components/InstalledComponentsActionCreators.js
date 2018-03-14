@@ -773,6 +773,32 @@ module.exports = {
       field: field
     });
   },
+  createConfigurationRow: function(componentId, configurationId, data, changeDescription) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      data: data
+    });
+    return installedComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription)
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          data: response
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          error: e
+        });
+        throw e;
+      });
+  },
   saveConfigurationRowEdit: function(componentId, configurationId, rowId, field) {
     var calledFunction, data, newValue;
     dispatcher.handleViewAction({
@@ -823,7 +849,7 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-    return installedComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription ? changeDescription : ('Row ' + rowId + ' deleted'))
+    return installedComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
       .then(function() {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         dispatcher.handleViewAction({
