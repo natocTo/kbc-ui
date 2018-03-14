@@ -26,6 +26,7 @@ ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactiva
 FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
 IsDockerBasedFn = require('../../../templates/dockerProxyApi').default
 IncrementalSetupModal = React.createFactory(require('./IncrementalSetupModal').default)
+ThoughtSpotTypeInput = React.createFactory(require('./ThoughtSpotTypeInput').default)
 
 defaultDataTypes =
 ['INT','BIGINT',
@@ -128,6 +129,8 @@ templateFn = (componentId) ->
             @_renderTableFiltersRow()
           if isRenderIncremental
             @_renderPrimaryKey()
+          if componentId == 'keboola.wr-thoughtspot'
+            @_renderThoughSpotTypeInput()
 
         ColumnsEditor
           onToggleHideIgnored: (e) =>
@@ -204,15 +207,19 @@ templateFn = (componentId) ->
           onSave: (isIncremental, primaryKey, newMapping) =>
             @state.v2Actions.updateV2State('savingIncremental', true)
             finishSaving =  => @state.v2Actions.updateV2State('savingIncremental', false)
-            newExportInfo = exportInfo.set('primaryKey', primaryKey).set('incremental', isIncremental)
+            newExportInfo = exportInfo
+              .set('primaryKey', primaryKey)
+              .set('incremental', isIncremental)
+              .mergeDeep(@state.v2State.get('customFields'))
+
             @setV2TableInfo(newExportInfo).then =>
               if newMapping != tableMapping
                 @state.v2Actions.setTableMapping(newMapping).then(finishSaving)
               else
                 finishSaving()
+          customFields: [@_getCustomFields(componentId)]
 
   _renderPrimaryKey: ->
-    v2State = @state.v2State
     exportInfo = @state.v2ConfigTable
     primaryKey = exportInfo.get('primaryKey', List())
     p null,
@@ -225,6 +232,32 @@ templateFn = (componentId) ->
         disabled: !!@state.editingColumns
         onClick: @showIncrementalSetupModal
         primaryKey.join(', ') or 'N/A'
+        ' '
+        span className: 'kbc-icon-pencil'
+
+  _getCustomFields: (componentId) ->
+    if componentId == 'keboola.wr-thoughtspot'
+      return [@_thoughSpotTypeInput()]
+
+    return []
+
+  _thoughSpotTypeInput: ->
+    ThoughtSpotTypeInput
+      value: @state.v2State.getIn(['customFields', 'type'], @state.v2ConfigTable.get('type', 'standard'))
+      onChange: (value) => @state.v2Actions.updateV2State(['customFields', 'type'], value)
+
+  _renderThoughSpotTypeInput: ->
+    tableType = @state.v2ConfigTable.get('type')
+    p null,
+      strong className: 'col-sm-3',
+        'Table Type'
+      ' '
+      button
+        className: 'btn btn-link'
+        style: {'paddingTop': 0, 'paddingBottom': 0}
+        disabled: !!@state.editingColumns
+        onClick: @showIncrementalSetupModal
+        tableType.toUpperCase() or 'STANDARD'
         ' '
         span className: 'kbc-icon-pencil'
 

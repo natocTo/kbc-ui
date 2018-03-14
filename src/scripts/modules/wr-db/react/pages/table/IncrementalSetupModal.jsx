@@ -17,14 +17,17 @@ export default React.createClass({
     onSave: React.PropTypes.func.isRequired,
     onHide: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired
+    isSaving: React.PropTypes.bool.isRequired,
+    customFields: PropTypes.array,
+    customFieldsValues: PropTypes.object
   },
 
   getStateFromProps(props) {
     return {
       primaryKey: props.currentPK,
       mapping: props.currentMapping,
-      isIncremental: props.isIncremental
+      isIncremental: props.isIncremental,
+      customFieldsValues: props.customFieldsValues
     };
   },
 
@@ -35,6 +38,19 @@ export default React.createClass({
   componentWillReceiveProps(nextProps) {
     if (nextProps.isSaving) return;
     this.setState(this.getStateFromProps(nextProps));
+  },
+
+  renderCustomFields() {
+    if (!this.props.customFields) {
+      return null;
+    }
+    return this.props.customFields.map(field => {
+      return (
+        <div>
+          {field}
+        </div>
+      );
+    });
   },
 
   render() {
@@ -51,6 +67,7 @@ export default React.createClass({
         </Modal.Header>
         <Modal.Body>
           <div className="form form-horizontal">
+            {this.renderCustomFields()}
             <div className="form-group form-group-">
               <label className="control-label col-sm-3">
                 Load Type
@@ -125,7 +142,6 @@ export default React.createClass({
 
   renderPKSelector() {
     return (
-
       <div className="form-group form-group">
         <label htmlFor="title" className="col-sm-3 control-label">
           Destination Table <div>Primary Key</div>
@@ -151,13 +167,12 @@ export default React.createClass({
   },
 
   getColumns() {
-    const result = this.props.columns.map((key) => {
+    return this.props.columns.map((key) => {
       return {
         'label': key,
         'value': key
       };
     }).toList().toJS();
-    return result;
   },
 
   closeModal() {
@@ -165,9 +180,13 @@ export default React.createClass({
   },
 
   handleSave() {
-    let pkToSave = [];
-    pkToSave = this.state.primaryKey ? this.state.primaryKey.split(',') : [];
-    this.props.onSave(this.state.isIncremental, fromJS(pkToSave), this.state.mapping).then(() =>
+    let pkToSave = this.state.primaryKey ? this.state.primaryKey.split(',') : [];
+    this.props.onSave(
+      this.state.isIncremental,
+      fromJS(pkToSave),
+      this.state.mapping,
+      this.state.customFieldsValues
+    ).then(() =>
       this.closeModal()
     );
   }
