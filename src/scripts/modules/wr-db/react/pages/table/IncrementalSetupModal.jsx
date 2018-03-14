@@ -18,16 +18,14 @@ export default React.createClass({
     onHide: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     isSaving: React.PropTypes.bool.isRequired,
-    customFields: PropTypes.array,
-    customFieldsValues: PropTypes.object
+    customFields: PropTypes.array
   },
 
   getStateFromProps(props) {
     return {
       primaryKey: props.currentPK,
       mapping: props.currentMapping,
-      isIncremental: props.isIncremental,
-      customFieldsValues: props.customFieldsValues
+      isIncremental: props.isIncremental
     };
   },
 
@@ -181,12 +179,7 @@ export default React.createClass({
 
   handleSave() {
     let pkToSave = this.state.primaryKey ? this.state.primaryKey.split(',') : [];
-    this.props.onSave(
-      this.state.isIncremental,
-      fromJS(pkToSave),
-      this.state.mapping,
-      this.state.customFieldsValues
-    ).then(() =>
+    this.props.onSave(this.state.isIncremental, fromJS(pkToSave), this.state.mapping).then(() =>
       this.closeModal()
     );
   }
