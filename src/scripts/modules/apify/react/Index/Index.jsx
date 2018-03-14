@@ -111,7 +111,7 @@ export default React.createClass({
   isConfigured() {
     const params = this.state.store.parameters;
     const hasAuth = (!!params.get('userId') && !!params.get('#token')) || !!params.get('executionId');
-    const hasCrawler = !!params.get('crawlerId') || !!params.get('executionId');
+    const hasCrawler = !!params.get('crawlerId') || !!params.get('executionId') || (params.get('actionType') === 'getDatasetItems' && params.get('datasetId'));
     return hasAuth && hasCrawler;
   },
 
@@ -163,6 +163,7 @@ export default React.createClass({
     const resultsTable = <p className="form-control-static"><SapiTableLinkEx tableId={tableId} /></p>;
     const executionId = parameters.get('executionId');
     const inputTableId = this.state.inputTableId;
+    const isGetDatasetAction = parameters.get('actionType') === 'getDatasetItems';
     const inputTableElement = (
       <p className="form-control-static">
         {inputTableId ?
@@ -171,18 +172,34 @@ export default React.createClass({
         }
       </p>
     );
+
+    const crawlerFormGroup = (
+      <span>
+        {this.renderStaticFormGroup('User ID', user)}
+        {this.renderStaticFormGroup('Crawler', crawler)}
+        {this.renderStaticFormGroup('Input Table', inputTableElement)}
+        {this.renderStaticFormGroup('Crawler Settings', settings)}
+      </span>
+    );
+
+    let resultForm = crawlerFormGroup;
+
+    if (isGetDatasetAction) {
+      resultForm = (
+        <span>
+          {this.renderStaticFormGroup('User ID', user)}
+          {this.renderStaticFormGroup('Dataset', <p className="form-control-static">{parameters.get('datasetId')}</p>)}
+        </span>
+          );
+    }
+
+    if (!!executionId) {
+      resultForm = this.renderStaticFormGroup('Execution ID', <p className="form-control-static">{executionId}</p>);
+    }
+
     return (
       <div className="form-horizontal">
-        {executionId ? this.renderStaticFormGroup('Execution ID', <p className="form-control-static">{executionId}</p>)
-         :
-         <span>
-           {this.renderStaticFormGroup('User ID', user)}
-           {this.renderStaticFormGroup('Crawler', crawler)}
-           {this.renderStaticFormGroup('Input Table', inputTableElement)}
-           {this.renderStaticFormGroup('Crawler Settings', settings)}
-         </span>
-
-        }
+        {resultForm}
         <div className="col-md-12">
           <span className="pull-right">
             <button className="btn btn-link" onClick={this.showSetupModal}>
