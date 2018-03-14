@@ -974,4 +974,31 @@ Dispatcher.register (payload) ->
 
       InstalledComponentsStore.emitChange()
 
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_START
+      _store = _store.setIn [
+        'deletingConfigurationRows', action.componentId, action.configurationId, action.rowId
+      ], true
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_ERROR
+      _store = _store.deleteIn [
+        'deletingConfigurationRows', action.componentId, action.configurationId, action.rowId
+      ]
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_SUCCESS
+      _store = _store
+        .deleteIn [
+          'deletingConfigurationRows', action.componentId, action.configurationId, action.rowId
+        ]
+        .deleteIn [
+          'configRows', action.componentId, action.configurationId, action.rowId
+        ]
+        .deleteIn [
+          'configRowsData', action.componentId, action.configurationId, action.rowId
+        ]
+
+      InstalledComponentsStore.emitChange()
+
+
 module.exports = InstalledComponentsStore
