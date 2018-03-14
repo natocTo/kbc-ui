@@ -91,7 +91,9 @@ export function createActions(componentId) {
   function createConfigRow(configId, data, waitingPath, changeDescription) {
     updateLocalState(configId, waitingPath, true);
     return componentsActions.createConfigurationRow(componentId, configId, data, changeDescription)
-      .then(() => updateLocalState(configId, waitingPath, false));
+      .then(() => {
+        updateLocalState(configId, waitingPath, false);
+      });
   }
 
   function updateConfigRow(configId, rowId, data, waitingPath, changeDescription) {
@@ -101,6 +103,7 @@ export function createActions(componentId) {
   }
 
   function deleteConfigRow(configId, rowId, waitingPath, changeDescription) {
+    updateLocalState(configId, waitingPath, true);
     return componentsActions.deleteConfigurationRow(componentId, configId, rowId, changeDescription)
       .then(() => updateLocalState(configId, waitingPath, false));
   }
