@@ -26,7 +26,6 @@ ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactiva
 FiltersDescription = require '../../../../components/react/components/generic/FiltersDescription'
 IsDockerBasedFn = require('../../../templates/dockerProxyApi').default
 IncrementalSetupModal = React.createFactory(require('./IncrementalSetupModal').default)
-ThoughtSpotTypeInput = React.createFactory(require('./ThoughtSpotTypeInput').default)
 
 defaultDataTypes =
 ['INT','BIGINT',
@@ -123,14 +122,14 @@ templateFn = (componentId) ->
       div className: 'kbc-main-content',
         div className: 'kbc-header',
           @_renderTableEdit()
+          if componentId == 'keboola.wr-thoughtspot'
+            @_renderThoughSpotTypeInput()
           if isRenderIncremental
             @_renderIncrementalSetup()
           if isRenderIncremental
             @_renderTableFiltersRow()
           if isRenderIncremental
             @_renderPrimaryKey()
-          if componentId == 'keboola.wr-thoughtspot'
-            @_renderThoughSpotTypeInput()
 
         ColumnsEditor
           onToggleHideIgnored: (e) =>
@@ -204,20 +203,21 @@ templateFn = (componentId) ->
             c.get('dbName')
           isIncremental: isIncremental
           allTables: @state.allTables
-          onSave: (isIncremental, primaryKey, newMapping) =>
+          onSave: (isIncremental, primaryKey, newMapping, customFieldsValues) =>
             @state.v2Actions.updateV2State('savingIncremental', true)
             finishSaving =  => @state.v2Actions.updateV2State('savingIncremental', false)
             newExportInfo = exportInfo
               .set('primaryKey', primaryKey)
               .set('incremental', isIncremental)
-              .mergeDeep(@state.v2State.get('customFields'))
+              .mergeDeep(customFieldsValues)
 
             @setV2TableInfo(newExportInfo).then =>
               if newMapping != tableMapping
                 @state.v2Actions.setTableMapping(newMapping).then(finishSaving)
               else
                 finishSaving()
-          customFields: [@_getCustomFields(componentId)]
+          customFieldsValues: @_getCustomFieldsValues()
+          componentId: componentId
 
   _renderPrimaryKey: ->
     exportInfo = @state.v2ConfigTable
@@ -236,17 +236,6 @@ templateFn = (componentId) ->
           ' '
           span className: 'kbc-icon-pencil'
 
-  _getCustomFields: (componentId) ->
-    if componentId == 'keboola.wr-thoughtspot'
-      return [@_thoughSpotTypeInput()]
-
-    return []
-
-  _thoughSpotTypeInput: ->
-    ThoughtSpotTypeInput
-      value: @state.v2State.getIn(['customFields', 'type'], @state.v2ConfigTable.get('type', 'standard'))
-      onChange: (value) => @state.v2Actions.updateV2State(['customFields', 'type'], value)
-
   _renderThoughSpotTypeInput: ->
     tableType = @state.v2ConfigTable.get('type', 'standard')
     div className: 'row',
@@ -262,6 +251,13 @@ templateFn = (componentId) ->
           tableType.toUpperCase()
           ' '
           span className: 'kbc-icon-pencil'
+
+  _getCustomFieldsValues: ->
+    if componentId == 'keboola.wr-thoughtspot'
+      return Map({type: @state.v2ConfigTable.get('type', 'standard')})
+
+    return Map()
+
 
   _onEditColumn: (newColumn) ->
     cname = newColumn.get('name')

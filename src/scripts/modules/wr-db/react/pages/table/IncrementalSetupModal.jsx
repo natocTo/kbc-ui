@@ -6,6 +6,7 @@ import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../components/react/components/generic/ChangedSinceFilterInput';
 import DataFilterRow from '../../../../components/react/components/generic/DataFilterRow';
+import ThoughtSpotTypeInput from './ThoughtSpotTypeInput';
 
 export default React.createClass({
   propTypes: {
@@ -18,14 +19,16 @@ export default React.createClass({
     onHide: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
     isSaving: React.PropTypes.bool.isRequired,
-    customFields: PropTypes.array
+    componentId: PropTypes.string.isRequired,
+    customFieldsValues: PropTypes.object
   },
 
   getStateFromProps(props) {
     return {
       primaryKey: props.currentPK,
       mapping: props.currentMapping,
-      isIncremental: props.isIncremental
+      isIncremental: props.isIncremental,
+      customFieldsValues: props.customFieldsValues
     };
   },
 
@@ -39,16 +42,10 @@ export default React.createClass({
   },
 
   renderCustomFields() {
-    if (!this.props.customFields) {
-      return null;
+    if (this.props.componentId === 'keboola.wr-thoughtspot') {
+      return this.renderThoughtSpotTypeInput();
     }
-    return this.props.customFields.map((field, index)=> {
-      return (
-        <div key={index}>
-          {field}
-        </div>
-      );
-    });
+    return null;
   },
 
   render() {
@@ -164,6 +161,17 @@ export default React.createClass({
     );
   },
 
+  renderThoughtSpotTypeInput() {
+    return (
+      <ThoughtSpotTypeInput
+        value={this.state.customFieldsValues.get('type', 'standard')}
+        onChange={(value) => this.setState({
+          customFieldsValues: this.state.customFieldsValues.set('type', value)
+        })}
+      />
+    );
+  },
+
   getColumns() {
     return this.props.columns.map((key) => {
       return {
@@ -179,7 +187,12 @@ export default React.createClass({
 
   handleSave() {
     let pkToSave = this.state.primaryKey ? this.state.primaryKey.split(',') : [];
-    this.props.onSave(this.state.isIncremental, fromJS(pkToSave), this.state.mapping).then(() =>
+    this.props.onSave(
+      this.state.isIncremental,
+      fromJS(pkToSave),
+      this.state.mapping,
+      this.state.customFieldsValues
+    ).then(() =>
       this.closeModal()
     );
   }
