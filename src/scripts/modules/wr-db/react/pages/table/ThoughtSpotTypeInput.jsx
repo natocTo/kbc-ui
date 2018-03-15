@@ -8,6 +8,12 @@ export default React.createClass({
     disabled: PropTypes.bool
   },
 
+  getDefaultProps() {
+    return {
+      value: 'standard'
+    };
+  },
+
   render() {
     return (
       <div className="form-group">
@@ -19,7 +25,7 @@ export default React.createClass({
             type="select"
             searchable={true}
             name="tableType"
-            value={this.props.value || 'standard'}
+            value={this.props.value}
             disabled={this.props.disabled}
             clearable={false}
             options={[
