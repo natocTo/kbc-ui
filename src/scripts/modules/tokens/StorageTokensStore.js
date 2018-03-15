@@ -82,7 +82,7 @@ Dispatcher.register( (payload) => {
       break;
     case ActionTypes.STORAGE_TOKEN_REFRESH_SUCCESS:
       _store = _store.setIn(['refreshingTokens', action.tokenId], false);
-      newTokens = _store.get('tokens').filter(function(t) {
+      newTokens = _store.get('tokens').map(function(t) {
         return t.get('id') === action.tokenId ? action.newToken : t;
       });
       _store = _store.set('tokens', newTokens);
