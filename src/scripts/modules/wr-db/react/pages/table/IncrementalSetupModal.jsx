@@ -42,9 +42,9 @@ export default React.createClass({
     if (!this.props.customFields) {
       return null;
     }
-    return this.props.customFields.map(field => {
+    return this.props.customFields.map((field, index)=> {
       return (
-        <div>
+        <div key={index}>
           {field}
         </div>
       );
@@ -66,7 +66,7 @@ export default React.createClass({
         <Modal.Body>
           <div className="form form-horizontal">
             {this.renderCustomFields()}
-            <div className="form-group form-group-">
+            <div className="form-group">
               <label className="control-label col-sm-3">
                 Load Type
               </label>
@@ -140,7 +140,7 @@ export default React.createClass({
 
   renderPKSelector() {
     return (
-      <div className="form-group form-group">
+      <div className="form-group">
         <label htmlFor="title" className="col-sm-3 control-label">
           Destination Table <div>Primary Key</div>
         </label>

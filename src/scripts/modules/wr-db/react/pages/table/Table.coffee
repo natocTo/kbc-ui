@@ -247,7 +247,7 @@ templateFn = (componentId) ->
       onChange: (value) => @state.v2Actions.updateV2State(['customFields', 'type'], value)
 
   _renderThoughSpotTypeInput: ->
-    tableType = @state.v2ConfigTable.get('type')
+    tableType = @state.v2ConfigTable.get('type', 'standard')
     p null,
       strong className: 'col-sm-3',
         'Table Type'
@@ -257,7 +257,7 @@ templateFn = (componentId) ->
         style: {'paddingTop': 0, 'paddingBottom': 0}
         disabled: !!@state.editingColumns
         onClick: @showIncrementalSetupModal
-        tableType.toUpperCase() or 'STANDARD'
+        tableType.toUpperCase()
         ' '
         span className: 'kbc-icon-pencil'
 

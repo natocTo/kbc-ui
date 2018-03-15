@@ -5,13 +5,12 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool,
-    groupClassName: PropTypes.string
+    disabled: PropTypes.bool
   },
 
   render() {
     return (
-      <div className="form-group form-group-">
+      <div className="form-group">
         <label className="control-label col-sm-3">
           Table Type
         </label>
