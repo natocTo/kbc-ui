@@ -10,6 +10,9 @@ import {componentSupportsConfigRows} from './actionsProvisioning';
 
 const defaultSshPort = 22;
 
+export const rowConfigurationType = 'row';
+export const standardConfigurationType = 'standard';
+
 export const sourceTablesPath = ['sourceTables', 'data'];
 export const sourceTablesErrorPath = ['sourceTables', 'error'];
 export const loadingSourceTablesPath = ['sourceTables', 'loading'];
@@ -20,7 +23,7 @@ export const connectionTestedPath = ['connection', 'tested'];
 
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
-  if (componentSupportsConfigRows(componentId)) {
+  if (componentSupportsConfigRows(componentId) && !config.hasIn(['parameters', 'tables'])) {
     const rows = store.getConfigRows(componentId, configId);
     const queries = rows.map((row) => {
       return queryFromRow(row);
@@ -29,13 +32,15 @@ function fetch(componentId, configId) {
     return {
       config: setConfig || Map(),
       parameters: setConfig.get('parameters', Map()),
-      localState: store.getLocalState(componentId, configId) || Map()
+      localState: store.getLocalState(componentId, configId) || Map(),
+      configurationType: rowConfigurationType
     };
   }
   return {
     config: config || Map(),
     parameters: config.get('parameters', Map()),
-    localState: store.getLocalState(componentId, configId) || Map()
+    localState: store.getLocalState(componentId, configId) || Map(),
+    configurationType: standardConfigurationType
   };
 }
 
@@ -319,6 +324,10 @@ export function createStore(componentId, configId) {
 
     getLocalState() {
       return fetch(componentId, configId).localState;
+    },
+
+    isRowConfiguration() {
+      return data.configurationType === rowConfigurationType;
     }
   };
 }

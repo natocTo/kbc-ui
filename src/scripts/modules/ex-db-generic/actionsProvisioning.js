@@ -272,7 +272,7 @@ export function createActions(componentId) {
       const newQueries = store.getQueries().filter((q) => q.get('id') !== qid);
       const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       const diffMsg = 'Delete query ' + store.getQueryName(qid);
-      if (componentSupportsConfigRows(componentId)) {
+      if (store.isRowConfiguration()) {
         return deleteConfigRow(configId, qid, ['pending', qid, 'deleteQuery'], diffMsg);
       }
       return saveConfigData(configId, newData, ['pending', qid, 'deleteQuery'], diffMsg);
@@ -334,7 +334,7 @@ export function createActions(componentId) {
       newQuery = newQuery.delete('advancedMode');
       newQuery = this.checkTableName(newQuery, store);
 
-      if (componentSupportsConfigRows(componentId)) {
+      if (store.isRowConfiguration()) {
         updateConfigRow(configId, queryId, newQuery, ['isSaving', queryId], 'Saving row query');
       } else {
         var newQueries, diffMsg;
@@ -375,7 +375,7 @@ export function createActions(componentId) {
         return query;
       });
       const diffMsg = 'Quickstart config creation';
-      if (componentSupportsConfigRows(componentId)) {
+      if (store.isRowConfiguration()) {
         queries.map(function(query) {
           const data = {
             'rowId': query.get('id'),
