@@ -89,6 +89,7 @@ OutputMappingRow = React.createClass(
                   onConfirm: @_handleDelete
 
             React.createElement OutputMappingModal,
+              transformationBucket: this.props.bucket
               mode: 'edit'
               tables: @props.tables
               buckets: @props.buckets

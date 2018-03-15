@@ -13,6 +13,7 @@ module.exports = React.createClass
   mixins: [ImmutableRenderMixin]
 
   propTypes:
+    transformationBucket: React.PropTypes.object.isRequired
     value: React.PropTypes.object.isRequired
     tables: React.PropTypes.object.isRequired
     buckets: React.PropTypes.object.isRequired
@@ -39,8 +40,13 @@ module.exports = React.createClass
     )
 
   _parseDestination: ->
+    bucketName = @props.transformationBucket.get('name')
+      .replace(/[^a-zA-Z0-9-]/i, '-')
+      .toLowerCase()
+    if !bucketName.startsWith('c-')
+      bucketName = 'c-' + bucketName
     destination = @props.value.get('destination')
-    tableIdParser.parse(destination, {defaultStage: 'out'})
+    tableIdParser.parse(destination, {defaultStage: 'out', defaultBucket: bucketName})
 
   _handleBlurSource: (e) ->
     isFileMapping = !@props.definition.has('source')
@@ -50,7 +56,8 @@ module.exports = React.createClass
       sourceValue = sourceValue.substring(0, lastDotIdx)
     dstParser = @_parseDestination()
     if !dstParser.parts.table
-      newDestination = dstParser.setPart('table', sourceValue)
+      newDestination = dstParser
+        .setPart('table', sourceValue)
       @_handleChangeDestination(newDestination.tableId)
 
   _handleChangeSource: (e) ->

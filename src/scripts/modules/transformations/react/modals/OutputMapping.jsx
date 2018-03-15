@@ -11,6 +11,7 @@ const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
 export default React.createClass({
   propTypes: {
+    transformationBucket: PropTypes.object.isRequired,
     mode: PropTypes.oneOf([MODE_CREATE, MODE_EDIT]).isRequired,
     mapping: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
@@ -77,12 +78,13 @@ export default React.createClass({
           onHide={this.close}
           show={this.state.showModal}
           bsSize="large"
-          >
+        >
           <Modal.Header closeButton={true}>
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <OutputMappingRowEditor
+              transformationBucket={this.props.transformationBucket}
               fill={true}
               value={this.props.mapping}
               tables={this.props.tables}
