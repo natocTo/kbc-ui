@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 // import {Table} from 'react-bootstrap';
 import {List, Map} from 'immutable';
+import TokenAge from './TokenAge';
 
 import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
@@ -48,6 +49,9 @@ export default React.createClass({
               </div>
               <div className="th">
                 Created
+              </div>
+              <div className="th">
+                Refreshed
               </div>
               <div className="th">
                 Expires
@@ -239,6 +243,9 @@ export default React.createClass({
         </div>
         <div className="td">
           <CreatedDate token={token} />
+        </div>
+        <div className="td">
+          <TokenAge token={token} />
         </div>
         <div className="td">
           <ExpiresInfo token={token} />
