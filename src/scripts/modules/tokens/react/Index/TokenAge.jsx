@@ -3,11 +3,14 @@ import moment from 'moment';
 
 const TokenAge = ({token}) => {
   const dateString = token.get('refreshed');
+  if (!dateString) {
+    return <span />;
+  }
   const refreshed = moment(dateString);
-  const formattedDate =  refreshed.format('YYYY-MM-DD HH:mm');
+  const formattedDate = refreshed.format('YYYY-MM-DD HH:mm');
   return (
-    <span title={dateString ? formattedDate : ''}>
-      {dateString ? refreshed.fromNow(false) : 'unknown'}
+    <span title={formattedDate}>
+      {refreshed.fromNow(false)}
     </span>
   );
 };
