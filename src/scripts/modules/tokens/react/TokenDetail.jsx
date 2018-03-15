@@ -13,6 +13,7 @@ import SaveButtons from '../../../react/common/SaveButtons';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import TokenString from './Index/TokenString';
 import SendTokenModal from '../react/Index/SendTokenModal';
+import {Link} from 'react-router';
 // import Tooltip from '../../../react/common/Tooltip';
 import ApplicationActionCreators from '../../../actions/ApplicationActionCreators';
 
@@ -121,12 +122,18 @@ export default React.createClass({
   },
 
   renderTokenCreated() {
+    const creatorLink = (
+      <Link to="tokens-detail" params={{tokenId: this.state.createdToken.get('id')}}>
+        {this.state.createdToken.get('description')}
+      </Link>
+    );
     return (
-      <div>
+      <div className="text-center">
         {this.renderTokenSendModal()}
-        <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. </p>
+        <p className="alert alert-success">Token {creatorLink} has been created. </p>
         <TokenString token={this.state.createdToken}
           sendTokenComponent={this.renderTokenSendButton(this.state.createdToken)}/>
+
       </div>
     );
   },
@@ -200,7 +207,7 @@ export default React.createClass({
              </div>
            )
           }
-          {this.renderTokenEditor(false)}
+          {!this.state.createdToken && this.renderTokenEditor(false)}
         </div>
       </div>
     );
