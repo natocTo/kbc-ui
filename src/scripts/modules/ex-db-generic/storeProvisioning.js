@@ -14,6 +14,7 @@ export const rowConfigurationType = 'row';
 export const standardConfigurationType = 'standard';
 
 export const sourceTablesPath = ['sourceTables', 'data'];
+export const incrementalCandidatesPath = ['sourceTables', 'incrementalCandidates'];
 export const sourceTablesErrorPath = ['sourceTables', 'error'];
 export const loadingSourceTablesPath = ['sourceTables', 'loading'];
 export const testingConnectionPath = ['connection', 'testing'];
@@ -52,7 +53,7 @@ export function queryFromRow(row) {
 
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
-  if (componentSupportsConfigRows(componentId) && !config.hasIn(['parameters', 'tables'])) {
+  if (componentSupportsConfigRows(componentId) && (!config.hasIn(['parameters', 'tables']) || config.getIn(['parameters', 'tables']).count() === 0)) {
     const rows = store.getConfigRows(componentId, configId);
     const queries = rows.map((row) => {
       return queryFromRow(row);
@@ -323,6 +324,10 @@ export function createStore(componentId, configId) {
 
     getSourceTables() {
       return data.localState.getIn(sourceTablesPath);
+    },
+
+    getIncrementalCandidates() {
+      return data.localState.getIn(incrementalCandidatesPath);
     },
 
     getSourceTablesLoading() {

@@ -37,7 +37,9 @@ export default React.createClass({
     queryNameExists: React.PropTypes.bool.isRequired,
     credentialsHasDatabase: React.PropTypes.bool,
     credentialsHasSchema: React.PropTypes.bool,
-    refreshMethod: React.PropTypes.func.isRequired
+    refreshMethod: React.PropTypes.func.isRequired,
+    isConfigRow: React.PropTypes.bool,
+    incrementalCandidates: React.PropTypes.object
   },
 
   getDefaultProps() {
@@ -90,6 +92,10 @@ export default React.createClass({
     return this.props.onChange(this.props.query.set('incremental', event.target.checked));
   },
 
+  handleIncrementalFetchingChange(newValue) {
+    return this.props.onChange(this.props.query.set('incrementalFetching', newValue));
+  },
+
   handleQueryChange(data) {
     return this.props.onChange(this.props.query.set('query', data.value));
   },
@@ -121,6 +127,26 @@ export default React.createClass({
           }).toJS()
         };
       });
+    } else {
+      return [];
+    }
+  },
+
+  incrementalFetchingOptions() {
+    if (!this.props.incrementalCandidates || this.props.query.get('table') === '') {
+      return [];
+    }
+    let selectedTable = this.props.query.get('table');
+    let candidateTable = this.props.incrementalCandidates.find((candidate) => {
+      return candidate.get('tableName') === selectedTable.get('tableName');
+    });
+    if (candidateTable) {
+      return candidateTable.get('candidates').map((candidate) => {
+        return {
+          value: candidate.get('name'),
+          label: candidate.get('name')
+        };
+      }).toJS();
     } else {
       return [];
     }
@@ -315,6 +341,7 @@ export default React.createClass({
               editing={this.props.destinationEditing}
             />
           </div>
+          {this.renderIncrementalFetching()}
           <div className="form-group">
             <div className="col-md-9 col-md-offset-3 checkbox">
               <label>
@@ -324,7 +351,7 @@ export default React.createClass({
                   onChange={this.handleIncrementalChange}
                   disabled={this.props.disabled}
                 />
-                Incremental Load
+                Incremental Loading
               </label>
               <div className="help-block">
                 If incremental load is turned on, the table will be updated instead of rewritten.
@@ -477,6 +504,40 @@ export default React.createClass({
 
   optionRenderer(option) {
     return option.render;
-  }
+  },
 
+  renderIncrementalFetching() {
+    if (this.props.isConfigRow && this.incrementalFetchingOptions().length > 0) {
+      var candidateSelector = (
+        <Select
+          name="incrementalFetching"
+          value={this.props.query.get('incrementalFetching') || ''}
+          placeholder="Select the column to be used for incremental fetching"
+          onChange={this.handleIncrementalFetchingChange}
+          options={this.incrementalFetchingOptions()}
+          disabled={this.props.disabled}
+        />
+      );
+      return (
+        <div className="form-group">
+          <label className="col-md-3 control-label">Incremental Fetching</label>
+          <div className="col-md-9">
+            <TableLoader
+              componentId={this.props.componentId}
+              configId={this.props.configId}
+              isLoadingSourceTables={this.props.isLoadingSourceTables}
+              isTestingConnection={this.props.isTestingConnection}
+              validConnection={this.props.validConnection}
+              tableSelectorElement={candidateSelector}
+              refreshMethod={this.props.refreshMethod}
+            />
+            <div className="help-block">
+              If incremental fetchingload is turned on,
+              only newly created or updated records since the last run will be fetched from the source database.
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
 });

@@ -7,7 +7,7 @@ import StorageTablesStore from '../../../../components/stores/StorageTablesStore
 import RoutesStore from '../../../../../stores/RoutesStore';
 
 import QueryEditor from '../../components/QueryEditor';
-import {connectionErrorPath, loadingSourceTablesPath} from '../../../storeProvisioning';
+import {connectionErrorPath, incrementalCandidatesPath, loadingSourceTablesPath} from '../../../storeProvisioning';
 import {sourceTablesPath} from '../../../storeProvisioning';
 import {sourceTablesErrorPath} from '../../../storeProvisioning';
 
@@ -58,7 +58,9 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         credentialsHasDatabase: !!credentials.get('database'),
         credentialsHasSchema: !!credentials.get('schema'),
         isTestingConnection: ExDbStore.isTestingConnection(),
-        validConnection: ExDbStore.isConnectionValid()
+        validConnection: ExDbStore.isConnectionValid(),
+        isConfigRow: ExDbStore.isRowConfiguration(),
+        incrementalCandidates: ExDbStore.getIncrementalCandidates()
       };
     },
 
@@ -106,6 +108,8 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           credentialsHasDatabase={this.state.credentialsHasDatabase}
           credentialsHasSchema={this.state.credentialsHasSchema}
           refreshMethod={this.handleRefreshSourceTables}
+          isConfigRow={this.state.isConfigRow}
+          incrementalCandidates={this.state.localState.getIn(incrementalCandidatesPath) || List()}
         />
       );
     },

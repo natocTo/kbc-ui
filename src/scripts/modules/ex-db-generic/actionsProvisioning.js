@@ -1,5 +1,5 @@
 import * as storeProvisioning from './storeProvisioning';
-import {List, fromJS} from 'immutable';
+import {List, Map, fromJS} from 'immutable';
 import RoutesStore from '../../stores/RoutesStore';
 
 import componentsActions from '../components/InstalledComponentsActionCreators';
@@ -137,6 +137,23 @@ export function createActions(componentId) {
     } else {
       return [];
     }
+  }
+
+  function getIncrementalCandidates(sourceTables) {
+    return sourceTables.map((table) => {
+      let tableCandidates = table.get('columns').filter((column) => {
+        if (column.has('autoIncrement') || column.get('type') === 'timestamp') {
+          return column;
+        }
+      });
+      if (tableCandidates.count() > 0) {
+        return Map({
+          tableName: table.get('name'),
+          schemaName: table.get('schema'),
+          candidates: tableCandidates
+        });
+      }
+    });
   }
 
   return {
@@ -439,6 +456,9 @@ export function createActions(componentId) {
             updateLocalState(configId, storeProvisioning.sourceTablesErrorPath, null);
           }
           updateLocalState(configId, storeProvisioning.sourceTablesPath, fromJS(data.tables));
+          if (store.isRowConfiguration()) {
+            updateLocalState(configId, storeProvisioning.incrementalCandidatesPath, getIncrementalCandidates(fromJS(data.tables)));
+          }
           updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, false);
         });
       }
