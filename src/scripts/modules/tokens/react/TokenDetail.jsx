@@ -112,7 +112,7 @@ export default React.createClass({
   renderTokenEditor(isEditing) {
     return (
       <TokenEditor
-        disabled={!!this.state.isSaving || !!this.state.createdToken}
+        disabled={!!this.state.isSaving}
         isEditing={isEditing}
         token={this.state.dirtyToken}
         allBuckets={this.state.allBuckets}
