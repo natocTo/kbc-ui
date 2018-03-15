@@ -334,7 +334,7 @@ export function createStore(componentId, configId) {
     },
 
     getLocalState() {
-      return fetch(componentId, configId).localState;
+      return data.localState;
     },
 
     isRowConfiguration() {

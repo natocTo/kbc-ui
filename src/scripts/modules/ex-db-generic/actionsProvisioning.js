@@ -338,9 +338,14 @@ export function createActions(componentId) {
         let isNewQuery = store.isNewQuery(queryId);
         const rowData = storeProvisioning.rowDataFromQuery(newQuery);
         if (isNewQuery) {
-          createConfigRow(configId, queryId, rowData, ['isSaving', queryId], 'Creating row query');
+          createConfigRow(configId, rowData, ['isSaving', queryId], 'Creating row query').then(() => {
+            removeFromLocalState(configId, ['editingQueries', queryId]);
+            removeFromLocalState(configId, ['newQueries', queryId]);
+          });
         } else {
-          updateConfigRow(configId, queryId, rowData, ['isSaving', queryId], 'Saving row query');
+          updateConfigRow(configId, queryId, rowData, ['isSaving', queryId], 'Saving row query').then(() => {
+            removeFromLocalState(configId, ['editingQueries', queryId]);
+          });
         }
       } else {
         var newQueries, diffMsg;
