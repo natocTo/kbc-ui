@@ -244,6 +244,10 @@ export function createActions(componentId) {
       const prefixMsg = !!newValue ? 'Enable' : 'Disable';
       const diffMsg = prefixMsg + ' query ' + store.getQueryName(qid);
       const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
+      if (store.isRowConfiguration()) {
+        let query = newQueries.find((q) => q.get('id') === qid);
+        return updateConfigRow(configId, qid, query, ['pending', qid, 'enabled'], diffMsg);
+      }
       return saveConfigData(configId, newData, ['pending', qid, 'enabled'], diffMsg);
     },
 
