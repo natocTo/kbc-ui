@@ -21,6 +21,35 @@ export const connectionErrorPath = ['connection', 'error'];
 export const connectionValidPath = ['connection', 'valid'];
 export const connectionTestedPath = ['connection', 'tested'];
 
+export function rowDataFromQuery(query) {
+  return {
+    'rowId': query.get('id'),
+    'name': query.get('name'),
+    'isDisabled': !query.get('enabled'),
+    'configuration': JSON.stringify({
+      'parameters': query.toJS()
+    })
+  };
+}
+
+export function queryFromRow(row) {
+  const rowConfig = row.getIn(['configuration', 'parameters']);
+  let query = Map({
+    id: parseInt(row.get('id'), 10),
+    name: row.get('name'),
+    enabled: !row.get('isDisabled'),
+    outputTable: rowConfig.get('outputTable'),
+    table: rowConfig.get('table'),
+    columns: rowConfig.get('columns'),
+    primaryKey: rowConfig.get('primaryKey'),
+    incremental: rowConfig.get('incremental')
+  });
+  if (rowConfig.get('query')) {
+    query = query.set('query', rowConfig.get('query')).set('advancedMode', true);
+  }
+  return query;
+}
+
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
   if (componentSupportsConfigRows(componentId) && !config.hasIn(['parameters', 'tables'])) {
@@ -42,24 +71,6 @@ function fetch(componentId, configId) {
     localState: store.getLocalState(componentId, configId) || Map(),
     configurationType: standardConfigurationType
   };
-}
-
-function queryFromRow(row) {
-  const rowConfig = row.get('configuration');
-  let query = Map({
-    id: parseInt(row.get('id'), 10),
-    name: row.get('name'),
-    enabled: !row.get('isDisabled'),
-    outputTable: rowConfig.get('outputTable'),
-    table: rowConfig.get('table'),
-    columns: rowConfig.get('columns'),
-    primaryKey: rowConfig.get('primaryKey'),
-    incremental: rowConfig.get('incremental')
-  });
-  if (rowConfig.get('query')) {
-    query = query.set('query', rowConfig.get('query')).set('advancedMode', true);
-  }
-  return query;
 }
 
 function generateId(existingIds) {

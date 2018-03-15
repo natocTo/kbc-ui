@@ -335,7 +335,13 @@ export function createActions(componentId) {
       newQuery = this.checkTableName(newQuery, store);
 
       if (store.isRowConfiguration()) {
-        updateConfigRow(configId, queryId, newQuery, ['isSaving', queryId], 'Saving row query');
+        let isNewQuery = store.isNewQuery(queryId);
+        const rowData = storeProvisioning.rowDataFromQuery(newQuery);
+        if (isNewQuery) {
+          createConfigRow(configId, queryId, rowData, ['isSaving', queryId], 'Creating row query');
+        } else {
+          updateConfigRow(configId, queryId, rowData, ['isSaving', queryId], 'Saving row query');
+        }
       } else {
         var newQueries, diffMsg;
         if (store.getQueries().find((q) => q.get('id') === newQuery.get('id') )) {
@@ -377,11 +383,7 @@ export function createActions(componentId) {
       const diffMsg = 'Quickstart config creation';
       if (store.isRowConfiguration()) {
         queries.map(function(query) {
-          const data = {
-            'rowId': query.get('id'),
-            'name': query.get('name'),
-            'configuration': JSON.stringify(query.toJS())
-          };
+          const data = storeProvisioning.rowDataFromQuery(query);
           createConfigRow(configId, data, ['quickstartSaving', query.get('id')], diffMsg).then(() => {
             removeFromLocalState(configId, ['quickstartSaving', query.get('id')]);
           });
