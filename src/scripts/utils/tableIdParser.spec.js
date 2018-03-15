@@ -45,4 +45,30 @@ describe('tableIdParser', () => {
     assert.equal('bucket', bucket);
     assert.equal('table', table);
   });
+
+  it('should parse null input with default stage and bucket', function() {
+    const parsed = parse(null, {defaultStage: 'out', defaultBucket: 'bucket'});
+    assert.equal('out.bucket.', parsed.tableId);
+    const {stage, bucket, table} = parsed.parts;
+    assert.equal('out', stage);
+    assert.equal('bucket', bucket);
+    assert.equal('', table);
+  });
+
+  it('should parse input with default stage and bucket', function() {
+    const parsed = parse('in.other.table', {defaultStage: 'out', defaultBucket: 'bucket'});
+    assert.equal('in.other.table', parsed.tableId);
+    const {stage, bucket, table} = parsed.parts;
+    assert.equal('in', stage);
+    assert.equal('other', bucket);
+    assert.equal('table', table);
+  });
+  it('should parse input filling defaultbucket', function() {
+    const parsed = parse('in..table', {defaultStage: 'out', defaultBucket: 'bucket'});
+    assert.equal('in.bucket.table', parsed.tableId);
+    const {stage, bucket, table} = parsed.parts;
+    assert.equal('in', stage);
+    assert.equal('bucket', bucket);
+    assert.equal('table', table);
+  });
 });
