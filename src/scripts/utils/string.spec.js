@@ -16,5 +16,8 @@ describe('string utils tests', function() {
     it('LaLaLa123->lalala123', function() {
       assert.equal(webalize('LaLaLa123'), 'lalala123');
     });
+    it('a_b->ab', function() {
+      assert.equal(webalize('a_b'), 'ab');
+    });
   });
 });
