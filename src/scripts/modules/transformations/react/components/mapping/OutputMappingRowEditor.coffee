@@ -7,12 +7,14 @@ AutosuggestWrapper = require('./AutoSuggestWrapper').default
 Select = React.createFactory require('../../../../../react/common/Select').default
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
+stringUtils = require('../../../../../utils/string').default
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
   mixins: [ImmutableRenderMixin]
 
   propTypes:
+    transformationBucket: React.PropTypes.object.isRequired
     value: React.PropTypes.object.isRequired
     tables: React.PropTypes.object.isRequired
     buckets: React.PropTypes.object.isRequired
@@ -39,8 +41,11 @@ module.exports = React.createClass
     )
 
   _parseDestination: ->
+    bucketName = stringUtils.webalize(@props.transformationBucket.get('name'))
+    if not bucketName.startsWith('c-')
+      bucketName = 'c-' + bucketName
     destination = @props.value.get('destination')
-    tableIdParser.parse(destination, {defaultStage: 'out'})
+    tableIdParser.parse(destination, {defaultStage: 'out', defaultBucket: bucketName})
 
   _handleBlurSource: (e) ->
     isFileMapping = !@props.definition.has('source')

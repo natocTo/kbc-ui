@@ -13,6 +13,7 @@ export default React.createClass({
 
   render() {
     return React.createElement(OutputMappingModal, {
+      transformationBucket: this.props.bucket,
       mode: 'create',
       mapping: this.props.mapping,
       tables: this.props.tables,
