@@ -7,6 +7,7 @@ AutosuggestWrapper = require('./AutoSuggestWrapper').default
 Select = React.createFactory require('../../../../../react/common/Select').default
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
+stringUtils = require('../../../../../utils/string').default
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
@@ -40,10 +41,8 @@ module.exports = React.createClass
     )
 
   _parseDestination: ->
-    bucketName = @props.transformationBucket.get('name')
-      .replace(/[^a-zA-Z0-9-]/i, '-')
-      .toLowerCase()
-    if !bucketName.startsWith('c-')
+    bucketName = stringUtils.webalize(@props.transformationBucket.get('name'))
+    if not bucketName.startsWith('c-')
       bucketName = 'c-' + bucketName
     destination = @props.value.get('destination')
     tableIdParser.parse(destination, {defaultStage: 'out', defaultBucket: bucketName})
@@ -56,8 +55,7 @@ module.exports = React.createClass
       sourceValue = sourceValue.substring(0, lastDotIdx)
     dstParser = @_parseDestination()
     if !dstParser.parts.table
-      newDestination = dstParser
-        .setPart('table', sourceValue)
+      newDestination = dstParser.setPart('table', sourceValue)
       @_handleChangeDestination(newDestination.tableId)
 
   _handleChangeSource: (e) ->
