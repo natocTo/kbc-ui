@@ -1,32 +1,30 @@
-
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import SqlDepAnalyzerApi from '../../../sqldep-analyzer/Api';
 
 export default React.createClass({
-  displayName: 'SqlDepModal',
-
   propTypes: {
     transformationId: React.PropTypes.string.isRequired,
     bucketId: React.PropTypes.string.isRequired,
-    backend: React.PropTypes.string.isRequired
+    backend: React.PropTypes.string.isRequired,
+    show: React.PropTypes.bool.isRequired,
+    onHide: React.PropTypes.func.isRequired
   },
 
   getInitialState() {
     return {
       isLoading: false,
-      sqlDepUrl: null,
-      showModal: false
+      sqlDepUrl: null
     };
   },
 
-  close() {
-    return this.setState({
-      showModal: false,
+  onHide() {
+    this.setState({
       isLoading: false,
       sqlDepUrl: null
     });
+    return this.props.onHide();
   },
 
   onRun() {
@@ -49,58 +47,32 @@ export default React.createClass({
       });
   },
 
-  open() {
-    this.setState({
-      showModal: true
-    });
-  },
-
-  betaWarning() {
-    if (this.props.backend === 'snowflake') {
-      return (
-        <span>{' '}
-          <span className="label label-info">BETA</span>
-        </span>
-      );
-    }
-  },
-
   render() {
     return (
-      <a onClick={this.handleOpenButtonClick}>
-        <i className="fa fa-sitemap fa-fw" />
-        {' '}SQLdep
-        {this.betaWarning()}
-        <Modal
-          show={this.state.showModal}
-          onHide={this.close}
-        >
-          <Modal.Header closeButton={true}>
-            <Modal.Title>SQLdep</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {this.renderBody()}
-          </Modal.Body>
-          <Modal.Footer>
-            <ButtonToolbar>
-              <Button onClick={this.close} bsStyle="link">Close</Button>
-              <Button
-                onClick={this.onRun}
-                className="btn-primary"
-                disabled={this.state.isLoading || !!this.state.sqlDepUrl || !this.isValidBackend()}
-              >
-                {this.state.isLoading ? 'Running' : 'Run'}
-              </Button>
-            </ButtonToolbar>
-          </Modal.Footer>
-        </Modal>
-      </a>
+      <Modal
+        show={this.props.show}
+        onHide={this.onHide}
+      >
+        <Modal.Header closeButton={true}>
+          <Modal.Title>SQLdep</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {this.renderBody()}
+        </Modal.Body>
+        <Modal.Footer>
+          <ButtonToolbar>
+            <Button onClick={this.onHide} bsStyle="link">Close</Button>
+            <Button
+              onClick={this.onRun}
+              className="btn-primary"
+              disabled={this.state.isLoading || !!this.state.sqlDepUrl || !this.isValidBackend()}
+            >
+              {this.state.isLoading ? 'Running' : 'Run'}
+            </Button>
+          </ButtonToolbar>
+        </Modal.Footer>
+      </Modal>
     );
-  },
-
-  handleOpenButtonClick(e) {
-    e.preventDefault();
-    return this.open();
   },
 
   renderSqlDepUrl() {
