@@ -31,16 +31,16 @@ export default React.createClass({
     this.setState({
       isLoading: true
     });
-    const component = this;
     return SqlDepAnalyzerApi
       .getGraph(this.props.bucketId, this.props.transformationId)
-      .then(function(response) {
-        return component.setState({
+      .then((response) => {
+        return this.setState({
           isLoading: false,
           sqlDepUrl: response.url
         });
-      }).catch(function(error) {
-        component.setState({
+      })
+      .catch((error) => {
+        this.setState({
           isLoading: false
         });
         throw error;
