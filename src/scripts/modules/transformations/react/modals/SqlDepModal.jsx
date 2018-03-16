@@ -41,6 +41,11 @@ export default React.createClass({
           isLoading: false,
           sqlDepUrl: response.url
         });
+      }).catch(function(error) {
+        component.setState({
+          isLoading: false
+        });
+        throw error;
       });
   },
 
