@@ -20,7 +20,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      isFirstChange: true
+      blockOnChangeOnce: true
     };
   },
 
@@ -42,6 +42,7 @@ export default React.createClass({
     const nextReadOnly = resetReadOnly ? nextProps.readOnly : this.props.readOnly;
     const nextValue = resetValue ? nextProps.value || this.props.value : this.props.value;
     if (!this.props.schema.equals(nextProps.schema) || resetValue || resetReadOnly) {
+      this.setState({blockOnChangeOnce: true});
       this.initJsonEditor(nextValue, nextReadOnly);
     }
   },
@@ -105,10 +106,10 @@ export default React.createClass({
     jsoneditor.on('change', function() {
       var json = jsoneditor.getValue();
       // editor calls onChange after its init causing isChanged = true without any user input. This will prevent calling onChange after editors init
-      if (!self.state.isFirstChange) {
-        props.onChange(Immutable.fromJS(json));
+      if (self.state.blockOnChangeOnce) {
+        self.setState({blockOnChangeOnce: false});
       } else {
-        self.setState({isFirstChange: false});
+        props.onChange(Immutable.fromJS(json));
       }
     });
 
