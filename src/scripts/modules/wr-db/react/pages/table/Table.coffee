@@ -35,7 +35,7 @@ defaultDataTypes =
 'DATE', 'DATETIME'
 ]
 
-{option, select, p, span, button, strong, div} = React.DOM
+{option, select, p, span, button, strong, div, ul, li} = React.DOM
 
 
 module.exports = (componentId) ->
@@ -121,15 +121,21 @@ templateFn = (componentId) ->
     div className: 'container-fluid',
       div className: 'kbc-main-content',
         div className: 'kbc-header',
-          @_renderTableEdit()
-          if componentId == 'keboola.wr-thoughtspot'
-            @_renderThoughSpotTypeInput()
-          if isRenderIncremental
-            @_renderIncrementalSetup()
-          if isRenderIncremental
-            @_renderTableFiltersRow()
-          if isRenderIncremental
-            @_renderPrimaryKey()
+          ul className: 'list-group list-group-no-border',
+            li className: 'list-group-item',
+              @_renderTableEdit()
+              if componentId == 'keboola.wr-thoughtspot'
+                li className: 'list-group-item',
+                  @_renderThoughSpotTypeInput()
+              if isRenderIncremental
+                li className: 'list-group-item',
+                  @_renderIncrementalSetup()
+              if isRenderIncremental
+                li className: 'list-group-item',
+                  @_renderTableFiltersRow()
+              if isRenderIncremental
+                li className: 'list-group-item',
+                  @_renderPrimaryKey()
 
         ColumnsEditor
           onToggleHideIgnored: (e) =>
