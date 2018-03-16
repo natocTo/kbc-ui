@@ -12,8 +12,8 @@ function createRequest(method, path) {
     .set('X-StorageApi-Token', ApplicationStore.getSapiTokenString());
 }
 
-module.exports = {
-  getGraph: function(configurationId, transformationId) {
+export default {
+  getGraph(configurationId, transformationId) {
     return createRequest('POST', configurationId + '/' + transformationId + '/graph')
       .promise().then(function(response) {
         return response.body;

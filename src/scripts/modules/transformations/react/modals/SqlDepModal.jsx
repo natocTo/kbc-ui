@@ -13,7 +13,7 @@ export default React.createClass({
     backend: React.PropTypes.string.isRequired
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       isLoading: false,
       sqlDepUrl: null,
@@ -21,7 +21,7 @@ export default React.createClass({
     };
   },
 
-  close: function() {
+  close() {
     return this.setState({
       showModal: false,
       isLoading: false,
@@ -29,7 +29,7 @@ export default React.createClass({
     });
   },
 
-  onRun: function() {
+  onRun() {
     this.setState({
       isLoading: true
     });
@@ -49,13 +49,13 @@ export default React.createClass({
       });
   },
 
-  open: function() {
+  open() {
     this.setState({
       showModal: true
     });
   },
 
-  betaWarning: function() {
+  betaWarning() {
     if (this.props.backend === 'snowflake') {
       return (
         <span>{' '}
@@ -65,7 +65,7 @@ export default React.createClass({
     }
   },
 
-  render: function() {
+  render() {
     return (
       <a onClick={this.handleOpenButtonClick}>
         <i className="fa fa-sitemap fa-fw" />
@@ -79,7 +79,7 @@ export default React.createClass({
             <Modal.Title>SQLdep</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this._renderBody()}
+            {this.renderBody()}
           </Modal.Body>
           <Modal.Footer>
             <ButtonToolbar>
@@ -98,12 +98,12 @@ export default React.createClass({
     );
   },
 
-  handleOpenButtonClick: function(e) {
+  handleOpenButtonClick(e) {
     e.preventDefault();
     return this.open();
   },
 
-  renderSqlDepUrl: function() {
+  renderSqlDepUrl() {
     if (this.state.sqlDepUrl) {
       return (
         <span>
@@ -114,7 +114,7 @@ export default React.createClass({
       );
     }
   },
-  _renderBody: function() {
+  renderBody() {
     if (this.props.backend === 'redshift' || this.props.backend === 'snowflake') {
       return (
         <span>
@@ -131,8 +131,5 @@ export default React.createClass({
         <p>Visual SQL analysis is available for Snowflake and Redshift transformations only.</p>
       );
     }
-  },
-  _handleConfirm: function() {
-    this.close();
   }
 });
