@@ -140,7 +140,7 @@ export default {
     return removeDiacritics(string)
     .toLowerCase()
     .replace(/[^a-z0-9\-]/g, '-')
-    .replace(/--/g, '-')
+    .replace(/-+/g, '-')
     .replace(/^-(.*)$/g, '$1')
     .replace(/^(.*)-$/g, '$1')
     .replace(/-/g, separator);

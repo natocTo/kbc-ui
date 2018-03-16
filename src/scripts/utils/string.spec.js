@@ -19,8 +19,8 @@ describe('string utils tests', function() {
     it('a_b->a-b', function() {
       assert.equal(webalize('a_b'), 'a-b');
     });
-    it('a__b->a-b', function() {
-      assert.equal(webalize('a__b'), 'a-b');
+    it('a__b___c->a-b-c', function() {
+      assert.equal(webalize('a__b___c'), 'a-b-c');
     });
     it('_a_b_->a-b', function() {
       assert.equal(webalize('_a_b_'), 'a-b');
