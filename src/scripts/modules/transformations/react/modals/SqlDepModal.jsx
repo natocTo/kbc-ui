@@ -87,7 +87,7 @@ export default React.createClass({
               <Button
                 onClick={this.onRun}
                 className="btn-primary"
-                disabled={this.state.isLoading || !!this.state.sqlDepUrl}
+                disabled={this.state.isLoading || !!this.state.sqlDepUrl || !this.isValidBackend()}
               >
                 {this.state.isLoading ? 'Running' : 'Run'}
               </Button>
@@ -115,7 +115,7 @@ export default React.createClass({
     }
   },
   renderBody() {
-    if (this.props.backend === 'redshift' || this.props.backend === 'snowflake') {
+    if (this.isValidBackend()) {
       return (
         <span>
           <p>
@@ -131,5 +131,12 @@ export default React.createClass({
         <p>Visual SQL analysis is available for Snowflake and Redshift transformations only.</p>
       );
     }
+  },
+
+  isValidBackend() {
+    if (this.props.backend === 'redshift' || this.props.backend === 'snowflake') {
+      return true;
+    }
+    return false;
   }
 });
