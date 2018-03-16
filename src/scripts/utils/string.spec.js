@@ -8,7 +8,7 @@ describe('string utils tests', function() {
       assert.equal(webalize('jeden dva tri styri pat'), 'jeden-dva-tri-styri-pat');
     });
     it('jeden dva  Tri -> jeden-dva-tri', function() {
-      assert.equal(webalize('jeden dva  Tri'), 'jeden-dva--tri');
+      assert.equal(webalize('jeden dva  Tri'), 'jeden-dva-tri');
     });
     it('Háčky a čárky NEdělají problémyô->hacky-a-carky-nedelaji-problemyo', function() {
       assert.equal(webalize('Háčky a čárky NEdělají problémyô'), 'hacky-a-carky-nedelaji-problemyo');
