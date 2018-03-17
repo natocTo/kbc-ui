@@ -18,7 +18,7 @@ ActivateDeactivateButton = React.createFactory(require('../../../../../react/com
 {Confirm, Loader} = require '../../../../../react/common/common'
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
 
-SqlDepModalButton = React.createFactory(require('../../modals/SqlDepModalButton').default)
+SqlDepButton = React.createFactory(require('../../components/SqlDepButton').default)
 EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
 
 sandboxUtils = require('../../../utils/sandboxUtils')
@@ -165,7 +165,7 @@ module.exports = React.createClass
               backend == 'mysql' && transformationType == 'simple' or
               backend == 'snowflake'
             li {},
-              SqlDepModalButton
+              SqlDepButton
                 backend: backend
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
