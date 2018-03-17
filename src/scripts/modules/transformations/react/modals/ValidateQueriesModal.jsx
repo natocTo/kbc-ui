@@ -107,6 +107,7 @@ export default React.createClass({
             {' '}<ExternalLink href="https://sqldep.com/">SQLdep API</ExternalLink>.
             Results will be immediately removed from their API after presenting to you.
           </p>
+          <p>The last saved version of the transformation will be used.</p>
           {this.renderResult()}
         </span>
       );

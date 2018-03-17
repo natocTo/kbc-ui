@@ -19,8 +19,7 @@ ActivateDeactivateButton = React.createFactory(require('../../../../../react/com
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
 
 SqlDepButton = React.createFactory(require('../../components/SqlDepButton').default)
-EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
-
+ValidateQueriesButton = React.createFactory(require('../../components/ValidateQueriesButton').default)
 sandboxUtils = require('../../../utils/sandboxUtils')
 
 {div, span, ul, li, a, em} = React.DOM
@@ -169,6 +168,16 @@ module.exports = React.createClass
                 backend: backend
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
+
+          if backend == 'redshift' or
+              backend == 'mysql' && transformationType == 'simple' or
+              backend == 'snowflake'
+            li {},
+              ValidateQueriesButton
+                backend: backend
+                bucketId: @state.bucketId
+                transformationId: @state.transformationId
+
           li {},
             a {},
               React.createElement Confirm,
