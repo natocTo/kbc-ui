@@ -3,6 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Edit from './QueriesEdit';
 import Clipboard from '../../../../../react/common/Clipboard';
 import SaveButtons from '../../../../../react/common/SaveButtons';
+import ValidateQueriesButton from '../../components/ValidateQueriesButton';
 
 /* global require */
 require('codemirror/mode/sql/sql');
@@ -43,6 +44,12 @@ export default React.createClass({
   renderButtons() {
     return (
       <span className="pull-right">
+        <ValidateQueriesButton
+          bucketId={this.props.bucketId}
+          transformationId={this.props.transformation.get('id')}
+          backend={this.props.transformation.get('backend')}
+          disabled={this.props.isChanged || this.props.isQueriesProcessing}
+        />
         <SaveButtons
           isSaving={this.props.isSaving}
           disabled={this.props.isQueriesProcessing}
