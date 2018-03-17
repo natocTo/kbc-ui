@@ -23,7 +23,7 @@ export default React.createClass({
   onHide() {
     this.setState({
       isLoading: false,
-      results: null
+      result: null
     });
     return this.props.onHide();
   },
