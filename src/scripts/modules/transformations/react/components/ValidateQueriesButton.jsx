@@ -1,11 +1,8 @@
 import React from 'react';
-
-import {Button} from 'react-bootstrap';
-
-// import SaveButtonsModal from './SaveButtonsModal';
+import { Button } from 'react-bootstrap';
+import Modal from '../modals/ValidateQueriesModal';
 
 export default React.createClass({
-
   propTypes: {
     transformationId: React.PropTypes.string.isRequired,
     bucketId: React.PropTypes.string.isRequired,
@@ -15,20 +12,49 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      modalOpen: false
+      showModal: false
     };
+  },
+
+  close() {
+    return this.setState({
+      showModal: false
+    });
+  },
+
+  open() {
+    this.setState({
+      showModal: true
+    });
+  },
+
+  handleOpenButtonClick(e) {
+    e.preventDefault();
+    return this.open();
   },
 
   render() {
     return (
-      <div className="kbc-buttons">
+      <span>
         <Button
           bsStyle="link"
           disabled={this.props.disabled}
+          onClick={this.open}
         >
           Validate
+          <span>{' '}
+            <span className="label label-info">BETA</span>
+          </span>
+          <Modal
+            transformationId={this.props.transformationId}
+            bucketId={this.props.bucketId}
+            backend={this.props.backend}
+            show={this.state.showModal}
+            onHide={this.close}
+          />
+
         </Button>
-      </div>
+      </span>
     );
   }
 });

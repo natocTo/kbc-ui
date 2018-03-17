@@ -5,5 +5,10 @@ export default {
     return Api.getGraph(configurationId, transformationId).then(function(response) {
       return response.body;
     });
+  },
+  validate(configurationId, transformationId) {
+    return Api.validate(configurationId, transformationId).then(function(response) {
+      return response.body;
+    });
   }
 };
