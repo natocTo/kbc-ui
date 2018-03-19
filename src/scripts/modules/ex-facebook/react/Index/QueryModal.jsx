@@ -117,7 +117,7 @@ export default React.createClass({
 
   renderDateRangeSelector() {
     return (
-      <div className="text-right mb-2">
+      <div className="text-right">
         <DateRangeSelector
           query={this.query()}
           updateQueryFn={(query) => this.updateLocalState(['query'], query)}
@@ -128,7 +128,7 @@ export default React.createClass({
 
   renderTemplateSelect() {
     return (
-      <div className="text-right mb-2">
+      <div className="text-right">
         <TemplateSelector
           templates={this.props.queryTemplates}
           query={this.query()}

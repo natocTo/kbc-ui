@@ -25,8 +25,7 @@ export default React.createClass({
     return (
       <Tabs activeKey={this.props.step} onSelect={this.goToStep} animation={false} id="wizardtab" className="indigo-ui-tabs">
         <Tab eventKey={Steps.STEP_CREDENTIALS} title="1. Credentials">
-          <div className="mx-2">
-            <div className="row">
+          <div className="row">
               <div className="col-sm-8">
                 <CredentialsForm
                   credentials={this.props.credentials}
@@ -48,11 +47,9 @@ export default React.createClass({
                 </div>
               </div>
             </div>
-          </div>
         </Tab>
         <Tab eventKey={Steps.STEP_TEMPLATE} title="2. Template" disabled={!this.isCredentialsValid()}>
-          <div className="mx-2">
-            <div className="row">
+          <div className="row">
               <div className="col-sm-8">
                 <p>Please select from the predefined templates to initialize the Adform configuration:</p>
                 <div className="form-group">
@@ -93,7 +90,6 @@ export default React.createClass({
                 </div>
               </div>
             </div>
-          </div>
         </Tab>
       </Tabs>
     );

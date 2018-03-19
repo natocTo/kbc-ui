@@ -91,12 +91,10 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="mx-4">
-          <SearchRow
-            query={this.state.searchQuery}
-            onSubmit={this._handleQueryChange}
-          />
-        </div>
+        <SearchRow
+          query={this.state.searchQuery}
+          onSubmit={this._handleQueryChange}
+        />
         {this.state.currentEventId ? this._renderCurrentEvent() : this._renderEventsList()}
       </div>
     );
