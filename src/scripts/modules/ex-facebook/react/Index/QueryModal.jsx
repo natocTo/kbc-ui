@@ -117,23 +117,31 @@ export default React.createClass({
 
   renderDateRangeSelector() {
     return (
-      <div className="text-right">
-        <DateRangeSelector
-          query={this.query()}
-          updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-        />
+      <div className="form-group">
+        <div className="col-xs-12">
+          <div className="text-right">
+            <DateRangeSelector
+              query={this.query()}
+              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+            />
+          </div>
+        </div>
       </div>
     );
   },
 
   renderTemplateSelect() {
     return (
-      <div className="text-right">
-        <TemplateSelector
-          templates={this.props.queryTemplates}
-          query={this.query()}
-          updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-        />
+      <div className="form-group">
+        <div className="col-xs-12">
+          <div className="text-right">
+            <TemplateSelector
+              templates={this.props.queryTemplates}
+              query={this.query()}
+              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+            />
+          </div>
+        </div>
       </div>
     );
   },
