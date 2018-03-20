@@ -139,9 +139,11 @@ export default {
   webalize(string, separator = '-') {
     return removeDiacritics(string)
     .toLowerCase()
-    .replace(/\ /g, '-')
-      .replace(/[^a-z0-9\-]/g, '')
-      .replace(/-/g, separator);
+    .replace(/[^a-z0-9\-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-(.*)$/g, '$1')
+    .replace(/^(.*)-$/g, '$1')
+    .replace(/-/g, separator);
   },
 
   capitalize(string) {
