@@ -126,5 +126,12 @@ export default {
     return new window.google.picker.DocsView()
       .setSelectFolderEnabled(false)
       .setEnableTeamDrives(true);
+  },
+
+  teamDriveFolders() {
+    return new window.google.picker.DocsView()
+      .setSelectFolderEnabled(true)
+      .setMimeTypes('application/vnd.google-apps.folder')
+      .setEnableTeamDrives(true);
   }
 };
