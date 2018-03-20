@@ -5,30 +5,15 @@ export default React.createClass({
   propTypes: {
     transformationId: React.PropTypes.string.isRequired,
     bucketId: React.PropTypes.string.isRequired,
-    backend: React.PropTypes.string.isRequired
-  },
-
-  getInitialState() {
-    return {
-      showModal: false
-    };
-  },
-
-  close() {
-    return this.setState({
-      showModal: false
-    });
-  },
-
-  open() {
-    this.setState({
-      showModal: true
-    });
+    backend: React.PropTypes.string.isRequired,
+    modalOpen: React.PropTypes.bool.isRequired,
+    onModalOpen: React.PropTypes.func.isRequired,
+    onModalClose: React.PropTypes.func.isRequired
   },
 
   handleOpenButtonClick(e) {
     e.preventDefault();
-    return this.open();
+    return this.props.onModalOpen();
   },
 
   render() {
@@ -43,8 +28,8 @@ export default React.createClass({
           transformationId={this.props.transformationId}
           bucketId={this.props.bucketId}
           backend={this.props.backend}
-          show={this.state.showModal}
-          onHide={this.close}
+          show={this.props.modalOpen}
+          onHide={this.props.onModalClose}
         />
 
       </a>

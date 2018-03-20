@@ -21,7 +21,8 @@ export default React.createClass({
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
-    highlightQueryNumber: PropTypes.number
+    highlightQueryNumber: PropTypes.number,
+    highlightingQueryDisabled: PropTypes.bool
   },
 
   render() {
@@ -34,7 +35,6 @@ export default React.createClass({
           </small>
           {this.renderButtons()}
         </h2>
-
         {this.queries()}
       </div>
     );
@@ -63,6 +63,7 @@ export default React.createClass({
         disabled={this.props.isSaving}
         onChange={this.props.onEditChange}
         highlightQueryNumber={this.props.highlightQueryNumber}
+        highlightingQueryDisabled={this.props.highlightingQueryDisabled}
         />
     );
   }

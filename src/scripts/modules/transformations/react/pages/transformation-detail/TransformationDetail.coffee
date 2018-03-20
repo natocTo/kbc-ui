@@ -61,7 +61,7 @@ module.exports = React.createClass
     latestVersionId: latestVersionId
 
   getInitialState: ->
-    sandboxModalOpen: false
+    validateModalOpen: false
 
   resolveLinkDocumentationLink: ->
     documentationLink = "https://help.keboola.com/manipulation/transformations/"
@@ -73,7 +73,6 @@ module.exports = React.createClass
       subpageName = transformationType
 
     return documentationLink + subpageName
-
 
   _deleteTransformation: ->
     bucketId = @state.bucket.get('id')
@@ -124,6 +123,7 @@ module.exports = React.createClass
             isEditingValid: @state.isTransformationEditingValid
             isQueriesProcessing: @state.pendingActions.has 'queries-processing'
             highlightQueryNumber: @state.highlightQueryNumber
+            highlightingQueryDisabled: @state.validateModalOpen
       div className: 'col-md-3 kbc-main-sidebar',
         ul className: 'nav nav-stacked',
           li {},
@@ -177,7 +177,11 @@ module.exports = React.createClass
                 backend: backend
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
-
+                modalOpen: @state.validateModalOpen
+                onModalOpen: =>
+                  @setState({validateModalOpen: true})
+                onModalClose: =>
+                  @setState({validateModalOpen: false})
           li {},
             a {},
               React.createElement Confirm,
