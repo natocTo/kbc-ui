@@ -3,7 +3,7 @@ ReactDOM = require 'react-dom'
 fuzzy = require 'fuzzy'
 string = require('../../../../utils/string').default
 Check = React.createFactory(require('../../../../react/common/common').Check)
-Select = React.createFactory(require('react-select'))
+Select = React.createFactory(require('react-select').default)
 
 ExportHelp = React.createFactory require('./ExportHelp').default
 LinkToDocs = React.createFactory require('./LinkToDocs').default

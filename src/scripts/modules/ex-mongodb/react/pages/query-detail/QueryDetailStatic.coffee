@@ -7,7 +7,7 @@ SapiTableLinkEx = React.createFactory(require('../../../../components/react/comp
 ExportHelp = React.createFactory require('../../components/ExportHelp').default
 LinkToDocs = React.createFactory require('../../components/LinkToDocs').default
 
-Select = React.createFactory(require('react-select'))
+Select = React.createFactory(require('react-select').default)
 
 module.exports = React.createClass
   displayName: 'ExDbQueryDetailStatic'

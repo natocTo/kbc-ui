@@ -6,7 +6,7 @@ Input = React.createFactory Input
 Button = React.createFactory(require('react-bootstrap').Button)
 ListGroup = React.createFactory ListGroup
 ListGroupItem = React.createFactory ListGroupItem
-Select = React.createFactory(require('react-select'))
+Select = React.createFactory(require('react-select').default)
 _ = require('underscore')
 
 module.exports = React.createClass

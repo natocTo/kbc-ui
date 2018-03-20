@@ -18,8 +18,8 @@ export default React.createClass({
     trimMultiCreatedValues: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     optionRenderer: PropTypes.func,
-    filterOption: PropTypes.func,
-    options: PropTypes.array
+    options: PropTypes.array,
+    filterOption: PropTypes.func
   },
 
   getDefaultProps() {
@@ -80,12 +80,16 @@ export default React.createClass({
       var emptyString = {};
       emptyString[this.props.valueKey] = '%_EMPTY_STRING_%';
       emptyString[this.props.labelKey] = (<code>[empty string]</code>);
-      opts.push(emptyString);
+      if (!opts.find(o => o[this.props.valueKey] === '%_EMPTY_STRING_%')) {
+        opts.push(emptyString);
+      }
 
       var spaceCharacter = {};
       spaceCharacter[this.props.valueKey] = '%_SPACE_CHARACTER_%';
       spaceCharacter[this.props.labelKey] = (<code>[space character]</code>);
-      opts.push(spaceCharacter);
+      if (!opts.find(o => o[this.props.valueKey] === '%_SPACE_CHARACTER_%')) {
+        opts.push(spaceCharacter);
+      }
     }
 
     var filterOption = function(op) {
@@ -127,6 +131,7 @@ export default React.createClass({
             valueRenderer={this.valueRenderer}
             filterOptions={this.filterOptions}
             onChange={this.onChange}
+            options={this.props.options || []}
           />
           {this.props.help ? (<span className="help-block">{this.props.help}</span>) : null}
         </span>
@@ -163,10 +168,7 @@ export default React.createClass({
         return value.value;
       })));
     } else {
-      // https://github.com/JedWatson/react-select/issues/1596
-      selected && Immutable.fromJS(selected) !== Immutable.List()
-        ? this.props.onChange(selected.value)
-        : this.props.onChange('');
+      selected ? this.props.onChange(selected.value) : this.props.onChange('');
     }
   },
 

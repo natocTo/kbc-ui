@@ -1,5 +1,5 @@
 React = require 'react'
-Select = React.createFactory(require('react-select'))
+Select = require('react-select').default
 _ = require('underscore')
 InstalledComponentsActionCreators = require '../../../components/InstalledComponentsActionCreators'
 
@@ -30,7 +30,7 @@ ConfigureSandbox = React.createClass
       div className: 'form-group',
         label className: 'col-sm-4 control-label', 'Data'
         div className: 'col-sm-6',
-          Select
+          React.createElement Select,
             name: 'include'
             value: @state.include
             multi: true

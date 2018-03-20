@@ -94,6 +94,7 @@ module.exports = React.createClass
           React.DOM.label className: 'col-xs-2 control-label', 'Tags'
           React.DOM.div className: 'col-xs-10',
             SelectCreatable
+              options: []
               name: 'tags'
               autofocus: true
               value: @_getTags()
@@ -124,6 +125,7 @@ module.exports = React.createClass
             React.DOM.label className: 'col-xs-2 control-label', 'Processed Tags'
             React.DOM.div className: 'col-xs-10',
               SelectCreatable
+                options: []
                 name: 'processed_tags'
                 value: @_getProcessedTags()
                 disabled: @props.disabled
@@ -134,4 +136,3 @@ module.exports = React.createClass
                 className: "help-block"
               ,
                 "Add these tags to files that were successfully processed"
-

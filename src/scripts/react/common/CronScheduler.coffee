@@ -1,7 +1,7 @@
 React = require 'react'
 later = require 'later'
 _ = require 'underscore'
-Select = require 'react-select'
+Select = require('react-select').default
 moment = require 'moment-timezone'
 date = require '../../utils/date'
 
