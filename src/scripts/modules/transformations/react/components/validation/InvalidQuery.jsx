@@ -24,20 +24,17 @@ export default React.createClass({
   render() {
     return (
       <p>
-        <div>
-          <ComponentConfigurationRowLink
-            componentId="transformation"
-            configId={this.props.bucketId}
-            rowId={this.props.transformationId}
-            query={{highlightQueryNumber: this.props.queryNumber}}
-            onClick={this.props.onClick}
-            >
-            Transformation {this.state.transformation.get('name')}, query #{this.props.queryNumber}
-          </ComponentConfigurationRowLink>
-        </div>
-        <div>
-          {this.props.message}
-        </div>
+        <ComponentConfigurationRowLink
+          componentId="transformation"
+          configId={this.props.bucketId}
+          rowId={this.props.transformationId}
+          query={{highlightQueryNumber: this.props.queryNumber}}
+          onClick={this.props.onClick}
+          >
+          Transformation {this.state.transformation.get('name')}, query #{this.props.queryNumber}
+        </ComponentConfigurationRowLink>
+        <br />
+        {this.props.message}
       </p>
     );
   }
