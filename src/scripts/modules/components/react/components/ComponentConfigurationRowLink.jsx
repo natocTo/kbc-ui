@@ -9,7 +9,8 @@ module.exports = React.createClass({
     rowId: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     query: React.PropTypes.object,
-    children: React.PropTypes.string.isRequired
+    children: React.PropTypes.string.isRequired,
+    onClick: React.PropTypes.func
   },
 
   render: function() {
@@ -22,6 +23,7 @@ module.exports = React.createClass({
           row: this.props.rowId
         }}
         query={this.props.query}
+        onClick={this.props.onClick}
         >{this.props.children}</Link>);
     } else {
       return (<span>{this.props.children}</span>);
