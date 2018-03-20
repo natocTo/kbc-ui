@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import SqlDepAnalyzerApi from '../../../sqldep-analyzer/Api';
 import ExternalLink from '../../../../react/common/ExternalLink';
-import ValidateQueriesResult from '../components/ValidateQueriesResult';
+import Result from '../components/validation/Result';
 import Immutable from 'immutable';
 
 export default React.createClass({
@@ -83,8 +83,8 @@ export default React.createClass({
       return;
     }
     return (
-      <ValidateQueriesResult
-        result={this.state.result}
+      <Result
+        queries={this.state.result.get('queries', Immutable.List())}
       />
     );
   },
