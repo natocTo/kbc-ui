@@ -85,6 +85,8 @@ export default React.createClass({
     return (
       <Result
         queries={this.state.result.get('queries', Immutable.List())}
+        bucketId={this.props.bucketId}
+        onRedirect={this.onHide}
       />
     );
   },
@@ -98,7 +100,7 @@ export default React.createClass({
             {' '}<ExternalLink href="https://sqldep.com/">SQLdep API</ExternalLink>.
             Results will be immediately removed from their API after presenting to you.
           </p>
-          <p>The last saved version of the transformation will be used.</p>
+          <p>The last saved version of the transformation is used.</p>
           {this.renderResult()}
         </span>
       );
