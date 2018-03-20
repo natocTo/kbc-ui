@@ -168,10 +168,7 @@ export default React.createClass({
         return value.value;
       })));
     } else {
-      // https://github.com/JedWatson/react-select/issues/1596
-      selected && Immutable.fromJS(selected) !== Immutable.List()
-        ? this.props.onChange(selected.value)
-        : this.props.onChange('');
+      selected ? this.props.onChange(selected.value) : this.props.onChange('');
     }
   },
 
