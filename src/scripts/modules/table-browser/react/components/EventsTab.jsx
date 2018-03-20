@@ -36,7 +36,7 @@ export default React.createClass({
     }
     const rows = this.renderTableRows();
     return (
-      <div style={{'max-height': '80vh', overflow: 'auto'}}>
+      <div style={{'max-height': '80vh', 'overflow-y': 'auto'}}>
         <div>
           <div className="row">
             <div className="col-xs-3">
