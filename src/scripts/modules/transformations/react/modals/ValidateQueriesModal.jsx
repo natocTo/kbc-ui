@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import SqlDepAnalyzerApi from '../../../sqldep-analyzer/Api';
 import ExternalLink from '../../../../react/common/ExternalLink';
+import ValidateQueriesResult from '../components/ValidateQueriesResult';
+import Immutable from 'immutable';
 
 export default React.createClass({
   propTypes: {
@@ -37,7 +39,7 @@ export default React.createClass({
       .then((response) => {
         return this.setState({
           isLoading: false,
-          result: response
+          result: Immutable.fromJS(response)
         });
       })
       .catch((error) => {
@@ -80,22 +82,11 @@ export default React.createClass({
     if (!this.state.result) {
       return;
     }
-    const result = this.state.result.queries.filter((query) => {
-      return query.status_code !== 'DONE';
-    });
-    if (result.length > 0) {
-      return (
-        <span>
-          <pre style={{maxHeight: '400px'}}>
-            {JSON.stringify(result, null, 2)}
-          </pre>
-        </span>
-      );
-    } else {
-      return (
-        <span>SQL is valid.</span>
-      );
-    }
+    return (
+      <ValidateQueriesResult
+        result={this.state.result}
+      />
+    );
   },
 
   renderBody() {
