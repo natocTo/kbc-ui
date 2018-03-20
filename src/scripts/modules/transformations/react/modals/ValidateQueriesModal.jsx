@@ -57,7 +57,7 @@ export default React.createClass({
         onHide={this.onHide}
       >
         <Modal.Header closeButton={true}>
-          <Modal.Title>SQLdep</Modal.Title>
+          <Modal.Title>Validate SQL</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {this.renderBody()}
