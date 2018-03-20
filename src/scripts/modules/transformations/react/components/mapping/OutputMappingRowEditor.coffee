@@ -77,11 +77,18 @@ module.exports = React.createClass
 
 
   _handleChangeIncremental: (e) ->
-    value = @props.value
-      .set("incremental", e.target.checked)
-      .set("deleteWhereColumn", "")
-      .set("deleteWhereOperator", "")
-      .set("deleteWhereValues", Immutable.List())
+    if e.target.checked
+      value = @props.value
+        .set("incremental", e.target.checked)
+        .set("deleteWhereColumn", "")
+        .set("deleteWhereOperator", "eq")
+        .set("deleteWhereValues", Immutable.List())
+    else
+      value = @props.value
+        .delete("incremental")
+        .delete("deleteWhereColumn")
+        .delete("deleteWhereOperator")
+        .delete("deleteWhereValues")
     @props.onChange(value)
 
   _handleChangePrimaryKey: (newValue) ->
@@ -89,12 +96,8 @@ module.exports = React.createClass
     @props.onChange(value)
 
   _handleChangeDeleteWhereColumn: (newValue) ->
-    deleteWhereOperator = @props.value.get("deleteWhereOperator", "")
-    if (deleteWhereOperator == "")
-      deleteWhereOperator = "eq"
     value = @props.value
       .set("deleteWhereColumn", newValue.trim())
-      .set("deleteWhereOperator", deleteWhereOperator)
     @props.onChange(value)
 
   _handleChangeDeleteWhereOperator: (e) ->
