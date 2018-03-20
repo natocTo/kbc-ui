@@ -120,5 +120,11 @@ export default {
       .setSelectFolderEnabled(true)
       .setStarred(true)
       .setLabel('Starred');
+  },
+
+  teamDrive() {
+    return new window.google.picker.DocsView()
+      .setSelectFolderEnabled(false)
+      .setEnableTeamDrives(true);
   }
 };

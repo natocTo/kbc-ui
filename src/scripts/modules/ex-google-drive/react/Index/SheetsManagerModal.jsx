@@ -85,7 +85,8 @@ export default React.createClass({
             ViewTemplates.sheets,
             ViewTemplates.sharedSheets,
             ViewTemplates.starredSheets,
-            ViewTemplates.recent
+            ViewTemplates.recent,
+            ViewTemplates.teamDrive
           ]}
         />
 

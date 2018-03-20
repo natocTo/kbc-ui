@@ -32,7 +32,9 @@ const authorizePicker = (userEmail, scope, callbackFn) => {
 };
 
 const createGdrivePicker = (viewsParam, viewGroups) => {
-  let picker = new window.google.picker.PickerBuilder().setDeveloperKey(apiKey);
+  let picker = new window.google.picker.PickerBuilder()
+    .setDeveloperKey(apiKey)
+    .enableFeature(window.google.picker.Feature.SUPPORT_TEAM_DRIVES);
 
   let views = viewsParam;
   if (_.isEmpty(views)) views = [templates.root];
