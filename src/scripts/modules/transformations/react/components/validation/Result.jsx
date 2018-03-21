@@ -13,7 +13,7 @@ export default React.createClass({
     if (this.props.result.count() > 0) {
       return (
         <div className="alert alert-danger">
-          <h4>Following errors were found</h4>
+          <h4>Following errors found</h4>
           {this.props.result.map((error, index) => {
             switch (error.getIn(['object', 'type'])) {
               case 'query':
