@@ -70,7 +70,7 @@ OrchestrationJobDetail = React.createClass
                 defaultActiveKey: @state.openedTab
                 animation: false
                 id: 'orchestration-job-detail-tabs',
-                  Tab eventKey: 'overview', title: 'Overview', className: 'no-padding',
+                  Tab eventKey: 'overview', title: 'Overview', className: 'tab-pane-no-padding',
                     JobOverview(job: @state.job)
                   Tab eventKey: 'log', title: 'Log',
                     Events
