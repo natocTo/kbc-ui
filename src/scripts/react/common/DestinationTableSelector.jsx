@@ -73,6 +73,7 @@ export default React.createClass({
         value={parts.bucket}
         onChange={this.selectBucket}
         options={this.prepareBucketsOptions().toJS()}
+        autosize={false}
       />
     );
 
@@ -85,6 +86,7 @@ export default React.createClass({
         value={parts.table}
         onChange={this.selectTable}
         options={this.prepareTablesOptions().toJS()}
+        autosize={false}
       />
     );
 
