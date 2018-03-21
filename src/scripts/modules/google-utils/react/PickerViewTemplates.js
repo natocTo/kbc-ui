@@ -124,6 +124,7 @@ export default {
 
   teamDriveFiles() {
     return new window.google.picker.DocsView()
+      .setIncludeFolders(true)
       .setSelectFolderEnabled(false)
       .setEnableTeamDrives(true);
   },
@@ -136,8 +137,10 @@ export default {
   },
 
   teamDriveSheets() {
-    return new window.google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
-    .setSelectFolderEnabled(false)
-    .setEnableTeamDrives(true);
+    const {google} = window;
+    return new google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+      .setIncludeFolders(true)
+      .setSelectFolderEnabled(false)
+      .setEnableTeamDrives(true);
   }
 };
