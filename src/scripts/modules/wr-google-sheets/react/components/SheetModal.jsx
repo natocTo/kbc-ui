@@ -38,7 +38,7 @@ export default React.createClass({
             minHeight: '250px'
           }}
         >
-          <Tabs className="indigo-ui-tabs" activeKey={step} defaultActiveKey={1} animation={false} id="wr-google-sheets-sheet-modal-tabs">
+          <Tabs activeKey={step} defaultActiveKey={1} animation={false} id="wr-google-sheets-sheet-modal-tabs">
             <Tab title="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
                  onSelect={this.onChangeInputMapping}

@@ -82,7 +82,7 @@ export default React.createClass({
           <Modal.Title>Change Date Range</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs className="indigo-ui-tabs" activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false} id="daterangemodaltab">
+          <Tabs activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false} id="daterangemodaltab">
             <Tab eventKey="relative" title="Relative">
               {this.renderRelative()}
             </Tab>

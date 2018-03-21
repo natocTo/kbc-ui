@@ -75,7 +75,7 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           {this.state.token ?
-           <Tabs className="indigo-ui-tabs" id="token-detail-tabs" animation={false}>
+           <Tabs id="token-detail-tabs" animation={false}>
              <Tab title="Overview" eventKey="overview">
                <div className="form form-horizontal">
                  <div className="form-group">

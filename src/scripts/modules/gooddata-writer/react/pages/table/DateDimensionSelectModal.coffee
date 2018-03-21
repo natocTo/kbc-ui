@@ -68,7 +68,7 @@ module.exports = React.createClass
             @_title()
 
         ModalBody null,
-          React.createElement Tabs, id: 'gooddata-writer-date-dimension-select-modal-tabs', className: 'indigo-ui-tabs',
+          React.createElement Tabs, id: 'gooddata-writer-date-dimension-select-modal-tabs',
             React.createElement Tab,
               eventKey: 'select'
               title: 'Select from existing'

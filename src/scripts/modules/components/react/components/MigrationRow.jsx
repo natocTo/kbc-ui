@@ -168,7 +168,7 @@ export default React.createClass({
          </p>
          :
          <div>
-           <Tabs className="indigo-ui-tabs" defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
+           <Tabs defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
 
              <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
                {this.renderConfigStatus()}

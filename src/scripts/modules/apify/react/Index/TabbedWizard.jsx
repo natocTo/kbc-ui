@@ -39,7 +39,7 @@ export default React.createClass({
   render() {
     return (
       <span>
-        <Tabs activeKey={this.props.step} animation={false} onSelect={this.props.selectTab} id="controlled-tab-wizard" className="indigo-ui-tabs">
+        <Tabs activeKey={this.props.step} animation={false} onSelect={this.props.selectTab} id="controlled-tab-wizard">
           <Tab title="Action"
             eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
             {this.renderActionForm()}

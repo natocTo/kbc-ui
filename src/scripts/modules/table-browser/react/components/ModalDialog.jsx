@@ -130,7 +130,7 @@ export default React.createClass({
   renderModalBody() {
     return (
       <div>
-        <Tabs className="indigo-ui-tabs" defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
+        <Tabs defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
           <Tab eventKey="general" title="General Info">
             {this.renderGeneralInfo()}
           </Tab>

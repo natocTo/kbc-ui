@@ -23,7 +23,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Tabs activeKey={this.props.step} onSelect={this.goToStep} animation={false} id="wizardtab" className="indigo-ui-tabs">
+      <Tabs activeKey={this.props.step} onSelect={this.goToStep} animation={false} id="wizardtab">
         <Tab eventKey={Steps.STEP_CREDENTIALS} title="1. Credentials">
           <div className="row">
               <div className="col-sm-8">

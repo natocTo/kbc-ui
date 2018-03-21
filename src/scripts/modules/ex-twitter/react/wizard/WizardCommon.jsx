@@ -9,7 +9,7 @@ export default React.createClass({
   },
   render() {
     return (
-      <Tabs className="indigo-ui-tabs" activeKey={this.props.activeStep} onSelect={this.props.goToStep} animation={false}
+      <Tabs activeKey={this.props.activeStep} onSelect={this.props.goToStep} animation={false}
         id="ex-twitter-react-wizard-common-tabs"
       >
         {this.mapChildren(this.props.children)}
