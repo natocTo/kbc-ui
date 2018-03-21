@@ -1,5 +1,6 @@
 import React from 'react';
 import InvalidQuery from './InvalidQuery';
+import MissingTable from './MissingTable';
 
 export default React.createClass({
   propTypes: {
@@ -22,6 +23,17 @@ export default React.createClass({
                     key={index}
                     transformationId={error.get('transformation')}
                     queryNumber={parseInt(error.getIn(['object', 'id']), 10)}
+                    message={error.get('message')}
+                    onClick={this.props.onRedirect}
+                  />
+                );
+              case 'table':
+                return (
+                  <MissingTable
+                    bucketId={this.props.bucketId}
+                    key={index}
+                    transformationId={error.get('transformation')}
+                    tableId={error.getIn(['object', 'id'])}
                     message={error.get('message')}
                     onClick={this.props.onRedirect}
                   />
