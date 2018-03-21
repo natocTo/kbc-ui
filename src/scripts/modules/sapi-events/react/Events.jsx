@@ -90,11 +90,13 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
-        <SearchRow
-          query={this.state.searchQuery}
-          onSubmit={this._handleQueryChange}
-        />
+      <div className="form-group">
+        <div className="col-xs-12">
+          <SearchRow
+            query={this.state.searchQuery}
+            onSubmit={this._handleQueryChange}
+          />
+        </div>
         {this.state.currentEventId ? this._renderCurrentEvent() : this._renderEventsList()}
       </div>
     );
