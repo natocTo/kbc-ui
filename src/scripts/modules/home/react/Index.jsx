@@ -89,7 +89,6 @@ export default React.createClass({
         <div className="kbc-overview-component-container">
           {this.state.projectHasGuideModeOn && (
             <Desk
-              linkToSettings={ApplicationStore.getProjectPageUrl('settings')}
               lessons={lessons}
               achievedLessonId={this.state.guideModeAchievedLessonId}
               openLessonModalFn={this.openLessonModal}

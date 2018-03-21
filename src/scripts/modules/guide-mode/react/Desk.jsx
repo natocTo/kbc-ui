@@ -4,14 +4,12 @@ import { Button } from 'react-bootstrap';
 export default React.createClass({
 
   propTypes: {
-    linkToSettings: React.PropTypes.string.isRequired,
     lessons: React.PropTypes.object.isRequired,
     achievedLessonId: React.PropTypes.number.isRequired,
     openLessonModalFn: React.PropTypes.func.isRequired
   },
 
   render() {
-    const { linkToSettings } = this.props;
     return (
       <div className="kbc-overview-component">
         <div className="guide-desk-container">
@@ -32,11 +30,7 @@ export default React.createClass({
                   These lessons will walk you through the basic steps of creating a project: from loading and manipulating data to visualizing the results and automating the whole process.
                   <br/>
                   <br/>
-                  Feel free to switch the Guide Mode off at any time. If needed, bring it back by going to
-                  {' '}
-                  <a className="guide-link" href={linkToSettings}>
-                    Settings > Guide Mode.
-                  </a>
+                  Do you enjoy working with Keboola Connection? Please contact us to create a new production project.
                 </p>
               </div>
             </div>
