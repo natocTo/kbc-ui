@@ -84,7 +84,7 @@ export default React.createClass({
     }
     return (
       <Result
-        queries={this.state.result.get('queries', Immutable.List())}
+        result={this.state.result}
         bucketId={this.props.bucketId}
         onRedirect={this.onHide}
       />

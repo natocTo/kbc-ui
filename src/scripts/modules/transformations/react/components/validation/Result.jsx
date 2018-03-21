@@ -4,35 +4,31 @@ import InvalidQuery from './InvalidQuery';
 export default React.createClass({
   propTypes: {
     bucketId: React.PropTypes.string.isRequired,
-    queries: React.PropTypes.object.isRequired,
+    result: React.PropTypes.object.isRequired,
     onRedirect: React.PropTypes.func.isRequired
   },
 
   render() {
-    const invalidQueries = this.props.queries.filter((query) => {
-      return query.get('status_code') !== 'DONE';
-    });
-    if (invalidQueries.count() > 0) {
+    if (this.props.result.count() > 0) {
       return (
         <div className="alert alert-danger">
           <h4>Following errors were found</h4>
-          {invalidQueries.map((invalidItem) => {
-            const [transformationId, itemType, itemIdentifier] = invalidItem.get('name').split('.');
-            switch (itemType) {
+          {this.props.result.map((error, index) => {
+            switch (error.getIn(['object', 'type'])) {
               case 'query':
                 return (
                   <InvalidQuery
                     bucketId={this.props.bucketId}
-                    key={invalidItem.get('name')}
-                    transformationId={transformationId}
-                    queryNumber={parseInt(itemIdentifier, 10)}
-                    message={invalidItem.get('status_desc')}
+                    key={index}
+                    transformationId={error.get('transformation')}
+                    queryNumber={parseInt(error.getIn(['object', 'id']), 10)}
+                    message={error.get('message')}
                     onClick={this.props.onRedirect}
                   />
                 );
               default:
                 return (
-                  <p>{invalidItem.get('status_desc')}</p>
+                  <p>{error.get('message')}</p>
                 );
             }
           }).toArray()}
