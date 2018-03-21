@@ -77,7 +77,7 @@ export default React.createClass({
               ViewTemplates.sheets,
               ViewTemplates.sharedSheets,
               ViewTemplates.starredSheets,
-              ViewTemplates.teamDrive
+              ViewTemplates.teamDriveSheets
             ]}
             multiselectEnabled={false}
           />

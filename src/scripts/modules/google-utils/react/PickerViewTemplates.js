@@ -122,7 +122,7 @@ export default {
       .setLabel('Starred');
   },
 
-  teamDrive() {
+  teamDriveFiles() {
     return new window.google.picker.DocsView()
       .setSelectFolderEnabled(false)
       .setEnableTeamDrives(true);
@@ -133,5 +133,11 @@ export default {
       .setSelectFolderEnabled(true)
       .setMimeTypes('application/vnd.google-apps.folder')
       .setEnableTeamDrives(true);
+  },
+
+  teamDriveSheets() {
+    return new window.google.picker.DocsView(google.picker.ViewId.SPREADSHEETS)
+    .setSelectFolderEnabled(false)
+    .setEnableTeamDrives(true);
   }
 };
