@@ -34,7 +34,7 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs activeKey={step} animation={false} onSelect={() => {return true;}} generateChildId={true}>
+          <Tabs className="tabs-inside-modal" activeKey={step} animation={false} onSelect={() => {return true;}} generateChildId={true}>
             <Tab title="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
                 mapping={this.localState(['mapping'], Map())}

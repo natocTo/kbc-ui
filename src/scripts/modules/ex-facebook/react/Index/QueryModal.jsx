@@ -53,7 +53,7 @@ export default React.createClass({
             query={this.query('query', Map())}
             apiVersion={this.props.apiVersion}
           />
-          <Tabs defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs">
+          <Tabs className="tabs-inside-modal" defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs">
             <Tab title="General" eventKey={1}>
               <div className="form-horizontal">
                 {this.renderTemplateSelect()}

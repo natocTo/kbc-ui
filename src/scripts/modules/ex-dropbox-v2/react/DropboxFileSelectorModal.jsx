@@ -56,7 +56,7 @@ export default React.createClass({
           <Modal.Title>Dropbox file selector</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}
+          <Tabs className="tabs-inside-modal" activeKey={this.state.activeTab} onSelect={this.goToTab} animation={false}
             id="ex-dropbox-v2-dropbox-file-selector-modal-tabs">
             <Tab eventKey="instant" title="Choose From Dropbox">
               <p>Please choose a CSV file you want to extract via Dropbox Chooser that uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>

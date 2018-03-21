@@ -51,7 +51,7 @@ module.exports = React.createClass
 
     div {className: 'container-fluid'},
       div {className: 'kbc-main-content'},
-        Tabs defaultActiveKey: @state.defaultActiveKey, animation: false,
+        Tabs defaultActiveKey: @state.defaultActiveKey, animation: false, className: 'tabs-inside-modal',
           if not @props.isExtLinkOnly
             Tab eventKey: 'instant', title: 'Instant Authorization',
               form {className: 'form-horizontal', action: @_getOAuthUrl(), method: 'POST'},
