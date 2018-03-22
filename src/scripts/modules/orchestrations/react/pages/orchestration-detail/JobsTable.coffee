@@ -42,7 +42,6 @@ JobsTable = React.createClass(
             RefreshIcon(
               isLoading: @props.jobsLoading
               onClick: @props.onJobsReload
-              loaderPosition: 'left'
             )
           )
         )
