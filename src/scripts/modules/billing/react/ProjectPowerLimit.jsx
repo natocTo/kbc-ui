@@ -80,24 +80,28 @@ export default React.createClass({
 
       if (this.state.canEdit || projectPowerLimitUpdated.get('limitValue')) {
         return (
-          <div style={{marginTop: '3em'}}>
-            <h3>
-              {projectPowerLimitUpdated.get('name') + ' '}
-              <small>
-                {'from ' + moment(this.state.dates.dateFrom).format('MMM D, YYYY')}
-                {' to ' + moment(this.state.dates.dateTo).format('MMM D, YYYY')}
-              </small>
-            </h3>
-            <div style={{width: '80%', margin: '0 auto'}}>
-              <div className={classnames('text-center', 'kbc-limit-inner')}>
-                <div style={{position: 'relative'}}>
-                  {this.renderProgress(projectPowerLimitUpdated)}
-                </div>
-                <div style={{marginBottom: '1em'}}>
-                  {this.renderLimit(projectPowerLimitUpdated)}
-                </div>
-                <div>
-                  {this.renderActionButton(projectPowerLimitUpdated)}
+          <div className="tab-content">
+            <div className="tab-pane tab-pane-no-padding active">
+              <div style={{marginTop: '3em'}}>
+                <h3>
+                  {projectPowerLimitUpdated.get('name') + ' '}
+                  <small>
+                    {'from ' + moment(this.state.dates.dateFrom).format('MMM D, YYYY')}
+                    {' to ' + moment(this.state.dates.dateTo).format('MMM D, YYYY')}
+                  </small>
+                </h3>
+                <div style={{width: '80%', margin: '0 auto'}}>
+                  <div className={classnames('text-center', 'kbc-limit-inner')}>
+                    <div style={{position: 'relative'}}>
+                      {this.renderProgress(projectPowerLimitUpdated)}
+                    </div>
+                    <div style={{marginBottom: '1em'}}>
+                      {this.renderLimit(projectPowerLimitUpdated)}
+                    </div>
+                    <div>
+                      {this.renderActionButton(projectPowerLimitUpdated)}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
