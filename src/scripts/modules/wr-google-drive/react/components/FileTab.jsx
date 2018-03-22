@@ -80,9 +80,10 @@ export default React.createClass({
             }}
             views={[
               ViewTemplates.files,
+              ViewTemplates.teamDriveFiles,
               ViewTemplates.sharedFiles,
               ViewTemplates.starredFiles,
-              ViewTemplates.teamDriveFiles
+              ViewTemplates.recentFiles
             ]}
             multiselectEnabled={false}
           />
@@ -113,9 +114,9 @@ export default React.createClass({
                 }}
                 views={[
                   ViewTemplates.rootFolder,
+                  ViewTemplates.teamDriveFolders,
                   ViewTemplates.sharedFolders,
-                  ViewTemplates.starredFolders,
-                  ViewTemplates.teamDriveFolders
+                  ViewTemplates.starredFolders
                 ]}
                 multiselectEnabled={false}
               />

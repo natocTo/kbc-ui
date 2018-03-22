@@ -83,10 +83,10 @@ export default React.createClass({
           requireSheetsApi={true}
           views={[
             ViewTemplates.sheets,
+            ViewTemplates.teamDriveSheets,
             ViewTemplates.sharedSheets,
             ViewTemplates.starredSheets,
-            ViewTemplates.recent,
-            ViewTemplates.teamDrive
+            ViewTemplates.recentSheets
           ]}
         />
 
@@ -168,7 +168,7 @@ export default React.createClass({
   },
 
   remapSheets(fileId, sheets) {
-    const newSheets = sheets.map((sheet) => {
+    return sheets.map((sheet) => {
       const s = sheet.properties;
       const sid = s.sheetId;
       return {
@@ -177,7 +177,6 @@ export default React.createClass({
         isSaved: !!this.props.savedSheets.find((ss) => ss.get('sheetId') === sid && ss.get('fileId') === fileId)
       };
     });
-    return newSheets;
   },
 
 

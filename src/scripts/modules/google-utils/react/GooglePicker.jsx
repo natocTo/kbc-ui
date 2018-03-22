@@ -2,11 +2,11 @@ import React from 'react';
 import _ from 'underscore';
 import {Button} from 'react-bootstrap';
 import * as InitGoogleApis from './InitGoogleApis';
-const {apiKey, authorize, injectGapiScript} = InitGoogleApis;
 import templates from './PickerViewTemplates';
 import {GapiStore} from './GapiFlux';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
+const {apiKey, authorize, injectGapiScript} = InitGoogleApis;
 
 const GDRIVE_SCOPE = [
   'https://www.googleapis.com/auth/drive.readonly'
