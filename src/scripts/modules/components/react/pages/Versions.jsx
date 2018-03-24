@@ -18,7 +18,7 @@ const ITEMS_PER_PAGE = 20;
 
 export default function(componentIdValue, configIdParam = 'config') {
   return React.createClass({
-    mixins: [createStoreMixin(VersionsStore, RoutesStore), immutableMixin],
+    mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
     getStateFromStores() {
       var versions, filteredVersions, query;
