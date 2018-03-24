@@ -19,7 +19,7 @@ import '../../styles.less';
 const ITEMS_PER_PAGE = 20;
 
 export default React.createClass({
-  mixins: [createStoreMixin(VersionsStore, RoutesStore), immutableMixin],
+  mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
   getStateFromStores() {
     var versions, filteredVersions, query;
