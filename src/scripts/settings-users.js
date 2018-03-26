@@ -166,165 +166,169 @@ const App = React.createClass({
                     </li>
                   </ul>
 
-                  <div className="row kbc-header">
-                    All users have full permissions in the project and can add or remove other users
-                    from it.
-                    <a
-                      href="#"
-                      className="pull-right kb-add-new-administrator-modal btn btn-success"
-                      data-toggle="tooltip"
-                      title="Add new user"
-                    >
-                      <i className="kbc-icon-plus" />New User
-                    </a>
-                  </div>
-                  <table className="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                      <th />
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>
-                        MFA{' '}
-                        <span
-                          className="fa fa-question-circle"
-                          data-toggle="tooltip"
-                          title="Multi-Factor Authentication"
-                        />
-                      </th>
-                      <th>Reason</th>
-                      <th>Joined</th>
-                      <th>Expires</th>
-                      <th className="kbc-action-column">
-                        <span className="fa" />Actions
-                      </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr className="">
-                      <td style={{ position: 'relative' }}>
-                        <img
-                          src="https://secure.gravatar.com/avatar/8117e4a19169f5a85ba7a8a77a3f02ef?s=40&amp;d=mm"
-                          width="40"
-                          height="40"
-                          className="kbc-user-avatar"
-                        />
-                      </td>
-                      <td>marc raiser</td>
-                      <td>email address</td>
-                      <td>
-                        <span className="fa fa-check" />
-                      </td>
-                      <td>
-                        <strong>spying:)</strong>
-                      </td>
-                      <td>
-                          <span
-                            className="kb-date-convert"
-                            data-date="2016-07-22T15:37:20+0200"
-                            title="2016-07-22T15:37:20+0200"
+                  <div className="tab-content">
+                    <div className="tab-pane tab-pane-no-padding active">
+                        <div className="kbc-header">
+                          All users have full permissions in the project and can add or remove other users
+                          from it.
+                          <a
+                            href="#"
+                            className="pull-right kb-add-new-administrator-modal btn btn-success"
+                            data-toggle="tooltip"
+                            title="Add new user"
                           >
-                            2016-07-22 15:37
-                          </span>
-                      </td>
-                      <td />
-                      <td>
-                        <div className="kbc-action-column">
-                          <a href="#" className="kb-confirm text-muted">
-                            <span className="kbc-icon-cup" />Remove
+                            <i className="kbc-icon-plus" />New User
                           </a>
                         </div>
-                      </td>
-                    </tr>
-                    <tr className="">
-                      <td style={{ position: 'relative' }}>
-                        <img
-                          src="https://secure.gravatar.com/avatar/0f7ad98cc5b6e8daff602989f0325d63?s=40&amp;d=mm"
-                          width="40"
-                          height="40"
-                          className="kbc-user-avatar"
-                        />
-                      </td>
-                      <td>Martin Halamíček</td>
-                      <td>email address</td>
-                      <td>
-                        <span className="fa fa-check" />
-                      </td>
-                      <td />
-                      <td>
-                        <span className="text-muted">N/A</span>
-                      </td>
-                      <td />
-                      <td>
-                        <div className="kbc-action-column">
-                          <a href="#" className="kb-confirm text-muted">
-                            <span className="kbc-icon-cup" />Remove
-                          </a>
+                        <table className="table table-striped table-hover">
+                          <thead>
+                          <tr>
+                            <th />
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>
+                              MFA{' '}
+                              <span
+                                className="fa fa-question-circle"
+                                data-toggle="tooltip"
+                                title="Multi-Factor Authentication"
+                              />
+                            </th>
+                            <th>Reason</th>
+                            <th>Joined</th>
+                            <th>Expires</th>
+                            <th className="kbc-action-column">
+                              <span className="fa" />Actions
+                            </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr className="">
+                            <td style={{ position: 'relative' }}>
+                              <img
+                                src="https://secure.gravatar.com/avatar/8117e4a19169f5a85ba7a8a77a3f02ef?s=40&amp;d=mm"
+                                width="40"
+                                height="40"
+                                className="kbc-user-avatar"
+                              />
+                            </td>
+                            <td>marc raiser</td>
+                            <td>email address</td>
+                            <td>
+                              <span className="fa fa-check" />
+                            </td>
+                            <td>
+                              <strong>spying:)</strong>
+                            </td>
+                            <td>
+                                <span
+                                  className="kb-date-convert"
+                                  data-date="2016-07-22T15:37:20+0200"
+                                  title="2016-07-22T15:37:20+0200"
+                                >
+                                  2016-07-22 15:37
+                                </span>
+                            </td>
+                            <td />
+                            <td>
+                              <div className="kbc-action-column">
+                                <a href="#" className="kb-confirm text-muted">
+                                  <span className="kbc-icon-cup" />Remove
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr className="">
+                            <td style={{ position: 'relative' }}>
+                              <img
+                                src="https://secure.gravatar.com/avatar/0f7ad98cc5b6e8daff602989f0325d63?s=40&amp;d=mm"
+                                width="40"
+                                height="40"
+                                className="kbc-user-avatar"
+                              />
+                            </td>
+                            <td>Martin Halamíček</td>
+                            <td>email address</td>
+                            <td>
+                              <span className="fa fa-check" />
+                            </td>
+                            <td />
+                            <td>
+                              <span className="text-muted">N/A</span>
+                            </td>
+                            <td />
+                            <td>
+                              <div className="kbc-action-column">
+                                <a href="#" className="kb-confirm text-muted">
+                                  <span className="kbc-icon-cup" />Remove
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr className="">
+                            <td style={{ position: 'relative' }}>
+                              <img
+                                src="https://secure.gravatar.com/avatar/f3d76c19c874d9fbe18e0dd37eaa979a?s=40&amp;d=mm"
+                                width="40"
+                                height="40"
+                                className="kbc-user-avatar"
+                              />
+                            </td>
+                            <td>Tomas Kacur</td>
+                            <td>email address</td>
+                            <td>
+                              <span className="fa fa-check" />
+                            </td>
+                            <td />
+                            <td>
+                                <span
+                                  className="kb-date-convert"
+                                  data-date="2016-04-19T16:41:44+0200"
+                                  title="2016-04-19T16:41:44+0200"
+                                >
+                                  2016-04-19 16:41
+                                </span>
+                            </td>
+                            <td />
+                            <td>
+                              <div className="kbc-action-column">
+                                <a href="#" className="kb-confirm text-muted">
+                                  <span className="kbc-icon-cup" />Remove
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr className="">
+                            <td style={{ position: 'relative' }}>
+                              <img
+                                src="https://secure.gravatar.com/avatar/ecdb3ba33f2ada77650dc6106646c86a?s=40&amp;d=mm"
+                                width="40"
+                                height="40"
+                                className="kbc-user-avatar"
+                              />
+                            </td>
+                            <td>Vladimír Kriška</td>
+                            <td>email address</td>
+                            <td>
+                              <span className="fa fa-check" />
+                            </td>
+                            <td />
+                            <td>
+                              <span className="text-muted">N/A</span>
+                            </td>
+                            <td />
+                            <td>
+                              <div className="kbc-action-column">
+                                <a href="#" className="kb-confirm text-muted">
+                                  <span className="fa fa-sign-out" />Leave
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
                         </div>
-                      </td>
-                    </tr>
-                    <tr className="">
-                      <td style={{ position: 'relative' }}>
-                        <img
-                          src="https://secure.gravatar.com/avatar/f3d76c19c874d9fbe18e0dd37eaa979a?s=40&amp;d=mm"
-                          width="40"
-                          height="40"
-                          className="kbc-user-avatar"
-                        />
-                      </td>
-                      <td>Tomas Kacur</td>
-                      <td>email address</td>
-                      <td>
-                        <span className="fa fa-check" />
-                      </td>
-                      <td />
-                      <td>
-                          <span
-                            className="kb-date-convert"
-                            data-date="2016-04-19T16:41:44+0200"
-                            title="2016-04-19T16:41:44+0200"
-                          >
-                            2016-04-19 16:41
-                          </span>
-                      </td>
-                      <td />
-                      <td>
-                        <div className="kbc-action-column">
-                          <a href="#" className="kb-confirm text-muted">
-                            <span className="kbc-icon-cup" />Remove
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className="">
-                      <td style={{ position: 'relative' }}>
-                        <img
-                          src="https://secure.gravatar.com/avatar/ecdb3ba33f2ada77650dc6106646c86a?s=40&amp;d=mm"
-                          width="40"
-                          height="40"
-                          className="kbc-user-avatar"
-                        />
-                      </td>
-                      <td>Vladimír Kriška</td>
-                      <td>email address</td>
-                      <td>
-                        <span className="fa fa-check" />
-                      </td>
-                      <td />
-                      <td>
-                        <span className="text-muted">N/A</span>
-                      </td>
-                      <td />
-                      <td>
-                        <div className="kbc-action-column">
-                          <a href="#" className="kb-confirm text-muted">
-                            <span className="fa fa-sign-out" />Leave
-                          </a>
-                        </div>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
+                    </div>
                 </div>
               </div>
             </div>
