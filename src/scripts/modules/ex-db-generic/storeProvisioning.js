@@ -43,7 +43,8 @@ export function queryFromRow(row) {
     table: rowConfig.get('table'),
     columns: rowConfig.get('columns'),
     primaryKey: rowConfig.get('primaryKey'),
-    incremental: rowConfig.get('incremental')
+    incremental: rowConfig.get('incremental'),
+    incrementalFetching: rowConfig.get('incrementalFetching')
   });
   if (rowConfig.get('query')) {
     query = query.set('query', rowConfig.get('query')).set('advancedMode', true);

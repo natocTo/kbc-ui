@@ -140,20 +140,22 @@ export function createActions(componentId) {
   }
 
   function getIncrementalCandidates(sourceTables) {
-    return sourceTables.map((table) => {
-      let tableCandidates = table.get('columns').filter((column) => {
+    return sourceTables.reduce((memo, table) => {
+      let qualifyingColumns = table.get('columns').filter((column) => {
         if (column.has('autoIncrement') || column.get('type') === 'timestamp') {
           return column;
         }
       });
-      if (tableCandidates.count() > 0) {
-        return Map({
+      if (qualifyingColumns.count() > 0) {
+        return memo.push(Map({
           tableName: table.get('name'),
           schemaName: table.get('schema'),
-          candidates: tableCandidates
-        });
+          candidates: qualifyingColumns
+        }));
+      } else {
+        return memo;
       }
-    });
+    }, List());
   }
 
   return {
@@ -457,7 +459,8 @@ export function createActions(componentId) {
           }
           updateLocalState(configId, storeProvisioning.sourceTablesPath, fromJS(data.tables));
           if (store.isRowConfiguration()) {
-            updateLocalState(configId, storeProvisioning.incrementalCandidatesPath, getIncrementalCandidates(fromJS(data.tables)));
+            let candidates = getIncrementalCandidates(fromJS(data.tables));
+            updateLocalState(configId, storeProvisioning.incrementalCandidatesPath, candidates);
           }
           updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, false);
         });

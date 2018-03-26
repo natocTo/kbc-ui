@@ -138,10 +138,11 @@ export default React.createClass({
     }
     let selectedTable = this.props.query.get('table');
     let candidateTable = this.props.incrementalCandidates.find((candidate) => {
-      return candidate.get('tableName') === selectedTable.get('tableName');
+      return candidate.get('name') === selectedTable.get('tableName')
+        && candidate.get('schema') === selectedTable.get('schema');
     });
     if (candidateTable) {
-      return candidateTable.get('candidates').map((candidate) => {
+      return candidateTable.get('columns').map((candidate) => {
         return {
           value: candidate.get('name'),
           label: candidate.get('name')
