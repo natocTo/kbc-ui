@@ -75,8 +75,10 @@ export default React.createClass({
             }}
             views={[
               ViewTemplates.sheets,
+              ViewTemplates.teamDriveSheets,
               ViewTemplates.sharedSheets,
-              ViewTemplates.starredSheets
+              ViewTemplates.starredSheets,
+              ViewTemplates.recentSheets
             ]}
             multiselectEnabled={false}
           />
@@ -107,6 +109,7 @@ export default React.createClass({
                 }}
                 views={[
                   ViewTemplates.rootFolder,
+                  ViewTemplates.teamDriveFolders,
                   ViewTemplates.sharedFolders,
                   ViewTemplates.starredFolders
                 ]}

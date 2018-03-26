@@ -2,11 +2,11 @@ import React from 'react';
 import _ from 'underscore';
 import {Button} from 'react-bootstrap';
 import * as InitGoogleApis from './InitGoogleApis';
-const {apiKey, authorize, injectGapiScript} = InitGoogleApis;
 import templates from './PickerViewTemplates';
 import {GapiStore} from './GapiFlux';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 
+const {apiKey, authorize, injectGapiScript} = InitGoogleApis;
 
 const GDRIVE_SCOPE = [
   'https://www.googleapis.com/auth/drive.readonly'
@@ -32,7 +32,9 @@ const authorizePicker = (userEmail, scope, callbackFn) => {
 };
 
 const createGdrivePicker = (viewsParam, viewGroups) => {
-  let picker = new window.google.picker.PickerBuilder().setDeveloperKey(apiKey);
+  let picker = new window.google.picker.PickerBuilder()
+    .setDeveloperKey(apiKey)
+    .enableFeature(window.google.picker.Feature.SUPPORT_TEAM_DRIVES);
 
   let views = viewsParam;
   if (_.isEmpty(views)) views = [templates.root];
