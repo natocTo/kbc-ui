@@ -149,7 +149,7 @@ export function createActions(componentId) {
       if (qualifyingColumns.count() > 0) {
         return memo.push(Map({
           tableName: table.get('name'),
-          schemaName: table.get('schema'),
+          schema: table.get('schema'),
           candidates: qualifyingColumns
         }));
       } else {
