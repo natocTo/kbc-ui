@@ -111,6 +111,7 @@ export default function(configId) {
     var params = {
       federationToken: true,
       notify: false,
+      isEncrypted: true,
       name: getLocalState().get('file').name,
       sizeBytes: getLocalState().get('file').size
     };
@@ -133,6 +134,7 @@ export default function(configId) {
         Key: response.uploadParams.key,
         Bucket: response.uploadParams.bucket,
         ACL: response.uploadParams.acl,
+        ServerSideEncryption: response.uploadParams['x-amz-server-side-encryption'],
         Body: getLocalState().get('file')
       };
       const credentials = response.uploadParams.credentials;
