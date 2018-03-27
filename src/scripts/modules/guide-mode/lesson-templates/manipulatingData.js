@@ -21,7 +21,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Bucket',
-      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-sm">+ New Transformation Bucket</span> and name it, e.g., _Guide bucket_. Then click <span class="btn btn-success btn-sm">Create Bucket</span>.',
+      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-sm">+ New Transformation Bucket</span> and name it, e.g., _Guide_. Then click <span class="btn btn-success btn-sm">Create Bucket</span>.',
       'media': '',
       'mediaType': '',
       'route': {
@@ -61,7 +61,7 @@ export default {
       + `<br><br>
 **Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.cars* as the Source. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. <br> Click again on <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.countries* as the Source. Accept the suggested destination. Click <span class="btn btn-success btn-sm">Create Input</span>.
 <br/><br/>
-**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and type \`cars_population\` as the Source. This table will be created in the transformation. Then set the Destination. Set \`out\` stage. Accept \`c-guide-bucket\` as a bucket name. Accept \`cars_population\` as a table. It’s a name for the new table *cars_population* that will be created in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
+**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and type \`cars_population\` as the Source. This table will be created in the transformation. Then set the Destination. Set \`out\` stage. Accept \`c-guide\` as a bucket name. Accept \`cars_population\` as a table. It’s a name for the new table *cars_population* that will be created in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
 <br/><br/>
 **Queries** — to create your output table, copy the following code and replace the default text with it: <br/> <pre><code>CREATE TABLE "cars_population" 
 AS SELECT 
@@ -122,7 +122,7 @@ To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa f
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Check Storage',
-      'markdown': 'To see what the final table looks like, check its data sample in Storage. Just click on the bucket **out.c-snowflake** on the left. Then click on the table *cars_population* and select the tab **Data sample**.<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
+      'markdown': 'To see what the final table looks like, check its data sample in Storage. Just click on the bucket **out.c-guide** on the left. Then click on the table *cars_population* and select the tab **Data sample**.<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'media': '',
       'mediaType': '',
       'route': {
