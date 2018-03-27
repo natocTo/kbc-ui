@@ -1,7 +1,7 @@
 import React from 'react';
 import InvalidQuery from './InvalidQuery';
-import MissingInput from './MissingInput';
-import MissingOutput from './MissingOutput';
+import InvalidInput from './InvalidInput';
+import InvalidOutput from './InvalidOutput';
 
 export default React.createClass({
   propTypes: {
@@ -28,9 +28,9 @@ export default React.createClass({
                     onClick={this.props.onRedirect}
                   />
                 );
-              case 'table':
+              case 'input':
                 return (
-                  <MissingInput
+                  <InvalidInput
                     bucketId={this.props.bucketId}
                     key={index}
                     transformationId={error.get('transformation')}
@@ -41,7 +41,7 @@ export default React.createClass({
                 );
               case 'output':
                 return (
-                  <MissingOutput
+                  <InvalidOutput
                     bucketId={this.props.bucketId}
                     key={index}
                     transformationId={error.get('transformation')}
