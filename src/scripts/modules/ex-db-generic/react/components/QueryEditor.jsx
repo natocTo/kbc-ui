@@ -93,7 +93,7 @@ export default React.createClass({
   },
 
   handleIncrementalFetchingChange(newValue) {
-    return this.props.onChange(this.props.query.set('incrementalFetching', newValue));
+    return this.props.onChange(this.props.query.set('incrementalFetchingColumn', newValue));
   },
 
   handleQueryChange(data) {
@@ -132,15 +132,19 @@ export default React.createClass({
     }
   },
 
+  getCandidateTable() {
+    let selectedTable = this.props.query.get('table');
+    return this.props.incrementalCandidates.find((candidate) => {
+      return candidate.get('tableName') === selectedTable.get('tableName')
+        && candidate.get('schema') === selectedTable.get('schema');
+    });
+  },
+
   incrementalFetchingOptions() {
     if (!this.props.incrementalCandidates || this.props.query.get('table') === '') {
       return [];
     }
-    let selectedTable = this.props.query.get('table');
-    let candidateTable = this.props.incrementalCandidates.find((candidate) => {
-      return candidate.get('tableName') === selectedTable.get('tableName')
-        && candidate.get('schema') === selectedTable.get('schema');
-    });
+    let candidateTable = this.getCandidateTable();
     if (candidateTable) {
       return candidateTable.get('candidates').map((candidate) => {
         return {
@@ -150,6 +154,20 @@ export default React.createClass({
       }).toJS();
     } else {
       return [];
+    }
+  },
+
+  incrementalFetchingWarning() {
+    if (this.props.query.get('incrementalFetchingColumn')) {
+      let candidateTable = this.getCandidateTable();
+      let candidateColumn = candidateTable.get('candidates').find((column) =>
+        column.get('name') === this.props.query.get('incrementalFetchingColumn')
+      );
+      if (candidateColumn.get('autoIncrement')) {
+        return 'Note: Using an autoIncrement ID means that only new records will be fetched, not updates or deletes.';
+      } else {
+        return 'Note: Using an update timestamp column means that only new and updated records will be fetched, not deletes.';
+      }
     }
   },
 
@@ -509,32 +527,21 @@ export default React.createClass({
 
   renderIncrementalFetching() {
     if (this.props.isConfigRow && this.incrementalFetchingOptions().length > 0) {
-      var candidateSelector = (
-        <Select
-          name="incrementalFetching"
-          value={this.props.query.get('incrementalFetching') || ''}
-          placeholder="Select the column to be used for incremental fetching"
-          onChange={this.handleIncrementalFetchingChange}
-          options={this.incrementalFetchingOptions()}
-          disabled={this.props.disabled}
-        />
-      );
       return (
         <div className="form-group">
           <label className="col-md-3 control-label">Incremental Fetching</label>
           <div className="col-md-9">
-            <TableLoader
-              componentId={this.props.componentId}
-              configId={this.props.configId}
-              isLoadingSourceTables={this.props.isLoadingSourceTables}
-              isTestingConnection={this.props.isTestingConnection}
-              validConnection={this.props.validConnection}
-              tableSelectorElement={candidateSelector}
-              refreshMethod={this.props.refreshMethod}
+            <Select
+              name="incrementalFetching"
+              value={this.props.query.get('incrementalFetchingColumn') || ''}
+              placeholder="Select the column to be used for incremental fetching"
+              onChange={this.handleIncrementalFetchingChange}
+              options={this.incrementalFetchingOptions()}
+              disabled={this.props.disabled}
             />
             <div className="help-block">
-              If incremental fetchingload is turned on,
-              only newly created or updated records since the last run will be fetched from the source database.
+              Only newly created or updated records since the last run will be fetched.<br/>
+              <span className="text-warning">{this.incrementalFetchingWarning()}</span>
             </div>
           </div>
         </div>

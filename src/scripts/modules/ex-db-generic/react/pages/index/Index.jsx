@@ -11,6 +11,7 @@ import VersionsStore from '../../../../components/stores/VersionsStore';
 
 import QueryTable from './QueryTable';
 import CreateQueryElement from '../../components/CreateQueryElement';
+import MigrateToRowsButton from '../../components/MigrateToRowsButton';
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
 import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
@@ -71,7 +72,8 @@ export default function(componentId) {
         validConnection: ExDbStore.isConnectionValid(),
         isTestingConnection: ExDbStore.isTestingConnection(),
         hasConnectionBeenTested: ExDbStore.hasConnectionBeenTested(),
-        localState: ExDbStore.getLocalState()
+        localState: ExDbStore.getLocalState(),
+        isRowConfiguration: ExDbStore.isRowConfiguration()
       };
     },
 
@@ -124,7 +126,9 @@ export default function(componentId) {
               queries={this.state.queriesFiltered}
               configurationId={this.state.configId}
               componentId={componentId}
-              pendingActions={this.state.pendingActions}/>
+              pendingActions={this.state.pendingActions}
+              isRowConfiguration={this.state.isRowConfiguration}
+            />
           );
         } else {
           return (
@@ -214,6 +218,21 @@ export default function(componentId) {
       }
     },
 
+    renderMigrationToRowsButton() {
+      if (actionsProvisioning.componentSupportsConfigRows(componentId) && !this.state.isRowConfiguration) {
+        return (
+          <div className="row component-empty-state text-center">
+            <p>Please migrate the configuration to the newest version</p>
+            <MigrateToRowsButton
+              componentId={componentId}
+              configId={this.state.configId}
+              actionsProvisioning={actionsProvisioning}
+            />
+          </div>
+        );
+      }
+    },
+
     render() {
       const configurationId = this.state.configId;
       return (
@@ -258,6 +277,7 @@ export default function(componentId) {
             </div>
             <ul className="nav nav-stacked">
               {this.renderCredentialsLink()}
+              {this.renderMigrationToRowsButton()}
               <li className={classnames({ disabled: !this.state.hasEnabledQueries })}>
                 <RunComponentButton
                   title="Run Extraction"

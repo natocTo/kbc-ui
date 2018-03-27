@@ -40,11 +40,12 @@ export function queryFromRow(row) {
     name: row.get('name'),
     enabled: !row.get('isDisabled'),
     outputTable: rowConfig.get('outputTable'),
-    table: rowConfig.get('table'),
+    table: rowConfig.get('table') || null,
     columns: rowConfig.get('columns'),
     primaryKey: rowConfig.get('primaryKey'),
     incremental: rowConfig.get('incremental'),
-    incrementalFetching: rowConfig.get('incrementalFetching')
+    incrementalFetchingColumn: rowConfig.get('incrementalFetchingColumn'),
+    state: rowConfig.get('state')
   });
   if (rowConfig.get('query')) {
     query = query.set('query', rowConfig.get('query')).set('advancedMode', true);
@@ -54,7 +55,7 @@ export function queryFromRow(row) {
 
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
-  if (componentSupportsConfigRows(componentId) && (!config.hasIn(['parameters', 'tables']) || config.getIn(['parameters', 'tables']).count() === 0)) {
+  if (componentSupportsConfigRows(componentId) && !config.hasIn(['parameters', 'tables'])) {
     const rows = store.getConfigRows(componentId, configId);
     const queries = rows.map((row) => {
       return queryFromRow(row);

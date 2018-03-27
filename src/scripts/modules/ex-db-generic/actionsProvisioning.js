@@ -313,8 +313,17 @@ export function createActions(componentId) {
         }
         runQuery = runQuery.delete('advancedMode');
       }
-      const runData = store.configData.setIn(['parameters', 'tables'], List().push(runQuery));
-      return runData;
+      if (store.isRowConfiguration()) {
+        return {
+          config: configId,
+          row: runQuery.get('id').toString()
+        };
+      } else {
+        return {
+          config: configId,
+          configData: store.configData.setIn(['parameters', 'tables'], List().push(runQuery))
+        };
+      }
     },
 
     resetQueryEdit(configId, queryId) {
@@ -465,6 +474,21 @@ export function createActions(componentId) {
           updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, false);
         });
       }
+    },
+
+    migrateConfig(configId) {
+      const store = getStore(configId);
+      const queries = store.getQueries();
+      queries.map((query) => {
+        let rowData = storeProvisioning.rowDataFromQuery(query);
+        let diffMsg = 'Migrating query ' + query.get('name') + ' to configuration row';
+        createConfigRow(configId, rowData, ['migrationSaving', query.get('id').toString()], diffMsg).then(() => {
+          removeFromLocalState(configId, ['migrationSaving', query.get('id').toString()]);
+        });
+      });
+      const newData = store.configData.deleteIn(['parameters', 'tables']);
+      const diffMsg = 'Migrating configuration to rows ';
+      return saveConfigData(configId, newData, ['migrationPending'], diffMsg);
     }
   };
 }
