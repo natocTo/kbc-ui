@@ -62,7 +62,7 @@ function fetch(componentId, configId) {
     }).toList();
     const setConfig = config.setIn(['parameters', 'tables'], queries);
     return {
-      config: setConfig || Map(),
+      config: config || Map(),
       parameters: setConfig.get('parameters', Map()),
       localState: store.getLocalState(componentId, configId) || Map(),
       configurationType: rowConfigurationType

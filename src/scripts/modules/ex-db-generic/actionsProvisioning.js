@@ -195,7 +195,10 @@ export function createActions(componentId) {
       const store = getStore(configId);
       let newCredentials = store.getNewCredentials();
       newCredentials = updateProtectedProperties(newCredentials, store.getCredentials());
-      const newData = store.configData.setIn(['parameters', 'db'], newCredentials);
+      let newData = store.configData.setIn(['parameters', 'db'], newCredentials);
+      if (store.isRowConfiguration()) {
+        newData = newData.deleteIn(['parameters', 'tables']);
+      }
       const diffMsg = 'Save new credentials';
       return saveConfigData(configId, newData, ['isSavingCredentials'], diffMsg).then(() => {
         this.resetNewCredentials(configId);
@@ -208,7 +211,10 @@ export function createActions(componentId) {
       const store = getStore(configId);
       let credentials = store.getEditingCredentials();
       credentials = updateProtectedProperties(credentials, store.getCredentials());
-      const newConfigData = store.configData.setIn(['parameters', 'db'], credentials);
+      let newConfigData = store.configData.setIn(['parameters', 'db'], credentials);
+      if (store.isRowConfiguration()) {
+        newConfigData = newConfigData.deleteIn(['parameters', 'tables']);
+      }
       const diffMsg = 'Update credentials';
       return saveConfigData(configId, newConfigData, ['isSavingCredentials'], diffMsg).then(() => {
         this.cancelCredentialsEdit(configId);
@@ -220,8 +226,8 @@ export function createActions(componentId) {
     testCredentials(configId, credentials) {
       const store = getStore(configId);
       const testingCredentials = updateProtectedProperties(credentials, store.getCredentials());
-      let runData = store.configData.setIn(['parameters', 'tables'], List());
-      runData = runData.setIn(['parameters', 'db'], testingCredentials);
+      let runData = store.configData.setIn(['parameters', 'db'], testingCredentials);
+      runData = runData.setIn(['parameters', 'tables'], List());
       const params = {
         configData: runData.toJS()
       };
@@ -262,11 +268,11 @@ export function createActions(componentId) {
       });
       const prefixMsg = !!newValue ? 'Enable' : 'Disable';
       const diffMsg = prefixMsg + ' query ' + store.getQueryName(qid);
-      const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       if (store.isRowConfiguration()) {
         let query = newQueries.find((q) => q.get('id') === qid);
         return updateConfigRow(configId, qid, query, ['pending', qid, 'enabled'], diffMsg);
       }
+      const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       return saveConfigData(configId, newData, ['pending', qid, 'enabled'], diffMsg);
     },
 
@@ -455,8 +461,8 @@ export function createActions(componentId) {
       const credentials = store.getCredentials();
       updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
       if (store.hasValidCredentials(credentials)) {
-        let runData = store.configData.setIn(['parameters', 'tables'], List());
-        runData = runData.setIn(['parameters', 'db'], store.getCredentials());
+        let runData = store.configData.setIn(['parameters', 'db'], store.getCredentials());
+        runData = runData.setIn(['parameters', 'tables'], List());
         const params = {
           configData: runData.toJS()
         };
