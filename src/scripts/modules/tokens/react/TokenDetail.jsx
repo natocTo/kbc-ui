@@ -75,23 +75,21 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           {this.state.token ?
-           <Tabs className="indigo-ui-tabs" id="token-detail-tabs" animation={false}>
-             <Tab title="Overview" eventKey="overview" style={{paddingTop: 0}}>
-               <div className="kbc-inner-content-padding-fix">
-                 <div className="form form-horizontal" style={{marginLeft: 0, marginRight: 0}}>
-                   <div className="form-group">
-                     <div className="col-sm-12 text-right">
-                       <SaveButtons
-                         isSaving={this.state.isSaving}
-                         disabled={!this.isValid()}
-                         isChanged={!this.state.token.equals(this.state.dirtyToken)}
-                         onSave={this.handleSaveToken}
-                         onReset={this.handleClose}
-                       />
-                     </div>
+           <Tabs id="token-detail-tabs" animation={false}>
+             <Tab title="Overview" eventKey="overview">
+               <div className="form form-horizontal">
+                 <div className="form-group">
+                   <div className="col-sm-12 text-right">
+                     <SaveButtons
+                       isSaving={this.state.isSaving}
+                       disabled={!this.isValid()}
+                       isChanged={!this.state.token.equals(this.state.dirtyToken)}
+                       onSave={this.handleSaveToken}
+                       onReset={this.handleClose}
+                     />
                    </div>
-                   {this.renderTokenEditor(true)}
                  </div>
+                 {this.renderTokenEditor(true)}
                </div>
              </Tab>
              <Tab title="Events" eventKey="events">

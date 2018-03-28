@@ -43,14 +43,18 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           <SettingsTabs active="settings-limits" />
-          {this.state.sections.map((section) => {
-            return React.createElement(LimitsSection, {
-              section: section,
-              keenClient: this.state.client,
-              isKeenReady: this.state.isKeenReady,
-              canEdit: this.state.canEdit
-            });
-          }, this)}
+          <div className="tab-content">
+            <div className="tab-pane tab-pane-no-padding active">
+              {this.state.sections.map((section) => {
+                return React.createElement(LimitsSection, {
+                  section: section,
+                  keenClient: this.state.client,
+                  isKeenReady: this.state.isKeenReady,
+                  canEdit: this.state.canEdit
+                });
+              }, this)}
+            </div>
+          </div>
         </div>
       </div>
     );

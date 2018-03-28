@@ -20,14 +20,18 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           <SettingsTabs active="settings-project-power" />
-          <div className="kbc-header">
-            <div className="row">
-              <div className="col-md-6">
-                <Graph/>
-                <ProjectPowerLimit/>
-              </div>
-              <div className="col-md-6">
-                <UsageByMonth />
+          <div className="tab-content">
+            <div className="tab-pane tab-pane-no-padding active">
+              <div className="kbc-header">
+                <div className="row">
+                  <div className="col-md-6">
+                    <Graph/>
+                    <ProjectPowerLimit/>
+                  </div>
+                  <div className="col-md-6">
+                    <UsageByMonth />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

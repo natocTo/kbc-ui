@@ -332,7 +332,9 @@ module.exports = React.createClass
 
   _renderLogRow: (job) ->
     div null,
-      h2 className: 'mx-4', 'Log'
+      div className: 'form-group',
+        div className: 'col-xs-12',
+          h2 null, 'Log'
       Events
         link:
           to: 'jobDetail'

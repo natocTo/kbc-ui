@@ -53,7 +53,7 @@ export default React.createClass({
             query={this.query('query', Map())}
             apiVersion={this.props.apiVersion}
           />
-          <Tabs defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs" className="indigo-ui-tabs">
+          <Tabs className="tabs-inside-modal" defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs">
             <Tab title="General" eventKey={1}>
               <div className="form-horizontal">
                 {this.renderTemplateSelect()}
@@ -117,23 +117,31 @@ export default React.createClass({
 
   renderDateRangeSelector() {
     return (
-      <div className="text-right mb-2">
-        <DateRangeSelector
-          query={this.query()}
-          updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-        />
+      <div className="form-group">
+        <div className="col-xs-12">
+          <div className="text-right">
+            <DateRangeSelector
+              query={this.query()}
+              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+            />
+          </div>
+        </div>
       </div>
     );
   },
 
   renderTemplateSelect() {
     return (
-      <div className="text-right mb-2">
-        <TemplateSelector
-          templates={this.props.queryTemplates}
-          query={this.query()}
-          updateQueryFn={(query) => this.updateLocalState(['query'], query)}
-        />
+      <div className="form-group">
+        <div className="col-xs-12">
+          <div className="text-right">
+            <TemplateSelector
+              templates={this.props.queryTemplates}
+              query={this.query()}
+              updateQueryFn={(query) => this.updateLocalState(['query'], query)}
+            />
+          </div>
+        </div>
       </div>
     );
   },

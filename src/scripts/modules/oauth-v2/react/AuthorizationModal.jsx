@@ -63,7 +63,7 @@ export default React.createClass({
               activeKey={this.state.activeTab}
               onSelect={this.goToTab}
               animation={false}
-              className="indigo-ui-tabs"
+              className="tabs-inside-modal"
             >
               <Tab eventKey="instant" title="Instant authorization">
                 {this.renderInstant()}

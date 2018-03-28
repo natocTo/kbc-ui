@@ -69,11 +69,10 @@ OrchestrationJobDetail = React.createClass
               Tabs
                 defaultActiveKey: @state.openedTab
                 animation: false
-                id: 'orchestration-job-detail-tabs'
-                className: 'indigo-ui-tabs',
-                  Tab eventKey: 'overview', title: 'Overview', className: 'no-top-padding',
+                id: 'orchestration-job-detail-tabs',
+                  Tab eventKey: 'overview', title: 'Overview', className: 'tab-pane-no-padding',
                     JobOverview(job: @state.job)
-                  Tab eventKey: 'log', title: 'Log', className: 'no-top-padding',
+                  Tab eventKey: 'log', title: 'Log',
                     Events
                       link:
                         to: 'orchestrationJob'

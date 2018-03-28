@@ -90,8 +90,8 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
-        <div className="mx-4">
+      <div className="form-group">
+        <div className="col-xs-12">
           <SearchRow
             query={this.state.searchQuery}
             onSubmit={this._handleQueryChange}

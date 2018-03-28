@@ -56,13 +56,17 @@ export default React.createClass({
 
   renderButtons() {
     return (
-      <div className="text-right">
-        <SaveButtons
-          isSaving={this.state.localState.get('isSaving', false)}
-          isChanged={this.state.localState.get('isChanged', false)}
-          onSave={this.state.actions.editSave}
-          onReset={this.state.actions.editReset}
-            />
+      <div className="form-group">
+        <div className="col-xs-12">
+          <div className="text-right">
+            <SaveButtons
+              isSaving={this.state.localState.get('isSaving', false)}
+              isChanged={this.state.localState.get('isChanged', false)}
+              onSave={this.state.actions.editSave}
+              onReset={this.state.actions.editReset}
+                />
+          </div>
+        </div>
       </div>
     );
   },
@@ -73,7 +77,6 @@ export default React.createClass({
         defaultActiveEventKey={1}
         animation={false}
         id="modules-ex-s3-react-pages-index-index-tabbed-area"
-        className="indigo-ui-tabs"
       >
         <Tab title="General" eventKey={1}>
           <Settings
@@ -117,13 +120,13 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <div className="row kbc-header">
             <ComponentDescription
               componentId={COMPONENT_ID}
               configId={this.state.configId}
             />
           </div>
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <div>
             {this.renderButtons()}
             {this.renderSettings()}
           </div>
