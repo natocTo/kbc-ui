@@ -22,6 +22,8 @@ SearchRow = require('../../../../../react/common/SearchRow').default
 actionProvisioning = require '../../../actionsProvisioning'
 LatestVersions = React.createFactory(require('../../../../components/react/components/SidebarVersionsWrapper').default)
 
+CreateQueryElement = React.createFactory(require('../../components/CreateQueryElement').default)
+
 {div, table, tbody, tr, td, ul, li, i, a, p, span, h2, p, strong, br, button} = React.DOM
 
 module.exports = (componentId) ->
@@ -89,20 +91,18 @@ module.exports = (componentId) ->
               configurationId: @state.configId
               componentId: componentId
               pendingActions: @state.pendingActions
+              actionCreators: actionCreators
           else
             @_renderNotFound()
         else if @state.hasCredentials
           div className: 'row component-empty-state text-center',
             p null,
               'No queries configured yet.'
-            Link
-              to: "ex-db-generic-#{componentId}-new-query"
-              params:
-                config: @state.configId
-              className: 'btn btn-success'
-            ,
-              i className: 'kbc-icon-plus'
-              'New Export'
+            CreateQueryElement
+              isNav: false,
+              componentId: componentId,
+              configurationId: @state.configId,
+              actionCreators: actionCreators
 
     renderSidebar: ->
       configurationId = @state.configId

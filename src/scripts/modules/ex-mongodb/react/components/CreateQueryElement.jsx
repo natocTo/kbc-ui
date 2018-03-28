@@ -1,7 +1,5 @@
 import React from 'react';
-
-import {Navigation} from 'react-router';
-
+import { Navigation } from 'react-router';
 
 export default React.createClass({
   displayName: 'CreateQueryElement',
@@ -10,12 +8,11 @@ export default React.createClass({
     isNav: React.PropTypes.bool.isRequired,
     configurationId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string,
-    actionsProvisioning: React.PropTypes.object.isRequired
+    actionCreators: React.PropTypes.object.isRequired
   },
 
   createQuery() {
-    const ExDbActionCreators = this.props.actionsProvisioning.createActions(this.props.componentId);
-    let query = ExDbActionCreators.createNewQuery(this.props.configurationId);
+    let query = this.props.actionCreators.createNewQuery(this.props.configurationId);
     this.transitionTo(
       'ex-db-generic-' + this.props.componentId + '-query',
       {
@@ -40,7 +37,7 @@ export default React.createClass({
           className="btn btn-success"
           onClick={this.createQuery}
         >
-          <i className="kbc-icon-plus"/> New Table
+          <i className="kbc-icon-plus"/> New Export
         </button>
       );
     }

@@ -69,7 +69,7 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
                 configurationId: @state.configId
                 filter: @state.queriesFilter
                 componentId: componentId
-                actionsProvisioning: actionsProvisioning
+                actionCreators: ExDbActionCreators
                 navQuery: @state.editingQuery || Map()
                 editingQueries: @state.editingQueries || List()
                 newQueries: @state.newQueries || List()

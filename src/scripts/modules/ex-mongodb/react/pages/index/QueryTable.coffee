@@ -6,6 +6,8 @@ QueryRow = React.createFactory(require './QueryRow')
 LinkToBucket = React.createFactory require('./../../components/LinkToBucket').default
 Link = React.createFactory(require('react-router').Link)
 
+CreateQueryElement = React.createFactory(require('../../components/CreateQueryElement').default)
+
 {span, div, i, strong, p} = React.DOM
 
 module.exports = React.createClass
@@ -16,6 +18,7 @@ module.exports = React.createClass
     configurationId: React.PropTypes.string
     componentId: React.PropTypes.string
     pendingActions: React.PropTypes.object
+    actionCreators: React.PropTypes.object
 
   render: ->
     childs = @props.queries.map((query) ->
@@ -31,14 +34,11 @@ module.exports = React.createClass
 
       div className: 'kbc-inner-padding',
         div className: 'text-right',
-          Link
-            to: "ex-db-generic-#{@props.componentId}-new-query"
-            params:
-              config: @props.configurationId
-            className: 'btn btn-success'
-          ,
-            i className: 'kbc-icon-plus'
-            'New Export'
+          CreateQueryElement
+            isNav: false,
+            componentId: @props.componentId,
+            configurationId: @props.configurationId,
+            actionCreators: @props.actionCreators
         p null,
           'Output bucket: '
           LinkToBucket
