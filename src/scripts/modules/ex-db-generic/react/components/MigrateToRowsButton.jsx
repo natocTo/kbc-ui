@@ -1,13 +1,11 @@
 import React from 'react';
-import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   displayName: 'MigrateToRowsButton',
   propTypes: {
     componentId: React.PropTypes.string,
     configId: React.PropTypes.string.isRequired,
-    actionsProvisioning: React.PropTypes.object.isRequired,
-    isPending: React.PropTypes.bool
+    actionsProvisioning: React.PropTypes.object.isRequired
   },
 
   migrateConfig() {
@@ -16,21 +14,13 @@ export default React.createClass({
   },
 
   render() {
-    if (this.props.isPending) {
-      return (
-        <span className="btn">
-          <Loader/>
-        </span>
-      );
-    } else {
-      return (
-          <button
-            className="btn"
-            onClick={this.migrateConfig}
-          >
-            Migrate configuration
-          </button>
-      );
-    }
+    return (
+        <button
+          className="btn btn-success"
+          onClick={this.migrateConfig}
+        >
+          Migrate configuration
+        </button>
+    );
   }
 });

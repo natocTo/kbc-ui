@@ -173,19 +173,6 @@ export default React.createClass({
     }
   },
 
-  renderlastFetchedInfo() {
-    if (this.props.query.get('incrementalFetchingColumn')) {
-      let queryState = this.props.query.get('state');
-      if (queryState.has('lastFetchedRow')) {
-        return (
-          <div>
-            Last fetched record had `{this.props.query.get('incrementalFetchingColumn')} = {queryState.get('lastFetchedRow')}`
-          </div>
-        );
-      }
-    }
-  },
-
   tableSelectOptions() {
     return this.props.tables.map(function(table) {
       return table.get('id');
@@ -561,6 +548,19 @@ export default React.createClass({
           </div>
         </div>
       );
+    }
+  },
+
+  renderlastFetchedInfo() {
+    if (this.props.query.get('incrementalFetchingColumn')) {
+      let queryState = this.props.query.get('state');
+      if (queryState.has('lastFetchedRow')) {
+        return (
+          <div>
+            Last fetched record had <strong>{this.props.query.get('incrementalFetchingColumn')}</strong> = {queryState.get('lastFetchedRow')}`
+          </div>
+        );
+      }
     }
   }
 });
