@@ -82,7 +82,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <div className="kbc-header kbc-header-with-bottom-border">
             <ComponentDescription
                 componentId={COMPONENT_ID}
                 configId={this.state.configId}
@@ -90,7 +90,7 @@ export default React.createClass({
           </div>
             {this.state.store.requestedEmail ?
                 <div>
-                <div className="kbc-inner-content-padding-fix with-bottom-border">
+                <div className="kbc-header kbc-header-with-bottom-border">
             <Form horizontal>
               <FormGroup>
                 <Col componentClass={ControlLabel} sm={4}>
@@ -177,7 +177,7 @@ export default React.createClass({
     } else {
       // if we either have email or it is being generated
       return (
-         <div className="kbc-inner-content-padding-fix with-bottom-border">
+         <div className="kbc-header kbc-header-with-bottom-border">
            <p>
              <RefreshIcon isLoading={true}/> Generating email address, please wait.
            </p>
