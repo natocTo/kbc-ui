@@ -1,15 +1,16 @@
 import Immutable, {Map} from 'immutable';
-export default {
-  createConfiguration(localState) {
-    const tableId = localState.get('tableId');
-    const title = localState.get('title');
-    const identifier = localState.get('identifier');
-    const params = {[tableId]: {title, identifier}};
-    return Immutable.fromJS({
-      parameters: params
-    });
-  },
+const createConfiguration = (localState) => {
+  const tableId = localState.get('tableId');
+  const title = localState.get('title');
+  const identifier = localState.get('identifier');
+  const params = {[tableId]: {title, identifier}};
+  return Immutable.fromJS({
+    parameters: params
+  });
+};
 
+export default {
+  createConfiguration,
   parseConfiguration(configuration) {
     const params = configuration.get('parameters', Map());
     const tableId = params.keySeq().first();
@@ -22,6 +23,6 @@ export default {
   },
 
   createEmptyConfiguration(name, webalizedName) {
-    return this.createConfiguration(Immutable.fromJS({name: webalizedName, parameters: {[name]: {}}}));
+    return createConfiguration(Immutable.fromJS({name: webalizedName, parameters: {[name]: {}}}));
   }
 };

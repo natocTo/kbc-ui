@@ -18,7 +18,7 @@ const routeSettings = {
       render: DimensionsSection,
       onSave: dimensionsAdapter.createConfiguratio,
       onLoad: dimensionsAdapter.parseConfiguration,
-      isComplete: true
+      isComplete: () => true
     }
   },
   row: {
@@ -29,7 +29,7 @@ const routeSettings = {
       onSave: title.createConfiguration,
       onLoad: title.parseConfiguration,
       onCreate: title.createEmptyConfiguration,
-      isComplete: true
+      isComplete: () => true
     },
     columns: [
       {
@@ -62,4 +62,6 @@ const routeSettings = {
   }
 };
 
-export default createRoute(routeSettings);
+const result = createRoute(routeSettings);
+
+export default result;
