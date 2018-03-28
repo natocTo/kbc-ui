@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import SqlDepAnalyzerApi from '../../../sqldep-analyzer/Api';
+import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -80,7 +81,7 @@ export default React.createClass({
       return (
         <span>
           <p>
-            SQLdep is ready at <a href={this.state.sqlDepUrl} target="_blank">{this.state.sqlDepUrl}</a>.
+            SQLdep is ready at <ExternalLink href={this.state.sqlDepUrl}>{this.state.sqlDepUrl}</ExternalLink>.
           </p>
         </span>
       );
@@ -92,7 +93,7 @@ export default React.createClass({
         <span>
           <p>
             Visual SQL analysis will send the SQL queries (including comments) and table details to
-            {' '}<a href="https://sqldep.com/">SQLdep API</a>.
+            {' '}<ExternalLink href="https://sqldep.com/">SQLdep API</ExternalLink>.
             Although the URL will be only available to you, the result is not secured any further.
           </p>
           {this.renderSqlDepUrl()}
