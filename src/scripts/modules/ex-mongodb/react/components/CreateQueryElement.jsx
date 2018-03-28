@@ -14,7 +14,7 @@ export default React.createClass({
   createQuery() {
     let query = this.props.actionCreators.createNewQuery(this.props.configurationId);
     this.transitionTo(
-      'ex-db-generic-' + this.props.componentId + '-query',
+      'ex-mongodb-query',
       {
         config: this.props.configurationId,
         query: query.get('id')

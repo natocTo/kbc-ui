@@ -30,7 +30,7 @@ module.exports = React.createClass
     props = @props
     Link
       className: 'tr'
-      to: "ex-db-generic-#{@props.componentId}-query"
+      to: "ex-mongodb-query"
       params:
         config: @props.configurationId
         query: @props.query.get 'id'

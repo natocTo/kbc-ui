@@ -43,7 +43,7 @@ export default {
   childRoutes: [
     createTablesRoute(componentId),
     {
-      name: 'ex-db-generic-' + componentId + '-query',
+      name: 'ex-mongodb-query',
       path: 'query/:query',
       title: function(routerState) {
         const configId = routerState.getIn(['params', 'config']);
@@ -64,10 +64,10 @@ export default {
       ],
       defaultRouteHandler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning),
       headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning, 'Export'),
-      childRoutes: [createTablesRoute('ex-db-generic-' + componentId + '-query')]
+      childRoutes: [createTablesRoute('ex-mongodb-query')]
     },
     {
-      name: 'ex-db-generic-' + componentId + '-credentials',
+      name: 'ex-mongodb-credentials',
       path: 'credentials',
       title: function() {
         return 'Credentials';

@@ -71,7 +71,7 @@ module.exports = (componentId) ->
             p null,
               'Please setup database credentials for this extractor.'
             Link
-              to: "ex-db-generic-#{componentId}-credentials"
+              to: 'ex-mongodb-credentials'
               params:
                 config: @state.configId
             ,
@@ -116,7 +116,7 @@ module.exports = (componentId) ->
           if @state.hasCredentials
             li null,
               Link
-                to: "ex-db-generic-#{componentId}-credentials"
+                to: "ex-mongodb-credentials"
                 params:
                   config: @state.configId
               ,
