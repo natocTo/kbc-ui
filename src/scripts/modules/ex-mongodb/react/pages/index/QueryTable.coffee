@@ -2,7 +2,7 @@ React = require 'react'
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 {Map} = require 'immutable'
 
-QueryRow = React.createFactory(require './QueryRow')
+QueryRow = React.createFactory(require('./QueryRow').default)
 LinkToBucket = React.createFactory require('./../../components/LinkToBucket').default
 Link = React.createFactory(require('react-router').Link)
 
