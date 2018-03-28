@@ -539,7 +539,7 @@ export default React.createClass({
               placeholder="Select the column to be used for incremental fetching"
               onChange={this.handleIncrementalFetchingChange}
               options={this.incrementalFetchingOptions()}
-              disabled={this.props.disabled}
+              disabled={this.props.disabled || this.getLastFetchedRowValue()}
             />
             <div className="help-block">
               <span className="text-warning">{this.incrementalFetchingWarning()}</span>
@@ -553,14 +553,36 @@ export default React.createClass({
 
   renderlastFetchedInfo() {
     if (this.props.query.get('incrementalFetchingColumn')) {
-      let queryState = this.props.query.get('state');
-      if (queryState.has('lastFetchedRow')) {
+      let lastFetchedRowValue = this.getLastFetchedRowValue();
+      if (lastFetchedRowValue) {
         return (
           <div>
-            Last fetched record had <strong>{this.props.query.get('incrementalFetchingColumn')}</strong> = {queryState.get('lastFetchedRow')}`
+            Last fetched record had <strong>{this.props.query.get('incrementalFetchingColumn')}</strong> value
+            {this.renderLastFetchedInput()}
           </div>
         );
       }
+    }
+  },
+
+  renderLastFetchedInput() {
+    return (
+      <input
+        className="form-control"
+        type="text"
+        value={this.getLastFetchedRowValue()}
+        disabled={this.props.disabled}
+        onChange={this.handleLastFetchedValueChange}
+      />
+    );
+  },
+
+  getLastFetchedRowValue() {
+    let queryState = this.props.query.get('state');
+    if (queryState.has('lastFetchedRow')) {
+      return queryState.get('lastFetchedRow');
+    } else {
+      return false;
     }
   }
 });
