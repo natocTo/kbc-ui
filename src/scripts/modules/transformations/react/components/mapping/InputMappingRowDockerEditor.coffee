@@ -131,7 +131,8 @@ module.exports = React.createClass
 
   render: ->
     component = @
-    showDetailTitle = React.DOM.h3 onClick: @_handleToggleShowDetails, 'Show Details'
+    showDetailTitle = React.DOM.h3 onClick: @_handleToggleShowDetails,
+      if @state.showDetails then 'Hide Details' else 'Show Details'
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div {className: "row col-md-12"},
         React.DOM.div className: 'form-group',
