@@ -33,6 +33,7 @@ import twitterRoutes from '../ex-twitter/routes';
 import geneeaGeneralRoutes from '../app-geneea-nlp-analysis/routes';
 import geneeaV2Routes from '../geneea-nlp-analysis-v2/routes';
 import customScienceRoutes from '../custom-science/Routes';
+import gooddataWriterV3Routes from '../gooddata-writer-v3/routes';
 
 const extractor = injectProps({ type: 'extractor' });
 const writer = injectProps({ type: 'writer' });
@@ -163,6 +164,7 @@ module.exports = {
       ]),
       createComponentRoute('wr-portal-sas', [wrPortalCreateRouteFn('wr-portal-sas')]),
       createComponentRoute('keboola.wr-portal-periscope', [wrPortalCreateRouteFn('keboola.wr-portal-periscope')]),
+      createComponentRoute('keboola.gooddata-writer', [gooddataWriterV3Routes]),
       createGenericDetailRoute('writer')
     ]
   }
