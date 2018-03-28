@@ -69,7 +69,7 @@ module.exports = React.createClass
               autoFocus: true
             if @props.outTableExist
               div className: 'help-block',
-                "Table with such name already exists."
+                "Export with such name already exists."
 
         div className: 'form-group',
           label className: 'col-md-2 control-label', 'Collection'
