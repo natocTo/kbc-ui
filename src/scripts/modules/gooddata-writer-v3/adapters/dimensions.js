@@ -1,7 +1,7 @@
 import {Map} from 'immutable';
 export default {
   createConfiguration(localState) {
-    return localState.get('dimensions');
+    return Map({parameters: {dimensions: localState.get('dimensions')}});
   },
 
   parseConfiguration(configuration) {

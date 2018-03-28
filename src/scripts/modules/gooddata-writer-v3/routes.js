@@ -16,7 +16,7 @@ const routeSettings = {
     detail: {
       title: 'Dimensions',
       render: DimensionsSection,
-      onSave: dimensionsAdapter.createConfiguratio,
+      onSave: dimensionsAdapter.createConfiguration,
       onLoad: dimensionsAdapter.parseConfiguration,
       isComplete: () => true
     }
