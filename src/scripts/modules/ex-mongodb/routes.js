@@ -5,8 +5,6 @@ import * as actionsProvisioning from './actionsProvisioning';
 import ExDbIndex from './react/pages/index/Index';
 import ExDbCredentialsPage from './react/pages/credentials/CredentialsPage';
 import ExDbQueryDetail from './react/pages/query-detail/QueryDetail';
-import ExDbNewQuery from './react/pages/new-query/NewQuery';
-import ExDbNewQueryHeaderButtons from './react/components/NewQueryHeaderButtons';
 import ExDbQueryHeaderButtons from './react/components/QueryActionButtons';
 import ExDbQueryName from './react/components/QueryName';
 import JobsActionCreators from '../jobs/ActionCreators';
@@ -43,7 +41,8 @@ export default {
   },
   defaultRouteHandler: ExDbIndex(componentId),
   childRoutes: [
-    createTablesRoute(componentId), {
+    createTablesRoute(componentId),
+    {
       name: 'ex-db-generic-' + componentId + '-query',
       path: 'query/:query',
       title: function(routerState) {
@@ -66,20 +65,8 @@ export default {
       defaultRouteHandler: ExDbQueryDetail(componentId, actionsProvisioning, storeProvisioning),
       headerButtonsHandler: ExDbQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning, 'Export'),
       childRoutes: [createTablesRoute('ex-db-generic-' + componentId + '-query')]
-    }, {
-      name: 'ex-db-generic-' + componentId + '-new-query',
-      path: 'new-query',
-      title: function() {
-        return 'New export';
-      },
-      requireData: [
-        function() {
-          return StorageActionCreators.loadTables();
-        }
-      ],
-      handler: ExDbNewQuery(componentId),
-      headerButtonsHandler: ExDbNewQueryHeaderButtons(componentId, actionsProvisioning, storeProvisioning)
-    }, {
+    },
+    {
       name: 'ex-db-generic-' + componentId + '-credentials',
       path: 'credentials',
       title: function() {
