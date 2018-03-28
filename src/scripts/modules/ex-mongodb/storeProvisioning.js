@@ -37,8 +37,8 @@ function isJsonValid(jsonString) {
 
 function isValidQuery(query) {
   const mode = query.get('mode', 'mapping');
-  const newMapping = query.get('newMapping', '') || '';
-  return query.get('newName', '').trim().length > 0
+  const mapping = query.get('mapping', '') || '';
+  return query.get('name', '').trim().length > 0
     && query.get('collection', '').trim().length > 0
 
     && (query.get('query', '').toString().trim().length === 0
@@ -49,8 +49,8 @@ function isValidQuery(query) {
     && (mode === 'raw'
       || (
         mode === 'mapping'
-        && newMapping.toString().trim().length > 0
-        && isJsonValid(newMapping.toString())
+        && mapping.toString().trim().length > 0
+        && isJsonValid(mapping.toString())
       )
     );
 }
@@ -160,15 +160,14 @@ export function createStore(componentId, configId) {
       }
     },
 
-    getNewQuery() {
+    getNewQuery(queryId = null) {
       const ids = this.getQueries().map((q) => q.get('id')).toJS();
       const defaultNewQuery = fromJS({
         enabled: true,
         incremental: false,
-        newName: '',
-        newMapping: '',
+        mapping: '',
         collection: '',
-        id: generateId(ids)
+        id: queryId !== null ? queryId : generateId(ids)
       });
       return data.localState.getIn(['newQueries', 'query'], defaultNewQuery);
     },
@@ -193,8 +192,12 @@ export function createStore(componentId, configId) {
       return data.localState.getIn(['editingQueries']);
     },
 
-    isSavingQuery() {
-      return data.localState.get('savingQueries');
+    isSavingQuery(queryId) {
+      return !!data.localState.getIn(['isSaving', queryId]);
+    },
+
+    isChangedQuery(queryId) {
+      return !!data.localState.getIn(['isChanged', queryId]);
     },
 
     isNewQuery(queryID) {
@@ -205,14 +208,9 @@ export function createStore(componentId, configId) {
       if (!query) {
         return false;
       }
-      const currentOutputTable = query.get('name');
-      const editingOutpuTable = query.get('newName') || '';
-      const found = this.getQueries().find((q) => {
-        var outTable = q.get('name');
-        // const isDefaultBad = (editingOutpuTable.trim().length === 0);
-        return (outTable === editingOutpuTable && outTable !== currentOutputTable);
+      return !!this.getQueries().find((q) => {
+        return q.get('name') === query.get('name') && q.get('id') !== query.get('id');
       });
-      return !!found;
     },
 
     isEditingQueryValid(queryId) {

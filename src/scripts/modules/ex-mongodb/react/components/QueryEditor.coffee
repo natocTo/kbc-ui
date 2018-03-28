@@ -24,7 +24,7 @@ module.exports = React.createClass
     component: React.PropTypes.object.isRequired
 
   _handleNameChange: (event) ->
-    @props.onChange(@props.query.set 'newName', event.target.value)
+    @props.onChange(@props.query.set 'name', event.target.value)
 
   _handleIncrementalChange: (event) ->
     @props.onChange(@props.query.set 'incremental', event.target.checked)
@@ -39,7 +39,7 @@ module.exports = React.createClass
     @props.onChange(@props.query.set 'limit', event.target.value)
 
   _handleMappingChange: (event) ->
-    @props.onChange(@props.query.set 'newMapping', event.target.value)
+    @props.onChange(@props.query.set 'mapping', event.target.value)
 
   _handleCollectionChange: (event) ->
     @props.onChange(@props.query.set 'collection', event.target.value)
@@ -48,7 +48,7 @@ module.exports = React.createClass
     @props.onChange(@props.query.set 'mode', selected.value)
 
   render: ->
-    div className: 'row',
+    div null,
       LinkToDocs documentationUrl: @props.component.get('documentationUrl')
 
       div className: 'form-horizontal',
@@ -62,8 +62,8 @@ module.exports = React.createClass
             input
               className: 'form-control'
               type: 'text'
-              value: @props.query.get 'newName'
-              ref: 'newName'
+              value: @props.query.get 'name'
+              ref: 'name'
               placeholder: 'e.g. last-100-articles'
               onChange: @_handleNameChange
               autoFocus: true
@@ -171,7 +171,9 @@ module.exports = React.createClass
             div className: 'col-md-10',
               CodeMirror
                 placeholder: ('e.g. {"_id.$oid": "id", "name": "name"}')
-                value: @props.query.get('newMapping')
+                value:
+                  if @props.query.has('mapping')
+                    @props.query.get('mapping').toString()
                 onChange: @_handleMappingChange
                 mode: 'application/json'
                 lint: true

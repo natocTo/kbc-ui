@@ -6,9 +6,9 @@ StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
 RoutesStore = require '../../../../../stores/RoutesStore'
 
 QueryEditor = React.createFactory(require '../../components/QueryEditor')
-QueryDetailStatic = React.createFactory(require './QueryDetailStatic')
 QueryNav = require('./QueryNav').default
 EditButtons = require '../../../../../react/common/EditButtons'
+SaveButtons = require('../../../../../react/common/SaveButtons').default
 constants = require './../../../constants'
 
 { Map, List } = require 'immutable'
@@ -30,7 +30,8 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
       ExDbStore = storeProvisioning.createStore(componentId, configId)
       isEditing = ExDbStore.isEditingQuery(queryId)
       query = ExDbStore.getConfigQuery(queryId)
-      editingQuery = ExDbStore.getEditingQuery(queryId)
+      editingQuery = if ExDbStore.isEditingQuery(queryId) then ExDbStore.getEditingQuery(queryId) else query
+      isChanged = ExDbStore.isChangedQuery(queryId)
       editingQueries: ExDbStore.getEditingQueries()
       newQueries: ExDbStore.getNewQueries()
       newQueriesIdsList: ExDbStore.getNewQueriesIdsList()
@@ -39,7 +40,8 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
       query: query
       editingQuery: editingQuery
       isEditing: isEditing
-      isSaving: ExDbStore.isSavingQuery()
+      isChanged: isChanged
+      isSaving: ExDbStore.isSavingQuery(queryId)
       isValid: ExDbStore.isEditingQueryValid(queryId)
       exports: StorageTablesStore.getAll()
       queriesFilter: ExDbStore.getQueriesFilter()
@@ -55,6 +57,9 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
 
     _handleCancel: ->
       ExDbActionCreators.cancelQueryEdit @state.configId, @state.query.get('id')
+
+    _handleReset: ->
+      ExDbActionCreators.resetQueryEdit @state.configId, @state.query.get('id')
 
     _handleSave: ->
       ExDbActionCreators.saveQueryEdit @state.configId, @state.query.get('id')
@@ -75,16 +80,15 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
                 newQueries: @state.newQueries || List()
                 newQueriesIdsList: @state.newQueriesIdsList
           div className: 'col-md-9 kbc-main-content-with-nav',
-            div className: 'row kbc-header',
+            div className: 'kbc-header',
               div className: 'kbc-buttons',
-                React.createElement EditButtons,
-                  isEditing: @state.isEditing
+                React.createElement SaveButtons,
                   isSaving: @state.isSaving
-                  isDisabled: !@state.isValid
-                  onCancel: @_handleCancel
+                  isChanged: @state.isChanged
+                  onReset: @_handleReset
                   onSave: @_handleSave
-                  onEditStart: @_handleEditStart
-            if @state.isEditing
+                  disabled: @state.isSaving or !@state.isValid
+            div className: 'kbc-header',
               QueryEditor
                 query: @state.editingQuery
                 exports: @state.exports
@@ -92,9 +96,4 @@ module.exports = (componentId, actionsProvisioning, storeProvisioning) ->
                 configId: @state.configId
                 componentId: componentId
                 outTableExist: @state.outTableExist
-                component: @state.component
-            else
-              QueryDetailStatic
-                query: @state.query
-                componentId: componentId
                 component: @state.component
