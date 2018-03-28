@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Immutable from 'immutable';
+import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 
 import { Input } from '../../../../react/common/KbcBootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
@@ -75,7 +76,7 @@ export default React.createClass({
             saveLabel="Create"
             onCancel={this.close}
             onSave={this.handleCreate}
-            />
+          />
         </Modal.Footer>
       </Modal>
     );
@@ -104,9 +105,34 @@ export default React.createClass({
     this.open();
   },
 
+  renderTableSelector() {
+    return (
+      <div className="form-group">
+        <label className="col-sm-4 control-label">
+          Table
+        </label>
+        <div className="col-sm-6">
+          <SapiTableSelector
+            placeholder="Select..."
+            value={this.state.form.get('name')}
+            onSelectTableFn= {this.setSelectedTable}
+            excludeTableFn= { () => false}/>
+        </div>
+      </div>
+
+    );
+  },
+
+  setSelectedTable(newTableId) {
+    this.setState({
+      form: this.state.form.set('name', newTableId)
+    });
+  },
+
   form() {
     return (
       <form className="form-horizontal" onSubmit={this.handleSubmit}>
+        {this.renderTableSelector()}
         <Input
           type="text"
           value={this.state.form.get('name')}
