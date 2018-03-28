@@ -24,7 +24,7 @@ module.exports = React.createClass
     resetUploadTask: React.PropTypes.func
 
   render: ->
-    div className: 'kbc-inner-content-padding-fix with-bottom-border',
+    div className: 'kbc-header kbc-header-with-bottom-border',
       form {className: 'form form-horizontal'},
 
         FormGroup null,

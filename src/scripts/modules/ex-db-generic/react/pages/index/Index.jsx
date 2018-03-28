@@ -200,7 +200,7 @@ export default function(componentId) {
       if (this.state.localState.getIn(storeProvisioning.connectionErrorPath) ||
         this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)) {
         return (
-          <div className="kbc-inner-content-padding-fix">
+          <div className="kbc-header">
             <AsynchActionError
               componentId={componentId}
               configId={this.state.configId}

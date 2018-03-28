@@ -64,13 +64,13 @@ export default function(componentId) {
           />
           <div className="col-md-9 kbc-main-content">
 
-            <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <div className="kbc-header kbc-header-with-bottom-border">
               <ComponentDescription
                 componentId={componentId}
                 configId={this.state.configId}
               />
             </div>
-            <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <div className="kbc-header kbc-header-with-bottom-border">
               <AuthorizationRow
                 id={this.state.oauthCredentialsId}
                 configId={this.state.configId}
@@ -179,7 +179,7 @@ export default function(componentId) {
 
       if (this.isAuthorized() || this.hasProfiles()) {
         return (
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <div className="kbc-header kbc-header-with-bottom-border">
             <div className="form-group form-group-sm">
               <label> Registered Profiles </label>
               {this.hasProfiles() ?
@@ -217,7 +217,7 @@ export default function(componentId) {
     renderQueriesTable() {
       return (
         <div>
-          <div className="kbc-inner-content-padding-fix text-right">
+          <div className="kbc-header text-right">
             {this.renderAddQueryLink()}
           </div>
           <QueriesTable
