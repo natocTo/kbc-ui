@@ -247,6 +247,7 @@ export default function(componentId) {
               </div>
             </div>
             {this.renderCredentialsSetup()}
+            {this.renderMigrationToRowsButton()}
             {this.renderAsynchError()}
             {
               this.state.queries.count() > 0 ? (
@@ -277,7 +278,6 @@ export default function(componentId) {
             </div>
             <ul className="nav nav-stacked">
               {this.renderCredentialsLink()}
-              {this.renderMigrationToRowsButton()}
               <li className={classnames({ disabled: !this.state.hasEnabledQueries })}>
                 <RunComponentButton
                   title="Run Extraction"

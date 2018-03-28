@@ -168,6 +168,21 @@ export default React.createClass({
       } else {
         return 'Note: Using an update timestamp column means that only new and updated records will be fetched, not deletes.';
       }
+    } else {
+      return 'If enabled, only newly created or updated records since the last run will be fetched.';
+    }
+  },
+
+  renderlastFetchedInfo() {
+    if (this.props.query.get('incrementalFetchingColumn')) {
+      let queryState = this.props.query.get('state');
+      if (queryState.has('lastFetchedRow')) {
+        return (
+          <div>
+            Last fetched record had `{this.props.query.get('incrementalFetchingColumn')} = {queryState.get('lastFetchedRow')}`
+          </div>
+        );
+      }
     }
   },
 
@@ -540,8 +555,8 @@ export default React.createClass({
               disabled={this.props.disabled}
             />
             <div className="help-block">
-              Only newly created or updated records since the last run will be fetched.<br/>
               <span className="text-warning">{this.incrementalFetchingWarning()}</span>
+              {this.renderlastFetchedInfo()}
             </div>
           </div>
         </div>
