@@ -23,6 +23,10 @@ export default {
   },
 
   createEmptyConfiguration(name, webalizedName) {
-    return createConfiguration(Immutable.fromJS({name: webalizedName, parameters: {[name]: {}}}));
+    const initState = {
+      tableId: name,
+      title: webalizedName
+    };
+    return createConfiguration(Immutable.fromJS(initState));
   }
 };

@@ -33,18 +33,19 @@ const routeSettings = {
     },
     columns: [
       {
-        name: 'Name',
+        name: 'Table Name',
         type: columnTypes.VALUE,
         value: function(row) {
           return row.get('name') !== '' ? row.get('name') : 'Untitled';
         }
       },
       {
-        name: 'Storage',
-        type: columnTypes.STORAGE_LINK_DEFAULT_BUCKET,
+        name: 'GoodData Title',
+        type: columnTypes.VALUE,
         value: function(row) {
-          const params = row.getIn(['configuration', 'params'], Map());
-          return params.keySeq().first();
+          const params = row.getIn(['configuration', 'parameters'], Map());
+          const tableId = params.keySeq().first();
+          return params.getIn([tableId, 'title']);
         }
       },
       {
