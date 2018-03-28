@@ -21,7 +21,6 @@ export default React.createClass({
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
     credentialsTemplate: React.PropTypes.object.isRequired,
-    hasSshTunnel: React.PropTypes.func.isRequired,
     actionCreators: React.PropTypes.object.isRequired
   },
 
@@ -138,29 +137,17 @@ export default React.createClass({
     return this.props.onChange(this.props.credentials.set('ssh', sshObject));
   },
 
-  sslRowOnChange(sslObject) {
-    return this.props.onChange(this.props.credentials.set('ssl', sslObject));
-  },
-
-  renderSshRow() {
-    if (this.props.hasSshTunnel(this.props.componentId)) {
-      return (
-        <SshTunnelRow
-          isEditing={this.props.enabled}
-          data={this.props.credentials.get('ssh', Map())}
-          onChange={this.sshRowOnChange}
-        />
-      );
-    }
-  },
-
   render() {
     const { componentId, configId, enabled, isValidEditingCredentials, isEditing } = this.props;
     return (
       <form className="form-horizontal">
-        <div className="kbc-inner-content-padding-fix">
+        <div className="kbc-header">
           {this.renderFields()}
-          {this.renderSshRow()}
+          <SshTunnelRow
+            isEditing={this.props.enabled}
+            data={this.props.credentials.get('ssh', Map())}
+            onChange={this.sshRowOnChange}
+          />
           <TestCredentialsButtonGroup
             componentId={componentId}
             configId={configId}
