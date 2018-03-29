@@ -152,25 +152,47 @@ export default React.createClass({
               />
             </div>
           </div>
-          <div className="form-group">
-            <label className="col-md-2 control-label">
-              Mapping
-              <ExportHelp message="Mapping to define structure of exported tables. Has to be valid JSON." />
-            </label>
-            <div className="col-md-10">
-              <CodeMirror
-                lineNumbers
-                lineWrapping
-                lint
-                mode="application/json"
-                onChange={this.handleMappingChange}
-                placeholder={'e.g. {"_id.$oid": "id", "name": "name"}'}
-                theme="solarized"
-              />
-            </div>
-          </div>
+          {this.renderMapping()}
         </div>
       </div>
     );
+  },
+
+  renderMapping() {
+    const { query } = this.props;
+
+    if (!query.has('mode') || query.get('mode') === 'mapping') {
+      const mappingValueType = typeof query.get('mapping');
+      let mappingValue;
+      if (mappingValueType === 'undefined') {
+        mappingValue = '';
+      } else if (mappingValueType === 'object') {
+        mappingValue = JSON.stringify(query.get('mapping'), null, 2);
+      } else {
+        mappingValue = query.get('mapping').toString();
+      }
+      return (
+        <div className="form-group">
+          <label className="col-md-2 control-label">
+            Mapping
+            <ExportHelp message="Mapping to define structure of exported tables. Has to be valid JSON." />
+          </label>
+          <div className="col-md-10">
+            <CodeMirror
+              lineNumbers
+              lineWrapping
+              lint
+              mode="application/json"
+              onChange={this.handleMappingChange}
+              placeholder={'e.g. {"_id.$oid": "id", "name": "name"}'}
+              theme="solarized"
+              value={mappingValue}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    return null;
   }
 });
