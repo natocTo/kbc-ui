@@ -40,6 +40,7 @@ export default React.createClass({
                   />
                 );
               case 'output':
+              case 'output_consistency':
                 return (
                   <InvalidOutput
                     bucketId={this.props.bucketId}
