@@ -23,14 +23,16 @@ export const connectionValidPath = ['connection', 'valid'];
 export const connectionTestedPath = ['connection', 'tested'];
 
 export function rowDataFromQuery(query) {
+  let queryState = JSON.stringify(query.get('state').toJS());
+  let paramsQuery = query.delete('state');
   return {
     'rowId': query.get('id'),
     'name': query.get('name'),
     'isDisabled': !query.get('enabled'),
     'configuration': JSON.stringify({
-      'parameters': query.toJS()
+      'parameters': paramsQuery.toJS()
     }),
-    'state': JSON.stringify(query.get('state').toJS())
+    'state': queryState
   };
 }
 
@@ -296,6 +298,10 @@ export function createStore(componentId, configId) {
         }
         return q.set('primaryKey', pk);
       });
+    },
+
+    setQueries(queries) {
+      return data.parameters.setIn('tables', queries);
     },
 
     getQueriesFiltered() {
