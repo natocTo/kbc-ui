@@ -49,12 +49,6 @@ export default (componentId, actionsProvisioning, storeProvisioning) => {
     _handleQueryChange(newQuery) {
       return ExDbActionCreators.updateEditingQuery(this.state.configId, newQuery);
     },
-    _handleEditStart() {
-      return ExDbActionCreators.editQuery(this.state.configId, this.state.query.get('id'));
-    },
-    _handleCancel() {
-      return ExDbActionCreators.cancelQueryEdit(this.state.configId, this.state.query.get('id'));
-    },
     _handleReset() {
       return ExDbActionCreators.resetQueryEdit(this.state.configId, this.state.query.get('id'));
     },
