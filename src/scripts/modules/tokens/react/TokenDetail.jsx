@@ -186,7 +186,7 @@ export default React.createClass({
       );
     }
     return (
-      <div className="kbc-header">
+      <div className="kbc-inner-content-padding-fix">
         <div className="form form-horizontal">
           {this.state.createdToken
            ? this.renderTokenCreated()

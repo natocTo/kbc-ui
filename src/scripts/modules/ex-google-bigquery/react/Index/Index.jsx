@@ -76,7 +76,7 @@ export default React.createClass({
         />
 
         <div className="col-md-9 kbc-main-content">
-          <div className="kbc-header kbc-header-with-bottom-border">
+          <div className="kbc-inner-content-padding-fix with-bottom-border">
             <ComponentDescription
               componentId={COMPONENT_ID}
               configId={this.state.configId}
@@ -86,7 +86,7 @@ export default React.createClass({
           {this.renderProjects()}
           {this.renderSarchForm()}
           {this.hasQueries() && (
-            <div className="kbc-header text-right">
+            <div className="kbc-inner-content-padding-fix text-right">
               {this.renderAddQueryLink()}
             </div>
           )}
@@ -234,7 +234,7 @@ export default React.createClass({
   renderProjects() {
     if (this.isAuthorized()/* || this.hasProfiles()*/) {
       return (
-        <div className="kbc-header kbc-header-with-bottom-border">
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
           <div className="form-group">
             <label> Google configuration </label>
             {this.hasProject() ?
@@ -258,7 +258,7 @@ export default React.createClass({
 
   renderAuthorizedInfo() {
     return (
-      <div className="kbc-header kbc-header-with-bottom-border">
+      <div className="kbc-inner-content-padding-fix with-bottom-border">
         <AuthorizationRow
           id={this.state.oauthCredentialsId}
           configId={this.state.configId}
@@ -275,7 +275,7 @@ export default React.createClass({
   renderSarchForm() {
     if (this.hasQueries() > 0) {
       return (
-        <div className="kbc-header kbc-header-with-bottom-border">
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
           <SearchRow
             onChange={this.handleFilterChange}
             query={this.state.queriesFilter}
