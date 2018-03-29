@@ -29,7 +29,8 @@ export function rowDataFromQuery(query) {
     'isDisabled': !query.get('enabled'),
     'configuration': JSON.stringify({
       'parameters': query.toJS()
-    })
+    }),
+    'state': JSON.stringify(query.get('state').toJS())
   };
 }
 

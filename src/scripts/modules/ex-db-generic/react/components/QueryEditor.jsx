@@ -96,6 +96,10 @@ export default React.createClass({
     return this.props.onChange(this.props.query.set('incrementalFetchingColumn', newValue));
   },
 
+  handleLastFetchedValueChange(event) {
+    return this.props.onChange(this.props.query.set('state', Immutable.fromJS({'lastFetchedRow': event.target.value})));
+  },
+
   handleQueryChange(data) {
     return this.props.onChange(this.props.query.set('query', data.value));
   },
