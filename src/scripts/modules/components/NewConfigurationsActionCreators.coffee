@@ -41,10 +41,6 @@ module.exports =
         component: component
         configuration: response
 
-      # open editing
-      if (component.get("flags").includes("genericTemplatesUI"))
-        InstalledComponentsActionCreators.startEditTemplatedComponentConfigData(componentId, response.id)
-
       transitionToComponentConfiguration(componentId, response.id)
     .catch (e) ->
       dispatcher.handleViewAction
