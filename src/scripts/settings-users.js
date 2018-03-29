@@ -168,7 +168,7 @@ const App = React.createClass({
 
                   <div className="tab-content">
                     <div className="tab-pane tab-pane-no-padding active">
-                        <div className="kbc-header kbc-header-with-bottom-border">
+                        <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
                           All users have full permissions in the project and can add or remove other users
                           from it.
                           <a
