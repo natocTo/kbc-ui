@@ -37,12 +37,6 @@ module.exports = React.createClass
   componentWillReceiveProps: (newProps) ->
     @setState({showDetails: @state.showDetails or newProps.initialShowDetails})
 
-  _handleToggleShowDetails: (e) ->
-    if e.target.classList.value
-      @setState(showDetails: true)
-    else
-      @setState(showDetails: false)
-
   _parseDestination: ->
     bucketName = stringUtils.webalize(@props.transformationBucket.get('name'))
     if not bucketName.startsWith('c-')
@@ -139,8 +133,7 @@ module.exports = React.createClass
 
   render: ->
     component = @
-    showDetailTitle = React.DOM.h3 onClick: @_handleToggleShowDetails,
-      if @state.showDetails then 'Hide Details' else 'Show Details'
+    showDetailTitle = React.DOM.h3 null, if @state.showDetails then 'Hide Details' else 'Show Details'
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div null,
         React.DOM.div {className: "row col-md-12"},
@@ -197,7 +190,7 @@ module.exports = React.createClass
         React.DOM.div {className: "row col-md-12"},
           Panel
             header: showDetailTitle
-            expanded: @state.showDetails
+            defaultExpanded: @state.showDetails
             className: 'panel-show-details'
             collapsible: true
             React.DOM.div {className: 'form-horizontal clearfix'},

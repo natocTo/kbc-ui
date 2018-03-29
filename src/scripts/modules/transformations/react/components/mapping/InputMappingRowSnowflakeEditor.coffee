@@ -31,12 +31,6 @@ module.exports = React.createClass
 
     should
 
-  _handleToggleShowDetails: (e) ->
-    if e.target.classList.value
-      @setState(showDetails: true)
-    else
-      @setState(showDetails: false)
-
   _handleChangeSource: (value) ->
     # use only table name from the table identifier
     if value
@@ -132,8 +126,7 @@ module.exports = React.createClass
 
   render: ->
     component = @
-    showDetailTitle = React.DOM.h3 onClick: @_handleToggleShowDetails,
-      if @state.showDetails then 'Hide Details' else 'Show Details'
+    showDetailTitle = React.DOM.h3 null, if @state.showDetails then 'Hide Details' else 'Show Details'
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div {className: "row col-md-12"},
         React.DOM.div className: 'form-group',
@@ -164,7 +157,7 @@ module.exports = React.createClass
       React.DOM.div {className: "row col-md-12"},
         Panel
           header: showDetailTitle
-          expanded: @state.showDetails
+          defaultExpanded: @state.showDetails
           className: 'panel-show-details'
           collapsible: true
           React.DOM.div {className: 'form-horizontal clearfix'},
