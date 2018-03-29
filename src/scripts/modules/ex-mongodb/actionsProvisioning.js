@@ -4,7 +4,6 @@ import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import RoutesStore from '../../stores/RoutesStore';
 
-import getDefaultPort from './defaultPorts';
 import {getProtectedProperties} from './credentials';
 
 export function loadConfiguration(componentId, configId) {
@@ -12,15 +11,6 @@ export function loadConfiguration(componentId, configId) {
 }
 
 export function createActions(componentId) {
-  function resetProtectedProperties(credentials) {
-    let result = credentials;
-    const props = getProtectedProperties(componentId);
-    for (let prop of props) {
-      result = result.set(prop, '');
-    }
-    return result;
-  }
-
   function updateProtectedProperties(newCredentials, oldCredentials) {
     const props = getProtectedProperties(componentId);
     let result = newCredentials;
@@ -65,16 +55,6 @@ export function createActions(componentId) {
       updateLocalState(configId, 'queriesFilter', query);
     },
 
-    editCredentials(configId) {
-      const store = getStore(configId);
-      let credentials = store.getCredentials();
-      if (!credentials.get('port')) {
-        credentials = credentials.set('port', getDefaultPort(componentId));
-      }
-      credentials = resetProtectedProperties(credentials);
-      updateLocalState(configId, 'editingCredentials', credentials);
-    },
-
     cancelCredentialsEdit(configId) {
       removeFromLocalState(configId, ['isChangedCredentials'], null);
       removeFromLocalState(configId, ['editingCredentials'], null);
@@ -104,16 +84,8 @@ export function createActions(componentId) {
       return saveConfigData(configId, newData, ['pending', qid, 'enabled']);
     },
 
-    updateNewQuery(configId, newQuery) {
-      updateLocalState(configId, ['newQueries', 'query'], newQuery);
-    },
-
     resetNewCredentials(configId) {
       updateLocalState(configId, ['newCredentials'], null);
-    },
-
-    updateNewCredentials(configId, newCredentials) {
-      updateLocalState(configId, ['newCredentials'], newCredentials);
     },
 
     saveNewCredentials(configId) {
@@ -186,13 +158,6 @@ export function createActions(componentId) {
       if (!localState(configId).getIn(['isChanged', queryId], false)) {
         updateLocalState(configId, ['isChanged', queryId], true);
       }
-    },
-
-    editQuery(configId, queryId) {
-      const query = getStore(configId).getConfigQuery(queryId);
-      const withMappingAsString = query.set('mapping', JSON.stringify(query.get('mapping'), null, 2));
-
-      updateLocalState(configId, ['editingQueries', queryId], withMappingAsString);
     },
 
     cancelQueryEdit(configId, queryId) {
