@@ -16,7 +16,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <div className="kbc-header">
+        <div className="kbc-inner-padding">
           <div className="text-right">
             <CreateQueryElement
               actionCreators={this.props.actionCreators}

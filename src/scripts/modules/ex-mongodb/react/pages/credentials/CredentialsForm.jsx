@@ -141,7 +141,7 @@ export default React.createClass({
     const { componentId, configId, enabled, isValidEditingCredentials, isEditing } = this.props;
     return (
       <form className="form-horizontal">
-        <div className="kbc-header">
+        <div className="kbc-inner-padding">
           {this.renderFields()}
           <SshTunnelRow
             isEditing={this.props.enabled}

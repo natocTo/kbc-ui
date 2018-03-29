@@ -75,7 +75,7 @@ export default (componentId, actionsProvisioning, storeProvisioning) => {
               </div>
             </div>
             <div className="col-md-9 kbc-main-content-with-nav">
-              <div className="kbc-header">
+              <div className="kbc-inner-padding text-right">
                 <div className="kbc-buttons">
                   <SaveButtons
                     isSaving={this.state.isSaving}
@@ -86,7 +86,7 @@ export default (componentId, actionsProvisioning, storeProvisioning) => {
                   />
                 </div>
               </div>
-              <div className="kbc-header">
+              <div className="kbc-inner-padding">
                 <QueryEditor
                   query={this.state.editingQuery}
                   exports={this.state.exports}
