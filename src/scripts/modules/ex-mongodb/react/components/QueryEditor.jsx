@@ -44,11 +44,11 @@ export default React.createClass({
         <LinkToDocs documentationUrl={this.props.component.get('documentationUrl')} />
         <div className="form-horizontal">
           <div className="form-group">
-            <label className="col-md-2 control-label">
+            <label className="col-md-3 control-label">
               Name
               <ExportHelp message="Name has to be unique across all exports in current configuration" />
             </label>
-            <div className="col-md-4">
+            <div className="col-md-9">
               <input
                 autoFocus={true}
                 className="form-control"
@@ -60,8 +60,8 @@ export default React.createClass({
             </div>
           </div>
           <div className="form-group">
-            <label className="col-md-2 control-label">Collection</label>
-            <div className="col-md-4">
+            <label className="col-md-3 control-label">Collection</label>
+            <div className="col-md-9">
               <input
                 className="form-control"
                 onChange={this.handleCollectionChange}
@@ -72,11 +72,11 @@ export default React.createClass({
             </div>
           </div>
           <div className="form-group">
-            <label className="col-md-2 control-label">
+            <label className="col-md-3 control-label">
               Query
               <ExportHelp message="Query to filter documents. Has to be valid JSON." />
             </label>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <CodeMirror
                 lineNumbers
                 lineWrapping
@@ -90,11 +90,11 @@ export default React.createClass({
             </div>
           </div>
           <div className="form-group">
-            <label className="col-md-2 control-label">
+            <label className="col-md-3 control-label">
               Sort
               <ExportHelp message="Sort results by specified keys. Has to be valid JSON." />
             </label>
-            <div className="col-md-10">
+            <div className="col-md-9">
               <CodeMirror
                 lineNumbers
                 lineWrapping
@@ -108,8 +108,8 @@ export default React.createClass({
             </div>
           </div>
           <div className="form-group">
-            <label className="col-md-2 control-label">Limit</label>
-            <div className="col-md-4">
+            <label className="col-md-3 control-label">Limit</label>
+            <div className="col-md-9">
               <input
                 className="form-control"
                 onChange={this.handleLimitChange}
@@ -120,8 +120,8 @@ export default React.createClass({
             </div>
           </div>
           <div className="form-group">
-            <label className="col-md-2 control-label">Incremental</label>
-            <div className="col-md-4">
+            <label className="col-md-3 control-label">Incremental</label>
+            <div className="col-md-9">
               <div style={{ marginTop: '1em', paddingLeft: '1em' }} />
               <label>
                 <input
@@ -133,7 +133,7 @@ export default React.createClass({
             </div>
           </div>
           <div className="form-group">
-            <label className="col-md-2 control-label">
+            <label className="col-md-3 control-label">
               Mode
               <ExportHelp
                 message={
@@ -142,7 +142,7 @@ export default React.createClass({
                 }
               />
             </label>
-            <div className="col-md-4">
+            <div className="col-md-9">
               <Select
                 name="mode"
                 clearable={false}
@@ -173,11 +173,11 @@ export default React.createClass({
       }
       return (
         <div className="form-group">
-          <label className="col-md-2 control-label">
+          <label className="col-md-3 control-label">
             Mapping
             <ExportHelp message="Mapping to define structure of exported tables. Has to be valid JSON." />
           </label>
-          <div className="col-md-10">
+          <div className="col-md-9">
             <CodeMirror
               lineNumbers
               lineWrapping
