@@ -85,7 +85,7 @@ export default React.createClass({
                 onChange={this.handleQueryChange}
                 placeholder={'optional, e.g. {"isActive": 1, "isDeleted": 0}'}
                 theme="solarized"
-                value={this.props.query.has('query') ? this.props.query.get('query') : undefined}
+                value={this.props.query.has('query') ? this.props.query.get('query') : ''}
               />
             </div>
           </div>
@@ -103,7 +103,7 @@ export default React.createClass({
                 onChange={this.handleSortChange}
                 placeholder={'optional, e.g. {"creationDate": -1}'}
                 theme="solarized"
-                value={this.props.query.has('sort') ? this.props.query.get('sort').toString() : undefined}
+                value={this.props.query.has('sort') ? this.props.query.get('sort').toString() : ''}
               />
             </div>
           </div>
