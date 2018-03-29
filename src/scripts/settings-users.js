@@ -169,16 +169,24 @@ const App = React.createClass({
                   <div className="tab-content">
                     <div className="tab-pane tab-pane-no-padding active">
                         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-                          All users have full permissions in the project and can add or remove other users
-                          from it.
-                          <a
-                            href="#"
-                            className="pull-right kb-add-new-administrator-modal btn btn-success"
-                            data-toggle="tooltip"
-                            title="Add new user"
-                          >
-                            <i className="kbc-icon-plus" />New User
-                          </a>
+                          <div className="row">
+                            <div className="col-md-9">
+                              All users have full permissions in the project and can add or remove other users
+                              from it.
+                            </div>
+                            <div className="col-md-3 text-right">
+                              <a
+                                href="#"
+                                className="kb-add-new-administrator-modal btn btn-success"
+                                data-toggle="tooltip"
+                                title="Add new user"
+                              >
+                                <i className="kbc-icon-plus" />New User
+                              </a>
+                            </div>
+                          </div>
+
+
                         </div>
                         <table className="table table-striped table-hover">
                           <thead>
