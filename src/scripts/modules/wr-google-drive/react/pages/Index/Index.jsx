@@ -56,14 +56,14 @@ export default function(COMPONENT_ID) {
         <div className="container-fluid">
           {this.renderTableModal()}
           <div className="col-md-9 kbc-main-content">
-            <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
               <ComponentDescription
                 componentId={COMPONENT_ID}
                 configId={this.state.configId}
               />
             </div>
 
-            <div className="kbc-inner-content-padding-fix with-bottom-border">
+            <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
               {this.renderAuthorizedInfo()}
             </div>
             {this.renderSearchRow()}
@@ -72,7 +72,7 @@ export default function(COMPONENT_ID) {
                 (
                   <div>
                     {this.isAuthorized() && (
-                      <div className="kbc-inner-content-padding-fix text-right">
+                      <div className="kbc-inner-padding text-right">
                         <Button bsStyle="success" onClick={() => this.showTableModal(1, null)}>
                           <i className="kbc-icon-plus"/>
                           New Table
@@ -125,7 +125,7 @@ export default function(COMPONENT_ID) {
     renderSearchRow() {
       if (this.hasTables()) {
         return (
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <SearchRow
               onChange={this.handleSearchQueryChange}
               query={this.state.localState.get('searchQuery', '')}

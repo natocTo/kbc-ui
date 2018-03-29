@@ -56,7 +56,7 @@ module.exports = React.createClass
             h2 null,
               'User specified database credentials'
 
-      div className: 'kbc-inner-content-padding-fix',
+      div className: 'kbc-inner-padding',
         _.map fields, (field) =>
           @_createInput(field[0], field[1], field[2], field[3], field[4], field[5], field[6], field[7])
         @_renderSshTunnelRow()

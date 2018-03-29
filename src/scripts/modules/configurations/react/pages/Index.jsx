@@ -60,7 +60,7 @@ export default React.createClass({
     const settings = this.state.settings;
     if (this.state.rows.count() === 0) {
       return (
-        <div className="kbc-inner-content-padding-fix with-bottom-border">
+        <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <div className="component-empty-state text-center">
             <p>No {settings.getIn(['row', 'name', 'plural']).toLowerCase()} created yet.</p>
             <CreateConfigurationRowButton
@@ -137,7 +137,7 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
-          <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription
               componentId={this.state.componentId}
               configId={this.state.configurationId}

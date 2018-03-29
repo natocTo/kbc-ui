@@ -179,7 +179,7 @@ export default React.createClass({
     const { componentId, configId, enabled, isValidEditingCredentials, isEditing } = this.props;
     return (
       <form className="form-horizontal">
-        <div className="kbc-inner-content-padding-fix">
+        <div className="kbc-inner-padding">
           {this.renderFields()}
           {this.renderSshRow()}
           {this.renderSSLForm()}
