@@ -1,8 +1,8 @@
 import React from 'react';
-import Select from 'react-select';
-import ExportHelp from './ExportHelp';
-import LinkToDocs from './LinkToDocs';
 import CodeMirror from 'react-code-mirror';
+import { FormGroup, FormControl, Col, ControlLabel, HelpBlock, Checkbox } from 'react-bootstrap';
+
+import LinkToDocs from './LinkToDocs';
 
 export default React.createClass({
   propTypes: {
@@ -35,48 +35,43 @@ export default React.createClass({
   handleCollectionChange(event) {
     return this.props.onChange(this.props.query.set('collection', event.target.value));
   },
-  handleModeChange(selected) {
-    return this.props.onChange(this.props.query.set('mode', selected.value));
+  handleModeChange(event) {
+    return this.props.onChange(this.props.query.set('mode', event.target.value));
   },
   render() {
     return (
       <div>
         <LinkToDocs documentationUrl={this.props.component.get('documentationUrl')} />
         <div className="form-horizontal">
-          <div className="form-group">
-            <label className="col-md-3 control-label">
-              Name
-              <ExportHelp message="Name has to be unique across all exports in current configuration" />
-            </label>
-            <div className="col-md-9">
-              <input
-                autoFocus={true}
-                className="form-control"
+          <FormGroup controlId="QueryEditor-name">
+            <Col componentClass={ControlLabel} md={3}>Name</Col>
+            <Col md={9}>
+              <FormControl
+                autoFocus
                 onChange={this.handleNameChange}
                 placeholder="e.g. last-100-articles"
                 type="text"
                 value={this.props.query.get('name')}
               />
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-md-3 control-label">Collection</label>
-            <div className="col-md-9">
-              <input
-                className="form-control"
+              <HelpBlock>Name has to be unique across all exports in current configuration</HelpBlock>
+            </Col>
+          </FormGroup>
+
+          <FormGroup controlId="QueryEditor-collection">
+            <Col componentClass={ControlLabel} md={3}>Collection</Col>
+            <Col md={9}>
+              <FormControl
                 onChange={this.handleCollectionChange}
                 placeholder="e.g. Article"
                 type="text"
                 value={this.props.query.get('collection')}
               />
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-md-3 control-label">
-              Query
-              <ExportHelp message="Query to filter documents. Has to be valid JSON." />
-            </label>
-            <div className="col-md-9">
+            </Col>
+          </FormGroup>
+
+          <FormGroup controlId="QueryEditor-query">
+            <Col componentClass={ControlLabel} md={3}>Query</Col>
+            <Col md={9}>
               <CodeMirror
                 lineNumbers
                 lineWrapping
@@ -87,14 +82,13 @@ export default React.createClass({
                 theme="solarized"
                 value={this.props.query.has('query') ? this.props.query.get('query') : ''}
               />
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-md-3 control-label">
-              Sort
-              <ExportHelp message="Sort results by specified keys. Has to be valid JSON." />
-            </label>
-            <div className="col-md-9">
+              <HelpBlock>Query to filter documents. Has to be valid JSON.</HelpBlock>
+            </Col>
+          </FormGroup>
+
+          <FormGroup controlId="QueryEditor-sort">
+            <Col componentClass={ControlLabel} md={3}>Sort</Col>
+            <Col md={9}>
               <CodeMirror
                 lineNumbers
                 lineWrapping
@@ -105,53 +99,45 @@ export default React.createClass({
                 theme="solarized"
                 value={this.props.query.has('sort') ? this.props.query.get('sort').toString() : ''}
               />
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-md-3 control-label">Limit</label>
-            <div className="col-md-9">
-              <input
-                className="form-control"
+              <HelpBlock>Sort results by specified keys. Has to be valid JSON.</HelpBlock>
+            </Col>
+          </FormGroup>
+
+          <FormGroup controlId="QueryEditor-collection">
+            <Col componentClass={ControlLabel} md={3}>Limit</Col>
+            <Col md={9}>
+              <FormControl
                 onChange={this.handleLimitChange}
                 placeholder="optional, e.g. 100"
                 value={this.props.query.get('limit')}
                 type="text"
               />
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-md-3 control-label">Incremental</label>
-            <div className="col-md-9">
-              <div style={{ marginTop: '1em', paddingLeft: '1em' }} />
-              <label>
-                <input
-                  onChange={this.handleIncrementalChange}
-                  type="checkbox"
-                  checked={this.props.query.get('incremental')}
-                />
-              </label>
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-md-3 control-label">
-              Mode
-              <ExportHelp
-                message={
-                  'Mapping mode allows you to define more precise structure.\n' +
-                  'In raw mode, only JSON objects are exported.'
-                }
-              />
-            </label>
-            <div className="col-md-9">
-              <Select
-                name="mode"
-                clearable={false}
-                options={[{ label: 'Mapping', value: 'mapping' }, { label: 'Raw', value: 'raw' }]}
+            </Col>
+          </FormGroup>
+
+          <FormGroup controlId="QueryEditor-incremental">
+            <Col mdOffset={3} md={9}>
+              <Checkbox checked={this.props.query.get('incremental')} onChange={this.handleIncrementalChange}>
+                Incremental
+              </Checkbox>
+            </Col>
+          </FormGroup>
+
+          <FormGroup controlId="QueryEditor-mode">
+            <Col componentClass={ControlLabel} md={3}>Mode</Col>
+            <Col md={9}>
+              <FormControl
+                componentClass="select"
                 onChange={this.handleModeChange}
                 value={this.props.query.get('mode') ? this.props.query.get('mode') : 'mapping'}
-              />
-            </div>
-          </div>
+              >
+                <option value="mapping">Mapping</option>
+                <option value="raw">Raw</option>
+              </FormControl>
+              <HelpBlock>Mapping mode allows you to define more precise structure. In raw mode, only JSON objects are exported.</HelpBlock>
+            </Col>
+          </FormGroup>
+
           {this.renderMapping()}
         </div>
       </div>
@@ -172,12 +158,9 @@ export default React.createClass({
         mappingValue = query.get('mapping').toString();
       }
       return (
-        <div className="form-group">
-          <label className="col-md-3 control-label">
-            Mapping
-            <ExportHelp message="Mapping to define structure of exported tables. Has to be valid JSON." />
-          </label>
-          <div className="col-md-9">
+        <FormGroup controlId="QueryEditor-mapping">
+          <Col componentClass={ControlLabel} md={3}>Mapping</Col>
+          <Col md={9}>
             <CodeMirror
               lineNumbers
               lineWrapping
@@ -188,8 +171,9 @@ export default React.createClass({
               theme="solarized"
               value={mappingValue}
             />
-          </div>
-        </div>
+            <HelpBlock>Mapping to define structure of exported tables. Has to be valid JSON.</HelpBlock>
+          </Col>
+        </FormGroup>
       );
     }
 
