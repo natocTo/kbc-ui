@@ -131,7 +131,10 @@ export function createActions(componentId) {
       let newQuery = query;
 
       const mode = newQuery.get('mode', 'mapping');
-      if (mode !== 'mapping') {
+
+      if (mode === 'mapping') {
+        newQuery = newQuery.set('mapping', JSON.parse(newQuery.get('mapping')));
+      } else {
         newQuery = newQuery.delete('mapping');
       }
       return newQuery;
