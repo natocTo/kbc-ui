@@ -29,7 +29,7 @@ module.exports = React.createClass
 
     div null,
 
-      div className: 'kbc-header',
+      div className: 'kbc-inner-padding',
         div className: 'text-right',
           Link
             to: "ex-db-generic-#{@props.componentId}-new-query"

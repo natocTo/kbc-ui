@@ -247,7 +247,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-header">
+      <div className="kbc-inner-padding">
         <div className="form-horizontal">
           <AsynchActionError
             componentId={this.props.componentId}

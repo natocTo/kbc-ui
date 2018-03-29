@@ -59,7 +59,7 @@ export default React.createClass({
         {this.renderSheetsManagerModal()}
         {this.renderEditTableModal()}
         <div className="col-md-9 kbc-main-content">
-          <div className="kbc-header kbc-header-with-bottom-border">
+          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             <ComponentDescription
               componentId={COMPONENT_ID}
               configId={this.state.configId}
@@ -67,7 +67,7 @@ export default React.createClass({
           </div>
           {this.renderAuthorizedInfo()}
           {this.hasSheets() && this.isAuthorized() && (
-            <div className="kbc-header text-right">
+            <div className="kbc-inner-padding text-right">
               {this.renderAddSheetLink()}
             </div>
           )}
@@ -139,7 +139,7 @@ export default React.createClass({
 
   renderAuthorizedInfo() {
     return (
-      <div className="kbc-header kbc-header-with-bottom-border">
+      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
         <AuthorizationRow
           id={this.state.oauthCredentialsId}
           configId={this.state.configId}

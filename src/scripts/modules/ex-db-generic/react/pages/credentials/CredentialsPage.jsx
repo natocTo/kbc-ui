@@ -34,7 +34,7 @@ export default function(componentId, actionsProvisioning, storeProvisioning, cre
       return (
         <div className="container-fluid">
           <div className="kbc-main-content">
-            <div className="kbc-header text-right">
+            <div className="kbc-inner-padding text-right">
               <SaveButtons
                 isSaving={this.state.isSaving}
                 isChanged={this.state.isChangedCredentials}
