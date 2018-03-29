@@ -72,7 +72,7 @@ OrchestrationJobDetail = React.createClass
                 id: 'orchestration-job-detail-tabs',
                   Tab eventKey: 'overview', title: 'Overview', className: 'tab-pane-no-padding',
                     JobOverview(job: @state.job)
-                  Tab eventKey: 'log', title: 'Log',
+                  Tab eventKey: 'log', title: 'Log', className: 'tab-pane-no-padding',
                     Events
                       link:
                         to: 'orchestrationJob'
