@@ -9,7 +9,7 @@ storeProvisioning = require '../../../storeProvisioning'
 RoutesStore = require '../../../../../stores/RoutesStore'
 LatestJobsStore = require '../../../../jobs/stores/LatestJobsStore'
 
-QueryTable = React.createFactory(require './QueryTable')
+QueryTable = React.createFactory(require('./QueryTable').default)
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentMetadata = require '../../../../components/react/components/ComponentMetadata'
 
