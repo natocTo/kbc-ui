@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
-// import ConfirmButtons from '../../../../react/common/ConfirmButtons';
+import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import CodeMirror from 'react-code-mirror';
 import JSONSchemaEditor from './JSONSchemaEditor';
 import Immutable from 'immutable';
-import SaveButtons from '../../../../react/common/SaveButtons';
 
 /* global require */
 require('codemirror/addon/lint/lint');
@@ -18,7 +17,6 @@ export default React.createClass({
     schema: PropTypes.object,
     isSaving: PropTypes.bool.isRequired,
     isValid: PropTypes.bool.isRequired,
-    isChanged: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
@@ -38,12 +36,14 @@ export default React.createClass({
     return (
       <div className="edit kbc-configuration-editor">
         <div className="text-right">
-          <SaveButtons
+          <ConfirmButtons
             isSaving={this.props.isSaving}
-            isChanged={this.props.isChanged}
             onSave={this.handleSave}
-            disabled={!this.props.isValid}
-            onReset={this.props.onCancel} />
+            onCancel={this.props.onCancel}
+            placement="right"
+            saveLabel={this.props.saveLabel}
+            isDisabled={!this.props.isValid}
+            />
         </div>
         {this.renderJSONSchemaEditor()}
         {this.renderCodeMirror()}
@@ -62,7 +62,6 @@ export default React.createClass({
         value={Immutable.fromJS(JSON.parse(this.props.data))}
         onChange={this.handleParamsChange}
         readOnly={this.props.isSaving}
-        isChanged={this.props.isChanged}
         disableCollapse={true}
         disableProperties={true}
       />
@@ -87,7 +86,7 @@ export default React.createClass({
           readOnly={this.props.isSaving}
           lint={true}
           gutters={['CodeMirror-lint-markers']}
-        />
+          />
       </span>
     );
   },
@@ -97,9 +96,7 @@ export default React.createClass({
   },
 
   handleParamsChange(value) {
-    if (!value.equals(Immutable.fromJS(JSON.parse(this.props.data)))) {
-      this.props.onChange(JSON.stringify(value));
-    }
+    this.props.onChange(JSON.stringify(value));
   },
 
   handleSave() {

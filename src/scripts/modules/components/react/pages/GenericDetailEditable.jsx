@@ -36,10 +36,9 @@ export default React.createClass({
       configData: InstalledComponentStore.getConfigData(componentId, configId),
       config: InstalledComponentStore.getConfig(componentId, configId),
       latestJobs: LatestJobsStore.getJobs(componentId, configId),
-      isChanged: InstalledComponentStore.isChangedRawConfigData(componentId, configId),
+      isEditing: InstalledComponentStore.isEditingRawConfigData(componentId, configId),
       isSaving: InstalledComponentStore.isSavingConfigData(componentId, configId),
-
-      editingConfigData: InstalledComponentStore.getEditingRawConfigData(componentId, configId),
+      editingConfigData: InstalledComponentStore.getEditingRawConfigData(componentId, configId, '{}'),
       isValidEditingConfigData: InstalledComponentStore.isValidEditingConfigData(componentId, configId),
       token: token
     };
@@ -65,22 +64,23 @@ export default React.createClass({
             <ComponentDescription
               componentId={this.state.componentId}
               configId={this.state.config.get('id')}
-            />
+              />
           </div>
           <div className="row">
             <div classNmae="col-xs-4">
               {this.renderConfigurationHint()}
               <Configuration
-                data={this.state.editingConfigData}
+                data={this.getConfigData()}
+                isEditing={this.state.isEditing}
                 isSaving={this.state.isSaving}
+                onEditStart={this.onEditStart}
                 onEditCancel={this.onEditCancel}
                 onEditChange={this.onEditChange}
-                isChanged={this.state.isChanged}
                 onEditSubmit={this.onEditSubmit}
                 isValid={this.state.isValidEditingConfigData}
                 supportsEncryption={this.state.component.get('flags').contains('encrypt')}
                 showDocumentationLink={!this.state.component.get('flags').contains('genericDockerUI-runtime')}
-              />
+                />
 
             </div>
           </div>
@@ -100,7 +100,7 @@ export default React.createClass({
                 component={this.state.componentId}
                 mode="link"
                 runParams={this.runParams()}
-              >
+                >
                 You are about to run component.
               </RunComponentButton>
             </li>
@@ -108,7 +108,7 @@ export default React.createClass({
               <DeleteConfigurationButton
                 componentId={this.state.componentId}
                 configId={this.state.config.get('id')}
-              />
+                />
             </li>
             {this.renderShinyAppLink()}
           </ul>
@@ -151,6 +151,18 @@ export default React.createClass({
 
   runParams() {
     return () => ({config: this.state.config.get('id')});
+  },
+
+  getConfigData() {
+    if (this.state.isEditing) {
+      return this.state.editingConfigData;
+    } else {
+      return JSON.stringify(this.state.configData.toJSON(), null, '  ');
+    }
+  },
+
+  onEditStart() {
+    InstalledComponentsActionCreators.startEditComponentRawConfigData(this.state.componentId, this.state.config.get('id'));
   },
 
   onEditCancel() {

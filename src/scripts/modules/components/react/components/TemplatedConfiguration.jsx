@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 import Edit from './TemplatedConfigurationEdit';
+import Static from './TemplatedConfigurationStatic';
+
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../../stores/RoutesStore';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
@@ -21,31 +23,40 @@ export default React.createClass({
       componentId = RoutesStore.getCurrentRouteParam('component'),
       component = ComponentsStore.getComponent(componentId);
 
-    const isTemplate = TemplatesStore.isConfigTemplate(
-      componentId,
-      InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
-    ) || InstalledComponentsStore.getTemplatedConfigValueWithoutUserParams(componentId, configId).isEmpty();
-
     return {
       componentId: componentId,
       configId: configId,
       component: ComponentsStore.getComponent(componentId),
+
       config: InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId),
       configSchema: component.get('configurationSchema'),
       configTemplates: TemplatesStore.getConfigTemplates(componentId),
-      isTemplate: isTemplate,
-      isChanged: InstalledComponentsStore.isChangedTemplatedConfig(componentId, configId),
+      isTemplate: TemplatesStore.isConfigTemplate(
+        componentId,
+        InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+      ) || InstalledComponentsStore.getTemplatedConfigValueWithoutUserParams(componentId, configId).isEmpty(),
+      selectedTemplate: TemplatesStore.getMatchingTemplate(
+        componentId,
+        InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+      ),
+      params: InstalledComponentsStore.getTemplatedConfigValueUserParams(componentId, configId),
+
+      supportsEncryption: component.get('flags').includes('encrypt'),
+
+      isEditing: InstalledComponentsStore.isEditingTemplatedConfig(componentId, configId),
       isSaving: InstalledComponentsStore.isSavingConfigData(componentId, configId),
       isEditingString: InstalledComponentsStore.isTemplatedConfigEditingString(componentId, configId),
 
       editingParams: InstalledComponentsStore.getTemplatedConfigEditingValueParams(componentId, configId),
       editingTemplate: InstalledComponentsStore.getTemplatedConfigEditingValueTemplate(componentId, configId),
       editingString: InstalledComponentsStore.getTemplatedConfigEditingValueString(componentId, configId)
+
     };
   },
 
   propTypes: {
     headerText: PropTypes.string,
+    editLabel: PropTypes.string,
     saveLabel: PropTypes.string,
     help: PropTypes.node
   },
@@ -54,6 +65,7 @@ export default React.createClass({
     return {
       headerText: 'Configuration Data',
       help: null,
+      editLabel: 'Edit configuration',
       saveLabel: 'Save configuration'
     };
   },
@@ -64,24 +76,43 @@ export default React.createClass({
         <h2>{this.props.headerText}</h2>
         {this.props.help}
         {this.renderHelp()}
-        {this.renderEditor()}
+        {this.scripts()}
       </div>
     );
+  },
+
+  scripts() {
+    if (this.state.isEditing) {
+      return this.renderEditor();
+    } else {
+      return (
+        <Static
+          config={this.state.config}
+          isTemplate={this.state.isTemplate}
+          template={this.state.selectedTemplate}
+          params={this.state.params}
+          paramsSchema={this.state.configSchema}
+          onEditStart={this.onEditStart}
+          editLabel={this.props.editLabel}
+          />
+      );
+    }
   },
 
   renderEditor() {
     return (
       <Edit
-        isTemplate={this.state.isTemplate}
         editingTemplate={this.state.editingTemplate}
         editingParams={this.state.editingParams}
         editingString={this.state.editingString}
-        isEditingString={this.state.isEditingString}
+
         templates={this.state.configTemplates}
         paramsSchema={this.state.configSchema}
+        isEditingString={this.state.isEditingString}
+
         isValid={this.isValid()}
         isSaving={this.state.isSaving}
-        isChanged={this.state.isChanged}
+
         onSave={this.onEditSubmit}
         onChangeTemplate={this.onEditChangeTemplate}
         onChangeString={this.onEditChangeString}
@@ -90,8 +121,12 @@ export default React.createClass({
         onCancel={this.onEditCancel}
         saveLabel={this.props.saveLabel}
 
-      />
+        />
     );
+  },
+
+  onEditStart() {
+    InstalledComponentsActionCreators.startEditTemplatedComponentConfigData(this.state.componentId, this.state.configId);
   },
 
   onEditCancel() {
@@ -110,12 +145,12 @@ export default React.createClass({
     InstalledComponentsActionCreators.updateEditTemplatedComponentConfigDataString(this.state.componentId, this.state.configId, value);
   },
 
+
   onEditChangeParams(value) {
     InstalledComponentsActionCreators.updateEditTemplatedComponentConfigDataParams(this.state.componentId, this.state.configId, value);
   },
 
   onEditChangeEditingMode(isStringEditingMode) {
-    this.onEditCancel();
     InstalledComponentsActionCreators.toggleEditTemplatedComponentConfigDataString(this.state.componentId, this.state.configId, isStringEditingMode);
   },
 
@@ -139,7 +174,7 @@ export default React.createClass({
       <Markdown
         source={this.state.component.get('configurationDescription')}
         height="small"
-      />
+        />
     );
   }
 });

@@ -47,11 +47,12 @@ export default React.createClass({
       componentId: componentId,
       configId: configId,
       versions: VersionsStore.getVersions(componentId, configId),
+      configDataParameters: InstalledComponentStore.getConfigDataParameters(componentId, configId),
       configData: configData,
       editingConfigData: InstalledComponentStore.getEditingConfigDataObject(componentId, configId),
       config: InstalledComponentStore.getConfig(componentId, configId),
       latestJobs: LatestJobsStore.getJobs(componentId, configId),
-      isParametersChanged: InstalledComponentStore.isChangedRawConfigDataParameters(componentId, configId),
+      isParametersEditing: InstalledComponentStore.isEditingRawConfigDataParameters(componentId, configId),
       isParametersSaving: InstalledComponentStore.isSavingConfigDataParameters(componentId, configId),
       editingConfigDataParameters: InstalledComponentStore.getEditingRawConfigDataParameters(componentId, configId, '{}'),
       isValidEditingConfigDataParameters: InstalledComponentStore.isValidEditingConfigDataParameters(componentId, configId),
@@ -84,16 +85,17 @@ export default React.createClass({
       return (
         <div>
           <RuntimeConfiguration
-            isChanged={this.state.localState.hasIn(['runtime', 'editing'])}
             data={this.getConfigDataRuntime()}
+            isEditing={this.state.localState.getIn(['runtime', 'isEditing'], false)}
             isSaving={this.state.localState.getIn(['runtime', 'saving'], false)}
+            onEditStart={this.onEditRuntimeStart}
             onEditCancel={this.onEditRuntimeCancel}
             onEditChange={this.onEditRuntimeChange}
             headerText="Runtime"
             onEditSubmit={this.onEditRuntimeSubmit}
             isValid={this.state.isValidEditingConfigDataRuntime}
             supportsEncryption={false}
-          />
+            />
         </div>
       );
     } else {
@@ -112,7 +114,7 @@ export default React.createClass({
           tables={this.state.tables}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-        />
+          />
       );
     } else {
       return null;
@@ -129,7 +131,7 @@ export default React.createClass({
           editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'files'], List())}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-        />
+          />
       );
     } else {
       return null;
@@ -148,7 +150,7 @@ export default React.createClass({
           buckets={this.state.buckets}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-        />
+          />
       );
     } else {
       return null;
@@ -165,7 +167,7 @@ export default React.createClass({
           editingValue={this.state.editingConfigData.getIn(['storage', 'output', 'files'], List())}
           pendingActions={this.state.pendingActions}
           openMappings={this.state.openMappings}
-        />
+          />
       );
     } else {
       return null;
@@ -211,7 +213,7 @@ export default React.createClass({
             <ComponentDescription
               componentId={this.state.componentId}
               configId={this.state.config.get('id')}
-            />
+              />
           </div>
           <div className="row">
             <div classNmae="col-xs-4">
@@ -221,29 +223,31 @@ export default React.createClass({
               {this.tableOutputMapping()}
               {this.fileOutputMapping()}
               {this.isTemplatedComponent() ? (
-                 <TemplatedConfiguration
-                   headerText="Configuration"
-                   editLabel="Edit configuration"
-                   saveLabel="Save configuration"
-                 />
+                <TemplatedConfiguration
+                  headerText="Configuration"
+                  editLabel="Edit configuration"
+                  saveLabel="Save configuration"
+                  />
               ) : (
-                 <span>
-                   <Configuration
-                     data={this.state.editingConfigDataParameters}
-                     isChanged={this.state.isParametersChanged}
-                     isSaving={this.state.isParametersSaving}
-                     onEditCancel={this.onEditParametersCancel}
-                     onEditChange={this.onEditParametersChange}
-                     onEditSubmit={this.onEditParametersSubmit}
-                     isValid={this.state.isValidEditingConfigDataParameters}
-                     headerText="Configuration"
-                     saveLabel="Save configuration"
-                     supportsEncryption={this.state.component.get('flags').includes('encrypt')}
-                     schema={this.state.component.get('configurationSchema', Map())}
-                     editHelp={this.state.component.get('configurationDescription')}
-                     documentationUrl={this.state.component.get('documentationUrl')}
-                   />
-                 </span>
+                <span>
+                  <Configuration
+                    data={this.getConfigDataParameters()}
+                    isEditing={this.state.isParametersEditing}
+                    isSaving={this.state.isParametersSaving}
+                    onEditStart={this.onEditParametersStart}
+                    onEditCancel={this.onEditParametersCancel}
+                    onEditChange={this.onEditParametersChange}
+                    onEditSubmit={this.onEditParametersSubmit}
+                    isValid={this.state.isValidEditingConfigDataParameters}
+                    headerText="Configuration"
+                    editLabel="Edit configuration"
+                    saveLabel="Save configuration"
+                    supportsEncryption={this.state.component.get('flags').includes('encrypt')}
+                    schema={this.state.component.get('configurationSchema', Map())}
+                    editHelp={this.state.component.get('configurationDescription')}
+                    documentationUrl={this.state.component.get('documentationUrl')}
+                    />
+                </span>
               )}
               {this.runtimeConfiguration()}
               {this.processorsConfiguration()}
@@ -268,7 +272,7 @@ export default React.createClass({
                 component={this.state.componentId}
                 mode="link"
                 runParams={this.runParams()}
-              >
+                >
                 You are about to run component.
               </RunComponentButton>
             </li>
@@ -276,7 +280,7 @@ export default React.createClass({
               <DeleteConfigurationButton
                 componentId={this.state.componentId}
                 configId={this.state.config.get('id')}
-              />
+                />
             </li>
           </ul>
           <LatestJobs
@@ -303,8 +307,19 @@ export default React.createClass({
   },
 
   getConfigDataRuntime() {
-    const savedData =  this.state.configData.get('runtime', Map());
-    return this.state.localState.getIn(['runtime', 'editing'], savedData);
+    if (this.state.localState.getIn(['runtime', 'isEditing'])) {
+      return this.state.localState.getIn(['runtime', 'editing']);
+    } else {
+      return this.state.configData.get('runtime', Map());
+    }
+  },
+
+  onEditRuntimeStart() {
+    const data = this.state.configData.get('runtime', Map());
+    let runtime = this.state.localState.get('runtime', Map());
+    runtime = runtime.set('editing', data);
+    runtime = runtime.set('isEditing', true);
+    this.updateLocalState(['runtime'], runtime);
   },
 
   onEditRuntimeCancel() {
@@ -385,6 +400,19 @@ export default React.createClass({
 
   onEditProcessorsChange(newValue) {
     this.updateLocalState(['processors', 'editing'], newValue);
+  },
+
+
+  getConfigDataParameters() {
+    if (this.state.isParametersEditing) {
+      return this.state.editingConfigDataParameters;
+    } else {
+      return JSON.stringify(this.state.configDataParameters.toJSON(), null, '  ');
+    }
+  },
+
+  onEditParametersStart() {
+    InstalledComponentsActionCreators.startEditComponentRawConfigDataParameters(this.state.componentId, this.state.config.get('id'));
   },
 
   onEditParametersCancel() {

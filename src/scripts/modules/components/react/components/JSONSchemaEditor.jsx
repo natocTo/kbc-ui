@@ -13,15 +13,8 @@ export default React.createClass({
     schema: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     readOnly: PropTypes.bool.isRequired,
-    isChanged: PropTypes.bool,
     disableProperties: PropTypes.bool,
     disableCollapse: PropTypes.bool
-  },
-
-  getInitialState() {
-    return {
-      blockOnChangeOnce: true
-    };
   },
 
   getDefaultProps() {
@@ -36,24 +29,18 @@ export default React.createClass({
   jsoneditor: null,
 
   componentWillReceiveProps(nextProps) {
-    // workaround to update editor internal value after reset of this.props.value
-    const resetValue = this.props.isChanged && !nextProps.isChanged;
-    const resetReadOnly = this.props.readOnly !== nextProps.readOnly;
-    const nextReadOnly = resetReadOnly ? nextProps.readOnly : this.props.readOnly;
-    const nextValue = resetValue ? nextProps.value || this.props.value : this.props.value;
-    if (!this.props.schema.equals(nextProps.schema) || resetValue || resetReadOnly) {
-      this.setState({blockOnChangeOnce: true});
-      this.initJsonEditor(nextValue, nextReadOnly);
+    if (!this.props.schema.equals(nextProps.schema)) {
+      this.initJsonEditor();
     }
   },
 
-  initJsonEditor(nextValue, nextReadOnly) {
+  initJsonEditor() {
     if (this.jsoneditor) {
       this.jsoneditor.destroy();
     }
     var options =       {
       schema: this.props.schema.toJS(),
-      startval: nextValue.toJS(),
+      startval: this.props.value.toJS(),
       theme: 'bootstrap3',
       iconlib: 'fontawesome4',
       custom_validators: [],
@@ -71,7 +58,7 @@ export default React.createClass({
       show_errors: 'interaction'
     };
 
-    if (nextReadOnly) {
+    if (this.props.readOnly) {
       options.disable_array_add = true;
       options.disable_collapse = true;
       options.disable_edit_json = true;
@@ -100,26 +87,20 @@ export default React.createClass({
     );
     this.jsoneditor = jsoneditor;
     var props = this.props;
-    const self = this;
 
     // When the value of the editor changes, update the JSON output and TODO validation message
     jsoneditor.on('change', function() {
       var json = jsoneditor.getValue();
-      // editor calls onChange after its init causing isChanged = true without any user input. This will prevent calling onChange after editors init
-      if (self.state.blockOnChangeOnce) {
-        self.setState({blockOnChangeOnce: false});
-      } else {
-        props.onChange(Immutable.fromJS(json));
-      }
+      props.onChange(Immutable.fromJS(json));
     });
 
-    if (nextReadOnly) {
+    if (this.props.readOnly) {
       jsoneditor.disable();
     }
   },
 
   componentDidMount() {
-    this.initJsonEditor(this.props.value, this.props.readOnly);
+    this.initJsonEditor();
   },
 
   getCurrentValue() {
