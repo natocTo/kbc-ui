@@ -1,11 +1,15 @@
 import React, {PropTypes} from 'react';
-const TitleSection = ({value, onChange, disabled}) =>(
-    <span>
-      <input disabled={disabled} onChange={e => onChange({identifier: e.target.value})}
+const TitleSection = ({value, onChange, disabled}) => (
+  <span>
+    <div> title
+      <input type="text" disabled={disabled} onChange={e => onChange({identifier: e.target.value})}
         value={value.identifier} />
+    </div>
+    <div> identifier
       <input disabled={disabled} onChange={e => onChange({title: e.target.value})} />
-    </span>
-  );
+    </div>
+  </span>
+);
 
 TitleSection.propTypes = {
   value: PropTypes.shape({

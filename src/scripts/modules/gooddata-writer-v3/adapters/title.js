@@ -25,7 +25,8 @@ export default {
   createEmptyConfiguration(name, webalizedName) {
     const initState = {
       tableId: name,
-      title: webalizedName
+      title: webalizedName,
+      identifier: ''
     };
     return createConfiguration(Immutable.fromJS(initState));
   }
