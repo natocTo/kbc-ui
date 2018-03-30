@@ -102,6 +102,7 @@ snowflake = [
   'timestamp_ltz'
   'timestamp_ntz'
   'timestamp_tz'
+  'variant'
 ]
 pgsql = [
   'int'
