@@ -8,6 +8,9 @@ SapiTableSelector = React.createFactory(require('../../../../components/react/co
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
 Panel = React.createFactory(require('react-bootstrap').Panel)
 
+PANEL_HEADER_SHOW_DETAILS = 'Show details'
+PANEL_HEADER_HIDE_DETAILS = 'Hide details'
+
 module.exports = React.createClass
   displayName: 'InputMappingRowDockjerEditor'
 
@@ -25,6 +28,8 @@ module.exports = React.createClass
 
   getInitialState: ->
     showDetails: @props.initialShowDetails
+    panelHeaderTitle: if !@props.initialShowDetails then PANEL_HEADER_SHOW_DETAILS else PANEL_HEADER_HIDE_DETAILS
+
 
   shouldComponentUpdate: (nextProps, nextState) ->
     should = @props.value != nextProps.value ||
@@ -125,7 +130,6 @@ module.exports = React.createClass
 
   render: ->
     component = @
-    showDetailTitle = React.DOM.h3 null, if @state.showDetails then 'Hide Details' else 'Show Details'
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div {className: "row col-md-12"},
         React.DOM.div className: 'form-group',
@@ -158,10 +162,14 @@ module.exports = React.createClass
                 React.DOM.code {}, "/data/in/tables/" + @_getFileName()
        React.DOM.div {className: "row col-md-12"},
         Panel
-          header: showDetailTitle
+          header: @state.panelHeaderTitle
           defaultExpanded: @state.showDetails
           className: 'panel-show-details'
           collapsible: true
+          onEnter: =>
+            @.setState {panelHeaderTitle: PANEL_HEADER_HIDE_DETAILS}
+          onExit: =>
+            @.setState {panelHeaderTitle: PANEL_HEADER_SHOW_DETAILS}
           React.DOM.div {className: 'form-horizontal clearfix'},
             React.DOM.div className: 'form-group form-group-sm',
               React.DOM.label className: 'col-xs-2 control-label', 'Columns'

@@ -10,8 +10,8 @@ tableIdParser = require('../../../../../utils/tableIdParser').default
 stringUtils = require('../../../../../utils/string').default
 Panel = React.createFactory(require('react-bootstrap').Panel)
 
-PANEL_HEADER_SHOW_DETAILS = 'Show details';
-PANEL_HEADER_HIDE_DETAILS = 'Hide details';
+PANEL_HEADER_SHOW_DETAILS = 'Show details'
+PANEL_HEADER_HIDE_DETAILS = 'Hide details'
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
