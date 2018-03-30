@@ -4,6 +4,10 @@ Immutable = require('immutable')
 {Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 SelectCreatable = React.createFactory(require('react-select').Creatable)
+Panel = React.createFactory(require('react-bootstrap').Panel)
+
+PANEL_HEADER_SHOW_DETAILS = 'Show details'
+PANEL_HEADER_HIDE_DETAILS = 'Hide details'
 
 module.exports = React.createClass
   displayName: 'FileInputMappingEditor'
@@ -15,11 +19,7 @@ module.exports = React.createClass
 
   getInitialState: ->
     showDetails: false
-
-  _handleToggleShowDetails: (e) ->
-    @setState(
-      showDetails: e.target.checked
-    )
+    panelHeaderTitle: if !@props.initialShowDetails then PANEL_HEADER_SHOW_DETAILS else PANEL_HEADER_HIDE_DETAILS
 
   shouldComponentUpdate: (nextProps, nextState) ->
     should = @props.value != nextProps.value ||
@@ -80,16 +80,6 @@ module.exports = React.createClass
   render: ->
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div {className: "row col-md-12"},
-        React.DOM.div className: 'form-group form-group-sm',
-          React.DOM.div className: 'col-xs-10 col-xs-offset-2',
-            Input
-              standalone: true
-              type: 'checkbox'
-              label: React.DOM.small {}, 'Show details'
-              checked: @state.showDetails
-              onChange: @_handleToggleShowDetails
-
-      React.DOM.div {className: "row col-md-12"},
         React.DOM.div className: 'form-group',
           React.DOM.label className: 'col-xs-2 control-label', 'Tags'
           React.DOM.div className: 'col-xs-10',
@@ -103,8 +93,16 @@ module.exports = React.createClass
               multi: true
               onChange: @_handleChangeTags
 
-      if @state.showDetails
-        React.DOM.div {className: "row col-md-12"},
+      React.DOM.div {className: "row col-md-12"},
+        Panel
+          header: @state.panelHeaderTitle
+          defaultExpanded: @state.showDetails
+          className: 'panel-show-details'
+          collapsible: true
+          onEnter: =>
+            @.setState {panelHeaderTitle: PANEL_HEADER_HIDE_DETAILS}
+          onExit: =>
+            @.setState {panelHeaderTitle: PANEL_HEADER_SHOW_DETAILS}
           Input
             bsSize: 'small'
             type: 'text'
@@ -119,8 +117,7 @@ module.exports = React.createClass
               className: "help-block"
             ,
               "Specify an Elasticsearch query to refine search"
-      if @state.showDetails
-        React.DOM.div {className: "row col-md-12"},
+
           React.DOM.div className: 'form-group form-group-sm',
             React.DOM.label className: 'col-xs-2 control-label', 'Processed Tags'
             React.DOM.div className: 'col-xs-10',
