@@ -63,16 +63,18 @@ export default {
 <br/><br/>
 **Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and type \`cars_population\` as the Source. This table will be created in the transformation. Then set the Destination. Set \`out\` stage. Accept \`c-guide\` as a bucket name. Accept \`cars_population\` as a table. It’s a name for the new table *cars_population* that will be created in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
 <br/><br/>
-**Queries** — to create your output table, copy the following code and replace the default text with it: <br/> <pre><code>CREATE TABLE "cars_population" 
-AS SELECT 
-&nbsp;&nbsp;&nbsp;&nbsp;"countries"."name", 
-&nbsp;&nbsp;&nbsp;&nbsp;"cars"."total_cars", 
-&nbsp;&nbsp;&nbsp;&nbsp;"countries"."population", 
-&nbsp;&nbsp;&nbsp;&nbsp;("cars"."total_cars" / "countries"."population") AS "cars_per_capita" 
+**Queries** — to create your output table, copy the following code and replace the default text with it: <br/> 
+<pre style="word-break: keep-all;"><code>CREATE TABLE "cars_population" AS 
+SELECT 
+    "countries"."name", 
+    "cars"."total_cars", 
+    "countries"."population", 
+    ("cars"."total_cars" / "countries"."population") AS "cars_per_capita" 
 FROM "cars" 
 JOIN "countries" 
-&nbsp;&nbsp;&nbsp;&nbsp;ON "cars"."country" = "countries"."name"
-</code></pre>.<br/> Then <span class="btn btn-success btn-sm">Save</span> it.
+    ON "cars"."country" = "countries"."name"
+</code></pre>
+<br/>Then <span class="btn btn-success btn-sm">Save</span> it.
 <br/><br/>
 To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.
 
