@@ -82,9 +82,6 @@ module.exports = React.createClass
     TIMESTAMP_TZ:
       name: "TIMESTAMP_TZ",
       size: false
-    VARIANT:
-      name: "VARIANT",
-      size: false
 
   _getDatatypeOptions: ->
     _.keys(@_datatypesMap)
