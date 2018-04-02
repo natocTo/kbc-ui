@@ -2,7 +2,8 @@
    ChangedSinceInput
  */
 import React from 'react';
-import Select from 'react-select';
+import { Creatable } from 'react-select';
+import changedSinceOptionIsValid from './changedSinceOptionIsValid';
 
 export default React.createClass({
 
@@ -101,15 +102,29 @@ export default React.createClass({
     }
   },
 
+  isValidNewOption({ label }) {
+    return changedSinceOptionIsValid(label);
+  },
+
+  newOptionCreator({ label }) {
+    return {
+      label: label,
+      value: '-' + label
+    };
+  },
+
   render() {
     return (
       <div>
-        <Select
-          placeholder="Select period..."
+        <Creatable
+          placeholder="Select period"
+          noResultsText="Invalid option"
           value={this.props.value}
           disabled={this.props.disabled}
           onChange={this.onChange}
           options={this.getSelectOptions()}
+          newOptionCreator={this.newOptionCreator}
+          isValidNewOption={this.isValidNewOption}
         />
       </div>
     );
