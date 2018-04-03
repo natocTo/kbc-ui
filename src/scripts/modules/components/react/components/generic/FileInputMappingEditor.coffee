@@ -16,17 +16,11 @@ module.exports = React.createClass
     value: React.PropTypes.object.isRequired
     onChange: React.PropTypes.func.isRequired
     disabled: React.PropTypes.bool.isRequired
+    initialShowDetails: React.PropTypes.bool.isRequired
 
   getInitialState: ->
-    showDetails: false
+    showDetails: @props.initialShowDetails
     panelHeaderTitle: if !@props.initialShowDetails then PANEL_HEADER_SHOW_DETAILS else PANEL_HEADER_HIDE_DETAILS
-
-  shouldComponentUpdate: (nextProps, nextState) ->
-    should = @props.value != nextProps.value ||
-        @props.disabled != nextProps.disabled ||
-        @state.showDetails != nextState.showDetails
-
-    should
 
   _handleChangeQuery: (e) ->
     value = @props.value.set("query", e.target.value)

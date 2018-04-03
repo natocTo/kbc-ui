@@ -4,6 +4,7 @@ import Immutable from 'immutable';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './FileInputMappingEditor';
 import Tooltip from '../../../../../react/common/Tooltip';
+import resolveInputShowDetails from '../../../../transformations/react/modals/resolveInputShowDetails';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
@@ -69,7 +70,8 @@ export default React.createClass({
     const props = {
       value: this.props.mapping,
       disabled: this.state.isSaving,
-      onChange: this.props.onChange
+      onChange: this.props.onChange,
+      initialShowDetails: resolveInputShowDetails(this.props.mapping)
     };
     return React.createElement(Editor, props);
   },
