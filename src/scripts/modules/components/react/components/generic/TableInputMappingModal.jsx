@@ -7,6 +7,7 @@ import resolveInputShowDetails from './resolveInputShowDetails';
 import Immutable from 'immutable';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
+const MAPPING_TYPE = 'tableInput';
 
 export default React.createClass({
   propTypes: {
@@ -134,7 +135,7 @@ export default React.createClass({
       tables: this.props.tables,
       disabled: this.state.isSaving,
       onChange: this.props.onChange,
-      initialShowDetails: resolveInputShowDetails(this.props.mapping),
+      initialShowDetails: resolveInputShowDetails(this.props.mapping, MAPPING_TYPE),
       isDestinationDuplicate: this.isDestinationDuplicate(),
       showFileHint: this.props.showFileHint,
       definition: this.props.definition
