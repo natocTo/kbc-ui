@@ -833,7 +833,7 @@ Dispatcher.register (payload) ->
         TemplatesStore.getApiTemplate(action.componentId)
       )
 
-      if (_store.getIn(['templatedConfigEditingString', action.componentId, action.configId], false))
+      if (_store.getIn(['templatedConfigValuesEditingString', componentId, configId], false))
         editingConfigValueString = InstalledComponentsStore.getTemplatedConfigEditingValueString(componentId, configId)
         editingData = editingData.setIn(
           ['parameters', 'config'],
