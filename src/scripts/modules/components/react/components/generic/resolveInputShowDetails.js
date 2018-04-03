@@ -1,4 +1,4 @@
-function tableInput(mapping) {
+var resolveTableInputShowDetails  = function(mapping) {
   if (mapping.has('columns') && mapping.get('columns').count() > 0) {
     return true;
   }
@@ -15,9 +15,9 @@ function tableInput(mapping) {
     return true;
   }
   return false;
-}
+};
 
-function fileInput(mapping) {
+var resolveFileInputShowDetails = function(mapping) {
   if (mapping.has('processed_tags') && mapping.get('processed_tags').count() > 0) {
     return true;
   }
@@ -26,14 +26,13 @@ function fileInput(mapping) {
     return true;
   }
   return false;
-}
+};
 
-export default function(mapping, type) {
-  if (type === 'tableInput') {
-    return tableInput(mapping);
-  } else if (type === 'fileInput') {
-    return fileInput(mapping);
-  } else {
-    return false;
+module.exports = {
+  resolveTableInputShowDetails: function(mapping) {
+    return resolveTableInputShowDetails(mapping);
+  },
+  resolveFileInputShowDetails: function(mapping) {
+    return resolveFileInputShowDetails(mapping);
   }
-}
+};
