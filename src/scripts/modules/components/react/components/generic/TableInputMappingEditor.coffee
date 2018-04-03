@@ -33,14 +33,6 @@ module.exports = React.createClass
     showDetails: @props.initialShowDetails
     panelHeaderTitle: if !@props.initialShowDetails then PANEL_HEADER_SHOW_DETAILS else PANEL_HEADER_HIDE_DETAILS
 
-  shouldComponentUpdate: (nextProps, nextState) ->
-    should = @props.value != nextProps.value ||
-        @props.tables != nextProps.tables ||
-        @props.disabled != nextProps.disabled ||
-        @state.showDetails != nextState.showDetails
-
-    should
-
   _handleChangeSource: (value) ->
     # use only table name from the table identifier
     immutable = @props.value.withMutations (mapping) ->
