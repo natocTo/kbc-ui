@@ -26,17 +26,9 @@ export default React.createClass({
     actionCreators: React.PropTypes.object.isRequired
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
-  },
-
   getDefaultProps() {
     return {
-      onChange: function() {
-        return {
-          isValidEditingCredentials: true
-        };
-      }
+      onChange: () => null
     };
   },
 
