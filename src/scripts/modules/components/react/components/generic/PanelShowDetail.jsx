@@ -6,7 +6,8 @@ export default React.createClass({
   propTypes: {
     defaultExpanded: PropTypes.bool,
     labelCollapsed: PropTypes.string,
-    labelOpen: PropTypes.string
+    labelOpen: PropTypes.string,
+    children: PropTypes.any
   },
 
   getDefaultProps() {

@@ -113,67 +113,6 @@ module.exports = React.createClass
       return @props.value.get("source")
     return ''
 
-   _getDetailContent: ->
-    return(
-      React.DOM.div {className: 'form-horizontal clearfix'},
-        React.DOM.div className: 'form-group form-group-sm',
-          React.DOM.label className: 'col-xs-2 control-label', 'Columns'
-          React.DOM.div className: 'col-xs-10',
-            Select
-              multi: true
-              name: 'columns'
-              value: @props.value.get("columns", Immutable.List()).toJS()
-              disabled: @props.disabled || !@props.value.get("source")
-              placeholder: "All columns will be imported"
-              onChange: @_handleChangeColumns
-              options: @_getColumnsOptions()
-            React.DOM.small
-              className: "help-block"
-            ,
-              "Import only specified columns"
-        React.DOM.div className: 'form-group form-group-sm',
-          React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
-          React.DOM.div className: 'col-xs-10',
-            ChangedSinceInput
-              value: @props.value.get(
-                "changedSince",
-                if (@props.value.get("days") > 0) then "-" + @props.value.get("days") + " days" else null
-              )
-              disabled: @props.disabled || !@props.value.get("source")
-              onChange: @_handleChangeChangedSince
-        React.DOM.div className: 'form-group form-group-sm',
-          React.DOM.label className: 'col-xs-2 control-label', 'Data filter'
-          React.DOM.div className: 'col-xs-4',
-            Select
-              name: 'whereColumn'
-              value: @props.value.get("whereColumn")
-              disabled: @props.disabled || !@props.value.get("source")
-              placeholder: "Select column"
-              onChange: @_handleChangeWhereColumn
-              options: @_getColumnsOptions()
-          React.DOM.div className: 'col-xs-2',
-            Input
-              type: 'select'
-              name: 'whereOperator'
-              value: @props.value.get("whereOperator")
-              disabled: @props.disabled
-              onChange: @_handleChangeWhereOperator
-            ,
-              React.DOM.option {value: "eq"}, "= (IN)"
-              React.DOM.option {value: "ne"}, "!= (NOT IN)"
-          React.DOM.div className: 'col-xs-4',
-            Select
-              name: 'whereValues'
-              value: @props.value.get('whereValues')
-              multi: true
-              disabled: @props.disabled
-              allowCreate: true
-              delimiter: ','
-              placeholder: 'Add a value...'
-              emptyStrings: true,
-              onChange: @_handleChangeWhereValues
-    )
-
   render: ->
     component = @
     React.DOM.div {className: 'form-horizontal clearfix'},
@@ -209,4 +148,60 @@ module.exports = React.createClass
       React.DOM.div {className: "row col-md-12"},
         PanelShowDetail
           defaultExpanded: @props.initialShowDetails
-          content: @_getDetailContent()
+          React.DOM.div {className: 'form-horizontal clearfix'},
+            React.DOM.div className: 'form-group form-group-sm',
+              React.DOM.label className: 'col-xs-2 control-label', 'Columns'
+              React.DOM.div className: 'col-xs-10',
+                Select
+                  multi: true
+                  name: 'columns'
+                  value: @props.value.get("columns", Immutable.List()).toJS()
+                  disabled: @props.disabled || !@props.value.get("source")
+                  placeholder: "All columns will be imported"
+                  onChange: @_handleChangeColumns
+                  options: @_getColumnsOptions()
+                React.DOM.small
+                  className: "help-block"
+                ,
+                  "Import only specified columns"
+            React.DOM.div className: 'form-group form-group-sm',
+              React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
+              React.DOM.div className: 'col-xs-10',
+                ChangedSinceInput
+                  value: @props.value.get(
+                    "changedSince",
+                    if (@props.value.get("days") > 0) then "-" + @props.value.get("days") + " days" else null
+                  )
+                  disabled: @props.disabled || !@props.value.get("source")
+                  onChange: @_handleChangeChangedSince
+            React.DOM.div className: 'form-group form-group-sm',
+              React.DOM.label className: 'col-xs-2 control-label', 'Data filter'
+              React.DOM.div className: 'col-xs-4',
+                Select
+                  name: 'whereColumn'
+                  value: @props.value.get("whereColumn")
+                  disabled: @props.disabled || !@props.value.get("source")
+                  placeholder: "Select column"
+                  onChange: @_handleChangeWhereColumn
+                  options: @_getColumnsOptions()
+              React.DOM.div className: 'col-xs-2',
+                Input
+                  type: 'select'
+                  name: 'whereOperator'
+                  value: @props.value.get("whereOperator")
+                  disabled: @props.disabled
+                  onChange: @_handleChangeWhereOperator
+                ,
+                  React.DOM.option {value: "eq"}, "= (IN)"
+                  React.DOM.option {value: "ne"}, "!= (NOT IN)"
+              React.DOM.div className: 'col-xs-4',
+                Select
+                  name: 'whereValues'
+                  value: @props.value.get('whereValues')
+                  multi: true
+                  disabled: @props.disabled
+                  allowCreate: true
+                  delimiter: ','
+                  placeholder: 'Add a value...'
+                  emptyStrings: true,
+                  onChange: @_handleChangeWhereValues

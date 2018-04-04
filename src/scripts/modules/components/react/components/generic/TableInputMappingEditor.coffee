@@ -52,27 +52,6 @@ module.exports = React.createClass
       return @props.value.get("source")
     return ''
 
-  _getDetailContent: ->
-    return (
-      React.DOM.div {className: 'form-horizontal clearfix'},
-        React.createElement ColumnsSelectRow,
-          value: @props.value
-          disabled: @props.disabled
-          onChange: @props.onChange
-          allTables: @props.tables
-
-        React.createElement ChangedSinceFilterInput,
-          mapping: @props.value
-          disabled: @props.disabled
-          onChange: @props.onChange
-
-        React.createElement DataFilterRow,
-          value: @props.value
-          disabled: @props.disabled
-          onChange: @props.onChange
-          allTables: @props.tables
-    )
-
   render: ->
     component = @
     React.DOM.div {className: 'form-horizontal clearfix'},
@@ -111,4 +90,20 @@ module.exports = React.createClass
       React.DOM.div {className: "row col-md-12"},
         PanelShowDetail
           defaultExpanded: @props.initialShowDetails
-          content: @_getDetailContent()
+          React.DOM.div {className: 'form-horizontal clearfix'},
+            React.createElement ColumnsSelectRow,
+              value: @props.value
+              disabled: @props.disabled
+              onChange: @props.onChange
+              allTables: @props.tables
+
+            React.createElement ChangedSinceFilterInput,
+              mapping: @props.value
+              disabled: @props.disabled
+              onChange: @props.onChange
+
+            React.createElement DataFilterRow,
+              value: @props.value
+              disabled: @props.disabled
+              onChange: @props.onChange
+              allTables: @props.tables
