@@ -7,10 +7,7 @@ Input = React.createFactory Input
 SapiTableSelector = React.createFactory(require('../SapiTableSelector'))
 ChangedSinceFilterInput = require('./ChangedSinceFilterInput').default
 DataFilterRow = require('./DataFilterRow').default
-Panel = React.createFactory(require('react-bootstrap').Panel)
-
-PANEL_HEADER_SHOW_DETAILS = 'Show details'
-PANEL_HEADER_HIDE_DETAILS = 'Hide details'
+PanelShowDetail = React.createFactory(require('./PanelShowDetail').default)
 
 module.exports = React.createClass
   displayName: 'TableInputMappingEditor'
@@ -28,10 +25,6 @@ module.exports = React.createClass
   getDefaultProps: ->
     showFileHint: true
     definition: Immutable.Map()
-
-  getInitialState: ->
-    showDetails: @props.initialShowDetails
-    panelHeaderTitle: if !@props.initialShowDetails then PANEL_HEADER_SHOW_DETAILS else PANEL_HEADER_HIDE_DETAILS
 
   _handleChangeSource: (value) ->
     # use only table name from the table identifier
@@ -58,6 +51,27 @@ module.exports = React.createClass
     if @props.value.get("source") && @props.value.get("source") != ''
       return @props.value.get("source")
     return ''
+
+  _getDetailContent: ->
+    return (
+      React.DOM.div {className: 'form-horizontal clearfix'},
+        React.createElement ColumnsSelectRow,
+          value: @props.value
+          disabled: @props.disabled
+          onChange: @props.onChange
+          allTables: @props.tables
+
+        React.createElement ChangedSinceFilterInput,
+          mapping: @props.value
+          disabled: @props.disabled
+          onChange: @props.onChange
+
+        React.createElement DataFilterRow,
+          value: @props.value
+          disabled: @props.disabled
+          onChange: @props.onChange
+          allTables: @props.tables
+    )
 
   render: ->
     component = @
@@ -95,30 +109,6 @@ module.exports = React.createClass
                     React.DOM.code {}, "/data/in/tables/" + @_getFileName()
 
       React.DOM.div {className: "row col-md-12"},
-        Panel
-          header: @state.panelHeaderTitle
-          defaultExpanded: @state.showDetails
-          className: 'panel-show-details'
-          collapsible: true
-          onEnter: =>
-            @.setState {panelHeaderTitle: PANEL_HEADER_HIDE_DETAILS}
-          onExit: =>
-            @.setState {panelHeaderTitle: PANEL_HEADER_SHOW_DETAILS}
-          React.DOM.div {className: 'form-horizontal clearfix'},
-            React.createElement ColumnsSelectRow,
-              value: @props.value
-              disabled: @props.disabled
-              onChange: @props.onChange
-              allTables: @props.tables
-
-            React.createElement ChangedSinceFilterInput,
-              mapping: @props.value
-              disabled: @props.disabled
-              onChange: @props.onChange
-
-
-            React.createElement DataFilterRow,
-              value: @props.value
-              disabled: @props.disabled
-              onChange: @props.onChange
-              allTables: @props.tables
+        PanelShowDetail
+          defaultExpanded: @props.initialShowDetails
+          content: @_getDetailContent()
