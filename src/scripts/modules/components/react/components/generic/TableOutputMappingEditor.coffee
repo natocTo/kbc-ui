@@ -7,7 +7,7 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 AutosuggestWrapper = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
-PanelShowDetail = React.createFactory(require('./PanelShowDetail').default)
+PanelWithDetails = React.createFactory(require('./PanelWithDetails').default)
 
 module.exports = React.createClass
   displayName: 'TableOutputMappingEditor'
@@ -153,7 +153,7 @@ module.exports = React.createClass
               placeholder: 'Storage table where \
               the source file data will be loaded to - you can create a new table or use an existing one.'
       React.DOM.div {className: "row col-md-12"},
-        PanelShowDetail
+        PanelWithDetails
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
             React.DOM.div {className: "form-group form-group-sm"},

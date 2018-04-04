@@ -8,8 +8,8 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
 stringUtils = require('../../../../../utils/string').default
-PanelShowDetail = React.createFactory(
-  require('../../../../components/react/components/generic/PanelShowDetail').default)
+PanelWithDetails = React.createFactory(
+  require('../../../../components/react/components/generic/PanelWithDetails').default)
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
@@ -178,7 +178,7 @@ module.exports = React.createClass
              placeholder: 'Storage table where \
              the source table data will be loaded to - you can create a new table or use an existing one.'
      React.DOM.div {className: "row col-md-12"},
-       PanelShowDetail
+       PanelWithDetails
          defaultExpanded: @props.initialShowDetails
          React.DOM.div {className: 'form-horizontal clearfix'},
            React.DOM.div {className: "form-group form-group-sm"},

@@ -7,8 +7,8 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 SnowflakeDataTypesContainer = React.createFactory(require("./input/SnowflakeDataTypesContainer"))
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
-PanelShowDetail = React.createFactory(
-  require('../../../../components/react/components/generic/PanelShowDetail').default)
+PanelWithDetails = React.createFactory(
+  require('../../../../components/react/components/generic/PanelWithDetails').default)
 
 module.exports = React.createClass
   displayName: 'InputMappingRowRedshiftEditor'
@@ -144,7 +144,7 @@ module.exports = React.createClass
               '.'
             else null
       React.DOM.div {className: "row col-md-12"},
-        PanelShowDetail
+        PanelWithDetails
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
             React.DOM.div className: 'form-group form-group-sm',

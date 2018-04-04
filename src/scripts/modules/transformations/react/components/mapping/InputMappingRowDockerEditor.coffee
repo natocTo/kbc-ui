@@ -6,8 +6,8 @@ Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
-PanelShowDetail = React.createFactory(
-  require('../../../../components/react/components/generic/PanelShowDetail').default)
+PanelWithDetails = React.createFactory(
+  require('../../../../components/react/components/generic/PanelWithDetails').default)
 
 module.exports = React.createClass
   displayName: 'InputMappingRowDockjerEditor'
@@ -146,7 +146,7 @@ module.exports = React.createClass
                 "File will be available at"
                 React.DOM.code {}, "/data/in/tables/" + @_getFileName()
       React.DOM.div {className: "row col-md-12"},
-        PanelShowDetail
+        PanelWithDetails
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
             React.DOM.div className: 'form-group form-group-sm',

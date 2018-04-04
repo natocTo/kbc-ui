@@ -7,7 +7,7 @@ Input = React.createFactory Input
 SapiTableSelector = React.createFactory(require('../SapiTableSelector'))
 ChangedSinceFilterInput = require('./ChangedSinceFilterInput').default
 DataFilterRow = require('./DataFilterRow').default
-PanelShowDetail = React.createFactory(require('./PanelShowDetail').default)
+PanelWithDetails = React.createFactory(require('./PanelWithDetails').default)
 
 module.exports = React.createClass
   displayName: 'TableInputMappingEditor'
@@ -88,7 +88,7 @@ module.exports = React.createClass
                     React.DOM.code {}, "/data/in/tables/" + @_getFileName()
 
       React.DOM.div {className: "row col-md-12"},
-        PanelShowDetail
+        PanelWithDetails
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
             React.createElement ColumnsSelectRow,

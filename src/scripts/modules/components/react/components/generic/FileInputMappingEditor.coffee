@@ -4,7 +4,7 @@ Immutable = require('immutable')
 {Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 SelectCreatable = React.createFactory(require('react-select').Creatable)
-PanelShowDetail = React.createFactory(require('./PanelShowDetail').default)
+PanelWithDetails = React.createFactory(require('./PanelWithDetails').default)
 
 module.exports = React.createClass
   displayName: 'FileInputMappingEditor'
@@ -81,7 +81,7 @@ module.exports = React.createClass
               onChange: @_handleChangeTags
 
       React.DOM.div {className: "row col-md-12"},
-        PanelShowDetail
+        PanelWithDetails
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
             Input
