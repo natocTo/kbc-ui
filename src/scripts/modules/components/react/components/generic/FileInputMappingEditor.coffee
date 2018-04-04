@@ -4,10 +4,7 @@ Immutable = require('immutable')
 {Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 SelectCreatable = React.createFactory(require('react-select').Creatable)
-Panel = React.createFactory(require('react-bootstrap').Panel)
-
-PANEL_HEADER_SHOW_DETAILS = 'Show details'
-PANEL_HEADER_HIDE_DETAILS = 'Hide details'
+PanelShowDetail = React.createFactory(require('./PanelShowDetail').default)
 
 module.exports = React.createClass
   displayName: 'FileInputMappingEditor'
@@ -17,10 +14,6 @@ module.exports = React.createClass
     onChange: React.PropTypes.func.isRequired
     disabled: React.PropTypes.bool.isRequired
     initialShowDetails: React.PropTypes.bool.isRequired
-
-  getInitialState: ->
-    showDetails: @props.initialShowDetails
-    panelHeaderTitle: if !@props.initialShowDetails then PANEL_HEADER_SHOW_DETAILS else PANEL_HEADER_HIDE_DETAILS
 
   _handleChangeQuery: (e) ->
     value = @props.value.set("query", e.target.value)
@@ -71,6 +64,41 @@ module.exports = React.createClass
 
     newTags.toArray()
 
+  _getDetailContent: ->
+    return(
+      React.DOM.div {className: 'form-horizontal clearfix'},
+        Input
+          bsSize: 'small'
+          type: 'text'
+          label: 'Query'
+          value: @props.value.get("query")
+          disabled: @props.disabled
+          placeholder: "Search query"
+          onChange: @_handleChangeQuery
+          labelClassName: 'col-xs-2'
+          wrapperClassName: 'col-xs-10'
+          help: React.DOM.small
+            className: "help-block"
+          ,
+            "Specify an Elasticsearch query to refine search"
+
+        React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.label className: 'col-xs-2 control-label', 'Processed Tags'
+          React.DOM.div className: 'col-xs-10',
+            SelectCreatable
+              options: []
+              name: 'processed_tags'
+              value: @_getProcessedTags()
+              disabled: @props.disabled
+              placeholder: "Add tags"
+              multi: true
+              onChange: @_handleChangeProcessedTags
+            React.DOM.small
+              className: "help-block"
+            ,
+              "Add these tags to files that were successfully processed"
+    )
+
   render: ->
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div {className: "row col-md-12"},
@@ -88,42 +116,6 @@ module.exports = React.createClass
               onChange: @_handleChangeTags
 
       React.DOM.div {className: "row col-md-12"},
-        Panel
-          header: @state.panelHeaderTitle
-          defaultExpanded: @state.showDetails
-          className: 'panel-show-details'
-          collapsible: true
-          onEnter: =>
-            @.setState {panelHeaderTitle: PANEL_HEADER_HIDE_DETAILS}
-          onExit: =>
-            @.setState {panelHeaderTitle: PANEL_HEADER_SHOW_DETAILS}
-          Input
-            bsSize: 'small'
-            type: 'text'
-            label: 'Query'
-            value: @props.value.get("query")
-            disabled: @props.disabled
-            placeholder: "Search query"
-            onChange: @_handleChangeQuery
-            labelClassName: 'col-xs-2'
-            wrapperClassName: 'col-xs-10'
-            help: React.DOM.small
-              className: "help-block"
-            ,
-              "Specify an Elasticsearch query to refine search"
-
-          React.DOM.div className: 'form-group form-group-sm',
-            React.DOM.label className: 'col-xs-2 control-label', 'Processed Tags'
-            React.DOM.div className: 'col-xs-10',
-              SelectCreatable
-                options: []
-                name: 'processed_tags'
-                value: @_getProcessedTags()
-                disabled: @props.disabled
-                placeholder: "Add tags"
-                multi: true
-                onChange: @_handleChangeProcessedTags
-              React.DOM.small
-                className: "help-block"
-              ,
-                "Add these tags to files that were successfully processed"
+        PanelShowDetail
+          defaultExpanded: @props.initialShowDetails
+          content: @_getDetailContent()

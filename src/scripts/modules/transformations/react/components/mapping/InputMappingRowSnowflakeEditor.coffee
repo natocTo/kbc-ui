@@ -7,10 +7,8 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 SnowflakeDataTypesContainer = React.createFactory(require("./input/SnowflakeDataTypesContainer"))
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
-Panel = React.createFactory(require('react-bootstrap').Panel)
-
-PANEL_HEADER_SHOW_DETAILS = 'Show details'
-PANEL_HEADER_HIDE_DETAILS = 'Hide details'
+PanelShowDetail = React.createFactory(
+  require('../../../../components/react/components/generic/PanelShowDetail').default)
 
 module.exports = React.createClass
   displayName: 'InputMappingRowRedshiftEditor'
@@ -22,10 +20,6 @@ module.exports = React.createClass
     disabled: React.PropTypes.bool.isRequired
     initialShowDetails: React.PropTypes.bool.isRequired
     isDestinationDuplicate: React.PropTypes.bool.isRequired
-
-  getInitialState: ->
-    showDetails: @props.initialShowDetails
-    panelHeaderTitle: if !@props.initialShowDetails then PANEL_HEADER_SHOW_DETAILS else PANEL_HEADER_HIDE_DETAILS
 
   _handleChangeSource: (value) ->
     # use only table name from the table identifier
@@ -119,6 +113,74 @@ module.exports = React.createClass
           value: column
         }
     )
+  _getDetailContent: ->
+    return (
+      React.DOM.div {className: 'form-horizontal clearfix'},
+        React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.label className: 'col-xs-2 control-label', 'Columns'
+          React.DOM.div className: 'col-xs-10',
+            Select
+              multi: true
+              name: 'columns'
+              value: @props.value.get("columns", Immutable.List()).toJS()
+              disabled: @props.disabled || !@props.value.get("source")
+              placeholder: "All columns will be imported"
+              onChange: @_handleChangeColumns
+              options: @_getColumnsOptions()
+            React.DOM.div
+              className: "help-block"
+            ,
+              React.DOM.small {}, "Import only specified columns"
+        React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
+          React.DOM.div className: 'col-xs-10',
+            ChangedSinceInput
+              value: @props.value.get(
+                "changedSince",
+                if (@props.value.get("days") > 0) then "-" + @props.value.get("days") + " days" else null
+              )
+              disabled: @props.disabled || !@props.value.get("source")
+              onChange: @_handleChangeChangedSince
+        React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.label className: 'col-xs-2 control-label', 'Data filter'
+          React.DOM.div className: 'col-xs-4',
+            Select
+              name: 'whereColumn'
+              value: @props.value.get("whereColumn")
+              disabled: @props.disabled || !@props.value.get("source")
+              placeholder: "Select column"
+              onChange: @_handleChangeWhereColumn
+              options: @_getColumnsOptions()
+          React.DOM.div className: 'col-xs-2',
+            Input
+              bsSize: 'small'
+              type: 'select'
+              name: 'whereOperator'
+              value: @props.value.get("whereOperator")
+              disabled: @props.disabled
+              onChange: @_handleChangeWhereOperator
+            ,
+              React.DOM.option {value: "eq"}, "= (IN)"
+              React.DOM.option {value: "ne"}, "!= (NOT IN)"
+          React.DOM.div className: 'col-xs-4',
+            Select
+              name: 'whereValues'
+              value: @props.value.get('whereValues')
+              multi: true
+              disabled: @props.disabled
+              allowCreate: true
+              placeholder: 'Add a value...'
+              emptyStrings: true,
+              onChange: @_handleChangeWhereValues
+        React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.label className: 'col-xs-2 control-label', 'Data types'
+          React.DOM.div className: 'col-xs-10',
+            SnowflakeDataTypesContainer
+              value: @props.value.get("datatypes", Immutable.Map())
+              disabled: @props.disabled || !@props.value.get("source")
+              onChange: @_handleChangeDataTypes
+              columnsOptions: @_getFilteredColumnsOptions()
+    )
 
   render: ->
     component = @
@@ -150,77 +212,6 @@ module.exports = React.createClass
               '.'
             else null
       React.DOM.div {className: "row col-md-12"},
-        Panel
-          header: @state.panelHeaderTitle
-          defaultExpanded: @state.showDetails
-          className: 'panel-show-details'
-          collapsible: true
-          onEnter: =>
-            @.setState {panelHeaderTitle: PANEL_HEADER_HIDE_DETAILS}
-          onExit: =>
-            @.setState {panelHeaderTitle: PANEL_HEADER_SHOW_DETAILS}
-          React.DOM.div {className: 'form-horizontal clearfix'},
-            React.DOM.div className: 'form-group form-group-sm',
-              React.DOM.label className: 'col-xs-2 control-label', 'Columns'
-              React.DOM.div className: 'col-xs-10',
-                Select
-                  multi: true
-                  name: 'columns'
-                  value: @props.value.get("columns", Immutable.List()).toJS()
-                  disabled: @props.disabled || !@props.value.get("source")
-                  placeholder: "All columns will be imported"
-                  onChange: @_handleChangeColumns
-                  options: @_getColumnsOptions()
-                React.DOM.div
-                  className: "help-block"
-                ,
-                  React.DOM.small {}, "Import only specified columns"
-            React.DOM.div className: 'form-group form-group-sm',
-              React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
-              React.DOM.div className: 'col-xs-10',
-                ChangedSinceInput
-                  value: @props.value.get(
-                    "changedSince",
-                    if (@props.value.get("days") > 0) then "-" + @props.value.get("days") + " days" else null
-                  )
-                  disabled: @props.disabled || !@props.value.get("source")
-                  onChange: @_handleChangeChangedSince
-            React.DOM.div className: 'form-group form-group-sm',
-              React.DOM.label className: 'col-xs-2 control-label', 'Data filter'
-              React.DOM.div className: 'col-xs-4',
-                Select
-                  name: 'whereColumn'
-                  value: @props.value.get("whereColumn")
-                  disabled: @props.disabled || !@props.value.get("source")
-                  placeholder: "Select column"
-                  onChange: @_handleChangeWhereColumn
-                  options: @_getColumnsOptions()
-              React.DOM.div className: 'col-xs-2',
-                Input
-                  bsSize: 'small'
-                  type: 'select'
-                  name: 'whereOperator'
-                  value: @props.value.get("whereOperator")
-                  disabled: @props.disabled
-                  onChange: @_handleChangeWhereOperator
-                ,
-                  React.DOM.option {value: "eq"}, "= (IN)"
-                  React.DOM.option {value: "ne"}, "!= (NOT IN)"
-              React.DOM.div className: 'col-xs-4',
-                Select
-                  name: 'whereValues'
-                  value: @props.value.get('whereValues')
-                  multi: true
-                  disabled: @props.disabled
-                  allowCreate: true
-                  placeholder: 'Add a value...'
-                  emptyStrings: true,
-                  onChange: @_handleChangeWhereValues
-            React.DOM.div className: 'form-group form-group-sm',
-              React.DOM.label className: 'col-xs-2 control-label', 'Data types'
-              React.DOM.div className: 'col-xs-10',
-                SnowflakeDataTypesContainer
-                  value: @props.value.get("datatypes", Immutable.Map())
-                  disabled: @props.disabled || !@props.value.get("source")
-                  onChange: @_handleChangeDataTypes
-                  columnsOptions: @_getFilteredColumnsOptions()
+        PanelShowDetail
+          defaultExpanded: @props.initialShowDetails
+          content: @_getDetailContent()
