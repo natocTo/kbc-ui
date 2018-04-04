@@ -5,7 +5,6 @@ export default React.createClass({
 
   propTypes: {
     defaultExpanded: PropTypes.bool,
-    content: PropTypes.object.isRequired,
     labelCollapsed: PropTypes.string,
     labelOpen: PropTypes.string
   },
@@ -33,7 +32,7 @@ export default React.createClass({
         defaultExpanded={this.props.defaultExpanded}
         className="panel-show-details"
         collapsible={true}>
-          {this.props.content}
+          {this.props.children}
       </Panel>
     );
   }
