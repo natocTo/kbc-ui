@@ -48,11 +48,6 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <GraphAPIExplorerLink
-            ids={this.props.accounts.keySeq()}
-            query={this.query('query', Map())}
-            apiVersion={this.props.apiVersion}
-          />
           <Tabs className="tabs-inside-modal" defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs">
             <Tab title="General" eventKey={1}>
               <div className="form-horizontal">
@@ -74,6 +69,11 @@ export default React.createClass({
           </Tabs>
         </Modal.Body>
         <Modal.Footer>
+          <GraphAPIExplorerLink
+            ids={this.props.accounts.keySeq()}
+            query={this.query('query', Map())}
+            apiVersion={this.props.apiVersion}
+          />
           <ConfirmButtons
             isSaving={this.props.isSavingFn(this.query('id'))}
             onSave={this.handleSave}
@@ -81,6 +81,7 @@ export default React.createClass({
             placement="right"
             saveLabel={this.localState(['currentQuery', 'name'], false) ? 'Save Query' : 'Create'}
             isDisabled={this.isSavingDisabled()}
+            className="kbc-buttons-inline"
           />
         </Modal.Footer>
       </Modal>
