@@ -90,15 +90,15 @@ export default React.createClass({
     actions.push((
       <li key="run">
         <RunComponentButton
-            title="Run"
-            component={this.state.componentId}
-            mode="link"
-            runParams={function() {
-              return {
-                config: state.configurationId,
-                row: state.rowId
-              };
-            }}
+          title="Run"
+          component={this.state.componentId}
+          mode="link"
+          runParams={() => (
+            {
+              config: state.configurationId,
+              row: state.rowId
+            })
+          }
         >
           {this.renderRunModalContent()}
         </RunComponentButton>
@@ -188,6 +188,54 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderOldWay() {
+    return (
+      <div className="col-md-9 kbc-main-content">
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
+          <ConfigurationRowDescription
+            componentId={this.state.componentId}
+            configId={this.state.configurationId}
+            rowId={this.state.rowId}
+          />
+        </div>
+        <div className="kbc-inner-content-padding-fix with-bottom-border">
+          {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration ? this.renderJsonEditor() : this.renderForm()}
+        </div>
+      </div>
+    );
+  },
+
+  renderSections() {
+    const {state} = this;
+    const sections = this.prepareSections();
+    return sections.map((section) =>
+      <div className="kbc-container-section">
+        <section.render
+          onChange={(diff) => Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, state.configuration.merge(Immutable.fromJS(diff)))}
+          value={section.onLoad(this.state.configuration)}
+        />
+      </div>
+    );
+  },
+
+  prepareSections() {
+    const routeSections = this.state.settings.getIn(['row', 'sections']);
+    const rowDescription = (
+      <ConfigurationRowDescription
+        componentId={this.state.componentId}
+        configId={this.state.configurationId}
+        rowId={this.state.rowId}
+      />);
+    const rowDescriptionSection = {
+      title: 'Description',
+      render: () => rowDescription,
+      onSave: () => null, // tba
+      onLoad: () => null, // tba
+      isComplete: () => true
+    };
+    return [].concat(rowDescriptionSection, routeSections.toJS());
   },
 
   renderRunModalContent() {
@@ -297,11 +345,11 @@ export default React.createClass({
     const configuration = this.state.configuration;
     const Configuration = this.state.settings.getIn(['row', 'detail', 'render']);
     return (<Configuration
-      onChange={function(diff) {
-        Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)));
-      }}
-      disabled={this.state.isSaving}
-      value={configuration.toJS()}
+              onChange={function(diff) {
+                Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)));
+              }}
+              disabled={this.state.isSaving}
+              value={configuration.toJS()}
     />);
   },
 
@@ -311,24 +359,20 @@ export default React.createClass({
     return [
       (<div key="close">{this.renderCloseJsonLink()}</div>),
       (<JsonConfiguration
-        key="json-configuration"
-        isSaving={this.state.isJsonConfigurationSaving}
-        value={this.state.jsonConfigurationValue}
-        isEditingValid={this.state.isJsonConfigurationValid}
-        isChanged={this.state.isJsonConfigurationChanged}
-        onEditCancel={function() {
-          return Actions.resetJsonConfiguration(state.componentId, state.configurationId, state.rowId);
-        }}
-        onEditChange={function(parameters) {
-          return Actions.updateJsonConfiguration(state.componentId, state.configurationId, state.rowId, parameters);
-        }}
-        onEditSubmit={function() {
-          const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' configuration edited manually';
-          return Actions.saveJsonConfiguration(state.componentId, state.configurationId, state.rowId, changeDescription);
-        }}
-        showSaveModal={this.state.isParsableConfiguration && !this.state.isJsonConfigurationParsable}
-        saveModalTitle="Save Parameters"
-        saveModalBody={(<div>The changes in the configuration are not compatible with the original visual form. Saving this configuration will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON editor only.</div>)}
+         key="json-configuration"
+         isSaving={this.state.isJsonConfigurationSaving}
+         value={this.state.jsonConfigurationValue}
+         isEditingValid={this.state.isJsonConfigurationValid}
+         isChanged={this.state.isJsonConfigurationChanged}
+         onEditCancel={() => Actions.resetJsonConfiguration(state.componentId, state.configurationId, state.rowId)}
+         onEditChange={parameters => Actions.updateJsonConfiguration(state.componentId, state.configurationId, state.rowId, parameters)}
+         onEditSubmit={() => {
+           const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' configuration edited manually';
+           return Actions.saveJsonConfiguration(state.componentId, state.configurationId, state.rowId, changeDescription);
+         }}
+         showSaveModal={this.state.isParsableConfiguration && !this.state.isJsonConfigurationParsable}
+         saveModalTitle="Save Parameters"
+         saveModalBody={(<div>The changes in the configuration are not compatible with the original visual form. Saving this configuration will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON editor only.</div>)}
       />)
     ];
   }

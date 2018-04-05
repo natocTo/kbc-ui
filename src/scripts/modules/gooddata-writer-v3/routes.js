@@ -23,7 +23,9 @@ const routeSettings = {
   },
   row: {
     hasState: true,
-    detail: {
+    onSave: title.createConfiguration, // defualt merge through all sections onSave functions
+    onLoad: title.parseConfiguration, // if not set then merge through all sections onLoad funtions
+    detail: { // obsolete
       title: 'Title and Identifier',
       render: TitleSection,
       onSave: title.createConfiguration,
@@ -31,6 +33,16 @@ const routeSettings = {
       onCreate: title.createEmptyConfiguration,
       isComplete: () => true
     },
+    sections: [
+      {
+        title: 'Title and Identifier',
+        render: TitleSection,
+        onSave: title.createConfiguration,
+        onLoad: title.parseConfiguration,
+        onCreate: title.createEmptyConfiguration,
+        isComplete: () => true
+      }
+    ],
     columns: [
       {
         name: 'Table Name',
