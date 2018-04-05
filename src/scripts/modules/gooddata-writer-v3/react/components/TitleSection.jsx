@@ -1,23 +1,40 @@
 import React, {PropTypes} from 'react';
-const TitleSection = ({value, onChange, disabled}) => (
-  <span>
-    <div> title
-      <input type="text" disabled={disabled} onChange={e => onChange({identifier: e.target.value})}
-        value={value.identifier} />
-    </div>
-    <div> identifier
-      <input disabled={disabled} onChange={e => onChange({title: e.target.value})} />
-    </div>
-  </span>
-);
+import {FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
 
-TitleSection.propTypes = {
-  value: PropTypes.shape({
-    title: PropTypes.string,
-    identifier: PropTypes.string
-  }),
-  onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired
-};
+export default React.createClass({
+  propTypes: {
+    value: PropTypes.shape({
+      title: PropTypes.string,
+      identifier: PropTypes.string
+    }),
+    onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool.isRequired
+  },
 
-export default TitleSection;
+  render() {
+    const {value, onChange, disabled} = this.props;
+    return (
+      <form>
+        <FormGroup>
+          <ControlLabel>Identifier</ControlLabel>
+          <FormControl
+
+            type="text"
+            disabled={disabled}
+            onChange={e => onChange({identifier: e.target.value})}
+            value={value.identifier}
+          />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Title</ControlLabel>
+          <FormControl
+            type="text"
+            disabled={disabled}
+            onChange={e => onChange({title: e.target.value})}
+            value={value.title}
+          />
+        </FormGroup>
+      </form>
+    );
+  }
+});
