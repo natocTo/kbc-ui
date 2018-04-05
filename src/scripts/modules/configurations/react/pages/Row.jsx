@@ -33,32 +33,33 @@ export default React.createClass({
     const settings = RoutesStore.getRouteSettings();
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const rowId = RoutesStore.getCurrentRouteParam('row');
-    const row = Store.get(settings.get('componentId'), configurationId, rowId);
-    const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(settings.get('componentId'), configurationId, rowId);
+    const componentId = settings.get('componentId');
+    const row = Store.get(componentId, configurationId, rowId);
+    const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId, rowId);
     return {
-      componentId: settings.get('componentId'),
+      componentId: componentId,
       settings: settings,
       configurationId: configurationId,
       rowId: rowId,
       row: row,
 
-      jsonConfigurationValue: Store.getEditingJsonConfigurationString(settings.get('componentId'), configurationId, rowId),
-      isJsonConfigurationSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-json'),
+      jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId, rowId),
+      isJsonConfigurationSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-json'),
       isJsonConfigurationValid: isJsonConfigurationValid,
-      isJsonConfigurationChanged: Store.isEditingJsonConfiguration(settings.get('componentId'), configurationId, rowId),
+      isJsonConfigurationChanged: Store.isEditingJsonConfiguration(componentId, configurationId, rowId),
       isJsonConfigurationParsable: isJsonConfigurationValid && isParsableConfiguration(
-        Immutable.fromJS(Store.getEditingJsonConfiguration(settings.get('componentId'), configurationId, rowId)),
+        Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId, rowId)),
         settings.getIn(['row', 'detail', 'onLoad']),
         settings.getIn(['row', 'detail', 'onSave'])
       ),
 
       isParsableConfiguration: isParsableConfiguration(
-        Store.getConfiguration(settings.get('componentId'), configurationId, rowId),
+        Store.getConfiguration(componentId, configurationId, rowId),
         settings.getIn(['row', 'detail', 'onLoad']),
         settings.getIn(['row', 'detail', 'onSave'])
       ),
       isJsonEditorOpen: Store.hasJsonEditor(
-        settings.get('componentId'),
+        componentId,
         configurationId,
         rowId,
         settings.getIn(['row', 'detail', 'onLoad']),
@@ -66,19 +67,19 @@ export default React.createClass({
       ),
 
       configuration: Store.getEditingConfiguration(
-        settings.get('componentId'),
+        componentId,
         configurationId,
         rowId,
         settings.getIn(['row', 'detail', 'onLoad'])
       ),
-      isSaving: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('save-configuration'),
-      isChanged: Store.isEditingConfiguration(settings.get('componentId'), configurationId, rowId),
+      isSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-configuration'),
+      isChanged: Store.isEditingConfiguration(componentId, configurationId, rowId),
 
-      isDeletePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('delete'),
-      isEnableDisablePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('enable') || Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('disable'),
+      isDeletePending: Store.getPendingActions(componentId, configurationId, rowId).has('delete'),
+      isEnableDisablePending: Store.getPendingActions(componentId, configurationId, rowId).has('enable') || Store.getPendingActions(componentId, configurationId, rowId).has('disable'),
 
-      hasState: !Store.get(settings.get('componentId'), configurationId, rowId).get('state', Immutable.Map()).isEmpty(),
-      isResetStatePending: Store.getPendingActions(settings.get('componentId'), configurationId, rowId).has('reset-state')
+      hasState: !Store.get(componentId, configurationId, rowId).get('state', Immutable.Map()).isEmpty(),
+      isResetStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('reset-state')
     };
   },
 
