@@ -1,6 +1,7 @@
 import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
 import TitleSection from './react/components/TitleSection';
 import title from './adapters/title';
+import rowAdapter from './adapters/row';
 
 import DimensionsSection from './react/components/DimensionsSection';
 import dimensionsAdapter from './adapters/dimensions';
@@ -23,9 +24,20 @@ const routeSettings = {
   },
   row: {
     hasState: true,
-    onSave: title.createConfiguration, // defualt merge through all sections onSave functions
-    onLoad: title.parseConfiguration, // if not set then merge through all sections onLoad funtions
-    detail: { // obsolete
+    onSave: rowAdapter.createConfiguration, // defualt merge through all sections onSave functions
+    onLoad: rowAdapter.parseConfiguration, // if not set then merge through all sections onLoad funtions
+    onCreate: rowAdapter.createEmptyConfiguration,
+    sections: [
+      {
+        title: 'Title and Identifier',
+        render: TitleSection,
+        onSave: title.createConfiguration,
+        onLoad: title.parseConfiguration,
+        isComplete: () => true
+      }
+    ],
+    // detail obsolete - will be removed
+    detail: {
       title: 'Title and Identifier',
       render: TitleSection,
       onSave: title.createConfiguration,
@@ -33,16 +45,6 @@ const routeSettings = {
       onCreate: title.createEmptyConfiguration,
       isComplete: () => true
     },
-    sections: [
-      {
-        title: 'Title and Identifier',
-        render: TitleSection,
-        onSave: title.createConfiguration,
-        onLoad: title.parseConfiguration,
-        onCreate: title.createEmptyConfiguration,
-        isComplete: () => true
-      }
-    ],
     columns: [
       {
         name: 'Table Name',
