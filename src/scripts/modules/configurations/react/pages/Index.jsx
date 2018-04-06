@@ -23,7 +23,8 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import CreateConfigurationRowButton from '../components/CreateConfigurationRowButton';
 import ConfigurationRows from '../components/ConfigurationRows';
-import Credentials from '../components/Credentials';
+// import Credentials from '../components/Credentials';
+import IndexSections from '../components/IndexSections';
 
 // styles
 import '../../styles.less';
@@ -67,7 +68,7 @@ export default React.createClass({
               label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
               componentId={state.componentId}
               configId={state.configurationId}
-              emptyConfig={settings.getIn(['row', 'onCreate'])}
+              emptyConfig={settings.getIn(['row', 'detail', 'onCreate'])}
               onRowCreated={this.onRowCreated}
               createChangeDescription={function(name) {
                 return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
@@ -143,7 +144,8 @@ export default React.createClass({
               configId={this.state.configurationId}
             />
           </div>
-          <Credentials/>
+          {/* <Credentials/> */}
+          <IndexSections />
           {this.renderRowsTable()}
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -167,7 +169,7 @@ export default React.createClass({
                 label={'New ' + this.state.settings.getIn(['row', 'name', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}
-                emptyConfig={settings.getIn(['row', 'onCreate'])}
+                emptyConfig={settings.getIn(['row', 'detail', 'onCreate'])}
                 onRowCreated={this.onRowCreated}
                 type="link"
                 createChangeDescription={function(name) {
