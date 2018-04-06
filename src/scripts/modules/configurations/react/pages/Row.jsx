@@ -65,7 +65,13 @@ export default React.createClass({
         settings.getIn(['row', 'detail', 'onLoad']),
         settings.getIn(['row', 'detail', 'onSave'])
       ),
-
+      configurationBySections: Store.getEditingConfigurationBySections(
+        componentId,
+        configurationId,
+        rowId,
+        settings.getIn(['row', 'onLoad'], configuration => configuration),
+        settings.getIn(['row', 'sections']).map(s => s.get('onLoad'))
+      ),
       configuration: Store.getEditingConfiguration(
         componentId,
         configurationId,
@@ -207,35 +213,30 @@ export default React.createClass({
     );
   },
 
-  renderSections() {
-    const {state} = this;
-    const sections = this.prepareSections();
-    return sections.map((section) =>
-      <div className="kbc-container-section">
-        <section.render
-          onChange={(diff) => Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, state.configuration.merge(Immutable.fromJS(diff)))}
-          value={section.onLoad(this.state.configuration)}
-        />
-      </div>
-    );
+  onUpdateSection(sectionKey, diff) {
+    const {configurationBySections, componentId, configurationId, rowId} = this.state;
+    const newConfigurationBySections = configurationBySections.setIn(
+      ['sections', sectionKey],
+      configurationBySections.getIn(['sections', sectionKey])
+                               .merge(Immutable.fromJS(diff)));
+    Actions.updateConfiguration(componentId, configurationId, rowId, newConfigurationBySections);
   },
 
-  prepareSections() {
-    const routeSections = this.state.settings.getIn(['row', 'sections']);
-    const rowDescription = (
-      <ConfigurationRowDescription
-        componentId={this.state.componentId}
-        configId={this.state.configurationId}
-        rowId={this.state.rowId}
-      />);
-    const rowDescriptionSection = {
-      title: 'Description',
-      render: () => rowDescription,
-      onSave: () => null, // tba
-      onLoad: () => null, // tba
-      isComplete: () => true
-    };
-    return [].concat(rowDescriptionSection, routeSections.toJS());
+  renderSections() {
+    const settingsSections = this.state.settings.getIn(['row', 'sections']);
+    return settingsSections.map((section, key) => {
+      const SectionComponent = section.get('render');
+      return (
+        <div key={key} className="kbc-container-section">
+          <SectionComponent
+            disabled={false} // todo
+            onChange={(diff) => this.onUpdateSection(key, diff)}
+            value={this.state.configurationBySections.getIn(['sections', key]).toJS()}
+          />
+        </div>
+      );
+    }
+    );
   },
 
   renderRunModalContent() {

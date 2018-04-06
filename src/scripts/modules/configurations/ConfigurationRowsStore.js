@@ -71,6 +71,19 @@ let ConfigurationRowsStore = StoreUtils.createStore({
     );
   },
 
+  getEditingConfigurationBySections: function(componentId, configId, rowId, parseFn, parseFnSections) {
+    const rootParsed = parseFn(this.getConfiguration(componentId, configId, rowId));
+    const sectionsParsed = parseFnSections.map(parseSectionFn => parseSectionFn(rootParsed));
+    const initConfiguration = Immutable.Map({
+      root: rootParsed,
+      sections: sectionsParsed
+    });
+    return _store.getIn(
+      ['editing', componentId, configId, rowId, 'configuration'],
+      initConfiguration
+    );
+  },
+
   isEditingConfiguration: function(componentId, configId, rowId) {
     return _store.hasIn(['editing', componentId, configId, rowId, 'configuration']);
   },
@@ -291,4 +304,3 @@ Dispatcher.register(function(payload) {
 });
 
 module.exports = ConfigurationRowsStore;
-
