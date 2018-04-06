@@ -1,6 +1,8 @@
 import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
 import TitleSection from './react/components/TitleSection';
+import LoadTypeSection from './react/components/LoadTypeSection';
 import title from './adapters/title';
+import loadType from './adapters/loadType';
 import rowAdapter from './adapters/row';
 
 import DimensionsSection from './react/components/DimensionsSection';
@@ -33,6 +35,13 @@ const routeSettings = {
         render: TitleSection,
         onSave: title.createConfiguration,
         onLoad: title.parseConfiguration,
+        isComplete: () => true
+      },
+      {
+        title: 'Load type',
+        render: LoadTypeSection,
+        onSave: loadType.createConfiguration,
+        onLoad: loadType.parseConfiguration,
         isComplete: () => true
       }
     ],
