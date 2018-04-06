@@ -24,6 +24,20 @@ let ConfigurationsStore = StoreUtils.createStore({
     return _store.getIn(['pendingActions', componentId, configurationId], Map());
   },
 
+  getEditingConfigurationBySections: function(componentId, configurationId, parseFn, parseFnSections) {
+    const rootParsed = parseFn(this.getConfiguration(componentId, configurationId));
+    const sectionsParsed = parseFnSections.map(parseSectionFn => parseSectionFn(rootParsed));
+    const initConfiguration = Immutable.Map({
+      root: rootParsed,
+      sections: sectionsParsed
+    });
+
+    return _store.getIn(
+      ['editing', componentId, configurationId, 'configuration'],
+      initConfiguration
+    );
+  },
+
   getEditingConfiguration: function(componentId, configurationId, parseFn) {
     const storedConfiguration = parseFn(this.getConfiguration(componentId, configurationId));
     return _store.getIn(
@@ -105,4 +119,3 @@ Dispatcher.register(function(payload) {
 });
 
 module.exports = ConfigurationsStore;
-

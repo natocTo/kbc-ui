@@ -6,6 +6,7 @@ import VersionActionCreators from '../components/VersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
 import removeEmptyEncryptAttributes from '../components/utils/removeEmptyEncryptAttributes';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
+import {Map} from 'immutable';
 
 const storeEncodedConfiguration = function(componentId, configurationId, configuration, changeDescription) {
   const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
@@ -36,6 +37,45 @@ module.exports = {
       configurationId: configurationId
     });
   },
+
+
+  saveConfigurationBySections: function(componentId, configurationId, createFn, createFnSections, parseFn, parseFnSections, changeDescription) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_START,
+      componentId: componentId,
+      configurationId: configurationId
+    });
+    const configurationBySections = ConfigurationsStore.getEditingConfigurationBySections(componentId, configurationId, parseFn, parseFnSections);
+
+    const configurationSectionsMerged = configurationBySections
+      .get('sections')
+      .reduce((memo, sectionConfig, idx) => {
+        const createSectionFn = createFnSections.get(idx);
+        return memo.merge(createSectionFn(sectionConfig));
+      }, Map());
+    const configurationRoot = configurationBySections.get('root');
+    const configuration = createFn(configurationRoot.merge(configurationSectionsMerged));
+
+    return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          configuration: response
+        });
+      }).catch(function(e) {
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          error: e
+        });
+        throw e;
+      });
+  },
+
 
   saveConfiguration: function(componentId, configurationId, createFn, parseFn, changeDescription) {
     Dispatcher.handleViewAction({
