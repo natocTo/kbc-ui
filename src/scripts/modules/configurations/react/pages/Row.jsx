@@ -276,12 +276,14 @@ export default React.createClass({
           isChanged={this.state.isChanged}
           onSave={function() {
             const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' edited';
-            return Actions.saveConfiguration(
+            return Actions.saveConfigurationBySections(
               state.componentId,
               state.configurationId,
               state.rowId,
-              state.settings.getIn(['row', 'detail', 'onSave']),
-              state.settings.getIn(['row', 'detail', 'onLoad']),
+              settings.getIn(['row', 'onSave']),
+              settings.getIn(['row', 'sections']).map(s => s.get('onSave')),
+              settings.getIn(['row', 'onLoad']),
+              settings.getIn(['row', 'sections']).map(s => s.get('onLoad')),
               changeDescription
             );
           }}
