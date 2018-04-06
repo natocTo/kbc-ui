@@ -14,18 +14,20 @@ import React from 'react';
 const routeSettings = {
   componentId: 'keboola.gooddata-writer',
   componentType: 'writer',
-  credentials: {
+  index: {
     show: true,
-    detail: {
-      title: 'Dimensions',
-      render: DimensionsSection,
-      onSave: dimensionsAdapter.createConfiguration,
-      onLoad: dimensionsAdapter.parseConfiguration,
-      isComplete: () => true
-    }
+    sections: [
+      {
+        title: 'Dimensions',
+        render: DimensionsSection,
+        onSave: dimensionsAdapter.createConfiguration,
+        onLoad: dimensionsAdapter.parseConfiguration,
+        isComplete: () => true
+      }
+    ]
   },
   row: {
-    hasState: true,
+    hasState: false,
     onSave: rowAdapter.createConfiguration, // defualt merge through all sections onSave functions
     onLoad: rowAdapter.parseConfiguration, // if not set then merge through all sections onLoad funtions
     onCreate: rowAdapter.createEmptyConfiguration,
@@ -38,7 +40,7 @@ const routeSettings = {
         isComplete: () => true
       },
       {
-        title: 'Load type',
+        title: 'Load Type',
         render: LoadTypeSection,
         onSave: loadType.createConfiguration,
         onLoad: loadType.parseConfiguration,
