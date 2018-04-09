@@ -3,6 +3,7 @@ import Index from '../react/pages/Index';
 import Row from '../react/pages/Row';
 import Versions from '../react/pages/Versions';
 import installedComponentsActions from '../../components/InstalledComponentsActionCreators';
+import storageActions from '../../components/StorageActionCreators';
 import versionsActions from '../../components/VersionsActionCreators';
 import rowVersionsActions from '../RowVersionsActionCreators';
 import jobsActions from '../../jobs/ActionCreators';
@@ -107,7 +108,9 @@ module.exports = {
           return configurationRow.get('name') !== '' ? configurationRow.get('name') : 'Untitled ' + settingsWithDefaults.row.name.singular;
         },
         requireData: [
-          (params) => rowVersionsActions.loadVersions(settingsWithDefaults.componentId, params.config, params.row)
+          (params) => rowVersionsActions.loadVersions(settingsWithDefaults.componentId, params.config, params.row),
+          () => storageActions.loadTables()
+
         ],
 
         defaultRouteHandler: Row,
