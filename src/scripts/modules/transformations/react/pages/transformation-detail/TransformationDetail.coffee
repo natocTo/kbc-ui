@@ -8,8 +8,9 @@ TransformationDetailStatic = React.createFactory(require './TransformationDetail
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TransformationsStore  = require('../../../stores/TransformationsStore')
 TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore')
-StorageTablesStore  = require('../../../../components/stores/StorageTablesStore')
-StorageBucketsStore  = require('../../../../components/stores/StorageBucketsStore')
+StorageTablesStore = require('../../../../components/stores/StorageTablesStore')
+StorageBucketsStore = require('../../../../components/stores/StorageBucketsStore')
+ApplicationStore = require('../../../../../stores/ApplicationStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
 VersionsStore = require('../../../../components/stores/VersionsStore')
 TransformationsActionCreators = require '../../../ActionCreators'
@@ -169,9 +170,10 @@ module.exports = React.createClass
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
 
-          if backend == 'redshift' or
+          if (backend == 'redshift' or
               backend == 'mysql' && transformationType == 'simple' or
-              backend == 'snowflake'
+              backend == 'snowflake') and
+              ApplicationStore.hasCurrentAdminFeature('validate-sql')
             li {},
               ValidateQueriesButton
                 backend: backend
