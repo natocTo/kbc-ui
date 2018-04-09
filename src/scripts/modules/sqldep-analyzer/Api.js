@@ -21,7 +21,7 @@ export default {
   },
 
   validate(configurationId, transformationId) {
-    return createRequest('POST', configurationId + '/' + transformationId + '/validate')
+    return createRequest('POST', 'validate?configId=' + configurationId + '&rowId=' + transformationId)
       .promise().then(function(response) {
         return response.body;
       });
