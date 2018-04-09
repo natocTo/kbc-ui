@@ -171,10 +171,14 @@ InstalledComponentsStore = StoreUtils.createStore
     _store.getIn ['configDataEditing', componentId, configId], defaultValue
 
   getEditingRawConfigData: (componentId, configId, defaultValue) ->
-    _store.getIn ['rawConfigDataEditing', componentId, configId], defaultValue
+    configData = InstalledComponentsStore.getConfigData(componentId, configId)
+    path = ['rawConfigDataEditing', componentId, configId]
+    _store.getIn path, JSON.stringify(configData, null, ' ')
 
-  getEditingRawConfigDataParameters: (componentId, configId, defaultValue) ->
-    _store.getIn ['rawConfigDataParametersEditing', componentId, configId], defaultValue
+  getEditingRawConfigDataParameters: (componentId, configId) ->
+    configData = InstalledComponentsStore.getConfigDataParameters(componentId, configId)
+    savedParams = JSON.stringify(configData.toJSON(), null, '  ')
+    _store.getIn ['rawConfigDataParametersEditing', componentId, configId], savedParams
 
   getSavingConfigData: (componentId, configId) ->
     _store.getIn ['configDataSaving', componentId, configId]
@@ -215,14 +219,24 @@ InstalledComponentsStore = StoreUtils.createStore
   isEditingConfigData: (componentId, configId) ->
     _store.hasIn ['editingConfigData', componentId, configId]
 
-  isEditingRawConfigData: (componentId, configId) ->
+  isChangedRawConfigData: (componentId, configId) ->
     _store.hasIn ['rawConfigDataEditing', componentId, configId]
 
-  isEditingRawConfigDataParameters: (componentId, configId) ->
+  isChangedRawConfigDataParameters: (componentId, configId) ->
     _store.hasIn ['rawConfigDataParametersEditing', componentId, configId]
 
   isEditingTemplatedConfig: (componentId, configId) ->
     _store.getIn(['templatedConfigEditing', componentId, configId], false)
+
+  isChangedTemplatedConfig: (componentId, configId) ->
+    pathValues = ['templatedConfigValuesEditingValues',
+    'templatedConfigValuesEditingString',
+    'templatedConfigEditing']
+    isChanged = pathValues.reduce((memo, path) ->
+      memo || _store.hasIn([path, componentId, configId], false)
+    , false)
+    isChanged
+
 
   getEditingConfig: (componentId, configId, field) ->
     _store.getIn ['editingConfigurations', componentId, configId, field]
@@ -324,13 +338,19 @@ InstalledComponentsStore = StoreUtils.createStore
     return config
 
   getTemplatedConfigEditingValueParams: (componentId, configId) ->
-    _store.getIn(['templatedConfigValuesEditingValues', componentId, configId, 'params'], Immutable.Map())
+    config = InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+    matchingTemplate = TemplatesStore.getMatchingTemplate(componentId, config)
+    params = InstalledComponentsStore.getTemplatedConfigValueUserParams(componentId, configId)
+    _store.getIn(['templatedConfigValuesEditingValues', componentId, configId, 'params'], params)
 
   getTemplatedConfigEditingValueTemplate: (componentId, configId) ->
-    _store.getIn(['templatedConfigValuesEditingValues', componentId, configId, 'template'], Immutable.Map())
+    config = InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+    matchingTemplate = TemplatesStore.getMatchingTemplate(componentId, config)
+    _store.getIn(['templatedConfigValuesEditingValues', componentId, configId, 'template'], matchingTemplate)
 
   getTemplatedConfigEditingValueString: (componentId, configId) ->
-    _store.getIn(['templatedConfigValuesEditingString', componentId, configId], '{}')
+    config = InstalledComponentsStore.getTemplatedConfigValueConfig(componentId, configId)
+    _store.getIn(['templatedConfigValuesEditingString', componentId, configId], JSON.stringify(config.toJS(), null, 2))
 
   isTemplatedConfigEditingString: (componentId, configId) ->
     _store.getIn(['templatedConfigEditingString', componentId, configId]) || false
@@ -346,12 +366,6 @@ Dispatcher.register (payload) ->
       _store = _store.setIn path, data
       InstalledComponentsStore.emitChange()
 
-    when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_EDIT_START
-      path = ['configDataEditing', action.componentId, action.configId]
-      configData = InstalledComponentsStore.getConfigData(action.componentId, action.configId)
-      _store = _store.setIn path, configData
-      InstalledComponentsStore.emitChange()
-
     when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_EDIT_UPDATE
       path = ['configDataEditing', action.componentId, action.configId]
       configData = action.data
@@ -363,12 +377,6 @@ Dispatcher.register (payload) ->
       _store = _store.deleteIn path
       InstalledComponentsStore.emitChange()
 
-    when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_START
-      path = ['rawConfigDataEditing', action.componentId, action.configId]
-      configData = InstalledComponentsStore.getConfigData(action.componentId, action.configId)
-      _store = _store.setIn path, JSON.stringify(configData, null, '  ')
-      InstalledComponentsStore.emitChange()
-
     when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_UPDATE
       path = ['rawConfigDataEditing', action.componentId, action.configId]
       configData = action.data
@@ -378,12 +386,6 @@ Dispatcher.register (payload) ->
     when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_CANCEL
       path = ['rawConfigDataEditing', action.componentId, action.configId]
       _store = _store.deleteIn path
-      InstalledComponentsStore.emitChange()
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_EDIT_START
-      path = ['rawConfigDataParametersEditing', action.componentId, action.configId]
-      configData = InstalledComponentsStore.getConfigDataParameters(action.componentId, action.configId)
-      _store = _store.setIn path, JSON.stringify(configData, null, '  ')
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_EDIT_UPDATE
@@ -792,35 +794,6 @@ Dispatcher.register (payload) ->
       _store = _store.deleteIn(path)
       InstalledComponentsStore.emitChange()
 
-
-    when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_START
-      _store = _store.withMutations (store) ->
-        store = store.setIn(["templatedConfigEditing", action.componentId, action.configId], true)
-        config = InstalledComponentsStore.getTemplatedConfigValueConfig(action.componentId, action.configId)
-        # compare with templates
-        if TemplatesStore.isConfigTemplate(action.componentId, config) ||
-            InstalledComponentsStore.
-            getTemplatedConfigValueWithoutUserParams(action.componentId, action.configId).
-            isEmpty()
-          store = store.setIn(
-            ["templatedConfigValuesEditingValues", action.componentId, action.configId, "template"],
-            TemplatesStore.getMatchingTemplate(action.componentId, config)
-          )
-
-          params = InstalledComponentsStore.getTemplatedConfigValueUserParams(action.componentId, action.configId)
-          store = store.setIn(
-            ["templatedConfigValuesEditingValues", action.componentId, action.configId, "params"],
-            params
-          )
-        # string edit
-        else
-          store = store.setIn(["templatedConfigEditingString", action.componentId, action.configId], true)
-          store = store.setIn(
-            ["templatedConfigValuesEditingString", action.componentId, action.configId],
-            JSON.stringify(config.toJS(), null, 2)
-          )
-      InstalledComponentsStore.emitChange()
-
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_CANCEL
       _store = _store
         .deleteIn(["templatedConfigValuesEditingValues", action.componentId, action.configId])
@@ -852,41 +825,33 @@ Dispatcher.register (payload) ->
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_SAVE_START
       configData = InstalledComponentsStore.getConfigData(action.componentId, action.configId) or Map()
+      componentId = action.componentId
+      configId = action.configId
       editingData = configData
-
       editingData = editingData.setIn(
         ['parameters', 'api'],
         TemplatesStore.getApiTemplate(action.componentId)
       )
 
-      if (_store.getIn(['templatedConfigEditingString', action.componentId, action.configId], false))
+      if (_store.getIn(['templatedConfigValuesEditingString', componentId, configId], false))
+        editingConfigValueString = InstalledComponentsStore.getTemplatedConfigEditingValueString(componentId, configId)
         editingData = editingData.setIn(
           ['parameters', 'config'],
-          fromJSOrdered(
-            JSON.parse(
-              _store.getIn(
-                ['templatedConfigValuesEditingString', action.componentId, action.configId]
-              )
-            )
-          )
+          fromJSOrdered(JSON.parse(editingConfigValueString))
         )
       else
         # params on the first place
+        editingParams = InstalledComponentsStore.getTemplatedConfigEditingValueParams(componentId, configId)
         editingData = editingData.setIn(
           ['parameters', 'config'],
-          _store.getIn(['templatedConfigValuesEditingValues', action.componentId, action.configId, 'params'], Map())
+          editingParams
         )
 
         # merge the template
+        editingTemplate = InstalledComponentsStore.getTemplatedConfigEditingValueTemplate(componentId, configId)
         editingData = editingData.setIn(
           ['parameters', 'config'],
-          editingData.getIn(['parameters', 'config'], Map()).merge(
-            _store.getIn(
-              ['templatedConfigValuesEditingValues', action.componentId, action.configId, 'template', 'data'],
-              Map()
-            )
-          )
-        )
+          editingData.getIn(['parameters', 'config'], Map()).merge(editingTemplate.get('data')))
 
       _store = _store.setIn ['configDataSaving', action.componentId, action.configId], editingData
       InstalledComponentsStore.emitChange()
@@ -912,32 +877,11 @@ Dispatcher.register (payload) ->
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_STRING_TOGGLE
+      componentId = action.componentId
+      configId = action.configId
+
       if action.isStringEditingMode
-
-        # params on the first place
-        mergedConfig = _store.getIn(
-          ['templatedConfigValuesEditingValues', action.componentId, action.configId, 'params'],
-          Map()
-        )
-
-        # merge the template
-        mergedConfig = mergedConfig.merge(
-          _store.getIn(
-            ['templatedConfigValuesEditingValues', action.componentId, action.configId, 'template', 'data'],
-            Map()
-          )
-        )
-
-        _store = _store.withMutations (store) ->
-          store = store.setIn(
-            ["templatedConfigValuesEditingString", action.componentId, action.configId],
-            JSON.stringify(
-              mergedConfig.toJS(),
-              null,
-              2
-            )
-          )
-          store = store.setIn(["templatedConfigEditingString", action.componentId, action.configId], true)
+        _store = _store.setIn(["templatedConfigEditingString", componentId, configId], true)
       else
         _store = _store.deleteIn(["templatedConfigValuesEditingString", action.componentId, action.configId])
           .deleteIn(["templatedConfigEditingString", action.componentId, action.configId])
