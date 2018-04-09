@@ -1,7 +1,18 @@
-import {Map, fromJS} from 'immutable';
+import {Map, fromJS, List} from 'immutable';
 function createConfiguration(localState) {
   const tableId = localState.get('tableId');
+  const imColumns = localState.get('columns').keySeq().toList();
   return fromJS({
+    storage: {
+      input: {
+        tables: [
+          {
+            source: tableId,
+            columns: imColumns
+          }
+        ]
+      }
+    },
     parameters: {
       tables: {
         [tableId]: localState.remove('tableId')
@@ -23,7 +34,8 @@ export default {
     const initState = {
       tableId: name,
       title: webalizedName,
-      identifier: ''
+      identifier: '',
+      columns: List()
     };
     return createConfiguration(fromJS(initState));
   }

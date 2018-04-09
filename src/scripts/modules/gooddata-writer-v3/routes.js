@@ -8,6 +8,9 @@ import rowAdapter from './adapters/row';
 import DimensionsSection from './react/components/DimensionsSection';
 import dimensionsAdapter from './adapters/dimensions';
 
+import TableColumnsEditor from './react/components/TableColumnsEditor';
+import tableColumnsEditorAdapter from './adapters/tableColumnsEditor';
+
 import {Map} from 'immutable';
 import React from 'react';
 
@@ -44,6 +47,13 @@ const routeSettings = {
         render: LoadTypeSection,
         onSave: loadType.createConfiguration,
         onLoad: loadType.parseConfiguration,
+        isComplete: () => true
+      },
+      {
+        title: 'columns setup',
+        render: TableColumnsEditor,
+        onSave: tableColumnsEditorAdapter.createConfiguration,
+        onLoad: tableColumnsEditorAdapter.parseConfiguration,
         isComplete: () => true
       }
     ],
