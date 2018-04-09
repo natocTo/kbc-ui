@@ -14,7 +14,7 @@ function createRequest(method, path) {
 
 export default {
   getGraph(configurationId, transformationId) {
-    return createRequest('POST', configurationId + '/' + transformationId + '/graph')
+    return createRequest('POST', 'graph?configId=' + configurationId + '&rowId=' + transformationId)
       .promise().then(function(response) {
         return response.body;
       });
