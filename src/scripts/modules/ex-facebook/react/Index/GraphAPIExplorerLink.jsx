@@ -21,16 +21,11 @@ export default React.createClass({
   renderDisabledLink() {
     return (
       <Tooltip placement="top" tooltip={this.tooltip}>
-        <span style={this.linkStyle} className="btn btn-link pull-right"  disabled>
+        <span className="btn btn-link"  disabled>
           {this.linkText}
         </span>
       </Tooltip>
     );
-  },
-
-  linkStyle: {
-    'marginTop': '5px',
-    'marginRight': '9px'
   },
 
   linkText: 'Try Query',
@@ -57,8 +52,8 @@ export default React.createClass({
     const url = `${API_URL}?method=GET&${params}`;
     return (
       <Tooltip placement="top" tooltip={this.tooltip}>
-        <a href={url} style={this.linkStyle}
-          target="_blank" className="btn btn-link pull-right">
+        <a href={url}
+          target="_blank" className="btn btn-link">
           {this.linkText}
         </a>
       </Tooltip>
