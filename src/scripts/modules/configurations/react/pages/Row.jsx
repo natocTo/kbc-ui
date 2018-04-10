@@ -222,8 +222,10 @@ export default React.createClass({
     const newConfigurationBySections = configurationBySections.setIn(
       ['sections', sectionKey],
       configurationBySections.getIn(['sections', sectionKey])
-                               .merge(Immutable.fromJS(diff)));
-    Actions.updateConfiguration(componentId, configurationId, rowId, newConfigurationBySections);
+                             .merge(Immutable.fromJS(diff)));
+    const created = this.state.createBySectionsFn(newConfigurationBySections);
+    const parsed = this.state.parseBySectionsFn(created);
+    Actions.updateConfiguration(componentId, configurationId, rowId, parsed);
   },
 
   renderSections() {

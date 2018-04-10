@@ -78,7 +78,9 @@ export default React.createClass({
       ['sections', sectionKey],
       configurationBySections.getIn(['sections', sectionKey])
                              .merge(Immutable.fromJS(diff)));
-    Actions.updateConfiguration(componentId, configurationId, newConfigurationBySections);
+    const created = this.state.createBySectionsFn(newConfigurationBySections);
+    const parsed = this.state.parseBySectionsFn(created);
+    Actions.updateConfiguration(componentId, configurationId, parsed);
   },
 
   renderSections() {
