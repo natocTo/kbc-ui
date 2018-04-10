@@ -27,16 +27,20 @@ export default React.createClass({
     const component = ComponentStore.getComponent(componentId);
     const isCompleteFn = settings.getIn(['credentials', 'detail', 'isComplete'], () => true); // todo
     const isChanged = Store.isEditingConfiguration(componentId, configurationId);
+    const createBySectionsFn = sections.makeCreateFn(settings.getIn(['index', 'onSave']), settings.getIn(['index', 'sections']));
+    const parseBySectionsFn = sections.makeParseFn(settings.getIn(['index', 'onLoad']), settings.getIn(['index', 'sections']));
     return {
       componentId: settings.get('componentId'),
       settings: settings,
       component: component,
       configurationId: configurationId,
+      createBySectionsFn,
+      parseBySectionsFn,
       configurationBySections: Store.getEditingConfiguration(
         componentId,
         configurationId,
-        sections.makeParseFn(settings.getIn(['index', 'onLoad']), settings.getIn(['index', 'sections']))
-        ),
+        parseBySectionsFn
+      ),
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged,
       isComplete: isCompleteFn(Store.getConfiguration(componentId, configurationId))
@@ -44,7 +48,7 @@ export default React.createClass({
   },
 
   renderButtons() {
-    const {componentId, configurationId, settings} = this.state;
+    const {componentId, configurationId, settings, createBySectionsFn, parseBySectionsFn} = this.state;
     return (
       <div className="text-right">
         <SaveButtons
@@ -54,8 +58,8 @@ export default React.createClass({
             return Actions.saveConfiguration(
               componentId,
               configurationId,
-              sections.makeCreateFn(settings.getIn(['index', 'onSave']), settings.getIn(['index', 'sections'])),
-              sections.makeParseFn(settings.getIn(['index', 'onLoad']), settings.getIn(['index', 'sections'])),
+              createBySectionsFn,
+              parseBySectionsFn,
               settings.getIn(['index', 'title'], 'parameters') + ' edited'
             );
           }}
