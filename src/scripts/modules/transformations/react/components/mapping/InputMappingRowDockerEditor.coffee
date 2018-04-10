@@ -6,8 +6,7 @@ Input = React.createFactory Input
 Select = React.createFactory require('../../../../../react/common/Select').default
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
-PanelWithDetails = React.createFactory(
-  require('../../../../components/react/components/generic/PanelWithDetails').default)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'InputMappingRowDockjerEditor'

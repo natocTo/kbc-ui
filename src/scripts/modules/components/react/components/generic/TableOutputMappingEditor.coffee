@@ -7,7 +7,7 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 AutosuggestWrapper = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
-PanelWithDetails = React.createFactory(require('./PanelWithDetails').default)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'TableOutputMappingEditor'

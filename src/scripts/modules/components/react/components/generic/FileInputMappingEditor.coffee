@@ -4,7 +4,7 @@ Immutable = require('immutable')
 {Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 SelectCreatable = React.createFactory(require('react-select').Creatable)
-PanelWithDetails = React.createFactory(require('./PanelWithDetails').default)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'FileInputMappingEditor'

@@ -7,7 +7,7 @@ Input = React.createFactory Input
 SapiTableSelector = React.createFactory(require('../SapiTableSelector'))
 ChangedSinceFilterInput = require('./ChangedSinceFilterInput').default
 DataFilterRow = require('./DataFilterRow').default
-PanelWithDetails = React.createFactory(require('./PanelWithDetails').default)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'TableInputMappingEditor'

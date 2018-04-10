@@ -7,8 +7,7 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 SnowflakeDataTypesContainer = React.createFactory(require("./input/SnowflakeDataTypesContainer"))
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
-PanelWithDetails = React.createFactory(
-  require('../../../../components/react/components/generic/PanelWithDetails').default)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'InputMappingRowRedshiftEditor'
@@ -211,4 +210,3 @@ module.exports = React.createClass
                   disabled: @props.disabled || !@props.value.get("source")
                   onChange: @_handleChangeDataTypes
                   columnsOptions: @_getFilteredColumnsOptions()
-            

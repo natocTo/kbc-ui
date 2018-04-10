@@ -8,8 +8,7 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
 stringUtils = require('../../../../../utils/string').default
-PanelWithDetails = React.createFactory(
-  require('../../../../components/react/components/generic/PanelWithDetails').default)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
