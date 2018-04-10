@@ -48,27 +48,30 @@ export default React.createClass({
   },
 
   renderButtons() {
-    const {componentId, configurationId, settings, createBySectionsFn, parseBySectionsFn} = this.state;
+    const {componentId, configurationId} = this.state;
     return (
       <div className="text-right">
         <SaveButtons
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
-          onSave={function() {
-            return Actions.saveConfiguration(
-              componentId,
-              configurationId,
-              createBySectionsFn,
-              parseBySectionsFn,
-              settings.getIn(['index', 'title'], 'parameters') + ' edited'
-            );
-          }}
+          onSave={this.handleSave}
           onReset={function() {
             return Actions.resetConfiguration(componentId, configurationId);
           }}
         />
         <br />
       </div>
+    );
+  },
+
+  handleSave() {
+    const {componentId, configurationId, settings, createBySectionsFn, parseBySectionsFn} = this.state;
+    return Actions.saveConfiguration(
+      componentId,
+      configurationId,
+      createBySectionsFn,
+      parseBySectionsFn,
+      settings.getIn(['index', 'title'], 'parameters') + ' edited'
     );
   },
 
@@ -83,6 +86,16 @@ export default React.createClass({
     Actions.updateConfiguration(componentId, configurationId, parsed);
   },
 
+  onSaveSection(sectionKey, diff) {
+    const {configurationBySections, componentId, configurationId} = this.state;
+    const newConfigurationBySections = configurationBySections.setIn(
+      ['sections', sectionKey],
+      configurationBySections.getIn(['sections', sectionKey])
+                             .merge(Immutable.fromJS(diff)));
+    const created = this.state.createBySectionsFn(newConfigurationBySections);
+    Actions.saveForcedConfiguration(componentId, configurationId, created);
+  },
+
   renderSections() {
     const settingsSections = this.state.settings.getIn(['index', 'sections']);
     return settingsSections.map((section, key) => {
@@ -90,8 +103,9 @@ export default React.createClass({
       return (
         <div key={key} className="kbc-inner-content-padding-fix with-bottom-border">
           <SectionComponent
-            disabled={false} // todo
+            disabled={this.state.isSaving}
             onChange={(diff) => this.onUpdateSection(key, diff)}
+            onSave={(diff) => this.onSaveSection(key, diff)}
             value={this.state.configurationBySections.getIn(['sections', key]).toJS()}
           />
         </div>

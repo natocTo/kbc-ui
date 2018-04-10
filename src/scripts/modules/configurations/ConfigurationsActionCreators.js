@@ -105,6 +105,33 @@ module.exports = {
       });
   },
 
+
+  saveForcedConfiguration: function(componentId, configurationId, forcedConfiguration, changeDescription) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_START,
+      componentId: componentId,
+      configurationId: configurationId
+    });
+    return storeEncodedConfiguration(componentId, configurationId, forcedConfiguration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          configuration: response
+        });
+      }).catch(function(e) {
+        Dispatcher.handleViewAction({
+          type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          error: e
+        });
+        throw e;
+      });
+  },
+
   orderRows: function(componentId, configurationId, rowIds, movedRowId, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATIONS_ORDER_ROWS_START,
