@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import SqlDepAnalyzerApi from '../../../sqldep-analyzer/Api';
-import ExternalLink from '../../../../react/common/ExternalLink';
+import { ExternalLink } from '@keboola/indigo-ui';
 import Result from '../components/validation/Result';
 import Immutable from 'immutable';
 
