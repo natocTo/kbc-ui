@@ -9,6 +9,8 @@ import RoutesStore from '../../../stores/RoutesStore';
 import {SearchRow} from '../../../react/common/common';
 import EventsTable from './EventsTable';
 import EventDetail from './EventDetail';
+import {Loader} from '@keboola/indigo-ui';
+
 
 export default React.createClass({
   mixins: [PureRendererMixin],
@@ -114,13 +116,13 @@ export default React.createClass({
     }
     if (this.state.isLoadingCurrentEvent) {
       return (
-        <div className="well">
-          Loading event
+        <div className="col-xs-12">
+          <Loader/> Loading event
         </div>
       );
     }
     return (
-      <div className="well">
+      <div className="col-xs-12">
         <Link {...this.props.link}>
           <span className="fa fa-chevron-left"/> Back
         </Link>
@@ -153,8 +155,8 @@ export default React.createClass({
       );
     }
     return (
-      <div className="well">
-        {this.state.isLoading ? 'Loading ...' : 'No events found.'}
+      <div className="col-xs-12">
+        {this.state.isLoading ? (<span><Loader/> Loading</span>) : 'No events found.'}
       </div>
     );
   },
