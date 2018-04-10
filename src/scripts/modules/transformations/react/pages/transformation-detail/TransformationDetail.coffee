@@ -170,10 +170,7 @@ module.exports = React.createClass
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
 
-          if (backend == 'redshift' or
-              backend == 'mysql' && transformationType == 'simple' or
-              backend == 'snowflake') and
-              ApplicationStore.hasCurrentAdminFeature('validate-sql')
+          if backend == 'snowflake' and ApplicationStore.hasCurrentAdminFeature('validate-sql')
             li {},
               ValidateQueriesButton
                 backend: backend
