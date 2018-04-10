@@ -1,4 +1,4 @@
-import {Map, fromJS, List} from 'immutable';
+import {Map, fromJS} from 'immutable';
 function createConfiguration(localState) {
   const tableId = localState.get('tableId');
   const imColumns = localState.get('columns').keySeq().toList();
@@ -35,7 +35,9 @@ export default {
       tableId: name,
       title: webalizedName,
       identifier: '',
-      columns: List()
+      incrementalLoad: 0,
+      grain: null,
+      columns: Map()
     };
     return createConfiguration(fromJS(initState));
   }
