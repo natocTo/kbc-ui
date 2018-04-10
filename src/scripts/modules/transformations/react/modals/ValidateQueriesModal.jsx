@@ -101,9 +101,9 @@ export default React.createClass({
             Results will be immediately removed from their API after presenting to you.
           </p>
           <p>The last saved version of the transformation is used.</p>
-          <div style={{maxHeight: '300px', overflow: 'scroll'}}>
+          <span style={{maxHeight: '300px', overflow: 'scroll'}}>
             {this.renderResult()}
-          </div>
+          </span>
         </span>
       );
     } else {
