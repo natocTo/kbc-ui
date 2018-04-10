@@ -71,16 +71,8 @@ module.exports = React.createClass
     a {onClick: @_openSupportModal}, " Contact support"
 
   _snowflakeDescription: ->
-    timeout = ApplicationStore.getSapiToken().getIn(
-      ['owner','limits', 'keboola.wr-db-snowflake.statementTimeout', 'value'],
-      15
-    )
     span null,
-      'These are write credentials to the snowflake database provided by Keboola. All executed queries have '
-      timeout
-      ' seconds timeout and there can be 2 concurrent sessions running at most.'
-      @_renderContactUs()
-      ' if you would like to raise these limits.'
+      'These are write credentials to the snowflake database provided by Keboola.'
 
 
   _renderTestCredentials: ->
