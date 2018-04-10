@@ -1,4 +1,4 @@
-var resolveTableInputShowDetails  = function(mapping) {
+const resolveTableInputShowDetails = (mapping) => {
   if (mapping.has('columns') && mapping.get('columns').count() > 0) {
     return true;
   }
@@ -17,7 +17,7 @@ var resolveTableInputShowDetails  = function(mapping) {
   return false;
 };
 
-var resolveFileInputShowDetails = function(mapping) {
+const resolveFileInputShowDetails = (mapping) => {
   if (mapping.has('processed_tags') && mapping.get('processed_tags').count() > 0) {
     return true;
   }
@@ -28,11 +28,7 @@ var resolveFileInputShowDetails = function(mapping) {
   return false;
 };
 
-module.exports = {
-  resolveTableInputShowDetails: function(mapping) {
-    return resolveTableInputShowDetails(mapping);
-  },
-  resolveFileInputShowDetails: function(mapping) {
-    return resolveFileInputShowDetails(mapping);
-  }
+export {
+  resolveTableInputShowDetails,
+  resolveFileInputShowDetails
 };
