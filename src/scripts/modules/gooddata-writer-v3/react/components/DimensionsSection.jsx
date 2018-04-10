@@ -7,6 +7,7 @@ export default React.createClass({
       dimensions: PropTypes.string
     }),
     onChange: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
   },
 
@@ -23,7 +24,21 @@ export default React.createClass({
             value={value.dimensions}
           />
         </FormGroup>
+        <div>
+          <button
+            disabled={this.props.disabled}
+            onClick={this.saveDoubled}
+            className="btn btn-success">
+            Double and Save
+          </button>
+        </div>
       </form>
     );
+  },
+
+  saveDoubled(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.onSave({dimensions: this.props.value.dimensions + this.props.value.dimensions});
   }
 });

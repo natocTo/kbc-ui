@@ -1,7 +1,7 @@
-import {Map} from 'immutable';
+import {Map, fromJS} from 'immutable';
 export default {
   createConfiguration(localState) {
-    return Map({parameters: {dimensions: localState.get('dimensions')}});
+    return fromJS({parameters: {dimensions: localState.get('dimensions')}});
   },
 
   parseConfiguration(configuration) {
