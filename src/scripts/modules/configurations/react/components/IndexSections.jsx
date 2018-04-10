@@ -14,6 +14,9 @@ import Actions from '../../ConfigurationsActionCreators';
 // global components
 import SaveButtons from '../../../../react/common/SaveButtons';
 
+// utils
+import sections from '../../utils/sections';
+
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
 
@@ -22,9 +25,6 @@ export default React.createClass({
     const componentId = settings.get('componentId');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const component = ComponentStore.getComponent(componentId);
-    const parseFn = settings.getIn(['index', 'onLoad'], c => c);
-    const sectionsParseFn = settings.getIn(['index', 'sections']).map(s => s.get('onLoad'));
-
     const isCompleteFn = settings.getIn(['credentials', 'detail', 'isComplete'], () => true); // todo
     const isChanged = Store.isEditingConfiguration(componentId, configurationId);
     return {
@@ -32,7 +32,11 @@ export default React.createClass({
       settings: settings,
       component: component,
       configurationId: configurationId,
-      configurationBySections: Store.getEditingConfigurationBySections(componentId, configurationId, parseFn, sectionsParseFn),
+      configurationBySections: Store.getEditingConfiguration(
+        componentId,
+        configurationId,
+        sections.makeParseFn(settings.getIn(['index', 'onLoad']), settings.getIn(['index', 'sections']))
+        ),
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged,
       isComplete: isCompleteFn(Store.getConfiguration(componentId, configurationId))
@@ -40,25 +44,23 @@ export default React.createClass({
   },
 
   renderButtons() {
-    const state = this.state;
+    const {componentId, configurationId, settings} = this.state;
     return (
       <div className="text-right">
         <SaveButtons
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={function() {
-            return Actions.saveConfigurationBySections(
-              state.componentId,
-              state.configurationId,
-              state.settings.getIn(['index', 'onSave'], c => c),
-              state.settings.getIn(['index', 'sections']).map(s => s.get('onSave')),
-              state.settings.getIn(['index', 'onLoad'], c => c),
-              state.settings.getIn(['index', 'sections']).map(s => s.get('onLoad')),
-              state.settings.getIn(['index', 'title'], 'parameters') + ' edited'
+            return Actions.saveConfiguration(
+              componentId,
+              configurationId,
+              sections.makeCreateFn(settings.getIn(['index', 'onSave']), settings.getIn(['index', 'sections'])),
+              sections.makeParseFn(settings.getIn(['index', 'onLoad']), settings.getIn(['index', 'sections'])),
+              settings.getIn(['index', 'title'], 'parameters') + ' edited'
             );
           }}
           onReset={function() {
-            return Actions.resetConfiguration(state.componentId, state.configurationId);
+            return Actions.resetConfiguration(componentId, configurationId);
           }}
         />
         <br />

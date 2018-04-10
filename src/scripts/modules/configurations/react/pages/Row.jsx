@@ -22,6 +22,7 @@ import LatestRowVersions from '../components/SidebarRowVersionsWrapper';
 
 // adapters
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
+import sections from '../../utils/sections';
 
 // styles
 import '../../styles.less';
@@ -36,6 +37,8 @@ export default React.createClass({
     const componentId = settings.get('componentId');
     const row = Store.get(componentId, configurationId, rowId);
     const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId, rowId);
+    const createBySectionsFn = sections.makeCreateFn(settings.getIn(['row', 'onSave']), settings.getIn(['row', 'sections']));
+    const parseBySectionsFn = sections.makeParseFn(settings.getIn(['row', 'onLoad']), settings.getIn(['row', 'sections']));
     return {
       componentId: componentId,
       settings: settings,
@@ -65,12 +68,13 @@ export default React.createClass({
         settings.getIn(['row', 'detail', 'onLoad']),
         settings.getIn(['row', 'detail', 'onSave'])
       ),
-      configurationBySections: Store.getEditingConfigurationBySections(
+      createBySectionsFn,
+      parseBySectionsFn,
+      configurationBySections: Store.getEditingConfiguration(
         componentId,
         configurationId,
         rowId,
-        settings.getIn(['row', 'onLoad'], configuration => configuration),
-        settings.getIn(['row', 'sections']).map(s => s.get('onLoad'))
+        parseBySectionsFn
       ),
       configuration: Store.getEditingConfiguration(
         componentId,
@@ -276,14 +280,12 @@ export default React.createClass({
           isChanged={this.state.isChanged}
           onSave={function() {
             const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' edited';
-            return Actions.saveConfigurationBySections(
+            return Actions.saveConfiguration(
               state.componentId,
               state.configurationId,
               state.rowId,
-              settings.getIn(['row', 'onSave']),
-              settings.getIn(['row', 'sections']).map(s => s.get('onSave')),
-              settings.getIn(['row', 'onLoad']),
-              settings.getIn(['row', 'sections']).map(s => s.get('onLoad')),
+              state.createBySectionsFn,
+              state.parseBySectionsFn,
               changeDescription
             );
           }}
