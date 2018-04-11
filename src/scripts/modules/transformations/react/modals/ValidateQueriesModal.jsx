@@ -12,7 +12,8 @@ export default React.createClass({
     bucketId: React.PropTypes.string.isRequired,
     backend: React.PropTypes.string.isRequired,
     show: React.PropTypes.bool.isRequired,
-    onHide: React.PropTypes.func.isRequired
+    onHide: React.PropTypes.func.isRequired,
+    isNotSaved: React.PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -91,6 +92,15 @@ export default React.createClass({
     );
   },
 
+  renderNotSavedWarning() {
+    if (!this.props.isNotSaved) {
+      return;
+    }
+    return (
+      <p className="alert alert-warning">You have unsaved changes. Validation will only apply to the last version.</p>
+    );
+  },
+
   renderBody() {
     if (this.isValidBackend()) {
       return (
@@ -100,7 +110,7 @@ export default React.createClass({
             {' '}<ExternalLink href="https://sqldep.com/">SQLdep API</ExternalLink>.
             Results will be immediately removed from their API after presenting to you.
           </p>
-          <p>The last saved version of the transformation is used.</p>
+          {this.renderNotSavedWarning()}
           <span style={{maxHeight: '300px', overflow: 'scroll'}}>
             {this.renderResult()}
           </span>

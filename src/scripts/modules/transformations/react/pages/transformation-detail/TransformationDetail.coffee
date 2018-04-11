@@ -181,6 +181,7 @@ module.exports = React.createClass
                   @setState({validateModalOpen: true})
                 onModalClose: =>
                   @setState({validateModalOpen: false})
+                isNotSaved: @state.editingFields.has('queriesString')
           li {},
             a {},
               React.createElement Confirm,
