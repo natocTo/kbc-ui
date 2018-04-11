@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { Creatable } from 'react-select';
-import changedSinceOptionIsValid from './changedSinceOptionIsValid';
+import changedSinceOptionCreator from './changedSinceOptionCreator';
 
 export default React.createClass({
 
@@ -103,28 +103,43 @@ export default React.createClass({
   },
 
   isValidNewOption({ label }) {
-    return changedSinceOptionIsValid(label);
+    const option = changedSinceOptionCreator(label);
+    if (option === false) {
+      return false;
+    }
+    return true;
   },
 
   newOptionCreator({ label }) {
+    const option = changedSinceOptionCreator(label);
     return {
-      label: label,
-      value: '-' + label
+      label: option,
+      value: '-' + option
     };
+  },
+
+  promptTextCreator(label) {
+    const option = changedSinceOptionCreator(label);
+    if (option === false) {
+      return 'Invalid range';
+    }
+    return option;
   },
 
   render() {
     return (
       <div>
         <Creatable
-          placeholder="Select period"
-          noResultsText="Invalid option"
+          placeholder="Select range"
+          noResultsText="Invalid range"
           value={this.props.value}
           disabled={this.props.disabled}
           onChange={this.onChange}
           options={this.getSelectOptions()}
           newOptionCreator={this.newOptionCreator}
           isValidNewOption={this.isValidNewOption}
+          trimFilter={true}
+          promptTextCreator={this.promptTextCreator}
         />
       </div>
     );
