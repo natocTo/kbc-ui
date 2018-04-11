@@ -1,7 +1,7 @@
 import {Map, fromJS} from 'immutable';
 
 const repass = param => param;
-const emptyMap = () =>  Map();
+const returnEmptyMap = () =>  Map();
 
 function parseBySections(rootParseFn, sectionsParseFn, configuration) {
   const rootParsed = rootParseFn(configuration);
@@ -52,7 +52,7 @@ export default {
 
   makeCreateEmptyFn(rootCreateEmptyFn, rootCreateFn, sections) {
     const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
-    const sectionsCreateEmptyFn = sections.map(section => section.get('onCreate') || emptyMap);
-    return (name, webalizedName) => createEmptyConfigBySections(rootCreateEmptyFn || emptyMap, sectionsCreateEmptyFn, rootCreateFn || repass, sectionsCreateFn, name, webalizedName);
+    const sectionsCreateEmptyFn = sections.map(section => section.get('onCreate') || returnEmptyMap);
+    return (name, webalizedName) => createEmptyConfigBySections(rootCreateEmptyFn || returnEmptyMap, sectionsCreateEmptyFn, rootCreateFn || repass, sectionsCreateFn, name, webalizedName);
   }
 };

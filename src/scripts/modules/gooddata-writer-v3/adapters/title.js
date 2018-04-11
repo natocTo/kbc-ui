@@ -9,7 +9,6 @@ export default {
   createConfiguration,
   parseConfiguration(rootParsedConfiguration) {
     return Map({
-      tableId: rootParsedConfiguration.get('tableId'), // mozno nebude potreba
       title: rootParsedConfiguration.get('title'),
       identifier: rootParsedConfiguration.get('identifier')
     });
