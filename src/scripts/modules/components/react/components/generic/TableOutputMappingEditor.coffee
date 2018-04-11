@@ -7,6 +7,7 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 AutosuggestWrapper = require('../../../../transformations/react/components/mapping/AutoSuggestWrapper').default
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'TableOutputMappingEditor'
@@ -24,14 +25,6 @@ module.exports = React.createClass
 
   getDefaultProps: ->
     definition: Immutable.Map()
-
-  getInitialState: ->
-    showDetails: @props.initialShowDetails
-
-  _handleToggleShowDetails: (e) ->
-    @setState(
-      showDetails: e.target.checked
-    )
 
   _parseDestination: ->
     destination = @props.value.get('destination')
@@ -129,47 +122,44 @@ module.exports = React.createClass
   render: ->
     component = @
     React.DOM.div {className: 'form-horizontal clearfix'},
-      React.DOM.div null,
+      if (!@props.definition.has('source'))
         React.DOM.div {className: "row col-md-12"},
-          React.DOM.div className: 'form-group form-group-sm',
-            React.DOM.div className: 'col-xs-10 col-xs-offset-2',
-              Input
-                standalone: true
-                type: 'checkbox'
-                label: React.DOM.small {}, 'Show details'
-                checked: @state.showDetails
-                onChange: @_handleToggleShowDetails
-        if (!@props.definition.has('source'))
-          React.DOM.div {className: "row col-md-12"},
-            Input
-              type: 'text'
-              name: 'source'
-              label: 'File'
-              value: @props.value.get("source")
-              disabled: @props.disabled
-              placeholder: "File name"
-              onBlur: @_handleBlurSource
-              onChange: @_handleChangeSource
-              labelClassName: 'col-xs-2'
-              wrapperClassName: 'col-xs-10'
-              autoFocus: true
-              help: React.DOM.span {},
-                "File will be uploaded from"
-                React.DOM.code {}, "/data/out/tables/" + @props.value.get("source", "")
-        React.DOM.div {className: "row col-md-12"},
-          React.DOM.div className: 'form-group',
-            React.DOM.label className: 'col-xs-2 control-label', 'Destination'
-            React.DOM.div className: 'col-xs-10',
-              React.createElement DestinationTableSelector,
-                currentSource: @props.value.get("source")
-                updatePart: @_updateDestinationPart
-                disabled: false
-                parts: @_parseDestination().parts
-                tables: @props.tables
-                buckets: @props.buckets
-                placeholder: 'Storage table where \
-                the source file data will be loaded to - you can create a new table or use an existing one.'
-              if @state.showDetails
+          Input
+            type: 'text'
+            name: 'source'
+            label: 'File'
+            value: @props.value.get("source")
+            disabled: @props.disabled
+            placeholder: "File name"
+            onBlur: @_handleBlurSource
+            onChange: @_handleChangeSource
+            labelClassName: 'col-xs-2'
+            wrapperClassName: 'col-xs-10'
+            autoFocus: true
+            help: React.DOM.span {},
+              "File will be uploaded from"
+              React.DOM.code {}, "/data/out/tables/" + @props.value.get("source", "")
+      React.DOM.div {className: "row col-md-12"},
+        React.DOM.div className: 'form-group',
+          React.DOM.label className: 'col-xs-2 control-label', 'Destination'
+          React.DOM.div className: 'col-xs-10',
+            React.createElement DestinationTableSelector,
+              currentSource: @props.value.get("source")
+              updatePart: @_updateDestinationPart
+              disabled: false
+              parts: @_parseDestination().parts
+              tables: @props.tables
+              buckets: @props.buckets
+              placeholder: 'Storage table where \
+              the source file data will be loaded to - you can create a new table or use an existing one.'
+      React.DOM.div {className: "row col-md-12"},
+        PanelWithDetails
+          defaultExpanded: @props.initialShowDetails
+          React.DOM.div {className: 'form-horizontal clearfix'},
+            React.DOM.div {className: "form-group form-group-sm"},
+              React.DOM.label {className: "control-label col-xs-2"},
+                React.DOM.span null,
+              React.DOM.div {className: "col-xs-10"},
                 Input
                   standalone: true
                   name: 'incremental'
@@ -182,8 +172,6 @@ module.exports = React.createClass
                     "If the destination table exists in Storage,
                     output mapping does not overwrite the table, it only appends the data to it.
                     Uses incremental write to Storage."
-        if @state.showDetails
-          React.DOM.div {className: "row col-md-12"},
             React.DOM.div {className: "form-group form-group-sm"},
               React.DOM.label {className: "control-label col-xs-2"},
                 React.DOM.span null,
@@ -209,38 +197,37 @@ module.exports = React.createClass
                     }
                   ).toJS()
 
-        if @state.showDetails && (@props.value.get("incremental") || @props.value.get("deleteWhereColumn", "") != "")
-          React.DOM.div {className: "row col-md-12"},
-            React.DOM.div className: 'form-group form-group-sm',
-              React.DOM.label className: 'col-xs-2 control-label', 'Delete rows'
-              React.DOM.div className: 'col-xs-4',
-                React.createElement AutosuggestWrapper,
-                  suggestions: @_getColumns()
-                  placeholder: 'Select column'
-                  value: @props.value.get("delete_where_column", "")
-                  onChange: @_handleChangeDeleteWhereColumn
-              React.DOM.div className: 'col-xs-2',
-                Input
-                  bsSize: 'small'
-                  type: 'select'
-                  name: 'deleteWhereOperator'
-                  value: @props.value.get("delete_where_operator")
-                  disabled: @props.disabled
-                  onChange: @_handleChangeDeleteWhereOperator
-                  groupClassName: "no-bottom-margin"
-                ,
-                  React.DOM.option {value: "eq"}, "= (IN)"
-                  React.DOM.option {value: "ne"}, "!= (NOT IN)"
-              React.DOM.div className: 'col-xs-4',
-                Select
-                  name: 'deleteWhereValues'
-                  value: @props.value.get('delete_where_values')
-                  multi: true
-                  disabled: @props.disabled
-                  allowCreate: true
-                  delimiter: ','
-                  placeholder: 'Add a value...'
-                  emptyStrings: true,
-                  onChange: @_handleChangeDeleteWhereValues
-              React.DOM.div className: 'col-xs-10 col-xs-offset-2 small help-block bottom-margin',
-                "Delete matching rows in the destination table before importing the result"
+            if (@props.value.get("incremental") || @props.value.get("deleteWhereColumn", "") != "")
+              React.DOM.div className: 'form-group form-group-sm',
+                React.DOM.label className: 'col-xs-2 control-label', 'Delete rows'
+                React.DOM.div className: 'col-xs-4',
+                  React.createElement AutosuggestWrapper,
+                    suggestions: @_getColumns()
+                    placeholder: 'Select column'
+                    value: @props.value.get("delete_where_column", "")
+                    onChange: @_handleChangeDeleteWhereColumn
+                React.DOM.div className: 'col-xs-2',
+                  Input
+                    bsSize: 'small'
+                    type: 'select'
+                    name: 'deleteWhereOperator'
+                    value: @props.value.get("delete_where_operator")
+                    disabled: @props.disabled
+                    onChange: @_handleChangeDeleteWhereOperator
+                    groupClassName: "no-bottom-margin"
+                  ,
+                    React.DOM.option {value: "eq"}, "= (IN)"
+                    React.DOM.option {value: "ne"}, "!= (NOT IN)"
+                React.DOM.div className: 'col-xs-4',
+                  Select
+                    name: 'deleteWhereValues'
+                    value: @props.value.get('delete_where_values')
+                    multi: true
+                    disabled: @props.disabled
+                    allowCreate: true
+                    delimiter: ','
+                    placeholder: 'Add a value...'
+                    emptyStrings: true,
+                    onChange: @_handleChangeDeleteWhereValues
+                React.DOM.div className: 'col-xs-10 col-xs-offset-2 small help-block bottom-margin',
+                  "Delete matching rows in the destination table before importing the result"

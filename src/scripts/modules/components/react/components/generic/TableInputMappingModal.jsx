@@ -3,7 +3,7 @@ import {Modal, Button} from 'react-bootstrap';
 import Tooltip from './../../../../../react/common/Tooltip';
 import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Editor from './TableInputMappingEditor';
-import resolveInputShowDetails from './resolveInputShowDetails';
+import {resolveTableInputShowDetails} from './resolveInputShowDetails';
 import Immutable from 'immutable';
 
 const MODE_CREATE = 'create', MODE_EDIT = 'edit';
@@ -134,7 +134,7 @@ export default React.createClass({
       tables: this.props.tables,
       disabled: this.state.isSaving,
       onChange: this.props.onChange,
-      initialShowDetails: resolveInputShowDetails(this.props.mapping),
+      initialShowDetails: resolveTableInputShowDetails(this.props.mapping),
       isDestinationDuplicate: this.isDestinationDuplicate(),
       showFileHint: this.props.showFileHint,
       definition: this.props.definition

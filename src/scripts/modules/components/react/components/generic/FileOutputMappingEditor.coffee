@@ -4,6 +4,7 @@ Immutable = require('immutable')
 {Input} = require('./../../../../../react/common/KbcBootstrap')
 Input = React.createFactory Input
 SelectCreatable = React.createFactory(require('react-select').Creatable)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'FileOutputMappingEditor'
@@ -15,18 +16,6 @@ module.exports = React.createClass
 
   getInitialState: ->
     showDetails: false
-
-  _handleToggleShowDetails: (e) ->
-    @setState(
-      showDetails: e.target.checked
-    )
-
-  shouldComponentUpdate: (nextProps, nextState) ->
-    should = @props.value != nextProps.value ||
-        @props.disabled != nextProps.disabled ||
-        @state.showDetails != nextState.showDetails
-
-    should
 
   _handleChangeSource: (e) ->
     value = @props.value.set("source", e.target.value.trim())
@@ -64,16 +53,6 @@ module.exports = React.createClass
   render: ->
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div {className: "row col-md-12"},
-        React.DOM.div className: 'form-group form-group-sm',
-          React.DOM.div className: 'col-xs-10 col-xs-offset-2',
-            Input
-              standalone: true
-              type: 'checkbox'
-              label: React.DOM.small {}, 'Show details'
-              checked: @state.showDetails
-              onChange: @_handleToggleShowDetails
-
-      React.DOM.div {className: "row col-md-12"},
         Input
           type: 'text'
           label: 'Source'
@@ -87,7 +66,6 @@ module.exports = React.createClass
           help: React.DOM.span {},
             "File will be uploaded from "
             React.DOM.code {}, "/data/out/files/" + @props.value.get("source", "")
-
       React.DOM.div {className: "row col-md-12"},
         React.DOM.div className: 'form-group',
           React.DOM.label className: 'col-xs-2 control-label', 'Tags'
@@ -104,29 +82,30 @@ module.exports = React.createClass
               className: "help-block"
             ,
               "File will be assigned these tags"
+      React.DOM.div {className: "row col-md-12"},
+        PanelWithDetails
+          defaultExpanded: @state.showDetails
+          React.DOM.div {className: 'form-horizontal clearfix'},
+            React.DOM.div className: 'form-group form-group-sm',
+              React.DOM.div className: 'col-xs-10 col-xs-offset-2',
+                Input
+                  standalone: true
+                  type: 'checkbox'
+                  label: React.DOM.small {}, 'Is public'
+                  checked: @props.value.get("is_public")
+                  onChange: @_handleChangeIsPublic
+                  disabled: @props.disabled
+                  help: React.DOM.small {},
+                    "File will be public (accessible outside Keboola Connection)"
 
-      if @state.showDetails
-        React.DOM.div className: 'form-group form-group-sm',
-          React.DOM.div className: 'col-xs-10 col-xs-offset-2',
-            Input
-              standalone: true
-              type: 'checkbox'
-              label: React.DOM.small {}, 'Is public'
-              checked: @props.value.get("is_public")
-              onChange: @_handleChangeIsPublic
-              disabled: @props.disabled
-              help: React.DOM.small {},
-                "File will be public (accessible outside Keboola Connection)"
-
-      if @state.showDetails
-        React.DOM.div className: 'form-group form-group-sm',
-          React.DOM.div className: 'col-xs-10 col-xs-offset-2',
-            Input
-              standalone: true
-              type: 'checkbox'
-              label: React.DOM.small {}, 'Is permanent'
-              checked: @props.value.get("is_permanent")
-              onChange: @_handleChangeIsPermanent
-              disabled: @props.disabled
-              help: React.DOM.small {},
-                "File will be stored permanently (otherwise will be deleted after 180 days)"
+          React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'col-xs-10 col-xs-offset-2',
+              Input
+                standalone: true
+                type: 'checkbox'
+                label: React.DOM.small {}, 'Is permanent'
+                checked: @props.value.get("is_permanent")
+                onChange: @_handleChangeIsPermanent
+                disabled: @props.disabled
+                help: React.DOM.small {},
+                  "File will be stored permanently (otherwise will be deleted after 180 days)"
