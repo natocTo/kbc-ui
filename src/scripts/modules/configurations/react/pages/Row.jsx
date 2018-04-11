@@ -52,14 +52,14 @@ export default React.createClass({
       isJsonConfigurationChanged: Store.isEditingJsonConfiguration(componentId, configurationId, rowId),
       isJsonConfigurationParsable: isJsonConfigurationValid && isParsableConfiguration(
         Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId, rowId)),
-        settings.getIn(['row', 'detail', 'onLoad']),
-        settings.getIn(['row', 'detail', 'onSave'])
+        parseBySectionsFn,
+        createBySectionsFn
       ),
 
       isParsableConfiguration: isParsableConfiguration(
         Store.getConfiguration(componentId, configurationId, rowId),
-        settings.getIn(['row', 'detail', 'onLoad']),
-        settings.getIn(['row', 'detail', 'onSave'])
+        parseBySectionsFn,
+        createBySectionsFn
       ),
       isJsonEditorOpen: Store.hasJsonEditor(
         componentId,
@@ -235,7 +235,7 @@ export default React.createClass({
       return (
         <div key={key} className="kbc-inner-content-padding-fix with-bottom-border">
           <SectionComponent
-            disabled={false} // todo
+            disabled={this.state.isSaving}
             onChange={(diff) => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.getIn(['sections', key]).toJS()}
           />
