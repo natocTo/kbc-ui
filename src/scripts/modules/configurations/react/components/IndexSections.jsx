@@ -65,13 +65,13 @@ export default React.createClass({
   },
 
   handleSave() {
-    const {componentId, configurationId, settings, createBySectionsFn, parseBySectionsFn} = this.state;
+    const {componentId, configurationId, createBySectionsFn, parseBySectionsFn} = this.state;
     return Actions.saveConfiguration(
       componentId,
       configurationId,
       createBySectionsFn,
       parseBySectionsFn,
-      settings.getIn(['index', 'title'], 'parameters') + ' edited'
+      'parameters edited'
     );
   },
 

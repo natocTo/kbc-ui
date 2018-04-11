@@ -21,7 +21,6 @@ const routeSettings = {
     show: true,
     sections: [
       {
-        title: 'Dimensions',
         render: DimensionsSection,
         onSave: dimensionsAdapter.createConfiguration,
         onLoad: dimensionsAdapter.parseConfiguration,
@@ -36,7 +35,6 @@ const routeSettings = {
     onCreate: rowAdapter.createEmptyConfiguration,
     sections: [
       {
-        title: 'Title and Identifier',
         render: TitleSection,
         onSave: title.createConfiguration,
         onLoad: title.parseConfiguration,
@@ -44,7 +42,6 @@ const routeSettings = {
         isComplete: () => true
       },
       {
-        title: 'Load Type',
         render: LoadTypeSection,
         onSave: loadType.createConfiguration,
         onLoad: loadType.parseConfiguration,
@@ -52,7 +49,6 @@ const routeSettings = {
         isComplete: () => true
       },
       {
-        title: 'columns setup',
         render: TableColumnsEditor,
         onSave: tableColumnsEditorAdapter.createConfiguration,
         onLoad: tableColumnsEditorAdapter.parseConfiguration,
@@ -62,7 +58,6 @@ const routeSettings = {
     ],
     // detail obsolete - will be removed
     detail: {
-      title: 'Title and Identifier',
       render: TitleSection,
       onSave: title.createConfiguration,
       onLoad: title.parseConfiguration,
