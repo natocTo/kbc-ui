@@ -40,6 +40,7 @@ const routeSettings = {
         render: TitleSection,
         onSave: title.createConfiguration,
         onLoad: title.parseConfiguration,
+        onCreate: title.createEmptyConfiguration,
         isComplete: () => true
       },
       {
@@ -47,6 +48,7 @@ const routeSettings = {
         render: LoadTypeSection,
         onSave: loadType.createConfiguration,
         onLoad: loadType.parseConfiguration,
+        onCreate: loadType.createEmptyConfiguration,
         isComplete: () => true
       },
       {
@@ -54,6 +56,7 @@ const routeSettings = {
         render: TableColumnsEditor,
         onSave: tableColumnsEditorAdapter.createConfiguration,
         onLoad: tableColumnsEditorAdapter.parseConfiguration,
+        onCreate: tableColumnsEditorAdapter.createEmptyConfiguration,
         isComplete: () => true
       }
     ],

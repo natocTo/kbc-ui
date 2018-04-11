@@ -17,7 +17,6 @@ export default {
 
   createEmptyConfiguration(name, webalizedName) {
     const initState = {
-      tableId: name,
       title: webalizedName,
       identifier: ''
     };

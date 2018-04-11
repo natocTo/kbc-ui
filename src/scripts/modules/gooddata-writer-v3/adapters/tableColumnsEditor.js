@@ -1,4 +1,4 @@
-import {Map, List} from 'immutable';
+import {Map, List, fromJS} from 'immutable';
 import TablesStore from '../../components/stores/StorageTablesStore';
 
 
@@ -23,6 +23,10 @@ export default {
       .get(c, defaultColumn.set('title', c)).set('id', c)
     );
     return Map().set('columns', columnsList);
+  },
+
+  createEmptyConfiguration() {
+    return fromJS({columns: []});
   }
 
 };

@@ -30,14 +30,10 @@ export default {
     const tableParams = params.get(tableId, Map()).set('tableId', tableId);
     return tableParams;
   },
-  createEmptyConfiguration(name, webalizedName) {
+
+  createEmptyConfiguration(name) {
     const initState = {
-      tableId: name,
-      title: webalizedName,
-      identifier: '',
-      incrementalLoad: 0,
-      grain: null,
-      columns: Map()
+      tableId: name
     };
     return fromJS(initState);
   }

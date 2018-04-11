@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import {Map, fromJS} from 'immutable';
 
 export default {
   createConfiguration: (localState) => localState.remove('hasFact'),
@@ -9,5 +9,9 @@ export default {
       incrementalLoad: rootParsedConfiguration.get('incrementalLoad', 0),
       grain: rootParsedConfiguration.get('grain', null)
     });
+  },
+
+  createEmptyConfiguration() {
+    return fromJS({grain: null, incrementalLoad: 0});
   }
 };
