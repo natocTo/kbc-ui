@@ -8,8 +8,9 @@ TransformationDetailStatic = React.createFactory(require './TransformationDetail
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TransformationsStore  = require('../../../stores/TransformationsStore')
 TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore')
-StorageTablesStore  = require('../../../../components/stores/StorageTablesStore')
-StorageBucketsStore  = require('../../../../components/stores/StorageBucketsStore')
+StorageTablesStore = require('../../../../components/stores/StorageTablesStore')
+StorageBucketsStore = require('../../../../components/stores/StorageBucketsStore')
+ApplicationStore = require('../../../../../stores/ApplicationStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
 VersionsStore = require('../../../../components/stores/VersionsStore')
 TransformationsActionCreators = require '../../../ActionCreators'
@@ -18,9 +19,8 @@ ActivateDeactivateButton = React.createFactory(require('../../../../../react/com
 {Confirm, Loader} = require '../../../../../react/common/common'
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
 
-SqlDepModalButton = React.createFactory(require('../../modals/SqlDepModalButton').default)
-EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
-
+SqlDepButton = React.createFactory(require('../../components/SqlDepButton').default)
+ValidateQueriesButton = React.createFactory(require('../../components/ValidateQueriesButton').default)
 sandboxUtils = require('../../../utils/sandboxUtils')
 
 {div, span, ul, li, a, em} = React.DOM
@@ -62,7 +62,7 @@ module.exports = React.createClass
     latestVersionId: latestVersionId
 
   getInitialState: ->
-    sandboxModalOpen: false
+    validateModalOpen: false
 
   resolveLinkDocumentationLink: ->
     documentationLink = "https://help.keboola.com/manipulation/transformations/"
@@ -74,7 +74,6 @@ module.exports = React.createClass
       subpageName = transformationType
 
     return documentationLink + subpageName
-
 
   _deleteTransformation: ->
     bucketId = @state.bucket.get('id')
@@ -125,6 +124,7 @@ module.exports = React.createClass
             isEditingValid: @state.isTransformationEditingValid
             isQueriesProcessing: @state.pendingActions.has 'queries-processing'
             highlightQueryNumber: @state.highlightQueryNumber
+            highlightingQueryDisabled: @state.validateModalOpen
       div className: 'col-md-3 kbc-main-sidebar',
         ul className: 'nav nav-stacked',
           li {},
@@ -165,10 +165,23 @@ module.exports = React.createClass
               backend == 'mysql' && transformationType == 'simple' or
               backend == 'snowflake'
             li {},
-              SqlDepModalButton
+              SqlDepButton
                 backend: backend
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
+
+          if backend == 'snowflake' and ApplicationStore.hasCurrentAdminFeature('validate-sql')
+            li {},
+              ValidateQueriesButton
+                backend: backend
+                bucketId: @state.bucketId
+                transformationId: @state.transformationId
+                modalOpen: @state.validateModalOpen
+                onModalOpen: =>
+                  @setState({validateModalOpen: true})
+                onModalClose: =>
+                  @setState({validateModalOpen: false})
+                isSaved: !@state.editingFields.get('queriesChanged', false)
           li {},
             a {},
               React.createElement Confirm,

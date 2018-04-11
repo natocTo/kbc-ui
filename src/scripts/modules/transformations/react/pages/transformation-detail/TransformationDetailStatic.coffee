@@ -366,6 +366,7 @@ module.exports = React.createClass
         isQueriesProcessing: @props.isQueriesProcessing
         isChanged: @props.editingFields.get('queriesChanged', false)
         highlightQueryNumber: @props.highlightQueryNumber
+        highlightingQueryDisabled: @props.highlightingQueryDisabled
         onEditCancel: =>
           TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
             @props.transformationId, 'queriesString')

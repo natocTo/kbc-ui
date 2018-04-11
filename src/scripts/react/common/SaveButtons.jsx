@@ -44,11 +44,11 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-buttons kbc-save-buttons">
+      <span className="kbc-buttons kbc-save-buttons">
         {this.resetButton()}
         {this.modal()}
         {this.saveButton()}
-      </div>
+      </span>
     );
   },
 

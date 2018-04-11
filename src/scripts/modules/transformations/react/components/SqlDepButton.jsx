@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from './SqlDepModal';
+import Modal from '../modals/SqlDepModal';
 
 export default React.createClass({
   propTypes: {

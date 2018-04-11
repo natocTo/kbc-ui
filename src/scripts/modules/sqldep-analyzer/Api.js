@@ -18,5 +18,12 @@ export default {
       .promise().then(function(response) {
         return response.body;
       });
+  },
+
+  validate(configurationId, transformationId) {
+    return createRequest('POST', 'validate?configId=' + configurationId + '&rowId=' + transformationId)
+      .promise().then(function(response) {
+        return response.body;
+      });
   }
 };
