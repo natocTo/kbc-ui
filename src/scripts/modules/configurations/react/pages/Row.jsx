@@ -65,8 +65,8 @@ export default React.createClass({
         componentId,
         configurationId,
         rowId,
-        settings.getIn(['row', 'detail', 'onLoad']),
-        settings.getIn(['row', 'detail', 'onSave'])
+        parseBySectionsFn,
+        createBySectionsFn
       ),
       createBySectionsFn,
       parseBySectionsFn,
@@ -76,6 +76,7 @@ export default React.createClass({
         rowId,
         parseBySectionsFn
       ),
+      // deprecated
       configuration: Store.getEditingConfiguration(
         componentId,
         configurationId,
@@ -347,6 +348,7 @@ export default React.createClass({
     );
   },
 
+  // deprecated
   renderFormFields() {
     const state = this.state;
     const configuration = this.state.configuration;
