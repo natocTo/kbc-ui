@@ -9,7 +9,7 @@ export default React.createClass({
     modalOpen: React.PropTypes.bool.isRequired,
     onModalOpen: React.PropTypes.func.isRequired,
     onModalClose: React.PropTypes.func.isRequired,
-    isNotSaved: React.PropTypes.bool.isRequired
+    isSaved: React.PropTypes.bool.isRequired
   },
 
   handleOpenButtonClick(e) {
@@ -31,7 +31,7 @@ export default React.createClass({
           backend={this.props.backend}
           show={this.props.modalOpen}
           onHide={this.props.onModalClose}
-          isNotSaved={this.props.isNotSaved}
+          isSaved={this.props.isSaved}
         />
 
       </a>

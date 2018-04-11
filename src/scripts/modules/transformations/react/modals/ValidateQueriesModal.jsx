@@ -13,7 +13,7 @@ export default React.createClass({
     backend: React.PropTypes.string.isRequired,
     show: React.PropTypes.bool.isRequired,
     onHide: React.PropTypes.func.isRequired,
-    isNotSaved: React.PropTypes.bool.isRequired
+    isSaved: React.PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -93,12 +93,11 @@ export default React.createClass({
   },
 
   renderNotSavedWarning() {
-    if (!this.props.isNotSaved) {
-      return;
+    if (!this.props.isSaved) {
+      return (
+        <p className="alert alert-warning">You have unsaved changes. Validation will only apply to the last version.</p>
+      );
     }
-    return (
-      <p className="alert alert-warning">You have unsaved changes. Validation will only apply to the last version.</p>
-    );
   },
 
   renderBody() {
