@@ -103,11 +103,7 @@ export default React.createClass({
   },
 
   isValidNewOption({ label }) {
-    const option = changedSinceOptionCreator(label);
-    if (option === false) {
-      return false;
-    }
-    return true;
+    return changedSinceOptionCreator(label) !== false;
   },
 
   newOptionCreator({ label }) {
