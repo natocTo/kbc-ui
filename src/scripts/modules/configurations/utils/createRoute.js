@@ -2,6 +2,7 @@ import React from 'react';
 import Index from '../react/pages/Index';
 import Row from '../react/pages/Row';
 import Versions from '../react/pages/Versions';
+import RowHeaderButtons from '../react/components/RowHeaderButtons';
 import installedComponentsActions from '../../components/InstalledComponentsActionCreators';
 import storageActions from '../../components/StorageActionCreators';
 import versionsActions from '../../components/VersionsActionCreators';
@@ -101,6 +102,7 @@ module.exports = {
         name: settingsWithDefaults.componentId + '-row',
         settings: settingsWithDefaults,
         path: 'rows/:row',
+        headerButtonsHandler: RowHeaderButtons,
         title: (routerState) => {
           const configId = routerState.getIn(['params', 'config']);
           const rowId = routerState.getIn(['params', 'row']);
