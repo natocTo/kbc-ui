@@ -1,10 +1,11 @@
-import {Map} from 'immutable';
+import {Map, fromJS} from 'immutable';
 
 const repass = param => param;
+const emptyMap = () =>  Map();
 
 function parseBySections(rootParseFn, sectionsParseFn, configuration) {
   const rootParsed = rootParseFn(configuration);
-  const sectionsParsed = sectionsParseFn.map((parseSectionFn = repass) => parseSectionFn(rootParsed));
+  const sectionsParsed = sectionsParseFn.map((parseSectionFn) => parseSectionFn(rootParsed));
   const parsedConfiguration = Map({
     root: rootParsed,
     sections: sectionsParsed
@@ -26,6 +27,17 @@ function createBySections(createFn, sectionsCreateFn, configurationBySections) {
   return createFn(configurationRoot.merge(configurationSectionsMerged));
 }
 
+function createEmptyConfigBySections(createEmptyFn, sectionsCreateEmptyFn, createFn, sectionsCreateFn, name, webalizedName) {
+  const sectionsData = sectionsCreateEmptyFn.map(sectionCreateFn => sectionCreateFn(name, webalizedName));
+  const root = createEmptyFn(name, webalizedName);
+  const configurationBySections = fromJS({
+    root,
+    sections: sectionsData
+  });
+
+  return createBySections(createFn, sectionsCreateFn, configurationBySections);
+}
+
 
 export default {
   makeParseFn(rootParseFn, sections) {
@@ -36,5 +48,11 @@ export default {
   makeCreateFn(rootCreateFn, sections) {
     const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
     return configuration => createBySections(rootCreateFn || repass, sectionsCreateFn, configuration);
+  },
+
+  makeCreateEmptyFn(rootCreateEmptyFn, rootCreateFn, sections) {
+    const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
+    const sectionsCreateEmptyFn = sections.map(section => section.get('onCreate') || emptyMap);
+    return (name, webalizedName) => createEmptyConfigBySections(rootCreateEmptyFn || emptyMap, sectionsCreateEmptyFn, rootCreateFn || repass, sectionsCreateFn, name, webalizedName);
   }
 };

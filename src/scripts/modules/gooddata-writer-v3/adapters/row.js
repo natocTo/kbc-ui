@@ -39,6 +39,6 @@ export default {
       grain: null,
       columns: Map()
     };
-    return createConfiguration(fromJS(initState));
+    return fromJS(initState);
   }
 };

@@ -26,6 +26,9 @@ import ConfigurationRows from '../components/ConfigurationRows';
 // import Credentials from '../components/Credentials';
 import IndexSections from '../components/IndexSections';
 
+// utils
+import sections from '../../utils/sections';
+
 // styles
 import '../../styles.less';
 
@@ -59,6 +62,8 @@ export default React.createClass({
   renderRowsTable() {
     const state = this.state;
     const settings = this.state.settings;
+    const createEmptyFn = settings.getIn(['row', 'onCreate']);
+    const createFn = settings.getIn(['row', 'onSave']);
     if (this.state.rows.count() === 0) {
       return (
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
@@ -68,7 +73,7 @@ export default React.createClass({
               label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
               componentId={state.componentId}
               configId={state.configurationId}
-              emptyConfig={settings.getIn(['row', 'onCreate'])}
+              emptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
               onRowCreated={this.onRowCreated}
               createChangeDescription={function(name) {
                 return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
@@ -135,6 +140,8 @@ export default React.createClass({
 
   render() {
     const settings = this.state.settings;
+    const createEmptyFn = settings.getIn(['row', 'onCreate']);
+    const createFn = settings.getIn(['row', 'onSave']);
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -156,10 +163,10 @@ export default React.createClass({
           <ul className="nav nav-stacked">
             <li>
               <RunComponentButton
-                  title="Run"
-                  component={this.state.componentId}
-                  mode="link"
-                  runParams={() => ({config: this.state.configurationId})}
+                title="Run"
+                component={this.state.componentId}
+                mode="link"
+                runParams={() => ({config: this.state.configurationId})}
               >
                 {this.renderRunModalContent()}
               </RunComponentButton>
@@ -169,7 +176,7 @@ export default React.createClass({
                 label={'New ' + this.state.settings.getIn(['row', 'name', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}
-                emptyConfig={settings.getIn(['row', 'onCreate'])}
+                emptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
                 onRowCreated={this.onRowCreated}
                 type="link"
                 createChangeDescription={function(name) {
