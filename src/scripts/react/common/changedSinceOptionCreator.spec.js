@@ -27,7 +27,6 @@ describe('changedSinceOptionCreator', function() {
     it('-1m', function() {
       assert.equal('1 minute', changedSinceOptionCreator('-1m'));
     });
-
   });
 
   describe('invalid options', function() {
