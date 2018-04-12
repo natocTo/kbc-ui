@@ -24,6 +24,9 @@ describe('changedSinceOptionCreator', function() {
     it('1 m', function() {
       assert.equal('1 minute', changedSinceOptionCreator('1 m'));
     });
+    it('1min', function() {
+      assert.equal('1 minute', changedSinceOptionCreator('1min'));
+    });
     it('-1m', function() {
       assert.equal('1 minute', changedSinceOptionCreator('-1m'));
     });
@@ -70,6 +73,9 @@ describe('changedSinceOptionCreator', function() {
       assert.equal(false, changedSinceOptionCreator('1 days'));
     });
     it('1 seconds', function() {
+      assert.equal(false, changedSinceOptionCreator('1 seconds'));
+    });
+    it('0 seconds', function() {
       assert.equal(false, changedSinceOptionCreator('0 seconds'));
     });
   });
