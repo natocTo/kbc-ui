@@ -701,8 +701,9 @@ Dispatcher.register (payload) ->
 
       if (!_store.hasIn(pathList))
         _store = _store.setIn(pathList, List())
-
       _store = _store.setIn(path, currentMapping)
+      mappingsList = _store.getIn(pathList, List()).map((m) -> m or Map())
+      _store = _store.setIn(pathList, mappingsList)
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_MAPPING_EDITING_CANCEL
