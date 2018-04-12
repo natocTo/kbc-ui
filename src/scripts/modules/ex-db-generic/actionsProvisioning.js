@@ -372,31 +372,31 @@ export function createActions(componentId) {
       newQuery = newQuery.delete('advancedMode');
       newQuery = this.checkTableName(newQuery, store);
 
+      var newQueries, diffMsg;
+      if (store.getQueries().find((q) => q.get('id') === newQuery.get('id') )) {
+        newQueries = store.getQueries().map((q) => q.get('id') === queryId ? newQuery : q);
+        diffMsg = 'Edit query '  + newQuery.get('name');
+      } else {
+        newQueries = store.getQueries().push(newQuery);
+        diffMsg = 'Create query ' + newQuery.get('name');
+      }
+      store.setQueries(newQueries);
+      removeFromLocalState(configId, ['isDestinationEditing', queryId]);
+      const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       if (store.isRowConfiguration()) {
         let isNewQuery = store.isNewQuery(queryId);
         const rowData = storeProvisioning.rowDataFromQuery(newQuery);
         if (isNewQuery) {
-          createConfigRow(configId, rowData, ['isSaving', queryId], 'Creating row query').then(() => {
+          createConfigRow(configId, rowData, ['isSaving', queryId], diffMsg).then(() => {
             removeFromLocalState(configId, ['editingQueries', queryId]);
             removeFromLocalState(configId, ['newQueries', queryId]);
           });
         } else {
-          updateConfigRow(configId, queryId, rowData, ['isSaving', queryId], 'Saving row query').then(() => {
+          updateConfigRow(configId, queryId, rowData, ['isSaving', queryId], diffMsg).then(() => {
             removeFromLocalState(configId, ['editingQueries', queryId]);
           });
         }
       } else {
-        var newQueries, diffMsg;
-        if (store.getQueries().find((q) => q.get('id') === newQuery.get('id') )) {
-          newQueries = store.getQueries().map((q) => q.get('id') === queryId ? newQuery : q);
-          diffMsg = 'Edit query '  + newQuery.get('name');
-        } else {
-          newQueries = store.getQueries().push(newQuery);
-          diffMsg = 'Create query ' + newQuery.get('name');
-        }
-        const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
-        removeFromLocalState(configId, ['isDestinationEditing', queryId]);
-
         saveConfigData(configId, newData, ['isSaving', queryId], diffMsg).then(() => {
           removeFromLocalState(configId, ['editingQueries', queryId]);
           removeFromLocalState(configId, ['isSaving', queryId]);

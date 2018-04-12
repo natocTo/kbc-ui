@@ -971,7 +971,9 @@ Dispatcher.register (payload) ->
           'configRowsData', action.componentId, action.configurationId, action.data.id
         ],
           fromJSOrdered(action.data.configuration)
-
+        .deleteIn [
+          'creatingConfigurationRows', action.componentId, action.configurationId
+        ]
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_START
