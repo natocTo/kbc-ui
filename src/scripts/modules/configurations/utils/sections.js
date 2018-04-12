@@ -1,11 +1,14 @@
 import {Map, fromJS} from 'immutable';
+import TablesStore from '../../components/stores/StorageTablesStore';
+
 
 const repass = param => param;
 const returnEmptyMap = () =>  Map();
 
 function parseBySections(rootParseFn, sectionsParseFn, configuration) {
-  const rootParsed = rootParseFn(configuration);
-  const sectionsParsed = sectionsParseFn.map((parseSectionFn) => parseSectionFn(rootParsed));
+  const tables = TablesStore.getAll();
+  const rootParsed = rootParseFn(configuration, tables);
+  const sectionsParsed = sectionsParseFn.map(parseSectionFn => parseSectionFn(rootParsed, tables));
   const parsedConfiguration = Map({
     root: rootParsed,
     sections: sectionsParsed

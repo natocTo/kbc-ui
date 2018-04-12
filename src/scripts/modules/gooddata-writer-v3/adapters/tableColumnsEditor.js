@@ -1,6 +1,4 @@
-import {Map, List, fromJS} from 'immutable';
-import TablesStore from '../../components/stores/StorageTablesStore';
-
+import {Map, fromJS} from 'immutable';
 
 export default {
   createConfiguration(localState) {
@@ -9,10 +7,10 @@ export default {
     return localState.set('columns', result);
   },
 
-  parseConfiguration(configuration) {
-    const configColumns = configuration.get('columns', Map()),
-      tableId = configuration.get('tableId');
-    const storageTable = TablesStore.getAll().get(tableId) || List();
+  parseConfiguration(configuration, tables) {
+    const configColumns = configuration.get('columns', Map());
+    const tableId = configuration.get('tableId');
+    const storageTable = tables.get(tableId);
     const storageTableColumns = storageTable.get('columns');
     const deletedColumns = configColumns
       .filter((val, id)  => !storageTableColumns.find(c => c === id))
