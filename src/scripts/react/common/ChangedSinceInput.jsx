@@ -137,6 +137,12 @@ export default React.createClass({
           trimFilter={true}
           promptTextCreator={this.promptTextCreator}
         />
+        <span className="help-block">
+          <small>
+            Type in any range, eg. <code>13 hours</code>.
+            Supported time dimensions are <code>minutes</code>, <code>hours</code> and <code>days</code>.
+          </small>
+        </span>
       </div>
     );
   }
