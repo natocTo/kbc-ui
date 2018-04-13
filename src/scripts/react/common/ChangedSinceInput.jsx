@@ -2,7 +2,8 @@
    ChangedSinceInput
  */
 import React from 'react';
-import Select from 'react-select';
+import { Creatable } from 'react-select';
+import changedSinceOptionCreator from './changedSinceOptionCreator';
 
 export default React.createClass({
 
@@ -101,16 +102,47 @@ export default React.createClass({
     }
   },
 
+  isValidNewOption({ label }) {
+    return changedSinceOptionCreator(label) !== false;
+  },
+
+  newOptionCreator({ label }) {
+    const option = changedSinceOptionCreator(label);
+    return {
+      label: option,
+      value: '-' + option
+    };
+  },
+
+  promptTextCreator(label) {
+    const option = changedSinceOptionCreator(label);
+    if (option === false) {
+      return 'Invalid range';
+    }
+    return option;
+  },
+
   render() {
     return (
       <div>
-        <Select
-          placeholder="Select period..."
+        <Creatable
+          placeholder="Select range"
+          noResultsText="Invalid range"
           value={this.props.value}
           disabled={this.props.disabled}
           onChange={this.onChange}
           options={this.getSelectOptions()}
+          newOptionCreator={this.newOptionCreator}
+          isValidNewOption={this.isValidNewOption}
+          trimFilter={true}
+          promptTextCreator={this.promptTextCreator}
         />
+        <span className="help-block">
+          <small>
+            Type in any range, e.g. <code>13 hours</code>.
+            Supported time dimensions are <code>minutes</code>, <code>hours</code> and <code>days</code>.
+          </small>
+        </span>
       </div>
     );
   }
