@@ -702,6 +702,9 @@ Dispatcher.register (payload) ->
       if (!_store.hasIn(pathList))
         _store = _store.setIn(pathList, List())
       _store = _store.setIn(path, currentMapping)
+
+      # editing mappings List may contain undefined values, make sure it contains empty Maps at least
+      # https://github.com/keboola/kbc-ui/pull/1623#issuecomment-381090091
       mappingsList = _store.getIn(pathList, List()).map((m) -> m or Map())
       _store = _store.setIn(pathList, mappingsList)
       InstalledComponentsStore.emitChange()
