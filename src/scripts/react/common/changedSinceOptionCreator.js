@@ -29,12 +29,7 @@ module.exports = function(value) {
   // trim the number from the beginning
   const dimensionPart = trimmedLabel.substr(numberPart.toString().length);
 
-  // empty dimension, it's just a number
-  if (dimensionPart.length === 0) {
-    return false;
-  }
-
-  // plural or singular?
+  // plural or singular? and set default
   let dimensions;
   if (Math.abs(numberPart) === 1) {
     dimensions = validTimeDimensionsSingular;
@@ -42,12 +37,21 @@ module.exports = function(value) {
     dimensions = validTimeDimensionsPlural;
   }
 
-  // try to match dimension
   let dimensionPartFull;
-  for (let i = 0; i < dimensions.length; i++) {
-    if (dimensions[i].substr(0, dimensionPart.length) === dimensionPart) {
-      dimensionPartFull = dimensions[i];
-      break;
+  // hour is default
+  if (dimensionPart.length === 0) {
+    if (Math.abs(numberPart) === 1) {
+      dimensionPartFull = 'hour';
+    } else {
+      dimensionPartFull = 'hours';
+    }
+  } else {
+    // try to match dimension
+    for (let i = 0; i < dimensions.length; i++) {
+      if (dimensions[i].substr(0, dimensionPart.length) === dimensionPart) {
+        dimensionPartFull = dimensions[i];
+        break;
+      }
     }
   }
 

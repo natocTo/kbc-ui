@@ -3,6 +3,12 @@ var changedSinceOptionCreator = require('./changedSinceOptionCreator');
 
 describe('changedSinceOptionCreator', function() {
   describe('valid options', function() {
+    it('1', function() {
+      assert.equal('1 hour', changedSinceOptionCreator('1'));
+    });
+    it('2', function() {
+      assert.equal('2 hours', changedSinceOptionCreator('2'));
+    });
     it('1m', function() {
       assert.equal('1 minute', changedSinceOptionCreator('1m'));
     });
@@ -47,9 +53,6 @@ describe('changedSinceOptionCreator', function() {
     });
     it('1 2', function() {
       assert.equal(false, changedSinceOptionCreator('1 2'));
-    });
-    it('1', function() {
-      assert.equal(false, changedSinceOptionCreator('1'));
     });
     it('number', function() {
       assert.equal(false, changedSinceOptionCreator(10));
