@@ -353,7 +353,8 @@ export default React.createClass({
           </div>
           {this.renderIncrementalFetching()}
           <div className="form-group">
-            <div className="col-md-9 col-md-offset-3 checkbox">
+            <label className="col-md-3 control-label">Incremental Loading</label>
+            <div className="col-md-9">
               <label>
                 <input
                   type="checkbox"
@@ -361,10 +362,9 @@ export default React.createClass({
                   onChange={this.handleIncrementalChange}
                   disabled={this.props.disabled}
                 />
-                Incremental Loading
+                If incremental load is turned on, the table will be updated instead of rewritten.
               </label>
               <div className="help-block">
-                If incremental load is turned on, the table will be updated instead of rewritten.
                 Tables with primary keys will update rows, tables without primary keys will append rows.
               </div>
             </div>
@@ -380,7 +380,8 @@ export default React.createClass({
     if (this.props.showSimple) {
       return (
         <div className="form-group">
-          <div className="col-md-9 col-md-offset-3 checkbox">
+          <label className="col-md-3 control-label">Advanced Mode</label>
+          <div className="col-md-9 checkbox form-control-static">
             <label>
               <input
                 standalone={true}
@@ -389,11 +390,8 @@ export default React.createClass({
                 checked={!!this.props.query.get('advancedMode')}
                 disabled={this.props.disabled}
                 onChange={this.handleToggleUseQueryEditor}/>
-              Advanced Mode
-            </label>
-            <div className="help-block">
               Create your own query using an SQL editor
-            </div>
+            </label>
           </div>
         </div>
       );
