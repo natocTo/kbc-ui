@@ -32,7 +32,7 @@ function createConfiguration(localState, configId) {
     after: [
       {
         definition: {
-          component: 'keboola.processor.move-files'
+          component: 'keboola.processor-move-files'
         },
         parameters: {
           direction: 'tables'
