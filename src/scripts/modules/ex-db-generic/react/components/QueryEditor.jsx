@@ -11,6 +11,7 @@ import AsynchActionError from './AsynchActionError';
 import TableLoader from './TableLoaderQueryEditor';
 
 import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates/helpAndHints';
+import ResetStateButton from '../../../configurations/react/components/ResetStateButton';
 
 import editorMode from '../../templates/editorMode';
 
@@ -96,8 +97,8 @@ export default React.createClass({
     return this.props.onChange(this.props.query.set('incrementalFetchingColumn', newValue));
   },
 
-  handleLastFetchedValueChange(event) {
-    return this.props.onChange(this.props.query.set('state', Immutable.fromJS({'lastFetchedRow': event.target.value})));
+  handleStateReset() {
+    return this.props.onChange(this.props.query.set('state', Immutable.fromJS({})));
   },
 
   handleQueryChange(data) {
@@ -158,22 +159,6 @@ export default React.createClass({
       }).toJS();
     } else {
       return [];
-    }
-  },
-
-  incrementalFetchingWarning() {
-    if (this.props.query.get('incrementalFetchingColumn')) {
-      let candidateTable = this.getCandidateTable();
-      let candidateColumn = candidateTable.get('candidates').find((column) =>
-        column.get('name') === this.props.query.get('incrementalFetchingColumn')
-      );
-      if (candidateColumn.get('autoIncrement')) {
-        return 'Note: Using an autoIncrement ID means that only new records will be fetched, not updates or deletes.';
-      } else {
-        return 'Note: Using an update timestamp column means that only new and updated records will be fetched, not deletes.';
-      }
-    } else {
-      return 'If enabled, only newly created or updated records since the last run will be fetched.';
     }
   },
 
@@ -571,29 +556,42 @@ export default React.createClass({
   },
 
   renderlastFetchedInfo() {
-    if (this.props.query.get('incrementalFetchingColumn')) {
+    let fetchingColumn = this.props.query.get('incrementalFetchingColumn');
+    if (fetchingColumn) {
       let lastFetchedRowValue = this.getLastFetchedRowValue();
       if (lastFetchedRowValue) {
         return (
           <div>
-            Last fetched record had <strong>{this.props.query.get('incrementalFetchingColumn')}</strong> value
-            {this.renderLastFetchedInput()}
+            Last fetched record had <strong>{fetchingColumn}</strong>
+            value <strong>{this.getLastFetchedRowValue()}</strong>
+            <ResetStateButton
+              onClick={this.handleStateReset}
+              isPending={false}
+              disabled={false}
+            >
+              Delete the current stored state.
+              Resetting means that the next run will start from the lowest value of {fetchingColumn}
+            </ResetStateButton>
           </div>
         );
       }
     }
   },
 
-  renderLastFetchedInput() {
-    return (
-      <input
-        className="form-control"
-        type="text"
-        value={this.getLastFetchedRowValue()}
-        disabled={this.props.disabled}
-        onChange={this.handleLastFetchedValueChange}
-      />
-    );
+  incrementalFetchingWarning() {
+    if (this.props.query.get('incrementalFetchingColumn')) {
+      let candidateTable = this.getCandidateTable();
+      let candidateColumn = candidateTable.get('candidates').find((column) =>
+        column.get('name') === this.props.query.get('incrementalFetchingColumn')
+      );
+      if (candidateColumn.get('autoIncrement')) {
+        return 'Note: Using an autoIncrement ID means that only new records will be fetched, not updates or deletes.';
+      } else {
+        return 'Note: Using an update timestamp column means that only new and updated records will be fetched, not deletes.';
+      }
+    } else {
+      return 'If enabled, only newly created or updated records since the last run will be fetched.';
+    }
   },
 
   getLastFetchedRowValue() {
