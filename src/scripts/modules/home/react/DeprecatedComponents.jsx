@@ -3,8 +3,6 @@ import StringUtils from '../../../utils/string';
 import ComponentDetailLink from '../../../react/common/ComponentDetailLink';
 import Immutable from 'immutable';
 
-import './expiration.less';
-
 export default React.createClass({
   propTypes: {
     components: PropTypes.object

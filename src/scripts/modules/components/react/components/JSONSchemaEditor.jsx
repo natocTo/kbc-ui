@@ -2,8 +2,6 @@ import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Immutable from 'immutable';
 
-/* global require */
-require('./configuration-json.less');
 require('json-editor');
 
 export default React.createClass({

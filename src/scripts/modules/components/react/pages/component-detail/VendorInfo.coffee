@@ -2,8 +2,6 @@ React = require 'react'
 List = require('immutable').List
 is3rdParty = require('../../../is3rdParty').default
 
-require('./VendorInfo.less')
-
 {div, label, ul, li, p, span, strong, address, a, br, em, table, tr, td, h2} = React.DOM
 module.exports = React.createClass
   displayName: 'VendorInfo'

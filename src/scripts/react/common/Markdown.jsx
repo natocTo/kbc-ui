@@ -2,8 +2,6 @@ import React from 'react';
 import Remarkable from 'react-remarkable';
 import ReadMore from './ReadMore';
 
-require('./Markdown.less');
-
 export default React.createClass({
   propTypes: {
     source: React.PropTypes.string,

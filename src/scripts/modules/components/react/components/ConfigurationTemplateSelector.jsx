@@ -5,8 +5,6 @@ import Markdown from '../../../../react/common/Markdown';
 import templateFinder from '../../../components/utils/templateFinder';
 import deepEqual from 'deep-equal';
 
-/* global require */
-require('./configuration-json.less');
 
 export default React.createClass({
 

@@ -3,7 +3,6 @@ import Select from 'react-select';
 import {fromJS} from 'immutable';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
-import './ComponentsSelector.less';
 
 export default React.createClass({
 

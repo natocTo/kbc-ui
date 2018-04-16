@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import contactSupport from '../../../utils/contactSupport';
-import './expiration.less';
 import IntlMessageFormat from 'intl-messageformat';
 
 const MESSAGES = {

@@ -24,7 +24,6 @@ Phase = require('./Phase').default
 AddOutputMapping = require('./AddOutputMapping').default
 AddInputMapping = require('./AddInputMapping').default
 InlineEditArea = require '../../../../../react/common/InlineEditArea'
-require('./TransformationDetailStatic.less')
 TransformationEmptyInputImage = React.createFactory(require('../../components/TransformationEmptyInputImage').default)
 TransformationEmptyOutputImage = React.createFactory(require('../../components/TransformationEmptyOutputImage').default)
 ConfigurationRowEditField = React.createFactory(require(

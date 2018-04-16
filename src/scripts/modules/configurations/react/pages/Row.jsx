@@ -23,9 +23,6 @@ import LatestRowVersions from '../components/SidebarRowVersionsWrapper';
 // adapters
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 
-// styles
-import '../../styles.less';
-
 export default React.createClass({
   mixins: [createStoreMixin(Store)],
 

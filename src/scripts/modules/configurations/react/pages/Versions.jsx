@@ -13,9 +13,6 @@ import { Map } from 'immutable';
 import createRowVersionOnRollback from '../../utils/createRowVersionOnRollback';
 import { simpleMatch } from '../../../../utils/utils';
 
-// styles
-import '../../styles.less';
-
 const ITEMS_PER_PAGE = 20;
 
 export default React.createClass({

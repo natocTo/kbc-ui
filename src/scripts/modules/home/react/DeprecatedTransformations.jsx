@@ -4,8 +4,6 @@ import TransformationBucketsStore from '../../transformations/stores/Transformat
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import ComponentConfigurationRowLink from '../../components/react/components/ComponentConfigurationRowLink';
 
-import './expiration.less';
-
 export default React.createClass({
   propTypes: {
     transformations: PropTypes.object

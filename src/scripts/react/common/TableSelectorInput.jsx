@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import AutoSuggestWrapper from '../../modules/transformations/react/components/mapping/AutoSuggestWrapper';
-require('./TableSelectorInput.less');
 
 export default React.createClass({
 

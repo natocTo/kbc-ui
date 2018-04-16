@@ -9,9 +9,6 @@ import SaveButtons from '../../../../react/common/SaveButtons';
 require('codemirror/addon/lint/lint');
 require('../../../../utils/codemirror/json-lint');
 
-/* global require */
-require('./configuration.less');
-
 export default React.createClass({
   propTypes: {
     data: PropTypes.string.isRequired,

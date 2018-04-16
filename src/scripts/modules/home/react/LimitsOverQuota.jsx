@@ -3,8 +3,6 @@ import {Link} from 'react-router';
 
 import {bytesToGBFormatted, numericMetricFormatted} from '../../../utils/numbers';
 
-import './limits.less';
-
 export default React.createClass({
   propTypes: {
     limits: PropTypes.object.isRequired

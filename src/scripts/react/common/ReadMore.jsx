@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-require('./ReadMore.less');
-
 export default React.createClass({
   propTypes: {
     height: React.PropTypes.string,
