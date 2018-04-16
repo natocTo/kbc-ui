@@ -20,7 +20,7 @@ export default {
     const columnsList = allColumns.map(c => configColumns
       .get(c, defaultColumn.set('title', c)).set('id', c)
     );
-    return Map().set('columns', columnsList);
+    return fromJS({columns: columnsList, tableId: tableId});
   },
 
   createEmptyConfiguration() {
