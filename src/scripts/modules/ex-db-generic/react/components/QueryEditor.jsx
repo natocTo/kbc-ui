@@ -517,7 +517,7 @@ export default React.createClass({
   },
 
   renderIncrementalFetching() {
-    if (this.props.isConfigRow && this.incrementalFetchingOptions().length > 0) {
+    if (!this.props.query.get('advancedMode') && this.props.isConfigRow && this.incrementalFetchingOptions().length > 0) {
       return (
         <div className="form-group">
           <label className="col-md-3 control-label">Incremental Fetching</label>
