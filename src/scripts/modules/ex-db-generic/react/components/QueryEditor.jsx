@@ -523,7 +523,8 @@ export default React.createClass({
           <label className="col-md-3 control-label">Incremental Fetching</label>
           <div className="col-md-9">
             <div className="row">
-              <div className="col-md-6">
+              <label className="col-md-2 control-label">Column</label>
+              <div className="col-md-10">
                 <Select
                   name="incrementalFetching"
                   value={this.props.query.get('incrementalFetchingColumn') || ''}
@@ -533,21 +534,32 @@ export default React.createClass({
                   disabled={this.props.disabled || !!this.getLastFetchedRowValue()}
                 />
               </div>
-              <label className="col-md-1 control-label">Limit</label>
-              <div className="col-md-5">
+            </div>
+            <div className="help-block">
+              {this.incrementalFetchingWarning()}
+            </div>
+            <div className="row">
+              <label className="col-md-2 control-label">Limit</label>
+              <div className="col-md-10">
                 <input
                   className="form-control"
                   name="incrementalFetchingLimit"
                   type="number"
-                  placeholder="# of records to fetch."
+                  default="0"
                   onChange={this.handleIncrementalFetchingLimitChange}
                   disabled={this.props.disabled}
                 />
               </div>
             </div>
             <div className="help-block">
-              <span className="text-warning">{this.incrementalFetchingWarning()}</span>
-              {this.renderlastFetchedInfo()}
+              The number of records to fetch from the source per run.
+              Subsequent runs will start from the last record fetched. Note: 0 means unlimited.
+            </div>
+            <div className="row">
+              <label className="col-md-4 control-label">Last fetched value</label>
+              <div className="col-md-8">
+                {this.renderlastFetchedInfo()}
+              </div>
             </div>
           </div>
         </div>
@@ -561,17 +573,22 @@ export default React.createClass({
       let lastFetchedRowValue = this.getLastFetchedRowValue();
       if (lastFetchedRowValue) {
         return (
-          <div>
-            Last fetched record had <strong>{fetchingColumn}</strong>
-            value <strong>{this.getLastFetchedRowValue()}</strong>
-            <ResetStateButton
-              onClick={this.handleStateReset}
-              isPending={false}
-              disabled={false}
-            >
-              Delete the current stored state.
-              Resetting means that the next run will start from the lowest value of {fetchingColumn}
-            </ResetStateButton>
+          <div className="form-control-static">
+            <div className="row">
+              <div className="col-md-6">
+                <strong>{this.getLastFetchedRowValue()}</strong>
+              </div>
+              <div className="col-md-6">
+                <ResetStateButton
+                  onClick={this.handleStateReset}
+                  isPending={false}
+                  disabled={false}
+                >
+                  Delete the current stored state.
+                  Resetting means that the next run will start from the lowest value of {fetchingColumn}
+                </ResetStateButton>
+              </div>
+            </div>
           </div>
         );
       }
