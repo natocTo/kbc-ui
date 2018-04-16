@@ -5,7 +5,7 @@ import {OverlayTrigger, Popover} from 'react-bootstrap';
 export default React.createClass({
   propTypes: {
     columnName: React.PropTypes.string.isRequired,
-    tableData: React.PropTypes.array,
+    tableData: React.PropTypes.object,
     error: React.PropTypes.string
   },
 
@@ -22,7 +22,7 @@ export default React.createClass({
 
   renderPopover() {
     return (
-      <Popover titl={`Preview - ${this.props.columnName}`}>
+      <Popover id="data-preview" title={`Preview - ${this.props.columnName}`}>
         {
           !this.props.tableData ?
           <span>{this.props.error ? this.props.error : 'Loading data...'}</span>

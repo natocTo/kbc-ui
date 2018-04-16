@@ -90,8 +90,8 @@ export default React.createClass({
   renderBody() {
     return (
       <tbody>
-        {this.props.value.columns.map(column =>
-          <tr>
+        {this.props.value.columns.map((column, idx) =>
+          <tr key={idx}>
             <td>
               {column.id}
             </td>
