@@ -543,7 +543,7 @@ export default React.createClass({
                   className="form-control"
                   name="incrementalFetchingLimit"
                   type="number"
-                  default="0"
+                  value={this.props.query.get('incrementalFetchingLimit') ? this.props.query.get('incrementalFetchingLimit') : 0}
                   onChange={this.handleIncrementalFetchingLimitChange}
                   disabled={this.props.disabled}
                 />
