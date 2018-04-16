@@ -537,14 +537,29 @@ export default React.createClass({
         <div className="form-group">
           <label className="col-md-3 control-label">Incremental Fetching</label>
           <div className="col-md-9">
-            <Select
-              name="incrementalFetching"
-              value={this.props.query.get('incrementalFetchingColumn') || ''}
-              placeholder="Select the column to be used for incremental fetching"
-              onChange={this.handleIncrementalFetchingChange}
-              options={this.incrementalFetchingOptions()}
-              disabled={this.props.disabled || this.getLastFetchedRowValue()}
-            />
+            <div className="row">
+              <div className="col-md-6">
+                <Select
+                  name="incrementalFetching"
+                  value={this.props.query.get('incrementalFetchingColumn') || ''}
+                  placeholder="Fetch by column"
+                  onChange={this.handleIncrementalFetchingChange}
+                  options={this.incrementalFetchingOptions()}
+                  disabled={this.props.disabled || !!this.getLastFetchedRowValue()}
+                />
+              </div>
+              <label className="col-md-1 control-label">Limit</label>
+              <div className="col-md-5">
+                <input
+                  className="form-control"
+                  name="incrementalFetchingLimit"
+                  type="number"
+                  placeholder="# of records to fetch."
+                  onChange={this.handleIncrementalFetchingLimitChange}
+                  disabled={this.props.disabled}
+                />
+              </div>
+            </div>
             <div className="help-block">
               <span className="text-warning">{this.incrementalFetchingWarning()}</span>
               {this.renderlastFetchedInfo()}
@@ -583,7 +598,7 @@ export default React.createClass({
 
   getLastFetchedRowValue() {
     let queryState = this.props.query.get('state');
-    if (queryState.has('lastFetchedRow')) {
+    if (queryState && queryState.has('lastFetchedRow')) {
       return queryState.get('lastFetchedRow');
     } else {
       return false;
