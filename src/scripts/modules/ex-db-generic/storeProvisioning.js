@@ -48,6 +48,7 @@ export function queryFromRow(row) {
     primaryKey: rowConfig.get('primaryKey'),
     incremental: rowConfig.get('incremental'),
     incrementalFetchingColumn: rowConfig.get('incrementalFetchingColumn'),
+    incrementalFetchingLimit: rowConfig.get('incrementalFetchingLimit'),
     state: row.get('state')
   });
   if (rowConfig.get('query')) {

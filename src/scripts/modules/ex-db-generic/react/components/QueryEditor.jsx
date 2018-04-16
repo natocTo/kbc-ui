@@ -97,6 +97,10 @@ export default React.createClass({
     return this.props.onChange(this.props.query.set('incrementalFetchingColumn', newValue));
   },
 
+  handleIncrementalFetchingLimitChange(newValue) {
+    return this.props.onChange(this.props.query.set('incrementalFethcingLimit', newValue));
+  },
+
   handleStateReset() {
     return this.props.onChange(this.props.query.set('state', Immutable.fromJS({})));
   },
