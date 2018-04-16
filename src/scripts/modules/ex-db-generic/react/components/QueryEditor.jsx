@@ -93,12 +93,12 @@ export default React.createClass({
     return this.props.onChange(this.props.query.set('incremental', event.target.checked));
   },
 
-  handleIncrementalFetchingChange(newValue) {
+  handleIncrementalFetchingColumnChange(newValue) {
     return this.props.onChange(this.props.query.set('incrementalFetchingColumn', newValue));
   },
 
-  handleIncrementalFetchingLimitChange(newValue) {
-    return this.props.onChange(this.props.query.set('incrementalFethcingLimit', newValue));
+  handleIncrementalFetchingLimitChange(event) {
+    return this.props.onChange(this.props.query.set('incrementalFetchingLimit', parseInt(event.target.value, 10)));
   },
 
   handleStateReset() {
@@ -533,7 +533,7 @@ export default React.createClass({
                   name="incrementalFetching"
                   value={this.props.query.get('incrementalFetchingColumn') || ''}
                   placeholder="Fetch by column"
-                  onChange={this.handleIncrementalFetchingChange}
+                  onChange={this.handleIncrementalFetchingColumnChange}
                   options={this.incrementalFetchingOptions()}
                   disabled={this.props.disabled || !!this.getLastFetchedRowValue()}
                 />
@@ -549,7 +549,7 @@ export default React.createClass({
                   className="form-control"
                   name="incrementalFetchingLimit"
                   type="number"
-                  value={this.props.query.get('incrementalFetchingLimit') ? this.props.query.get('incrementalFetchingLimit') : 0}
+                  value={this.props.query.get('incrementalFetchingLimit') || 0}
                   onChange={this.handleIncrementalFetchingLimitChange}
                   disabled={this.props.disabled}
                 />
