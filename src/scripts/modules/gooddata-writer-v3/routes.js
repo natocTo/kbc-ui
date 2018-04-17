@@ -64,6 +64,30 @@ const routeSettings = {
       onCreate: title.createEmptyConfiguration,
       isComplete: () => true
     },
+    storageColumnsEditor: {
+      initColumn: columnName => Map({type: 'IGNORE', title: columnName}),
+      columnsKey: 'columns',
+      columnIdKey: 'id',
+      isColumnIgnored: column => column.get('type') === 'IGNORE',
+      onSaveColumns: (columnsList) =>
+        columnsList.reduce((memo, column) =>
+          memo.set(column.get('id'), column.delete('id')), Map()),
+      onLoadColumns: (configColumns) =>
+        (configColumns || Map())
+          .map((column, id) => column.set('id', id))
+          .valueSeq().toList(),
+      columnsMappings: [
+        {
+          title: 'GoodData Title',
+          render: () => 'blabla'
+        },
+        {
+          title: 'Type',
+          render: () => 'blabla'
+        }
+      ]
+
+    },
     columns: [
       {
         name: 'Table Name',
