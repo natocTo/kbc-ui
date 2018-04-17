@@ -57,24 +57,25 @@ export default React.createClass({
   renderButtons() {
     const state = this.state;
     return (
-      <div className="text-right">
-        <SaveButtons
-          isSaving={this.state.isSaving}
-          isChanged={this.state.isChanged}
-          onSave={function() {
-            return Actions.saveConfiguration(
-              state.componentId,
-              state.configurationId,
-              state.settings.getIn(['credentials', 'detail', 'onSave']),
-              state.settings.getIn(['credentials', 'detail', 'onLoad']),
-              state.settings.getIn(['credentials', 'detail', 'title']) + ' edited'
-            );
-          }}
-          onReset={function() {
-            return Actions.resetConfiguration(state.componentId, state.configurationId);
-          }}
-        />
-        <br />
+      <div className="form-group">
+        <div className="text-right">
+          <SaveButtons
+            isSaving={this.state.isSaving}
+            isChanged={this.state.isChanged}
+            onSave={function() {
+              return Actions.saveConfiguration(
+                state.componentId,
+                state.configurationId,
+                state.settings.getIn(['credentials', 'detail', 'onSave']),
+                state.settings.getIn(['credentials', 'detail', 'onLoad']),
+                state.settings.getIn(['credentials', 'detail', 'title']) + ' edited'
+              );
+            }}
+            onReset={function() {
+              return Actions.resetConfiguration(state.componentId, state.configurationId);
+            }}
+          />
+        </div>
       </div>
     );
   },
