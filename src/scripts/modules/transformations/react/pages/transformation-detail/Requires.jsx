@@ -54,7 +54,7 @@ export default React.createClass({
   },
 
   allowInterbackendDependencies(current, compared) {
-    if (!ApplicationStore.hasCurrentProjectFeature('docker-transformations-snowflake-workspace-credentials')) {
+    if (!ApplicationStore.hasCurrentProjectFeature('transformations-mixed-backends')) {
       return false;
     }
     if (!allowedMixedBackends.includes(current.get('backend'))) {

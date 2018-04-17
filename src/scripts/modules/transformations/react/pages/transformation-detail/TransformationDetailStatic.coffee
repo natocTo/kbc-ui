@@ -194,7 +194,7 @@ module.exports = React.createClass
           placeholder: "Describe transformation"
           fallbackValue: @props.transformation.get("description")
       if @props.transformation.get('backend') != 'docker' ||
-          ApplicationStore.hasCurrentProjectFeature('docker-transformations-snowflake-workspace-credentials') &&
+          ApplicationStore.hasCurrentProjectFeature('transformations-mixed-backends') &&
           @props.transformation.get('backend') == 'docker'&&
           ['python', 'r'].includes(@props.transformation.get('type'))
         div {className: 'kbc-row'},
