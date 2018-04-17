@@ -3,7 +3,10 @@ import _ from 'underscore';
 import Select from 'react-select';
 import {fromJS} from 'immutable';
 import RoutesStore from '../../../../../stores/RoutesStore';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
 
+const allowedMixedBackends = ['docker', 'snowflake'];
+const allowedMixedBackendTypes = ['simple', 'python', 'r'];
 
 export default React.createClass({
   propTypes: {
@@ -50,14 +53,35 @@ export default React.createClass({
     );
   },
 
+  allowInterbackendDependencies(current, compared) {
+    if (!ApplicationStore.hasCurrentProjectFeature('docker-transformations-snowflake-workspace-credentials')) {
+      return false;
+    }
+    if (!allowedMixedBackends.includes(current.get('backend'))) {
+      return false;
+    }
+    if (!allowedMixedBackends.includes(compared.get('backend'))) {
+      return false;
+    }
+    if (!allowedMixedBackendTypes.includes(current.get('type'))) {
+      return false;
+    }
+    if (!allowedMixedBackendTypes.includes(compared.get('type'))) {
+      return false;
+    }
+    return true;
+  },
+
   getSelectOptions: function(transformations, currentTransformation) {
+    const component = this;
     let options = _.sortBy(_.map(_.filter(transformations.toArray(), function(transformation) {
       return (
-        (
-          parseInt(transformation.get('phase'), 10) === parseInt(currentTransformation.get('phase'), 10)
-          && transformation.get('backend') === currentTransformation.get('backend')
-          && transformation.get('id') !== currentTransformation.get('id')
+        parseInt(transformation.get('phase'), 10) === parseInt(currentTransformation.get('phase'), 10)
+        && (
+          transformation.get('backend') === currentTransformation.get('backend')
+          || component.allowInterbackendDependencies(currentTransformation, transformation)
         )
+        && transformation.get('id') !== currentTransformation.get('id')
         || currentTransformation.get('requires').contains(transformation.get('id'))
       );
     }), function(transformation) {

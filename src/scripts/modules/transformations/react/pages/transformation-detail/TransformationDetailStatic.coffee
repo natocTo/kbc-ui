@@ -6,7 +6,7 @@ _ = require('underscore')
 
 ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
 TransformationsActionCreators = require '../../../ActionCreators'
-
+ApplicationStore = require '../../../../../stores/ApplicationStore'
 
 InputMappingRow = React.createFactory(require './InputMappingRow')
 InputMappingDetail = React.createFactory(require './InputMappingDetail')
@@ -193,7 +193,10 @@ module.exports = React.createClass
           editElement: InlineEditArea
           placeholder: "Describe transformation"
           fallbackValue: @props.transformation.get("description")
-      if @props.transformation.get('backend') != 'docker'
+      if @props.transformation.get('backend') != 'docker' ||
+          ApplicationStore.hasCurrentProjectFeature('docker-transformations-snowflake-workspace-credentials') &&
+          @props.transformation.get('backend') == 'docker'&&
+          ['python', 'r'].includes(@props.transformation.get('type'))
         div {className: 'kbc-row'},
           @_renderRequires()
 
