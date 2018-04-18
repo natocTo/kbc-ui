@@ -70,6 +70,7 @@ export default React.createClass({
           <div className="component-empty-state text-center">
             <p>No {settings.getIn(['row', 'name', 'plural']).toLowerCase()} created yet.</p>
             <CreateConfigurationRowButton
+              componentType={this.state.component.get('type')}
               label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
               componentId={state.componentId}
               configId={state.configurationId}
@@ -173,6 +174,7 @@ export default React.createClass({
             </li>
             <li>
               <CreateConfigurationRowButton
+                componentType={this.state.component.get('type')}
                 label={'New ' + this.state.settings.getIn(['row', 'name', 'singular'])}
                 componentId={this.state.componentId}
                 configId={this.state.configurationId}

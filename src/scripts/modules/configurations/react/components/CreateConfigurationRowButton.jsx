@@ -13,6 +13,7 @@ export default React.createClass({
   mixins: [immutableMixin],
 
   propTypes: {
+    componentType: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
     configId: PropTypes.string.isRequired,
     onRowCreated: PropTypes.func.isRequired,
@@ -132,17 +133,20 @@ export default React.createClass({
   form() {
     return (
       <form className="form-horizontal" onSubmit={this.handleSubmit}>
-        {this.renderTableSelector()}
-        <Input
-          type="text"
-          value={this.state.form.get('name')}
-          autoFocus={true}
-          onChange={this.handleChange.bind(this, 'name')}
-          placeholder="Name"
-          label="Name"
-          ref="name"
-          labelClassName="col-sm-4"
-          wrapperClassName="col-sm-6"/>
+        {this.props.componentType === 'writer' ?
+         this.renderTableSelector()
+         :
+         <Input
+           type="text"
+           value={this.state.form.get('name')}
+           autoFocus={true}
+           onChange={this.handleChange.bind(this, 'name')}
+           placeholder="Name"
+           label="Name"
+           ref="name"
+           labelClassName="col-sm-4"
+           wrapperClassName="col-sm-6"/>
+        }
         <Input
           type="textarea"
           value={this.state.form.get('description')}
