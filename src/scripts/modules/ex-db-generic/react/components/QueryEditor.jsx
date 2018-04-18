@@ -588,7 +588,6 @@ export default React.createClass({
                   isPending={false}
                   disabled={false}
                 >
-                  Delete the current stored state.
                   Resetting means that the next run will start from the lowest value of {fetchingColumn}
                 </ResetStateButton>
               </div>
