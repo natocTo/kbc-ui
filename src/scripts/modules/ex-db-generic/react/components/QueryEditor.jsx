@@ -138,7 +138,7 @@ export default React.createClass({
     const pkCols = this.props.getPKColumns(Immutable.fromJS(newValue), this.props.sourceTables);
     let sourctTablePks = pkCols.map((column) => {
       return column.get('name');
-    }).toJS();
+    }).toList();
 
     let destinationTablePks = (this.isExistingTable())
       ? this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey')
