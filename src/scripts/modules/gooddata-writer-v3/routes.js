@@ -1,4 +1,5 @@
 import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
+import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
 import TitleSection from './react/components/TitleSection';
 import LoadTypeSection from './react/components/LoadTypeSection';
 import title from './adapters/title';
@@ -8,8 +9,9 @@ import rowAdapter from './adapters/row';
 import DimensionsSection from './react/components/DimensionsSection';
 import dimensionsAdapter from './adapters/dimensions';
 
-import TableColumnsEditor from './react/components/TableColumnsEditor';
-import tableColumnsEditorAdapter from './adapters/tableColumnsEditor';
+
+import TitleColumnInput from './react/components/TitleColumnInput';
+import TypeColumn from './react/components/TypeColumn';
 
 import {Map} from 'immutable';
 import React from 'react';
@@ -48,13 +50,30 @@ const routeSettings = {
         onCreate: loadType.createEmptyConfiguration,
         isComplete: () => true
       },
-      {
-        render: TableColumnsEditor,
-        onSave: tableColumnsEditorAdapter.createConfiguration,
-        onLoad: tableColumnsEditorAdapter.parseConfiguration,
-        onCreate: tableColumnsEditorAdapter.createEmptyConfiguration,
+      createColumnsEditorSection({
+        initColumnFn: columnName => Map({id: columnName, type: 'IGNORE', title: columnName}),
+        columnsKey: 'columns',
+        columnIdKey: 'id',
+        isColumnIgnored: column => column.get('type') === 'IGNORE',
+        onSaveColumns: (columnsList) =>
+          columnsList.reduce((memo, column) =>
+            memo.set(column.get('id'), column.delete('id')), Map()),
+        onLoadColumns: (configColumns) =>
+          (configColumns || Map())
+            .map((column, id) => column.set('id', id))
+            .valueSeq().toList(),
+        columnsMappings: [
+          {
+            title: 'GoodData Title',
+            render: TitleColumnInput
+          },
+          {
+            title: 'Type',
+            render: TypeColumn
+          }
+        ],
         isComplete: () => true
-      }
+      })
     ],
     // detail obsolete - will be removed
     detail: {
@@ -63,30 +82,6 @@ const routeSettings = {
       onLoad: title.parseConfiguration,
       onCreate: title.createEmptyConfiguration,
       isComplete: () => true
-    },
-    storageColumnsEditor: {
-      initColumn: columnName => Map({type: 'IGNORE', title: columnName}),
-      columnsKey: 'columns',
-      columnIdKey: 'id',
-      isColumnIgnored: column => column.get('type') === 'IGNORE',
-      onSaveColumns: (columnsList) =>
-        columnsList.reduce((memo, column) =>
-          memo.set(column.get('id'), column.delete('id')), Map()),
-      onLoadColumns: (configColumns) =>
-        (configColumns || Map())
-          .map((column, id) => column.set('id', id))
-          .valueSeq().toList(),
-      columnsMappings: [
-        {
-          title: 'GoodData Title',
-          render: () => 'blabla'
-        },
-        {
-          title: 'Type',
-          render: () => 'blabla'
-        }
-      ]
-
     },
     columns: [
       {
