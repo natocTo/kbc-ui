@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import {FormControl} from 'react-bootstrap';
 import storageApi from '../../../components/StorageApi';
 import {fromJS} from 'immutable';
 import ColumnDataPreview from './ColumnDataPreview';
@@ -8,7 +7,8 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
       tableId: PropTypes.string,
-      columns: PropTypes.any
+      columns: PropTypes.any,
+      columnsMappings: PropTypes.any
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -59,6 +59,7 @@ export default React.createClass({
   },
 
   render() {
+    let headers = this.props.value.columnsMappings.map(c => c.title);
     return (
       <table className="table">
         <thead>
@@ -66,12 +67,7 @@ export default React.createClass({
             <th>
               Column
             </th>
-            <th>
-              GoodData Title
-            </th>
-            <th>
-              Type
-            </th>
+            {headers.map(title => <th>{title}</th>)}
             <th>
               Content Preview
             </th>
@@ -95,22 +91,15 @@ export default React.createClass({
             <td>
               {column.id}
             </td>
-            <td>
-              <FormControl
-                type="text"
-                disabled={this.props.disabled}
-                onChange={e => this.onChangeColumn({...column, title: e.target.value})}
-                value={column.title}
-              />
-            </td>
-            <td>
-              <FormControl
-                type="text"
-                disabled={this.props.disabled}
-                onChange={e => this.onChangeColumn({...column, type: e.target.value})}
-                value={column.type}
-              />
-            </td>
+            {this.props.value.columnsMappings.map(cm =>
+              <td key={cm.title}>
+                <cm.render
+                  disabled={this.props.disabled}
+                  column={column}
+                  onChange={this.onChangeColumn}
+                />
+              </td>
+            )}
             <td>
               <ColumnDataPreview
                 columnName={column.id}

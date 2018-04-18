@@ -39,6 +39,7 @@ export default React.createClass({
     const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId, rowId);
     const createBySectionsFn = sections.makeCreateFn(settings.getIn(['row', 'onSave']), settings.getIn(['row', 'sections']));
     const parseBySectionsFn = sections.makeParseFn(settings.getIn(['row', 'onLoad']), settings.getIn(['row', 'sections']));
+
     return {
       componentId: componentId,
       settings: settings,
@@ -142,9 +143,7 @@ export default React.createClass({
       actions.push((
         <li className={this.state.isResetStatePending || !this.state.hasState ? 'disabled' : ''} key="reset-state">
           <ResetStateButton
-            onClick={function() {
-              return Actions.resetState(state.componentId, state.configurationId, state.rowId);
-            }}
+            onClick={() => Actions.resetState(state.componentId, state.configurationId, state.rowId)}
             isPending={this.state.isResetStatePending}
             disabled={!this.state.hasState}
           >Delete the current stored state of the configuration, eg. progress of an incremental
@@ -304,9 +303,7 @@ export default React.createClass({
     const state = this.state;
     return (
       <small>
-        <a onClick={function() {
-          Actions.openJsonEditor(state.componentId, state.configurationId, state.rowId);
-        }}>
+        <a onClick={() => Actions.openJsonEditor(state.componentId, state.configurationId, state.rowId)}>
           Open JSON editor
         </a>
         {' '}
@@ -324,9 +321,7 @@ export default React.createClass({
     }
     return (
       <small>
-        <a onClick={function() {
-          Actions.closeJsonEditor(state.componentId, state.configurationId, state.rowId);
-        }}>
+        <a onClick={() => Actions.closeJsonEditor(state.componentId, state.configurationId, state.rowId)}>
           Close JSON editor
         </a>
         {' '}
@@ -354,9 +349,9 @@ export default React.createClass({
     const configuration = this.state.configuration;
     const Configuration = this.state.settings.getIn(['row', 'detail', 'render']);
     return (<Configuration
-              onChange={function(diff) {
-                Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)));
-              }}
+              onChange={(diff) =>
+                Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)))
+              }
               disabled={this.state.isSaving}
               value={configuration.toJS()}
     />);
