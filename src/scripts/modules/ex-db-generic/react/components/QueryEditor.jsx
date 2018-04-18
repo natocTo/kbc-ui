@@ -138,7 +138,7 @@ export default React.createClass({
     const pkCols = this.props.getPKColumns(Immutable.fromJS(newValue), this.props.sourceTables);
     let sourctTablePks = pkCols.map((column) => {
       return column.get('name');
-    }).toJS();
+    }).toList();
 
     let destinationTablePks = (this.isExistingTable())
       ? this.props.tables.get(this.props.query.get('outputTable')).get('primaryKey')
@@ -245,6 +245,14 @@ export default React.createClass({
     }
   },
 
+  getPkValue() {
+    const pk = this.props.query.get('primaryKey');
+    if (Immutable.List.isList(pk)) {
+      return pk;
+    }
+    return Immutable.List();
+  },
+
   render() {
     return (
       <div className="kbc-inner-padding">
@@ -264,7 +272,7 @@ export default React.createClass({
             <div className="col-md-9">
               <Select
                 name="primaryKey"
-                value={this.props.query.get('primaryKey')}
+                value={this.getPkValue()}
                 multi={true}
                 disabled={this.props.disabled || this.isExistingTable()}
                 allowCreate={true}
