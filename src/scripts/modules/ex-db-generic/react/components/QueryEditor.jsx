@@ -264,7 +264,10 @@ export default React.createClass({
             <div className="col-md-9">
               <Select
                 name="primaryKey"
-                value={this.props.query.get('primaryKey')}
+                value={
+                  Immutable.List.isList(this.props.query.get('primaryKey')) ?
+                    this.props.query.get('primaryKey') : Immutable.List()
+                }
                 multi={true}
                 disabled={this.props.disabled || this.isExistingTable()}
                 allowCreate={true}
