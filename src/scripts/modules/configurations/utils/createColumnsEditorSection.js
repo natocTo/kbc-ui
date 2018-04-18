@@ -3,14 +3,14 @@ import StorageTableColumnsEditor from '../react/components/StorageTableColumnsEd
 
 export default (params) => {
   if (!params) return null;
-  const {onLoadColumns,
-         onSaveColumns,
-         initColumnFn,
-         columnsKey = 'columns',
-         columnIdKey = 'id',
-         columnsMappings = [],
-         isComplete = () => true,
-         isColumnIgnored = column => column.get('type') === 'IGNORE'} = params;
+  const {onLoadColumns, // remap columns object/array stored in config to localstate array columnsObject => columnsArray
+         onSaveColumns, // remap columns array from localstate to config representation (columnsArray) => columnsObject
+         initColumnFn, // initial value of column given by its name (columnName) => columnObject
+         columnsKey = 'columns', // property in config/localstate representing columns object/array
+         matchColumnKey = 'id', // used for matching columns objects with storage table columns by its name (columnName, columnObject) => true/false
+         columnsMappings = [], // array of object containing render and title property
+         isComplete = () => true, // is representation complete?
+         isColumnIgnored = column => column.get('type') === 'IGNORE'} = params; // if ignored then won't be saved to input mapping columns property of configuration object
 
   return fromJS({
     onSave(localState) {
@@ -28,9 +28,9 @@ export default (params) => {
       const storageTableColumns = storageTable.get('columns');
       const deletedColumns = configColumns
         .filter(column =>
-          !storageTableColumns.find(c => c === column.get(columnIdKey)));
+          !storageTableColumns.find(c => c === column.get(matchColumnKey)));
       const allColumns = storageTableColumns.concat(deletedColumns);
-      const columnsList = allColumns.map(c => configColumns.find(cc => cc.get('id') === c, null, initColumnFn(c)));
+      const columnsList = allColumns.map(c => configColumns.find(cc => cc.get(matchColumnKey) === c, null, initColumnFn(c)));
       return fromJS({[columnsKey]: columnsList, tableId: tableId, columnsMappings});
     },
 

@@ -53,7 +53,7 @@ const routeSettings = {
       createColumnsEditorSection({
         initColumnFn: columnName => Map({id: columnName, type: 'IGNORE', title: columnName}),
         columnsKey: 'columns',
-        columnIdKey: 'id',
+        matchColumnKey: 'id',
         isColumnIgnored: column => column.get('type') === 'IGNORE',
         onSaveColumns: (columnsList) =>
           columnsList.reduce((memo, column) =>
