@@ -23,7 +23,7 @@ export const connectionValidPath = ['connection', 'valid'];
 export const connectionTestedPath = ['connection', 'tested'];
 
 export function rowDataFromQuery(query) {
-  let queryState = JSON.stringify(query.get('state').toJS());
+  let queryState = query.has('state') ? query.get('state').toJS() : {};
   let paramsQuery = query.delete('state');
   return {
     'rowId': query.get('id'),
@@ -32,7 +32,7 @@ export function rowDataFromQuery(query) {
     'configuration': JSON.stringify({
       'parameters': paramsQuery.toJS()
     }),
-    'state': queryState
+    'state': JSON.stringify(queryState)
   };
 }
 
