@@ -126,6 +126,7 @@ export default function(configId) {
       const awsParams = {
         signatureVersion: 'v4',
         maxRetries: 0,
+        region: response.region,
         httpOptions: {
           timeout: 0
         }
