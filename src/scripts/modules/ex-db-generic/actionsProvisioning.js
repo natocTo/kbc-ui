@@ -98,13 +98,13 @@ export function createActions(componentId) {
 
   function updateConfigRow(configId, rowId, data, waitingPath, changeDescription) {
     updateLocalState(configId, waitingPath, true);
-    return componentsActions.updateConfigurationRow(componentId, configId, rowId, data, changeDescription)
+    return componentsActions.updateConfigurationRow(componentId, configId, rowId.toString(), data, changeDescription)
       .then(() => updateLocalState(configId, waitingPath, false));
   }
 
   function deleteConfigRow(configId, rowId, waitingPath, changeDescription) {
     updateLocalState(configId, waitingPath, true);
-    return componentsActions.deleteConfigurationRow(componentId, configId, rowId, changeDescription)
+    return componentsActions.deleteConfigurationRow(componentId, configId, rowId.toString(), changeDescription)
       .then(() => updateLocalState(configId, waitingPath, false));
   }
 
@@ -380,9 +380,8 @@ export function createActions(componentId) {
         newQueries = store.getQueries().push(newQuery);
         diffMsg = 'Create query ' + newQuery.get('name');
       }
-      store.setQueries(newQueries);
       removeFromLocalState(configId, ['isDestinationEditing', queryId]);
-      const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
+
       if (store.isRowConfiguration()) {
         let isNewQuery = store.isNewQuery(queryId);
         const rowData = storeProvisioning.rowDataFromQuery(newQuery);
@@ -390,13 +389,18 @@ export function createActions(componentId) {
           createConfigRow(configId, rowData, ['isSaving', queryId], diffMsg).then(() => {
             removeFromLocalState(configId, ['editingQueries', queryId]);
             removeFromLocalState(configId, ['newQueries', queryId]);
+            removeFromLocalState(configId, ['isSaving', queryId]);
+            removeFromLocalState(configId, ['isChanged', queryId]);
           });
         } else {
           updateConfigRow(configId, queryId, rowData, ['isSaving', queryId], diffMsg).then(() => {
             removeFromLocalState(configId, ['editingQueries', queryId]);
+            removeFromLocalState(configId, ['isSaving', queryId]);
+            removeFromLocalState(configId, ['isChanged', queryId]);
           });
         }
       } else {
+        const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
         saveConfigData(configId, newData, ['isSaving', queryId], diffMsg).then(() => {
           removeFromLocalState(configId, ['editingQueries', queryId]);
           removeFromLocalState(configId, ['isSaving', queryId]);

@@ -64,10 +64,10 @@ function fetch(componentId, configId) {
     const queries = rows.map((row) => {
       return queryFromRow(row);
     }).toList();
-    const setConfig = config.setIn(['parameters', 'tables'], queries);
     return {
       config: config || Map(),
-      parameters: setConfig.get('parameters', Map()),
+      parameters: config.get('parameters', Map()),
+      queries: queries || List(),
       localState: store.getLocalState(componentId, configId) || Map(),
       configurationType: rowConfigurationType
     };
@@ -292,17 +292,23 @@ export function createStore(componentId, configId) {
     configData: data.config,
 
     getQueries() {
-      return data.parameters.get('tables', List()).map((q) => {
-        let pk = q.get('primaryKey', null);
-        if (_.isEmpty(pk) || _.isString(pk)) {
-          pk = List();
-        }
-        return q.set('primaryKey', pk);
-      });
-    },
-
-    setQueries(queries) {
-      return data.parameters.setIn('tables', queries);
+      if (data.parameters.has('tables')) {
+        return data.parameters.get('tables', List()).map((q) => {
+          let pk = q.get('primaryKey', null);
+          if (_.isEmpty(pk) || _.isString(pk)) {
+            pk = List();
+          }
+          return q.set('primaryKey', pk);
+        });
+      } else {
+        return data.queries.map((q) => {
+          let pk = q.get('primaryKey', null);
+          if (_.isEmpty(pk) || _.isString(pk)) {
+            pk = List();
+          }
+          return q.set('primaryKey', pk);
+        });
+      }
     },
 
     getQueriesFiltered() {
