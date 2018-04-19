@@ -34,8 +34,8 @@ export default React.createClass({
           Learn more about the MySQL transformation deprecation <a href="http://status.keboola.com/deprecating-mysql-storage-and-transformations" target="_blank">timeline and reasons</a>.
         </div>
         <div className="row">
-          {deprecatedTransformationsInBuckets.map(function(bucket, indexBucket) {
-            return (
+            {deprecatedTransformationsInBuckets.map(function(bucket, indexBucket) {
+              return (
               <div className="col-md-6" key={indexBucket}>
                 <h4>
                   <span className={'kbc-transformation-icon'}/>
@@ -56,11 +56,11 @@ export default React.createClass({
                   );
                 }).toSeq().toArray()}
                 </ul>
-              </div>
-            );
-          }).toSeq().toArray()}
-      </div>
-    </AlertBlock>
+           </div>
+              );
+            }).toSeq().toArray()}
+        </div>
+      </AlertBlock>
     );
   }
 });

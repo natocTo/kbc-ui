@@ -17,7 +17,6 @@
       margin-top: @statusBarHeight;
     }
     .kbc-main-content {
-      margin-top: @statusBarHeight;
       min-height: 86vh;
       overflow: hidden;
     }
@@ -28,14 +27,10 @@
       overflow: auto !important;
       padding-right: @wizardWidthAside!important;
     }
-
+    .kbc-overview-component-container {
+      margin-top: @statusBarHeight !important;
+    }
     &.guide-mode-lesson-on {
-      .kbc-overview-component-container {
-        margin-top: 50px !important;
-      }
-      .kbc-main-content {
-        margin-top: @statusBarHeight !important;
-      }
       .guide-desk-container {
         display: none;
       }
@@ -78,14 +73,6 @@
     min-height: 410px;
     border-radius: 5px;
 
-    &-container {
-      min-height: 0 !important;
-      margin-top: @statusBarHeight !important;
-
-      + .kbc-main-content{
-        margin-top: 17px;
-      }
-    }
     p {
       font-size: 14px;
       line-height: 1.5;
