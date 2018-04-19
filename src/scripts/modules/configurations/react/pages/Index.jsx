@@ -141,6 +141,7 @@ export default React.createClass({
 
   render() {
     const settings = this.state.settings;
+    const sidebarCustomItems = settings.getIn(['index', 'sidebarCustomItems'], Immutable.List());
     const createEmptyFn = settings.getIn(['row', 'onCreate']);
     const createFn = settings.getIn(['row', 'onSave']);
     return (
@@ -172,6 +173,15 @@ export default React.createClass({
                 {this.renderRunModalContent()}
               </RunComponentButton>
             </li>
+            {
+              sidebarCustomItems.map((SidebarItem, idx) =>
+                <li key={idx}>
+                  <SidebarItem
+                    configuration={this.state.configuration}
+                    onSaveConfiguration={(newConfig) => configurationsActions.updateConfiguration(this.state.componentId, this.state.configurationId, newConfig)}
+                  />
+                </li>
+              )}
             <li>
               <CreateConfigurationRowButton
                 componentType={this.state.component.get('type')}
