@@ -307,25 +307,6 @@ export default React.createClass({
           />
           {this.renderSimpleTable()}
           {this.renderSimpleColumns()}
-          <div className="form-group">
-            <label className="col-md-3 control-label">Primary Key</label>
-            <div className="col-md-9">
-              <Select
-                name="primaryKey"
-                value={this.getPkValue()}
-                multi={true}
-                disabled={this.props.disabled || this.isExistingTable()}
-                allowCreate={true}
-                delimiter=","
-                placeholder={this.primaryKeyPlaceholder()}
-                emptyStrings={false}
-                onChange={this.handlePrimaryKeyChange}
-                options={this.primaryKeyOptions()}
-                promptTextCreator={(label) => (label) ? 'Add column "' + label + '" as primary key' : ''}
-              />
-              {this.isExistingTable() && this.primaryKeyHelp()}
-            </div>
-          </div>
           <div className={(this.props.queryNameExists) ? 'form-group has-error' : 'form-group'}>
             <label className="col-md-3 control-label">Name</label>
             <div className="col-md-9">
@@ -356,6 +337,25 @@ export default React.createClass({
             />
           </div>
           {this.renderIncrementalFetching()}
+          <div className="form-group">
+            <label className="col-md-3 control-label">Primary Key</label>
+            <div className="col-md-9">
+              <Select
+                name="primaryKey"
+                value={this.getPkValue()}
+                multi={true}
+                disabled={this.props.disabled || this.isExistingTable()}
+                allowCreate={true}
+                delimiter=","
+                placeholder={this.primaryKeyPlaceholder()}
+                emptyStrings={false}
+                onChange={this.handlePrimaryKeyChange}
+                options={this.primaryKeyOptions()}
+                promptTextCreator={(label) => (label) ? 'Add column "' + label + '" as primary key' : ''}
+              />
+              {this.isExistingTable() && this.primaryKeyHelp()}
+            </div>
+          </div>
           <div className="form-group">
             <div className="col-md-9 col-md-offset-3 checkbox">
               <label>
