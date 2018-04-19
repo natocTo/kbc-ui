@@ -5,9 +5,9 @@ export default {
   },
 
   parseConfiguration(configuration) {
-    const params = configuration.get('parameters', Map());
+    const dimensions = configuration.getIn(['parameters', 'dimensions'], Map());
     return Map({
-      dimensions: params.get('dimensions', '')
+      dimensions: dimensions
     });
   }
 };

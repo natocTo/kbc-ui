@@ -93,7 +93,7 @@ export default React.createClass({
       configurationBySections.getIn(['sections', sectionKey])
                              .merge(Immutable.fromJS(diff)));
     const created = this.state.createBySectionsFn(newConfigurationBySections);
-    Actions.saveForcedConfiguration(componentId, configurationId, created);
+    return Actions.saveForcedConfiguration(componentId, configurationId, created);
   },
 
   renderSections() {
@@ -117,7 +117,6 @@ export default React.createClass({
   render() {
     return (
       <span>
-        {this.renderButtons()}
         {this.renderSections()}
       </span>
     );
