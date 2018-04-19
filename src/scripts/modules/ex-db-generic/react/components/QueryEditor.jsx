@@ -596,6 +596,15 @@ export default React.createClass({
         );
       }
     }
+    return (
+      <div className="form-control-static">
+        <div className="row">
+          <div className="col-md-12">
+            No state information available
+          </div>
+        </div>
+      </div>
+    );
   },
 
   incrementalFetchingWarning() {
