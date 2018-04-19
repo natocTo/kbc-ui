@@ -26,7 +26,17 @@ export default React.createClass({
     const createBySectionsFn = sections.makeCreateFn(settings.getIn(['row', 'onSave']), settings.getIn(['row', 'sections']));
     const parseBySectionsFn = sections.makeParseFn(settings.getIn(['row', 'onLoad']), settings.getIn(['row', 'sections']));
 
+    const configurationBySections = Store.getEditingConfiguration(
+      componentId,
+      configurationId,
+      rowId,
+      parseBySectionsFn
+    );
+
+    const isComplete = sections.isComplete(settings.getIn(['row', 'isComplete']), settings.getIn(['row', 'sections']), configurationBySections);
+
     return {
+      isComplete,
       createBySectionsFn,
       parseBySectionsFn,
       componentId: componentId,
@@ -43,6 +53,7 @@ export default React.createClass({
     return (
       <div className="text-right">
         <SaveButtons
+          disabled={!this.state.isComplete}
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={this.handleSave}

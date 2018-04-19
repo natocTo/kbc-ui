@@ -25,10 +25,17 @@ export default React.createClass({
     const componentId = settings.get('componentId');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const component = ComponentStore.getComponent(componentId);
-    const isCompleteFn = settings.getIn(['credentials', 'detail', 'isComplete'], () => true); // todo
     const isChanged = Store.isEditingConfiguration(componentId, configurationId);
     const createBySectionsFn = sections.makeCreateFn(settings.getIn(['index', 'onSave']), settings.getIn(['index', 'sections']));
     const parseBySectionsFn = sections.makeParseFn(settings.getIn(['index', 'onLoad']), settings.getIn(['index', 'sections']));
+
+    const configurationBySections = Store.getEditingConfiguration(
+      componentId,
+      configurationId,
+      parseBySectionsFn
+    );
+
+    const isComplete = sections.isComplete(settings.getIn(['index', 'isComplete']), settings.getIn(['index', 'sections']), configurationBySections);
     return {
       componentId: settings.get('componentId'),
       settings: settings,
@@ -36,14 +43,10 @@ export default React.createClass({
       configurationId: configurationId,
       createBySectionsFn,
       parseBySectionsFn,
-      configurationBySections: Store.getEditingConfiguration(
-        componentId,
-        configurationId,
-        parseBySectionsFn
-      ),
+      configurationBySections: configurationBySections,
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged,
-      isComplete: isCompleteFn(Store.getConfiguration(componentId, configurationId))
+      isComplete: isComplete
     };
   },
 
@@ -55,9 +58,7 @@ export default React.createClass({
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={this.handleSave}
-          onReset={function() {
-            return Actions.resetConfiguration(componentId, configurationId);
-          }}
+          onReset={() => Actions.resetConfiguration(componentId, configurationId)}
         />
         <br />
       </div>

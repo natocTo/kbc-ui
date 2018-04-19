@@ -1,9 +1,10 @@
-import {Map, fromJS} from 'immutable';
+import {Map, fromJS, List} from 'immutable';
 import TablesStore from '../../components/stores/StorageTablesStore';
 
 
 const repass = param => param;
 const returnEmptyMap = () =>  Map();
+const returnTrue = () => true;
 
 function parseBySections(rootParseFn, sectionsParseFn, configuration) {
   const tables = TablesStore.getAll();
@@ -20,7 +21,7 @@ function parseBySections(rootParseFn, sectionsParseFn, configuration) {
 
 function createBySections(createFn, sectionsCreateFn, configurationBySections) {
   const configurationSectionsMerged = configurationBySections
-    .get('sections')
+    .get('sections', List())
     .reduce((memo, sectionConfig, idx) => {
       const createSectionFn = sectionsCreateFn.get(idx);
       return memo.merge(createSectionFn(sectionConfig));
@@ -41,6 +42,17 @@ function createEmptyConfigBySections(createEmptyFn, sectionsCreateEmptyFn, creat
   return createBySections(createFn, sectionsCreateFn, configurationBySections);
 }
 
+function isCompleteBySections(rootIsCompleteFn, sectionsIsCompleteFn, configBySections) {
+  const rootIsComplete = rootIsCompleteFn(configBySections.get('root'));
+  const sectionsIsComplete = configBySections.get('sections', List())
+                                             .reduce(
+                                               (memo, sectionData, idx) => {
+                                                 const isCompleteFn = sectionsIsCompleteFn.get(idx);
+                                                 return memo && isCompleteFn(sectionData);
+                                               }, true);
+  return rootIsComplete && sectionsIsComplete;
+}
+
 
 export default {
   makeParseFn(rootParseFn, sections) {
@@ -57,5 +69,10 @@ export default {
     const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
     const sectionsCreateEmptyFn = sections.map(section => section.get('onCreate') || returnEmptyMap);
     return (name, webalizedName) => createEmptyConfigBySections(rootCreateEmptyFn || returnEmptyMap, sectionsCreateEmptyFn, rootCreateFn || repass, sectionsCreateFn, name, webalizedName);
+  },
+
+  isComplete(rootIsCompleteFn, sections, configuration) {
+    const sectionsIsCompleteFn = sections.map(s => s.get('isComplete', returnTrue));
+    return isCompleteBySections(rootIsCompleteFn || returnTrue, sectionsIsCompleteFn, configuration);
   }
 };
