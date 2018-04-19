@@ -1,10 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import {AlertBlock} from '@keboola/indigo-ui';
-
 import {bytesToGBFormatted, numericMetricFormatted} from '../../../utils/numbers';
-
-import './limits.less';
 
 export default React.createClass({
   propTypes: {

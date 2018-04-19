@@ -5,7 +5,6 @@ import TransformationsStore from '../../transformations/stores/TransformationsSt
 import ComponentConfigurationRowLink from '../../components/react/components/ComponentConfigurationRowLink';
 import { AlertBlock } from '@keboola/indigo-ui';
 
-import './expiration.less';
 
 export default React.createClass({
   propTypes: {

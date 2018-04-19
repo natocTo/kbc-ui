@@ -4,8 +4,6 @@ import ComponentDetailLink from '../../../react/common/ComponentDetailLink';
 import Immutable from 'immutable';
 import {AlertBlock} from '@keboola/indigo-ui';
 
-import './expiration.less';
-
 export default React.createClass({
   propTypes: {
     components: PropTypes.object
