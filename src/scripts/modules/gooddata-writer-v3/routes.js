@@ -9,6 +9,7 @@ import rowAdapter from './adapters/row';
 import DimensionsSection from './react/components/DimensionsSection';
 import dimensionsAdapter from './adapters/dimensions';
 import columnsEditorDefinition from './adapters/columnsEditorDefinition';
+import ToggleProjectAccess from './react/components/ToggleProjectAccess';
 
 
 import {Map} from 'immutable';
@@ -18,6 +19,9 @@ const routeSettings = {
   componentId: 'keboola.gooddata-writer',
   componentType: 'writer',
   index: {
+    sidebarCustomItems: [
+      ToggleProjectAccess
+    ],
     show: true,
     sections: [
       {

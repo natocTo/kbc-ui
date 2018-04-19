@@ -80,18 +80,20 @@ export default React.createClass({
             <span>
               <table className="table">
                 <thead>
-                  <th>Name</th>
-                  <th>Include Time</th>
-                  <th>Identifier</th>
-                  <th>Template</th>
-                  <th>{/* actions */}</th>
+                  <tr>
+                    <th>Name</th>
+                    <th>Include Time</th>
+                    <th>Identifier</th>
+                    <th>Template</th>
+                    <th>{/* actions */}</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {
                     dimKeys.map(dimName => {
                       const dim = dimensions[dimName];
                       return (
-                        <tr>
+                        <tr key={dimName}>
                           <td> {dimName}</td>
                           <td> {dim.includeTime ? 'yes' : 'no'}</td>
                           <td> {dim.identifier}</td>
