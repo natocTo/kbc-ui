@@ -67,7 +67,7 @@ export default React.createClass({
             <th>
               Column
             </th>
-            {headers.map(title => <th>{title}</th>)}
+            {headers.map((title, idx) => <th key={idx}>{title}</th>)}
             <th>
               Content Preview
             </th>
