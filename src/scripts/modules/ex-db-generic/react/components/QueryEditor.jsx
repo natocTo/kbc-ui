@@ -307,6 +307,7 @@ export default React.createClass({
           />
           {this.renderSimpleTable()}
           {this.renderSimpleColumns()}
+          <h3>General Settings</h3>
           <div className={(this.props.queryNameExists) ? 'form-group has-error' : 'form-group'}>
             <label className="col-md-3 control-label">Name</label>
             <div className="col-md-9">
@@ -337,6 +338,7 @@ export default React.createClass({
             />
           </div>
           {this.renderIncrementalFetching()}
+          <h3>Loading Options</h3>
           <div className="form-group">
             <label className="col-md-3 control-label">Primary Key</label>
             <div className="col-md-9">
@@ -373,6 +375,7 @@ export default React.createClass({
               </div>
             </div>
           </div>
+          <h3>Advanced Mode</h3>
           {this.renderQueryToggle()}
           {this.renderQueryEditor()}
         </div>
@@ -393,11 +396,8 @@ export default React.createClass({
                 checked={!!this.props.query.get('advancedMode')}
                 disabled={this.props.disabled}
                 onChange={this.handleToggleUseQueryEditor}/>
-              Advanced Mode
-            </label>
-            <div className="help-block">
               Create your own query using an SQL editor
-            </div>
+            </label>
           </div>
         </div>
       );
@@ -439,18 +439,21 @@ export default React.createClass({
       );
 
       return (
-        <div className="form-group">
-          <label className="col-md-3 control-label">Source Table</label>
-          <div className="col-md-9">
-            <TableLoader
-              componentId={this.props.componentId}
-              configId={this.props.configId}
-              isLoadingSourceTables={this.props.isLoadingSourceTables}
-              isTestingConnection={this.props.isTestingConnection}
-              validConnection={this.props.validConnection}
-              tableSelectorElement={tableSelector}
-              refreshMethod={this.props.refreshMethod}
-            />
+        <div>
+          <h3>Data Source</h3>
+          <div className="form-group">
+            <label className="col-md-3 control-label">Table</label>
+            <div className="col-md-9">
+              <TableLoader
+                componentId={this.props.componentId}
+                configId={this.props.configId}
+                isLoadingSourceTables={this.props.isLoadingSourceTables}
+                isTestingConnection={this.props.isTestingConnection}
+                validConnection={this.props.validConnection}
+                tableSelectorElement={tableSelector}
+                refreshMethod={this.props.refreshMethod}
+              />
+            </div>
           </div>
         </div>
       );
@@ -523,47 +526,45 @@ export default React.createClass({
   renderIncrementalFetching() {
     if (!this.props.query.get('advancedMode') && this.props.isConfigRow && this.incrementalFetchingOptions().length > 0) {
       return (
-        <div className="form-group">
-          <label className="col-md-3 control-label">Incremental Fetching</label>
-          <div className="col-md-9">
-            <div className="row">
-              <label className="col-md-2 control-label">Column</label>
-              <div className="col-md-10">
-                <Select
-                  name="incrementalFetching"
-                  value={this.props.query.get('incrementalFetchingColumn') || ''}
-                  placeholder="Fetch by column"
-                  onChange={this.handleIncrementalFetchingColumnChange}
-                  options={this.incrementalFetchingOptions()}
-                  disabled={this.props.disabled || !!this.getLastFetchedRowValue()}
-                />
+        <div>
+          <h3>Incremental Fetching</h3>
+          <div className="form-group">
+            <label className="col-md-3 control-label">Column</label>
+            <div className="col-md-9">
+              <Select
+                name="incrementalFetching"
+                value={this.props.query.get('incrementalFetchingColumn') || ''}
+                placeholder="Fetch by column"
+                onChange={this.handleIncrementalFetchingColumnChange}
+                options={this.incrementalFetchingOptions()}
+                disabled={this.props.disabled || !!this.getLastFetchedRowValue()}
+              />
+              <div className="help-block">
+                {this.incrementalFetchingWarning()}
               </div>
             </div>
-            <div className="help-block">
-              {this.incrementalFetchingWarning()}
-            </div>
-            <div className="row">
-              <label className="col-md-2 control-label">Limit</label>
-              <div className="col-md-10">
-                <input
-                  className="form-control"
-                  name="incrementalFetchingLimit"
-                  type="number"
-                  value={this.props.query.get('incrementalFetchingLimit') || 0}
-                  onChange={this.handleIncrementalFetchingLimitChange}
-                  disabled={this.props.disabled}
-                />
+          </div>
+          <div className="form-group">
+            <label className="col-md-3 control-label">Limit</label>
+            <div className="col-md-9">
+              <input
+                className="form-control"
+                name="incrementalFetchingLimit"
+                type="number"
+                value={this.props.query.get('incrementalFetchingLimit') || 0}
+                onChange={this.handleIncrementalFetchingLimitChange}
+                disabled={this.props.disabled}
+              />
+              <div className="help-block">
+                The number of records to fetch from the source per run.
+                Subsequent runs will start from the last record fetched. Note: 0 means unlimited.
               </div>
             </div>
-            <div className="help-block">
-              The number of records to fetch from the source per run.
-              Subsequent runs will start from the last record fetched. Note: 0 means unlimited.
-            </div>
-            <div className="row">
-              <label className="col-md-4 control-label">Last fetched value</label>
-              <div className="col-md-8">
-                {this.renderlastFetchedInfo()}
-              </div>
+          </div>
+          <div className="form-group">
+            <label className="col-md-3 control-label">Last fetched value</label>
+            <div className="col-md-8">
+              {this.renderlastFetchedInfo()}
             </div>
           </div>
         </div>
