@@ -59,28 +59,34 @@ export default React.createClass({
     RoutesStore.getRouter().transitionTo(this.state.componentId + '-row', transitionParams);
   },
 
-  renderRowsTable() {
+  renderNewConfigRowButton() {
     const state = this.state;
     const settings = this.state.settings;
     const createEmptyFn = settings.getIn(['row', 'onCreate']);
     const createFn = settings.getIn(['row', 'onSave']);
+    return (
+      <CreateConfigurationRowButton
+        componentType={this.state.component.get('type')}
+        label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
+        componentId={state.componentId}
+        configId={state.configurationId}
+        emptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
+        onRowCreated={this.onRowCreated}
+        createChangeDescription={() => settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added'}
+        type="button"
+      />
+    );
+  },
+
+  renderRowsTable() {
+    const state = this.state;
+    const settings = this.state.settings;
     if (this.state.rows.count() === 0) {
       return (
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <div className="component-empty-state text-center">
             <p>No {settings.getIn(['row', 'name', 'plural']).toLowerCase()} created yet.</p>
-            <CreateConfigurationRowButton
-              componentType={this.state.component.get('type')}
-              label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
-              componentId={state.componentId}
-              configId={state.configurationId}
-              emptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
-              onRowCreated={this.onRowCreated}
-              createChangeDescription={function(name) {
-                return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
-              }}
-              type="button"
-            />
+            {this.renderNewConfigRowButton()}
           </div>
         </div>);
     } else {
@@ -88,6 +94,7 @@ export default React.createClass({
       const filter = this.state.settings.getIn(['row', 'searchFilter']);
       return (<ConfigurationRows
         key="rows"
+        newConfigButton={this.renderNewConfigRowButton()}
         rows={this.state.rows.toList()}
         componentId={this.state.componentId}
         component={this.state.component}
@@ -142,8 +149,6 @@ export default React.createClass({
   render() {
     const settings = this.state.settings;
     const sidebarCustomItems = settings.getIn(['index', 'sidebarCustomItems'], Immutable.List());
-    const createEmptyFn = settings.getIn(['row', 'onCreate']);
-    const createFn = settings.getIn(['row', 'onSave']);
     return (
       <div className="container-fluid">
         <div className="col-md-9 kbc-main-content">
@@ -182,20 +187,6 @@ export default React.createClass({
                   />
                 </li>
               )}
-            <li>
-              <CreateConfigurationRowButton
-                componentType={this.state.component.get('type')}
-                label={'New ' + this.state.settings.getIn(['row', 'name', 'singular'])}
-                componentId={this.state.componentId}
-                configId={this.state.configurationId}
-                emptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
-                onRowCreated={this.onRowCreated}
-                type="link"
-                createChangeDescription={function(name) {
-                  return settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added';
-                }}
-              />
-            </li>
             <li>
               <DeleteConfigurationButton
                 componentId={this.state.componentId}

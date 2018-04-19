@@ -22,6 +22,7 @@ export default React.createClass({
     rowEnableDisablePending: React.PropTypes.func.isRequired,
     rowLinkTo: React.PropTypes.string.isRequired,
     onOrder: React.PropTypes.func.isRequired,
+    newConfigButton: React.PropTypes.node.isRequired,
     orderPending: React.PropTypes.object.isRequired
   },
 
