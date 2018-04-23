@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import SaveButtons from '../../../react/common/SaveButtons';
 import { PanelGroup, Panel } from 'react-bootstrap';
 
-export default (title, InnerComponent, options = {}) => {
+export default (TitleComponent, InnerComponent, options = {}) => {
   return React.createClass({
 
     propTypes: {
@@ -49,7 +49,7 @@ export default (title, InnerComponent, options = {}) => {
                 <span className="td">
                   <h4>
                     {this.accordionArrow()}
-                    {title}
+                    <TitleComponent value={this.props.value}/>
                   </h4>
                 </span>
               </span>
