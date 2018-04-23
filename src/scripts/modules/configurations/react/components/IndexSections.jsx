@@ -102,10 +102,11 @@ export default React.createClass({
   renderSections() {
     const settingsSections = this.state.settings.getIn(['index', 'sections']);
     const {storedConfigurationSections} = this.state;
+    const returnTrue = () => true;
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');
       const onSectionSave = section.get('onSave');
-      const sectionIsCompleteFn = section.get('isComplete');
+      const sectionIsCompleteFn = section.get('isComplete') || returnTrue;
       const isComplete = sectionIsCompleteFn(onSectionSave(storedConfigurationSections.get(key)));
       return (
         <div key={key}>
