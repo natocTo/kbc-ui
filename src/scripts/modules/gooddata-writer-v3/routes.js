@@ -45,7 +45,7 @@ const routeSettings = {
         isComplete: () => true
       },
       {
-        render: createCollapsibleSection(({incrementalLoad}) => <span> Load Type: {incrementalLoad > 0 ? 'Full Load' : 'Incremental Load'} </span>,
+        render: createCollapsibleSection(({value}) => <span> Load Type: {value.incrementalLoad === 0 ? 'Full Load' : 'Incremental Load'} </span>,
                                          LoadTypeSection),
         onSave: loadType.createConfiguration,
         onLoad: loadType.parseConfiguration,

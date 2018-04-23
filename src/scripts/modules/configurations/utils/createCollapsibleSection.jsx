@@ -49,7 +49,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
                 <span className="td">
                   <h4>
                     {this.accordionArrow()}
-                    <TitleComponent value={this.props.value}/>
+                    <TitleComponent value={options.includeSaveButtons ? this.state.value : this.props.value}/>
                   </h4>
                 </span>
               </span>
