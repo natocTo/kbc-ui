@@ -77,13 +77,6 @@ export default React.createClass({
         rowId,
         parseBySectionsFn
       ),
-      // deprecated
-      configuration: Store.getEditingConfiguration(
-        componentId,
-        configurationId,
-        rowId,
-        settings.getIn(['row', 'detail', 'onLoad'])
-      ),
       isSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-configuration'),
       isChanged: Store.isEditingConfiguration(componentId, configurationId, rowId),
 
@@ -346,7 +339,13 @@ export default React.createClass({
   // deprecated
   renderFormFields() {
     const state = this.state;
-    const configuration = this.state.configuration;
+    const {componentId, configurationId, rowId, settings}  = this.state;
+    const configuration = Store.getEditingConfiguration(
+      componentId,
+      configurationId,
+      rowId,
+      settings.getIn(['row', 'detail', 'onLoad'])
+    );
     const Configuration = this.state.settings.getIn(['row', 'detail', 'render']);
     return (<Configuration
               onChange={(diff) =>

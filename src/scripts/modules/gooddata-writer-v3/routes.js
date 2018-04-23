@@ -53,14 +53,6 @@ const routeSettings = {
       },
       createColumnsEditorSection(columnsEditorDefinition)
     ],
-    // detail obsolete - will be removed
-    detail: {
-      render: TitleSection,
-      onSave: title.createConfiguration,
-      onLoad: title.parseConfiguration,
-      onCreate: title.createEmptyConfiguration,
-      isComplete: () => true
-    },
     columns: [
       {
         name: 'Table Name',
