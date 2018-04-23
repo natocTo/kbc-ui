@@ -12,29 +12,30 @@ import {
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import React from 'react';
+import createCollapsibleSection from '../configurations/utils/createCollapsibleSection';
 import Immutable from 'immutable';
 
 const routeSettings = {
   componentId: 'keboola.ex-aws-s3',
   componentType: 'extractor',
-  credentials: {
-    show: true,
-    detail: {
-      title: 'AWS Credentials',
-      render: CredentialsForm,
+  index: {
+    sections: [{
+      render: createCollapsibleSection(() => <span>AWS Credentials</span>,
+                                       CredentialsForm,
+                                       {includeSaveButtons: true}),
       onSave: credentialsCreateConfiguration,
       onLoad: credentialsParseConfiguration,
       isComplete: credentialsIsComplete
-    }
+    }]
   },
   row: {
     hasState: true,
-    detail: {
+    sections: [{
       render: ConfigurationForm,
       onSave: rowCreateConfiguration,
       onCreate: rowCreateEmptyConfiguration,
       onLoad: rowParseConfiguration
-    },
+    }],
     columns: [
       {
         name: 'Name',
