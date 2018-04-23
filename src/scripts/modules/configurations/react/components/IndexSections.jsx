@@ -102,7 +102,7 @@ export default React.createClass({
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');
       return (
-        <div key={key} className="kbc-inner-content-padding-fix with-bottom-border">
+        <div key={key}>
           <SectionComponent
             disabled={this.state.isSaving}
             onChange={(diff) => this.onUpdateSection(key, diff)}
