@@ -36,7 +36,6 @@ export default React.createClass({
             <Clipboard text={this.props.value}/>
           </small>
         </h2>
-        {this.renderButtons()}
         <Input
           value={this.props.value}
           disabled={this.props.isSaving}
