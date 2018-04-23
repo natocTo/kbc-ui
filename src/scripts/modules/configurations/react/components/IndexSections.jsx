@@ -35,8 +35,10 @@ export default React.createClass({
       parseBySectionsFn
     );
 
-    const isComplete = sections.isComplete(settings.getIn(['index', 'isComplete']), settings.getIn(['index', 'sections']), configurationBySections);
+    const storedConfigurationSections = parseBySectionsFn(Store.getConfiguration(componentId, configurationId)).get('sections');
+
     return {
+      storedConfigurationSections,
       componentId: settings.get('componentId'),
       settings: settings,
       component: component,
@@ -45,8 +47,8 @@ export default React.createClass({
       parseBySectionsFn,
       configurationBySections: configurationBySections,
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
-      isChanged: isChanged,
-      isComplete: isComplete
+      isChanged: isChanged
+
     };
   },
 
@@ -99,11 +101,16 @@ export default React.createClass({
 
   renderSections() {
     const settingsSections = this.state.settings.getIn(['index', 'sections']);
+    const {storedConfigurationSections} = this.state;
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');
+      const onSectionSave = section.get('onSave');
+      const sectionIsCompleteFn = section.get('isComplete');
+      const isComplete = sectionIsCompleteFn(onSectionSave(storedConfigurationSections.get(key)));
       return (
         <div key={key}>
           <SectionComponent
+            isComplete={isComplete}
             disabled={this.state.isSaving}
             onChange={(diff) => this.onUpdateSection(key, diff)}
             onSave={(diff) => this.onSaveSection(key, diff)}

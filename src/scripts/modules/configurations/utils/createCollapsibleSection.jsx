@@ -7,6 +7,7 @@ export default (title, InnerComponent, options = {}) => {
 
     propTypes: {
       disabled: PropTypes.bool,
+      isComplete: PropTypes.bool,
       onSave: PropTypes.func,
       onChange: PropTypes.func,
       value: PropTypes.any
@@ -29,7 +30,7 @@ export default (title, InnerComponent, options = {}) => {
         return true;
       }
 
-      return this.props.disabled;
+      return !this.props.isComplete;
     },
 
     accordionArrow() {
