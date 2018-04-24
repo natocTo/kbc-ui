@@ -12,7 +12,7 @@ export function loadConfiguration(componentId, configId) {
 
 export function createActions(componentId) {
   function updateProtectedProperties(newCredentials, oldCredentials) {
-    const props = getProtectedProperties(componentId);
+    const props = getProtectedProperties();
     let result = newCredentials;
     for (let prop of props) {
       const newValue = newCredentials.get(prop);

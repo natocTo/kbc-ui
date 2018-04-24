@@ -128,7 +128,7 @@ export default React.createClass({
   },
 
   renderFields() {
-    return this.props.credentialsTemplate.getFields(this.props.componentId).map(function(field) {
+    return this.props.credentialsTemplate.getFields().map(function(field) {
       return this.createInput(field.label, field.name, field.type, field.protected);
     }, this);
   },

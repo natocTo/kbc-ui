@@ -72,7 +72,7 @@ export function createStore(componentId, configId) {
         return false;
       }
       const hasSSH = true;
-      const fields = templateFields.getFields(componentId);
+      const fields = templateFields.getFields();
       const validGeneralCreds = _.reduce(fields, (memo, field) => {
         let value = credentials.get(field.name, '');
         if (value) {
