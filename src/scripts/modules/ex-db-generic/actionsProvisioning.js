@@ -462,9 +462,8 @@ export function createActions(componentId) {
 
     getSourceTables(configId) {
       const store = getStore(configId);
-      const credentials = store.getCredentials();
-      updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
-      if (store.hasValidCredentials(credentials)) {
+      if (store.isConnectionValid()) {
+        updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
         let runData = store.configData.setIn(['parameters', 'db'], store.getCredentials());
         runData = runData.setIn(['parameters', 'tables'], List());
         const params = {
