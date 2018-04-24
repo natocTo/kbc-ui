@@ -26,16 +26,19 @@ function generateId(existingIds) {
   return newId;
 }
 
-function isJsonValid(jsonString) {
+export function isJsonValid(jsonString) {
+  if (typeof jsonString !== 'string' || jsonString.trim().length === 0) {
+    return false;
+  }
   try {
-    jsonString.trim().length > 0 && JSON.parse(jsonString);
+    JSON.parse(jsonString);
     return true;
   } catch (error) {
     return false;
   }
 }
 
-function isMappingValid(mapping) {
+export function isMappingValid(mapping) {
   if (Map.isMap(mapping)) {
     return isJsonValid(JSON.stringify(mapping.toJS()));
   } else {
@@ -43,9 +46,9 @@ function isMappingValid(mapping) {
   }
 }
 
-function isValidQuery(query) {
+export function isValidQuery(query) {
   const mode = query.get('mode', 'mapping');
-  const mapping = query.get('mapping', '') || '';
+  const mapping = query.get('mapping', '');
   return query.get('name', '').trim().length > 0
     && query.get('collection', '').trim().length > 0
 
