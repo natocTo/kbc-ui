@@ -154,9 +154,9 @@ export default function(componentId) {
               <Quickstart
                 componentId={componentId}
                 configId={this.state.configId}
-                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath)}
-                isTestingConnection={this.state.localState.getIn(storeProvisioning.testingConnectionPath)}
-                validConnection={this.state.localState.getIn(storeProvisioning.connectionValidPath)}
+                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath) || false}
+                isTestingConnection={this.state.localState.getIn(storeProvisioning.testingConnectionPath) || false}
+                validConnection={this.state.localState.getIn(storeProvisioning.connectionValidPath) || false}
                 sourceTables={this.state.localState.getIn(storeProvisioning.sourceTablesPath)}
                 sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
                 quickstart={this.state.localState.get('quickstart') || Map()}
