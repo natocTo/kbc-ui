@@ -12,7 +12,7 @@ export default React.createClass({
     return (
       <Link
         className="list-group-item"
-        to={`ex-db-generic-${this.props.componentId}-query`}
+        to={'ex-mongodb-query'}
         params={this.linkParams()}
         >
         {(this.props.isEditing) ? (
