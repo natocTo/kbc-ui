@@ -35,6 +35,14 @@ function isJsonValid(jsonString) {
   }
 }
 
+function isMappingValid(mapping) {
+  if (Map.isMap(mapping)) {
+    return isJsonValid(JSON.stringify(mapping.toJS()));
+  } else {
+    return isJsonValid(mapping);
+  }
+}
+
 function isValidQuery(query) {
   const mode = query.get('mode', 'mapping');
   const mapping = query.get('mapping', '') || '';
@@ -47,11 +55,7 @@ function isValidQuery(query) {
       || isJsonValid(query.get('sort', '').toString()))
 
     && (mode === 'raw'
-      || (
-        mode === 'mapping'
-        && mapping.toString().trim().length > 0
-        && isJsonValid(mapping.toString())
-      )
+      || (mode === 'mapping' && isMappingValid(mapping))
     );
 }
 
