@@ -53,7 +53,10 @@ export default React.createClass({
                 type="text"
                 value={this.props.query.get('name')}
               />
-              <HelpBlock>Name has to be unique across all exports in current configuration</HelpBlock>
+              <HelpBlock>
+                {this.props.outTableExist && <span className="text-danger">Export with such name already exists.{' '}</span>}
+                Name has to be unique across all exports in current configuration
+              </HelpBlock>
             </Col>
           </FormGroup>
 
