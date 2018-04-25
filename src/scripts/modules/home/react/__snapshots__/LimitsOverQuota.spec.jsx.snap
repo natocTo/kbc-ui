@@ -1,79 +1,63 @@
 exports[`<LimitsOverQuota /> should render limits 1`] = `
-<div
-  className="kbc-overview-component">
-  <div
-    className="row kbc-header kbc-limits">
-    <div
-      className="alert alert-danger">
-      <h3>
-        Project is over quota
-      </h3>
-      <ul
-        className="list-unstyled">
-        <li>
-          <Link
-            activeClassName="active"
-            className=""
-            to="settings-limits">
-            <strong>
-              Section 1
-               - 
-              My Limit 1
-            </strong>
-             
-            (12.88 GB of 107.37 GB)
-          </Link>
-        </li>
-        <li>
-          <Link
-            activeClassName="active"
-            className=""
-            to="settings-limits">
-            <strong>
-              Section 2
-               - 
-              My Limit 2
-            </strong>
-             
-            (1,100 of 15,000)
-          </Link>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+<AlertBlock
+  style="danger"
+  title="Project is over quota">
+  <ul
+    className="list-unstyled list-no-padding">
+    <li>
+      <Link
+        activeClassName="active"
+        className=""
+        to="settings-limits">
+        <strong>
+          Section 1
+           - 
+          My Limit 1
+        </strong>
+         
+        (12.88 GB of 107.37 GB)
+      </Link>
+    </li>
+    <li>
+      <Link
+        activeClassName="active"
+        className=""
+        to="settings-limits">
+        <strong>
+          Section 2
+           - 
+          My Limit 2
+        </strong>
+         
+        (1,100 of 15,000)
+      </Link>
+    </li>
+  </ul>
+</AlertBlock>
 `;
 
 exports[`<LimitsOverQuota /> should render nothing for no limits 1`] = `null`;
 
 exports[`<LimitsOverQuota /> should render one limit 1`] = `
-<div
-  className="kbc-overview-component">
-  <div
-    className="row kbc-header kbc-limits">
-    <div
-      className="alert alert-danger">
-      <h3>
-        Project is over quota
-      </h3>
-      <ul
-        className="list-unstyled">
-        <li>
-          <Link
-            activeClassName="active"
-            className=""
-            to="settings-limits">
-            <strong>
-              Section 1
-               - 
-              My Limit 1
-            </strong>
-             
-            (12.88 GB of 107.37 GB)
-          </Link>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+<AlertBlock
+  style="danger"
+  title="Project is over quota">
+  <ul
+    className="list-unstyled list-no-padding">
+    <li>
+      <Link
+        activeClassName="active"
+        className=""
+        to="settings-limits">
+        <strong>
+          Section 1
+           - 
+          My Limit 1
+        </strong>
+         
+        (12.88 GB of 107.37 GB)
+      </Link>
+    </li>
+  </ul>
+</AlertBlock>
 `;
