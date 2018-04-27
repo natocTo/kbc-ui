@@ -2,6 +2,7 @@ React = require('react')
 Link = React.createFactory(require('react-router').Link)
 Router = require 'react-router'
 Immutable = require 'immutable'
+classnames = require 'classnames'
 
 TransformationDetailStatic = React.createFactory(require './TransformationDetailStatic')
 
@@ -134,11 +135,13 @@ module.exports = React.createClass
             ,
               span className: 'fa fa-search fa-fw'
               ' Overview'
-          li {},
+          li className: classnames(disabled: @state.transformation.get('disabled')),
             RunComponentButton(
               title: "Run transformation"
               component: 'transformation'
               mode: 'link'
+              disabled: @state.transformation.get('disabled')
+              disabledReason: if @state.transformation.get('disabled') then 'Transformation is disabled' else ''
               runParams: =>
                 configBucketId: @state.bucketId
                 transformations: [@state.transformation.get('id')]
