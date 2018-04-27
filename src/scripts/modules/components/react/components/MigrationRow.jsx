@@ -157,7 +157,8 @@ export default React.createClass({
     }
 
     const configHelpText = 'List of all configurations to be migrated and their new counterparts';
-    const orchHelpText = 'List of orchestrations containing tasks of either the old db extractor or new db extractors. After a successful migration there should be only new db extractor tasks.';
+    const orchHelpText = 'List of orchestrations containing tasks of either the old component or new component. '
+      + 'After a successful migration there should be only new component\'s tasks.';
 
     const body = (
       !this.state.loadingStatus ?
