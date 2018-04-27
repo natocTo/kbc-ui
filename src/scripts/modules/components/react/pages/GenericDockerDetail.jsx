@@ -92,7 +92,6 @@ export default React.createClass({
             headerText="Runtime"
             onEditSubmit={this.onEditRuntimeSubmit}
             isValid={this.state.isValidEditingConfigDataRuntime}
-            supportsEncryption={false}
           />
         </div>
       );
