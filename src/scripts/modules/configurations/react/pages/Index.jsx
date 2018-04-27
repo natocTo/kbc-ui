@@ -59,13 +59,12 @@ export default React.createClass({
     RoutesStore.getRouter().transitionTo(this.state.componentId + '-row', transitionParams);
   },
 
-  renderNewConfigRowButton(wrapperClassName) {
+  renderNewConfigRowButton(type) {
     const state = this.state;
     const settings = this.state.settings;
     const createEmptyFn = settings.getIn(['row', 'onCreate']);
     const createFn = settings.getIn(['row', 'onSave']);
     return (
-      <div className={wrapperClassName}>
         <CreateConfigurationRowButton
           componentType={this.state.component.get('type')}
           label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
@@ -74,9 +73,8 @@ export default React.createClass({
           emptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
           onRowCreated={this.onRowCreated}
           createChangeDescription={() => settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added'}
-          type="button"
+          type={type}
         />
-      </div>
     );
   },
 
@@ -88,7 +86,7 @@ export default React.createClass({
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <div className="component-empty-state text-center">
             <p>No {settings.getIn(['row', 'name', 'plural']).toLowerCase()} created yet.</p>
-            {this.renderNewConfigRowButton()}
+            {this.renderNewConfigRowButton('button')}
           </div>
         </div>);
     } else {
@@ -96,7 +94,6 @@ export default React.createClass({
       const filter = this.state.settings.getIn(['row', 'searchFilter']);
       return (<ConfigurationRows
         key="rows"
-        newConfigButton={this.renderNewConfigRowButton('text-right')}
         rows={this.state.rows.toList()}
         componentId={this.state.componentId}
         component={this.state.component}
@@ -189,6 +186,9 @@ export default React.createClass({
                   />
                 </li>
               )}
+            <li>
+              {this.renderNewConfigRowButton('link')}
+            </li>
             <li>
               <DeleteConfigurationButton
                 componentId={this.state.componentId}
