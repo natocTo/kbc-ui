@@ -78,7 +78,6 @@ export default React.createClass({
                 isChanged={this.state.isChanged}
                 onEditSubmit={this.onEditSubmit}
                 isValid={this.state.isValidEditingConfigData}
-                supportsEncryption={this.state.component.get('flags').contains('encrypt')}
                 showDocumentationLink={!this.state.component.get('flags').contains('genericDockerUI-runtime')}
               />
 

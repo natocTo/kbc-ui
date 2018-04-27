@@ -15,7 +15,6 @@ export default React.createClass({
     onEditChange: PropTypes.func.isRequired,
     onEditSubmit: PropTypes.func.isRequired,
     isValid: PropTypes.bool.isRequired,
-    supportsEncryption: PropTypes.bool.isRequired,
     headerText: PropTypes.string,
     saveLabel: PropTypes.string,
     help: PropTypes.node,
@@ -90,7 +89,6 @@ export default React.createClass({
         onCancel={this.props.onEditCancel}
         isValid={this.props.isValid}
         saveLabel={this.props.saveLabel}
-        supportsEncryption={this.props.supportsEncryption}
         help={this.props.editHelp}
       />
     );
