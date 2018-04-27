@@ -2,7 +2,6 @@ React = require 'react'
 _ = require 'underscore'
 {List} = require 'immutable'
 
-Tooltip = React.createFactory(require('./Tooltip').default)
 Button = React.createFactory(require('react-bootstrap').Button)
 {Loader} = require('@keboola/indigo-ui')
 Markdown = React.createFactory(require('./Markdown').default)
@@ -21,17 +20,13 @@ StaticArea = React.createFactory React.createClass
 
   render: ->
     props = _.omit @props, 'text'
-    # props.className = 'kbc-inline-edit-link-markdown'
     span null,
       div props,
         if @props.text
           [
-            Tooltip
-              tooltip: @props.editTooltip
-              key: @props.editTooltip
-              placement: 'top'
-            ,
-              div className: 'text-right' ,
+            div
+              key: 'button-div'
+              className: 'text-right',
                 button
                   className: 'btn btn-link'
                   onClick: @props.onEditStart
@@ -49,17 +44,13 @@ StaticArea = React.createFactory React.createClass
           div
             className: 'text-right'
           ,
-            Tooltip
-              tooltip: @props.editTooltip
-              placement: 'top'
+            button
+              className: 'btn btn-link'
+              onClick: @props.onEditStart
             ,
-              button
-                className: 'btn btn-link'
-                onClick: @props.onEditStart
-              ,
-                span className: 'kbc-icon-pencil'
-                ' '
-                @props.placeholder
+              span className: 'kbc-icon-pencil'
+              ' '
+              @props.placeholder
 
 
 
