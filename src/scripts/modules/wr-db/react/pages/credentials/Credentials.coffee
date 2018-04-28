@@ -154,7 +154,7 @@ templateFn = (componentId, driver, isProvisioning) ->
           ,
             span className: 'td',
               h4 className: 'list-group-item-heading', "Own #{driverName} database"
-              p className: 'list-group-item-text', "User has own #{driverName} database and will provide credenetials"
+              p className: 'list-group-item-text', "User has own #{driverName} database and will provide credentials"
           a
             className: 'tr'
             onClick: @_toggleCreateProvWriteCredentials
