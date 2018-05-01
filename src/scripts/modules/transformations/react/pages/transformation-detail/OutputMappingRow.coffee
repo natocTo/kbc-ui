@@ -25,9 +25,11 @@ OutputMappingRow = React.createClass(
     pendingActions: React.PropTypes.object.isRequired
     definition: React.PropTypes.object,
     otherOutputMappings: React.PropTypes.object
+    disabled: React.PropTypes.bool
 
   getDefaultProps: ->
     definition: Immutable.Map()
+    disabled: false
 
   render: ->
     span {className: 'table', style: {wordBreak: 'break-word'}},
@@ -75,7 +77,7 @@ OutputMappingRow = React.createClass(
                 @props.outputMapping.get('destination')
             ]
           span {className: 'td col-xs-1 col-xs-1 text-right kbc-no-wrap'},
-            if (@props.outputMapping.get('destination') != '')
+            if (@props.outputMapping.get('destination') != '' && !@props.disabled)
               React.createElement DeleteButton,
                 tooltip: 'Delete Output'
                 isPending: @props.pendingActions.get('delete-output-' + @props.mappingIndex)
@@ -87,20 +89,20 @@ OutputMappingRow = React.createClass(
                       @props.outputMapping.get('destination')
                     "?"
                   onConfirm: @_handleDelete
-
-            React.createElement OutputMappingModal,
-              transformationBucket: this.props.bucket
-              mode: 'edit'
-              tables: @props.tables
-              buckets: @props.buckets
-              backend: @props.transformation.get("backend")
-              type: @props.transformation.get("type")
-              mapping: @props.editingOutputMapping
-              onChange: @_handleChange
-              onCancel: @_handleCancel
-              onSave: @_handleSave
-              definition: @props.definition
-              otherOutputMappings: @props.otherOutputMappings
+            if (!@props.disabled)
+              React.createElement OutputMappingModal,
+                transformationBucket: this.props.bucket
+                mode: 'edit'
+                tables: @props.tables
+                buckets: @props.buckets
+                backend: @props.transformation.get("backend")
+                type: @props.transformation.get("type")
+                mapping: @props.editingOutputMapping
+                onChange: @_handleChange
+                onCancel: @_handleCancel
+                onSave: @_handleSave
+                definition: @props.definition
+                otherOutputMappings: @props.otherOutputMappings
 
   _handleChange: (newMapping) ->
     actionCreators.updateTransformationEditingField(@props.bucket.get('id'),

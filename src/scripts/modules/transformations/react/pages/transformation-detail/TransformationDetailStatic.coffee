@@ -225,7 +225,7 @@ module.exports = React.createClass
         div {className: 'mapping'},
           h2 {},
             'Input Mapping'
-            if !@_isOpenRefineTransformation()
+            if !@_isOpenRefineTransformation() && !@_isMySqlTransformation()
               span className: 'pull-right add-mapping-button',
                 if !@_getInputMappingValue().count()
                   small className: 'empty-label',
@@ -263,6 +263,7 @@ module.exports = React.createClass
                         pendingActions: @props.pendingActions
                         otherDestinations: @_inputMappingDestinations(key)
                         definition: definition
+                        disabled: @_isMySqlTransformation()
                 ,
                   InputMappingDetail
                     fill: true
@@ -278,7 +279,7 @@ module.exports = React.createClass
         div {className: 'mapping'},
           h2 {},
             'Output Mapping'
-            if !@_isOpenRefineTransformation()
+            if !@_isOpenRefineTransformation() && !@_isMySqlTransformation()
               span className: 'pull-right add-mapping-button',
                 if !@_getOutputMappingValue().count()
                   small className: 'empty-label',
@@ -321,6 +322,7 @@ module.exports = React.createClass
                           .filter((otherOutputMapping, otherOutputMappingKey) ->
                             return otherOutputMappingKey != key
                           )
+                        disabled: @_isMySqlTransformation()
                 ,
                   OutputMappingDetail
                     fill: true
