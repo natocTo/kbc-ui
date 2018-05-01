@@ -391,6 +391,7 @@ module.exports = React.createClass
         isChanged: @props.editingFields.get('queriesChanged', false)
         highlightQueryNumber: @props.highlightQueryNumber
         highlightingQueryDisabled: @props.highlightingQueryDisabled
+        disabled: @_isMySqlTransformation()
         onEditCancel: =>
           TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
             @props.transformationId, 'queriesString')
