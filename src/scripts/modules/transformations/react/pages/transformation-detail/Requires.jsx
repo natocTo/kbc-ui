@@ -16,7 +16,7 @@ export default React.createClass({
     isSaving: PropTypes.bool.isRequired,
     onEditChange: PropTypes.func.isRequired,
     bucketId: PropTypes.string.isRequired,
-    disabled: PropTypes.boolean
+    disabled: PropTypes.bool
   },
 
   getDefaultProps() {
