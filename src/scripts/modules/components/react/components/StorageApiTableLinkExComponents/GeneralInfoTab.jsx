@@ -8,6 +8,7 @@ import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import filesize from 'filesize';
 import TableUpdatedByComponentInfo from '../../../../../react/common/TableUpdatedByComponentInfo';
+import formatCardinalNumber from '../../../../../utils/formatCardinalNumber';
 
 export default React.createClass({
 
@@ -64,10 +65,7 @@ export default React.createClass({
   },
 
   renderRowsCount(value) {
-    if (value === null) {
-      return 'N/A';
-    }
-    return value + ' rows';
+    return formatCardinalNumber(value) + ' rows';
   },
 
   renderDataSize(value) {
