@@ -35,7 +35,7 @@ ConfigurationRowEditField = React.createFactory(require(
   findInputMappingDefinition, findOutputMappingDefinition} = require('../../../../components/utils/mappingDefinitions')
 
 
-{div, span, input, strong, form, button, h2, i, ul, li, button, a, small, p, code, em, small, img} = React.DOM
+{div, span, input, strong, form, button, h2, h3, i, ul, li, button, a, small, p, code, em, small, img} = React.DOM
 
 module.exports = React.createClass
   displayName: 'TransformationDetailStatic'
@@ -72,6 +72,9 @@ module.exports = React.createClass
         'source': 'data.csv'
       }
     ])
+
+  _isMySqlTransformation: ->
+    @props.transformation.get("backend") == "db" || @props.transformation.get("backend") == "mysql"
 
   _isOpenRefineTransformation: ->
     @props.transformation.get("backend") == "docker" && @props.transformation.get("type") == "openrefine"
@@ -183,6 +186,23 @@ module.exports = React.createClass
                 a {href: "https://help.keboola.com/manipulation/transformations/openrefine/"},
                   'documentation'
                 '.'
+          ]
+
+        if @_isMySqlTransformation()
+          [
+            div {className: "alert alert-warning"},
+              h3 {},
+                'MySQL Deprecation Warning'
+
+              div {className: "help-block"},
+                span {},
+                  'MySQL transformations are deprecated. '
+                  'Please migrate this transformation to Snowflake. '
+                  'If you encounter any issues, please contact us using the support button. '
+                  'Learn more about the MySQL transformation deprecation '
+                  a {href: "http://status.keboola.com/deprecating-mysql-storage-and-transformations"},
+                    'timeline and reasons'
+                  '.'
           ]
 
         ConfigurationRowEditField
