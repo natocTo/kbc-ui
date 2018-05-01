@@ -166,6 +166,7 @@ module.exports = React.createClass
           React.createElement Phase,
             bucketId: @props.bucketId
             transformation: @props.transformation
+            disabled: @_isMySqlTransformation()
           ' '
           TransformationTypeLabel
             backend: @props.transformation.get 'backend'
