@@ -115,6 +115,7 @@ module.exports = React.createClass
     props = @props
     span {},
       React.createElement Requires,
+        disabled: @_isMySqlTransformation()
         transformation: @props.transformation
         transformations: @props.transformations
         isSaving: @props.pendingActions.has('save-requires')
