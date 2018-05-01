@@ -33,10 +33,10 @@ export default React.createClass({
           <div className="row kbc-header kbc-expiration kbc-deprecation">
             <div className="alert alert-warning">
               <h3>
-                Project contains deprecated MySQL transformations
+                Please migrate these MySQL transformations to Snowflake
               </h3>
               <div>
-                Learn more about the deprecation <a href="http://status.keboola.com/deprecating-mysql-storage-and-transformations" target="_blank">timeline and reasons</a>.
+                Learn more about the MySQL transformation deprecation <a href="http://status.keboola.com/deprecating-mysql-storage-and-transformations" target="_blank">timeline and reasons</a>.
               </div>
               <div className="row">
                 {deprecatedTransformationsInBuckets.map(function(bucket, indexBucket) {
