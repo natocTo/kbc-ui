@@ -6,14 +6,23 @@ export default React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
     transformation: PropTypes.object.isRequired,
-    bucketId: PropTypes.string.isRequired
+    bucketId: PropTypes.string.isRequired,
+    disabled: PropTypes.bool
   },
+
+  getDefaultProps() {
+    return {
+      disabled: false
+    };
+  },
+
 
   render() {
     return (
       <PhaseModal
         transformation={this.props.transformation}
         bucketId={this.props.bucketId}
+        disabled={this.props.disabled}
       />
     );
   }

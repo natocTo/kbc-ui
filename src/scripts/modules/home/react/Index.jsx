@@ -96,14 +96,12 @@ export default React.createClass({
           )}
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-
-          <DeprecatedComponents
-            components={this.state.installedComponents}
-          />
           <DeprecatedTransformations
             transformations={this.state.transformations}
           />
-
+          <DeprecatedComponents
+            components={this.state.installedComponents}
+          />
         </div>
         }
         <div className="kbc-main-content">

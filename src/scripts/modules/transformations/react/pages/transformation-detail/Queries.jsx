@@ -22,7 +22,14 @@ export default React.createClass({
     onEditSubmit: PropTypes.func.isRequired,
     isChanged: PropTypes.bool.isRequired,
     highlightQueryNumber: PropTypes.number,
-    highlightingQueryDisabled: PropTypes.bool
+    highlightingQueryDisabled: PropTypes.bool,
+    disabled: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      disabled: false
+    };
   },
 
   render() {
@@ -45,7 +52,7 @@ export default React.createClass({
       <span className="pull-right">
         <SaveButtons
           isSaving={this.props.isSaving}
-          disabled={this.props.isQueriesProcessing}
+          disabled={this.props.isQueriesProcessing || this.props.disabled}
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
@@ -60,7 +67,7 @@ export default React.createClass({
         queries={this.props.queries}
         splitQueries={this.props.splitQueries}
         backend={this.props.transformation.get('backend')}
-        disabled={this.props.isSaving}
+        disabled={this.props.isSaving || this.props.disabled}
         onChange={this.props.onEditChange}
         highlightQueryNumber={this.props.highlightQueryNumber}
         highlightingQueryDisabled={this.props.highlightingQueryDisabled}

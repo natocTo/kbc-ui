@@ -15,7 +15,14 @@ export default React.createClass({
     requires: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditChange: PropTypes.func.isRequired,
-    bucketId: PropTypes.string.isRequired
+    bucketId: PropTypes.string.isRequired,
+    disabled: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      disabled: false
+    };
   },
 
   onValueClick: function(value) {
@@ -38,7 +45,7 @@ export default React.createClass({
             value={this.props.requires.toArray()}
             options={this.getSelectOptions(this.props.transformations, this.props.transformation)}
             multi={true}
-            disabled={this.props.isSaving}
+            disabled={this.props.isSaving || this.props.disabled}
             onChange={this.handleValueChange}
             placeholder="Add required transformation..."
             isLoading={this.props.isSaving}

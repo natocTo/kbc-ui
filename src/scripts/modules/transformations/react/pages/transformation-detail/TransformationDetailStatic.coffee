@@ -35,7 +35,7 @@ ConfigurationRowEditField = React.createFactory(require(
   findInputMappingDefinition, findOutputMappingDefinition} = require('../../../../components/utils/mappingDefinitions')
 
 
-{div, span, input, strong, form, button, h2, i, ul, li, button, a, small, p, code, em, small, img} = React.DOM
+{div, span, input, strong, form, button, h2, h3, i, ul, li, button, a, small, p, code, em, small, img} = React.DOM
 
 module.exports = React.createClass
   displayName: 'TransformationDetailStatic'
@@ -72,6 +72,9 @@ module.exports = React.createClass
         'source': 'data.csv'
       }
     ])
+
+  _isMySqlTransformation: ->
+    @props.transformation.get("backend") == "db" || @props.transformation.get("backend") == "mysql"
 
   _isOpenRefineTransformation: ->
     @props.transformation.get("backend") == "docker" && @props.transformation.get("type") == "openrefine"
@@ -112,6 +115,7 @@ module.exports = React.createClass
     props = @props
     span {},
       React.createElement Requires,
+        disabled: @_isMySqlTransformation()
         transformation: @props.transformation
         transformations: @props.transformations
         isSaving: @props.pendingActions.has('save-requires')
@@ -162,6 +166,7 @@ module.exports = React.createClass
           React.createElement Phase,
             bucketId: @props.bucketId
             transformation: @props.transformation
+            disabled: @_isMySqlTransformation()
           ' '
           TransformationTypeLabel
             backend: @props.transformation.get 'backend'
@@ -185,6 +190,21 @@ module.exports = React.createClass
                 '.'
           ]
 
+        if @_isMySqlTransformation()
+          div {className: "alert alert-warning"},
+            h3 {},
+              'MySQL Deprecation Warning'
+
+            div {className: "help-block"},
+              span {},
+                'MySQL transformations are deprecated. '
+                'Please migrate this transformation to Snowflake. '
+                'If you encounter any issues, please contact us using the support button. '
+                'Learn more about the MySQL transformation deprecation '
+                a {href: "http://status.keboola.com/deprecating-mysql-storage-and-transformations"},
+                  'timeline and reasons'
+                '.'
+
         ConfigurationRowEditField
           componentId: 'transformation'
           configId: @props.bucketId
@@ -204,7 +224,7 @@ module.exports = React.createClass
         div {className: 'mapping'},
           h2 {},
             'Input Mapping'
-            if !@_isOpenRefineTransformation()
+            if !@_isOpenRefineTransformation() && !@_isMySqlTransformation()
               span className: 'pull-right add-mapping-button',
                 if !@_getInputMappingValue().count()
                   small className: 'empty-label',
@@ -242,6 +262,7 @@ module.exports = React.createClass
                         pendingActions: @props.pendingActions
                         otherDestinations: @_inputMappingDestinations(key)
                         definition: definition
+                        disabled: @_isMySqlTransformation()
                 ,
                   InputMappingDetail
                     fill: true
@@ -257,7 +278,7 @@ module.exports = React.createClass
         div {className: 'mapping'},
           h2 {},
             'Output Mapping'
-            if !@_isOpenRefineTransformation()
+            if !@_isOpenRefineTransformation() && !@_isMySqlTransformation()
               span className: 'pull-right add-mapping-button',
                 if !@_getOutputMappingValue().count()
                   small className: 'empty-label',
@@ -300,6 +321,7 @@ module.exports = React.createClass
                           .filter((otherOutputMapping, otherOutputMappingKey) ->
                             return otherOutputMappingKey != key
                           )
+                        disabled: @_isMySqlTransformation()
                 ,
                   OutputMappingDetail
                     fill: true
@@ -370,6 +392,7 @@ module.exports = React.createClass
         isChanged: @props.editingFields.get('queriesChanged', false)
         highlightQueryNumber: @props.highlightQueryNumber
         highlightingQueryDisabled: @props.highlightingQueryDisabled
+        disabled: @_isMySqlTransformation()
         onEditCancel: =>
           TransformationsActionCreators.cancelTransformationEditingField(@props.bucketId,
             @props.transformationId, 'queriesString')
