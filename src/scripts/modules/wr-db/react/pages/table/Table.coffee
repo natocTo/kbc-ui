@@ -84,11 +84,9 @@ templateFn = (componentId) ->
     dataPreview: null
 
   _prepareColumns: (configColumns, storageColumns) ->
-    allColumns = configColumns
-      .map((c) -> c.get('name'))
-      .toSet()
-      .union(storageColumns.toSet())
-      .toList()
+    configColumnsNamesSet = configColumns.map((c) -> c.get('name')).toSet()
+    deletedColumns = configColumnsNamesSet.subtract(storageColumns)
+    allColumns = storageColumns.concat(deletedColumns)
     allColumns.map (storageColumn) ->
       configColumnFound = configColumns.find( (cc) -> cc.get('name') == storageColumn)
       if configColumnFound
