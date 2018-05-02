@@ -22,14 +22,12 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    saveLabel: PropTypes.string,
-    supportsEncryption: PropTypes.bool
+    saveLabel: PropTypes.string
   },
 
   getDefaultProps() {
     return {
       saveLabel: 'Save configuration',
-      supportsEncryption: false,
       schema: Immutable.Map()
     };
   },
@@ -75,7 +73,7 @@ export default React.createClass({
     }
     return (
       <span>
-        {this.props.supportsEncryption ? (<p className="help-block small">Properties prefixed with <code>#</code> sign will be encrypted on save. Already encrypted strings will persist.</p>) : null}
+        <p className="help-block small">Properties prefixed with <code>#</code> sign will be encrypted on save. Already encrypted strings will persist.</p>
         <CodeMirror
           value={this.props.data}
           theme="solarized"

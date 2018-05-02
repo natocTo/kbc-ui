@@ -92,7 +92,6 @@ export default React.createClass({
             headerText="Runtime"
             onEditSubmit={this.onEditRuntimeSubmit}
             isValid={this.state.isValidEditingConfigDataRuntime}
-            supportsEncryption={false}
           />
         </div>
       );
@@ -238,7 +237,6 @@ export default React.createClass({
                      isValid={this.state.isValidEditingConfigDataParameters}
                      headerText="Configuration"
                      saveLabel="Save configuration"
-                     supportsEncryption={this.state.component.get('flags').includes('encrypt')}
                      schema={this.state.component.get('configurationSchema', Map())}
                      editHelp={this.state.component.get('configurationDescription')}
                      documentationUrl={this.state.component.get('documentationUrl')}

@@ -22,45 +22,27 @@ import configurationMovedToTrash from './react/components/notifications/configur
 import configurationMovedToTrashWithRestore from './react/components/notifications/configurationMovedToTrashWithRestore';
 
 const storeEncodedConfig = function(componentId, configId, dataToSave, changeDescription) {
-  let component = InstalledComponentsStore.getComponent(componentId);
-  if (component.get('flags').includes('encrypt')) {
-    const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
-    let projectId = ApplicationStore.getCurrentProject().get('id');
-    return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
-      const dataToSaveEncrypted = {
-        configuration: JSON.stringify(encryptedResponse.body),
-        changeDescription: changeDescription
-      };
-      return installedComponentsApi.updateComponentConfiguration(componentId, configId, dataToSaveEncrypted);
-    });
-  } else {
-    const dataToSavePrepared = {
-      configuration: JSON.stringify(dataToSave),
+  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
+  let projectId = ApplicationStore.getCurrentProject().get('id');
+  return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
+    const dataToSaveEncrypted = {
+      configuration: JSON.stringify(encryptedResponse.body),
       changeDescription: changeDescription
     };
-    return installedComponentsApi.updateComponentConfiguration(componentId, configId, dataToSavePrepared);
-  }
+    return installedComponentsApi.updateComponentConfiguration(componentId, configId, dataToSaveEncrypted);
+  });
 };
 
 const storeEncodedConfigRow = function(componentId, configId, rowId, dataToSave, changeDescription) {
-  let component = InstalledComponentsStore.getComponent(componentId);
-  if (component.get('flags').includes('encrypt')) {
-    const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
-    let projectId = ApplicationStore.getCurrentProject().get('id');
-    return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
-      const dataToSaveEncrypted = {
-        configuration: JSON.stringify(encryptedResponse.body),
-        changeDescription: changeDescription
-      };
-      return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSaveEncrypted);
-    });
-  } else {
-    const dataToSavePrepared = {
-      configuration: JSON.stringify(dataToSave),
+  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
+  let projectId = ApplicationStore.getCurrentProject().get('id');
+  return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
+    const dataToSaveEncrypted = {
+      configuration: JSON.stringify(encryptedResponse.body),
       changeDescription: changeDescription
     };
-    return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSavePrepared);
-  }
+    return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSaveEncrypted);
+  });
 };
 
 module.exports = {

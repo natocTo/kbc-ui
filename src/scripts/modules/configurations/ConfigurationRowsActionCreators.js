@@ -3,7 +3,6 @@ import Dispatcher from '../../Dispatcher';
 import Constants from './ConfigurationRowsConstants';
 import ConfigurationRowsStore from './ConfigurationRowsStore';
 import InstalledComponentsApi from '../components/InstalledComponentsApi';
-import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
@@ -15,24 +14,15 @@ import stringUtils from '../../utils/string';
 const { webalize } = stringUtils;
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
-  let component = InstalledComponentsStore.getComponent(componentId);
-  if (component.get('flags').includes('encrypt')) {
-    const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
-    const projectId = ApplicationStore.getCurrentProject().get('id');
-    return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
-      const dataToSaveEncrypted = {
-        configuration: JSON.stringify(encryptedResponse.body),
-        changeDescription: changeDescription
-      };
-      return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, dataToSaveEncrypted, changeDescription);
-    });
-  } else {
-    const dataToSavePrepared = {
-      configuration: JSON.stringify(configuration),
+  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
+  const projectId = ApplicationStore.getCurrentProject().get('id');
+  return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
+    const dataToSaveEncrypted = {
+      configuration: JSON.stringify(encryptedResponse.body),
       changeDescription: changeDescription
     };
-    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, dataToSavePrepared, changeDescription);
-  }
+    return InstalledComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, dataToSaveEncrypted, changeDescription);
+  });
 };
 
 module.exports = {

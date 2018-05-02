@@ -3,30 +3,20 @@ import Constants from './ConfigurationsConstants';
 import ConfigurationsStore from './ConfigurationsStore';
 import InstalledComponentsApi from '../components/InstalledComponentsApi';
 import VersionActionCreators from '../components/VersionsActionCreators';
-import InstalledComponentsStore from '../components/stores/InstalledComponentsStore';
 import ApplicationStore from '../../stores/ApplicationStore';
 import removeEmptyEncryptAttributes from '../components/utils/removeEmptyEncryptAttributes';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
 
 const storeEncodedConfiguration = function(componentId, configurationId, configuration, changeDescription) {
-  let component = InstalledComponentsStore.getComponent(componentId);
-  if (component.get('flags').includes('encrypt')) {
-    const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
-    const projectId = ApplicationStore.getCurrentProject().get('id');
-    return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
-      const dataToSaveEncrypted = {
-        configuration: JSON.stringify(encryptedResponse.body),
-        changeDescription: changeDescription
-      };
-      return InstalledComponentsApi.updateComponentConfiguration(componentId, configurationId, dataToSaveEncrypted);
-    });
-  } else {
-    const dataToSavePrepared = {
-      configuration: JSON.stringify(configuration),
+  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
+  const projectId = ApplicationStore.getCurrentProject().get('id');
+  return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
+    const dataToSaveEncrypted = {
+      configuration: JSON.stringify(encryptedResponse.body),
       changeDescription: changeDescription
     };
-    return InstalledComponentsApi.updateComponentConfiguration(componentId, configurationId, dataToSavePrepared, changeDescription);
-  }
+    return InstalledComponentsApi.updateComponentConfiguration(componentId, configurationId, dataToSaveEncrypted);
+  });
 };
 
 module.exports = {
