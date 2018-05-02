@@ -191,21 +191,19 @@ module.exports = React.createClass
           ]
 
         if @_isMySqlTransformation()
-          [
-            div {className: "alert alert-warning"},
-              h3 {},
-                'MySQL Deprecation Warning'
+          div {className: "alert alert-warning"},
+            h3 {},
+              'MySQL Deprecation Warning'
 
-              div {className: "help-block"},
-                span {},
-                  'MySQL transformations are deprecated. '
-                  'Please migrate this transformation to Snowflake. '
-                  'If you encounter any issues, please contact us using the support button. '
-                  'Learn more about the MySQL transformation deprecation '
-                  a {href: "http://status.keboola.com/deprecating-mysql-storage-and-transformations"},
-                    'timeline and reasons'
-                  '.'
-          ]
+            div {className: "help-block"},
+              span {},
+                'MySQL transformations are deprecated. '
+                'Please migrate this transformation to Snowflake. '
+                'If you encounter any issues, please contact us using the support button. '
+                'Learn more about the MySQL transformation deprecation '
+                a {href: "http://status.keboola.com/deprecating-mysql-storage-and-transformations"},
+                  'timeline and reasons'
+                '.'
 
         ConfigurationRowEditField
           componentId: 'transformation'
