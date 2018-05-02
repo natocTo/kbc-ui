@@ -54,10 +54,10 @@ module.exports = React.createClass
   displayName: "JobDetail"
 
   getStateFromStores: ->
-    job = JobsStore.get RoutesStore.getCurrentRouteIntParam('jobId')
+    job = JobsStore.get(RoutesStore.getCurrentRouteIntParam('jobId'))
 
     configuration = new Map()
-    if job.hasIn ['params', 'config']
+    if job and job.hasIn ['params', 'config']
       config = job.getIn ['params', 'config']
       configuration = InstalledComponentsStore.getConfig(getComponentId(job), config?.toString())
 
@@ -74,6 +74,8 @@ module.exports = React.createClass
     activeAccordion: activeAccordion
 
   componentDidUpdate: (prevProps, prevState) ->
+    if not @state.job
+      return
     currentStatus = @state.job.get 'status'
     prevStatus = prevState.job.get 'status'
     return if currentStatus == prevStatus
@@ -92,13 +94,17 @@ module.exports = React.createClass
 
   render: ->
     job = @state.job
-    div {className: 'container-fluid'},
-      div {className: 'kbc-main-content'},
-        @_renderGeneralInfoRow(job)
-        @_renderRunInfoRow(job)
-        @_renderErrorResultRow(job) if job.get('status') == 'error'
-        @_renderAccordion(job)
-        @_renderLogRow(job)
+    if @state.job
+      div {className: 'container-fluid'},
+        div {className: 'kbc-main-content'},
+          @_renderGeneralInfoRow(job)
+          @_renderRunInfoRow(job)
+          @_renderErrorResultRow(job) if job.get('status') == 'error'
+          @_renderAccordion(job)
+          @_renderLogRow(job)
+    else
+      null
+
 
   _renderErrorDetails: (job) ->
     exceptionId = job.getIn ['result', 'exceptionId']

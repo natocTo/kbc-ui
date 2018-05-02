@@ -18,7 +18,9 @@ module.exports = React.createClass
     job: JobsStore.get jobId
 
   render: ->
-    span null,
-      JobTerminateButton
-        job: @state.job
-
+    if @state.job
+      span null,
+        JobTerminateButton
+          job: @state.job
+    else
+      null
