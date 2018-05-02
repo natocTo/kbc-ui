@@ -19,6 +19,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import {factory as eventsFactory} from '../../../sapi-events/EventsService';
 import RoutesStore from '../../../../stores/RoutesStore';
 import hiddenComponents from '../../utils/hiddenComponents';
+import formatCardinalNumber from '../../../../utils/formatCardinalNumber';
 
 const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableImportError', 'tableExported'];
 
@@ -199,7 +200,7 @@ export default React.createClass({
           {filesize(table.get('dataSizeBytes', 'N/A'))}
         </div>
         <div>
-          {table.get('rowsCount', 'N/A')} rows
+          {formatCardinalNumber(table.get('rowsCount'))} rows
         </div>
       </span>
     );
