@@ -29,7 +29,7 @@ export default React.createClass({
   },
 
   canBeTerminated() {
-    return this.props.job.get('status') === 'waiting' || this.props.job.get('status') === 'processing';
+    return this.props.job && (this.props.job.get('status') === 'waiting' || this.props.job.get('status') === 'processing');
   }
 
 });
