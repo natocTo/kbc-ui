@@ -1,7 +1,8 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Alert, Modal, Table, Tabs, Tab} from 'react-bootstrap';
+import {Modal, Table, Tabs, Tab} from 'react-bootstrap';
+import {AlertBlock} from '@keboola/indigo-ui';
 import {Check, Loader, RefreshIcon} from '@keboola/indigo-ui';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
@@ -200,7 +201,7 @@ export default React.createClass({
       bsSize: 'large'
     };
     return (
-      <div className="migration-row">
+      <div className="kbc-overview-component-container">
         {this.renderInfoRow()}
         {this.renderModal(dialogTitle, body, footer, dialogProps)}
       </div>
@@ -229,15 +230,10 @@ export default React.createClass({
 
   renderInfoRow() {
     return (
-      <Alert bsStyle="warning">
-        <span>
-          <h3>This component has been deprecated</h3>
-          <div className="migration-row-content">
-            {this.getInfo()}
-          </div>
-        </span>
-          {this.renderMigrationButton()}
-      </Alert>
+      <AlertBlock style="warning" title="This component has been deprecated">
+        {this.getInfo()}
+        {this.renderMigrationButton()}
+      </AlertBlock>
     );
   },
 

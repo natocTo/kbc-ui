@@ -1,9 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
-
+import {AlertBlock} from '@keboola/indigo-ui';
 import {bytesToGBFormatted, numericMetricFormatted} from '../../../utils/numbers';
-
-import './limits.less';
 
 export default React.createClass({
   propTypes: {
@@ -18,18 +16,11 @@ export default React.createClass({
     }
 
     return (
-        <div className="kbc-overview-component">
-          <div className="row kbc-header kbc-limits">
-            <div className="alert alert-danger">
-              <h3>
-                Project is over quota
-              </h3>
-              <ul className="list-unstyled">
-                {limits.map(this.limit)}
-              </ul>
-            </div>
-          </div>
-        </div>
+      <AlertBlock style="danger" title="Project is over quota">
+        <ul className="list-unstyled list-no-padding">
+          {limits.map(this.limit)}
+        </ul>
+      </AlertBlock>
     );
   },
 
