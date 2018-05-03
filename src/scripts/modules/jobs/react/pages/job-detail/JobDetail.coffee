@@ -238,6 +238,7 @@ module.exports = React.createClass
               'Configuration'
             strong {className: 'col-md-9'},
               configurationLink
+              @._renderConfigVersion(job)
           div {className: 'row'},
             span {className: 'col-md-3'},
               'Created At'
@@ -271,6 +272,11 @@ module.exports = React.createClass
                 Duration({startTime: job.get('startTime'), endTime: job.get('endTime')})
               else
                 'N/A'
+
+  _renderConfigVersion: (job) ->
+    configVersion = job.getIn(['result', 'configVersion'], null)
+    if configVersion != null
+      ' - Version #' + configVersion
 
   _renderAccordion: (job) ->
     isTransformation = job.get('component') == 'transformation'
