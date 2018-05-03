@@ -2,18 +2,28 @@
   float: none;
 }
 
-.badge{
-  &-component-container{
+.badge {
+  &-component-container {
     position: absolute;
-    right: 12px ;
+    right: 12px;
     top: 12px;
   }
-  &-component-item{
+  &-component-item {
     margin-left: 3px;
   }
 }
 
-.kbc-components-overview .td{
+.kbc-components-overview .td {
   position: relative;
+  padding: 24px;
+  text-decoration: none;
 
+  &:hover {
+    background: #c8edfa;
+    box-shadow: inset 0px 0px 0px 2px #25b8eb;
+  }
+
+  .kbc-components-overview-description {
+    color: #282d38;
+  }
 }

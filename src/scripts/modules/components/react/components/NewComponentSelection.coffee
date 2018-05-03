@@ -2,6 +2,7 @@ React = require 'react'
 ComponentsActionCreators = require '../../ComponentsActionCreators'
 ComponentIcon = React.createFactory(require('../../../../react/common/ComponentIcon').default)
 ComponentDetailLink = React.createFactory(require('../../../../react/common/ComponentDetailLink').default)
+ComponentBadges = React.createFactory(require('../../../../react/common/ComponentBadges').default)
 SearchRow = React.createFactory(require('../../../../react/common/SearchRow').default)
 Link = React.createFactory(require('react-router').Link)
 Button = React.createFactory(require('react-bootstrap').Button)
@@ -21,31 +22,17 @@ ComponentBox = React.createClass
 
   render: ->
     component = @props.component
-    div className: 'td',
-      div className: 'badge-component-container',
-        div
-          className: 'badge badge-component-item'
-          ,
-          'Alpha'
-        div
-          className: 'badge badge-component-item'
-          ,
-          '3rd'
+    ComponentDetailLink
+      componentId: @props.component.get("id")
+      type: @props.component.get("type")
+      ComponentBadges
+        flags: @props.component.get("flags")
       ComponentIcon
         component: component
         size: '64'
       h2 null,
         component.get('name')
-      p null, component.get('description')
-      ComponentDetailLink
-        componentId: @props.component.get("id")
-        type: @props.component.get("type")
-
-        button
-          className: 'btn btn-success'
-          onClick: @open
-        ,
-          'More'
+      p className: 'kbc-components-overview-description', component.get('description')
 
 module.exports = React.createClass
   displayName: 'NewComponentSelection'

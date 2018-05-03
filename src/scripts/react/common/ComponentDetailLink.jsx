@@ -15,6 +15,7 @@ export default React.createClass({
         params={{
           component: this.props.componentId
         }}
+        className="td"
       >
         {this.props.children}
       </Link>
