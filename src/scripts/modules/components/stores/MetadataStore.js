@@ -88,6 +88,23 @@ var MetadataStore = StoreUtils.createStore({
 
   isSavingMetadata: function(objectType, objectId, metadataKey) {
     return _store.hasIn(['savingMetadata', objectType, objectId, metadataKey]);
+  },
+
+  getTableLastUpdatedInfo: function(tableId) {
+    let componentFound = this.getTableMetadata(tableId, 'system', 'KBC.lastUpdatedBy.component.id');
+    let configFound = this.getTableMetadata(tableId, 'system', 'KBC.lastUpdatedBy.configuration.id');
+    if (!componentFound || !configFound) {
+      componentFound = this.getTableMetadata(tableId, 'system', 'KBC.createdBy.component.id');
+      configFound = this.getTableMetadata(tableId, 'system', 'KBC.createdBy.configuration.id');
+    }
+    const componentId = componentFound && componentFound.get('value');
+    const configId = configFound && configFound.get('value');
+    const timestamp = configFound && configFound.get('timestamp');
+    return {
+      'component': componentId,
+      'config': configId,
+      'timestamp': timestamp
+    };
   }
 
 });
