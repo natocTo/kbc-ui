@@ -11,10 +11,7 @@ export default React.createClass({
 
   getStateFromStores() {
     const components = ComponentsStore
-      .getFilteredForType(this.props.type)
-      .filter((component) => {
-        return !component.get('flags').includes('excludeFromNewList');
-      });
+      .getFilteredForType(this.props.type);
 
     return {
       components: components,
