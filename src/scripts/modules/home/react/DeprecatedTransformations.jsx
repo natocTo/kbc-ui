@@ -30,9 +30,9 @@ export default React.createClass({
     }
     return (
       <AlertBlock style="warning" title="Please migrate these MySQL transformations to Snowflake">
-        <div>
+        <p>
           Learn more about the MySQL transformation deprecation <a href="http://status.keboola.com/deprecating-mysql-storage-and-transformations" target="_blank">timeline and reasons</a>.
-        </div>
+        </p>
         <div className="row">
             {deprecatedTransformationsInBuckets.map(function(bucket, indexBucket) {
               return (
