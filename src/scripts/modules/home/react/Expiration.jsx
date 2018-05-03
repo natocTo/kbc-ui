@@ -24,7 +24,7 @@ export default React.createClass({
     }
 
     return (
-      <AlertBlock style="warning" title={'This project will expire in '  + this.days()}>
+      <AlertBlock type="warning" title={'This project will expire in '  + this.days()}>
         <p>Please <a onClick={contactSupport}>contact support</a> for project plan upgrade.</p>
       </AlertBlock>
     );

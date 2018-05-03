@@ -16,7 +16,7 @@ export default React.createClass({
     }
 
     return (
-      <AlertBlock style="danger" title="Project is over quota">
+      <AlertBlock type="danger" title="Project is over quota">
         <ul className="list-unstyled list-no-padding">
           {limits.map(this.limit)}
         </ul>

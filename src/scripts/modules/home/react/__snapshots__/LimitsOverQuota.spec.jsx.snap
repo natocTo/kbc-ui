@@ -1,7 +1,7 @@
 exports[`<LimitsOverQuota /> should render limits 1`] = `
 <AlertBlock
-  style="danger"
-  title="Project is over quota">
+  title="Project is over quota"
+  type="danger">
   <ul
     className="list-unstyled list-no-padding">
     <li>
@@ -40,8 +40,8 @@ exports[`<LimitsOverQuota /> should render nothing for no limits 1`] = `null`;
 
 exports[`<LimitsOverQuota /> should render one limit 1`] = `
 <AlertBlock
-  style="danger"
-  title="Project is over quota">
+  title="Project is over quota"
+  type="danger">
   <ul
     className="list-unstyled list-no-padding">
     <li>

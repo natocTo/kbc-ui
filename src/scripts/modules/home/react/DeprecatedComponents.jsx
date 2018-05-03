@@ -23,7 +23,7 @@ export default React.createClass({
     });
 
     return (
-      <AlertBlock style="warning" title="Project contains deprecated components">
+      <AlertBlock type="warning" title="Project contains deprecated components">
         <div className="row">
           {grouped.entrySeq().map(function([type, components]) {
             return (

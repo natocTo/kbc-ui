@@ -230,7 +230,7 @@ export default React.createClass({
 
   renderInfoRow() {
     return (
-      <AlertBlock style="warning" title="This component has been deprecated">
+      <AlertBlock type="warning" title="This component has been deprecated">
         {this.getInfo()}
         {this.renderMigrationButton()}
       </AlertBlock>
