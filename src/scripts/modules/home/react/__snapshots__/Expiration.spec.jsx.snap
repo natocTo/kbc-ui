@@ -1,7 +1,7 @@
 exports[`<Expiration /> should render expiration warning when expiration is close 1`] = `
 <AlertBlock
-  style="warning"
-  title="This project will expire in 1 day">
+  title="This project will expire in 1 day"
+  type="warning">
   <p>
     Please 
     <a

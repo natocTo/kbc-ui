@@ -29,7 +29,7 @@ export default React.createClass({
       return null;
     }
     return (
-      <AlertBlock style="warning" title="Please migrate these MySQL transformations to Snowflake">
+      <AlertBlock type="warning" title="Please migrate these MySQL transformations to Snowflake">
         <p>
           Learn more about the MySQL transformation deprecation <a href="http://status.keboola.com/deprecating-mysql-storage-and-transformations" target="_blank">timeline and reasons</a>.
         </p>
