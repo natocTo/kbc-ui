@@ -14,6 +14,7 @@ module.exports = React.createClass
     columnsOptions: React.PropTypes.array.isRequired
     onChange: React.PropTypes.func.isRequired
     disabled: React.PropTypes.bool.isRequired
+    tableId: React.PropTypes.string.isRequired
 
   getInitialState: ->
     column: ""
@@ -57,6 +58,9 @@ module.exports = React.createClass
     value = @props.value.remove(key)
     @props.onChange(value)
 
+  _handleAutoloadDataTypes: ->
+    false
+
   _datatypesMap:
     NUMBER:
       name: "NUMBER",
@@ -94,11 +98,20 @@ module.exports = React.createClass
       !_.contains(_.keys(component.props.value.toJS()), option.value)
     )
 
+  _getColumns: ->
+    _.map(@props.columnsOptions, (option) ->
+      option.value
+    )
+
   render: ->
     React.DOM.span null,
       SnowflakeDataTypesList
         datatypes: @props.value
         handleRemoveDataType: @_handleRemoveDataType
+        tableId: @props.tableId
+        columns: @_getColumns()
+        disabled: @props.disabled
+        handleAutoloadDatatypes: @_handleAutoloadDatatypes
       SnowflakeDataTypesAddForm
         datatypes: @props.value
         columnValue: @state.column
