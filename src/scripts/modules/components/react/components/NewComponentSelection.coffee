@@ -22,6 +22,15 @@ ComponentBox = React.createClass
   render: ->
     component = @props.component
     div className: 'td',
+      div className: 'badge-component-container',
+        div
+          className: 'badge badge-component-item'
+          ,
+          'Alpha'
+        div
+          className: 'badge badge-component-item'
+          ,
+          '3rd'
       ComponentIcon
         component: component
         size: '64'
