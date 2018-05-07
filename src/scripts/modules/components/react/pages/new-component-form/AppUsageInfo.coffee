@@ -23,22 +23,25 @@ module.exports = React.createClass
 
     if (@props.component.get("flags").contains("appInfo.fullAccess"))
       features.push tr {key: "fullAccess"},
-        ComponentBadge
-          flag: "fullAccess"
+        td null,
+          ComponentBadge
+            flag: "fullAccess"
         td null,
           'This ' + @getAppType() + ' will have full access to the project including all its data.'
 
     if (@props.component.get("flags").contains("appInfo.fee"))
       features.push tr {key: "fee"},
-        ComponentBadge
-          flag: "fee"
+        td null,
+          ComponentBadge
+            flag: "fee"
         td null,
           'There is an extra charge to use this ' + @getAppType()
 
     if (@props.component.get("flags").contains("appInfo.redshiftOnly"))
       features.push tr {key: "redshift"},
-        ComponentBadge
-          flag: "redshiftOnly"
+        td null,
+          ComponentBadge
+            flag: "redshiftOnly"
         td null,
           'Redshift backend is required to use this ' + @getAppType()
 
@@ -52,8 +55,9 @@ module.exports = React.createClass
 
     if (@props.component.get("flags").contains("appInfo.dataOut"))
       features.push tr {key: "dataOut"},
-        ComponentBadge
-          flag: "dataOut"
+        td null,
+          ComponentBadge
+            flag: "dataOut"
         td null,
           "This #{@getAppType()} sends data outside of Keboola Connection"
 
