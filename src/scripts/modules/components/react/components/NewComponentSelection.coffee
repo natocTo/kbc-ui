@@ -27,7 +27,6 @@ ComponentBox = React.createClass
       type: @props.component.get("type")
       ComponentOverviewBadges
         flags: @props.component.get("flags")
-        console.log(@props.component.get("flags"))
       ComponentIcon
         component: component
         size: '64'

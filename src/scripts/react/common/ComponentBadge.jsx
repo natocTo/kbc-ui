@@ -27,10 +27,10 @@ export default React.createClass({
       return (<span><i className="fa fa-cloud-upload fa-fw"/> OUT</span>);
     }
     if (flag === 'responsibility') {
-      return ('KEBOOLA');
+      return ('Keboola');
     }
     if (flag === 'fee') {
-      return (<span><i className="fa fa-money fa-fw"/></span>);
+      return (<span><i className="fa fa-dollar fa-fw"/></span>);
     }
     if (flag === 'redshiftOnly') {
       return (<span><i className="fa fa-database fa-fw"/></span>);
