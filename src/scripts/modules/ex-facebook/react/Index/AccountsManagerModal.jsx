@@ -73,8 +73,7 @@ export default React.createClass({
 
   isSavingDisabled() {
     const hasChanged = !this.props.accounts.equals(this.localState(['selected']));
-    const isEmpty = this.localState(['selected'], Map()).count() === 0;
-    return !hasChanged || isEmpty;
+    return !hasChanged;
   },
 
   renderConfigAccounts() {
