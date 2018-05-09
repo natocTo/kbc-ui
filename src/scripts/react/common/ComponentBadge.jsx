@@ -71,7 +71,7 @@ export default React.createClass({
       badge = <span><i className="fa fa-exclamation-triangle fa-fw"/><i className="fa fa-clock-o fa-fw"/></span>;
       description = `This ${this.getAppType()} is deprecated`;
     }
-    if (this.component.getIn(['vendor', 'licenseUrl'])) {
+    if (this.props.component.getIn(['vendor', 'licenseUrl'])) {
       badge = <span><i className="fa fa-file-text-o fa-fw"/></span>;
       description = <span>You agree to <a href={this.props.component.getIn(['vendor', 'licenseUrl'])}>vendor's license agreement</a></span>;
     }
