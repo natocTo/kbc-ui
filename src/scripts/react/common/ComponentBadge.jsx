@@ -16,10 +16,12 @@ export default React.createClass({
 
     return (
       <div>
-        <div className={'badge badge-component-item badge-component-item-' + webalize(this.props.flag)}
-             title={this.props.type === 'title' ? content.get('description') : ''}
-        >
-        {content.get('badge')}
+        <div className={'badge-component-wrap-' + this.props.type}>
+          <div className={'badge badge-component-item badge-component-item-' + webalize(this.props.flag)}
+            title={this.props.type === 'title' ? content.get('description') : ''}
+          >
+            {content.get('badge')}
+          </div>
         </div>
         {this.props.type === 'inline' &&
         <div className="badge-component-description">
