@@ -491,13 +491,19 @@ export function createActions(componentId) {
       queries.map((query) => {
         let rowData = storeProvisioning.rowDataFromQuery(query);
         let diffMsg = 'Migrating query ' + query.get('name') + ' to configuration row';
-        createConfigRow(configId, rowData, ['migrationSaving', query.get('id').toString()], diffMsg).then(() => {
-          removeFromLocalState(configId, ['migrationSaving', query.get('id').toString()]);
+        createConfigRow(configId, rowData, ['migration', 'processing', query.get('id').toString()], diffMsg).then(() => {
+          removeFromLocalState(configId, ['migration', 'processing', query.get('id').toString()]);
         });
       });
       const newData = store.configData.deleteIn(['parameters', 'tables']);
       const diffMsg = 'Migrating configuration to rows ';
-      return saveConfigData(configId, newData, ['migrationPending'], diffMsg);
+      return saveConfigData(configId, newData, ['migration', 'saving'], diffMsg).then(() => {
+        updateLocalState(configId, ['migration', 'completed'], true);
+      });
+    },
+
+    dismissMigrationAlert(configId) {
+      removeFromLocalState(configId, ['migration']);
     }
   };
 }

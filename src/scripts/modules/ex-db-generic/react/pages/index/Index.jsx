@@ -1,6 +1,7 @@
 import React from 'react';
 import {Map} from 'immutable';
 import classnames from 'classnames';
+import {Alert} from 'react-bootstrap';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
@@ -91,6 +92,10 @@ export default function(componentId) {
 
     handleRefreshSourceTables() {
       return actionsProvisioning.reloadSourceTables(componentId, this.state.configId);
+    },
+
+    handleDismissMigrationAlert() {
+      return actionsCreators.dismissMigrationAlert(this.state.configId);
     },
 
     renderNewQueryLink() {
@@ -222,12 +227,23 @@ export default function(componentId) {
       if (actionsProvisioning.componentSupportsConfigRows(componentId) && !this.state.isRowConfiguration) {
         return (
           <div className="row component-empty-state text-center">
-            <p>Please migrate the configuration to the newest version</p>
+            <p>Please migrate the configuration to the newest format to unlock the latest features.</p>
             <MigrateToRowsButton
               componentId={componentId}
               configId={this.state.configId}
+              pending={!!this.state.localState.getIn(['migration', 'pending'])}
+              completed={!!this.state.localState.getIn(['migration', 'completed'])}
               actionsProvisioning={actionsProvisioning}
             />
+          </div>
+        );
+      } else if (actionsProvisioning.componentSupportsConfigRows(componentId) &&
+        !!this.state.localState.getIn(['migration', 'completed'])) {
+        return (
+          <div className="row component-empty-state text-center">
+            <Alert bsStyle="success" closeLabel="X" onDismiss={this.handleDismissMigrationAlert}>
+              The configuration has been successfully migrated.
+            </Alert>
           </div>
         );
       }
