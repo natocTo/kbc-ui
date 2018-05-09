@@ -125,7 +125,7 @@ export function createActions(componentId) {
   }
 
   function getPKColumsFromSourceTable(targetTable, sourceTables) {
-    var matchedTable = sourceTables.find((table) =>
+    const matchedTable = sourceTables.find((table) =>
       table.get('schema') === targetTable.get('schema')
       && table.get('name') === targetTable.get('tableName')
     );
@@ -141,7 +141,7 @@ export function createActions(componentId) {
 
   function getIncrementalCandidates(sourceTables) {
     return sourceTables.reduce((memo, table) => {
-      let qualifyingColumns = table.get('columns').filter((column) => {
+      const qualifyingColumns = table.get('columns').filter((column) => {
         if (column.has('autoIncrement') || column.get('type') === 'timestamp') {
           return column;
         }
@@ -287,7 +287,7 @@ export function createActions(componentId) {
 
     createQuery(configId) {
       const store = getStore(configId);
-      let newQuery = this.checkTableName(store.generateNewQuery(null, componentSupportsSimpleSetup(componentId)), store);
+      const newQuery = this.checkTableName(store.generateNewQuery(null, componentSupportsSimpleSetup(componentId)), store);
       updateLocalState(configId, ['newQueries', newQuery.get('id')], newQuery);
       updateLocalState(configId, ['newQueriesIdsList'], store.getNewQueriesIdsList().unshift(newQuery.get('id')));
       this.changeQueryEdit(configId, newQuery);
@@ -383,7 +383,7 @@ export function createActions(componentId) {
       removeFromLocalState(configId, ['isDestinationEditing', queryId]);
 
       if (store.isRowConfiguration()) {
-        let isNewQuery = store.isNewQuery(queryId);
+        const isNewQuery = store.isNewQuery(queryId);
         const rowData = storeProvisioning.rowDataFromQuery(newQuery);
         if (isNewQuery) {
           createConfigRow(configId, rowData, ['isSaving', queryId], diffMsg).then(() => {
@@ -414,7 +414,7 @@ export function createActions(componentId) {
 
     quickstart(configId, tableList) {
       const store = getStore(configId);
-      let queries = tableList.map(function(table) {
+      const queries = tableList.map(function(table) {
         let query = store.generateNewQuery(null, componentSupportsSimpleSetup(componentId));
         query = query.set('table', table);
         query = query.set('name', table.get('tableName'));
@@ -477,7 +477,7 @@ export function createActions(componentId) {
           }
           updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
           if (store.isRowConfiguration()) {
-            let candidates = getIncrementalCandidates(fromJS(data.tables));
+            const candidates = getIncrementalCandidates(fromJS(data.tables));
             updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
           }
           updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, false);
@@ -489,8 +489,8 @@ export function createActions(componentId) {
       const store = getStore(configId);
       const queries = store.getQueries();
       queries.map((query) => {
-        let rowData = storeProvisioning.rowDataFromQuery(query);
-        let diffMsg = 'Migrating query ' + query.get('name') + ' to configuration row';
+        const rowData = storeProvisioning.rowDataFromQuery(query);
+        const diffMsg = 'Migrating query ' + query.get('name') + ' to configuration row';
         createConfigRow(configId, rowData, ['migration', 'processing', query.get('id').toString()], diffMsg).then(() => {
           removeFromLocalState(configId, ['migration', 'processing', query.get('id').toString()]);
         });

@@ -23,8 +23,8 @@ export const CONNECTION_VALID_PATH = ['connection', 'valid'];
 export const CONNECTION_TESTED_PATH = ['connection', 'tested'];
 
 export function rowDataFromQuery(query) {
-  let queryState = query.has('state') ? query.get('state').toJS() : {};
-  let paramsQuery = query.delete('state');
+  const queryState = query.has('state') ? query.get('state').toJS() : {};
+  const paramsQuery = query.delete('state');
   return {
     'rowId': query.get('id'),
     'name': query.get('name'),
@@ -159,7 +159,7 @@ export function createStore(componentId, configId) {
     },
 
     getNewCredentials() {
-      var defaultNewCredentials = data.parameters.get('db', Map());
+      let defaultNewCredentials = data.parameters.get('db', Map());
       if (!defaultNewCredentials.get('port')) {
         defaultNewCredentials = defaultNewCredentials.set('port', getDefaultPort(componentId));
       }
