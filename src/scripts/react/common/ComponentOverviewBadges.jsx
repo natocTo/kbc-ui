@@ -6,20 +6,20 @@ export default React.createClass({
   propTypes: {
     component: PropTypes.object.isRequired,
     type: PropTypes.oneOf(['title', 'inline']),
-    filter: PropTypes.string.isRequired
+    filterQuery: PropTypes.string
   },
 
   getDefaultProps() {
     return ({
       type: 'title',
-      filter: ''
+      filterQuery: ''
     });
   },
 
   filterFlags()  {
     const flags = this.props.component.get('flags');
-    if (this.props.filter !== '')  {
-      return flags.filter((flag) => flag === this.props.filter);
+    if (this.props.filterQuery !== '')  {
+      return flags.filter((flag) => flag === this.props.filterQuery);
     } else {
       return flags;
     }

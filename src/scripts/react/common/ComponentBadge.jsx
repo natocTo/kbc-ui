@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
-import classNames from 'classnames';
 import {Map} from 'immutable';
+import stringUtils from '../../utils/string';
+const {webalize} = stringUtils;
 
 
 export default React.createClass({
@@ -15,7 +16,7 @@ export default React.createClass({
 
     return (
       <div>
-        <div className={classNames('badge badge-component-item badge-component-item-', this.props.flag)}
+        <div className={'badge badge-component-item badge-component-item-' + webalize(this.props.flag)}
              title={this.props.type === 'title' ? content.get('description') : ''}
         >
         {content.get('badge')}
@@ -30,44 +31,45 @@ export default React.createClass({
   },
 
   getBadgeContent() {
+    const flag = this.props.flag;
     let badge;
     let description;
 
-    if (this.props.flag  === '3rdParty') {
+    if (flag  === '3rdParty') {
       badge = <span>3<sup>rd</sup> party</span>;
       description = 'This is a 3rd party #{this.getAppType()} supported by its author';
     }
-    if (this.props.flag  === 'excludeFromNewList') {
+    if (flag  === 'excludeFromNewList') {
       badge = 'Alpha';
     }
-    if (this.props.flag === 'appInfo.dataIn') {
+    if (flag === 'appInfo.dataIn') {
       badge = <span><i className="fa fa-cloud-download fa-fw"/> IN</span>;
       description = 'This #{this.getAppType()} extracts data from outside sources';
     }
-    if (this.props.flag === 'appInfo.dataOut') {
+    if (flag === 'appInfo.dataOut') {
       badge = <span><i className="fa fa-cloud-upload fa-fw"/> OUT</span>;
       description = 'This #{this.getAppType()} sends data outside of Keboola Connection';
     }
-    if (this.props.flag === 'responsibility') {
+    if (flag === 'responsibility') {
       badge = 'Keboola';
       description = 'Support for this #{this.getAppType()} is provided by Keboola';
     }
-    if (this.props.flag === 'appInfo.fee') {
+    if (flag === 'appInfo.fee') {
       badge = <span><i className="fa fa-dollar fa-fw"/></span>;
       description = 'There is an extra charge to use this ' + this.getAppType();
     }
-    if (this.props.flag === 'appInfo.redshiftOnly') {
+    if (flag === 'appInfo.redshiftOnly') {
       badge = <span><i className="fa fa-database fa-fw"/></span>;
       description = 'Redshift backend is required to use this ' + this.getAppType();
     }
-    if (this.props.flag === 'appInfo.fullAccess') {
+    if (flag === 'appInfo.fullAccess') {
       badge = <span><i className="fa fa-key fa-fw"/></span>;
       description = 'This ' + this.getAppType() + ' will have full access to the project including all its data.';
     }
-    if (this.props.flag === 'deprecated') {
+    if (flag === 'deprecated') {
       badge = <span><i className="fa fa-exclamation-triangle fa-fw"/><i className="fa fa-clock-o fa-fw"/></span>;
     }
-    if (this.props.flag === 'license') {
+    if (flag === 'license') {
       badge = <span><i className="fa fa-file-text-o fa-fw"/></span>;
       // DUMMY
       description = 'lorem  lorem lorem';
