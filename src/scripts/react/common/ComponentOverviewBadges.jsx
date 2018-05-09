@@ -26,14 +26,8 @@ export default React.createClass({
   },
 
   render() {
-    const filteredFlags = this.filterFlags();
-    const badges = filteredFlags.map((flag) =>
-      <ComponentBadge flag={flag} component={this.props.component} type={this.props.type} />
-    );
     return (
-      <span>
-        {badges}
-      </span>
+      <ComponentBadge flag="nevim" component={this.props.component} type={this.props.type} />
     );
   }
 });

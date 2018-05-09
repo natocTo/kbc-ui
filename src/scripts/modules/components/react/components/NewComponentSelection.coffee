@@ -27,7 +27,6 @@ ComponentBox = React.createClass
       type: @props.component.get("type")
       div
         className: 'badge-component-container',
-        console.log('-------', @props.component.getIn(['vendor', 'licenseUrl']), @props.component)
         ComponentOverviewBadges
           component: @props.component
           filterQuery: '3rdParty'
