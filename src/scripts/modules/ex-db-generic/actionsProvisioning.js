@@ -384,7 +384,7 @@ export function createActions(componentId) {
 
       if (store.isRowConfiguration()) {
         const isNewQuery = store.isNewQuery(queryId);
-        const rowData = storeProvisioning.rowDataFromQuery(newQuery);
+        const rowData = this.rowDataFromQuery(newQuery);
         if (isNewQuery) {
           createConfigRow(configId, rowData, ['isSaving', queryId], diffMsg).then(() => {
             removeFromLocalState(configId, ['editingQueries', queryId]);
@@ -430,7 +430,7 @@ export function createActions(componentId) {
       const diffMsg = 'Quickstart config creation';
       if (store.isRowConfiguration()) {
         queries.map(function(query) {
-          const data = storeProvisioning.rowDataFromQuery(query);
+          const data = this.rowDataFromQuery(query);
           createConfigRow(configId, data, ['quickstartSaving', query.get('id')], diffMsg).then(() => {
             removeFromLocalState(configId, ['quickstartSaving', query.get('id')]);
           });
@@ -489,7 +489,7 @@ export function createActions(componentId) {
       const store = getStore(configId);
       const queries = store.getQueries();
       queries.map((query) => {
-        const rowData = storeProvisioning.rowDataFromQuery(query);
+        const rowData = this.rowDataFromQuery(query);
         const diffMsg = 'Migrating query ' + query.get('name') + ' to configuration row';
         createConfigRow(configId, rowData, ['migration', 'processing', query.get('id').toString()], diffMsg).then(() => {
           removeFromLocalState(configId, ['migration', 'processing', query.get('id').toString()]);
@@ -504,6 +504,20 @@ export function createActions(componentId) {
 
     dismissMigrationAlert(configId) {
       removeFromLocalState(configId, ['migration']);
+    },
+
+    rowDataFromQuery(query) {
+      const queryState = query.has('state') ? query.get('state').toJS() : {};
+      const paramsQuery = query.delete('state');
+      return {
+        'rowId': query.get('id'),
+        'name': query.get('name'),
+        'isDisabled': !query.get('enabled'),
+        'configuration': JSON.stringify({
+          'parameters': paramsQuery.toJS()
+        }),
+        'state': JSON.stringify(queryState)
+      };
     }
   };
 }

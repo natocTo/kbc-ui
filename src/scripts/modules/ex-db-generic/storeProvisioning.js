@@ -22,20 +22,6 @@ export const CONNECTION_ERROR_PATH = ['connection', 'error'];
 export const CONNECTION_VALID_PATH = ['connection', 'valid'];
 export const CONNECTION_TESTED_PATH = ['connection', 'tested'];
 
-export function rowDataFromQuery(query) {
-  const queryState = query.has('state') ? query.get('state').toJS() : {};
-  const paramsQuery = query.delete('state');
-  return {
-    'rowId': query.get('id'),
-    'name': query.get('name'),
-    'isDisabled': !query.get('enabled'),
-    'configuration': JSON.stringify({
-      'parameters': paramsQuery.toJS()
-    }),
-    'state': JSON.stringify(queryState)
-  };
-}
-
 export function queryFromRow(row) {
   const rowConfig = row.getIn(['configuration', 'parameters']);
   let query = Map({
