@@ -17,9 +17,9 @@ export function loadSourceTables(componentId, configId) {
   const store = storeProvisioning.createStore(componentId, configId);
   if (store.hasValidCredentials(store.getCredentials()) && (!store.hasConnectionBeenTested() || !store.getSourceTables())) {
     if (!store.hasConnectionBeenTested()) {
-      actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, true);
+      actions.updateLocalState(configId, storeProvisioning.TESTING_CONNECTION_PATH, true);
       return actions.testSavedCredentials(configId).then((connectionValid) => {
-        actions.updateLocalState(configId, storeProvisioning.testingConnectionPath, false);
+        actions.updateLocalState(configId, storeProvisioning.TESTING_CONNECTION_PATH, false);
         if (connectionValid && componentSupportsSimpleSetup(componentId)) {
           return createActions(componentId).getSourceTables(configId);
         }
@@ -33,7 +33,7 @@ export function loadSourceTables(componentId, configId) {
 
 export function reloadSourceTables(componentId, configId) {
   if (componentSupportsSimpleSetup(componentId)) {
-    createActions(componentId).updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
+    createActions(componentId).updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, true);
     return createActions(componentId).getSourceTables(configId);
   }
 }
@@ -178,7 +178,7 @@ export function createActions(componentId) {
     updateEditingCredentials(configId, newCredentials) {
       updateLocalState(configId, 'editingCredentials', newCredentials);
       if (!getLocalState(configId).get('isChangedCredentials', false)) {
-        updateLocalState(configId, storeProvisioning.connectionTestedPath, false);
+        updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, false);
         updateLocalState(configId, ['isChangedCredentials'], true);
       }
     },
@@ -202,7 +202,7 @@ export function createActions(componentId) {
       const diffMsg = 'Save new credentials';
       return saveConfigData(configId, newData, ['isSavingCredentials'], diffMsg).then(() => {
         this.resetNewCredentials(configId);
-        this.updateLocalState(configId, storeProvisioning.connectionTestedPath, false);
+        this.updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, false);
         RoutesStore.getRouter().transitionTo(componentId, {config: configId});
       });
     },
@@ -218,7 +218,7 @@ export function createActions(componentId) {
       const diffMsg = 'Update credentials';
       return saveConfigData(configId, newConfigData, ['isSavingCredentials'], diffMsg).then(() => {
         this.cancelCredentialsEdit(configId);
-        this.updateLocalState(configId, storeProvisioning.connectionTestedPath, false);
+        this.updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, false);
         RoutesStore.getRouter().transitionTo(componentId, {config: configId});
       });
     },
@@ -239,15 +239,15 @@ export function createActions(componentId) {
       return this.testCredentials(configId, store.getCredentials()).then(function(data) {
         var connectionValid = false;
         if (data.status === 'error') {
-          updateLocalState(configId, storeProvisioning.connectionErrorPath, fromJS(data.message));
-          updateLocalState(configId, storeProvisioning.connectionValidPath, false);
+          updateLocalState(configId, storeProvisioning.CONNECTION_ERROR_PATH, fromJS(data.message));
+          updateLocalState(configId, storeProvisioning.CONNECTION_VALID_PATH, false);
         } else if (data.status === 'success') {
-          updateLocalState(configId, storeProvisioning.connectionValidPath, true);
-          updateLocalState(configId, storeProvisioning.connectionErrorPath, null);
+          updateLocalState(configId, storeProvisioning.CONNECTION_VALID_PATH, true);
+          updateLocalState(configId, storeProvisioning.CONNECTION_ERROR_PATH, null);
           connectionValid = true;
         }
-        updateLocalState(configId, storeProvisioning.testingConnectionPath, false);
-        updateLocalState(configId, storeProvisioning.connectionTestedPath, true);
+        updateLocalState(configId, storeProvisioning.TESTING_CONNECTION_PATH, false);
+        updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, true);
         return connectionValid;
       });
     },
@@ -463,7 +463,7 @@ export function createActions(componentId) {
     getSourceTables(configId) {
       const store = getStore(configId);
       if (store.isConnectionValid()) {
-        updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, true);
+        updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, true);
         let runData = store.configData.setIn(['parameters', 'db'], store.getCredentials());
         runData = runData.setIn(['parameters', 'tables'], List());
         const params = {
@@ -471,16 +471,16 @@ export function createActions(componentId) {
         };
         return callDockerAction(componentId, 'getTables', params).then(function(data) {
           if (data.status === 'error') {
-            updateLocalState(configId, storeProvisioning.sourceTablesErrorPath, fromJS(data.message));
+            updateLocalState(configId, storeProvisioning.SOURCE_TABLES_ERROR_PATH, fromJS(data.message));
           } else if (data.status === 'success') {
-            updateLocalState(configId, storeProvisioning.sourceTablesErrorPath, null);
+            updateLocalState(configId, storeProvisioning.SOURCE_TABLES_ERROR_PATH, null);
           }
-          updateLocalState(configId, storeProvisioning.sourceTablesPath, fromJS(data.tables));
+          updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
           if (store.isRowConfiguration()) {
             let candidates = getIncrementalCandidates(fromJS(data.tables));
-            updateLocalState(configId, storeProvisioning.incrementalCandidatesPath, candidates);
+            updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
           }
-          updateLocalState(configId, storeProvisioning.loadingSourceTablesPath, false);
+          updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, false);
         });
       }
     },

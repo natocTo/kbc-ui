@@ -146,7 +146,7 @@ export default function(componentId) {
       } else if (
         actionsProvisioning.componentSupportsSimpleSetup(componentId)
         && this.state.hasCredentials
-        && !this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)
+        && !this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)
       ) {
         return (
           <div className="row component-empty-state text-center">
@@ -154,11 +154,11 @@ export default function(componentId) {
               <Quickstart
                 componentId={componentId}
                 configId={this.state.configId}
-                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath) || false}
-                isTestingConnection={this.state.localState.getIn(storeProvisioning.testingConnectionPath) || false}
-                validConnection={this.state.localState.getIn(storeProvisioning.connectionValidPath) || false}
-                sourceTables={this.state.localState.getIn(storeProvisioning.sourceTablesPath)}
-                sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
+                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.LOADING_SOURCE_TABLES_PATH) || false}
+                isTestingConnection={this.state.localState.getIn(storeProvisioning.TESTING_CONNECTION_PATH) || false}
+                validConnection={this.state.localState.getIn(storeProvisioning.CONNECTION_VALID_PATH) || false}
+                sourceTables={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_PATH)}
+                sourceTablesError={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)}
                 quickstart={this.state.localState.get('quickstart') || Map()}
                 onChange={actionsCreators.quickstartSelected}
                 onSubmit={actionsCreators.quickstart}
@@ -201,17 +201,17 @@ export default function(componentId) {
     },
 
     renderAsynchError() {
-      if (this.state.localState.getIn(storeProvisioning.connectionErrorPath) ||
-        this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)) {
+      if (this.state.localState.getIn(storeProvisioning.CONNECTION_ERROR_PATH) ||
+        this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)) {
         return (
           <div className="kbc-inner-padding">
             <AsynchActionError
               componentId={componentId}
               configId={this.state.configId}
-              connectionTesting={this.state.localState.getIn(storeProvisioning.testingConnectionPath, false)}
-              connectionError={this.state.localState.getIn(storeProvisioning.connectionErrorPath)}
-              sourceTablesLoading={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath, false)}
-              sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
+              connectionTesting={this.state.localState.getIn(storeProvisioning.TESTING_CONNECTION_PATH, false)}
+              connectionError={this.state.localState.getIn(storeProvisioning.CONNECTION_ERROR_PATH)}
+              sourceTablesLoading={this.state.localState.getIn(storeProvisioning.LOADING_SOURCE_TABLES_PATH, false)}
+              sourceTablesError={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)}
             />
           </div>
         );
