@@ -37,34 +37,35 @@ export default React.createClass({
 
     if (flag  === '3rdParty') {
       badge = <span>3<sup>rd</sup> party</span>;
-      description = 'This is a 3rd party #{this.getAppType()} supported by its author';
+      description = `This is a 3rd party ${this.getAppType()} supported by its author`;
     }
     if (flag  === 'excludeFromNewList') {
       badge = 'Alpha';
     }
     if (flag === 'appInfo.dataIn') {
       badge = <span><i className="fa fa-cloud-download fa-fw"/> IN</span>;
-      description = 'This #{this.getAppType()} extracts data from outside sources';
+      description = `This ${this.getAppType()} extracts data from outside sources`;
     }
     if (flag === 'appInfo.dataOut') {
       badge = <span><i className="fa fa-cloud-upload fa-fw"/> OUT</span>;
-      description = 'This #{this.getAppType()} sends data outside of Keboola Connection';
+      description = `This ${this.getAppType()} sends data outside of Keboola Connection`;
     }
     if (flag === 'responsibility') {
       badge = 'Keboola';
-      description = 'Support for this #{this.getAppType()} is provided by Keboola';
+      description = `Support for this ${this.getAppType()} is provided by Keboola`;
     }
     if (flag === 'appInfo.fee') {
       badge = <span><i className="fa fa-dollar fa-fw"/></span>;
-      description = 'There is an extra charge to use this ' + this.getAppType();
+      description = `There is an extra charge to use this ${this.getAppType()}`;
     }
     if (flag === 'appInfo.redshiftOnly') {
       badge = <span><i className="fa fa-database fa-fw"/></span>;
-      description = 'Redshift backend is required to use this ' + this.getAppType();
+      description = `Redshift backend is required to use this ${this.getAppType()}`;
+      // description = `images/${this.getAppType()}`;
     }
     if (flag === 'appInfo.fullAccess') {
       badge = <span><i className="fa fa-key fa-fw"/></span>;
-      description = 'This ' + this.getAppType() + ' will have full access to the project including all its data.';
+      description = `This ${this.getAppType()} will have full access to the project including all its data.`;
     }
     if (flag === 'deprecated') {
       badge = <span><i className="fa fa-exclamation-triangle fa-fw"/><i className="fa fa-clock-o fa-fw"/></span>;
