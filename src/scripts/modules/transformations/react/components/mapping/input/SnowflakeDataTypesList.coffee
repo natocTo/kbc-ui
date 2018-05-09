@@ -11,11 +11,10 @@ module.exports = React.createClass
   mixins: [ImmutableRenderMixin]
 
   propTypes:
-    tableId: React.PropTypes.string.isRequired
+    tableId: React.PropTypes.string
     datatypes: React.PropTypes.object.isRequired
     handleRemoveDataType: React.PropTypes.func.isRequired
-    hasMetadataDatatypes: React.PropTypes.bool
-    handleAutoloadTypes: React.PropTypes.func
+    handleAutoloadDataTypes: React.PropTypes.func
 
   render: ->
     component = @
@@ -25,11 +24,11 @@ module.exports = React.createClass
         if !@props.datatypes.count()
           React.DOM.p {},
             "No data types set yet."
-            if @props.hasMetadataDatatypes || true
+            if this.props.tableId
               DatatypeAutoloader
                 tableId: this.props.tableId
                 columns: this.props.columns
-                onAutoloadDatatypes: this.props.handleAutoloadTypes
+                handleAutoloadDataTypes: this.props.handleAutoloadDataTypes
         else
           ListGroup {},
             @props.datatypes.sort().map((datatype, key) ->

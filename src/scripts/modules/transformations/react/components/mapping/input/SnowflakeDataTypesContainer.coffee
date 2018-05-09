@@ -14,7 +14,7 @@ module.exports = React.createClass
     columnsOptions: React.PropTypes.array.isRequired
     onChange: React.PropTypes.func.isRequired
     disabled: React.PropTypes.bool.isRequired
-    tableId: React.PropTypes.string.isRequired
+    tableId: React.PropTypes.string
 
   getInitialState: ->
     column: ""
@@ -111,7 +111,7 @@ module.exports = React.createClass
         tableId: @props.tableId
         columns: @_getColumns()
         disabled: @props.disabled
-        handleAutoloadDatatypes: @_handleAutoloadDatatypes
+        handleAutoloadDataTypes: @_handleAutoloadDataTypes
       SnowflakeDataTypesAddForm
         datatypes: @props.value
         columnValue: @state.column
