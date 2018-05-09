@@ -6,7 +6,8 @@ import {Map} from 'immutable';
 export default React.createClass({
   propTypes: {
     flag: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['title', 'inline'])
+    type: PropTypes.oneOf(['title', 'inline']),
+    component: PropTypes.object.isRequired
   },
 
   render() {
@@ -84,16 +85,15 @@ export default React.createClass({
   },
 
   getAppType() {
-    return 'component';
-    // switch (this.props.component.get('type')) {
-    //   case 'extractor':
-    //     return 'extractor';
-    //   case  'writer':
-    //     return 'writer';
-    //   case 'application':
-    //     return 'application';
-    //   default:
-    //     'component';
-    // }
+    switch (this.props.component.get('type')) {
+      case 'extractor':
+        return 'extractor';
+      case  'writer':
+        return 'writer';
+      case 'application':
+        return 'application';
+      default:
+        'component';
+    }
   }
 });
