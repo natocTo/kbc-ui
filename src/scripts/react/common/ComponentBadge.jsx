@@ -14,22 +14,26 @@ export default React.createClass({
   render() {
     const content = this.getBadgeContent();
 
-    return (
-      <div>
-        <div className={'badge-component-wrap-' + this.props.type}>
-          <div className={'badge badge-component-item badge-component-item-' + webalize(this.props.flag)}
-            title={this.props.type === 'title' ? content.get('description') : ''}
-          >
-            {content.get('badge')}
+    if (content === null) {
+      return null;
+    } else {
+      return (
+        <div>
+          <div className={'badge-component-wrap-' + this.props.type}>
+            <div className={'badge badge-component-item badge-component-item-' + webalize(this.props.flag)}
+              title={this.props.type === 'title' ? content.get('description') : ''}
+            >
+              {content.get('badge')}
+            </div>
           </div>
+          {this.props.type === 'inline' &&
+          <div className="badge-component-description">
+              {content.get('description')}
+          </div>
+          }
         </div>
-        {this.props.type === 'inline' &&
-        <div className="badge-component-description">
-            {content.get('description')}
-        </div>
-        }
-      </div>
-    );
+      );
+    }
   },
 
   getBadgeContent() {
@@ -40,42 +44,35 @@ export default React.createClass({
     if (flag  === '3rdParty') {
       badge = <span>3<sup>rd</sup> party</span>;
       description = `This is a 3rd party ${this.getAppType()} supported by its author`;
-    }
-    if (flag  === 'excludeFromNewList') {
+    } else if (flag  === 'excludeFromNewList') {
       badge = 'Alpha';
       description = `This ${this.getAppType()} is private`;
-    }
-    if (flag === 'appInfo.dataIn') {
+    } else if (flag === 'appInfo.dataIn') {
       badge = <span><i className="fa fa-cloud-download fa-fw"/> IN</span>;
       description = `This ${this.getAppType()} extracts data from outside sources`;
-    }
-    if (flag === 'appInfo.dataOut') {
+    } else if (flag === 'appInfo.dataOut') {
       badge = <span><i className="fa fa-cloud-upload fa-fw"/> OUT</span>;
       description = `This ${this.getAppType()} sends data outside of Keboola Connection`;
-    }
-    if (flag === 'responsibility') {
+    } else if (flag === 'responsibility') {
       badge = 'Keboola';
       description = `Support for this ${this.getAppType()} is provided by Keboola`;
-    }
-    if (flag === 'appInfo.fee') {
+    } else if (flag === 'appInfo.fee') {
       badge = <span><i className="fa fa-dollar fa-fw"/></span>;
       description = `There is an extra charge to use this ${this.getAppType()}`;
-    }
-    if (flag === 'appInfo.redshiftOnly') {
+    } else if (flag === 'appInfo.redshiftOnly') {
       badge = <span><i className="fa fa-database fa-fw"/></span>;
       description = `Redshift backend is required to use this ${this.getAppType()}`;
-    }
-    if (flag === 'appInfo.fullAccess') {
+    } else if (flag === 'appInfo.fullAccess') {
       badge = <span><i className="fa fa-key fa-fw"/></span>;
       description = `This ${this.getAppType()} will have full access to the project including all its data.`;
-    }
-    if (flag === 'deprecated') {
+    } else if (flag === 'deprecated') {
       badge = <span><i className="fa fa-exclamation-triangle fa-fw"/><i className="fa fa-clock-o fa-fw"/></span>;
       description = `This ${this.getAppType()} is deprecated`;
-    }
-    if (this.props.component.getIn(['vendor', 'licenseUrl'])) {
+    } else if (this.props.component.getIn(['vendor', 'licenseUrl'])) {
       badge = <span><i className="fa fa-file-text-o fa-fw"/></span>;
       description = <span>You agree to <a href={this.props.component.getIn(['vendor', 'licenseUrl'])}>vendor's license agreement</a></span>;
+    } else {
+      return null;
     }
     return Map({
       badge: badge,
