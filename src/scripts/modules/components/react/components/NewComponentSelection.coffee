@@ -27,6 +27,7 @@ ComponentBox = React.createClass
       type: @props.component.get("type")
       ComponentOverviewBadges
         component: @props.component
+        filter: '3rdParty'
       ComponentIcon
         component: component
         size: '64'
