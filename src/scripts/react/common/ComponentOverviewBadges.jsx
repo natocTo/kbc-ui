@@ -31,9 +31,9 @@ export default React.createClass({
       <ComponentBadge flag={flag} component={this.props.component} type={this.props.type} />
     );
     return (
-      <div className="badge-component-container">
+      <span>
         {badges}
-      </div>
+      </span>
     );
   }
 });
