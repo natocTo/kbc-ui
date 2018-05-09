@@ -22,7 +22,7 @@ export default React.createClass({
         {content.get('badge')}
         </div>
         {this.props.type === 'inline' &&
-        <div>
+        <div className="badge-component-description">
             {content.get('description')}
         </div>
         }
@@ -41,6 +41,7 @@ export default React.createClass({
     }
     if (flag  === 'excludeFromNewList') {
       badge = 'Alpha';
+      description = `This ${this.getAppType()} is private`;
     }
     if (flag === 'appInfo.dataIn') {
       badge = <span><i className="fa fa-cloud-download fa-fw"/> IN</span>;
@@ -61,7 +62,6 @@ export default React.createClass({
     if (flag === 'appInfo.redshiftOnly') {
       badge = <span><i className="fa fa-database fa-fw"/></span>;
       description = `Redshift backend is required to use this ${this.getAppType()}`;
-      // description = `images/${this.getAppType()}`;
     }
     if (flag === 'appInfo.fullAccess') {
       badge = <span><i className="fa fa-key fa-fw"/></span>;
@@ -69,17 +69,11 @@ export default React.createClass({
     }
     if (flag === 'deprecated') {
       badge = <span><i className="fa fa-exclamation-triangle fa-fw"/><i className="fa fa-clock-o fa-fw"/></span>;
+      description = `This ${this.getAppType()} is deprecated`;
     }
-    if (flag === 'license') {
+    if (this.component.getIn(['vendor', 'licenseUrl'])) {
       badge = <span><i className="fa fa-file-text-o fa-fw"/></span>;
-      // DUMMY
-      description = 'lorem  lorem lorem';
-
-    // if (this.props.component.getIn(['vendor', 'licenseUrl'])) {
-    //   description = 'You agree to ';
-    //   // a {href: this.props.component.getIn(['vendor', 'licenseUrl'])},
-    //   //   'vendor\'s license agreement'
-    // }
+      description = <span>You agree to <a href={this.props.component.getIn(['vendor', 'licenseUrl'])}>vendor's license agreement</a></span>;
     }
     return Map({
       badge: badge,
