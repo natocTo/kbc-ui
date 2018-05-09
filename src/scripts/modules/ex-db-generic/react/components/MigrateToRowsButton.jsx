@@ -1,9 +1,8 @@
 import React from 'react';
 
 export default React.createClass({
-  displayName: 'MigrateToRowsButton',
   propTypes: {
-    componentId: React.PropTypes.string,
+    componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
     actionsProvisioning: React.PropTypes.object.isRequired
   },
