@@ -158,6 +158,20 @@ export function createActions(componentId) {
     }, List());
   }
 
+  function rowDataFromQuery(query) {
+    const queryState = query.has('state') ? query.get('state').toJS() : {};
+    const paramsQuery = query.delete('state');
+    return {
+      'rowId': query.get('id'),
+      'name': query.get('name'),
+      'isDisabled': !query.get('enabled'),
+      'configuration': JSON.stringify({
+        'parameters': paramsQuery.toJS()
+      }),
+      'state': JSON.stringify(queryState)
+    };
+  }
+
   return {
     // Credentials Actions start
     editCredentials(configId) {
@@ -384,7 +398,7 @@ export function createActions(componentId) {
 
       if (store.isRowConfiguration()) {
         const isNewQuery = store.isNewQuery(queryId);
-        const rowData = this.rowDataFromQuery(newQuery);
+        const rowData = rowDataFromQuery(newQuery);
         if (isNewQuery) {
           createConfigRow(configId, rowData, ['isSaving', queryId], diffMsg).then(() => {
             removeFromLocalState(configId, ['editingQueries', queryId]);
@@ -430,7 +444,7 @@ export function createActions(componentId) {
       const diffMsg = 'Quickstart config creation';
       if (store.isRowConfiguration()) {
         queries.map(function(query) {
-          const data = this.rowDataFromQuery(query);
+          const data = rowDataFromQuery(query);
           createConfigRow(configId, data, ['quickstartSaving', query.get('id')], diffMsg).then(() => {
             removeFromLocalState(configId, ['quickstartSaving', query.get('id')]);
           });
@@ -489,7 +503,7 @@ export function createActions(componentId) {
       const store = getStore(configId);
       const queries = store.getQueries();
       queries.map((query) => {
-        const rowData = this.rowDataFromQuery(query);
+        const rowData = rowDataFromQuery(query);
         const diffMsg = 'Migrating query ' + query.get('name') + ' to configuration row';
         updateLocalState(configId, ['migration', 'pending'], true);
         createConfigRow(configId, rowData, ['migration', 'processing', query.get('id').toString()], diffMsg).then(() => {
@@ -506,20 +520,6 @@ export function createActions(componentId) {
 
     dismissMigrationAlert(configId) {
       removeFromLocalState(configId, ['migration']);
-    },
-
-    rowDataFromQuery(query) {
-      const queryState = query.has('state') ? query.get('state').toJS() : {};
-      const paramsQuery = query.delete('state');
-      return {
-        'rowId': query.get('id'),
-        'name': query.get('name'),
-        'isDisabled': !query.get('enabled'),
-        'configuration': JSON.stringify({
-          'parameters': paramsQuery.toJS()
-        }),
-        'state': JSON.stringify(queryState)
-      };
     }
   };
 }
