@@ -1,15 +1,12 @@
 import React from 'react';
 import {Map} from 'immutable';
-import Clipboard from '../../../../../react/common/Clipboard';
 
 import TestCredentialsButtonGroup from '../../../../../react/common/TestCredentialsButtonGroup';
-import {Input, FormControls} from './../../../../../react/common/KbcBootstrap';
+import {Input} from './../../../../../react/common/KbcBootstrap';
 import Tooltip from '../../../../../react/common/Tooltip';
 import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
 
 import SSLForm from './SSLForm';
-
-const StaticText = FormControls.Static;
 
 export default React.createClass({
   propTypes: {
@@ -73,6 +70,7 @@ export default React.createClass({
             key={propName}
             label={this.renderProtectedLabel(labelValue, !!savedValue)}
             type="password"
+            disabled={!this.props.enabled}
             labelClassName="col-xs-4"
             wrapperClassName="col-xs-8"
             placeholder={(savedValue) ? 'type new password to change it' : ''}
@@ -82,49 +80,25 @@ export default React.createClass({
   },
 
   createInput(labelValue, propName, type = 'text', isProtected = false) {
-    if (this.props.enabled) {
-      if (isProtected) {
-        return this.createProtectedInput(labelValue, propName);
-      } else {
-        return (
-          <Input
-            key={propName}
-            label={labelValue}
-            type={type}
-            labelClassName={(type === 'checkbox') ? '' : 'col-xs-4'}
-            wrapperClassName={(type === 'checkbox') ? 'col-xs-8 col-xs-offset-4' : 'col-xs-8'}
-            value={this.props.credentials.get(propName)}
-            checked={(type === 'checkbox') ? this.props.credentials.get(propName) : false}
-            onChange={
-              (type === 'checkbox') ?
-                this.handleCheckboxChange.bind(this, propName) :
-                this.handleChange.bind(this, propName)
-            }
-          />
-        );
-      }
-    } else if (isProtected) {
-      return (
-        <StaticText
-          key={propName}
-          label={labelValue}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          <Tooltip tooltip="Encrypted password">
-            <span className="fa fa-fw fa-lock"/>
-          </Tooltip>
-        </StaticText>
-      );
+    if (isProtected) {
+      return this.createProtectedInput(labelValue, propName);
     } else {
       return (
-        <StaticText
+        <Input
           key={propName}
           label={labelValue}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          {this.props.credentials.get(propName)}
-          {(this.props.credentials.get(propName)) ? <Clipboard text={this.props.credentials.get(propName).toString()}/> : null}
-        </StaticText>
+          type={type}
+          disabled={!this.props.enabled}
+          labelClassName={(type === 'checkbox') ? '' : 'col-xs-4'}
+          wrapperClassName={(type === 'checkbox') ? 'col-xs-8 col-xs-offset-4' : 'col-xs-8'}
+          value={this.props.credentials.get(propName)}
+          checked={(type === 'checkbox') ? this.props.credentials.get(propName) : false}
+          onChange={
+            (type === 'checkbox') ?
+              this.handleCheckboxChange.bind(this, propName) :
+              this.handleChange.bind(this, propName)
+          }
+        />
       );
     }
   },
