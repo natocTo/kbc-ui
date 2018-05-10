@@ -5,16 +5,28 @@
 .badge {
   &-component-container {
     position: absolute;
-    right: 12px;
-    top: 12px;
+    right: 9px;
+    top: 9px;
+    .badge-component-item-responsibility{
+      //don't show Keboola badge in component selection
+      display: none;
+    }
   }
   &-component-description{
-    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 8px;
   }
   &-component-item {
-    padding: 5px 10px;
-    margin-left: 3px;
-    margin-bottom: 5px;
+    padding: 2px 7px 2px 9px;
+    margin: 0px 0px 5px 3px;
+    font-size: 12px;
+    line-height: 16px;
+    &-wrap{
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+
     &-excludeFromNewList{
       background: #282d38;
     }
@@ -33,8 +45,11 @@
   }
   &-component-wrap {
     &-inline {
-      min-width: 90px;
-      display: inline-block;
+      display: flex;
+      flex-flow: row;
+      .badge-component-item-wrap{
+        min-width: 92px;
+      }
     }
   }
 }

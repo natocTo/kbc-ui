@@ -1,11 +1,19 @@
 import React, {PropTypes} from 'react';
+import keboolaLogo from '../../../images/keboola.svg';
 
 
 export default React.createClass({
   propTypes: {
-    flag: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['title', 'inline']),
-    component: PropTypes.object.isRequired
+    component: PropTypes.object.isRequired,
+    filterQuery: PropTypes.string
+  },
+
+  getDefaultProps() {
+    return ({
+      type: 'title',
+      filterQuery: ''
+    });
   },
 
   render() {
@@ -14,15 +22,15 @@ export default React.createClass({
     return (
       <div>
         {badges.map((badge) =>
-          <div>
-            <div className={'badge-component-wrap-' + this.props.type}>
+          <div className={'badge-component-wrap-' + this.props.type}>
+              <div className="badge-component-item-wrap">
               <div className={'badge badge-component-item badge-component-item-' + badge.key}
                 title={this.props.type === 'title' ? badge.description : ''}
                 key={badge.key}
               >
               {badge.title}
               </div>
-            </div>
+              </div>
             {this.props.type === 'inline' &&
             <div className="badge-component-description">
               {badge.description}
@@ -35,12 +43,12 @@ export default React.createClass({
   },
 
   getBadges() {
-    const flags = this.props.component.get('flags');
+    const flags = this.getFilterFlags();
     let badges = [];
 
     if (!flags.contains('3rdParty')) {
       badges.push({
-        title: 'Keboola',
+        title: <span><img src={keboolaLogo} height="17" alt=""/> Keboola</span>,
         description: `Support for this ${this.getAppType()} is provided by Keboola`,
         key: 'responsibility'
       });
@@ -109,6 +117,16 @@ export default React.createClass({
       });
     }
     return badges;
+  },
+
+
+  getFilterFlags()  {
+    const flags = this.props.component.get('flags');
+    if (this.props.filterQuery !== '')  {
+      return flags.filter((flag) => flag === this.props.filterQuery);
+    } else {
+      return flags;
+    }
   },
 
   getAppType() {

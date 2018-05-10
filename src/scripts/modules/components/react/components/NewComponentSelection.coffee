@@ -2,7 +2,7 @@ React = require 'react'
 ComponentsActionCreators = require '../../ComponentsActionCreators'
 ComponentIcon = React.createFactory(require('../../../../react/common/ComponentIcon').default)
 ComponentDetailLink = React.createFactory(require('../../../../react/common/ComponentDetailLink').default)
-ComponentOverviewBadges = React.createFactory(require('../../../../react/common/ComponentOverviewBadges').default)
+ComponentBadge = React.createFactory(require('../../../../react/common/ComponentBadge').default)
 SearchRow = React.createFactory(require('../../../../react/common/SearchRow').default)
 Link = React.createFactory(require('react-router').Link)
 Button = React.createFactory(require('react-bootstrap').Button)
@@ -27,7 +27,7 @@ ComponentBox = React.createClass
       type: @props.component.get("type")
       div
         className: 'badge-component-container',
-        ComponentOverviewBadges
+        ComponentBadge
           component: @props.component
           filterQuery: '3rdParty'
       ComponentIcon

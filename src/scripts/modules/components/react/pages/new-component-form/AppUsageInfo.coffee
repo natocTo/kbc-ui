@@ -1,6 +1,6 @@
 React = require 'react'
 is3rdParty = require('../../../is3rdParty').default
-ComponentOverviewBadges = React.createFactory(require('../../../../../react/common/ComponentOverviewBadges').default)
+ComponentBadge = React.createFactory(require('../../../../../react/common/ComponentBadge').default)
 
 
 {div, label, ul, li, p, span, strong, address, a, br, em, table, tbody, tr, td, h2} = React.DOM
@@ -11,9 +11,7 @@ module.exports = React.createClass
     component: React.PropTypes.object.isRequired
 
   render: ->
-    table {className: "kbcLicenseTable"},
-      tbody null,
-        ComponentOverviewBadges
-          component: @props.component
-          type: "inline"
-
+    div {className: "kbcLicenseTable"},
+      ComponentBadge
+        component: @props.component
+        type: "inline"
