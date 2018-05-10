@@ -4,7 +4,6 @@ export default React.createClass({
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
-    pending: React.PropTypes.bool.isRequired,
     actionsProvisioning: React.PropTypes.object.isRequired
   },
 
