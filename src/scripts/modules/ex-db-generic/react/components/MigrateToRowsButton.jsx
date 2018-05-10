@@ -18,6 +18,7 @@ export default React.createClass({
       <button
         className="btn btn-success"
         onClick={this.migrateConfig}
+        disabled={this.props.pending}
       >
         Migrate Configuration
       </button>
