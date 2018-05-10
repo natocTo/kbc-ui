@@ -1,5 +1,4 @@
 import React from 'react';
-import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -14,18 +13,13 @@ export default React.createClass({
     ExDbActionCreators.migrateConfig(this.props.configId);
   },
 
-  dismissAlert() {
-    const ExDbActionCreators = this.props.actionsProvisioning.createActions(this.props.componentId);
-    ExDbActionCreators.dismissMigrationAlert(this.props.configId);
-  },
-
   render() {
     return (
       <button
         className="btn btn-success"
         onClick={this.migrateConfig}
       >
-        {this.props.pending ? <Loader /> : 'Migrate Configuration'}
+        Migrate Configuration
       </button>
     );
   }
