@@ -52,6 +52,7 @@ export default React.createClass({
           {headerRows}
         </ul>
         <PanelWithDetails
+          placement="bottom"
           labelOpen={labelOpen}
           labelCollapse="Show less">
           <ul>
