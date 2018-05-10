@@ -1,5 +1,4 @@
 import React from 'react';
-import {Loader} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -21,7 +20,7 @@ export default React.createClass({
         onClick={this.migrateConfig}
         disabled={this.props.pending}
       >
-        {this.props.pending ? <Loader/> : 'Migrate Configuration'}
+        Migrate Configuration
       </button>
     );
   }
