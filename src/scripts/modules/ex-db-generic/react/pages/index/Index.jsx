@@ -231,6 +231,7 @@ export default function(componentId) {
             <MigrateToRowsButton
               componentId={componentId}
               configId={this.state.configId}
+              pending={!!this.state.localState.getIn(['migration', 'pending'])}
               completed={!!this.state.localState.getIn(['migration', 'completed'])}
               actionsProvisioning={actionsProvisioning}
             />
