@@ -19,6 +19,7 @@ import JsonConfiguration from '../components/JsonConfiguration';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';
 import LatestRowVersions from '../components/SidebarRowVersionsWrapper';
+import createCollapsibleSection from '../../utils/createCollapsibleSection';
 
 // adapters
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
@@ -231,12 +232,26 @@ export default React.createClass({
     Actions.updateConfiguration(componentId, configurationId, rowId, parsed);
   },
 
+  prepareReactComponent(renderObject) {
+    if (!Immutable.Map.isMap(renderObject)) {
+      return renderObject;
+    }
+    const renderType = renderObject.get('type');
+    switch (renderType) {
+      case 'collabsible':
+        const { title, component, options } = renderObject.toJS();
+        return createCollapsibleSection(title, component, options);
+      default:
+        return renderObject.get('component');
+    }
+  },
+
   renderSections() {
     const settingsSections = this.state.settings.getIn(['row', 'sections']);
     const { storedConfigurationSections } = this.state;
     const returnTrue = () => true;
     return settingsSections.map((section, key) => {
-      const SectionComponent = section.get('render');
+      const SectionComponent = this.prepareReactComponent(section.get('render'));
       const onSectionSave = section.get('onSave');
       const sectionIsCompleteFn = section.get('isComplete') || returnTrue;
       const isComplete = sectionIsCompleteFn(onSectionSave(storedConfigurationSections.get(key)));

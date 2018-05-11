@@ -12,7 +12,6 @@ import {
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import React from 'react';
-import createCollapsibleSection from '../configurations/utils/createCollapsibleSection';
 import Immutable from 'immutable';
 
 const routeSettings = {
@@ -20,9 +19,12 @@ const routeSettings = {
   componentType: 'extractor',
   index: {
     sections: [{
-      render: createCollapsibleSection(() => <span>AWS Credentials</span>,
-                                       CredentialsForm,
-                                       {includeSaveButtons: true}),
+      render: {
+        type: 'collabsible',
+        title: () => <span>AWS Credentials</span>,
+        component: CredentialsForm,
+        options: {includeSaveButtons: true}
+      },
       onSave: credentialsCreateConfiguration,
       onLoad: credentialsParseConfiguration,
       isComplete: credentialsIsComplete
