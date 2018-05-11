@@ -1,4 +1,4 @@
-import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
+import { columnTypes, createRoute } from '../configurations/utils/createRoute';
 import {
   createConfiguration as rowCreateConfiguration,
   parseConfiguration as rowParseConfiguration,
@@ -19,22 +19,24 @@ const routeSettings = {
   componentId: 'keboola.ex-http',
   componentType: 'extractor',
   index: {
-    sections: [{
-      render: createCollapsibleSection(() => <span>Base URL</span>,
-                                       CredentialsForm,
-                                       {includeSaveButtons: true}),
-      onSave: credentialsCreateConfiguration,
-      onLoad: credentialsParseConfiguration,
-      isComplete: credentialsIsComplete
-    }]
+    sections: [
+      {
+        render: createCollapsibleSection(() => <span>Base URL</span>, CredentialsForm, { includeSaveButtons: true }),
+        onSave: credentialsCreateConfiguration,
+        onLoad: credentialsParseConfiguration,
+        isComplete: credentialsIsComplete
+      }
+    ]
   },
   row: {
-    sections: [{
-      render: ConfigurationForm,
-      onSave: rowCreateConfiguration,
-      onCreate: rowCreateEmptyConfiguration,
-      onLoad: rowParseConfiguration
-    }],
+    sections: [
+      {
+        render: ConfigurationForm,
+        onSave: rowCreateConfiguration,
+        onCreate: rowCreateEmptyConfiguration,
+        onLoad: rowParseConfiguration
+      }
+    ],
     columns: [
       {
         name: 'Name',
@@ -47,9 +49,13 @@ const routeSettings = {
         name: 'Storage',
         type: columnTypes.STORAGE_LINK_DEFAULT_BUCKET,
         value: function(row) {
-          const processorMoveFiles = row.getIn(['configuration', 'processors', 'after'], Immutable.List()).find(function(processor) {
-            return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
-          }, null, Immutable.Map());
+          const processorMoveFiles = row.getIn(['configuration', 'processors', 'after'], Immutable.List()).find(
+            function(processor) {
+              return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';
+            },
+            null,
+            Immutable.Map()
+          );
           return processorMoveFiles.getIn(['parameters', 'folder']);
         }
       },
@@ -57,11 +63,7 @@ const routeSettings = {
         name: 'Description',
         type: columnTypes.VALUE,
         value: function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
+          return <small>{row.get('description') !== '' ? row.get('description') : 'No description'}</small>;
         }
       }
     ]
