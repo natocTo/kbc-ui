@@ -2,6 +2,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
+import {Alert} from 'react-bootstrap';
 
 import {CodeEditor} from '../../../../react/common/common';
 import Select from '../../../../react/common/Select';
@@ -358,26 +359,37 @@ export default React.createClass({
               {this.isExistingTable() && this.primaryKeyHelp()}
             </div>
           </div>
-          <div className="form-group">
-            <div className="col-md-9 col-md-offset-3 checkbox">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={this.props.query.get('incremental')}
-                  onChange={this.handleIncrementalChange}
-                  disabled={this.props.disabled}
-                />
-                Incremental Loading
-              </label>
-              <div className="help-block">
-                If incremental load is turned on, the table will be updated instead of rewritten.
-                Tables with primary keys will update rows, tables without primary keys will append rows.
-              </div>
-            </div>
-          </div>
+          {this.renderIncrementalLoadOption()}
           <h3>Advanced Mode</h3>
           {this.renderQueryToggle()}
           {this.renderQueryEditor()}
+        </div>
+      </div>
+    );
+  },
+
+  renderIncrementalLoadOption() {
+    let helpAlert = null;
+    if (this.props.query.get('incrementalFetchingColumn') && !this.props.query.get('incremental')) {
+      helpAlert = <Alert bsStyle="warning"><strong>Caution</strong>: Incremental Fetching is enabled.  Please be aware that each run will completely replace the destination table when incremental loading is disabled.</Alert>;
+    }
+    return (
+      <div className="form-group">
+        <div className="col-md-9 col-md-offset-3 checkbox">
+          <label>
+            <input
+              type="checkbox"
+              checked={this.props.query.get('incremental')}
+              onChange={this.handleIncrementalChange}
+              disabled={this.props.disabled}
+            />
+            Incremental Loading
+          </label>
+          <div className="help-block">
+            If incremental load is turned on, the table will be updated instead of rewritten.
+            Tables with primary keys will update rows, tables without primary keys will append rows.
+            {helpAlert}
+          </div>
         </div>
       </div>
     );
