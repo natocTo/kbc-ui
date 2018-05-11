@@ -37,9 +37,17 @@ export default React.createClass({
     const componentId = settings.get('componentId');
     const row = Store.get(componentId, configurationId, rowId);
     const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId, rowId);
-    const createBySectionsFn = sections.makeCreateFn(settings.getIn(['row', 'onSave']), settings.getIn(['row', 'sections']));
-    const parseBySectionsFn = sections.makeParseFn(settings.getIn(['row', 'onLoad']), settings.getIn(['row', 'sections']));
-    const storedConfigurationSections = parseBySectionsFn(Store.getConfiguration(componentId, configurationId, rowId)).get('sections');
+    const createBySectionsFn = sections.makeCreateFn(
+      settings.getIn(['row', 'onSave']),
+      settings.getIn(['row', 'sections'])
+    );
+    const parseBySectionsFn = sections.makeParseFn(
+      settings.getIn(['row', 'onLoad']),
+      settings.getIn(['row', 'sections'])
+    );
+    const storedConfigurationSections = parseBySectionsFn(
+      Store.getConfiguration(componentId, configurationId, rowId)
+    ).get('sections');
 
     return {
       componentId: componentId,
@@ -52,40 +60,35 @@ export default React.createClass({
       isJsonConfigurationSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-json'),
       isJsonConfigurationValid: isJsonConfigurationValid,
       isJsonConfigurationChanged: Store.isEditingJsonConfiguration(componentId, configurationId, rowId),
-      isJsonConfigurationParsable: isJsonConfigurationValid && isParsableConfiguration(
-        Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId, rowId)),
-        parseBySectionsFn,
-        createBySectionsFn
-      ),
+      isJsonConfigurationParsable:
+        isJsonConfigurationValid &&
+        isParsableConfiguration(
+          Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId, rowId)),
+          parseBySectionsFn,
+          createBySectionsFn
+        ),
 
       isParsableConfiguration: isParsableConfiguration(
         Store.getConfiguration(componentId, configurationId, rowId),
         parseBySectionsFn,
         createBySectionsFn
       ),
-      isJsonEditorOpen: Store.hasJsonEditor(
-        componentId,
-        configurationId,
-        rowId,
-        parseBySectionsFn,
-        createBySectionsFn
-      ),
+      isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, rowId, parseBySectionsFn, createBySectionsFn),
       createBySectionsFn,
       parseBySectionsFn,
       storedConfigurationSections,
-      configurationBySections: Store.getEditingConfiguration(
-        componentId,
-        configurationId,
-        rowId,
-        parseBySectionsFn
-      ),
+      configurationBySections: Store.getEditingConfiguration(componentId, configurationId, rowId, parseBySectionsFn),
       isSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-configuration'),
       isChanged: Store.isEditingConfiguration(componentId, configurationId, rowId),
 
       isDeletePending: Store.getPendingActions(componentId, configurationId, rowId).has('delete'),
-      isEnableDisablePending: Store.getPendingActions(componentId, configurationId, rowId).has('enable') || Store.getPendingActions(componentId, configurationId, rowId).has('disable'),
+      isEnableDisablePending:
+        Store.getPendingActions(componentId, configurationId, rowId).has('enable') ||
+        Store.getPendingActions(componentId, configurationId, rowId).has('disable'),
 
-      hasState: !Store.get(componentId, configurationId, rowId).get('state', Immutable.Map()).isEmpty(),
+      hasState: !Store.get(componentId, configurationId, rowId)
+        .get('state', Immutable.Map())
+        .isEmpty(),
       isResetStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('reset-state')
     };
   },
@@ -94,24 +97,22 @@ export default React.createClass({
     const state = this.state;
     const settings = this.state.settings;
     let actions = [];
-    actions.push((
+    actions.push(
       <li key="run">
         <RunComponentButton
           title="Run"
           component={this.state.componentId}
           mode="link"
-          runParams={() => (
-            {
-              config: state.configurationId,
-              row: state.rowId
-            })
-          }
+          runParams={() => ({
+            config: state.configurationId,
+            row: state.rowId
+          })}
         >
           {this.renderRunModalContent()}
         </RunComponentButton>
       </li>
-    ));
-    actions.push((
+    );
+    actions.push(
       <li key="activate">
         <ActivateDeactivateButton
           key="activate"
@@ -123,41 +124,45 @@ export default React.createClass({
           isPending={this.state.isEnableDisablePending}
           onChange={function() {
             if (state.row.get('isDisabled', false)) {
-              const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' enabled';
+              const changeDescription =
+                settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' enabled';
               return Actions.enable(state.componentId, state.configurationId, state.rowId, changeDescription);
             } else {
-              const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' disabled';
+              const changeDescription =
+                settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' disabled';
               return Actions.disable(state.componentId, state.configurationId, state.rowId, changeDescription);
             }
           }}
           mode="link"
         />
       </li>
-    ));
+    );
     if (settings.getIn(['row', 'hasState'])) {
-      actions.push((
+      actions.push(
         <li className={this.state.isResetStatePending || !this.state.hasState ? 'disabled' : ''} key="reset-state">
           <ResetStateButton
             onClick={() => Actions.resetState(state.componentId, state.configurationId, state.rowId)}
             isPending={this.state.isResetStatePending}
             disabled={!this.state.hasState}
-          >Delete the current stored state of the configuration, eg. progress of an incremental
-            processes.</ResetStateButton>
+          >
+            Delete the current stored state of the configuration, eg. progress of an incremental processes.
+          </ResetStateButton>
         </li>
-      ));
+      );
     }
-    actions.push((
+    actions.push(
       <li key="delete">
         <DeleteConfigurationRowButton
           onClick={function() {
-            const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' deleted';
+            const changeDescription =
+              settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' deleted';
             return Actions.delete(state.componentId, state.configurationId, state.rowId, true, changeDescription);
           }}
           isPending={this.state.isDeletePending}
           mode="link"
         />
       </li>
-    ));
+    );
     return actions;
   },
 
@@ -173,7 +178,9 @@ export default React.createClass({
             />
           </div>
           <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-            {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration ? this.renderJsonEditor() : this.renderForm()}
+            {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration
+              ? this.renderJsonEditor()
+              : this.renderForm()}
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -182,9 +189,7 @@ export default React.createClass({
             configurationId={this.state.configurationId}
             rowId={this.state.rowId}
           />
-          <ul className="nav nav-stacked">
-            {this.renderActions()}
-          </ul>
+          <ul className="nav nav-stacked">{this.renderActions()}</ul>
           <LatestRowVersions
             componentId={this.state.componentId}
             configId={this.state.configurationId}
@@ -207,18 +212,20 @@ export default React.createClass({
           />
         </div>
         <div className="kbc-inner-content-padding-fix with-bottom-border">
-          {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration ? this.renderJsonEditor() : this.renderForm()}
+          {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration
+            ? this.renderJsonEditor()
+            : this.renderForm()}
         </div>
       </div>
     );
   },
 
   onUpdateSection(sectionKey, diff) {
-    const {configurationBySections, componentId, configurationId, rowId} = this.state;
+    const { configurationBySections, componentId, configurationId, rowId } = this.state;
     const newConfigurationBySections = configurationBySections.setIn(
       ['sections', sectionKey],
-      configurationBySections.getIn(['sections', sectionKey])
-                             .merge(Immutable.fromJS(diff)));
+      configurationBySections.getIn(['sections', sectionKey]).merge(Immutable.fromJS(diff))
+    );
     const created = this.state.createBySectionsFn(newConfigurationBySections);
     const parsed = this.state.parseBySectionsFn(created);
     Actions.updateConfiguration(componentId, configurationId, rowId, parsed);
@@ -226,7 +233,7 @@ export default React.createClass({
 
   renderSections() {
     const settingsSections = this.state.settings.getIn(['row', 'sections']);
-    const {storedConfigurationSections} = this.state;
+    const { storedConfigurationSections } = this.state;
     const returnTrue = () => true;
     return settingsSections.map((section, key) => {
       const SectionComponent = section.get('render');
@@ -238,20 +245,23 @@ export default React.createClass({
           <SectionComponent
             isComplete={isComplete}
             disabled={this.state.isSaving}
-            onChange={(diff) => this.onUpdateSection(key, diff)}
+            onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.getIn(['sections', key]).toJS()}
           />
         </div>
       );
-    }
-    );
+    });
   },
 
   renderRunModalContent() {
     const rowName = this.state.row.get('name', 'Untitled');
     let changedMessage = '';
     if (this.state.isJsonConfigurationChanged || this.state.isChanged) {
-      changedMessage = (<p><strong>{'The configuration has unsaved changes.'}</strong></p>);
+      changedMessage = (
+        <p>
+          <strong>{'The configuration has unsaved changes.'}</strong>
+        </p>
+      );
     }
     if (this.state.row.get('isDisabled')) {
       return (
@@ -266,9 +276,7 @@ export default React.createClass({
       return (
         <span>
           {changedMessage}
-          <p>
-            You are about to run {rowName}.
-          </p>
+          <p>You are about to run {rowName}.</p>
         </span>
       );
     }
@@ -283,7 +291,8 @@ export default React.createClass({
           isSaving={this.state.isSaving}
           isChanged={this.state.isChanged}
           onSave={function() {
-            const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' edited';
+            const changeDescription =
+              settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' edited';
             return Actions.saveConfiguration(
               state.componentId,
               state.configurationId,
@@ -307,8 +316,7 @@ export default React.createClass({
       <small>
         <a onClick={() => Actions.openJsonEditor(state.componentId, state.configurationId, state.rowId)}>
           Open JSON editor
-        </a>
-        {' '}
+        </a>{' '}
         (discards all unsaved changes)
       </small>
     );
@@ -318,15 +326,17 @@ export default React.createClass({
     const state = this.state;
     if (!this.state.isParsableConfiguration) {
       return (
-        <small>Can't close JSON editor, configuration is not compatible. Revert your changes to allow switching back to the visual form.</small>
+        <small>
+          Can't close JSON editor, configuration is not compatible. Revert your changes to allow switching back to the
+          visual form.
+        </small>
       );
     }
     return (
       <small>
         <a onClick={() => Actions.closeJsonEditor(state.componentId, state.configurationId, state.rowId)}>
           Close JSON editor
-        </a>
-        {' '}
+        </a>{' '}
         (discards all unsaved changes)
       </small>
     );
@@ -336,9 +346,7 @@ export default React.createClass({
     return (
       <div>
         {this.renderOpenJsonLink()}
-        <h2>
-          Configuration
-        </h2>
+        <h2>Configuration</h2>
         {this.renderSections()}
       </div>
     );
@@ -347,7 +355,7 @@ export default React.createClass({
   // deprecated
   renderFormFields() {
     const state = this.state;
-    const {componentId, configurationId, rowId, settings}  = this.state;
+    const { componentId, configurationId, rowId, settings } = this.state;
     const configuration = Store.getEditingConfiguration(
       componentId,
       configurationId,
@@ -355,36 +363,60 @@ export default React.createClass({
       settings.getIn(['row', 'detail', 'onLoad'])
     );
     const Configuration = this.state.settings.getIn(['row', 'detail', 'render']);
-    return (<Configuration
-              onChange={(diff) =>
-                Actions.updateConfiguration(state.componentId, state.configurationId, state.rowId, configuration.merge(Immutable.fromJS(diff)))
-              }
-              disabled={this.state.isSaving}
-              value={configuration.toJS()}
-    />);
+    return (
+      <Configuration
+        onChange={diff =>
+          Actions.updateConfiguration(
+            state.componentId,
+            state.configurationId,
+            state.rowId,
+            configuration.merge(Immutable.fromJS(diff))
+          )
+        }
+        disabled={this.state.isSaving}
+        value={configuration.toJS()}
+      />
+    );
   },
 
   renderJsonEditor() {
     const state = this.state;
     const settings = this.state.settings;
     return [
-      (<div key="close">{this.renderCloseJsonLink()}</div>),
-      (<JsonConfiguration
-         key="json-configuration"
-         isSaving={this.state.isJsonConfigurationSaving}
-         value={this.state.jsonConfigurationValue}
-         isEditingValid={this.state.isJsonConfigurationValid}
-         isChanged={this.state.isJsonConfigurationChanged}
-         onEditCancel={() => Actions.resetJsonConfiguration(state.componentId, state.configurationId, state.rowId)}
-         onEditChange={parameters => Actions.updateJsonConfiguration(state.componentId, state.configurationId, state.rowId, parameters)}
-         onEditSubmit={() => {
-           const changeDescription = settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' configuration edited manually';
-           return Actions.saveJsonConfiguration(state.componentId, state.configurationId, state.rowId, changeDescription);
-         }}
-         showSaveModal={this.state.isParsableConfiguration && !this.state.isJsonConfigurationParsable}
-         saveModalTitle="Save Parameters"
-         saveModalBody={(<div>The changes in the configuration are not compatible with the original visual form. Saving this configuration will disable the visual representation of the whole configuration and you will be able to edit the configuration in JSON editor only.</div>)}
-      />)
+      <div key="close">{this.renderCloseJsonLink()}</div>,
+      <JsonConfiguration
+        key="json-configuration"
+        isSaving={this.state.isJsonConfigurationSaving}
+        value={this.state.jsonConfigurationValue}
+        isEditingValid={this.state.isJsonConfigurationValid}
+        isChanged={this.state.isJsonConfigurationChanged}
+        onEditCancel={() => Actions.resetJsonConfiguration(state.componentId, state.configurationId, state.rowId)}
+        onEditChange={parameters =>
+          Actions.updateJsonConfiguration(state.componentId, state.configurationId, state.rowId, parameters)
+        }
+        onEditSubmit={() => {
+          const changeDescription =
+            settings.getIn(['row', 'name', 'singular']) +
+            ' ' +
+            state.row.get('name') +
+            ' configuration edited manually';
+          return Actions.saveJsonConfiguration(
+            state.componentId,
+            state.configurationId,
+            state.rowId,
+            changeDescription
+          );
+        }}
+        showSaveModal={this.state.isParsableConfiguration && !this.state.isJsonConfigurationParsable}
+        saveModalTitle="Save Parameters"
+        saveModalBody={
+          <div>
+            The changes in the configuration are not compatible with the original visual form. Saving this configuration
+            will disable the visual representation of the whole configuration and you will be able to edit the
+            configuration in JSON editor only.
+          </div>
+        }
+      />
     ];
   }
 });
