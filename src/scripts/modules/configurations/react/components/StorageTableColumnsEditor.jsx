@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import storageApi from '../../../components/StorageApi';
-import {fromJS} from 'immutable';
+import { fromJS } from 'immutable';
 import ColumnDataPreview from './ColumnDataPreview';
 
 export default React.createClass({
@@ -26,20 +26,19 @@ export default React.createClass({
     };
   },
 
-
   fetchData() {
     this.setState({
       loadingPreview: true
     });
     return storageApi
-      .tableDataPreview(this.props.value.tableId, {limit: 10})
-      .then( (csv) => {
+      .tableDataPreview(this.props.value.tableId, { limit: 10 })
+      .then(csv => {
         this.setState({
           loadingPreview: false,
           dataPreview: fromJS(csv)
         });
       })
-      .catch((error) => {
+      .catch(error => {
         let dataPreviewError = null;
         if (error.response && error.response.body) {
           if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
@@ -64,13 +63,9 @@ export default React.createClass({
       <table className="table">
         <thead>
           <tr>
-            <th>
-              Column
-            </th>
+            <th>Column</th>
             {headers.map((title, idx) => <th key={idx}>{title}</th>)}
-            <th>
-              Content Preview
-            </th>
+            <th>Content Preview</th>
           </tr>
         </thead>
         {this.renderBody()}
@@ -79,27 +74,21 @@ export default React.createClass({
   },
 
   onChangeColumn(column) {
-    const newColumns = this.props.value.columns.map( c => c.id === column.id ? column : c);
-    this.props.onChange({columns: newColumns});
+    const newColumns = this.props.value.columns.map(c => (c.id === column.id ? column : c));
+    this.props.onChange({ columns: newColumns });
   },
 
   renderBody() {
     return (
       <tbody>
-        {this.props.value.columns.map((column, idx) =>
+        {this.props.value.columns.map((column, idx) => (
           <tr key={idx}>
-            <td>
-              {column.id}
-            </td>
-            {this.props.value.columnsMappings.map(cm =>
+            <td>{column.id}</td>
+            {this.props.value.columnsMappings.map(cm => (
               <td key={cm.title}>
-                <cm.render
-                  disabled={this.props.disabled}
-                  column={column}
-                  onChange={this.onChangeColumn}
-                />
+                <cm.render disabled={this.props.disabled} column={column} onChange={this.onChangeColumn} />
               </td>
-            )}
+            ))}
             <td>
               <ColumnDataPreview
                 columnName={column.id}
@@ -108,7 +97,7 @@ export default React.createClass({
               />
             </td>
           </tr>
-        )}
+        ))}
       </tbody>
     );
   }
