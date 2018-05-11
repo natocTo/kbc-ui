@@ -337,7 +337,7 @@ export default React.createClass({
               editing={this.props.destinationEditing}
             />
           </div>
-          {this.renderIncrementalFetching()}
+          {this.renderIncrementalFetchingSection()}
           <h3>Loading Options</h3>
           <div className="form-group">
             <label className="col-md-3 control-label">Primary Key</label>
@@ -523,50 +523,67 @@ export default React.createClass({
     return option.render;
   },
 
-  renderIncrementalFetching() {
-    if (!this.props.query.get('advancedMode') && this.props.isConfigRow && this.incrementalFetchingOptions().length > 0) {
+  renderIncrementalFetchingForm() {
+    return (
+      <div className="form-group">
+        <label className="col-md-3 control-label">Column</label>
+        <div className="col-md-9">
+          <Select
+            name="incrementalFetching"
+            value={this.props.query.get('incrementalFetchingColumn') || ''}
+            placeholder="Fetch by column"
+            onChange={this.handleIncrementalFetchingColumnChange}
+            options={this.incrementalFetchingOptions()}
+            disabled={this.props.disabled || !!this.getLastFetchedRowValue()}
+          />
+          <div className="help-block">
+            {this.incrementalFetchingWarning()}
+          </div>
+        </div>
+      </div>,
+      <div className="form-group">
+        <label className="col-md-3 control-label">Limit</label>
+        <div className="col-md-9">
+          <input
+            className="form-control"
+            name="incrementalFetchingLimit"
+            type="number"
+            value={this.props.query.get('incrementalFetchingLimit') || 0}
+            onChange={this.handleIncrementalFetchingLimitChange}
+            disabled={this.props.disabled}
+          />
+          <div className="help-block">
+            The number of records to fetch from the source per run.
+            Subsequent runs will start from the last record fetched. Note: 0 means unlimited.
+          </div>
+        </div>
+      </div>,
+      <div className="form-group">
+        <label className="col-md-3 control-label">Last fetched value</label>
+        <div className="col-md-8">
+          {this.renderlastFetchedInfo()}
+        </div>
+      </div>
+    );
+  },
+
+  renderIncrementalFetchingSection() {
+    if (!this.props.query.get('advancedMode') && this.props.isConfigRow) {
+      const fetchingHelpText = (
+        <div className="form-group">
+          <div className="col-md-8 col-md-offset-3 help-block">
+            Incremental fetching is available for this extractor but only for tables containing an auto incrementing primary key or a timestamp column.
+          </div>
+        </div>
+      );
       return (
         <div>
           <h3>Incremental Fetching</h3>
-          <div className="form-group">
-            <label className="col-md-3 control-label">Column</label>
-            <div className="col-md-9">
-              <Select
-                name="incrementalFetching"
-                value={this.props.query.get('incrementalFetchingColumn') || ''}
-                placeholder="Fetch by column"
-                onChange={this.handleIncrementalFetchingColumnChange}
-                options={this.incrementalFetchingOptions()}
-                disabled={this.props.disabled || !!this.getLastFetchedRowValue()}
-              />
-              <div className="help-block">
-                {this.incrementalFetchingWarning()}
-              </div>
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-md-3 control-label">Limit</label>
-            <div className="col-md-9">
-              <input
-                className="form-control"
-                name="incrementalFetchingLimit"
-                type="number"
-                value={this.props.query.get('incrementalFetchingLimit') || 0}
-                onChange={this.handleIncrementalFetchingLimitChange}
-                disabled={this.props.disabled}
-              />
-              <div className="help-block">
-                The number of records to fetch from the source per run.
-                Subsequent runs will start from the last record fetched. Note: 0 means unlimited.
-              </div>
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="col-md-3 control-label">Last fetched value</label>
-            <div className="col-md-8">
-              {this.renderlastFetchedInfo()}
-            </div>
-          </div>
+          {
+            (this.incrementalFetchingOptions().length > 0)
+              ? this.renderIncrementalFetchingForm()
+              : fetchingHelpText
+          }
         </div>
       );
     }
