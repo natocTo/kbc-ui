@@ -4,8 +4,8 @@ import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivat
 import DeleteConfigurationRowButton from './DeleteConfigurationRowButton';
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import ChangeOrderHandle from './ChangeOrderHandle';
-import { Link } from 'react-router';
 import ConfigurationRowsTableCell from './ConfigurationRowsTableCell';
+import RoutesStore from '../../../../stores/RoutesStore';
 
 const TableRow = React.createClass({
   mixins: [immutableMixin],
@@ -38,13 +38,17 @@ const TableRow = React.createClass({
   },
 
   render() {
+    const router = RoutesStore.getRouter();
+
+
     const props = this.props;
     return (
-      <Link
-        to={this.props.linkTo}
-        params={{config: this.props.configurationId, row: this.props.row.get('id')}}
+      <div
         className="tr"
         data-id={props.row.get('id')}
+        onClick={() => {
+          router.transitionTo(this.props.linkTo, {config: this.props.configurationId, row: this.props.row.get('id')});
+        }}
       >
         <div className="td" key="handle">
           {this.renderDragHandle()}
@@ -69,7 +73,7 @@ const TableRow = React.createClass({
         <div className="td text-right kbc-no-wrap">
           {this.renderRowActionButtons()}
         </div>
-      </Link>
+      </div>
     );
   },
 
