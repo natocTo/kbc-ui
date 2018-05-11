@@ -558,12 +558,7 @@ export default React.createClass({
           </div>
         </div>
       </div>,
-      <div className="form-group">
-        <label className="col-md-3 control-label">Last fetched value</label>
-        <div className="col-md-8">
-          {this.renderlastFetchedInfo()}
-        </div>
-      </div>
+      this.renderlastFetchedInfo()
     ];
   },
 
@@ -590,15 +585,16 @@ export default React.createClass({
   },
 
   renderlastFetchedInfo() {
-    let fetchingColumn = this.props.query.get('incrementalFetchingColumn');
+    var formElement;
+    const fetchingColumn = this.props.query.get('incrementalFetchingColumn');
     if (fetchingColumn) {
       let lastFetchedRowValue = this.getLastFetchedRowValue();
       if (lastFetchedRowValue) {
         const tooltip = 'Resetting means that the next run will start from the lowest value of ' + fetchingColumn;
-        return (
+        formElement = (
           <div className="form-control-static">
             <div>
-              <strong>{this.getLastFetchedRowValue()}</strong>
+              <strong>{lastFetchedRowValue}</strong>
             </div>
             <div className="help-block">
               To start from the beginning of the table you can
@@ -612,16 +608,25 @@ export default React.createClass({
             </div>
           </div>
         );
+      } else {
+        formElement = (
+          <div className="form-control-static">
+            There is no value stored.
+            <div className="help-block">
+              Either the component has not yet run, or it has been reset.
+            </div>
+          </div>
+        );
       }
-    }
-    return (
-      <div className="form-control-static">
-        There is no value stored.
-        <div className="help-block">
-          Either the component has not yet run, or it has been reset.
+      return (
+        <div className="form-group">
+          <label className="col-md-3 control-label">Last fetched value</label>
+          <div className="col-md-8">
+            {formElement}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   },
 
   incrementalFetchingWarning() {
