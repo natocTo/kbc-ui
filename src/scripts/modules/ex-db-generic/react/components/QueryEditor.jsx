@@ -550,7 +550,7 @@ export default React.createClass({
             type="number"
             value={this.props.query.get('incrementalFetchingLimit') || 0}
             onChange={this.handleIncrementalFetchingLimitChange}
-            disabled={this.props.disabled}
+            disabled={this.props.disabled || !this.props.query.get('incrementalFetchingColumn')}
           />
           <div className="help-block">
             The number of records to fetch from the source per run.
