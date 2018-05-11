@@ -567,7 +567,8 @@ export default React.createClass({
       const fetchingHelpText = (
         <div className="form-group">
           <div className="col-md-8 col-md-offset-3 help-block">
-            Incremental fetching is available for this extractor but only for tables containing an auto incrementing primary key or a timestamp column.
+            Incremental fetching is available for this extractor
+            but only for tables containing an auto incrementing primary key or a timestamp column.
           </div>
         </div>
       );
@@ -575,7 +576,7 @@ export default React.createClass({
         <div>
           <h3>Incremental Fetching</h3>
           {
-            (this.incrementalFetchingOptions().length > 0)
+            (this.incrementalFetchingOptions().length > 0 || this.props.query.get('incrementalFetchingColumn'))
               ? this.renderIncrementalFetchingForm()
               : fetchingHelpText
           }
@@ -630,7 +631,7 @@ export default React.createClass({
   },
 
   incrementalFetchingWarning() {
-    if (this.props.query.get('incrementalFetchingColumn')) {
+    if (this.props.query.get('incrementalFetchingColumn') && this.props.sourceTables.length > 0) {
       let candidateTable = this.getCandidateTable();
       let candidateColumn = candidateTable.get('candidates').find((column) =>
         column.get('name') === this.props.query.get('incrementalFetchingColumn')
