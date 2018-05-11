@@ -615,9 +615,9 @@ export default React.createClass({
         column.get('name') === this.props.query.get('incrementalFetchingColumn')
       );
       if (candidateColumn.get('autoIncrement')) {
-        return 'Note: Using an autoIncrement ID means that only new records will be fetched, not updates or deletes.';
+        return 'Using an autoIncrement ID means that only new records will be fetched, not updates or deletes.';
       } else {
-        return 'Note: Using an update timestamp column means that only new and updated records will be fetched, not deletes.';
+        return 'Using an update timestamp column means that only new and updated records will be fetched, not deletes.';
       }
     } else {
       return 'If enabled, only newly created or updated records since the last run will be fetched.';
