@@ -30,17 +30,13 @@ export default React.createClass({
     return (
       <div>
         <h2>
-          Configuration
-          {' '}
+          Configuration{' '}
           <small>
-            <Clipboard text={this.props.value}/>
+            <Clipboard text={this.props.value} />
           </small>
         </h2>
-        <Input
-          value={this.props.value}
-          disabled={this.props.isSaving}
-          onChange={this.props.onEditChange}
-          />
+        {this.renderButtons()}
+        <Input value={this.props.value} disabled={this.props.isSaving} onChange={this.props.onEditChange} />
       </div>
     );
   },

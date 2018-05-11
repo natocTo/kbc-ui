@@ -347,6 +347,7 @@ export default React.createClass({
       <div>
         {this.renderOpenJsonLink()}
         <h2>Configuration</h2>
+        {this.renderButtons()}
         {this.renderSections()}
       </div>
     );
