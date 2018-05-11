@@ -17,7 +17,9 @@ export default React.createClass({
     return (
       <a
          target="_blank"
-         href={this.bucketUrl()}>{this.props.children}</a>
+         href={this.bucketUrl()}
+         onClick={(e) => e.stopPropagation()}
+      >{this.props.children}</a>
     );
   }
 });

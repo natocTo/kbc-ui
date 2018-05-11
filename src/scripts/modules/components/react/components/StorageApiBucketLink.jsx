@@ -16,7 +16,9 @@ export default React.createClass({
     return (
       <a
          target="_blank"
-         href={this.fileUploadsUrl()}>{this.props.children}</a>
+         href={this.fileUploadsUrl()}
+         onClick={(e) => e.stopPropagation()}
+      >{this.props.children}</a>
     );
   }
 });
