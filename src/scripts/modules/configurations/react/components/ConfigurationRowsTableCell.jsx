@@ -2,6 +2,8 @@ import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import StorageApiTableLinkEx from '../../../components/react/components/StorageApiTableLinkEx';
 import {columnTypes} from '../../../configurations/utils/createRoute';
+import StorageApiBucketLink from '../../../components/react/components/StorageApiBucketLink';
+import StorageApiFileUploadsLink from '../../../components/react/components/StorageApiFileUploadsLink';
 
 const TableCell = React.createClass({
   mixins: [immutableMixin],
@@ -19,12 +21,24 @@ const TableCell = React.createClass({
     if (this.props.type === columnTypes.STORAGE_LINK_DEFAULT_BUCKET) {
       const defaultBucketStage = this.props.component.getIn(['data', 'default_bucket_stage']);
       const sanitizedComponentId = this.props.component.get('id').replace(/[^a-zA-Z0-9-]/i, '-');
-      const tableId = defaultBucketStage + '.c-' + sanitizedComponentId + '-' + this.props.configurationId + '.' + this.props.valueFn(this.props.row);
-      return (
-        <StorageApiTableLinkEx
-          tableId={tableId}
-        />
-      );
+      const tableName = this.props.valueFn(this.props.row);
+      const bucketId = defaultBucketStage + '.c-' + sanitizedComponentId + '-' + this.props.configurationId;
+      if (!tableName || typeof tableName === 'undefined') {
+        return (<span>
+          Unable to determine table name.<br />
+          Check bucket
+          {' '}<StorageApiBucketLink bucketId={bucketId}>{bucketId}</StorageApiBucketLink>
+          {' '}or
+          {' '}<StorageApiFileUploadsLink>File Uploads</StorageApiFileUploadsLink>.
+        </span>);
+      } else {
+        const tableId = bucketId + '.' + tableName;
+        return (
+          <StorageApiTableLinkEx
+            tableId={tableId}
+          />
+        );
+      }
     } else {
       return (
         <span>
