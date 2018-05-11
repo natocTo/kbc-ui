@@ -23,14 +23,13 @@ const TableCell = React.createClass({
       const sanitizedComponentId = this.props.component.get('id').replace(/[^a-zA-Z0-9-]/i, '-');
       const tableName = this.props.valueFn(this.props.row);
       const bucketId = defaultBucketStage + '.c-' + sanitizedComponentId + '-' + this.props.configurationId;
-      if (!tableName) {
+      if (!tableName || typeof tableName === 'undefined') {
         return (<span>
           Unable to determine table name.<br />
           Check bucket
           {' '}<StorageApiBucketLink bucketId={bucketId}>{bucketId}</StorageApiBucketLink>
           {' '}or
-          {' '}<StorageApiFileUploadsLink>File Uploads</StorageApiFileUploadsLink>
-          .
+          {' '}<StorageApiFileUploadsLink>File Uploads</StorageApiFileUploadsLink>.
         </span>);
       } else {
         const tableId = bucketId + '.' + tableName;
