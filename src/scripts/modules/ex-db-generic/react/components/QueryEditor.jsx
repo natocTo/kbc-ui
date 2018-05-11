@@ -594,21 +594,21 @@ export default React.createClass({
     if (fetchingColumn) {
       let lastFetchedRowValue = this.getLastFetchedRowValue();
       if (lastFetchedRowValue) {
+        const tooltip = 'Resetting means that the next run will start from the lowest value of ' + fetchingColumn;
         return (
           <div className="form-control-static">
-            <div className="row">
-              <div className="col-md-6">
-                <strong>{this.getLastFetchedRowValue()}</strong>
-              </div>
-              <div className="col-md-6">
-                <ResetStateButton
-                  onClick={this.handleStateReset}
-                  isPending={false}
-                  disabled={false}
-                >
-                  Resetting means that the next run will start from the lowest value of {fetchingColumn}
-                </ResetStateButton>
-              </div>
+            <div>
+              <strong>{this.getLastFetchedRowValue()}</strong>
+            </div>
+            <div className="help-block">
+              To start from the beginning of the table you can
+              <ResetStateButton
+                label="Clear the stored value"
+                onClick={this.handleStateReset}
+                isPending={false}
+                disabled={false}
+                tooltip={tooltip}
+              />
             </div>
           </div>
         );
@@ -616,10 +616,9 @@ export default React.createClass({
     }
     return (
       <div className="form-control-static">
-        <div className="row">
-          <div className="col-md-12">
-            No state information available
-          </div>
+        There is no value stored.
+        <div className="help-block">
+          Either the component has not yet run, or it has been reset.
         </div>
       </div>
     );
