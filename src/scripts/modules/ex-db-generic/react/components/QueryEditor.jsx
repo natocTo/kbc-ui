@@ -524,7 +524,7 @@ export default React.createClass({
   },
 
   renderIncrementalFetchingForm() {
-    return (
+    return [
       <div className="form-group">
         <label className="col-md-3 control-label">Column</label>
         <div className="col-md-9">
@@ -564,7 +564,7 @@ export default React.createClass({
           {this.renderlastFetchedInfo()}
         </div>
       </div>
-    );
+    ];
   },
 
   renderIncrementalFetchingSection() {
