@@ -1,7 +1,5 @@
 import React from 'react';
-
 import ApplicationStore from '../../../../stores/ApplicationStore';
-
 
 export default React.createClass({
   propTypes: {
