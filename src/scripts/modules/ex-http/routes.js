@@ -1,4 +1,5 @@
-import { columnTypes, createRoute } from '../configurations/utils/createRoute';
+import createRoute from '../configurations/utils/createRoute';
+import columnTypes from '../configurations/utils/columnTypeConstants';
 import {
   createConfiguration as rowCreateConfiguration,
   parseConfiguration as rowParseConfiguration,
