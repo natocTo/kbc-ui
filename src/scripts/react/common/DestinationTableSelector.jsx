@@ -1,7 +1,5 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
-// import {HelpBlock} from 'react-bootstrap';
-// import storageActions from '../../../../components/StorageActionCreators';
 import './DestinationTableSelector.less';
 
 export default React.createClass({
@@ -14,10 +12,6 @@ export default React.createClass({
     updatePart: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired
   },
-
-  /* componentDidMount() {
-   *   storageActions.loadTablesForce();
-   * },*/
 
   prepareBucketsOptions() {
     const stage = this.props.parts.stage;
