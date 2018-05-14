@@ -23,7 +23,7 @@ const TableCell = React.createClass({
       const sanitizedComponentId = this.props.component.get('id').replace(/[^a-zA-Z0-9-]/i, '-');
       const tableName = this.props.valueFn(this.props.row);
       const bucketId = defaultBucketStage + '.c-' + sanitizedComponentId + '-' + this.props.configurationId;
-      if (!tableName || typeof tableName === 'undefined') {
+      if (!tableName) {
         return (<span>
           Unable to determine table name<br />
           Check bucket
