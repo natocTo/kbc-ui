@@ -28,7 +28,6 @@ export default React.createClass({
             onChange={function(e) {
               props.onChange({url: e.target.value});
             }}
-            placeholder="https://connection.keboola.com/"
             disabled={this.props.disabled}
             />
           <HelpBlock>
@@ -43,7 +42,6 @@ export default React.createClass({
             onChange={function(e) {
               props.onChange({bucket: e.target.value});
             }}
-            placeholder="in.c-main"
             disabled={this.props.disabled}
             />
           <HelpBlock>Full bucket ID (e.g. in.c-main).</HelpBlock>
