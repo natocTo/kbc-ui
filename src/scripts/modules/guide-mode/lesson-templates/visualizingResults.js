@@ -26,7 +26,7 @@ export default {
       'markdown': 'Let’s assume you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the section **Writers**.'
       + `
 - Find **Tableau**. You can use the search feature to find it faster.
-- Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
+- Click on component and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
 - Name the configuration, e.g., _Guide writer_, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 `,
       'mediaType': '',
