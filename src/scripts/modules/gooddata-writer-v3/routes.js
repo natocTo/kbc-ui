@@ -1,4 +1,5 @@
-import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
+import createRoute  from '../configurations/utils/createRoute';
+import columnTypes  from '../configurations/utils/columnTypeConstants';
 import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
 import TitleSection from './react/components/TitleSection';
 import LoadTypeSection from './react/components/LoadTypeSection';
