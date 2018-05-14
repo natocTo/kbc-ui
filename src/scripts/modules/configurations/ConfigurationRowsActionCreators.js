@@ -240,8 +240,8 @@ module.exports = {
 
     const configurationSectionsMerged = configurationBySections
       .get('sections')
-      .reduce((memo, sectionConfig, idx) => {
-        const createSectionFn = createFnSections.get(idx);
+      .reduce((memo, sectionConfig, index) => {
+        const createSectionFn = createFnSections.get(index);
         return memo.merge(createSectionFn(sectionConfig));
       }, Map());
     const configurationRoot = configurationBySections.get('root');

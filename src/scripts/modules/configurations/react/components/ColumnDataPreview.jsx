@@ -29,8 +29,8 @@ export default React.createClass({
           :
           <ul>
             {this.getColumnValues()
-                 .map((value, idx) =>
-                   <li key={idx}>{value}</li>
+                 .map((value, index) =>
+                   <li key={index}>{value}</li>
                  ).toArray()
             }
           </ul>
