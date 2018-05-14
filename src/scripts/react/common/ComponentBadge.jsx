@@ -6,13 +6,13 @@ export default React.createClass({
   propTypes: {
     type: PropTypes.oneOf(['title', 'inline']),
     component: PropTypes.object.isRequired,
-    filterQuery: PropTypes.string
+    filterBadge: PropTypes.string
   },
 
   getDefaultProps() {
     return ({
       type: 'title',
-      filterQuery: ''
+      filterBadge: ''
     });
   },
 
@@ -121,8 +121,8 @@ export default React.createClass({
 
   getFilterFlags()  {
     const flags = this.props.component.get('flags');
-    if (this.props.filterQuery !== '')  {
-      return flags.filter((flag) => flag === this.props.filterQuery);
+    if (this.props.filterBadge !== '')  {
+      return flags.filter((flag) => flag === this.props.filterBadge);
     } else {
       return flags;
     }
