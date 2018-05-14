@@ -20,8 +20,8 @@ function parseBySections(rootParseFn, sectionsParseFn, configuration) {
 function createBySections(createFn, sectionsCreateFn, configurationBySections) {
   const configurationSectionsMerged = configurationBySections
     .get('sections', List())
-    .reduce((memo, sectionConfig, idx) => {
-      const createSectionFn = sectionsCreateFn.get(idx);
+    .reduce((memo, sectionConfig, index) => {
+      const createSectionFn = sectionsCreateFn.get(index);
       return memo.merge(createSectionFn(sectionConfig));
     }, Map());
 
@@ -49,8 +49,8 @@ function createEmptyConfigBySections(
 
 function isCompleteBySections(rootIsCompleteFn, sectionsIsCompleteFn, configBySections) {
   const rootIsComplete = rootIsCompleteFn(configBySections.get('root'));
-  const sectionsIsComplete = configBySections.get('sections', List()).reduce((memo, sectionData, idx) => {
-    const isCompleteFn = sectionsIsCompleteFn.get(idx);
+  const sectionsIsComplete = configBySections.get('sections', List()).reduce((memo, sectionData, index) => {
+    const isCompleteFn = sectionsIsCompleteFn.get(index);
     return memo && isCompleteFn(sectionData);
   }, true);
   return rootIsComplete && sectionsIsComplete;

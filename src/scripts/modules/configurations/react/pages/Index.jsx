@@ -178,8 +178,8 @@ export default React.createClass({
               </RunComponentButton>
             </li>
             {
-              sidebarCustomItems.map((SidebarItem, idx) =>
-                <li key={idx}>
+              sidebarCustomItems.map((SidebarItem, index) =>
+                <li key={index}>
                   <SidebarItem
                     configuration={this.state.configuration}
                     onSaveConfiguration={(newConfig) => configurationsActions.updateConfiguration(this.state.componentId, this.state.configurationId, newConfig)}
