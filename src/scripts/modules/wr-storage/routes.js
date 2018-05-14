@@ -1,4 +1,8 @@
+import {Map} from 'immutable';
+import React from 'react';
+
 import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
+import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
 import ConfigurationSection from './react/components/Configuration';
 import tableAdapter from './adapters/table';
@@ -6,8 +10,6 @@ import tableAdapter from './adapters/table';
 import TargetProjectSection from './react/components/TargetProject';
 import targetProjectAdapter from './adapters/targetProject';
 
-import {Map} from 'immutable';
-import React from 'react';
 
 const routeSettings = {
   componentId: 'keboola.wr-storage',
@@ -15,7 +17,11 @@ const routeSettings = {
   index: {
     sections: [
       {
-        render: TargetProjectSection,
+        render: CollapsibleSection({
+          title: 'Target Project',
+          contentComponent: TargetProjectSection,
+          options: { includeSaveButtons: true }
+        }),
         onSave: targetProjectAdapter.createConfiguration,
         onLoad: targetProjectAdapter.parseConfiguration
       }
