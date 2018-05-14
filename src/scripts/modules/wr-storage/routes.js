@@ -1,16 +1,10 @@
 import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
-import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
-import TitleSection from './react/components/TitleSection';
-import LoadTypeSection from './react/components/LoadTypeSection';
-import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
-import title from './adapters/title';
-import loadType from './adapters/loadType';
-import rowAdapter from './adapters/row';
 
-import TargetProjectSection from './react/components/TargetProjectSection';
+import ConfigurationSection from './react/components/Configuration';
+import tableAdapter from './adapters/table';
+
+import TargetProjectSection from './react/components/TargetProject';
 import targetProjectAdapter from './adapters/targetProject';
-import columnsEditorDefinition from './adapters/columnsEditorDefinition';
-import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
 import {Map} from 'immutable';
 import React from 'react';
@@ -29,44 +23,40 @@ const routeSettings = {
   },
   row: {
     hasState: false,
-    onSave: rowAdapter.createConfiguration, // defualt merge through all sections onSave functions
-    onLoad: rowAdapter.parseConfiguration, // if not set then merge through all sections onLoad funtions
-    onCreate: rowAdapter.createEmptyConfiguration,
+    // onSave: rowAdapter.createConfiguration, // default merge through all sections onSave functions
+    // onLoad: rowAdapter.parseConfiguration, // if not set then merge through all sections onLoad funtions
+    // onCreate: rowAdapter.createEmptyConfiguration,
     sections: [
       {
-        render: TitleSection,
-        onSave: title.createConfiguration,
-        onLoad: title.parseConfiguration,
-        onCreate: title.createEmptyConfiguration,
+        render: ConfigurationSection,
+        onSave: tableAdapter.createConfiguration,
+        onLoad: tableAdapter.parseConfiguration,
+        onCreate: tableAdapter.createEmptyLocalState,
         isComplete: () => true
-      },
-      {
-        render: CollapsibleSection({
-          title: LoadTypeSectionTitle,
-          contentComponent: LoadTypeSection
-        }),
-        onSave: loadType.createConfiguration,
-        onLoad: loadType.parseConfiguration,
-        onCreate: loadType.createEmptyConfiguration,
-        isComplete: () => true
-      },
-      createColumnsEditorSection(columnsEditorDefinition)
+      }
     ],
     columns: [
       {
-        name: 'Table Name',
+        name: 'Name',
         type: columnTypes.VALUE,
         value: function(row) {
           return row.get('name') !== '' ? row.get('name') : 'Untitled';
         }
       },
       {
-        name: 'GoodData Title',
+        name: 'Source Table',
         type: columnTypes.VALUE,
         value: function(row) {
-          const params = row.getIn(['configuration', 'parameters'], Map());
-          const tableId = params.keySeq().first();
-          return params.getIn([tableId, 'title']);
+          const configuration = row.getIn(['configuration'], Map());
+          return configuration.getIn(['storage', 'input', 'tables', 0, 'source'], 'Unknown');
+        }
+      },
+      {
+        name: 'Destination Table',
+        type: columnTypes.VALUE,
+        value: function(row) {
+          const configuration = row.getIn(['configuration'], Map());
+          return configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], 'Unknown');
         }
       },
       {
