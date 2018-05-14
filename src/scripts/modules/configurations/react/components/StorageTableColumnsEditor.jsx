@@ -58,13 +58,13 @@ export default React.createClass({
   },
 
   render() {
-    let headers = this.props.value.columnsMappings.map(c => c.title);
+    let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
       <table className="table">
         <thead>
           <tr>
             <th>Column</th>
-            {headers.map((title, idx) => <th key={idx}>{title}</th>)}
+            {headers.map((title, index) => <th key={index}>{title}</th>)}
             <th>Content Preview</th>
           </tr>
         </thead>
@@ -73,20 +73,20 @@ export default React.createClass({
     );
   },
 
-  onChangeColumn(column) {
-    const newColumns = this.props.value.columns.map(c => (c.id === column.id ? column : c));
+  onChangeColumn(newValue) {
+    const newColumns = this.props.value.columns.map(column => (column.id === newValue.id ? newValue : column));
     this.props.onChange({ columns: newColumns });
   },
 
   renderBody() {
     return (
       <tbody>
-        {this.props.value.columns.map((column, idx) => (
-          <tr key={idx}>
+        {this.props.value.columns.map((column, index) => (
+          <tr key={index}>
             <td>{column.id}</td>
-            {this.props.value.columnsMappings.map(cm => (
-              <td key={cm.title}>
-                <cm.render disabled={this.props.disabled} column={column} onChange={this.onChangeColumn} />
+            {this.props.value.columnsMappings.map(mapping => (
+              <td key={index}>
+                <mapping.render disabled={this.props.disabled} column={column} onChange={this.onChangeColumn} />
               </td>
             ))}
             <td>
