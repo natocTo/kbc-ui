@@ -4,7 +4,7 @@ import ApplicationStore from '../../../../stores/ApplicationStore';
 export default React.createClass({
   propTypes: {
     bucketId: React.PropTypes.string.isRequired,
-    children: React.PropTypes.any
+    children: React.PropTypes.any.isRequired
   },
 
   bucketUrl() {
