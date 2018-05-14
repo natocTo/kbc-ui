@@ -2,6 +2,7 @@ import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
 import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
 import TitleSection from './react/components/TitleSection';
 import LoadTypeSection from './react/components/LoadTypeSection';
+import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
 import title from './adapters/title';
 import loadType from './adapters/loadType';
 import rowAdapter from './adapters/row';
@@ -10,7 +11,7 @@ import DimensionsSection from './react/components/DimensionsSection';
 import dimensionsAdapter from './adapters/dimensions';
 import columnsEditorDefinition from './adapters/columnsEditorDefinition';
 import ToggleProjectAccess from './react/components/ToggleProjectAccess';
-import createCollapsibleSection from '../configurations/utils/createCollapsibleSection';
+import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
 import {Map} from 'immutable';
 import React from 'react';
@@ -45,8 +46,10 @@ const routeSettings = {
         isComplete: () => true
       },
       {
-        render: createCollapsibleSection(({value}) => <span> Load Type: {value.incrementalLoad === 0 ? 'Full Load' : 'Incremental Load'} </span>,
-                                         LoadTypeSection),
+        render: CollapsibleSection({
+          title: LoadTypeSectionTitle,
+          contentComponent: LoadTypeSection
+        }),
         onSave: loadType.createConfiguration,
         onLoad: loadType.parseConfiguration,
         onCreate: loadType.createEmptyConfiguration,
