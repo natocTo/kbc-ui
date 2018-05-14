@@ -4,7 +4,7 @@ import {Map} from 'immutable';
 import TestCredentialsButtonGroup from '../../../../../react/common/TestCredentialsButtonGroup';
 import {Input} from './../../../../../react/common/KbcBootstrap';
 import Tooltip from '../../../../../react/common/Tooltip';
-import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
+import NonStaticSshTunnelRow from '../../../../../react/common/NonStaticSshTunnelRow';
 
 import SSLForm from './SSLForm';
 
@@ -120,7 +120,7 @@ export default React.createClass({
   renderSshRow() {
     if (this.props.hasSshTunnel(this.props.componentId)) {
       return (
-        <SshTunnelRow
+        <NonStaticSshTunnelRow
           isEditing={this.props.enabled}
           data={this.props.credentials.get('ssh', Map())}
           onChange={this.sshRowOnChange}
@@ -163,4 +163,3 @@ export default React.createClass({
     );
   }
 });
-
