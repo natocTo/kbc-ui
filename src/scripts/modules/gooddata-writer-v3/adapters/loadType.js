@@ -3,7 +3,7 @@ import {Map, fromJS} from 'immutable';
 export default {
   createConfiguration: (localState) => localState.remove('hasFact'),
   parseConfiguration(rootParsedConfiguration) {
-    const hasFact = rootParsedConfiguration.get('columns').find(c => c.get('type') === 'fact');
+    const hasFact = rootParsedConfiguration.get('columns').find(column => column.get('type') === 'fact');
     return Map({
       hasFact,
       incrementalLoad: rootParsedConfiguration.get('incrementalLoad', 0),
