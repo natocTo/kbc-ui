@@ -21,12 +21,11 @@ export default React.createClass({
 
     return (
       <div>
-        {badges.map((badge) =>
-          <div className={'badge-component-wrap-' + this.props.type}>
+        {badges.map((badge, idx) =>
+          <div className={'badge-component-wrap-' + this.props.type} key={idx}>
               <div className="badge-component-item-wrap">
               <div className={'badge badge-component-item badge-component-item-' + badge.key}
                 title={this.props.type === 'title' ? badge.description : ''}
-                key={badge.key}
               >
               {badge.title}
               </div>
