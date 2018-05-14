@@ -61,14 +61,16 @@ export default (TitleComponent, InnerComponent, options = {}) => {
 
     renderButtons() {
       return (
-        <div className="text-right">
-          <SaveButtons
-            isSaving={this.props.disabled}
-            isChanged={this.state.isChanged}
-            onSave={this.handleSave}
-            onReset={() => this.setState({value: this.props.value, isChanged: false})}
-          />
-          <br />
+        <div className="form-group">
+          <div className="text-right">
+            <SaveButtons
+              isSaving={this.props.disabled}
+              isChanged={this.state.isChanged}
+              onSave={this.handleSave}
+              onReset={() => this.setState({value: this.props.value, isChanged: false})}
+            />
+            <br />
+          </div>
         </div>
       );
     },
