@@ -3,20 +3,19 @@ import ApplicationStore from '../../../../stores/ApplicationStore';
 
 export default React.createClass({
   propTypes: {
-    bucketId: React.PropTypes.string.isRequired,
     children: React.PropTypes.any
   },
 
-  bucketUrl() {
-    return ApplicationStore.getSapiBucketUrl(this.props.bucketId);
+  fileUploadsUrl() {
+    return ApplicationStore.getSapiFileUploadsUrl();
   },
 
   render() {
     return (
       <a
-         target="_blank"
-         href={this.bucketUrl()}
-         onClick={(e) => e.stopPropagation()}
+        target="_blank"
+        href={this.fileUploadsUrl()}
+        onClick={(e) => e.stopPropagation()}
       >{this.props.children}</a>
     );
   }
