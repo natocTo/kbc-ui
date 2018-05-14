@@ -58,24 +58,57 @@ module.exports = React.createClass
     value = @props.value.remove(key)
     @props.onChange(value)
 
-  _handleAutoloadDataTypes: ->
-    false
+  _handleAutoloadDataTypes: (column, metadata) ->
+    datatypeLength = metadata.filter (entry) ->
+      entry.get('key') == 'KBC.datatype.length'
+    if datatypeLength.length > 0
+      datatypeLength = datatypeLength.get(0)
+
+    datatypeNullable = metadata.filter (entry) ->
+      entry.get('key') == 'KBC.datatype.nullable'
+    if datatypeNullable.length > 0
+      datatypeNullable = datatypeNullable.get(0)
+
+    basetype = metadata.filter (entry) ->
+      entry.get('key') == 'KBC.datatype.basetype'
+    if basetype.length == 0
+      null
+    else
+      basetype = basetype.get(0)
+    datatype = Immutable.fromJS(@_datatypesMap).filter (datatype) ->
+      datatype.get('basetype') == basetype.get('value')
+    type =
+      column: column
+      type: datatype.name
+      length: datatypeLength.get('value')
+      convertEmptyValuesToNull: datatypeNullable.get('value')
+    value = @props.value.set(column, Immutable.fromJS(type))
+    @props.onChange(value)
 
   _datatypesMap:
+    INTEGER:
+      name: "INTEGER",
+      basetype: "INTEGER",
+      size: true,
     NUMBER:
       name: "NUMBER",
+      basetype: "NUMERIC",
       size: true
     FLOAT:
       name: "FLOAT",
+      basetype: "FLOAT",
       size: false
     VARCHAR:
       name: "VARCHAR",
+      basetype: "STRING",
       size: true,
     DATE:
       name: "DATE",
+      basetype: "DATE",
       size: false
     TIMESTAMP:
       name: "TIMESTAMP",
+      basetype: "TIMESTAMP",
       size: false
     TIMESTAMP_LTZ:
       name: "TIMESTAMP_LTZ",
@@ -89,6 +122,7 @@ module.exports = React.createClass
     VARIANT:
       name: "VARIANT",
       size: false
+
   _getDatatypeOptions: ->
     _.keys(@_datatypesMap)
 

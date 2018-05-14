@@ -3,7 +3,6 @@ import MetadataStore from '../../../../../components/stores/MetadataStore';
 import createStoreMixin from '../../../../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
-  displayName: 'DataTypeAutoloader',
   propTypes: {
     tableId: React.PropTypes.string.isRequired,
     columns: React.PropTypes.array.isRequired,
@@ -13,11 +12,24 @@ export default React.createClass({
 
   mixins: [createStoreMixin(MetadataStore)],
 
+  getStateFromStores: function() {
+    return {
+      hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(this.props.tableId),
+      tableColumnMetadata: MetadataStore.getTableColumnsMetadata(this.props.tableId)
+    };
+  },
+
+  handleAutoload: function() {
+    this.state.tableColumnMetadata.map((metadata, colname) => {
+      this.props.handleAutoloadDataTypes(colname, metadata);
+    });
+  },
+
   render() {
-    if (!this.state.disabled && MetadataStore.tableHasMetadataDatatypes(this.props.tableId)) {
+    if (!this.props.disabled && this.state.hasMetadataDatatypes) {
       return (
         <span>
-          <button onClick={this.handleAutoloadDataTypes}>Autoload Datatypes</button>
+          <button onClick={this.handleAutoload}>Autoload Datatypes</button>
         </span>
       );
     } else {
