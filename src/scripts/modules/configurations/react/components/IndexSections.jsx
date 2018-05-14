@@ -16,7 +16,6 @@ import SaveButtons from '../../../../react/common/SaveButtons';
 
 // utils
 import sections from '../../utils/sections';
-import createCollapsibleSection from '../../utils/createCollapsibleSection';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
@@ -100,26 +99,12 @@ export default React.createClass({
     return Actions.saveForcedConfiguration(componentId, configurationId, created);
   },
 
-  prepareReactComponent(renderObject) {
-    if (!Immutable.Map.isMap(renderObject)) {
-      return renderObject;
-    }
-    const renderType = renderObject.get('type');
-    switch (renderType) {
-      case 'collabsible':
-        const { title, component, options } = renderObject.toJS();
-        return createCollapsibleSection(title, component, options);
-      default:
-        return renderObject.get('component');
-    }
-  },
-
   renderSections() {
     const settingsSections = this.state.settings.getIn(['index', 'sections']);
     const {storedConfigurationSections} = this.state;
     const returnTrue = () => true;
     return settingsSections.map((section, key) => {
-      const SectionComponent = this.prepareReactComponent(section.get('render'));
+      const SectionComponent = section.get('render');
       const onSectionSave = section.get('onSave');
       const sectionIsCompleteFn = section.get('isComplete') || returnTrue;
       const isComplete = sectionIsCompleteFn(onSectionSave(storedConfigurationSections.get(key)));

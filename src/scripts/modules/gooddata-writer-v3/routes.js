@@ -7,10 +7,10 @@ import loadType from './adapters/loadType';
 import rowAdapter from './adapters/row';
 
 import DimensionsSection from './react/components/DimensionsSection';
-import DimensionsSectionTitle from './react/components/DimensionsSectionTitle';
 import dimensionsAdapter from './adapters/dimensions';
 import columnsEditorDefinition from './adapters/columnsEditorDefinition';
 import ToggleProjectAccess from './react/components/ToggleProjectAccess';
+import createCollapsibleSection from '../configurations/utils/createCollapsibleSection';
 
 import {Map} from 'immutable';
 import React from 'react';
@@ -45,11 +45,8 @@ const routeSettings = {
         isComplete: () => true
       },
       {
-        render: {
-          type: 'collabsible',
-          title: DimensionsSectionTitle,
-          component: LoadTypeSection
-        },
+        render: createCollapsibleSection(({value}) => <span> Load Type: {value.incrementalLoad === 0 ? 'Full Load' : 'Incremental Load'} </span>,
+                                         LoadTypeSection),
         onSave: loadType.createConfiguration,
         onLoad: loadType.parseConfiguration,
         onCreate: loadType.createEmptyConfiguration,

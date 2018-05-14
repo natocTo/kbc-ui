@@ -13,6 +13,7 @@ import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import React from 'react';
 import Immutable from 'immutable';
+import createCollapsibleSection from '../configurations/utils/createCollapsibleSection';
 
 const routeSettings = {
   componentId: 'keboola.ex-http',
@@ -20,12 +21,7 @@ const routeSettings = {
   index: {
     sections: [
       {
-        render: {
-          type: 'collabsible',
-          title: () => <span>Base URL</span>,
-          component: CredentialsForm,
-          options: { includeSaveButtons: true }
-        },
+        render: createCollapsibleSection(() => <span>Base URL</span>, CredentialsForm, { includeSaveButtons: true }),
         onSave: credentialsCreateConfiguration,
         onLoad: credentialsParseConfiguration,
         isComplete: credentialsIsComplete
