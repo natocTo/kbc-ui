@@ -25,11 +25,12 @@ const TableCell = React.createClass({
       const bucketId = defaultBucketStage + '.c-' + sanitizedComponentId + '-' + this.props.configurationId;
       if (!tableName) {
         return (<span>
-          Unable to determine table name<br />
+          Unable to determine table name.<br />
           Check bucket
           {' '}<StorageApiBucketLink bucketId={bucketId}>{bucketId}</StorageApiBucketLink>
           {' '}or
           {' '}<StorageApiFileUploadsLink>File Uploads</StorageApiFileUploadsLink>
+          .
         </span>);
       } else {
         const tableId = bucketId + '.' + tableName;
