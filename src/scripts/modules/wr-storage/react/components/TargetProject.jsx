@@ -9,8 +9,7 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
       url: PropTypes.string.isRequired,
-      token: PropTypes.string.isRequired,
-      bucket: PropTypes.string.isRequired
+      token: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -21,18 +20,20 @@ export default React.createClass({
     return (
       <form>
         <FormGroup>
-          <ControlLabel>Storage API URL</ControlLabel>
+          <ControlLabel>Project Region</ControlLabel>
           <FormControl
-            type="text"
+            componentClass="select"
+            placeholder="select"
             value={this.props.value.url}
             onChange={function(e) {
               props.onChange({url: e.target.value});
             }}
             disabled={this.props.disabled}
-            />
-          <HelpBlock>
-            URL of the target Storage (e.g. https://connection.keboola.com/).
-          </HelpBlock>
+          >
+            <option value="" disabled>Select region</option>
+            <option value="https://connection.keboola.com/">US</option>
+            <option value="https://connection.eu-central-1.keboola.com/">EU</option>
+          </FormControl>
         </FormGroup>
         <FormGroup>
           <ControlLabel>Storage API Token</ControlLabel>
