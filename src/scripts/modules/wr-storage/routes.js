@@ -1,7 +1,8 @@
 import {Map} from 'immutable';
 import React from 'react';
 
-import { columnTypes, createRoute }  from '../configurations/utils/createRoute';
+import createRoute  from '../configurations/utils/createRoute';
+import columnTypes  from '../configurations/utils/columnTypeConstants';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
 import ConfigurationSection from './react/components/Configuration';
