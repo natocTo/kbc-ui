@@ -125,7 +125,7 @@
       "^.+\\.(jsx|js|coffee)$": "<rootDir>/environment/jest/transform.js"
     },
     "moduleNameMapper": {
-      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/FileStub.js",
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/environment/jest/FileStub.js",
       "^.+\\.(css|less|scss|sass)$": "<rootDir>/environment/jest/CSSStub.js"
     },
     "setupFiles": [
