@@ -45,7 +45,7 @@ export default React.createClass({
     const tablesCount = this.props.tables.get('tables').count();
     const headerRows = this.renderSlicedItems(0, limit);
     const panelContentRows = this.renderSlicedItems(limit, tablesCount);
-    const labelOpen = tablesCount === 100 ? `More than ${tablesCount - limit} others.` : `${tablesCount - limit} others`;
+    const labelOpen = tablesCount === 100 ? `More than ${tablesCount - limit} others.` : `Show ${tablesCount - limit} more tables`;
     return (
       <span>
         <ul className="list-no-bottom-margin">
