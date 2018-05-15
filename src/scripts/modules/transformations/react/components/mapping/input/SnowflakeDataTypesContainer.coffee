@@ -58,33 +58,6 @@ module.exports = React.createClass
     value = @props.value.remove(key)
     @props.onChange(value)
 
-  _handleAutoloadDataTypes: (column, metadata) ->
-    datatypeLength = metadata.filter (entry) ->
-      entry.get('key') == 'KBC.datatype.length'
-    if datatypeLength.length > 0
-      datatypeLength = datatypeLength.get(0)
-
-    datatypeNullable = metadata.filter (entry) ->
-      entry.get('key') == 'KBC.datatype.nullable'
-    if datatypeNullable.length > 0
-      datatypeNullable = datatypeNullable.get(0)
-
-    basetype = metadata.filter (entry) ->
-      entry.get('key') == 'KBC.datatype.basetype'
-    if basetype.length == 0
-      null
-    else
-      basetype = basetype.get(0)
-    datatype = Immutable.fromJS(@_datatypesMap).filter (datatype) ->
-      datatype.get('basetype') == basetype.get('value')
-    type =
-      column: column
-      type: datatype.name
-      length: datatypeLength.get('value')
-      convertEmptyValuesToNull: datatypeNullable.get('value')
-    value = @props.value.set(column, Immutable.fromJS(type))
-    @props.onChange(value)
-
   _datatypesMap:
     INTEGER:
       name: "INTEGER",
@@ -122,6 +95,38 @@ module.exports = React.createClass
     VARIANT:
       name: "VARIANT",
       size: false
+
+  _handleAutoloadDataTypes: (columnMetadata) ->
+    datatypesMap = Immutable.fromJS(@_datatypesMap)
+    datatypes = columnMetadata.map (metadata, colname) ->
+      datatypeLength = metadata.filter (entry) ->
+        entry.get('key') == 'KBC.datatype.length'
+      if datatypeLength.count() > 0
+        datatypeLength = datatypeLength.get(0)
+
+      datatypeNullable = metadata.filter (entry) ->
+        entry.get('key') == 'KBC.datatype.nullable'
+      if datatypeNullable.count() > 0
+        datatypeNullable = datatypeNullable.get(0)
+
+      basetype = metadata.filter (entry) ->
+        entry.get('key') == 'KBC.datatype.basetype'
+      if basetype.count() == 0
+        null
+      else
+        basetype = basetype.get(0)
+      datatypeName = null
+      datatype = datatypesMap.map (datatype) ->
+        if datatype.get('basetype') == basetype.get('value')
+          datatypeName = datatype.get('name')
+          datatype
+      type =
+        column: colname
+        type: datatypeName
+        length: if datatype.get(datatypeName).get('size') then datatypeLength.get('value') else null
+        convertEmptyValuesToNull: datatypeNullable.get('value')
+      Immutable.fromJS(type)
+    @props.onChange(datatypes)
 
   _getDatatypeOptions: ->
     _.keys(@_datatypesMap)

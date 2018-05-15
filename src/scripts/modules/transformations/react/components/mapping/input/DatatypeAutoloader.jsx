@@ -20,9 +20,10 @@ export default React.createClass({
   },
 
   handleAutoload: function() {
-    this.state.tableColumnMetadata.map((metadata, colname) => {
-      this.props.handleAutoloadDataTypes(colname, metadata);
+    const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
+      return this.props.columns.indexOf(colname) > -1;
     });
+    this.props.handleAutoloadDataTypes(metadataSet);
   },
 
   render() {
