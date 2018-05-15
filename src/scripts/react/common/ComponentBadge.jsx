@@ -97,7 +97,7 @@ export default React.createClass({
     if (flags.contains('appInfo.fullAccess')) {
       badges.push({
         title: <span><i className="fa fa-key fa-fw"/></span>,
-        description: `This ${this.getAppType()} will have full access to the project including all its data.`,
+        description: `This ${this.getAppType()} will have full access to the project including all its data`,
         key: 'fullAccess'
       });
     }
