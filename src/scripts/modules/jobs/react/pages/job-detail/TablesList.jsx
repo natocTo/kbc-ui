@@ -48,7 +48,7 @@ export default React.createClass({
     const labelOpen = tablesCount === 100 ? `More than ${tablesCount - limit} others.` : `${tablesCount - limit} others`;
     return (
       <span>
-        <ul>
+        <ul className="list-no-bottom-margin">
           {headerRows}
         </ul>
         <PanelWithDetails
