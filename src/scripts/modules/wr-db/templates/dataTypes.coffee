@@ -169,7 +169,7 @@ module.exports =
   'keboola.wr-db-mssql-v2':
     typesList: mssql
     default:
-      type: 'varchar'
+      type: 'nvarchar'
       size: '255'
   'keboola.wr-db-pgsql':
     typesList: pgsql
