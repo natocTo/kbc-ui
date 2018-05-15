@@ -35,18 +35,6 @@ export default React.createClass({
           </HelpBlock>
         </FormGroup>
         <FormGroup>
-          <ControlLabel>Bucket ID</ControlLabel>
-          <FormControl
-            type="text"
-            value={this.props.value.bucket}
-            onChange={function(e) {
-              props.onChange({bucket: e.target.value});
-            }}
-            disabled={this.props.disabled}
-            />
-          <HelpBlock>Full bucket ID (e.g. in.c-main).</HelpBlock>
-        </FormGroup>
-        <FormGroup>
           <ControlLabel>Storage API Token</ControlLabel>
           <FormControl
             type="password"
@@ -56,7 +44,7 @@ export default React.createClass({
             }}
             disabled={this.props.disabled}
             />
-            <HelpBlock>Use token with permissions limited only to write to the target bucket.</HelpBlock>
+            <HelpBlock>Use token with permissions limited only to write to a single target bucket.</HelpBlock>
         </FormGroup>
       </form>
     );
