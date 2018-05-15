@@ -643,7 +643,7 @@ export default React.createClass({
   },
 
   incrementalFetchingWarning() {
-    if (this.props.query.get('incrementalFetchingColumn') && this.props.sourceTables.length > 0) {
+    if (this.props.query.get('incrementalFetchingColumn') && this.props.sourceTables.count() > 0) {
       let candidateTable = this.getCandidateTable();
       let candidateColumn = candidateTable.get('candidates').find((column) =>
         column.get('name') === this.props.query.get('incrementalFetchingColumn')
