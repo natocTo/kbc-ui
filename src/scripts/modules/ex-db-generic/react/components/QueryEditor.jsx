@@ -643,19 +643,26 @@ export default React.createClass({
   },
 
   incrementalFetchingWarning() {
+    var infoMessage = 'If enabled, only newly created or updated records since the last run will be fetched.';
     if (this.props.query.get('incrementalFetchingColumn') && this.props.sourceTables.count() > 0) {
       let candidateTable = this.getCandidateTable();
-      let candidateColumn = candidateTable.get('candidates').find((column) =>
-        column.get('name') === this.props.query.get('incrementalFetchingColumn')
-      );
-      if (candidateColumn.get('autoIncrement')) {
-        return 'Using an autoIncrement ID means that only new records will be fetched, not updates or deletes.';
+      if (candidateTable) {
+        let candidateColumn = candidateTable.get('candidates').find((column) =>
+          column.get('name') === this.props.query.get('incrementalFetchingColumn')
+        );
+        if (candidateColumn.get('autoIncrement')) {
+          infoMessage = 'Using an autoIncrement ID means that only new records will be fetched, not updates or' +
+            ' deletes.';
+        } else {
+          infoMessage = 'Using an update timestamp column means that only new and updated records will be fetched,' +
+            ' not deletes.';
+        }
       } else {
-        return 'Using an update timestamp column means that only new and updated records will be fetched, not deletes.';
+        infoMessage = 'In order to enable incremental fetching the source table must contain a timestamp column or' +
+          ' an auto-incrementing primary key';
       }
-    } else {
-      return 'If enabled, only newly created or updated records since the last run will be fetched.';
     }
+    return infoMessage;
   },
 
   getLastFetchedRowValue() {
