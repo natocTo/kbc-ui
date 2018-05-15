@@ -30,6 +30,7 @@ ComponentBox = React.createClass
         ComponentBadge
           component: @props.component
           filterBadge: '3rdParty'
+          type: 'title'
       ComponentIcon
         component: component
         size: '64'
