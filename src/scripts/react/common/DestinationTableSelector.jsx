@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
-// import {HelpBlock} from 'react-bootstrap';
-// import storageActions from '../../../../components/StorageActionCreators';
 import './DestinationTableSelector.less';
+import stringUtils from '../../utils/string';
+const { webalize } = stringUtils;
+
 
 export default React.createClass({
   propTypes: {
@@ -14,10 +15,6 @@ export default React.createClass({
     updatePart: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired
   },
-
-  /* componentDidMount() {
-   *   storageActions.loadTablesForce();
-   * },*/
 
   prepareBucketsOptions() {
     const stage = this.props.parts.stage;
@@ -66,7 +63,7 @@ export default React.createClass({
     );
     const bucketSelect = (
       <Select.Creatable
-        promptTextCreator={label => `Create new bucket ${label.startsWith('c-') ? '' : 'c-'}${label}`}
+        promptTextCreator={label => label}
         clearable={true}
         disabled={this.props.disabled}
         placeholder="Select bucket or create new"
@@ -74,12 +71,13 @@ export default React.createClass({
         onChange={this.selectBucket}
         options={this.prepareBucketsOptions().toJS()}
         autosize={false}
+        newOptionCreator={this.selectBucketOptionCreator}
       />
     );
 
     const tableSelect = (
       <Select.Creatable
-        promptTextCreator={label => `Create new table ${label}`}
+        promptTextCreator={label => label}
         clearable={true}
         disabled={this.props.disabled}
         placeholder="Select table or create new"
@@ -87,6 +85,7 @@ export default React.createClass({
         onChange={this.selectTable}
         options={this.prepareTablesOptions().toJS()}
         autosize={false}
+        newOptionCreator={this.selectTableOptionCreator}
       />
     );
 
@@ -136,6 +135,21 @@ export default React.createClass({
 
   updateValue(partNameToUpdate, value) {
     this.props.updatePart(partNameToUpdate, value);
-  }
+  },
 
+  selectBucketOptionCreator({ label }) {
+    const option = (label.startsWith('c-') ? '' : 'c-') + webalize(label);
+    return {
+      label: 'Create new bucket ' + option,
+      value: option
+    };
+  },
+
+  selectTableOptionCreator({ label }) {
+    const option = webalize(label);
+    return {
+      label: 'Create new table ' + option,
+      value: option
+    };
+  }
 });
