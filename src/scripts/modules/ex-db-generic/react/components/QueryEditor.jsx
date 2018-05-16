@@ -7,12 +7,12 @@ import {Alert} from 'react-bootstrap';
 import {CodeEditor} from '../../../../react/common/common';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
+import Tooltip from '../../../../react/common/Tooltip';
 
 import AsynchActionError from './AsynchActionError';
 import TableLoader from './TableLoaderQueryEditor';
 
 import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates/helpAndHints';
-import ResetStateButton from '../../../configurations/react/components/ResetStateButton';
 
 import editorMode from '../../templates/editorMode';
 
@@ -611,13 +611,14 @@ export default React.createClass({
             </div>
             <div className="help-block">
               To start from the beginning of the table you can
-              <ResetStateButton
-                label="Clear the stored value"
-                onClick={this.handleStateReset}
-                isPending={false}
-                disabled={false}
-                tooltip={tooltip}
-              />
+              <a onClick={this.handleStateReset}>
+                <Tooltip
+                  tooltip={tooltip}
+                  placement="top"
+                >
+                  <span> clear the stored value</span>
+                </Tooltip>
+              </a>
             </div>
           </div>
         );
