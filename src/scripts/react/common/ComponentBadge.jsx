@@ -63,7 +63,7 @@ export default React.createClass({
     if (flags.contains('excludeFromNewList')) {
       badges.push({
         title: 'Alpha',
-        description: `This ${this.getAppType()} is private`,
+        description: `This ${this.getAppType()} is private.`,
         key: 'excludeFromNewList'
       });
     }
