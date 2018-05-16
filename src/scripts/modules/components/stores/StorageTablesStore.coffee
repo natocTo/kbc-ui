@@ -15,6 +15,9 @@ _store = Map(
 
 StorageTablesStore = StoreUtils.createStore
 
+  get: (tableId) ->
+    _store.getIn(['tables', tableId])
+
   getAll: ->
     _store.get 'tables'
 
