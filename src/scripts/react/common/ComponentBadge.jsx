@@ -49,14 +49,14 @@ export default React.createClass({
     if (!flags.contains('3rdParty')) {
       badges.push({
         title: <span><img src={keboolaLogo} height="17" alt=""/> Keboola</span>,
-        description: `Support for this ${this.getAppType()} is provided by Keboola`,
+        description: `Support for this ${this.getAppType()} is provided by Keboola.`,
         key: 'responsibility'
       });
     }
     if (flags.contains('3rdParty')) {
       badges.push({
         title: <span>3<sup>rd</sup> party</span>,
-        description: `This is a 3rd party ${this.getAppType()} supported by its author`,
+        description: `This is a third-party ${this.getAppType()} supported by its vendor.`,
         key: '3rdParty'
       });
     }
@@ -70,49 +70,49 @@ export default React.createClass({
     if (flags.contains('appInfo.dataIn')) {
       badges.push({
         title: <span><i className="fa fa-cloud-download fa-fw"/> IN</span>,
-        description: `This ${this.getAppType()} extracts data from outside sources`,
+        description: `This ${this.getAppType()} retrieves data from outside sources.`,
         key: 'dataIn'
       });
     }
     if (flags.contains('appInfo.dataOut')) {
       badges.push({
         title: <span><i className="fa fa-cloud-upload fa-fw"/> OUT</span>,
-        description: `This ${this.getAppType()} sends data outside of Keboola Connection`,
+        description: `This ${this.getAppType()} sends data outside of Keboola Connection.`,
         key: 'dataOut'
       });
     }
     if (flags.contains('appInfo.fee')) {
       badges.push({
         title: <span><i className="fa fa-dollar fa-fw"/></span>,
-        description: `There is an extra charge to use this ${this.getAppType()}`,
+        description: `There is an extra charge to use this ${this.getAppType()}.`,
         key: 'fee'
       });
     }
     if (flags.contains('appInfo.redshiftOnly')) {
       badges.push({
         title: <span><i className="fa fa-database fa-fw"/></span>,
-        description: `Redshift backend is required to use this ${this.getAppType()}`,
+        description: `A Redshift backend is required to use this ${this.getAppType()}.`,
         key: 'redshift'
       });
     }
     if (flags.contains('appInfo.fullAccess')) {
       badges.push({
         title: <span><i className="fa fa-key fa-fw"/></span>,
-        description: `This ${this.getAppType()} will have full access to the project including all its data`,
+        description: `This ${this.getAppType()} will have full access to the project including all its data.`,
         key: 'fullAccess'
       });
     }
     if (flags.contains('deprecated')) {
       badges.push({
         title: <span><i className="fa fa-exclamation-triangle fa-fw"/><i className="fa fa-clock-o fa-fw"/></span>,
-        description: `This ${this.getAppType()} is deprecated`,
+        description: `This ${this.getAppType()} is deprecated.`,
         key: 'deprecated'
       });
     }
     if (this.props.component.getIn(['data', 'vendor', 'licenseUrl'])) {
       badges.push({
         title: <span><i className="fa fa-file-text-o fa-fw"/></span>,
-        description: <span>You agree to <ExternalLink href={this.props.component.getIn(['data', 'vendor', 'licenseUrl'])}>vendors license agreement</ExternalLink></span>,
+        description: <span>You agree to the <ExternalLink href={this.props.component.getIn(['data', 'vendor', 'licenseUrl'])}>vendor's license agreement</ExternalLink>.</span>,
         key: 'license'
       });
     }
