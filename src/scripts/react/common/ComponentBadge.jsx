@@ -109,7 +109,7 @@ export default React.createClass({
         key: 'deprecated'
       });
     }
-    if (this.props.component.getIn(['data', 'vendor', 'licenseUrl'])) {
+    if (flags.contains('hasLicence')) {
       badges.push({
         title: <span><i className="fa fa-file-text-o fa-fw"/></span>,
         description: <span>You agree to the <ExternalLink href={this.props.component.getIn(['data', 'vendor', 'licenseUrl'])}>vendor's license agreement</ExternalLink>.</span>,
@@ -121,7 +121,7 @@ export default React.createClass({
 
 
   getFilterFlags()  {
-    const flags = this.props.component.get('flags');
+    let flags = this.resolveFlags();
     if (this.props.filterBadge !== '')  {
       return flags.filter((flag) => flag === this.props.filterBadge);
     } else {
@@ -139,6 +139,14 @@ export default React.createClass({
         return 'application';
       default:
         'component';
+    }
+  },
+
+  resolveFlags() {
+    if (this.props.component.getIn(['data', 'vendor', 'licenseUrl'])) {
+      return this.props.component.get('flags').push('hasLicence');
+    } else {
+      return this.props.component.get('flags');
     }
   }
 });
