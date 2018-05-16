@@ -1,9 +1,9 @@
 import assert from 'assert';
 import Immutable from 'immutable';
-import adapter from './table';
-import { cases } from './table.spec.def';
+import adapter from './inputMapping';
+import { cases } from './inputMapping.spec.def';
 
-describe('credentials', function() {
+describe('inputMapping', function() {
   describe('createConfiguration()', function() {
     it('should return an empty config with defaults from an empty local state', function() {
       assert.deepEqual(cases.emptyWithDefaults.configuration, adapter.createConfiguration(Immutable.fromJS({})).toJS());

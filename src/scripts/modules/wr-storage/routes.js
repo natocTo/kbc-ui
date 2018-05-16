@@ -5,8 +5,8 @@ import createRoute  from '../configurations/utils/createRoute';
 import columnTypes  from '../configurations/utils/columnTypeConstants';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
-import ConfigurationSection from './react/components/Configuration';
-import tableAdapter from './adapters/table';
+import InputMappingSection from './react/components/InputMapping';
+import inputMappingAdapter from './adapters/inputMapping';
 
 import TargetProjectSection from './react/components/TargetProject';
 import targetProjectAdapter from './adapters/targetProject';
@@ -35,12 +35,13 @@ const routeSettings = {
     // onCreate: rowAdapter.createEmptyConfiguration,
     sections: [
       {
-        render: ConfigurationSection,
-        onSave: tableAdapter.createConfiguration,
-        onLoad: tableAdapter.parseConfiguration,
-        onCreate: tableAdapter.createEmptyLocalState,
-        isComplete: () => true
+        render: InputMappingSection,
+        onSave: inputMappingAdapter.createConfiguration,
+        onLoad: inputMappingAdapter.parseConfiguration,
+        onCreate: inputMappingAdapter.createEmptyLocalState,
+        table: (configuration) => configuration.getIn(['storage', 'input', 'tables', 0, 'source'])
       }
+
     ],
     columns: [
       {
