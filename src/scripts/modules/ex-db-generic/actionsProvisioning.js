@@ -515,6 +515,8 @@ export function createActions(componentId) {
       return saveConfigData(configId, newData, ['migration', 'saving'], diffMsg).then(() => {
         updateLocalState(configId, ['migration', 'pending'], false);
         updateLocalState(configId, ['migration', 'completed'], true);
+        const candidates = getIncrementalCandidates(store.getSourceTables(configId));
+        updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
       });
     },
 
