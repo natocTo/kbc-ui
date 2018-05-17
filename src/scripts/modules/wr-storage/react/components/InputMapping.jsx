@@ -4,10 +4,7 @@ import {Form, FormControl, FormGroup, ControlLabel, Col} from 'react-bootstrap';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 import StorageApiLink from '../../../components/react/components/StorageApiTableLinkEx';
 import {PanelWithDetails} from '@keboola/indigo-ui';
-<<<<<<< HEAD
-=======
 
->>>>>>> fix(wr-storage): simplified input mapping
 export default React.createClass({
   mixins: [immutableMixin],
 
