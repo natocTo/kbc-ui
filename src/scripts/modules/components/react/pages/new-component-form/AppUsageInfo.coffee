@@ -14,4 +14,4 @@ module.exports = React.createClass
     div {className: "kbcLicenseTable"},
       ComponentBadge
         component: @props.component
-        type: 'inline'
+        type: 'description'

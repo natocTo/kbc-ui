@@ -23,18 +23,18 @@ export default React.createClass({
     return (
       <div>
         {badges.map((badge, idx) =>
-          <div className={'badge-component-wrap-' + this.props.type} key={idx}>
-              <div className="badge-component-item-wrap">
+          <div className={'badge-component-container-' + this.props.type} key={idx}>
+            <div className="badge-component-placeholder">
               <div className={'badge badge-component-item badge-component-item-' + badge.key}
                 title={this.props.type === 'title' ? badge.description : ''}
               >
               {badge.title}
               </div>
-              </div>
-            {this.props.type === 'inline' &&
-            <div className="badge-component-description">
-              {badge.description}
             </div>
+            {this.props.type === 'description' &&
+              <div className="badge-component-description">
+                {badge.description}
+              </div>
             }
           </div>
         )}

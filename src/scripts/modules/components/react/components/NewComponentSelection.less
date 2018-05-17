@@ -2,55 +2,53 @@
   float: none;
 }
 
-.badge {
-  &-component-container {
-    position: absolute;
-    right: 9px;
-    top: 9px;
-    .badge-component-item-responsibility{
-      //don't show Keboola badge in component selection
-      display: none;
+.badge-component {
+  &-container {
+    &-plain {
+      position: absolute;
+      right: 9px;
+      top: 9px;
+      .badge-component-item-responsibility {
+        //don't show Keboola badge in component selection
+        display: none;
+      }
+    }
+    &-description  {
+      display: flex;
+      flex-flow: row;
+      .badge-component-placeholder {
+        min-width: 92px;
+      }
     }
   }
-  &-component-description{
-    margin-left: 10px;
-    margin-bottom: 8px;
+  &-placeholder {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
   }
-  &-component-item {
+  &-item {
     padding: 2px 7px 2px 9px;
-    margin: 0px 0px 5px 3px;
     font-size: 12px;
     line-height: 16px;
-    &-wrap{
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-start;
-    }
-
-    &-excludeFromNewList{
+    &-excludeFromNewList {
       background: #282d38;
     }
-    &-fee{
+    &-fee {
       background: #fbd062;
       color: #282d38;
     }
-    &-deprecated{
+    &-deprecated {
       background: #e70b37;
       color: #fff;
     }
-    &-responsibility{
+    &-responsibility {
       background: #25B8EB;
       color: #fff;
     }
   }
-  &-component-wrap {
-    &-inline {
-      display: flex;
-      flex-flow: row;
-      .badge-component-item-wrap{
-        min-width: 92px;
-      }
-    }
+  &-description {
+    margin-left: 10px;
+    margin-bottom: 8px;
   }
 }
 

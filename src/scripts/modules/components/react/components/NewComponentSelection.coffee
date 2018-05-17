@@ -25,12 +25,10 @@ ComponentBox = React.createClass
     ComponentDetailLink
       componentId: @props.component.get("id")
       type: @props.component.get("type")
-      div
-        className: 'badge-component-container',
-        ComponentBadge
-          component: @props.component
-          filterBadge: '3rdParty'
-          type: 'title'
+      ComponentBadge
+        component: @props.component
+        filterBadge: '3rdParty'
+        type: 'plain'
       ComponentIcon
         component: component
         size: '64'
