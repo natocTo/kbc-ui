@@ -576,7 +576,7 @@ export default React.createClass({
           </div>
         </div>
       </div>,
-      this.renderlastFetchedInfo()
+      this.renderLastFetchedInfo()
     ];
   },
 
@@ -603,7 +603,7 @@ export default React.createClass({
     }
   },
 
-  renderlastFetchedInfo() {
+  renderLastFetchedInfo() {
     var formElement;
     const fetchingColumn = this.props.query.get('incrementalFetchingColumn');
     if (fetchingColumn) {
