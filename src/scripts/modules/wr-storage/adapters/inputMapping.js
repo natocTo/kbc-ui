@@ -24,8 +24,7 @@ const parseConfiguration = function(configuration) {
 };
 
 const createEmptyLocalState = function(tableId) {
-  const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
-  return Immutable.fromJS({source: tableId, destination: tableName});
+  return Immutable.fromJS({source: tableId});
 };
 
 export default {
