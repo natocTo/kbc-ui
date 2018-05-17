@@ -371,7 +371,13 @@ export default React.createClass({
   renderIncrementalLoadOption() {
     let helpAlert = null;
     if (this.props.query.get('incrementalFetchingColumn') && !this.props.query.get('incremental')) {
-      helpAlert = <Alert bsStyle="warning"><strong>Caution</strong>: Incremental Fetching is enabled.  Please be aware that each run will completely replace the destination table when incremental loading is disabled.</Alert>;
+      helpAlert = (
+        <Alert bsStyle="warning">
+          It is recommended to enable incremental loading if using incremental fetching.
+          If incremental loading is <strong>not</strong> enabled,
+          the storage table will only ever contain the most recently fetched results.
+        </Alert>
+      );
     }
     return (
       <div className="form-group">
