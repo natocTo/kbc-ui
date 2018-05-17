@@ -14,7 +14,7 @@ import RunComponentButton from '../../../components/react/components/RunComponen
 import ConfigurationRowDescription from '../components/ConfigurationRowDescription';
 import ConfigurationRowMetadata from '../components/ConfigurationRowMetadata';
 import DeleteConfigurationRowButton from '../components/DeleteConfigurationRowButton';
-import ResetStateButton from '../components/ResetStateButton';
+import ClearStateButton from '../components/ClearStateButton';
 import JsonConfiguration from '../components/JsonConfiguration';
 import SaveButtons from '../../../../react/common/SaveButtons';
 import ActivateDeactivateButton from '../../../../react/common/ActivateDeactivateButton';

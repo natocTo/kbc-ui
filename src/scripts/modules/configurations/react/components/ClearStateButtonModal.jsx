@@ -33,7 +33,7 @@ module.exports = React.createClass({
         <Modal.Footer>
           <ButtonToolbar>
             <Button bsStyle="link" onClick={this.props.onHide}>Close</Button>
-            <Button bsStyle="primary" onClick={this._handleRun} disabled={this.props.disabled}>Reset</Button>
+            <Button bsStyle="primary" onClick={this._handleRun} disabled={this.props.disabled}>Clear</Button>
           </ButtonToolbar>
         </Modal.Footer>
       </Modal>
