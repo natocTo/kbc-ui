@@ -640,7 +640,7 @@ export default React.createClass({
       }
       return (
         <div className="form-group">
-          <label className="col-md-3 control-label">Last fetched value</label>
+          <label className="col-md-3 control-label">Last Fetched Value</label>
           <div className="col-md-8">
             {formElement}
           </div>
