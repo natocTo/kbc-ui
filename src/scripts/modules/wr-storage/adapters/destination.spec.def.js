@@ -23,7 +23,7 @@ export const cases = {
   simple: {
     localState: {
       destination: 'test',
-      incremental: true,
+      incremental: true
     },
     configuration: {
       storage: {

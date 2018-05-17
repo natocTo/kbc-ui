@@ -54,7 +54,6 @@ export default React.createClass({
               />
             <HelpBlock>Use token with permissions limited only to write to a single target bucket.</HelpBlock>
           </Col>
-
         </FormGroup>
       </Form>
     );
