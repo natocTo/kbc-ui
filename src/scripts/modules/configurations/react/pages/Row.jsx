@@ -4,7 +4,6 @@ import Immutable from 'immutable';
 // stores
 import Store from '../../ConfigurationRowsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
-import StorageTablesStore from '../../../components/stores/StorageTablesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
@@ -29,7 +28,7 @@ import sections from '../../utils/sections';
 import '../../styles.less';
 
 export default React.createClass({
-  mixins: [createStoreMixin(Store, StorageTablesStore)],
+  mixins: [createStoreMixin(Store)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
@@ -78,7 +77,6 @@ export default React.createClass({
       createBySectionsFn,
       parseBySectionsFn,
       storedConfigurationSections,
-      configuration: Store.getConfiguration(componentId, configurationId, rowId),
       configurationBySections: Store.getEditingConfiguration(componentId, configurationId, rowId, parseBySectionsFn),
       isSaving: Store.getPendingActions(componentId, configurationId, rowId).has('save-configuration'),
       isChanged: Store.isEditingConfiguration(componentId, configurationId, rowId),
@@ -242,10 +240,6 @@ export default React.createClass({
       const onSectionSave = section.get('onSave');
       const sectionIsCompleteFn = section.get('isComplete') || returnTrue;
       const isComplete = sectionIsCompleteFn(onSectionSave(storedConfigurationSections.get(key)));
-      let props = [];
-      if (section.has('table')) {
-        props.table = StorageTablesStore.get(section.get('table')(this.state.configuration));
-      }
       return (
         <div key={key}>
           <SectionComponent
@@ -253,7 +247,6 @@ export default React.createClass({
             disabled={this.state.isSaving}
             onChange={diff => this.onUpdateSection(key, diff)}
             value={this.state.configurationBySections.getIn(['sections', key]).toJS()}
-            {...props}
           />
         </div>
       );
