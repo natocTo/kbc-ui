@@ -17,7 +17,6 @@ import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates
 import editorMode from '../../templates/editorMode';
 
 export default React.createClass({
-  displayName: 'ExDbQueryEditor',
   propTypes: {
     query: React.PropTypes.object.isRequired,
     tables: React.PropTypes.object.isRequired,
@@ -167,14 +166,6 @@ export default React.createClass({
     }
   },
 
-  tableSelectOptions() {
-    return this.props.tables.map(function(table) {
-      return table.get('id');
-    }).sortBy(function(val) {
-      return val;
-    });
-  },
-
   getPksOnSourceTableChange(newValue) {
     const pkCols = this.props.getPKColumns(Immutable.fromJS(newValue), this.props.sourceTables);
     let sourctTablePks = pkCols.map((column) => {
@@ -269,12 +260,6 @@ export default React.createClass({
   getTableValue() {
     if (this.props.query.get('table')) {
       return this.props.query.get('table').get('tableName');
-    } else return '';
-  },
-
-  getTableLabel() {
-    if (this.props.query.get('table')) {
-      return this.props.query.get('table').get('name');
     } else return '';
   },
 
@@ -543,7 +528,7 @@ export default React.createClass({
 
   renderIncrementalFetchingForm() {
     return [
-      <div className="form-group">
+      <div className="form-group" key="column">
         <label className="col-md-3 control-label">Column</label>
         <div className="col-md-9">
           <Select
@@ -559,7 +544,7 @@ export default React.createClass({
           </div>
         </div>
       </div>,
-      <div className="form-group">
+      <div className="form-group" key="limit">
         <label className="col-md-3 control-label">Limit</label>
         <div className="col-md-9">
           <input
@@ -641,7 +626,7 @@ export default React.createClass({
         );
       }
       return (
-        <div className="form-group">
+        <div className="form-group" key="last-fetched-value">
           <label className="col-md-3 control-label">Last Fetched Value</label>
           <div className="col-md-8">
             {formElement}
