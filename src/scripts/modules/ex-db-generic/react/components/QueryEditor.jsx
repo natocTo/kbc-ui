@@ -617,14 +617,16 @@ export default React.createClass({
             </div>
             <div className="help-block">
               To start from the beginning of the table you can
+              {' '}
               <a onClick={this.handleStateReset}>
                 <Tooltip
                   tooltip={tooltip}
                   placement="top"
                 >
-                  <span> clear the stored value</span>
+                  <span>clear the stored value</span>
                 </Tooltip>
               </a>
+              .
             </div>
           </div>
         );
