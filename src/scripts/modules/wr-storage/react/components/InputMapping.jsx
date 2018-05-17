@@ -14,8 +14,7 @@ export default React.createClass({
       changedSince: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
-    table: PropTypes.object.isRequired
+    disabled: PropTypes.bool.isRequired
   },
 
   render() {

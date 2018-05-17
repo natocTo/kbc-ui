@@ -32,16 +32,12 @@ const routeSettings = {
   },
   row: {
     hasState: false,
-    // onSave: rowAdapter.createConfiguration, // default merge through all sections onSave functions
-    // onLoad: rowAdapter.parseConfiguration, // if not set then merge through all sections onLoad funtions
-    // onCreate: rowAdapter.createEmptyConfiguration,
     sections: [
       {
         render: InputMappingSection,
         onSave: inputMappingAdapter.createConfiguration,
         onLoad: inputMappingAdapter.parseConfiguration,
-        onCreate: inputMappingAdapter.createEmptyLocalState,
-        table: (configuration) => configuration.getIn(['storage', 'input', 'tables', 0, 'source'])
+        onCreate: inputMappingAdapter.createEmptyLocalState
       },
       {
         render: DestinationSection,
