@@ -13,6 +13,7 @@ import _ from 'lodash';
 import fuzzy from 'fuzzy';
 import Immutable from 'immutable';
 import columnTypeConstants from './columnTypeConstants';
+import {createTablesRoute} from '../../table-browser/routes';
 
 // defaults
 const defaults = {
@@ -107,6 +108,7 @@ export default function(settings) {
       ],
       defaultRouteHandler: Row,
       childRoutes: [
+        createTablesRoute(settingsWithDefaults.componentId + '-row'),
         {
           name: settingsWithDefaults.componentId + '-row-versions',
           settings: settingsWithDefaults,
