@@ -89,7 +89,7 @@ export default React.createClass({
       hasState: !Store.get(componentId, configurationId, rowId)
         .get('state', Immutable.Map())
         .isEmpty(),
-      isResetStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('reset-state')
+      isClearStatePending: Store.getPendingActions(componentId, configurationId, rowId).has('clear-state')
     };
   },
 
@@ -139,14 +139,14 @@ export default React.createClass({
     );
     if (settings.getIn(['row', 'hasState'])) {
       actions.push(
-        <li className={this.state.isResetStatePending || !this.state.hasState ? 'disabled' : ''} key="reset-state">
-          <ResetStateButton
-            onClick={() => Actions.resetState(state.componentId, state.configurationId, state.rowId)}
-            isPending={this.state.isResetStatePending}
+        <li className={this.state.isClearStatePending || !this.state.hasState ? 'disabled' : ''} key="clear-state">
+          <ClearStateButton
+            onClick={() => Actions.clearState(state.componentId, state.configurationId, state.rowId)}
+            isPending={this.state.isClearStatePending}
             disabled={!this.state.hasState}
           >
             Delete the current stored state of the configuration, eg. progress of an incremental processes.
-          </ResetStateButton>
+          </ClearStateButton>
         </li>
       );
     }

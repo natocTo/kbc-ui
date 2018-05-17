@@ -319,9 +319,9 @@ module.exports = {
     });
   },
 
-  resetState: function(componentId, configurationId, rowId) {
+  clearState: function(componentId, configurationId, rowId) {
     Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_START,
+      type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_START,
       componentId: componentId,
       configurationId: configurationId,
       rowId: rowId
@@ -330,7 +330,7 @@ module.exports = {
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_SUCCESS,
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
@@ -338,7 +338,7 @@ module.exports = {
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_RESET_STATE_ERROR,
+          type: Constants.ActionTypes.CONFIGURATION_ROWS_CLEAR_STATE_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
