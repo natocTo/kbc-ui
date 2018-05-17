@@ -11,6 +11,8 @@ import inputMappingAdapter from './adapters/inputMapping';
 import TargetProjectSection from './react/components/TargetProject';
 import targetProjectAdapter from './adapters/targetProject';
 
+import DestinationSection from './react/components/Destination';
+import destinationAdapter from './adapters/destination';
 
 const routeSettings = {
   componentId: 'keboola.wr-storage',
@@ -40,8 +42,13 @@ const routeSettings = {
         onLoad: inputMappingAdapter.parseConfiguration,
         onCreate: inputMappingAdapter.createEmptyLocalState,
         table: (configuration) => configuration.getIn(['storage', 'input', 'tables', 0, 'source'])
+      },
+      {
+        render: DestinationSection,
+        onSave: destinationAdapter.createConfiguration,
+        onLoad: destinationAdapter.parseConfiguration,
+        onCreate: destinationAdapter.createEmptyLocalState
       }
-
     ],
     columns: [
       {
