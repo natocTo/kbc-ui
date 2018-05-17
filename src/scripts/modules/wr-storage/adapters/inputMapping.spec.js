@@ -28,7 +28,7 @@ describe('inputMapping', function() {
 
   describe('createEmptyLocalState()', function() {
     it('should return a default localState with the table details filled in', function() {
-      assert.deepEqual(adapter.createEmptyLocalState('in.c-bucket.test').toJS(), {source: 'in.c-bucket.test', destination: 'test'});
+      assert.deepEqual(adapter.createEmptyLocalState('in.c-bucket.test').toJS(), {source: 'in.c-bucket.test'});
     });
   });
 });
