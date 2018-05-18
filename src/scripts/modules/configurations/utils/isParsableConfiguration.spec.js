@@ -22,6 +22,13 @@ const parse = function(configuration) {
   });
 };
 
+const normalize = function(configuration) {
+  let normalized = configuration;
+  normalized = normalized.setIn(['key2'], configuration.getIn(['key2'], ''));
+  normalized = normalized.setIn(['nested', 'key2'], configuration.getIn(['nested', 'key2'], ''));
+  return normalized;
+};
+
 describe('isParsableConfiguration', function() {
   it('empty configuration should be parsable', function() {
     const configuration = Immutable.fromJS({});
@@ -38,6 +45,17 @@ describe('isParsableConfiguration', function() {
     });
     assert.equal(true, isParsableConfiguration(configuration, parse, create));
   });
+  it('simple full configuration should be parsable with normalize function', function() {
+    const configuration = Immutable.fromJS({
+      key1: 'test1',
+      key2: 'test2',
+      nested: {
+        key1: 'test3',
+        key2: 'test4'
+      }
+    });
+    assert.equal(true, isParsableConfiguration(configuration, parse, create, normalize));
+  });
   it('invalid configuration should not be parsable', function() {
     const configuration = Immutable.fromJS({
       invalidKey1: 'test',
@@ -50,19 +68,47 @@ describe('isParsableConfiguration', function() {
     });
     assert.equal(false, isParsableConfiguration(configuration, parse, create));
   });
-  it('incomplete configuration should be parsable', function() {
+  it('invalid configuration should not be parsable with normalize function', function() {
+    const configuration = Immutable.fromJS({
+      invalidKey1: 'test',
+      key1: 'test1',
+      key2: 'test2',
+      nested: {
+        key1: 'test3',
+        key2: 'test4'
+      }
+    });
+    assert.equal(false, isParsableConfiguration(configuration, parse, create, normalize));
+  });
+  it('incomplete configuration should not be parsable', function() {
     const configuration = Immutable.fromJS({
       key1: 'test1',
       nested: {
         key1: 'test2'
       }
     });
-    assert.equal(true, isParsableConfiguration(configuration, parse, create));
+    assert.equal(false, isParsableConfiguration(configuration, parse, create));
   });
-  it('more incomplete configuration should be parsable', function() {
+  it('incomplete configuration should be parsable with normalize function', function() {
+    const configuration = Immutable.fromJS({
+      key1: 'test1',
+      nested: {
+        key1: 'test2'
+      }
+    });
+    assert.equal(true, isParsableConfiguration(configuration, parse, create, normalize));
+  });
+  it('more incomplete configuration should not be parsable', function() {
     const configuration = Immutable.fromJS({
       key1: 'test1'
     });
-    assert.equal(true, isParsableConfiguration(configuration, parse, create));
+    assert.equal(false, isParsableConfiguration(configuration, parse, create));
+  });
+
+  it('more incomplete configuration should not be parsable with normalize function', function() {
+    const configuration = Immutable.fromJS({
+      key1: 'test1'
+    });
+    assert.equal(false, isParsableConfiguration(configuration, parse, create, normalize));
   });
 });
