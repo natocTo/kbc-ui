@@ -78,8 +78,11 @@ function generateId(existingIds) {
 function isValidQuery(query) {
   const nameValid = query.get('name', '').trim().length > 0;
   const queryValid = query.get('query', '').trim().length > 0;
-  const tableValid = (query.get('table')) ? query.get('table').get('tableName', '').trim().length > 0 : false;
-  return nameValid && (queryValid || tableValid);
+  const advancedMode = query.get('advancedMode', false);
+  const tableValid = (query.get('table'))
+    ? query.get('table').get('tableName', '').trim().length > 0
+    : false;
+  return nameValid && ((advancedMode && queryValid) || (!advancedMode && tableValid));
 }
 
 export const componentsStore = store;
