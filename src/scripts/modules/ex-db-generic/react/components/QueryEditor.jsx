@@ -153,7 +153,7 @@ export default React.createClass({
   },
 
   incrementalFetchingOptions() {
-    if (!this.props.incrementalCandidates || this.props.query.get('table') === '') {
+    if (!this.props.incrementalCandidates || !this.props.query.get('table')) {
       return [];
     }
     let candidateTable = this.getCandidateTable();
@@ -641,7 +641,11 @@ export default React.createClass({
 
   incrementalFetchingWarning() {
     var infoMessage = 'If enabled, only newly created or updated records since the last run will be fetched.';
-    if (this.props.query.get('incrementalFetchingColumn') && this.props.sourceTables.count() > 0) {
+    if (
+      this.props.query.get('incrementalFetchingColumn')
+      && this.props.sourceTables.count() > 0
+      && !!this.props.query.get('table')
+    ) {
       let candidateTable = this.getCandidateTable();
       if (candidateTable) {
         let candidateColumn = candidateTable.get('candidates').find((column) =>
