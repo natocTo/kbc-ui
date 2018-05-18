@@ -281,23 +281,21 @@ export function createStore(componentId, configId) {
     configData: data.config,
 
     getQueries() {
-      if (data.parameters.has('tables')) {
-        return data.parameters.get('tables', List()).map((q) => {
-          let pk = q.get('primaryKey', null);
-          if (_.isEmpty(pk) || _.isString(pk)) {
-            pk = List();
-          }
-          return q.set('primaryKey', pk);
-        });
+      if (!componentSupportsConfigRows() || data.parameters.has('tables')) {
+        return this.prepareQueries(data.parameters.get('tables', List()));
       } else {
-        return data.queries.map((q) => {
-          let pk = q.get('primaryKey', null);
-          if (_.isEmpty(pk) || _.isString(pk)) {
-            pk = List();
-          }
-          return q.set('primaryKey', pk);
-        });
+        return this.prepareQueries(data.queries);
       }
+    },
+
+    prepareQueries(tables) {
+      return tables.map((q) => {
+        let pk = q.get('primaryKey', null);
+        if (_.isEmpty(pk) || _.isString(pk)) {
+          pk = List();
+        }
+        return q.set('primaryKey', pk);
+      });
     },
 
     getQueriesFiltered() {
