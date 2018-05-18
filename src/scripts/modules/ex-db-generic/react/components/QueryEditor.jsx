@@ -142,7 +142,10 @@ export default React.createClass({
   },
 
   getCandidateTable() {
-    let selectedTable = this.props.query.get('table');
+    const selectedTable = this.props.query.get('table');
+    if (!selectedTable) {
+      return null;
+    }
     return this.props.incrementalCandidates.find((candidate) => {
       return candidate.get('tableName') === selectedTable.get('tableName')
         && candidate.get('schema') === selectedTable.get('schema');
