@@ -20,6 +20,16 @@ jest.mock('../../../../modules/components/stores/InstalledComponentsStore', () =
     },
     getLocalState: () => {
       return data;
+    },
+    getConfigRows: () => {
+      return Immutable.fromJS([
+        {
+          outputTable: 'in.c-keboola-ex-db-mysql.test1'
+        },
+        {
+          outputTable: 'in.c-keboola-ex-db-mysql.test2'
+        }
+      ]);
     }
   };
 });

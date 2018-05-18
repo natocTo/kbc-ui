@@ -815,5 +815,87 @@ module.exports = {
       });
       throw e;
     });
+  },
+  createConfigurationRow: function(componentId, configurationId, data, changeDescription) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      data: data
+    });
+    return installedComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription)
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          data: response
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          error: e
+        });
+        throw e;
+      });
+  },
+  deleteConfigurationRow: function(componentId, configurationId, rowId, changeDescription) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    return installedComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
+      .then(function() {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
+  },
+  updateConfigurationRow: function(componentId, configurationId, rowId, data, changeDescription) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId,
+      data: data
+    });
+    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, data, changeDescription)
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          data: response
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
   }
 };
