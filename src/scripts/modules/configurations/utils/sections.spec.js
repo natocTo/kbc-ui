@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import sections from './sections';
 
 describe('sections', function() {
-  describe('demonstrate bug, invalidValue gets passed through', function() {
+  describe('demonstrate bug, invalidKey gets passed through', function() {
     const createBySectionsFn = sections.makeCreateFn(
       null,
       Immutable.fromJS([
