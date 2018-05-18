@@ -2,12 +2,10 @@
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'underscore';
-import {Alert} from 'react-bootstrap';
 
 import {CodeEditor} from '../../../../react/common/common';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
-import Tooltip from '../../../../react/common/Tooltip';
 
 import AsynchActionError from './AsynchActionError';
 import TableLoader from './TableLoaderQueryEditor';
@@ -17,6 +15,7 @@ import {getQueryEditorPlaceholder, getQueryEditorHelpText} from '../../templates
 import editorMode from '../../templates/editorMode';
 
 export default React.createClass({
+  displayName: 'ExDbQueryEditor',
   propTypes: {
     query: React.PropTypes.object.isRequired,
     tables: React.PropTypes.object.isRequired,
@@ -38,9 +37,7 @@ export default React.createClass({
     queryNameExists: React.PropTypes.bool.isRequired,
     credentialsHasDatabase: React.PropTypes.bool,
     credentialsHasSchema: React.PropTypes.bool,
-    refreshMethod: React.PropTypes.func.isRequired,
-    isConfigRow: React.PropTypes.bool,
-    incrementalCandidates: React.PropTypes.object
+    refreshMethod: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
@@ -93,18 +90,6 @@ export default React.createClass({
     return this.props.onChange(this.props.query.set('incremental', event.target.checked));
   },
 
-  handleIncrementalFetchingColumnChange(newValue) {
-    return this.props.onChange(this.props.query.set('incrementalFetchingColumn', newValue));
-  },
-
-  handleIncrementalFetchingLimitChange(event) {
-    return this.props.onChange(this.props.query.set('incrementalFetchingLimit', parseInt(event.target.value, 10)));
-  },
-
-  handleStateReset() {
-    return this.props.onChange(this.props.query.set('state', Immutable.fromJS({})));
-  },
-
   handleQueryChange(data) {
     return this.props.onChange(this.props.query.set('query', data.value));
   },
@@ -141,32 +126,12 @@ export default React.createClass({
     }
   },
 
-  getCandidateTable() {
-    const selectedTable = this.props.query.get('table');
-    if (!selectedTable) {
-      return null;
-    }
-    return this.props.incrementalCandidates.find((candidate) => {
-      return candidate.get('tableName') === selectedTable.get('tableName')
-        && candidate.get('schema') === selectedTable.get('schema');
+  tableSelectOptions() {
+    return this.props.tables.map(function(table) {
+      return table.get('id');
+    }).sortBy(function(val) {
+      return val;
     });
-  },
-
-  incrementalFetchingOptions() {
-    if (!this.props.incrementalCandidates || !this.props.query.get('table')) {
-      return [];
-    }
-    let candidateTable = this.getCandidateTable();
-    if (candidateTable) {
-      return candidateTable.get('candidates').map((candidate) => {
-        return {
-          value: candidate.get('name'),
-          label: candidate.get('name')
-        };
-      }).toJS();
-    } else {
-      return [];
-    }
   },
 
   getPksOnSourceTableChange(newValue) {
@@ -221,7 +186,6 @@ export default React.createClass({
         .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
         .set('name', newName ? newName : '')
         .set('primaryKey', primaryKeys)
-        .set('incrementalFetchingColumn', '')
     );
   },
 
@@ -267,6 +231,12 @@ export default React.createClass({
     } else return '';
   },
 
+  getTableLabel() {
+    if (this.props.query.get('table')) {
+      return this.props.query.get('table').get('name');
+    } else return '';
+  },
+
   getOutputTableValue() {
     if (this.props.query.get('outputTable') !== '') {
       return this.props.query.get('outputTable');
@@ -297,7 +267,25 @@ export default React.createClass({
           />
           {this.renderSimpleTable()}
           {this.renderSimpleColumns()}
-          <h3>General Settings</h3>
+          <div className="form-group">
+            <label className="col-md-3 control-label">Primary Key</label>
+            <div className="col-md-9">
+              <Select
+                name="primaryKey"
+                value={this.getPkValue()}
+                multi={true}
+                disabled={this.props.disabled || this.isExistingTable()}
+                allowCreate={true}
+                delimiter=","
+                placeholder={this.primaryKeyPlaceholder()}
+                emptyStrings={false}
+                onChange={this.handlePrimaryKeyChange}
+                options={this.primaryKeyOptions()}
+                promptTextCreator={(label) => (label) ? 'Add column "' + label + '" as primary key' : ''}
+              />
+              {this.isExistingTable() && this.primaryKeyHelp()}
+            </div>
+          </div>
           <div className={(this.props.queryNameExists) ? 'form-group has-error' : 'form-group'}>
             <label className="col-md-3 control-label">Name</label>
             <div className="col-md-9">
@@ -327,64 +315,25 @@ export default React.createClass({
               editing={this.props.destinationEditing}
             />
           </div>
-          {this.renderIncrementalFetchingSection()}
-          <h3>Loading Options</h3>
           <div className="form-group">
-            <label className="col-md-3 control-label">Primary Key</label>
-            <div className="col-md-9">
-              <Select
-                name="primaryKey"
-                value={this.getPkValue()}
-                multi={true}
-                disabled={this.props.disabled || this.isExistingTable()}
-                allowCreate={true}
-                delimiter=","
-                placeholder={this.primaryKeyPlaceholder()}
-                emptyStrings={false}
-                onChange={this.handlePrimaryKeyChange}
-                options={this.primaryKeyOptions()}
-                promptTextCreator={(label) => (label) ? 'Add column "' + label + '" as primary key' : ''}
-              />
-              {this.isExistingTable() && this.primaryKeyHelp()}
+            <div className="col-md-9 col-md-offset-3 checkbox">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={this.props.query.get('incremental')}
+                  onChange={this.handleIncrementalChange}
+                  disabled={this.props.disabled}
+                />
+                Incremental Load
+              </label>
+              <div className="help-block">
+                If incremental load is turned on, the table will be updated instead of rewritten.
+                Tables with primary keys will update rows, tables without primary keys will append rows.
+              </div>
             </div>
           </div>
-          {this.renderIncrementalLoadOption()}
-          <h3>Advanced Mode</h3>
           {this.renderQueryToggle()}
           {this.renderQueryEditor()}
-        </div>
-      </div>
-    );
-  },
-
-  renderIncrementalLoadOption() {
-    let helpAlert = null;
-    if (this.props.query.get('incrementalFetchingColumn') && !this.props.query.get('incremental')) {
-      helpAlert = (
-        <Alert bsStyle="warning">
-          It is recommended to enable incremental loading if using incremental fetching.
-          If incremental loading is <strong>not</strong> enabled,
-          the storage table will only ever contain the most recently fetched results.
-        </Alert>
-      );
-    }
-    return (
-      <div className="form-group">
-        <div className="col-md-9 col-md-offset-3 checkbox">
-          <label>
-            <input
-              type="checkbox"
-              checked={this.props.query.get('incremental')}
-              onChange={this.handleIncrementalChange}
-              disabled={this.props.disabled}
-            />
-            Incremental Loading
-          </label>
-          <div className="help-block">
-            If incremental load is turned on, the table will be updated instead of rewritten.
-            Tables with primary keys will update rows, tables without primary keys will append rows.
-            {helpAlert}
-          </div>
         </div>
       </div>
     );
@@ -403,8 +352,11 @@ export default React.createClass({
                 checked={!!this.props.query.get('advancedMode')}
                 disabled={this.props.disabled}
                 onChange={this.handleToggleUseQueryEditor}/>
-              Create your own query using an SQL editor
+              Advanced Mode
             </label>
+            <div className="help-block">
+              Create your own query using an SQL editor
+            </div>
           </div>
         </div>
       );
@@ -446,21 +398,18 @@ export default React.createClass({
       );
 
       return (
-        <div>
-          <h3>Data Source</h3>
-          <div className="form-group">
-            <label className="col-md-3 control-label">Table</label>
-            <div className="col-md-9">
-              <TableLoader
-                componentId={this.props.componentId}
-                configId={this.props.configId}
-                isLoadingSourceTables={this.props.isLoadingSourceTables}
-                isTestingConnection={this.props.isTestingConnection}
-                validConnection={this.props.validConnection}
-                tableSelectorElement={tableSelector}
-                refreshMethod={this.props.refreshMethod}
-              />
-            </div>
+        <div className="form-group">
+          <label className="col-md-3 control-label">Source Table</label>
+          <div className="col-md-9">
+            <TableLoader
+              componentId={this.props.componentId}
+              configId={this.props.configId}
+              isLoadingSourceTables={this.props.isLoadingSourceTables}
+              isTestingConnection={this.props.isTestingConnection}
+              validConnection={this.props.validConnection}
+              tableSelectorElement={tableSelector}
+              refreshMethod={this.props.refreshMethod}
+            />
           </div>
         </div>
       );
@@ -528,151 +477,6 @@ export default React.createClass({
 
   optionRenderer(option) {
     return option.render;
-  },
-
-  renderIncrementalFetchingForm() {
-    return [
-      <div className="form-group" key="column">
-        <label className="col-md-3 control-label">Column</label>
-        <div className="col-md-9">
-          <Select
-            name="incrementalFetching"
-            value={this.props.query.get('incrementalFetchingColumn') || ''}
-            placeholder="Fetch by column"
-            onChange={this.handleIncrementalFetchingColumnChange}
-            options={this.incrementalFetchingOptions()}
-            disabled={this.props.disabled || !!this.getLastFetchedRowValue()}
-          />
-          <div className="help-block">
-            {this.incrementalFetchingWarning()}
-          </div>
-        </div>
-      </div>,
-      <div className="form-group" key="limit">
-        <label className="col-md-3 control-label">Limit</label>
-        <div className="col-md-9">
-          <input
-            className="form-control"
-            name="incrementalFetchingLimit"
-            type="number"
-            value={this.props.query.get('incrementalFetchingLimit') || 0}
-            onChange={this.handleIncrementalFetchingLimitChange}
-            disabled={this.props.disabled || !this.props.query.get('incrementalFetchingColumn')}
-          />
-          <div className="help-block">
-            The number of records to fetch from the source per run.
-            Subsequent runs will start from the last record fetched. Note: 0 means unlimited.
-          </div>
-        </div>
-      </div>,
-      this.renderLastFetchedInfo()
-    ];
-  },
-
-  renderIncrementalFetchingSection() {
-    if (!this.props.query.get('advancedMode') && this.props.isConfigRow) {
-      const fetchingHelpText = (
-        <div className="form-group">
-          <div className="col-md-8 col-md-offset-3 help-block">
-            Incremental fetching is available for this extractor
-            but only for tables containing an auto incrementing primary key or a timestamp column.
-          </div>
-        </div>
-      );
-      return (
-        <div>
-          <h3>Incremental Fetching</h3>
-          {
-            (this.incrementalFetchingOptions().length > 0 || this.props.query.get('incrementalFetchingColumn'))
-              ? this.renderIncrementalFetchingForm()
-              : fetchingHelpText
-          }
-        </div>
-      );
-    }
-  },
-
-  renderLastFetchedInfo() {
-    var formElement;
-    const fetchingColumn = this.props.query.get('incrementalFetchingColumn');
-    if (fetchingColumn) {
-      let lastFetchedRowValue = this.getLastFetchedRowValue();
-      if (lastFetchedRowValue) {
-        const tooltip = 'Resetting means that the next run will start from the lowest value of ' + fetchingColumn;
-        formElement = (
-          <div className="form-control-static">
-            <div>
-              <strong>{lastFetchedRowValue}</strong>
-            </div>
-            <div className="help-block">
-              To start from the beginning of the table you can
-              {' '}
-              <a onClick={this.handleStateReset}>
-                <Tooltip
-                  tooltip={tooltip}
-                  placement="top"
-                >
-                  <span>clear the stored value</span>
-                </Tooltip>
-              </a>
-              .
-            </div>
-          </div>
-        );
-      } else {
-        formElement = (
-          <div className="form-control-static">
-            There is no value stored.
-            <div className="help-block">
-              Either the component has not yet run, or it has been reset.
-            </div>
-          </div>
-        );
-      }
-      return (
-        <div className="form-group" key="last-fetched-value">
-          <label className="col-md-3 control-label">Last Fetched Value</label>
-          <div className="col-md-8">
-            {formElement}
-          </div>
-        </div>
-      );
-    }
-  },
-
-  incrementalFetchingWarning() {
-    var infoMessage = 'If enabled, only newly created or updated records since the last run will be fetched.';
-    if (
-      this.props.query.get('incrementalFetchingColumn')
-      && this.props.sourceTables.count() > 0
-      && !!this.props.query.get('table')
-    ) {
-      let candidateTable = this.getCandidateTable();
-      if (candidateTable) {
-        let candidateColumn = candidateTable.get('candidates').find((column) =>
-          column.get('name') === this.props.query.get('incrementalFetchingColumn')
-        );
-        if (candidateColumn.get('autoIncrement')) {
-          infoMessage = 'Using an autoIncrement ID means that only new records will be fetched, not updates or' +
-            ' deletes.';
-        } else {
-          infoMessage = 'Using an update timestamp column means that only new and updated records will be fetched,' +
-            ' not deletes.';
-        }
-      } else {
-        infoMessage = 'In order to enable incremental fetching the source table must contain a timestamp column or' +
-          ' an auto-incrementing primary key';
-      }
-    }
-    return infoMessage;
-  },
-
-  getLastFetchedRowValue() {
-    let queryState = this.props.query.get('state');
-    if (queryState && queryState.has('lastFetchedRow')) {
-      return queryState.get('lastFetchedRow');
-    } else {
-      return false;
-    }
   }
+
 });

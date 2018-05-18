@@ -12,8 +12,7 @@ export default React.createClass({
     queries: React.PropTypes.object,
     configurationId: React.PropTypes.string,
     componentId: React.PropTypes.string,
-    pendingActions: React.PropTypes.object,
-    isRowConfiguration: React.PropTypes.bool
+    pendingActions: React.PropTypes.object
   },
 
   render() {
@@ -25,7 +24,6 @@ export default React.createClass({
           pendingActions={this.props.pendingActions.get(query.get('id'), Map())}
           configurationId={this.props.configurationId}
           key={query.get('id')}
-          isRowConfiguration={this.props.isRowConfiguration}
         />
       );
     }, this).toArray();

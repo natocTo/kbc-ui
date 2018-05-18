@@ -13,9 +13,6 @@ jest.mock('../../../../modules/components/stores/InstalledComponentsStore', () =
     },
     getLocalState: () => {
       return data;
-    },
-    getConfigRows: () => {
-      return Immutable.List();
     }
   };
 });
