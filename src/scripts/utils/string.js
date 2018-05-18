@@ -138,12 +138,15 @@ export default {
 
   webalize(string, separator = '-') {
     return removeDiacritics(string)
-    .toLowerCase()
-    .replace(/[^a-z0-9\-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-(.*)$/g, '$1')
-    .replace(/^(.*)-$/g, '$1')
-    .replace(/-/g, separator);
+      .toLowerCase()
+      .replace(/[^a-z0-9\-_]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-(.*)$/g, '$1')
+      .replace(/^(.*)-$/g, '$1')
+      .replace(/_+/g, '_')
+      .replace(/^_+/, '')
+      .replace(/_+$/, '')
+      .replace(/-/g, separator);
   },
 
   capitalize(string) {

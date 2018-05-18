@@ -16,14 +16,14 @@ describe('string utils tests', function() {
     it('LaLaLa123->lalala123', function() {
       assert.equal(webalize('LaLaLa123'), 'lalala123');
     });
-    it('a_b->a-b', function() {
-      assert.equal(webalize('a_b'), 'a-b');
+    it('a_b->a_b', function() {
+      assert.equal(webalize('a_b'), 'a_b');
     });
-    it('a__b___c->a-b-c', function() {
-      assert.equal(webalize('a__b___c'), 'a-b-c');
+    it('__a__b___c->a_b_c', function() {
+      assert.equal(webalize('__a__b___c'), 'a_b_c');
     });
-    it('_a_b_->a-b', function() {
-      assert.equal(webalize('_a_b_'), 'a-b');
+    it('_a_b_->a_b', function() {
+      assert.equal(webalize('_a_b_'), 'a_b');
     });
   });
 });
