@@ -73,7 +73,10 @@ export default function(
     },
 
     runParams() {
-      return actionCreators.prepareSingleQueryRunData(this.state.configId, this.state.query, 'detail');
+      return {
+        config: this.state.configId,
+        configData: actionCreators.prepareSingleQueryRunData(this.state.configId, this.state.query, 'detail')
+      };
     },
 
     handleActiveChange(newValue) {

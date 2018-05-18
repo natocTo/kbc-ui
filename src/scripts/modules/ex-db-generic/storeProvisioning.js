@@ -6,63 +6,23 @@ import hasSshTunnel from './templates/hasSshTunnel';
 import _ from 'underscore';
 import string from '../../utils/string';
 import getDefaultPort from './templates/defaultPorts';
-import {componentSupportsConfigRows} from './actionsProvisioning';
 
 const defaultSshPort = 22;
 
-export const ROW_CONFIGURATION_TYPE = 'row';
-export const STANDARD_CONFIGURATION_TYPE = 'standard';
-
-export const SOURCE_TABLES_PATH = ['sourceTables', 'data'];
-export const INCREMENTAL_CANDIDATES_PATH = ['sourceTables', 'incrementalCandidates'];
-export const SOURCE_TABLES_ERROR_PATH = ['sourceTables', 'error'];
-export const LOADING_SOURCE_TABLES_PATH = ['sourceTables', 'loading'];
-export const TESTING_CONNECTION_PATH = ['connection', 'testing'];
-export const CONNECTION_ERROR_PATH = ['connection', 'error'];
-export const CONNECTION_VALID_PATH = ['connection', 'valid'];
-export const CONNECTION_TESTED_PATH = ['connection', 'tested'];
-
-export function queryFromRow(row) {
-  const rowConfig = row.getIn(['configuration', 'parameters']);
-  let query = Map({
-    id: parseInt(row.get('id'), 10),
-    name: row.get('name'),
-    enabled: !row.get('isDisabled'),
-    outputTable: rowConfig.get('outputTable'),
-    table: rowConfig.get('table') || null,
-    columns: rowConfig.get('columns'),
-    primaryKey: rowConfig.get('primaryKey'),
-    incremental: rowConfig.get('incremental'),
-    incrementalFetchingColumn: rowConfig.get('incrementalFetchingColumn'),
-    incrementalFetchingLimit: rowConfig.get('incrementalFetchingLimit'),
-    state: row.get('state')
-  });
-  if (rowConfig.get('query')) {
-    query = query.set('query', rowConfig.get('query')).set('advancedMode', true);
-  }
-  return query;
-}
+export const sourceTablesPath = ['sourceTables', 'data'];
+export const sourceTablesErrorPath = ['sourceTables', 'error'];
+export const loadingSourceTablesPath = ['sourceTables', 'loading'];
+export const testingConnectionPath = ['connection', 'testing'];
+export const connectionErrorPath = ['connection', 'error'];
+export const connectionValidPath = ['connection', 'valid'];
+export const connectionTestedPath = ['connection', 'tested'];
 
 function fetch(componentId, configId) {
   const config = store.getConfigData(componentId, configId) || Map();
-  if (componentSupportsConfigRows(componentId) && !config.hasIn(['parameters', 'tables'])) {
-    const rows = store.getConfigRows(componentId, configId);
-    const queries = rows.map((row) => {
-      return queryFromRow(row);
-    }).toList();
-    return {
-      config: config || Map(),
-      parameters: config.get('parameters', Map()),
-      queries: queries || List(),
-      localState: store.getLocalState(componentId, configId) || Map(),
-      configurationType: ROW_CONFIGURATION_TYPE
-    };
-  }
   return {
     config: config || Map(),
     parameters: config.get('parameters', Map()),
-    localState: store.getLocalState(componentId, configId) || Map(),
-    configurationType: STANDARD_CONFIGURATION_TYPE
+    localState: store.getLocalState(componentId, configId) || Map()
   };
 }
 
@@ -78,11 +38,8 @@ function generateId(existingIds) {
 function isValidQuery(query) {
   const nameValid = query.get('name', '').trim().length > 0;
   const queryValid = query.get('query', '').trim().length > 0;
-  const advancedMode = query.get('advancedMode', false);
-  const tableValid = (query.get('table'))
-    ? query.get('table').get('tableName', '').trim().length > 0
-    : false;
-  return nameValid && ((advancedMode && queryValid) || (!advancedMode && tableValid));
+  const tableValid = (query.get('table')) ? query.get('table').get('tableName', '').trim().length > 0 : false;
+  return nameValid && (queryValid || tableValid);
 }
 
 export const componentsStore = store;
@@ -148,7 +105,7 @@ export function createStore(componentId, configId) {
     },
 
     getNewCredentials() {
-      let defaultNewCredentials = data.parameters.get('db', Map());
+      var defaultNewCredentials = data.parameters.get('db', Map());
       if (!defaultNewCredentials.get('port')) {
         defaultNewCredentials = defaultNewCredentials.set('port', getDefaultPort(componentId));
       }
@@ -165,19 +122,19 @@ export function createStore(componentId, configId) {
     },
 
     isTestingConnection() {
-      return data.localState.getIn(TESTING_CONNECTION_PATH, false);
+      return data.localState.getIn(testingConnectionPath, false);
     },
 
     isConnectionValid() {
-      return data.localState.getIn(CONNECTION_VALID_PATH, false);
+      return data.localState.getIn(connectionValidPath, false);
     },
 
     getConnectionError() {
-      return data.localState.getIn(CONNECTION_ERROR_PATH, null);
+      return data.localState.getIn(connectionErrorPath, null);
     },
 
     hasConnectionBeenTested() {
-      return data.localState.getIn(CONNECTION_TESTED_PATH, false);
+      return data.localState.getIn(connectionTestedPath, false);
     },
     // Credentials -- end --
 
@@ -281,23 +238,13 @@ export function createStore(componentId, configId) {
     configData: data.config,
 
     getQueries() {
-      if (data.parameters.has('tables')) {
-        return data.parameters.get('tables', List()).map((q) => {
-          let pk = q.get('primaryKey', null);
-          if (_.isEmpty(pk) || _.isString(pk)) {
-            pk = List();
-          }
-          return q.set('primaryKey', pk);
-        });
-      } else {
-        return data.queries.map((q) => {
-          let pk = q.get('primaryKey', null);
-          if (_.isEmpty(pk) || _.isString(pk)) {
-            pk = List();
-          }
-          return q.set('primaryKey', pk);
-        });
-      }
+      return data.parameters.get('tables', List()).map((q) => {
+        let pk = q.get('primaryKey', null);
+        if (_.isEmpty(pk) || _.isString(pk)) {
+          pk = List();
+        }
+        return q.set('primaryKey', pk);
+      });
     },
 
     getQueriesFiltered() {
@@ -328,15 +275,11 @@ export function createStore(componentId, configId) {
     },
 
     getSourceTables() {
-      return data.localState.getIn(SOURCE_TABLES_PATH);
-    },
-
-    getIncrementalCandidates() {
-      return data.localState.getIn(INCREMENTAL_CANDIDATES_PATH);
+      return data.localState.getIn(sourceTablesPath);
     },
 
     getSourceTablesLoading() {
-      return !!data.localState.getIn(LOADING_SOURCE_TABLES_PATH);
+      return !!data.localState.getIn(loadingSourceTablesPath);
     },
 
     getQuickstartTables() {
@@ -344,11 +287,7 @@ export function createStore(componentId, configId) {
     },
 
     getLocalState() {
-      return data.localState;
-    },
-
-    isRowConfiguration() {
-      return data.configurationType === ROW_CONFIGURATION_TYPE;
+      return fetch(componentId, configId).localState;
     }
   };
 }
