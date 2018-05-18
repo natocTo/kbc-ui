@@ -31,4 +31,19 @@ describe('inputMapping', function() {
       assert.deepEqual(adapter.createEmptyLocalState('in.c-bucket.test').toJS(), {source: 'in.c-bucket.test'});
     });
   });
+
+  describe('normalizeConfiguration()', function() {
+    const normalized = {
+      storage: {
+        input: {
+          tables: [
+            {
+              changed_since: ''
+            }
+          ]
+        }
+      }
+    };
+    assert.deepEqual(normalized, adapter.normalizeConfiguration(Immutable.fromJS({})).toJS());
+  });
 });
