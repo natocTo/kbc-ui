@@ -1,7 +1,7 @@
 import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
 import Tooltip from '../../../../react/common/Tooltip';
-import Modal from './ResetStateButtonModal';
+import Modal from './ClearStateButtonModal';
 
 export default React.createClass({
   propTypes: {
@@ -17,7 +17,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      label: 'Reset State',
+      label: 'Clear State',
       disabledTooltip: 'No stored state',
       tooltipPlacement: 'top',
       tooltip: 'State stores information from the previous run(s) and allows eg. incremental loads.'
@@ -82,7 +82,7 @@ export default React.createClass({
     if (this.props.isPending) {
       return (
         <Tooltip
-          tooltip="Resetting state"
+          tooltip="Clearing state"
           placement={this.props.tooltipPlacement}
         >
           {body}
