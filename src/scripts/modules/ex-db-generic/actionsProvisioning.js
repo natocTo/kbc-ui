@@ -328,6 +328,8 @@ export function createActions(componentId) {
         if (runQuery.get('advancedMode')) {
           runQuery = runQuery.delete('table');
           runQuery = runQuery.delete('columns');
+          runQuery = runQuery.delete('incrementalFetchingColumn');
+          runQuery = runQuery.delete('incrementalFetchingLimit');
         } else {
           runQuery = runQuery.delete('query');
         }
@@ -380,6 +382,8 @@ export function createActions(componentId) {
       if (newQuery.get('advancedMode')) {
         newQuery = newQuery.delete('table');
         newQuery = newQuery.delete('columns');
+        newQuery = newQuery.delete('incrementalFetchingColumn');
+        newQuery = newQuery.delete('incrementalFetchingLimit');
       } else {
         newQuery = newQuery.delete('query');
       }
