@@ -29,6 +29,15 @@ function createBySections(createFn, sectionsCreateFn, configurationBySections) {
   return createFn(configurationRoot.mergeDeep(configurationSectionsMerged));
 }
 
+function normalizeBySections(rootNormalizeFn, sectionsNormalizeFn, configuration) {
+  const rootNormalized = rootNormalizeFn(configuration);
+  let normalized = rootNormalized;
+  sectionsNormalizeFn.forEach(function(normalizeFn) {
+    normalized = normalizeFn(normalized);
+  });
+  return normalized;
+}
+
 function createEmptyConfigBySections(
   createEmptyFn,
   sectionsCreateEmptyFn,
@@ -65,6 +74,11 @@ export default {
   makeCreateFn(rootCreateFn, sections) {
     const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
     return configuration => createBySections(rootCreateFn || repass, sectionsCreateFn, configuration);
+  },
+
+  makeNormalizeFn(rootNormalizeFn, sections) {
+    const sectionsNormalizeFn = sections.map(section => section.get('normalize') || repass);
+    return configuration => normalizeBySections(rootNormalizeFn || repass, sectionsNormalizeFn, configuration);
   },
 
   makeCreateEmptyFn(rootCreateEmptyFn, rootCreateFn, sections) {
