@@ -281,7 +281,7 @@ export function createStore(componentId, configId) {
     configData: data.config,
 
     getQueries() {
-      if (!componentSupportsConfigRows() || data.parameters.has('tables')) {
+      if (!componentSupportsConfigRows(componentId) || data.parameters.has('tables')) {
         return this.prepareQueries(data.parameters.get('tables', List()));
       } else {
         return this.prepareQueries(data.queries);
