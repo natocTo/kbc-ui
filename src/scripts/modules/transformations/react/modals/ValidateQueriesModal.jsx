@@ -109,6 +109,9 @@ export default React.createClass({
             {' '}<ExternalLink href="https://sqldep.com/">SQLdep API</ExternalLink>.
             Results will be immediately removed from their API after presenting to you.
           </p>
+          <p>
+            Tables defined in output mapping that does not yet exist in Storage are not validated.
+          </p>
           {this.renderNotSavedWarning()}
           <span style={{maxHeight: '300px', overflow: 'scroll'}}>
             {this.renderResult()}
@@ -117,7 +120,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <p>SQL validation is available for Snowflake and Redshift transformations only.</p>
+        <p>SQL validation is available for Snowflake transformations only.</p>
       );
     }
   },

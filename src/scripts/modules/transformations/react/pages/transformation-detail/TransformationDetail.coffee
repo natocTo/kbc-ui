@@ -173,7 +173,7 @@ module.exports = React.createClass
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
 
-          if backend == 'snowflake' and ApplicationStore.hasCurrentAdminFeature('validate-sql')
+          if backend == 'snowflake'
             li {},
               ValidateQueriesButton
                 backend: backend
