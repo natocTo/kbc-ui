@@ -17,7 +17,8 @@ export default React.createClass({
     query: React.PropTypes.object.isRequired,
     pendingActions: React.PropTypes.object.isRequired,
     configurationId: React.PropTypes.string.isRequired,
-    componentId: React.PropTypes.string.isRequired
+    componentId: React.PropTypes.string.isRequired,
+    isRowConfiguration: React.PropTypes.bool.isRequired
   },
 
   handleActiveChange(newValue) {
@@ -38,6 +39,7 @@ export default React.createClass({
   render() {
     const actionCreators = actionsProvisioning.createActions(this.props.componentId);
     const link = 'ex-db-generic-' + this.props.componentId + '-query';
+    const runParams = actionCreators.prepareSingleQueryRunData(this.props.configurationId, this.props.query, 'index');
     return (
       <Link
         className="tr"
@@ -71,10 +73,7 @@ export default React.createClass({
             title="Run Extraction"
             component={this.props.componentId}
             runParams={() => {
-              return {
-                config: this.props.configurationId,
-                configData: actionCreators.prepareSingleQueryRunData(this.props.configurationId, this.props.query, 'index')
-              };
+              return runParams;
             }}
           >You are about to run extraction</RunExtractionButton>
         </span>

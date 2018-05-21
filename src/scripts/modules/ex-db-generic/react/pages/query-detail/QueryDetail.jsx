@@ -7,9 +7,9 @@ import StorageTablesStore from '../../../../components/stores/StorageTablesStore
 import RoutesStore from '../../../../../stores/RoutesStore';
 
 import QueryEditor from '../../components/QueryEditor';
-import {connectionErrorPath, loadingSourceTablesPath} from '../../../storeProvisioning';
-import {sourceTablesPath} from '../../../storeProvisioning';
-import {sourceTablesErrorPath} from '../../../storeProvisioning';
+import {CONNECTION_ERROR_PATH, INCREMENTAL_CANDIDATES_PATH, LOADING_SOURCE_TABLES_PATH} from '../../../storeProvisioning';
+import {SOURCE_TABLES_PATH} from '../../../storeProvisioning';
+import {SOURCE_TABLES_ERROR_PATH} from '../../../storeProvisioning';
 
 import QueryNav from './QueryNav';
 import SaveButtons from '../../../../../react/common/SaveButtons';
@@ -58,7 +58,9 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
         credentialsHasDatabase: !!credentials.get('database'),
         credentialsHasSchema: !!credentials.get('schema'),
         isTestingConnection: ExDbStore.isTestingConnection(),
-        validConnection: ExDbStore.isConnectionValid()
+        validConnection: ExDbStore.isConnectionValid(),
+        isConfigRow: ExDbStore.isRowConfiguration(),
+        incrementalCandidates: ExDbStore.getIncrementalCandidates()
       };
     },
 
@@ -93,12 +95,12 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           configId={this.state.configId}
           componentId={componentId}
           getDefaultOutputTable={this.getDefaultOutputTableId}
-          isLoadingSourceTables={this.state.localState.getIn(loadingSourceTablesPath, false)}
+          isLoadingSourceTables={this.state.localState.getIn(LOADING_SOURCE_TABLES_PATH, false)}
           isTestingConnection={this.state.isTestingConnection}
           validConnection={this.state.validConnection}
-          connectionError={this.state.localState.getIn(connectionErrorPath)}
-          sourceTables={this.state.localState.getIn(sourceTablesPath) || List()}
-          sourceTablesError={this.state.localState.getIn(sourceTablesErrorPath)}
+          connectionError={this.state.localState.getIn(CONNECTION_ERROR_PATH)}
+          sourceTables={this.state.localState.getIn(SOURCE_TABLES_PATH) || List()}
+          sourceTablesError={this.state.localState.getIn(SOURCE_TABLES_ERROR_PATH)}
           destinationEditing={this.state.localState.getIn(['isDestinationEditing', this.state.queryId], false)}
           onDestinationEdit={ExDbActionCreators.destinationEdit}
           getPKColumns={ExDbActionCreators.getPKColumnsFromSourceTable}
@@ -106,6 +108,8 @@ export default function(componentId, actionsProvisioning, storeProvisioning) {
           credentialsHasDatabase={this.state.credentialsHasDatabase}
           credentialsHasSchema={this.state.credentialsHasSchema}
           refreshMethod={this.handleRefreshSourceTables}
+          isConfigRow={this.state.isConfigRow}
+          incrementalCandidates={this.state.localState.getIn(INCREMENTAL_CANDIDATES_PATH) || List()}
         />
       );
     },
