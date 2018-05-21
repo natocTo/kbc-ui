@@ -117,7 +117,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <p>SQL validation is available for Snowflake and Redshift transformations only.</p>
+        <p>SQL validation is available for Snowflake transformations only.</p>
       );
     }
   },
