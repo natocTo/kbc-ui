@@ -84,6 +84,9 @@ ApplicationStore = StoreUtils.createStore
   getSapiBucketUrl: (bucketId) ->
     @getProjectBaseUrl() + "/storage#/buckets/#{bucketId}"
 
+  getSapiFileUploadsUrl: ->
+    @getProjectBaseUrl() + "/storage#/file-uploads"
+
   getUrlTemplates: ->
     _store.getIn ['kbc', 'urlTemplates']
 
