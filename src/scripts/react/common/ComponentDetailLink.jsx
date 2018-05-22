@@ -5,7 +5,7 @@ export default React.createClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    children: PropTypes.string
+    children: PropTypes.any
   },
 
   render() {
