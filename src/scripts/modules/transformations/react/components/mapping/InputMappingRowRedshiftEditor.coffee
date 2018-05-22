@@ -7,6 +7,7 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 RedshiftDataTypesContainer = React.createFactory(require("./input/RedshiftDataTypesContainer"))
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'InputMappingRowRedshiftEditor'
@@ -18,22 +19,6 @@ module.exports = React.createClass
     disabled: React.PropTypes.bool.isRequired
     initialShowDetails: React.PropTypes.bool.isRequired
     isDestinationDuplicate: React.PropTypes.bool.isRequired
-
-  getInitialState: ->
-    showDetails: @props.initialShowDetails
-
-  shouldComponentUpdate: (nextProps, nextState) ->
-    should = @props.value != nextProps.value ||
-    @props.tables != nextProps.tables ||
-    @props.disabled != nextProps.disabled ||
-    @state.showDetails != nextState.showDetails
-
-    should
-
-  _handleToggleShowDetails: (e) ->
-    @setState(
-      showDetails: e.target.checked
-    )
 
   distStyleOptions: [
       label: "EVEN"
@@ -189,16 +174,6 @@ module.exports = React.createClass
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div {className: "row col-md-12"},
         React.DOM.div className: 'form-group',
-          React.DOM.div className: 'col-xs-10 col-xs-offset-2',
-            Input
-              standalone: true
-              type: 'checkbox'
-              label: 'Show details'
-              checked: @state.showDetails
-              onChange: @_handleToggleShowDetails
-
-      React.DOM.div {className: "row col-md-12"},
-        React.DOM.div className: 'form-group',
           React.DOM.label className: 'col-xs-2 control-label', 'Source'
           React.DOM.div className: 'col-xs-10',
             SapiTableSelector
@@ -207,18 +182,17 @@ module.exports = React.createClass
               placeholder: "Source table"
               onSelectTableFn: @_handleChangeSource
               autoFocus: true
-            if @state.showDetails
-              React.DOM.div className: 'checkbox',
-                React.DOM.label null,
-                  React.DOM.input
-                    standalone: true
-                    type: 'checkbox'
-                    checked: @props.value.get("optional")
-                    disabled: @props.disabled
-                    onChange: @_handleChangeOptional
-                  ' Optional'
-                React.DOM.span className: 'help-block',
-                  "If this table does not exist in Storage, the transformation won't show an error."
+            React.DOM.div className: 'checkbox',
+              React.DOM.label null,
+                React.DOM.input
+                  standalone: true
+                  type: 'checkbox'
+                  checked: @props.value.get("optional")
+                  disabled: @props.disabled
+                  onChange: @_handleChangeOptional
+                ' Optional'
+              React.DOM.span className: 'help-block',
+                "If this table does not exist in Storage, the transformation won't show an error."
 
       React.DOM.div {className: "row col-md-12"},
         Input
@@ -236,8 +210,10 @@ module.exports = React.createClass
               React.DOM.code {}, @props.value.get("destination")
               '.'
             else null
-      if @state.showDetails
-        React.DOM.div {className: "row col-md-12"},
+      React.DOM.div {className: "row col-md-12"},
+      PanelWithDetails
+        defaultExpanded: @props.initialShowDetails
+        React.DOM.div {className: 'form-horizontal clearfix'},
           React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Columns'
             React.DOM.div className: 'col-xs-10',
@@ -253,8 +229,6 @@ module.exports = React.createClass
                 className: "help-block"
               ,
                 "Import only specified columns"
-      if @state.showDetails
-        React.DOM.div {className: "row col-md-12"},
           React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
             React.DOM.div className: 'col-xs-10',
@@ -265,8 +239,6 @@ module.exports = React.createClass
                 )
                 disabled: @props.disabled || !@props.value.get("source")
                 onChange: @_handleChangeChangedSince
-      if @state.showDetails
-        React.DOM.div {className: "row col-md-12"},
           React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Data filter'
             React.DOM.div className: 'col-xs-4',
@@ -298,8 +270,6 @@ module.exports = React.createClass
                 placeholder: 'Add a value...'
                 emptyStrings: true,
                 onChange: @_handleChangeWhereValues
-      if @state.showDetails
-        React.DOM.div {className: "row col-md-12"},
           React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Data types'
             React.DOM.div className: 'col-xs-10',
@@ -308,8 +278,6 @@ module.exports = React.createClass
                 disabled: @props.disabled || !@props.value.get("source")
                 onChange: @_handleChangeDataTypes
                 columnsOptions: @_getFilteredColumnsOptions()
-      if @state.showDetails
-        React.DOM.div {className: "row col-md-12"},
           React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Sort key'
             React.DOM.div className: 'col-xs-10',
@@ -324,8 +292,6 @@ module.exports = React.createClass
               React.DOM.div className: "help-block",
                 "SORTKEY option for creating table in Redshift DB.
                   You can create a compound sort key."
-      if @state.showDetails
-        React.DOM.div {className: "row col-md-12"},
           React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Distribution'
             React.DOM.div className: 'col-xs-5',
