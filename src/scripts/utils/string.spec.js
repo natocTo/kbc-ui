@@ -10,6 +10,9 @@ describe('string utils tests', function() {
     it('jeden dva  Tri -> jeden-dva-tri', function() {
       assert.equal(webalize('jeden dva  Tri'), 'jeden-dva-tri');
     });
+    it('jeden DVA  Tri -> jeden-DVA-Tri', function() {
+      assert.equal(webalize('jeden DVA  Tri', {caseSensitive: true}), 'jeden-DVA-Tri');
+    });
     it('Háčky a čárky NEdělají problémyô->hacky-a-carky-nedelaji-problemyo', function() {
       assert.equal(webalize('Háčky a čárky NEdělají problémyô'), 'hacky-a-carky-nedelaji-problemyo');
     });
