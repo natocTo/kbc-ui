@@ -214,7 +214,7 @@ export default React.createClass({
         bsStyle="primary"
         onClick={this.showModal}
         disabled={this.state.isLoading}
-        type="sumbit">
+      >
         Proceed to Migration
         {this.state.isLoading ? <Loader/> : null}
       </Button>
