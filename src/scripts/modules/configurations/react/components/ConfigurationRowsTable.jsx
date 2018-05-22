@@ -125,6 +125,7 @@ export default React.createClass({
   render() {
     return (
       <div className={classnames(
+        'table-config-rows',
         'table',
         'table-striped',
         {
