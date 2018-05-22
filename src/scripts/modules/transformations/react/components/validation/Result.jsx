@@ -2,6 +2,7 @@ import React from 'react';
 import InvalidQuery from './InvalidQuery';
 import InvalidInput from './InvalidInput';
 import InvalidOutput from './InvalidOutput';
+import contactSupport from '../../../../../utils/contactSupport';
 
 export default React.createClass({
   propTypes: {
@@ -57,6 +58,10 @@ export default React.createClass({
                 );
             }
           }).toArray()}
+          <p>
+            Not an error?
+            Please <a onClick={() => contactSupport({type: 'project'})}>contact us</a>.
+          </p>
         </div>);
     } else {
       return (
