@@ -283,8 +283,9 @@ export function createActions(componentId) {
       const prefixMsg = !!newValue ? 'Enable' : 'Disable';
       const diffMsg = prefixMsg + ' query ' + store.getQueryName(qid);
       if (store.isRowConfiguration()) {
-        let query = newQueries.find((q) => q.get('id') === qid);
-        return updateConfigRow(configId, qid, query, ['pending', qid, 'enabled'], diffMsg);
+        const query = newQueries.find((q) => q.get('id') === qid);
+        const rowData = rowDataFromQuery(query);
+        return updateConfigRow(configId, qid, rowData, ['pending', qid, 'enabled'], diffMsg);
       }
       const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       return saveConfigData(configId, newData, ['pending', qid, 'enabled'], diffMsg);
