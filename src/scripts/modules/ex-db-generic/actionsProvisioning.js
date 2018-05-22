@@ -494,7 +494,7 @@ export function createActions(componentId) {
             updateLocalState(configId, storeProvisioning.SOURCE_TABLES_ERROR_PATH, null);
           }
           updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
-          if (store.isRowConfiguration()) {
+          if (store.isRowConfiguration() && data.tables) {
             const candidates = getIncrementalCandidates(fromJS(data.tables));
             updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
           }
