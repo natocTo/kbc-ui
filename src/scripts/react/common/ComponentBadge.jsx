@@ -137,7 +137,7 @@ export default React.createClass({
       case 'application':
         return 'application';
       default:
-        'component';
+        return 'component';
     }
   },
 
