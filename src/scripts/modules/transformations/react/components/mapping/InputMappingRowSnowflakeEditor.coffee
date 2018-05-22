@@ -10,7 +10,7 @@ ChangedSinceInput = React.createFactory(require('../../../../../react/common/Cha
 PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
-  displayName: 'InputMappingRowRedshiftEditor'
+  displayName: 'InputMappingRowSnowflakeEditor'
 
   propTypes:
     value: React.PropTypes.object.isRequired
@@ -137,7 +137,7 @@ module.exports = React.createClass
           labelClassName: 'col-xs-2'
           wrapperClassName: 'col-xs-10'
           bsStyle: if @props.isDestinationDuplicate then 'error' else null
-          help: if @props.isDestinationDuplicate then React.DOM.small {'className': 'error'},
+          help: if @props.isDestinationDuplicate then React.DOM.span {'className': 'error'},
               'Duplicate destination '
               React.DOM.code {}, @props.value.get("destination")
               '.'
@@ -146,7 +146,7 @@ module.exports = React.createClass
         PanelWithDetails
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
-            React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'form-group',
               React.DOM.label className: 'col-xs-2 control-label', 'Columns'
               React.DOM.div className: 'col-xs-10',
                 Select
@@ -160,8 +160,8 @@ module.exports = React.createClass
                 React.DOM.div
                   className: "help-block"
                 ,
-                  React.DOM.small {}, "Import only specified columns"
-            React.DOM.div className: 'form-group form-group-sm',
+                  "Import only specified columns"
+            React.DOM.div className: 'form-group',
               React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
               React.DOM.div className: 'col-xs-10',
                 ChangedSinceInput
@@ -171,7 +171,7 @@ module.exports = React.createClass
                   )
                   disabled: @props.disabled || !@props.value.get("source")
                   onChange: @_handleChangeChangedSince
-            React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'form-group',
               React.DOM.label className: 'col-xs-2 control-label', 'Data filter'
               React.DOM.div className: 'col-xs-4',
                 Select
@@ -183,7 +183,6 @@ module.exports = React.createClass
                   options: @_getColumnsOptions()
               React.DOM.div className: 'col-xs-2',
                 Input
-                  bsSize: 'small'
                   type: 'select'
                   name: 'whereOperator'
                   value: @props.value.get("whereOperator")
@@ -202,7 +201,7 @@ module.exports = React.createClass
                   placeholder: 'Add a value...'
                   emptyStrings: true,
                   onChange: @_handleChangeWhereValues
-            React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'form-group',
               React.DOM.label className: 'col-xs-2 control-label', 'Data types'
               React.DOM.div className: 'col-xs-10',
                 SnowflakeDataTypesContainer

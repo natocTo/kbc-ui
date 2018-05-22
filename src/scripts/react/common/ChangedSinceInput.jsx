@@ -138,10 +138,8 @@ export default React.createClass({
           promptTextCreator={this.promptTextCreator}
         />
         <span className="help-block">
-          <small>
-            Type in any range, e.g. <code>13 hours</code>.
-            Supported time dimensions are <code>minutes</code>, <code>hours</code> and <code>days</code>.
-          </small>
+          Type in any range, e.g. <code>13 hours</code>.
+          Supported time dimensions are <code>minutes</code>, <code>hours</code> and <code>days</code>.
         </span>
       </div>
     );
