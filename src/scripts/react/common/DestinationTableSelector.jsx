@@ -138,7 +138,7 @@ export default React.createClass({
   },
 
   selectBucketOptionCreator({ label }) {
-    const option = (label.startsWith('c-') ? '' : 'c-') + webalize(label);
+    const option = (label.startsWith('c-') ? '' : 'c-') + webalize(label, {caseSensitive: true});
     return {
       label: 'Create new bucket ' + option,
       value: option
@@ -146,7 +146,7 @@ export default React.createClass({
   },
 
   selectTableOptionCreator({ label }) {
-    const option = webalize(label);
+    const option = webalize(label, {caseSensitive: true});
     return {
       label: 'Create new table ' + option,
       value: option
