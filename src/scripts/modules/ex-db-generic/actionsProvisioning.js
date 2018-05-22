@@ -283,8 +283,9 @@ export function createActions(componentId) {
       const prefixMsg = !!newValue ? 'Enable' : 'Disable';
       const diffMsg = prefixMsg + ' query ' + store.getQueryName(qid);
       if (store.isRowConfiguration()) {
-        let query = newQueries.find((q) => q.get('id') === qid);
-        return updateConfigRow(configId, qid, query, ['pending', qid, 'enabled'], diffMsg);
+        const query = newQueries.find((q) => q.get('id') === qid);
+        const rowData = rowDataFromQuery(query);
+        return updateConfigRow(configId, qid, rowData, ['pending', qid, 'enabled'], diffMsg);
       }
       const newData = store.configData.setIn(['parameters', 'tables'], newQueries);
       return saveConfigData(configId, newData, ['pending', qid, 'enabled'], diffMsg);
@@ -494,7 +495,7 @@ export function createActions(componentId) {
             updateLocalState(configId, storeProvisioning.SOURCE_TABLES_ERROR_PATH, null);
           }
           updateLocalState(configId, storeProvisioning.SOURCE_TABLES_PATH, fromJS(data.tables));
-          if (store.isRowConfiguration()) {
+          if (store.isRowConfiguration() && data.tables) {
             const candidates = getIncrementalCandidates(fromJS(data.tables));
             updateLocalState(configId, storeProvisioning.INCREMENTAL_CANDIDATES_PATH, candidates);
           }
