@@ -124,9 +124,8 @@ export default React.createClass({
     let flags = this.resolveFlags();
     if (this.props.filterBadge !== '')  {
       return flags.filter((flag) => flag === this.props.filterBadge);
-    } else {
-      return flags;
     }
+    return flags;
   },
 
   getAppType() {
