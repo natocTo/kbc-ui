@@ -136,14 +136,18 @@ export default {
     return str.replace(/[^a-zA-Z0-9-]/g, '-');
   },
 
-  webalize(string, separator = '-') {
-    return removeDiacritics(string)
-    .toLowerCase()
-    .replace(/[^a-z0-9\-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-(.*)$/g, '$1')
-    .replace(/^(.*)-$/g, '$1')
-    .replace(/-/g, separator);
+  webalize(string, options = {}) {
+    const {separator = '-', caseSensitive = false} = options;
+    const caseHandledString = caseSensitive ? removeDiacritics(string) : removeDiacritics(string).toLowerCase();
+    return caseHandledString
+      .replace(caseSensitive ? /[^A-Za-z0-9\-_]/g : /[^a-z0-9\-_]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-(.*)$/g, '$1')
+      .replace(/^(.*)-$/g, '$1')
+      .replace(/_+/g, '_')
+      .replace(/^_+/, '')
+      .replace(/_+$/, '')
+      .replace(/-/g, separator);
   },
 
   capitalize(string) {
