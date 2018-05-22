@@ -5,14 +5,14 @@ import { ExternalLink } from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
-    type: PropTypes.oneOf(['title', 'inline']),
+    type: PropTypes.oneOf(['plain', 'description']),
     component: PropTypes.object.isRequired,
     filterBadge: PropTypes.string
   },
 
   getDefaultProps() {
     return ({
-      type: 'title',
+      type: 'plain',
       filterBadge: ''
     });
   },
