@@ -1,7 +1,7 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Modal, Table, Tabs, Tab} from 'react-bootstrap';
+import {Modal, Table, Tabs, Tab, Row, Col, Button} from 'react-bootstrap';
 import {AlertBlock} from '@keboola/indigo-ui';
 import {Check, Loader, RefreshIcon} from '@keboola/indigo-ui';
 import {fromJS, List, Map} from 'immutable';
@@ -210,13 +210,14 @@ export default React.createClass({
 
   renderMigrationButton() {
     return (
-      <button
+      <Button
+        bsStyle="primary"
         onClick={this.showModal}
         disabled={this.state.isLoading}
-        type="sumbit" className="btn btn-primary">
+        type="sumbit">
         Proceed to Migration
         {this.state.isLoading ? <Loader/> : null}
-      </button>
+      </Button>
     );
   },
 
@@ -231,8 +232,16 @@ export default React.createClass({
   renderInfoRow() {
     return (
       <AlertBlock type="warning" title="This component has been deprecated">
-        {this.getInfo()}
-        {this.renderMigrationButton()}
+        <Row>
+          <Col md={9}>
+          <span>
+            <p>
+              {this.getInfo()}
+            </p>
+          </span>
+            {this.renderMigrationButton()}
+          </Col>
+        </Row>
       </AlertBlock>
     );
   },
