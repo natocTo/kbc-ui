@@ -1,9 +1,7 @@
 React = require 'react'
 ComponentsActionCreators = require '../../ComponentsActionCreators'
-ComponentIcon = React.createFactory(require('../../../../react/common/ComponentIcon').default)
-ComponentDetailLink = React.createFactory(require('../../../../react/common/ComponentDetailLink').default)
-ComponentBadge = React.createFactory(require('../../../../react/common/ComponentBadge').default)
 SearchRow = React.createFactory(require('../../../../react/common/SearchRow').default)
+ComponentBox = React.createFactory(require('../../../../react/common/ComponentBox').default)
 Link = React.createFactory(require('react-router').Link)
 Button = React.createFactory(require('react-bootstrap').Button)
 
@@ -11,30 +9,6 @@ Button = React.createFactory(require('react-bootstrap').Button)
 {div, table, tbody, tr, td, ul, li, a, span, h2, p, button, i} = React.DOM
 
 require('./NewComponentSelection.less')
-
-ComponentBox = React.createClass
-  displayName: 'ComponentBox'
-  propTypes:
-    component: React.PropTypes.object.isRequired
-
-  shouldComponentUpdate: (nextProps) ->
-    @props.component == nextProps.component
-
-  render: ->
-    component = @props.component
-    ComponentDetailLink
-      componentId: @props.component.get("id")
-      type: @props.component.get("type")
-      ComponentBadge
-        component: @props.component
-        filterBadge: '3rdParty'
-        type: 'plain'
-      ComponentIcon
-        component: component
-        size: '64'
-      h2 null,
-        component.get('name')
-      p className: 'kbc-components-overview-description', component.get('description')
 
 module.exports = React.createClass
   displayName: 'NewComponentSelection'
@@ -75,5 +49,7 @@ module.exports = React.createClass
       className: 'tr'
       key: idx
     , components.map((component) ->
-      React.createElement ComponentBox, component: component, key: component.get('id')
+      ComponentBox
+        component: component
+        key: component.get('id')
     ).toArray()
