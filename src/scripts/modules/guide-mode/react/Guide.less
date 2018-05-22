@@ -13,7 +13,8 @@
 
   &-mode {
     .kbc-sidebar,
-    .kbc-navbar{
+    .kbc-navbar,
+    .kbc-main-content{
       margin-top: @statusBarHeight;
     }
     .kbc-main-content {
@@ -29,6 +30,9 @@
     }
     .kbc-overview-component-container {
       margin-top: @statusBarHeight !important;
+    }
+    .kbc-overview-component-container ~ .kbc-main-content{
+      margin-top: 0;
     }
     &.guide-mode-lesson-on {
       .guide-desk-container {
