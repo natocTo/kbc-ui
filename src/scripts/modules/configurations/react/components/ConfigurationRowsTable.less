@@ -1,17 +1,19 @@
-.table.config-rows-table > .tbody > .tr.sortable-fallback {
-  display: none;
-}
+.table.table-config-rows {
+  & > .tbody > .tr.sortable-fallback {
+    display: none;
+  }
 
-.table.config-rows-table > .tbody > .tr.sortable-ghost {
-  background-color: #e5f4f7;
-}
+  & > .tbody > .tr.sortable-ghost {
+    background-color: #e5f4f7;
+  }
 
-.table.config-rows-table > .tbody > .tr {
-  text-decoration: none;
-  cursor: pointer;
-}
+  & > .tbody > .tr {
+    text-decoration: none;
+    cursor: pointer;
+  }
 
-.table.config-rows-table > .tbody > .tr:hover {
-  background-color: #e5f4f7;
-  text-decoration: none;
+  & > .tbody > .tr:hover {
+    background-color: #e5f4f7;
+    text-decoration: none;
+  }
 }
