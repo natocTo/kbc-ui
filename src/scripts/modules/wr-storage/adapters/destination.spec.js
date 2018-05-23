@@ -31,13 +31,4 @@ describe('destination', function() {
       assert.deepEqual(adapter.createEmptyLocalState('in.c-bucket.test').toJS(), {destination: 'test'});
     });
   });
-
-  describe('normalizeConfiguration()', function() {
-    const normalized = {
-      parameters: {
-        incremental: false
-      }
-    };
-    assert.deepEqual(normalized, adapter.normalizeConfiguration(Immutable.fromJS({})).toJS());
-  });
 });

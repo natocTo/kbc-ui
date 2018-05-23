@@ -27,18 +27,8 @@ const createEmptyLocalState = function(tableId) {
   return Immutable.fromJS({source: tableId});
 };
 
-const normalizeConfiguration = function(configuration) {
-  let normalized = configuration;
-  normalized = normalized.setIn(
-    ['storage', 'input', 'tables', 0, 'changed_since'],
-    configuration.getIn(['storage', 'input', 'tables', 0, 'changed_since'], '')
-  );
-  return normalized;
-};
-
 export default {
   createConfiguration: createConfiguration,
   parseConfiguration: parseConfiguration,
-  createEmptyLocalState: createEmptyLocalState,
-  normalizeConfiguration: normalizeConfiguration
+  createEmptyLocalState: createEmptyLocalState
 };
