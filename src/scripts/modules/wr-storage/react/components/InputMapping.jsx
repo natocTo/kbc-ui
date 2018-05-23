@@ -37,7 +37,12 @@ export default React.createClass({
             </FormControl.Static>
           </Col>
         </FormGroup>
-        <PanelWithDetails defaultExpanded={panelExpanded}>
+        <PanelWithDetails
+          defaultExpanded={panelExpanded}
+          placement="bottom"
+          labelCollapse="Hide Advanced Options"
+          labelOpen="Show Advanced Options"
+        >
           <FormGroup>
             <Col componentClass={ControlLabel} sm={4}>
               Changed In Last
