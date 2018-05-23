@@ -50,19 +50,4 @@ describe('isParsableConfiguration', function() {
     });
     assert.equal(false, isParsableConfiguration(configuration, parse, create));
   });
-  it('incomplete configuration should be parsable', function() {
-    const configuration = Immutable.fromJS({
-      key1: 'test1',
-      nested: {
-        key1: 'test2'
-      }
-    });
-    assert.equal(true, isParsableConfiguration(configuration, parse, create));
-  });
-  it('more incomplete configuration should be parsable', function() {
-    const configuration = Immutable.fromJS({
-      key1: 'test1'
-    });
-    assert.equal(true, isParsableConfiguration(configuration, parse, create));
-  });
 });
