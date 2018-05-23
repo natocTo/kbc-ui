@@ -137,7 +137,7 @@ module.exports = React.createClass
             labelClassName: 'col-xs-2'
             wrapperClassName: 'col-xs-10'
             bsStyle: if @props.isDestinationDuplicate then 'error' else null
-            help: if @props.isDestinationDuplicate then React.DOM.small {'className': 'error'},
+            help: if @props.isDestinationDuplicate then React.DOM.span {'className': 'error'},
                 'Duplicate destination '
                 React.DOM.code {}, @props.value.get("destination")
                 '.'
@@ -148,7 +148,7 @@ module.exports = React.createClass
         PanelWithDetails
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
-            React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'form-group',
               React.DOM.label className: 'col-xs-2 control-label', 'Columns'
               React.DOM.div className: 'col-xs-10',
                 Select
@@ -159,11 +159,11 @@ module.exports = React.createClass
                   placeholder: "All columns will be imported"
                   onChange: @_handleChangeColumns
                   options: @_getColumnsOptions()
-                React.DOM.small
+                React.DOM.span
                   className: "help-block"
                 ,
                   "Import only specified columns"
-            React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'form-group',
               React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
               React.DOM.div className: 'col-xs-10',
                 ChangedSinceInput
@@ -173,7 +173,7 @@ module.exports = React.createClass
                   )
                   disabled: @props.disabled || !@props.value.get("source")
                   onChange: @_handleChangeChangedSince
-            React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'form-group',
               React.DOM.label className: 'col-xs-2 control-label', 'Data filter'
               React.DOM.div className: 'col-xs-4',
                 Select

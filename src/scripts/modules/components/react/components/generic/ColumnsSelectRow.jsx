@@ -13,7 +13,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="form-group form-group-sm">
+      <div className="form-group">
         <label className="col-xs-2 control-label"> Columns</label>
         <div className="col-xs-10">
           <Select
@@ -24,10 +24,10 @@ export default React.createClass({
             placeholder="All columns will be imported"
             onChange={this._handleChangeColumns}
             options={this._getColumnsOptions()}/>
-          <small
+          <div
             className="help-block">
             Import only specified columns
-          </small>
+          </div>
         </div>
       </div>
     );

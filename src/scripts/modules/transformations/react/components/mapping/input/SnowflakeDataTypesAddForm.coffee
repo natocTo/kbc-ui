@@ -71,14 +71,14 @@ module.exports = React.createClass
             disabled: @props.disabled || !@props.showSize
             placeholder: "Length, eg. 38,0"
             onChange: @_handleSizeOnChange
-      React.DOM.div {className: "row", style: {paddingTop: "5px"}},
+      React.DOM.div {className: "row"},
         React.DOM.span {className: "col-xs-6"},
           Input
             checked: @props.convertEmptyValuesToNullValue
             onChange: @_convertEmptyValuesToNullOnChange
             standalone: true
             type: 'checkbox'
-            label: React.DOM.small {},
+            label: React.DOM.span {},
               'Convert empty values to '
               React.DOM.code null,
                 'null'
@@ -91,9 +91,9 @@ module.exports = React.createClass
             "Create data type"
       React.DOM.div {className: "row", style: {paddingTop: "10px"}},
         React.DOM.div {className: "help-block col-xs-12"},
-            React.DOM.div {},
-              React.DOM.code {}, "VARCHAR(255)"
-              "default for primary key columns"
-            React.DOM.div {},
-              React.DOM.code {}, "VARCHAR NOT NULL"
-              "default for all other columns"
+          React.DOM.div {},
+            React.DOM.code {}, "VARCHAR(255)"
+            "default for primary key columns"
+          React.DOM.div {},
+            React.DOM.code {}, "VARCHAR NOT NULL"
+            "default for all other columns"

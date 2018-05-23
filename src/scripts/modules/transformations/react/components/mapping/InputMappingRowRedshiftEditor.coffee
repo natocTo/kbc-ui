@@ -188,12 +188,12 @@ module.exports = React.createClass
     component = @
     React.DOM.div {className: 'form-horizontal clearfix'},
       React.DOM.div {className: "row col-md-12"},
-        React.DOM.div className: 'form-group form-group-sm',
+        React.DOM.div className: 'form-group',
           React.DOM.div className: 'col-xs-10 col-xs-offset-2',
             Input
               standalone: true
               type: 'checkbox'
-              label: React.DOM.small {}, 'Show details'
+              label: 'Show details'
               checked: @state.showDetails
               onChange: @_handleToggleShowDetails
 
@@ -216,8 +216,8 @@ module.exports = React.createClass
                     checked: @props.value.get("optional")
                     disabled: @props.disabled
                     onChange: @_handleChangeOptional
-                  React.DOM.small null, ' Optional'
-                React.DOM.small className: 'help-block',
+                  ' Optional'
+                React.DOM.span className: 'help-block',
                   "If this table does not exist in Storage, the transformation won't show an error."
 
       React.DOM.div {className: "row col-md-12"},
@@ -231,14 +231,14 @@ module.exports = React.createClass
           labelClassName: 'col-xs-2'
           wrapperClassName: 'col-xs-10'
           bsStyle: if @props.isDestinationDuplicate then 'error' else null
-          help: if @props.isDestinationDuplicate then React.DOM.small {'className': 'error'},
+          help: if @props.isDestinationDuplicate then React.DOM.span {'className': 'error'},
               'Duplicate destination '
               React.DOM.code {}, @props.value.get("destination")
               '.'
             else null
       if @state.showDetails
         React.DOM.div {className: "row col-md-12"},
-          React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Columns'
             React.DOM.div className: 'col-xs-10',
               Select
@@ -252,10 +252,10 @@ module.exports = React.createClass
               React.DOM.div
                 className: "help-block"
               ,
-                React.DOM.small {}, "Import only specified columns"
+                "Import only specified columns"
       if @state.showDetails
         React.DOM.div {className: "row col-md-12"},
-          React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Changed in last'
             React.DOM.div className: 'col-xs-10',
               ChangedSinceInput
@@ -267,7 +267,7 @@ module.exports = React.createClass
                 onChange: @_handleChangeChangedSince
       if @state.showDetails
         React.DOM.div {className: "row col-md-12"},
-          React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Data filter'
             React.DOM.div className: 'col-xs-4',
               Select
@@ -279,7 +279,6 @@ module.exports = React.createClass
                 options: @_getColumnsOptions()
             React.DOM.div className: 'col-xs-2',
               Input
-                bsSize: 'small'
                 type: 'select'
                 name: 'whereOperator'
                 value: @props.value.get("whereOperator")
@@ -301,7 +300,7 @@ module.exports = React.createClass
                 onChange: @_handleChangeWhereValues
       if @state.showDetails
         React.DOM.div {className: "row col-md-12"},
-          React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Data types'
             React.DOM.div className: 'col-xs-10',
               RedshiftDataTypesContainer
@@ -311,7 +310,7 @@ module.exports = React.createClass
                 columnsOptions: @_getFilteredColumnsOptions()
       if @state.showDetails
         React.DOM.div {className: "row col-md-12"},
-          React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Sort key'
             React.DOM.div className: 'col-xs-10',
               Select
@@ -323,12 +322,11 @@ module.exports = React.createClass
                 onChange: @_handleChangeSortKey
                 options: @_getFilteredColumnsOptions()
               React.DOM.div className: "help-block",
-                React.DOM.small {},
-                  "SORTKEY option for creating table in Redshift DB.
-                    You can create a compound sort key."
+                "SORTKEY option for creating table in Redshift DB.
+                  You can create a compound sort key."
       if @state.showDetails
         React.DOM.div {className: "row col-md-12"},
-          React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.div className: 'form-group',
             React.DOM.label className: 'col-xs-2 control-label', 'Distribution'
             React.DOM.div className: 'col-xs-5',
               Select
@@ -354,6 +352,5 @@ module.exports = React.createClass
             React.DOM.div
               className: "col-xs-offset-2 col-xs-10 help-block"
             ,
-              React.DOM.small {},
-                "DISTKEY and DISTSTYLE options used for
-                  CREATE TABLE query in Redshift."
+              "DISTKEY and DISTSTYLE options used for
+                CREATE TABLE query in Redshift."

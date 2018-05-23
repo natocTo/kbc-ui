@@ -85,7 +85,6 @@ module.exports = React.createClass
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
             Input
-              bsSize: 'small'
               type: 'text'
               label: 'Query'
               value: @props.value.get("query")
@@ -99,7 +98,7 @@ module.exports = React.createClass
               ,
                 "Specify an Elasticsearch query to refine search"
 
-            React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'form-group',
               React.DOM.label className: 'col-xs-2 control-label', 'Processed Tags'
               React.DOM.div className: 'col-xs-10',
                 SelectCreatable
@@ -110,7 +109,7 @@ module.exports = React.createClass
                   placeholder: "Add tags"
                   multi: true
                   onChange: @_handleChangeProcessedTags
-                React.DOM.small
+                React.DOM.span
                   className: "help-block"
                 ,
                   "Add these tags to files that were successfully processed"

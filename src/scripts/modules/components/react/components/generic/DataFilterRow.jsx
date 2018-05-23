@@ -16,7 +16,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return ({
-      groupClassName: 'form-group form-group-sm',
+      groupClassName: 'form-group',
       labelClassName: 'col-xs-2 control-label',
       whereColumnClassName: 'col-xs-4'
     });

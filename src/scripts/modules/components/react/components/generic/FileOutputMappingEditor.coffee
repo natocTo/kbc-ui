@@ -86,26 +86,24 @@ module.exports = React.createClass
         PanelWithDetails
           defaultExpanded: @state.showDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
-            React.DOM.div className: 'form-group form-group-sm',
+            React.DOM.div className: 'form-group',
               React.DOM.div className: 'col-xs-10 col-xs-offset-2',
                 Input
                   standalone: true
                   type: 'checkbox'
-                  label: React.DOM.small {}, 'Is public'
+                  label: 'Is public'
                   checked: @props.value.get("is_public")
                   onChange: @_handleChangeIsPublic
                   disabled: @props.disabled
-                  help: React.DOM.small {},
-                    "File will be public (accessible outside Keboola Connection)"
+                  help: "File will be public (accessible outside Keboola Connection)"
 
-          React.DOM.div className: 'form-group form-group-sm',
+          React.DOM.div className: 'form-group',
             React.DOM.div className: 'col-xs-10 col-xs-offset-2',
               Input
                 standalone: true
                 type: 'checkbox'
-                label: React.DOM.small {}, 'Is permanent'
+                label: 'Is permanent'
                 checked: @props.value.get("is_permanent")
                 onChange: @_handleChangeIsPermanent
                 disabled: @props.disabled
-                help: React.DOM.small {},
-                  "File will be stored permanently (otherwise will be deleted after 180 days)"
+                help: "File will be stored permanently (otherwise will be deleted after 180 days)"

@@ -17,7 +17,7 @@ export default React.createClass({
       labelClassName: 'col-xs-2',
       wrapperClassName: 'col-xs-10',
       label: 'Changed in last',
-      groupClassName: 'form-group form-group-sm'
+      groupClassName: 'form-group'
     };
   },
 
