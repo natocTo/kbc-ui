@@ -85,7 +85,6 @@ module.exports = React.createClass
           defaultExpanded: @props.initialShowDetails
           React.DOM.div {className: 'form-horizontal clearfix'},
             Input
-              bsSize: 'small'
               type: 'text'
               label: 'Query'
               value: @props.value.get("query")
