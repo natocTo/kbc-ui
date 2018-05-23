@@ -40,7 +40,12 @@ export default React.createClass({
         </FormGroup>
         <FormGroup>
           <Col smOffset={4} sm={8}>
-            <Checkbox checked={this.props.value.incremental}>Incremental</Checkbox>
+            <Checkbox
+              checked={this.props.value.incremental}
+              onChange={function(e) {
+                props.onChange({incremental: e.target.checked});
+              }}
+            >Incremental</Checkbox>
             <HelpBlock>
               The table will be imported incrementally into the target project. Primary keys will be kept.
             </HelpBlock>
