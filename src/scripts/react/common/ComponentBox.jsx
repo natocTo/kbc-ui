@@ -1,16 +1,12 @@
 import React from 'react';
+
 import ComponentDetailLink from './ComponentDetailLink';
 import ComponentBadge from './ComponentBadge';
 import ComponentIcon from './ComponentIcon';
 
-
 export default React.createClass({
   propTypes: {
     component: React.PropTypes.object.isRequired
-  },
-
-  shouldComponentUpdate(nextProps) {
-    this.props.component === nextProps.component;
   },
 
   render() {
@@ -37,6 +33,4 @@ export default React.createClass({
       </ComponentDetailLink>
     );
   }
-
-
 });
