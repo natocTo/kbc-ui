@@ -48,7 +48,6 @@ module.exports = {
     const configurationBySections = ConfigurationsStore.getEditingConfigurationBySections(componentId, configurationId, parseFn, parseFnSections);
 
     const configuration = configurationBySections
-      .get('sections')
       .reduce((memo, sectionConfig, index) => {
         const createSectionFn = createFnSections.get(index);
         return memo.merge(createSectionFn(sectionConfig));

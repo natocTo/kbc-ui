@@ -35,7 +35,7 @@ export default React.createClass({
       parseBySectionsFn
     );
 
-    const storedConfigurationSections = parseBySectionsFn(Store.getConfiguration(componentId, configurationId)).get('sections');
+    const storedConfigurationSections = parseBySectionsFn(Store.getConfiguration(componentId, configurationId));
 
     return {
       storedConfigurationSections,
@@ -80,9 +80,9 @@ export default React.createClass({
 
   onUpdateSection(sectionKey, diff) {
     const {configurationBySections, componentId, configurationId} = this.state;
-    const newConfigurationBySections = configurationBySections.setIn(
-      ['sections', sectionKey],
-      configurationBySections.getIn(['sections', sectionKey])
+    const newConfigurationBySections = configurationBySections.set(
+      sectionKey,
+      configurationBySections.get(sectionKey)
                              .merge(Immutable.fromJS(diff)));
     const created = this.state.createBySectionsFn(newConfigurationBySections);
     const parsed = this.state.parseBySectionsFn(created);
@@ -91,9 +91,9 @@ export default React.createClass({
 
   onSaveSection(sectionKey, diff) {
     const {configurationBySections, componentId, configurationId} = this.state;
-    const newConfigurationBySections = configurationBySections.setIn(
-      ['sections', sectionKey],
-      configurationBySections.getIn(['sections', sectionKey])
+    const newConfigurationBySections = configurationBySections.set(
+      sectionKey,
+      configurationBySections.get(sectionKey)
                              .merge(Immutable.fromJS(diff)));
     const created = this.state.createBySectionsFn(newConfigurationBySections);
     return Actions.saveForcedConfiguration(componentId, configurationId, created);
@@ -115,7 +115,7 @@ export default React.createClass({
             disabled={this.state.isSaving}
             onChange={(diff) => this.onUpdateSection(key, diff)}
             onSave={(diff) => this.onSaveSection(key, diff)}
-            value={this.state.configurationBySections.getIn(['sections', key]).toJS()}
+            value={this.state.configurationBySections.get(key).toJS()}
           />
         </div>
       );

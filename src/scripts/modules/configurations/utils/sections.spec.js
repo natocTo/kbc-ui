@@ -27,16 +27,14 @@ describe('sections makeParseFn()', function() {
         key2: 'val2'
       }
     });
-    const expected = {
-      sections: [
-        {
-          key1: 'val1'
-        },
-        {
-          key2: 'val2'
-        }
-      ]
-    };
+    const expected = [
+      {
+        key1: 'val1'
+      },
+      {
+        key2: 'val2'
+      }
+    ];
     assert.deepEqual(expected, parseFn(configuration).toJS());
   });
   it('should not map invalid values', function() {
@@ -48,16 +46,14 @@ describe('sections makeParseFn()', function() {
         invalidKey: 'val3'
       }
     });
-    const expected = {
-      sections: [
-        {
-          key1: 'val1'
-        },
-        {
-          key2: 'val2'
-        }
-      ]
-    };
+    const expected = [
+      {
+        key1: 'val1'
+      },
+      {
+        key2: 'val2'
+      }
+    ];
     assert.deepEqual(expected, parseFn(configuration).toJS());
   });
 });
@@ -85,17 +81,14 @@ describe('sections makeCreateFn()', function() {
   ]);
   it('should map all valid values', function() {
     const createFn = sections.makeCreateFn(sectionsDefinition);
-    const localState = Immutable.fromJS({
-      sections: [
-        {
-          key1: 'val1'
-        },
-        {
-          key2: 'val2'
-        }
-
-      ]
-    });
+    const localState = Immutable.fromJS([
+      {
+        key1: 'val1'
+      },
+      {
+        key2: 'val2'
+      }
+    ]);
     const expected = {
       parameters: {
         key1: 'val1',
@@ -106,19 +99,16 @@ describe('sections makeCreateFn()', function() {
   });
   it('should not map invalid values', function() {
     const createFn = sections.makeCreateFn(sectionsDefinition);
-    const localState = Immutable.fromJS({
-      sections: [
-        {
-          key1: 'val1',
-          invalidKey1: 'val3'
-        },
-        {
-          key2: 'val2',
-          invalidKey2: 'val4'
-        }
-
-      ]
-    });
+    const localState = Immutable.fromJS([
+      {
+        key1: 'val1',
+        invalidKey1: 'val3'
+      },
+      {
+        key2: 'val2',
+        invalidKey2: 'val4'
+      }
+    ]);
     const expected = {
       parameters: {
         key1: 'val1',

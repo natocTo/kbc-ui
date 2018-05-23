@@ -1,4 +1,4 @@
-import { Map, fromJS, List } from 'immutable';
+import { Map } from 'immutable';
 import TablesStore from '../../components/stores/StorageTablesStore';
 
 const repass = param => param;
@@ -8,15 +8,11 @@ const returnTrue = () => true;
 function parseBySections(sectionsParseFn, configuration) {
   const tables = TablesStore.getAll();
   const sectionsParsed = sectionsParseFn.map(parseSectionFn => parseSectionFn(configuration, tables));
-  const parsedConfiguration = Map({
-    sections: sectionsParsed
-  });
-  return parsedConfiguration;
+  return sectionsParsed;
 }
 
 function createBySections(sectionsCreateFn, configurationBySections) {
   const configuration = configurationBySections
-    .get('sections', List())
     .reduce((memo, sectionConfig, index) => {
       const createSectionFn = sectionsCreateFn.get(index);
       return memo.mergeDeep(createSectionFn(sectionConfig));
@@ -32,11 +28,7 @@ function createEmptyConfigBySections(
   webalizedName
 ) {
   const sectionsData = sectionsCreateEmptyFn.map(sectionCreateFn => sectionCreateFn(name, webalizedName));
-  const configurationBySections = fromJS({
-    sections: sectionsData
-  });
-
-  return createBySections(sectionsCreateFn, configurationBySections);
+  return createBySections(sectionsCreateFn, sectionsData);
 }
 
 function isCompleteBySections(sectionsIsCompleteFn, configuration) {

@@ -72,12 +72,9 @@ let ConfigurationRowsStore = StoreUtils.createStore({
   },
 
   getEditingConfigurationBySections: function(componentId, configId, rowId, parseFn, parseFnSections) {
-    const sectionsParsed = parseFnSections.map(
+    const initConfiguration = parseFnSections.map(
       parseSectionFn => parseSectionFn(this.getConfiguration(componentId, configId, rowId))
     );
-    const initConfiguration = Immutable.Map({
-      sections: sectionsParsed
-    });
     return _store.getIn(
       ['editing', componentId, configId, rowId, 'configuration'],
       initConfiguration
