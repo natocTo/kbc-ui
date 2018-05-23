@@ -62,8 +62,6 @@ export default React.createClass({
   renderNewConfigRowButton(type) {
     const state = this.state;
     const settings = this.state.settings;
-    const createEmptyFn = settings.getIn(['row', 'onCreate']);
-    const createFn = settings.getIn(['row', 'onSave']);
     return (
         <CreateConfigurationRowButton
           componentType={this.state.component.get('type')}
