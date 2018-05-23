@@ -5,66 +5,56 @@ const repass = param => param;
 const returnEmptyMap = () => Map();
 const returnTrue = () => true;
 
-function parseBySections(rootParseFn, sectionsParseFn, configuration) {
+function parseBySections(sectionsParseFn, configuration) {
   const tables = TablesStore.getAll();
-  const rootParsed = rootParseFn(configuration, tables);
-  const sectionsParsed = sectionsParseFn.map(parseSectionFn => parseSectionFn(rootParsed, tables));
+  const sectionsParsed = sectionsParseFn.map(parseSectionFn => parseSectionFn(configuration, tables));
   const parsedConfiguration = Map({
-    root: rootParsed,
     sections: sectionsParsed
   });
-
   return parsedConfiguration;
 }
 
-function createBySections(createFn, sectionsCreateFn, configurationBySections) {
-  const configurationSectionsMerged = configurationBySections
+function createBySections(sectionsCreateFn, configurationBySections) {
+  const configuration = configurationBySections
     .get('sections', List())
     .reduce((memo, sectionConfig, index) => {
       const createSectionFn = sectionsCreateFn.get(index);
       return memo.mergeDeep(createSectionFn(sectionConfig));
     }, Map());
 
-  const configurationRoot = configurationBySections.get('root');
-  return createFn(configurationRoot.mergeDeep(configurationSectionsMerged));
+  return configuration;
 }
 
 function createEmptyConfigBySections(
-  createEmptyFn,
   sectionsCreateEmptyFn,
-  createFn,
   sectionsCreateFn,
   name,
   webalizedName
 ) {
   const sectionsData = sectionsCreateEmptyFn.map(sectionCreateFn => sectionCreateFn(name, webalizedName));
-  const root = createEmptyFn(name, webalizedName);
   const configurationBySections = fromJS({
-    root,
     sections: sectionsData
   });
 
-  return createBySections(createFn, sectionsCreateFn, configurationBySections);
+  return createBySections(sectionsCreateFn, configurationBySections);
 }
 
-function isCompleteBySections(rootIsCompleteFn, sectionsIsCompleteFn, configBySections) {
-  const rootIsComplete = rootIsCompleteFn(configBySections.get('root'));
-  const sectionsIsComplete = configBySections.get('sections', List()).reduce((memo, sectionData, index) => {
-    const isCompleteFn = sectionsIsCompleteFn.get(index);
-    return memo && isCompleteFn(sectionData);
+function isCompleteBySections(sectionsIsCompleteFn, configuration) {
+  const sectionsIsComplete = sectionsIsCompleteFn.reduce((memo, isCompleteFn) => {
+    return memo && isCompleteFn(configuration);
   }, true);
-  return rootIsComplete && sectionsIsComplete;
+  return sectionsIsComplete;
 }
 
 export default {
   makeParseFn(rootParseFn, sections) {
     const sectionsParseFn = sections.map(section => section.get('onLoad') || repass);
-    return configuration => parseBySections(rootParseFn || repass, sectionsParseFn, configuration);
+    return configuration => parseBySections(sectionsParseFn, configuration);
   },
 
   makeCreateFn(rootCreateFn, sections) {
     const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
-    return configuration => createBySections(rootCreateFn || repass, sectionsCreateFn, configuration);
+    return configuration => createBySections(sectionsCreateFn, configuration);
   },
 
   makeCreateEmptyFn(rootCreateEmptyFn, rootCreateFn, sections) {
@@ -72,9 +62,7 @@ export default {
     const sectionsCreateEmptyFn = sections.map(section => section.get('onCreate') || returnEmptyMap);
     return (name, webalizedName) =>
       createEmptyConfigBySections(
-        rootCreateEmptyFn || returnEmptyMap,
         sectionsCreateEmptyFn,
-        rootCreateFn || repass,
         sectionsCreateFn,
         name,
         webalizedName
@@ -82,7 +70,7 @@ export default {
   },
 
   isComplete(rootIsCompleteFn, sections, configuration) {
-    const sectionsIsCompleteFn = sections.map(s => s.get('isComplete', returnTrue));
-    return isCompleteBySections(rootIsCompleteFn || returnTrue, sectionsIsCompleteFn, configuration);
+    const sectionsIsCompleteFn = sections.map(section => section.get('isComplete', returnTrue));
+    return isCompleteBySections(sectionsIsCompleteFn, configuration);
   }
 };
