@@ -20,7 +20,7 @@ describe('sections makeParseFn()', function() {
     }
   ]);
   it('should map all valid values', function() {
-    const parseFn = sections.makeParseFn(null, sectionsDefinition);
+    const parseFn = sections.makeParseFn(sectionsDefinition);
     const configuration = Immutable.fromJS({
       parameters: {
         key1: 'val1',
@@ -40,7 +40,7 @@ describe('sections makeParseFn()', function() {
     assert.deepEqual(expected, parseFn(configuration).toJS());
   });
   it('should not map invalid values', function() {
-    const parseFn = sections.makeParseFn(null, sectionsDefinition);
+    const parseFn = sections.makeParseFn(sectionsDefinition);
     const configuration = Immutable.fromJS({
       parameters: {
         key1: 'val1',
@@ -84,7 +84,7 @@ describe('sections makeCreateFn()', function() {
     }
   ]);
   it('should map all valid values', function() {
-    const createFn = sections.makeCreateFn(null, sectionsDefinition);
+    const createFn = sections.makeCreateFn(sectionsDefinition);
     const localState = Immutable.fromJS({
       sections: [
         {
@@ -105,7 +105,7 @@ describe('sections makeCreateFn()', function() {
     assert.deepEqual(expected, createFn(localState).toJS());
   });
   it('should not map invalid values', function() {
-    const createFn = sections.makeCreateFn(null, sectionsDefinition);
+    const createFn = sections.makeCreateFn(sectionsDefinition);
     const localState = Immutable.fromJS({
       sections: [
         {
@@ -156,7 +156,7 @@ describe('sections makeCreateEmptyFn()', function() {
     }
   ]);
   it('should create valid empty conig', function() {
-    const createEmptyFn = sections.makeCreateEmptyFn(null, null, sectionsDefinition);
+    const createEmptyFn = sections.makeCreateEmptyFn(sectionsDefinition);
     const expected = {
       parameters: {
         key1: 'myWebalized',
@@ -181,7 +181,7 @@ describe('sections isComplete', function() {
     }
   ]);
   it('should return true for a complete config', function() {
-    assert.equal(true, sections.isComplete(null, sectionsDefinition, Immutable.fromJS({
+    assert.equal(true, sections.isComplete(sectionsDefinition, Immutable.fromJS({
       parameters: {
         key1: 'val1',
         key2: 'val2'
@@ -189,16 +189,16 @@ describe('sections isComplete', function() {
     })));
   });
   it('should return false for an empty config', function() {
-    assert.equal(false, sections.isComplete(null, sectionsDefinition, Immutable.fromJS({})));
+    assert.equal(false, sections.isComplete(sectionsDefinition, Immutable.fromJS({})));
   });
   it('should return false for an incomplete complete config', function() {
-    assert.equal(false, sections.isComplete(null, sectionsDefinition, Immutable.fromJS({
+    assert.equal(false, sections.isComplete(sectionsDefinition, Immutable.fromJS({
       parameters: {
         key1: '',
         key2: 'val2'
       }
     })));
-    assert.equal(false, sections.isComplete(null, sectionsDefinition, Immutable.fromJS({
+    assert.equal(false, sections.isComplete(sectionsDefinition, Immutable.fromJS({
       parameters: {
         key1: 'val1',
         key2: ''
@@ -210,7 +210,6 @@ describe('sections isComplete', function() {
 describe('sections parse(create())', function() {
   it('should simple merge', function() {
     const createBySectionsFn = sections.makeCreateFn(
-      null,
       Immutable.fromJS([
         {
           onSave: function(localState) {
@@ -233,7 +232,6 @@ describe('sections parse(create())', function() {
       ])
     );
     const parseBySectionsFn = sections.makeParseFn(
-      null,
       Immutable.fromJS([
         {
           onLoad: function(configuration) {
@@ -263,7 +261,6 @@ describe('sections parse(create())', function() {
 
   it('should deep merge', function() {
     const createBySectionsFn = sections.makeCreateFn(
-      null,
       Immutable.fromJS([
         {
           onSave: function(localState) {
@@ -290,7 +287,6 @@ describe('sections parse(create())', function() {
       ])
     );
     const parseBySectionsFn = sections.makeParseFn(
-      null,
       Immutable.fromJS([
         {
           onLoad: function(configuration) {
@@ -322,7 +318,6 @@ describe('sections parse(create())', function() {
 
   it('unknown key shall not pass', function() {
     const createBySectionsFn = sections.makeCreateFn(
-      null,
       Immutable.fromJS([
         {
           onSave: function(localState) {
@@ -336,7 +331,6 @@ describe('sections parse(create())', function() {
       ])
     );
     const parseBySectionsFn = sections.makeParseFn(
-      null,
       Immutable.fromJS([
         {
           onLoad: function(configuration) {

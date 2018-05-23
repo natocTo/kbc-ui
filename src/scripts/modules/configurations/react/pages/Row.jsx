@@ -38,11 +38,9 @@ export default React.createClass({
     const row = Store.get(componentId, configurationId, rowId);
     const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId, rowId);
     const createBySectionsFn = sections.makeCreateFn(
-      settings.getIn(['row', 'onSave']),
       settings.getIn(['row', 'sections'])
     );
     const parseBySectionsFn = sections.makeParseFn(
-      settings.getIn(['row', 'onLoad']),
       settings.getIn(['row', 'sections'])
     );
     const storedConfigurationSections = parseBySectionsFn(

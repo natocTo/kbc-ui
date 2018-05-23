@@ -70,7 +70,7 @@ export default React.createClass({
           label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
           componentId={state.componentId}
           configId={state.configurationId}
-          emptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
+          emptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
           onRowCreated={this.onRowCreated}
           createChangeDescription={() => settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added'}
           type={type}

@@ -26,8 +26,8 @@ export default React.createClass({
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const component = ComponentStore.getComponent(componentId);
     const isChanged = Store.isEditingConfiguration(componentId, configurationId);
-    const createBySectionsFn = sections.makeCreateFn(settings.getIn(['index', 'onSave']), settings.getIn(['index', 'sections']));
-    const parseBySectionsFn = sections.makeParseFn(settings.getIn(['index', 'onLoad']), settings.getIn(['index', 'sections']));
+    const createBySectionsFn = sections.makeCreateFn(settings.getIn(['index', 'sections']));
+    const parseBySectionsFn = sections.makeParseFn(settings.getIn(['index', 'sections']));
 
     const configurationBySections = Store.getEditingConfiguration(
       componentId,

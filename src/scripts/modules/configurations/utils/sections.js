@@ -47,17 +47,17 @@ function isCompleteBySections(sectionsIsCompleteFn, configuration) {
 }
 
 export default {
-  makeParseFn(rootParseFn, sections) {
+  makeParseFn(sections) {
     const sectionsParseFn = sections.map(section => section.get('onLoad') || repass);
     return configuration => parseBySections(sectionsParseFn, configuration);
   },
 
-  makeCreateFn(rootCreateFn, sections) {
+  makeCreateFn(sections) {
     const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
     return configuration => createBySections(sectionsCreateFn, configuration);
   },
 
-  makeCreateEmptyFn(rootCreateEmptyFn, rootCreateFn, sections) {
+  makeCreateEmptyFn(sections) {
     const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
     const sectionsCreateEmptyFn = sections.map(section => section.get('onCreate') || returnEmptyMap);
     return (name, webalizedName) =>
@@ -69,7 +69,7 @@ export default {
       );
   },
 
-  isComplete(rootIsCompleteFn, sections, configuration) {
+  isComplete(sections, configuration) {
     const sectionsIsCompleteFn = sections.map(section => section.get('isComplete', returnTrue));
     return isCompleteBySections(sectionsIsCompleteFn, configuration);
   }
