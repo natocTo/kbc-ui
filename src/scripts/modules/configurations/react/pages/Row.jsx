@@ -45,10 +45,6 @@ export default React.createClass({
       settings.getIn(['row', 'onLoad']),
       settings.getIn(['row', 'sections'])
     );
-    const normalizeBySectionsFn = sections.makeNormalizeFn(
-      settings.getIn(['row', 'normalize']),
-      settings.getIn(['row', 'sections'])
-    );
     const storedConfigurationSections = parseBySectionsFn(
       Store.getConfiguration(componentId, configurationId, rowId)
     ).get('sections');
@@ -69,17 +65,15 @@ export default React.createClass({
         isParsableConfiguration(
           Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId, rowId)),
           parseBySectionsFn,
-          createBySectionsFn,
-          normalizeBySectionsFn
+          createBySectionsFn
         ),
 
       isParsableConfiguration: isParsableConfiguration(
         Store.getConfiguration(componentId, configurationId, rowId),
         parseBySectionsFn,
-        createBySectionsFn,
-        normalizeBySectionsFn
+        createBySectionsFn
       ),
-      isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, rowId, parseBySectionsFn, createBySectionsFn, normalizeBySectionsFn),
+      isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, rowId, parseBySectionsFn, createBySectionsFn),
       createBySectionsFn,
       parseBySectionsFn,
       storedConfigurationSections,
