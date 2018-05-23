@@ -47,14 +47,12 @@ module.exports = {
     });
     const configurationBySections = ConfigurationsStore.getEditingConfigurationBySections(componentId, configurationId, parseFn, parseFnSections);
 
-    const configurationSectionsMerged = configurationBySections
+    const configuration = configurationBySections
       .get('sections')
       .reduce((memo, sectionConfig, index) => {
         const createSectionFn = createFnSections.get(index);
         return memo.merge(createSectionFn(sectionConfig));
       }, Map());
-    const configurationRoot = configurationBySections.get('root');
-    const configuration = createFn(configurationRoot.merge(configurationSectionsMerged));
 
     return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
       .then(function(response) {
