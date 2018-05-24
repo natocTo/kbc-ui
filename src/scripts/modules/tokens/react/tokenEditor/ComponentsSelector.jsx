@@ -56,7 +56,7 @@ export default React.createClass({
     return (
       <span>
         <ComponentIcon component={component}/>
-        <ComponentName component={component}/>
+        <ComponentName component={component} showType />
       </span>
     );
   },

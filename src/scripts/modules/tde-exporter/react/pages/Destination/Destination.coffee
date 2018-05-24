@@ -3,7 +3,7 @@ Link = require('react-router').Link
 
 ComponentsStore  = require('../../../../components/stores/ComponentsStore')
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
-ComponentName = React.createFactory(require '../../../../../react/common/ComponentName')
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
 ComponentEmptyState = require('../../../../components/react/components/ComponentEmptyState').default
 
@@ -186,7 +186,7 @@ module.exports = React.createClass
       ComponentIcon {component: component, size: '32'}
       ' '
       span style: {paddingRight: '1em'},
-        component.get('name')
+        ComponentName component: component
       ' '
       button
         type: 'button'

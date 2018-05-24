@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import DeletedConfigurationRow from './DeletedConfigurationRow';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
+import ComponentName from '../../../../react/common/ComponentName';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
@@ -19,7 +20,7 @@ export default React.createClass({
           <div className="kbc-title">
             <h2>
               <ComponentIcon component={this.props.component} size="32" />
-              {this.props.component.get('name')}{this.renderType()}
+              <ComponentName component={this.props.component} showType />
             </h2>
           </div>
         </div>
@@ -30,14 +31,6 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
-
-  renderType() {
-    if (this.props.component.get('type') === 'extractor' || this.props.component.get('type') === 'writer') {
-      return (
-        <span> {this.props.component.get('type')}</span>
-      );
-    }
   },
 
   configurations() {

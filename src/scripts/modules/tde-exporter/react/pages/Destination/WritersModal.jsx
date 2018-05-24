@@ -4,6 +4,7 @@ import {Button, Modal} from 'react-bootstrap';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import {Loader} from '@keboola/indigo-ui';
 import {OAUTH_V2_WRITERS} from '../../../tdeCommon';
+import { componentNameAsString } from '../../../../../react/common/ComponentName';
 
 export default React.createClass({
 
@@ -75,7 +76,7 @@ export default React.createClass({
     const component = ComponentsStore.getComponent(componentId);
     return (
       <option key={taskName} value={taskName}>
-        {component.get('name')}
+        {componentNameAsString(component)}
       </option>
     );
   },

@@ -340,7 +340,7 @@ module.exports = React.createClass
         span {className: ''},
           ComponentIcon {component: component, size: '32'}
           ' '
-          ComponentName {component: component}
+          ComponentName {component: component, showType: true}
 
   _renderLogRow: (job) ->
     div null,

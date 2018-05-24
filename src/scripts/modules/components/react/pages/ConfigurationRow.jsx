@@ -7,6 +7,7 @@ import InstalledComponentsActionCreators from '../../InstalledComponentsActionCr
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import {isObsoleteComponent} from '../../../../modules/trash/utils';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
+import { componentNameAsString } from '../../../../react/common/ComponentName';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -63,7 +64,7 @@ export default React.createClass({
         component={this.props.componentId}
         runParams={this.runParams()}
       >
-        You are about to run the {this.props.component.get('name')} configuration <strong>{this.props.config.get('name')}</strong>.
+        You are about to run the {componentNameAsString(this.props.component)} configuration <strong>{this.props.config.get('name')}</strong>.
       </RunConfigurationButton>
     );
   },

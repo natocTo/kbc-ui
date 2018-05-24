@@ -8,6 +8,7 @@ import moment from 'moment';
 
 import ComponentsStore from '../../modules/components/stores/ComponentsStore';
 import ComponentIcon from './ComponentIcon';
+import ComponentName from './ComponentName';
 import ComponentConfigurationLink from '../../modules/components/react/components/ComponentConfigurationLink';
 import InstalledComponentsStore from '../../modules/components/stores/InstalledComponentsStore';
 import InstalledComponentsActions from '../../modules/components/InstalledComponentsActionCreators';
@@ -44,18 +45,16 @@ export default React.createClass({
       return <Loader />;
     }
 
-    const componentName = component.get('type') !== 'transformation' ? `${component.get('name')} ${component.get('type')}` : `${component.get('type')}`;
     const config = InstalledComponentsStore.getConfig(componentId, configId);
     const unknownConfigName = `Unknown configuration (${configId})`;
     const configName = config ? config.get('name', unknownConfigName) : unknownConfigName;
 
     return (
       <span>
-        {/* {this.renderTimefromNow(timestamp)} */}
         <ComponentIcon component={fromJS(component)} resizeToSize="16" />
-        <ComponentConfigurationLink componentId={componentId} configId={configId}>{componentName} / {configName}
+        <ComponentConfigurationLink componentId={componentId} configId={configId}>
+          <ComponentName component={component} /> / {configName}
         </ComponentConfigurationLink>
-
       </span>
     );
   },

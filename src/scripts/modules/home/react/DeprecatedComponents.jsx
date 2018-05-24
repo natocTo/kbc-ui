@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import StringUtils from '../../../utils/string';
 import ComponentDetailLink from '../../../react/common/ComponentDetailLink';
+import ComponentName from '../../../react/common/ComponentName';
 import Immutable from 'immutable';
 import {AlertBlock} from '@keboola/indigo-ui';
 
@@ -36,12 +37,12 @@ export default React.createClass({
               {components.entrySeq().map(function([index, component]) {
                 return (
                   <li key={index}>
-                      <ComponentDetailLink
+                    <ComponentDetailLink
                       type={component.get('type')}
                       componentId={component.get('id')}
-                      >
-                      {component.get('name')}
-                      </ComponentDetailLink>
+                    >
+                      <ComponentName component={component} />
+                    </ComponentDetailLink>
                   </li>
                 );
               })}

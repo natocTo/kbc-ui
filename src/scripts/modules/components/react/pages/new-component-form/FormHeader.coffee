@@ -1,5 +1,6 @@
 React = require 'react'
 ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 Button = React.createFactory(require('react-bootstrap').Button)
 
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
@@ -25,7 +26,8 @@ module.exports = React.createClass
         ComponentIcon
           component: @props.component
           className: 'pull-left'
-        h2 null, @props.component.get 'name'
+        h2 null,
+          ComponentName component: @props.component
         p null, @props.component.get 'description'
       if @props.withButtons
         @_renderButtons()

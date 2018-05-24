@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import { componentNameAsString } from '../../../../../react/common/ComponentName';
 
 export default (component, jobId) => {
   return React.createClass({
@@ -9,11 +10,7 @@ export default (component, jobId) => {
 
     getJobName() {
       if (component) {
-        if (component.get('type') === 'transformation') {
-          return component.get('name') + ' job';
-        } else {
-          return component.get('name') + ' ' + component.get('type') + ' job';
-        }
+        return componentNameAsString(component, {showType: true}) + ' job';
       } else {
         return 'Job';
       }
