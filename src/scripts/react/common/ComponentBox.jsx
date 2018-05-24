@@ -18,8 +18,9 @@ export default React.createClass({
       >
         <ComponentBadge
             component={component}
-            filterBadge="3rdParty"
-            type="plain"/>
+            filterBadges={['3rdParty', 'appInfo.beta']}
+            type="plain"
+        />
         <ComponentIcon
             component={component}
             size="64"

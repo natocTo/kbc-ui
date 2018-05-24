@@ -5,6 +5,8 @@
 .badge-component {
   &-container {
     &-plain {
+      display: flex;
+      flex-direction: row;
       position: absolute;
       right: 9px;
       top: 9px;
@@ -13,21 +15,21 @@
         display: none;
       }
     }
-    &-description  {
-      display: flex;
-      flex-flow: row;
+    &-description {
       .badge-component-placeholder {
         min-width: 92px;
+        display: flex;
+        justify-content: flex-end;
       }
     }
   }
-  &-placeholder {
+  &-row {
     display: flex;
-    justify-content: flex-end;
     align-items: flex-start;
   }
   &-item {
     padding: 2px 7px 2px 9px;
+    margin-left: 3px;
     font-size: 12px;
     line-height: 16px;
     &-excludeFromNewList {

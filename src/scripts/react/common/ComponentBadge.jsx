@@ -7,13 +7,13 @@ export default React.createClass({
   propTypes: {
     type: PropTypes.oneOf(['plain', 'description']),
     component: PropTypes.object.isRequired,
-    filterBadge: PropTypes.string
+    filterBadges: PropTypes.array
   },
 
   getDefaultProps() {
     return ({
       type: 'plain',
-      filterBadge: ''
+      filterBadges: []
     });
   },
 
@@ -21,16 +21,16 @@ export default React.createClass({
     const badges = this.getBadges();
 
     return (
-      <div>
+      <div className={'badge-component-container-' + this.props.type}>
         {badges.map((badge, idx) =>
-          <div className={'badge-component-container-' + this.props.type} key={idx}>
+          <div className="badge-component-row" key={idx}>
             <div className="badge-component-placeholder">
-              <div className={'badge badge-component-item badge-component-item-' + badge.key}
-                title={this.props.type === 'title' ? badge.description : ''}
-              >
-              {badge.title}
+                <div className={'badge badge-component-item badge-component-item-' + badge.key}
+                  title={this.props.type === 'title' ? badge.description : ''}
+                >
+                {badge.title}
+                </div>
               </div>
-            </div>
             {this.props.type === 'description' &&
               <div className="badge-component-description">
                 {badge.description}
@@ -81,6 +81,13 @@ export default React.createClass({
         key: 'dataOut'
       });
     }
+    if (flags.contains('appInfo.beta')) {
+      badges.push({
+        title: 'Beta',
+        description: `The ${this.getAppType()} is public, but it's in beta stage.`,
+        key: 'appInfo.beta'
+      });
+    }
     if (flags.contains('appInfo.fee')) {
       badges.push({
         title: <span><i className="fa fa-dollar fa-fw"/></span>,
@@ -122,8 +129,10 @@ export default React.createClass({
 
   getFilterFlags()  {
     let flags = this.resolveFlags();
-    if (this.props.filterBadge !== '')  {
-      return flags.filter((flag) => flag === this.props.filterBadge);
+    if (this.props.filterBadges.length !== 0)  {
+      return flags.filter((flag) => {
+        return this.props.filterBadges.indexOf(flag) !== -1;
+      });
     }
     return flags;
   },
