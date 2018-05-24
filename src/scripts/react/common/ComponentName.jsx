@@ -1,28 +1,30 @@
 import React, {PropTypes} from 'react';
 
+const shouldShowType = (component) => {
+  return component.get('type') === 'extractor' || component.get('type') === 'writer';
+};
+
 export default React.createClass({
   propTypes: {
-    component: PropTypes.object
+    component: PropTypes.object.isRequired,
+    showType: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      showType: false
+    };
   },
 
   render() {
+    const { component, showType } = this.props;
     return (
-        <span>
-          {this.props.component.get('name')} {this.componentType()}
-        </span>
+      <span>
+        {component.get('name')}
+        {showType && shouldShowType(component) && (
+          <span>{' '}<small>{this.props.component.get('type')}</small></span>
+        )}
+      </span>
     );
-  },
-
-  componentType() {
-    if (!this.shouldShowType()) {
-      return null;
-    }
-
-    return <small>{this.props.component.get('type')}</small>;
-  },
-
-  shouldShowType() {
-    return this.props.component.get('type') === 'extractor' || this.props.component.get('type') === 'writer';
   }
-
 });
