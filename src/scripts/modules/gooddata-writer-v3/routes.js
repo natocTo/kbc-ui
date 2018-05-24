@@ -6,7 +6,6 @@ import LoadTypeSection from './react/components/LoadTypeSection';
 import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
 import title from './adapters/title';
 import loadType from './adapters/loadType';
-import rowAdapter from './adapters/row';
 
 import DimensionsSection from './react/components/DimensionsSection';
 import dimensionsAdapter from './adapters/dimensions';
@@ -35,9 +34,6 @@ const routeSettings = {
   },
   row: {
     hasState: false,
-    onSave: rowAdapter.createConfiguration, // defualt merge through all sections onSave functions
-    onLoad: rowAdapter.parseConfiguration, // if not set then merge through all sections onLoad funtions
-    onCreate: rowAdapter.createEmptyConfiguration,
     sections: [
       {
         render: TitleSection,
