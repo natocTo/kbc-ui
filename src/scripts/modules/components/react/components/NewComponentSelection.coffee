@@ -1,8 +1,7 @@
 React = require 'react'
 ComponentsActionCreators = require '../../ComponentsActionCreators'
-ComponentIcon = React.createFactory(require('../../../../react/common/ComponentIcon').default)
-ComponentDetailLink = React.createFactory(require('../../../../react/common/ComponentDetailLink').default)
 SearchRow = React.createFactory(require('../../../../react/common/SearchRow').default)
+ComponentBox = React.createFactory(require('../../../../react/common/ComponentBox').default)
 Link = React.createFactory(require('react-router').Link)
 Button = React.createFactory(require('react-bootstrap').Button)
 
@@ -11,38 +10,11 @@ Button = React.createFactory(require('react-bootstrap').Button)
 
 require('./NewComponentSelection.less')
 
-ComponentBox = React.createClass
-  displayName: 'ComponentBox'
-  propTypes:
-    component: React.PropTypes.object.isRequired
-
-  shouldComponentUpdate: (nextProps) ->
-    @props.component == nextProps.component
-
-  render: ->
-    component = @props.component
-    div className: 'td',
-      ComponentIcon
-        component: component
-        size: '64'
-      h2 null,
-        component.get('name')
-      p null, component.get('description')
-      ComponentDetailLink
-        componentId: @props.component.get("id")
-        type: @props.component.get("type")
-
-        button
-          className: 'btn btn-success'
-          onClick: @open
-        ,
-          'More'
-
 module.exports = React.createClass
   displayName: 'NewComponentSelection'
   propTypes:
     components: React.PropTypes.object.isRequired
-    filter: React.PropTypes.string.isRequired
+    filter: React.PropTypes.string
     componentType: React.PropTypes.string.isRequired
 
   render: ->
@@ -77,5 +49,7 @@ module.exports = React.createClass
       className: 'tr'
       key: idx
     , components.map((component) ->
-      React.createElement ComponentBox, component: component, key: component.get('id')
+      ComponentBox
+        component: component
+        key: component.get('id')
     ).toArray()
