@@ -38,7 +38,7 @@ export default React.createClass({
 
   render() {
     return (
-      <a onClick={this.handleOpenButtonClick}>
+      <a onClick={this.handleOpenButtonClick} className="btn btn-link">
         <i className="fa fa-sitemap fa-fw" />
         {' '}SQLdep
         {this.betaWarning()}

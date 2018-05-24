@@ -159,7 +159,7 @@ module.exports = React.createClass({
     );
     return (
       <a className={
-        classnames({
+        classnames('btn', 'btn-link', {
           'text-muted': this.props.disabled || this.state.isLoading
         })}
         onClick={this.onOpenButtonClick}

@@ -130,7 +130,7 @@ export default function(COMPONENT_ID) {
                 </RunComponentButton>
               </li>
               <li>
-                <a href={this.state.component.get('documentationUrl')} target="_blank">
+                <a href={this.state.component.get('documentationUrl')} target="_blank" className="btn btn-link">
                   <i className="fa fa-question-circle fa-fw" /> Documentation
                 </a>
               </li>

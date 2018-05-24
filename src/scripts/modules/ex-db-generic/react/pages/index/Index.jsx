@@ -188,7 +188,7 @@ export default function(componentId) {
         if (this.state.isTestingConnection) {
           return (
             <li>
-              <Link to={link} params={{config: this.state.configId}}>
+              <Link to={link} params={{config: this.state.configId}} className="btn btn-link">
                 <Loader className="fa-fw"/> Database Credentials
               </Link>
             </li>
@@ -196,7 +196,7 @@ export default function(componentId) {
         } else {
           return (
             <li>
-              <Link to={link} params={{ config: this.state.configId }}>
+              <Link to={link} params={{ config: this.state.configId }} className="btn btn-link">
                 <i className="fa fa-fw fa-user"/> Database Credentials
               </Link>
             </li>

@@ -6,7 +6,7 @@
 @import './Autosuggest';
 @import './rc-switch';
 
-body {
+body, .label, .badge {
   font-family: "Whitney SSm A", "Whitney SSm B";
   font-style: normal;
   font-weight: 400;
@@ -22,6 +22,12 @@ h1, h2, h3, h4, h5, h6 {
   font-style: normal;
   font-weight: 500;
 }
+
+ @media (min-width: 768px) {
+   .form-horizontal .control-label {
+     font-size: 100%;
+   }
+ }
 
 pre.CodeMirror-placeholder {
   color: #717e9a;

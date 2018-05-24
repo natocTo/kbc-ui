@@ -51,6 +51,7 @@ module.exports = React.createClass
     else
       React.DOM.a
         onClick: @_handleDelete
+        className: 'btn btn-link'
       ,
         @_renderIcon()
         ' Move to Trash'

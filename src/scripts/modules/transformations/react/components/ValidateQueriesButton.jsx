@@ -19,7 +19,7 @@ export default React.createClass({
 
   render() {
     return (
-      <a onClick={this.handleOpenButtonClick}>
+      <a onClick={this.handleOpenButtonClick} className="btn btn-link">
         <i className="fa fa-check-square-o fa-fw" />
         {' '}Validate
         <span>{' '}

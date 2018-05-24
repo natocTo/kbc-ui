@@ -202,6 +202,7 @@ templateFn = (componentId) ->
           li null,
             Link
               to: "#{componentId}-credentials"
+              className: "btn btn-link"
               params:
                 config: @state.configId
             ,

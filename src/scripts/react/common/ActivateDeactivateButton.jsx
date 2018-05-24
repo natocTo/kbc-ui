@@ -64,7 +64,9 @@ export default React.createClass({
 
   renderLink() {
     return (
-      <a onClick={this.handleClick} disabled={this.props.isPending || this.props.buttonDisabled}>
+      <a onClick={this.handleClick} disabled={this.props.isPending || this.props.buttonDisabled}
+         className="btn btn-link"
+      >
         {this.props.isPending ? <Loader className="fa-fw"/> : this.renderIcon(!this.props.isActive)} {this.tooltip()}
       </a>
     );

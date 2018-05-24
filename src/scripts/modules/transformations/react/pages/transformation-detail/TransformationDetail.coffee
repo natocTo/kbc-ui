@@ -132,6 +132,7 @@ module.exports = React.createClass
             Link
               to: 'transformationDetailGraph'
               params: {row: @state.transformation.get("id"), config: @state.bucket.get('id')}
+              className: 'btn btn-link'
             ,
               span className: 'fa fa-search fa-fw'
               ' Overview'
@@ -186,7 +187,8 @@ module.exports = React.createClass
                   @setState({validateModalOpen: false})
                 isSaved: !@state.editingFields.get('queriesChanged', false)
           li {},
-            a {},
+            a
+              className: 'btn btn-link'
               React.createElement Confirm,
                 text: 'Delete transformation'
                 title: "Do you really want to delete the transformation #{@state.transformation.get('name')}?"
@@ -198,7 +200,7 @@ module.exports = React.createClass
                   span className: 'fa kbc-icon-cup fa-fw'
                   ' Delete transformation'
           li {},
-            a {href: @resolveLinkDocumentationLink()}
+            a {href: @resolveLinkDocumentationLink(), className: 'btn btn-link'}
             ,
               span className: 'fa fa-question-circle fa-fw'
               ' Documentation'
