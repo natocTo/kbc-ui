@@ -21,16 +21,16 @@ export default React.createClass({
     const badges = this.getBadges();
 
     return (
-      <div>
+      <div className={'badge-component-container-' + this.props.type}>
         {badges.map((badge, idx) =>
-          <div className={'badge-component-container-' + this.props.type} key={idx}>
+          <div className="badge-component-row" key={idx}>
             <div className="badge-component-placeholder">
-              <div className={'badge badge-component-item badge-component-item-' + badge.key}
-                title={this.props.type === 'title' ? badge.description : ''}
-              >
-              {badge.title}
+                <div className={'badge badge-component-item badge-component-item-' + badge.key}
+                  title={this.props.type === 'title' ? badge.description : ''}
+                >
+                {badge.title}
+                </div>
               </div>
-            </div>
             {this.props.type === 'description' &&
               <div className="badge-component-description">
                 {badge.description}
