@@ -93,7 +93,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <a onClick={this.handleOpenButtonClick}>
+        <a onClick={this.handleOpenButtonClick}  className="btn btn-link">
           <i className="kbc-icon-plus" />{' '}{this.props.label}
           {this.renderModal()}
         </a>

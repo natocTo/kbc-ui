@@ -92,7 +92,7 @@ export default React.createClass({
           />
           <ul className="nav nav-stacked">
             <li>
-              <a href={this.state.component.get('documentationUrl')} target="_blank">
+              <a href={this.state.component.get('documentationUrl')} target="_blank" className="btn btn-link">
                 <i className="fa fa-question-circle fa-fw" /> Documentation
               </a>
             </li>

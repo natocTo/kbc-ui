@@ -120,6 +120,7 @@ module.exports = React.createClass
           li null,
             React.createElement Link,
               to: 'gooddata-writer-date-dimensions'
+              className: 'btn btn-link'
               params:
                 config: writer.get 'id'
             ,
@@ -128,6 +129,7 @@ module.exports = React.createClass
           li null,
             React.createElement Link,
               to: 'jobs'
+              className: 'btn btn-link'
               query:
                 q: '+component:gooddata-writer +params.config:' + writer.get('id')
             ,
@@ -151,6 +153,7 @@ module.exports = React.createClass
           li null,
             React.createElement Link,
               to: 'gooddata-writer-model'
+              className: 'btn btn-link'
               params:
                 config: @state.writer.getIn ['config', 'id']
             ,

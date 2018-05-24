@@ -55,7 +55,7 @@ export default React.createClass({
       </span>
     );
     return (
-      <a onClick={this.onModalOpen}>
+      <a onClick={this.onModalOpen}  className="btn btn-link">
         {this.renderModal()}
         {this.tooltipWrapper(body)}
       </a>

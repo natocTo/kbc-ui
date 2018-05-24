@@ -63,7 +63,7 @@ export default React.createClass({
 
   renderLink() {
     return (
-      <a onClick={this.onClick}>
+      <a onClick={this.onClick} className="btn btn-link">
         {this.renderIcon()}
         {' '}
         {this.props.label}
