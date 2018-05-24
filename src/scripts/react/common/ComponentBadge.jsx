@@ -7,13 +7,13 @@ export default React.createClass({
   propTypes: {
     type: PropTypes.oneOf(['plain', 'description']),
     component: PropTypes.object.isRequired,
-    filterBadge: PropTypes.string
+    filterBadges: PropTypes.array
   },
 
   getDefaultProps() {
     return ({
       type: 'plain',
-      filterBadge: ''
+      filterBadges: []
     });
   },
 
@@ -129,8 +129,10 @@ export default React.createClass({
 
   getFilterFlags()  {
     let flags = this.resolveFlags();
-    if (this.props.filterBadge !== '')  {
-      return flags.filter((flag) => flag === this.props.filterBadge);
+    if (this.props.filterBadges.length !== 0)  {
+      return flags.filter((flag) => {
+        return this.props.filterBadges.indexOf(flag) !== -1;
+      });
     }
     return flags;
   },
