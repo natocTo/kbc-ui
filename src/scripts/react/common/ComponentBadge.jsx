@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import keboolaLogo from '../../../images/keboola.svg';
+import { Icon } from '@keboola/indigo-ui';
 import { ExternalLink } from '@keboola/indigo-ui';
 
 
@@ -48,7 +48,7 @@ export default React.createClass({
 
     if (!flags.contains('3rdParty')) {
       badges.push({
-        title: <span><img src={keboolaLogo} height="17" alt=""/> Keboola</span>,
+        title: <span><Icon.Keboola className="badge-component-item-responsibility-icon" /> Keboola</span>,
         description: `Support for this ${this.getAppType()} is provided by Keboola.`,
         key: 'responsibility'
       });
