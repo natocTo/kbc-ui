@@ -1,24 +1,27 @@
 import Immutable, {Map} from 'immutable';
+import {parseParameters, createConfigParameters} from '../helpers/rowParametersTable';
+
 const createConfiguration = (localState) => {
-  const title = localState.get('title');
-  const identifier = localState.get('identifier');
-  return Immutable.fromJS({title, identifier});
+  return createConfigParameters(localState);
 };
 
 export default {
   createConfiguration,
-  parseConfiguration(rootParsedConfiguration) {
+  parseConfiguration(configuration) {
+    const parametersTable = parseParameters(configuration);
     return Map({
-      title: rootParsedConfiguration.get('title'),
-      identifier: rootParsedConfiguration.get('identifier')
+      tableId: parametersTable.get('tableId'),
+      title: parametersTable.get('title'),
+      identifier: parametersTable.get('identifier')
     });
   },
 
   createEmptyConfiguration(name, webalizedName) {
     const initState = {
+      tableId: name,
       title: webalizedName,
       identifier: ''
     };
-    return createConfiguration(Immutable.fromJS(initState));
+    return Immutable.fromJS(initState);
   }
 };
