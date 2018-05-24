@@ -81,6 +81,13 @@ export default React.createClass({
         key: 'dataOut'
       });
     }
+    if (flags.contains('appInfo.beta')) {
+      badges.push({
+        title: 'Beta',
+        description: `The ${this.getAppType()} is public, but it's in beta stage.`,
+        key: 'appInfo.beta'
+      });
+    }
     if (flags.contains('appInfo.fee')) {
       badges.push({
         title: <span><i className="fa fa-dollar fa-fw"/></span>,
