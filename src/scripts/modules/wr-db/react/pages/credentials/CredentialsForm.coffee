@@ -93,6 +93,7 @@ module.exports = React.createClass
         @props.changeCredentialsFn(@props.credentials.set('ssh', newSshData))
       data: @props.credentials.get('ssh', Map())
       isEditing: @props.isEditing
+      disabledCheckbox: false
 
   _createInput: (
     labelValue,
