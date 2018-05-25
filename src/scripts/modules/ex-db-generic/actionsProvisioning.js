@@ -342,6 +342,7 @@ export function createActions(componentId) {
           row: runQuery.get('id').toString()
         };
       } else {
+        runQuery = runQuery.delete('incrementalFetchingColumn').delete('incrementalFetchingLimit');
         return {
           config: configId,
           configData: store.configData.setIn(['parameters', 'tables'], List().push(runQuery))
@@ -389,6 +390,11 @@ export function createActions(componentId) {
         newQuery = newQuery.delete('query');
       }
       newQuery = newQuery.delete('advancedMode');
+      if (!store.isRowConfiguration()) {
+        // if a table was made while this bug was alive https://github.com/keboola/kbc-ui/issues/1731,
+        // need to remove the invalid parameters
+        newQuery = newQuery.delete('incrementalFetchingColumn').delete('incrementalFetchingLimit');
+      }
       newQuery = this.checkTableName(newQuery, store);
 
       var newQueries, diffMsg;
