@@ -159,14 +159,12 @@ module.exports = React.createClass({
             onChange={this._handleChangeDestination}
             labelClassName="col-xs-2"
             wrapperClassName="col-xs-10"
-            bsStyle={this.props.isDestinationDuplicate() ? 'error' : null}
+            bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
             help={
-              this.props.isDestinationDuplicate()
-                ? (
-                  <span className="error">
+              this.props.isDestinationDuplicate
+                ? <span className="error">
                       Duplicate Destination <code>{this.props.value.get('destination')}</code>.
-                    </span>
-                )
+                  </span>
                 : null
             }
           />
@@ -226,7 +224,8 @@ module.exports = React.createClass({
                 </div>
                 <div className="col-xs-4">
                   <Select
-                    value="whereValues"
+                    mane="whereValues"
+                    value={this.props.value.get('whereValues')}
                     multi={true}
                     disabled={this.props.disabled}
                     allowCreate={true}
