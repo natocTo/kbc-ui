@@ -1,16 +1,33 @@
 import React from 'react';
+import { PanelWithDetails } from '@keboola/indigo-ui';
 
 import duration from '../../../../../utils/duration';
 import TableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
-import {PanelWithDetails} from '@keboola/indigo-ui';
 
 const VISIBLE_TABLES_LIMIT = 10;
 
 export default React.createClass({
-
   propTypes: {
     tables: React.PropTypes.object.isRequired,
     allTablesIds: React.PropTypes.object.isRequired
+  },
+
+  render() {
+    const tablesCount = this.props.tables.get('tables').count();
+    if (tablesCount > 0) {
+      if (tablesCount > VISIBLE_TABLES_LIMIT) {
+        return this.renderWithPanel();
+      } else {
+        return (
+          <ul>
+            {this.renderSlicedItems(0, tablesCount)}
+          </ul>
+        );
+      }
+    }
+    return (
+      <div className="text-muted">No tables.</div>
+    );
   },
 
   duration(durationSeconds) {
@@ -64,29 +81,5 @@ export default React.createClass({
         </PanelWithDetails>
       </span>
     );
-  },
-
-  rows() {
-    const tablesCount = this.props.tables.get('tables').count();
-    if (tablesCount > VISIBLE_TABLES_LIMIT) {
-      return this.renderWithPanel();
-    } else {
-      return (
-        <ul>
-          {this.renderSlicedItems(0, tablesCount)}
-        </ul>
-      );
-    }
-  },
-
-  render() {
-    const tablesCount = this.props.tables.get('tables').count();
-    if (tablesCount > 0) {
-      return this.rows();
-    } else {
-      return (
-        <div className="text-muted">No tables.</div>
-      );
-    }
   }
 });
