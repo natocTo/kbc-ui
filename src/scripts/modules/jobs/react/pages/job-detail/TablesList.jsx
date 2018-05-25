@@ -19,11 +19,14 @@ export default React.createClass({
 
   renderSlicedItems(start, count) {
     return this.props.tables
-               .get('tables')
-               .toSeq()
-               .slice(start, count)
-               .map(this.renderListItem)
-               .toArray();
+      .get('tables')
+      .sortBy((table) => {
+        return -table.get('durationTotalSeconds');
+      })
+      .toSeq()
+      .slice(start, count)
+      .map(this.renderListItem)
+      .toArray();
   },
 
   renderListItem(table) {
