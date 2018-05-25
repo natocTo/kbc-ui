@@ -178,7 +178,7 @@ const mysqlFields = [
     'protected': false,
     'required': false
   }, {
-    'label': 'Enable Network Compression',
+    'label': 'Network Compression',
     'name': 'networkCompression',
     'type': 'checkbox',
     'protected': false,
