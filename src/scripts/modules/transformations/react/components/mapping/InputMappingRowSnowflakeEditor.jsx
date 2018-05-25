@@ -6,7 +6,7 @@ import {Input} from './../../../../../react/common/KbcBootstrap';
 
 import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
-import SnowflakeDataTypesContainer from "./input/SnowflakeDataTypesContainer";
+import SnowflakeDataTypesContainer from './input/SnowflakeDataTypesContainer';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import {PanelWithDetails} from '@keboola/indigo-ui';
 
@@ -24,18 +24,18 @@ module.exports = React.createClass({
     // use only table name from the table identifier
     var destination;
     if (value) {
-      destination = value.substr(value.lastIndexOf(".") + 1);
+      destination = value.substr(value.lastIndexOf('.') + 1);
     } else {
       destination = '';
     }
-    const mutatedValue = this.props.withMutations((mapping) => {
-      mapping = mapping.set("source", value);
-      mapping = mapping.set("destination", destination);
-      mapping = mapping.set("datatypes", Immutable.Map());
-      mapping = mapping.set("whereColumn", "");
-      mapping = mapping.set("whereValues", Immutable.List());
-      mapping = mapping.set("whereOperator", "eq");
-      mapping = mapping.set("columns", Immutable.List());
+    const mutatedValue = this.props.value.withMutations((mapping) => {
+      let mutation = mapping.set('source', value);
+      mutation = mutation.set('destination', destination);
+      mutation = mutation.set('datatypes', Immutable.Map());
+      mutation = mutation.set('whereColumn', '');
+      mutation = mutation.set('whereValues', Immutable.List());
+      mutation = mutation.set('whereOperator', 'eq');
+      return mutation.set('columns', Immutable.List());
     });
     return this.props.onChange(mutatedValue);
   },
@@ -55,57 +55,57 @@ module.exports = React.createClass({
 
   _handleChangeColumns(newValue) {
     const mutatedValue = this.props.value.withMutations((mapping) => {
-      mapping = mapping.set('columns', newValue);
+      let mutation = mapping.set('columns', newValue);
       if (newValue.count()) {
-        let columns = mapping.get('columns').toJS();
-        if (!_.contains(columns, mapping.get("whereColumn"))) {
-          mapping = mapping.set('whereColumn', '');
-          mapping = mapping.set('whereValues', Immutable.List());
-          mapping = mapping.set('whereOperator', 'eq');
+        let columns = mutation.get('columns').toJS();
+        if (!_.contains(columns, mutation.get('whereColumn'))) {
+          mutation = mutation.set('whereColumn', '');
+          mutation = mutation.set('whereValues', Immutable.List());
+          mutation = mutation.set('whereOperator', 'eq');
         }
-        let datatypes = _.pick(mapping.get('datatypes').toJS(), columns);
-        mapping = mapping.set('datatypes', Immutable.fromJS(datatypes || Immutable.Map()));
+        let datatypes = _.pick(mutation.get('datatypes').toJS(), columns);
+        mutation = mutation.set('datatypes', Immutable.fromJS(datatypes || Immutable.Map()));
       }
     });
     return this.props.onChange(mutatedValue);
   },
 
   _handleChangeWhereColumn(string) {
-    return this.props.onChange(this.props.value.set("whereColumn", string));
+    return this.props.onChange(this.props.value.set('whereColumn', string));
   },
 
   _handleChangeWhereOperator(e) {
-    return this.props.onChange(this.props.value.set("whereOperator", e.target.value));
+    return this.props.onChange(this.props.value.set('whereOperator', e.target.value));
   },
   _handleChangeWhereValues(newValue) {
-    return this.props.onChange(this.props.value.set("whereValues", newValue));
+    return this.props.onChange(this.props.value.set('whereValues', newValue));
   },
 
   _handleChangeDataTypes(datatypes) {
-    return this.props.onChange(this.props.value.set("datatypes", datatypes));
+    return this.props.onChange(this.props.value.set('datatypes', datatypes));
   },
 
   _getColumns() {
     if (!this.props.value.get('source')) {
       return [];
     }
-    const table = this.props.tables.find((table) => {
+    const selectedTable = this.props.tables.find((table) => {
       return table.get('id') === this.props.value.get('source');
     });
-    if (table) {
-      return table.get('columns').toJS()
+    if (selectedTable) {
+      return selectedTable.get('columns').toJS();
     }
     return [];
   },
 
   _getColumnsOptions() {
     const columns = this._getColumns();
-    return _.map(columns, (columns) => {
+    return _.map(columns, (column) => {
       return {
         label: column,
         value: column
       };
-    })
+    });
   },
 
   _getFilteredColumnsOptions() {
@@ -124,9 +124,12 @@ module.exports = React.createClass({
   },
 
   getChangedSinceValue() {
-    return this.props.value.get('changedSince')
-      ? this.props.value.get('changedSince')
-      : this.props.value.get('days') > 0 ? "-" + this.props.value.get('days') + ' days' : null;
+    if (this.props.value.get('changedSince')) {
+      return this.props.value.get('changedSince');
+    } else if (this.props.value.get('days') > 0) {
+      return '-' + this.props.value.get('days') + ' days';
+    }
+    return null;
   },
 
   render() {
@@ -137,7 +140,7 @@ module.exports = React.createClass({
             <label className="col-xs-2 control-label">Source</label>
             <div className="col-xs-10">
               <SapiTableSelector
-                value={this.props.value.get("source")}
+                value={this.props.value.get('source')}
                 disabled={this.props.disabled}
                 placeholder="Source Table"
                 onSelectTableFn={this._handleChangeSource}
@@ -150,7 +153,7 @@ module.exports = React.createClass({
           <Input
             type="text"
             label="Destination"
-            value={this.props.value.get("destination")}
+            value={this.props.value.get('destination')}
             disabled={this.props.disabled}
             placeholder="Destination table name in transformation DB"
             onChange={this._handleChangeDestination}
@@ -177,8 +180,8 @@ module.exports = React.createClass({
                   <Select
                     multi={true}
                     name="columns"
-                    value={this.props.get("columns", Immutable.List()).toJS()}
-                    disabled={this.props.disabled || !this.props.value.get("source")}
+                    value={this.props.value.get('columns', Immutable.List()).toJS()}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
                     placeholder="All columns will be imported"
                     onChange={this._handleChangeColumns}
                     options={this._getColumnsOptions()}
@@ -203,8 +206,8 @@ module.exports = React.createClass({
                 <div className="col-xs-4">
                   <Select
                     name="whereColumn"
-                    value={this.props.value.get("whereColumn")}
-                    disabled={this.props.disabled || !this.props.value.get("source")}
+                    value={this.props.value.get('whereColumn')}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
                     onChange={this._handleChangeWhereColumn}
                     options={this._getColumnsOptions()}
                   />
@@ -238,7 +241,7 @@ module.exports = React.createClass({
                 <div className="col-xs-10">
                   <SnowflakeDataTypesContainer
                     value={this.props.value.get('datatypes', Immutable.Map())}
-                    disabled={this.props.disabled || !this.props.value.get("source")}
+                    disabled={this.props.disabled || !this.props.value.get('source')}
                     onChange={this._handleChangeDataTypes}
                     columnsOptions={this._getColumnsOptions()}
                   />
@@ -250,4 +253,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-};
+});
