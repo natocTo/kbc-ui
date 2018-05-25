@@ -216,13 +216,14 @@ export default React.createClass({
     const oldTableName = this.props.query.getIn(['table', 'tableName'], '');
     const newName = (currentName && currentName !== oldTableName) ? currentName : newValue.tableName;
     const primaryKeys = (newValue === '') ? Immutable.List() : this.getPksOnSourceTableChange(newValue);
-    return this.props.onChange(
-      this.props.query
-        .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
-        .set('name', newName ? newName : '')
-        .set('primaryKey', primaryKeys)
-        .set('incrementalFetchingColumn', '')
-    );
+    let newQuery = this.props.query
+      .set('table', (newValue === '') ? newValue : Immutable.fromJS(newValue))
+      .set('name', newName ? newName : '')
+      .set('primaryKey', primaryKeys);
+    if (this.props.isConfigRow) {
+      newQuery = newQuery.set('incrementalFetchingColumn', '');
+    }
+    return this.props.onChange(newQuery);
   },
 
   getColumnsOptions() {
