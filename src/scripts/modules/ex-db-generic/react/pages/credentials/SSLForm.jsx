@@ -41,7 +41,7 @@ export default React.createClass({
         <Input
           disabled={!this.props.isEditing}
           type="checkbox"
-          label={<span>Enable encrypted (SSL) connection {this.renderHelp()}</span>}
+          label={<span>Encrypted (SSL) connection {this.renderHelp()}</span>}
           wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={this.isEnabled()}
           onChange={this.handleToggle.bind(this, propName)}
