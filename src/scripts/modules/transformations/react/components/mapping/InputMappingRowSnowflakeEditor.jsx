@@ -104,12 +104,9 @@ export default React.createClass({
   },
 
   _getFilteredColumnsOptions() {
-    var columns;
-    if (this.props.value.get('columns', Immutable.List()).count() > 0) {
-      columns = this.props.value.get('columns').toJS();
-    } else {
-      columns = this._getColumns();
-    }
+    const columns = this.props.value.get('columns', Immutable.List()).count() > 0
+      ? this.props.value.get('columns').toJS()
+      : this._getColumns();
     return _.map(columns, (column) => {
       return {
         label: column,
