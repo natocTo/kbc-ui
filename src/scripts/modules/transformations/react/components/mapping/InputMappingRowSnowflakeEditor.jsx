@@ -10,7 +10,7 @@ import SnowflakeDataTypesContainer from './input/SnowflakeDataTypesContainer';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import {PanelWithDetails} from '@keboola/indigo-ui';
 
-module.exports = React.createClass({
+export default React.createClass({
   propTypes: {
     value: React.PropTypes.object.isRequired,
     tables: React.PropTypes.object.isRequired,
