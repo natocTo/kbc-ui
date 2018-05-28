@@ -61,6 +61,7 @@ export default React.createClass({
         let datatypes = _.pick(mutation.get('datatypes').toJS(), columns);
         mutation = mutation.set('datatypes', Immutable.fromJS(datatypes || Immutable.Map()));
       }
+      return mutation;
     });
     return this.props.onChange(mutatedValue);
   },
