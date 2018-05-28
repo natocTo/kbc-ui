@@ -236,7 +236,7 @@ export default React.createClass({
                     value={this.props.value.get('datatypes', Immutable.Map())}
                     disabled={this.props.disabled || !this.props.value.get('source')}
                     onChange={this._handleChangeDataTypes}
-                    columnsOptions={this._getColumnsOptions()}
+                    columnsOptions={this._getFilteredColumnsOptions()}
                   />
                 </div>
               </div>
