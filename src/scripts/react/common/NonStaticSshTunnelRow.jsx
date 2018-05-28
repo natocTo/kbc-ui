@@ -10,7 +10,8 @@ export default React.createClass({
   propTypes: {
     onChange: PropTypes.func,
     data: PropTypes.object,
-    isEditing: PropTypes.bool
+    isEditing: PropTypes.bool,
+    disabledCheckbox: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -44,7 +45,7 @@ export default React.createClass({
   renderEnableCheckbox() {
     return (
       <Input
-        disabled={!this.props.isEditing}
+        disabled={!this.props.isEditing || this.props.disabledCheckbox}
         type="checkbox"
         label={<span>Enable SSH Tunnel {this.renderHelp()}</span>}
         wrapperClassName="col-xs-8 col-xs-offset-4"
