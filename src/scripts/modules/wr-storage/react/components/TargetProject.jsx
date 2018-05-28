@@ -34,8 +34,8 @@ export default React.createClass({
               disabled={this.props.disabled}
             >
               <option value="" disabled>Select region</option>
-              <option value="https://connection.keboola.com/">US</option>
-              <option value="https://connection.eu-central-1.keboola.com/">EU</option>
+              <option value="https://connection.keboola.com/">US (default)</option>
+              <option value="https://connection.eu-central-1.keboola.com/">EU (eu-central-1)</option>
             </FormControl>
           </Col>
         </FormGroup>
