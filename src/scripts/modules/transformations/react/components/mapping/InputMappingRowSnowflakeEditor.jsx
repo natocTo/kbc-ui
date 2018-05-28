@@ -199,6 +199,7 @@ export default React.createClass({
                     name="whereColumn"
                     value={this.props.value.get('whereColumn')}
                     disabled={this.props.disabled || !this.props.value.get('source')}
+                    placeholder="Select column"
                     onChange={this._handleChangeWhereColumn}
                     options={this._getColumnsOptions()}
                   />
@@ -217,7 +218,7 @@ export default React.createClass({
                 </div>
                 <div className="col-xs-4">
                   <Select
-                    mane="whereValues"
+                    name="whereValues"
                     value={this.props.value.get('whereValues')}
                     multi={true}
                     disabled={this.props.disabled}
