@@ -22,12 +22,7 @@ module.exports = React.createClass({
 
   _handleChangeSource(value) {
     // use only table name from the table identifier
-    var destination;
-    if (value) {
-      destination = value.substr(value.lastIndexOf('.') + 1);
-    } else {
-      destination = '';
-    }
+    const destination = value ? value.substr(value.lastIndexOf('.') + 1) : '';
     const mutatedValue = this.props.value.withMutations((mapping) => {
       let mutation = mapping.set('source', value);
       mutation = mutation.set('destination', destination);
