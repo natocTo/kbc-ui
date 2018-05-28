@@ -150,6 +150,7 @@ export default React.createClass({
           isEditing={this.props.enabled}
           data={this.props.credentials.get('ssh', Map())}
           onChange={this.sshRowOnChange}
+          disabledCheckbox={this.props.credentials.getIn(['ssl', 'enabled'], false)}
         />
       );
     }
@@ -162,6 +163,7 @@ export default React.createClass({
           isEditing={this.props.enabled}
           data={this.props.credentials.get('ssl', Map())}
           onChange={this.sslRowOnChange}
+          disabledCheckbox={this.props.credentials.getIn(['ssh', 'enabled'], false)}
         />
       );
     }

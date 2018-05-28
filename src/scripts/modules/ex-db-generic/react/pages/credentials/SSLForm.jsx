@@ -14,7 +14,8 @@ export default React.createClass({
   propTypes: {
     onChange: React.PropTypes.func,
     data: React.PropTypes.object.isRequired,
-    isEditing: React.PropTypes.bool.isRequired
+    isEditing: React.PropTypes.bool.isRequired,
+    disabledCheckbox: React.PropTypes.bool.isRequired
   },
 
   getDefaultProps() {
@@ -39,7 +40,7 @@ export default React.createClass({
     if (this.props.isEditing) {
       return (
         <Input
-          disabled={!this.props.isEditing}
+          disabled={!this.props.isEditing || this.props.disabledCheckbox}
           type="checkbox"
           label={<span>Encrypted (SSL) connection {this.renderHelp()}</span>}
           wrapperClassName="col-xs-8 col-xs-offset-4"
