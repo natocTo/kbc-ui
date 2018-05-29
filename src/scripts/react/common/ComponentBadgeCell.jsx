@@ -2,40 +2,27 @@ import React, {PropTypes} from 'react';
 import { Icon } from '@keboola/indigo-ui';
 import { ExternalLink } from '@keboola/indigo-ui';
 
+require('./Badges.less');
 
 export default React.createClass({
   propTypes: {
-    type: PropTypes.oneOf(['plain', 'description']),
-    component: PropTypes.object.isRequired,
-    filterBadges: PropTypes.array
-  },
-
-  getDefaultProps() {
-    return ({
-      type: 'plain',
-      filterBadges: []
-    });
+    component: PropTypes.object.isRequired
   },
 
   render() {
     const badges = this.getBadges();
 
     return (
-      <div className={'badge-component-container-' + this.props.type}>
+      <div className={'badge-component-container-plain'}>
         {badges.map((badge, idx) =>
           <div className="badge-component-row" key={idx}>
             <div className="badge-component-placeholder">
                 <div className={'badge badge-component-item badge-component-item-' + badge.key}
-                  title={this.props.type === 'plain' ? badge.description : ''}
+                  title={badge.description}
                 >
                 {badge.title}
                 </div>
               </div>
-            {this.props.type === 'description' &&
-              <div className="badge-component-description">
-                {badge.description}
-              </div>
-            }
           </div>
         )}
       </div>
@@ -43,7 +30,7 @@ export default React.createClass({
   },
 
   getBadges() {
-    const flags = this.getFilterFlags();
+    const flags = this.resolveFlags();
     let badges = [];
 
     if (!flags.contains('3rdParty')) {
@@ -124,17 +111,6 @@ export default React.createClass({
       });
     }
     return badges;
-  },
-
-
-  getFilterFlags()  {
-    let flags = this.resolveFlags();
-    if (this.props.filterBadges.length !== 0)  {
-      return flags.filter((flag) => {
-        return this.props.filterBadges.indexOf(flag) !== -1;
-      });
-    }
-    return flags;
   },
 
   getAppType() {

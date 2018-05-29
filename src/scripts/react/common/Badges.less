@@ -1,0 +1,89 @@
+.modal-footer .btn-toolbar > a .btn {
+  float: none;
+}
+
+.badge-component {
+  &-container {
+    &-plain {
+      display: flex;
+      flex-direction: row;
+      position: absolute;
+      right: 9px;
+      top: 9px;
+      .badge-component-item-responsibility {
+        //don't show Keboola badge in component selection
+        display: none;
+      }
+    }
+    &-description {
+      .badge-component-placeholder {
+        min-width: 92px;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+  &-row {
+    display: flex;
+    align-items: flex-start;
+  }
+  &-item {
+    padding: 2px 7px 2px 9px;
+    margin-left: 3px;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: help;
+    &-excludeFromNewList {
+      background: #282d38;
+    }
+    &-fee {
+      background: #fbd062;
+      color: #282d38;
+    }
+    &-deprecated {
+      background: #e70b37;
+      color: #fff;
+    }
+    &-responsibility {
+      background: #25B8EB;
+      color: #fff;
+      &-icon{
+        color:#fff;
+        vertical-align: bottom;
+        width: auto;
+        height: 16px;
+      }
+    }
+  }
+  &-description {
+    margin-left: 10px;
+    margin-bottom: 8px;
+  }
+}
+
+.kbc-components-list .kbc-header {
+  position: relative;
+
+  .badge-component-container-plain {
+    top: 24px;
+    right: 24px;
+  }
+}
+
+.kbc-components-overview .td {
+  position: relative;
+  padding: 24px;
+  text-decoration: none;
+  transition: 0.08s all ease-out;
+
+  &:hover {
+    background: #c8edfa;
+    box-shadow: inset 0px 0px 0px 2px #25b8eb;
+    h2 {
+      text-decoration: underline;
+    }
+  }
+  .kbc-components-overview-description {
+    color: #282d38;
+  }
+}

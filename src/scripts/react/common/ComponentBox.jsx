@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ComponentDetailLink from './ComponentDetailLink';
-import ComponentBadge from './ComponentBadge';
+import ComponentBadgeRow from './ComponentBadgeRow';
 import ComponentIcon from './ComponentIcon';
 import ComponentName from './ComponentName';
 
@@ -17,10 +17,8 @@ export default React.createClass({
           componentId={component.get('id')}
           type={component.get('type')}
       >
-        <ComponentBadge
+        <ComponentBadgeRow
             component={component}
-            filterBadges={['3rdParty', 'appInfo.beta']}
-            type="plain"
         />
         <ComponentIcon
             component={component}
