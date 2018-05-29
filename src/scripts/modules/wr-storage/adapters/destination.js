@@ -6,11 +6,13 @@ const createConfiguration = function(localState) {
       input: {
         tables: [
           {
-            source: localState.get('source', ''),
             destination: localState.get('destination', '')
           }
         ]
       }
+    },
+    parameters: {
+      incremental: localState.get('incremental', false)
     }
   });
   return config;
@@ -18,14 +20,14 @@ const createConfiguration = function(localState) {
 
 const parseConfiguration = function(configuration) {
   return Immutable.fromJS({
-    source: configuration.getIn(['storage', 'input', 'tables', 0, 'source'], ''),
-    destination: configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], '')
+    destination: configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], ''),
+    incremental: configuration.getIn(['parameters', 'incremental'], false)
   });
 };
 
 const createEmptyLocalState = function(tableId) {
   const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
-  return Immutable.fromJS({source: tableId, destination: tableName});
+  return Immutable.fromJS({destination: tableName});
 };
 
 export default {

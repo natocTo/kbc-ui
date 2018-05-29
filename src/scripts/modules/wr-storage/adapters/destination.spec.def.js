@@ -1,38 +1,42 @@
 export const cases = {
   emptyWithDefaults: {
     localState: {
-      source: '',
-      destination: ''
+      destination: '',
+      incremental: false
     },
     configuration: {
       storage: {
         input: {
           tables: [
             {
-              source: '',
               destination: ''
             }
           ]
         }
+      },
+      parameters: {
+        incremental: false
       }
     }
   },
 
   simple: {
     localState: {
-      source: 'in.c-main.test',
-      destination: 'test'
+      destination: 'test',
+      incremental: true
     },
     configuration: {
       storage: {
         input: {
           tables: [
             {
-              source: 'in.c-main.test',
               destination: 'test'
             }
           ]
         }
+      },
+      parameters: {
+        incremental: true
       }
     }
   }

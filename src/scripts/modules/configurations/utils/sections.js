@@ -22,11 +22,11 @@ function createBySections(createFn, sectionsCreateFn, configurationBySections) {
     .get('sections', List())
     .reduce((memo, sectionConfig, index) => {
       const createSectionFn = sectionsCreateFn.get(index);
-      return memo.merge(createSectionFn(sectionConfig));
+      return memo.mergeDeep(createSectionFn(sectionConfig));
     }, Map());
 
   const configurationRoot = configurationBySections.get('root');
-  return createFn(configurationRoot.merge(configurationSectionsMerged));
+  return createFn(configurationRoot.mergeDeep(configurationSectionsMerged));
 }
 
 function createEmptyConfigBySections(

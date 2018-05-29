@@ -5,8 +5,7 @@ export default {
     const config = Immutable.fromJS({
       parameters: {
         url: localState.get('url', ''),
-        '#token': localState.get('token', ''),
-        bucket: localState.get('bucket', '')
+        '#token': localState.get('token', '')
       }
     });
     return config;
@@ -15,15 +14,13 @@ export default {
   parseConfiguration: function(configuration) {
     return Immutable.fromJS({
       url: configuration.getIn(['parameters', 'url'], ''),
-      token: configuration.getIn(['parameters', '#token'], ''),
-      bucket: configuration.getIn(['parameters', 'bucket'], '')
+      token: configuration.getIn(['parameters', '#token'], '')
     });
   },
 
   isComplete: function(configuration) {
     return configuration.getIn(['parameters', 'url'], '') !== ''
       && configuration.getIn(['parameters', '#token'], '') !== ''
-      && configuration.getIn(['parameters', 'bucket'], '') !== ''
       ;
   }
 };

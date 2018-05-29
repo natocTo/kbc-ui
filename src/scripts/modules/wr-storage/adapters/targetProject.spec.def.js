@@ -2,14 +2,12 @@ export const cases = {
   emptyWithDefaults: {
     localState: {
       url: '',
-      token: '',
-      bucket: ''
+      token: ''
     },
     configuration: {
       parameters: {
         url: '',
-        '#token': '',
-        bucket: ''
+        '#token': ''
       }
     }
   },
@@ -17,14 +15,12 @@ export const cases = {
   simple: {
     localState: {
       url: 'https://connection.keboola.com/',
-      token: 'test',
-      bucket: 'in.c-mybucket'
+      token: 'test'
     },
     configuration: {
       parameters: {
         url: 'https://connection.keboola.com/',
-        '#token': 'test',
-        bucket: 'in.c-mybucket'
+        '#token': 'test'
       }
     }
   }

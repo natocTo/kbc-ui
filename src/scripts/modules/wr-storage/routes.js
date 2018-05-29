@@ -5,12 +5,14 @@ import createRoute  from '../configurations/utils/createRoute';
 import columnTypes  from '../configurations/utils/columnTypeConstants';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
-import ConfigurationSection from './react/components/Configuration';
-import tableAdapter from './adapters/table';
+import InputMappingSection from './react/components/InputMapping';
+import inputMappingAdapter from './adapters/inputMapping';
 
 import TargetProjectSection from './react/components/TargetProject';
 import targetProjectAdapter from './adapters/targetProject';
 
+import DestinationSection from './react/components/Destination';
+import destinationAdapter from './adapters/destination';
 
 const routeSettings = {
   componentId: 'keboola.wr-storage',
@@ -30,16 +32,18 @@ const routeSettings = {
   },
   row: {
     hasState: false,
-    // onSave: rowAdapter.createConfiguration, // default merge through all sections onSave functions
-    // onLoad: rowAdapter.parseConfiguration, // if not set then merge through all sections onLoad funtions
-    // onCreate: rowAdapter.createEmptyConfiguration,
     sections: [
       {
-        render: ConfigurationSection,
-        onSave: tableAdapter.createConfiguration,
-        onLoad: tableAdapter.parseConfiguration,
-        onCreate: tableAdapter.createEmptyLocalState,
-        isComplete: () => true
+        render: InputMappingSection,
+        onSave: inputMappingAdapter.createConfiguration,
+        onLoad: inputMappingAdapter.parseConfiguration,
+        onCreate: inputMappingAdapter.createEmptyLocalState
+      },
+      {
+        render: DestinationSection,
+        onSave: destinationAdapter.createConfiguration,
+        onLoad: destinationAdapter.parseConfiguration,
+        onCreate: destinationAdapter.createEmptyLocalState
       }
     ],
     columns: [
