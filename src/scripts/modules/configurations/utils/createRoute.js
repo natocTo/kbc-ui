@@ -46,7 +46,7 @@ const defaults = {
       },
       {
         name: 'Storage',
-        type: columnTypeConstants.STORAGE_LINK_DEFAULT_BUCKET,
+        type: columnTypeConstants.TABLE_LINK_DEFAULT_BUCKET,
         value: function(row) {
           return row.getIn(['configuration', 'parameters', 'name'], 'untitled');
         }
