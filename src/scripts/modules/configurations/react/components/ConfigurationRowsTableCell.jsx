@@ -40,6 +40,19 @@ const TableCell = React.createClass({
           />
         );
       }
+    } else if (this.props.type === columnTypes.TABLE_LINK) {
+      const tableId = this.props.valueFn(this.props.row);
+      if (!tableId) {
+        return (<span>
+          Unable to determine table name.
+        </span>);
+      } else {
+        return (
+          <StorageApiTableLinkEx
+            tableId={tableId}
+          />
+        );
+      }
     } else {
       return (
         <span>
