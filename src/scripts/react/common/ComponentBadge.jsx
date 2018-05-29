@@ -26,7 +26,7 @@ export default React.createClass({
           <div className="badge-component-row" key={idx}>
             <div className="badge-component-placeholder">
                 <div className={'badge badge-component-item badge-component-item-' + badge.key}
-                  title={this.props.type === 'title' ? badge.description : ''}
+                  title={this.props.type === 'plain' ? badge.description : ''}
                 >
                 {badge.title}
                 </div>
