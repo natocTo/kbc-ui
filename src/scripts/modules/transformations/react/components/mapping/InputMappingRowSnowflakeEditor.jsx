@@ -9,6 +9,8 @@ import SapiTableSelector from '../../../../components/react/components/SapiTable
 import DatatypeForm from './input/DatatypeForm';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import {PanelWithDetails} from '@keboola/indigo-ui';
+import MetadataStore from '../../../../components/stores/MetadataStore';
+import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
   propTypes: {
@@ -18,6 +20,24 @@ export default React.createClass({
     disabled: React.PropTypes.bool.isRequired,
     initialShowDetails: React.PropTypes.bool.isRequired,
     isDestinationDuplicate: React.PropTypes.bool.isRequired
+  },
+
+  mixins: [createStoreMixin(MetadataStore)],
+
+  getStateFromStores() {
+    return {
+      hasMetadataDatatypes: this.props.value.get('source') ? MetadataStore.tableHasMetadataDatatypes(this.props.value.get('source')) : false,
+      tableColumnMetadata: this.props.value.get('source') ? MetadataStore.getTableColumnsMetadata(this.props.value.get('source')) : Immutable.Map()
+    };
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value.get('source') !== this.props.value.get('source')) {
+      this.setState({
+        hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(nextProps.value.get('source')),
+        tableColumnMetadata: MetadataStore.getTableColumnsMetadata(nextProps.value.get('source'))
+      });
+    }
   },
 
   _handleChangeSource(value) {
@@ -236,8 +256,10 @@ export default React.createClass({
                 <label className="col-xs-2 control-label">Data types</label>
                 <div className="col-xs-10">
                   <DatatypeForm
-                    tableId={this.props.value.get('source', Immutable.Map())}
+                    datatypes={this.props.value.get('datatypes', Immutable.Map())}
                     columns={this._getFilteredColumns()}
+                    hasMetadataDatatypes={this.state.hasMetadataDatatypes}
+                    tableColumnMetadata={this.state.tableColumnMetadata}
                     disabled={this.props.disabled || !this.props.value.get('source')}
                     onChange={this._handleChangeDataTypes}
                   />

@@ -5,39 +5,42 @@ import Select from 'react-select';
 export default React.createClass({
 
   propTypes: {
-    column: React.PropTypes.object.isRequired,
+    datatype: React.PropTypes.object.isRequired,
+    typeOptions: React.PropTypes.array.isRequired,
     disabled: React.PropTypes.bool,
     onChange: React.PropTypes.func
   },
 
-  render: function() {
+  render() {
     return (
-      <div className="row">
-        <div className="col-xs-4">
-          {this.props.column.get('name')}
+      <div className="row" key={this.props.datatype.get('column')}>
+        <div className="col-xs-2">
+          <strong>{this.props.datatype.get('column')}</strong>
         </div>
         <div className="col-xs-4">
           <Select
-            name={this.props.column.get('name') + '_datatype'}
-            value={this.props.column.get('type')}
-            onChange={this.onChange}
+            name={this.props.datatype.get('column') + '_datatype'}
+            value={this.props.datatype.get('type')}
+            options={this.props.typeOptions}
+            onChange={this.props.onChange}
+            disabled={this.props.disabled}
           />
         </div>
-        <div className="col-xs-4">
+        <div className="col-xs-2">
           <Input
-            name={this.props.column.get('name') + '_length'}
+            name={this.props.datatype.get('column') + '_length'}
             type="text"
-            value={this.props.column.get('length')}
-            onChange={this.onChange}
+            value={this.props.datatype.get('length')}
+            onChange={this.props.onChange}
             disabled={this.props.disabled}
             placeholder="Length, eg. 38,0"
           />
         </div>
         <div className="col-xs-4">
           <Input
-            name={this.props.column.get('name') + '_nullable'}
+            name={this.props.datatype.get('column') + '_nullable'}
             type="checkbox"
-            checked={this.props.column.get('convertEmptyValuesToNullValue')}
+            checked={this.props.datatype.get('convertEmptyValuesToNullValue') > 0}
             label={
               <span>Convert empty values to <code>null</code></span>
             }

@@ -1,27 +1,19 @@
 import React from 'react';
+import _ from 'underscore';
 import Immutable from 'immutable';
 import DatatypeFormRow from './DatatypeFormRow';
-import MetadataStore from '../../../../../components/stores/MetadataStore';
-import createStoreMixin from '../../../../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
   propTypes: {
-    tableId: React.PropTypes.string.isRequired,
-    columns: React.PropTypes.object.isRequired,
+    datatypes: React.PropTypes.object.isRequired,
+    columns: React.PropTypes.array.isRequired,
+    hasMetadataDatatypes: React.PropTypes.bool.isRequired,
+    tableColumnMetadata: React.PropTypes.object.isRequired,
     disabled: React.PropTypes.bool,
     onChange: React.PropTypes.func
   },
 
-  mixins: [createStoreMixin(MetadataStore)],
-
-  getStateFromStores: function() {
-    return {
-      hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(this.props.tableId),
-      tableColumnMetadata: MetadataStore.getTableColumnsMetadata(this.props.tableId)
-    };
-  },
-
-  _datatypesMap: new Immutable.Map({
+  snowflakeDatatypesMap: new Immutable.fromJS({
     NUMBER: {
       name: 'NUMBER',
       basetype: 'NUMERIC',
@@ -71,8 +63,7 @@ export default React.createClass({
   }),
 
 
-  getDataTypes: function(columnMetadata) {
-    const datatypesMap = Immutable.fromJS(this._datatypesMap);
+  getMetadataDataTypes(columnMetadata) {
     const datatypes = columnMetadata.map((metadata, colname) => {
       let datatypeLength = metadata.filter((entry) => {
         return entry.get('key') === 'KBC.datatype.length';
@@ -97,9 +88,9 @@ export default React.createClass({
       }
       let datatypeName = null;
 
-      let datatype = datatypesMap.map((mappedDatatype) => {
+      let datatype = this.snowflakeDatatypesMap.map((mappedDatatype) => {
         if (mappedDatatype.get('basetype') === basetype.get('value')) {
-          datatypeName = datatype.get('name');
+          datatypeName = mappedDatatype.get('name');
           return mappedDatatype;
         }
       });
@@ -111,15 +102,15 @@ export default React.createClass({
         convertEmptyValuesToNull: datatypeNullable.get('value')
       });
     });
-    return this.props.onChange(datatypes);
+    return datatypes;
   },
 
-  getDefaultDatatypes: function() {
-    if (this.state.hasMetadataDatatypes) {
-      const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
+  getDefaultDatatypes() {
+    if (this.props.hasMetadataDatatypes) {
+      const metadataSet = this.props.tableColumnMetadata.filter((metadata, colname) => {
         return this.props.columns.indexOf(colname) > -1;
       });
-      return this.getDefaultDataTypes(metadataSet);
+      return this.getMetadataDataTypes(metadataSet);
     } else {
       return this.props.columns.map((column) => {
         // TODO: check for PK column
@@ -133,24 +124,51 @@ export default React.createClass({
     }
   },
 
-  renderColumn: function(column) {
-    const types = this.getDefaultDatatypes();
+  handleColumnChange(newType) {
+    // replace the changed column
+    const datatypes = this.props.datatypes.map((type) => {
+      if (type.get('column') === newType.get('column')) {
+        return newType;
+      } else {
+        return type;
+      }
+    });
+    return this.props.onChange(datatypes);
+  },
+
+  getTypeOptions() {
+    return _.map(_.keys(this.snowflakeDatatypesMap.toJS()), (option) => {
+      return {
+        label: option,
+        value: option
+      };
+    });
+  },
+
+  renderColumn(column) {
+    const types = this.props.datatypes.count() > 0 ? this.props.datatypes : this.getDefaultDatatypes();
     const columnObject = types.filter((type) => {
-      return type.column === column;
+      return type.get('column') === column;
     });
     return (
       <DatatypeFormRow
-        column={columnObject}
-        onChange={this.hangleColumnChange}
+        datatype={columnObject.get(column)}
+        typeOptions={this.getTypeOptions()}
+        onChange={this.handleColumnChange}
         disabled={this.props.disabled}
       />
     );
   },
 
-  render: function() {
-    const renderedColumns = this.getColumns.map((column) => {
+  render() {
+    if (this.props.disabled) {
+      return null;
+    }
+    const renderedColumns = this.props.columns.map((column) => {
       return this.renderColumn(column);
     });
-    return ({renderedColumns});
+    return (
+      <div>{renderedColumns}</div>
+    );
   }
 });
