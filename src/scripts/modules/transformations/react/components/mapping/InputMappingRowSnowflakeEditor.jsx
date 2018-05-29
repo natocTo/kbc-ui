@@ -6,7 +6,7 @@ import {Input} from './../../../../../react/common/KbcBootstrap';
 
 import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
-import SnowflakeDataTypesContainer from './input/SnowflakeDataTypesContainer';
+import DatatypeForm from './input/DatatypeForm';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
 import {PanelWithDetails} from '@keboola/indigo-ui';
 
@@ -104,11 +104,14 @@ export default React.createClass({
     });
   },
 
-  _getFilteredColumnsOptions() {
-    const columns = this.props.value.get('columns', Immutable.List()).count() > 0
+  _getFilteredColumns() {
+    return this.props.value.get('columns', Immutable.List()).count() > 0
       ? this.props.value.get('columns').toJS()
       : this._getColumns();
-    return _.map(columns, (column) => {
+  },
+
+  _getFilteredColumnsOptions() {
+    return _.map(this._getFilteredColumns(), (column) => {
       return {
         label: column,
         value: column
@@ -232,11 +235,11 @@ export default React.createClass({
               <div className="form-group">
                 <label className="col-xs-2 control-label">Data types</label>
                 <div className="col-xs-10">
-                  <SnowflakeDataTypesContainer
-                    value={this.props.value.get('datatypes', Immutable.Map())}
+                  <DatatypeForm
+                    tableId={this.props.value.get('source', Immutable.Map())}
+                    columns={this._getFilteredColumns()}
                     disabled={this.props.disabled || !this.props.value.get('source')}
                     onChange={this._handleChangeDataTypes}
-                    columnsOptions={this._getFilteredColumnsOptions()}
                   />
                 </div>
               </div>
