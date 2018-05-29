@@ -56,7 +56,7 @@ const routeSettings = {
       },
       {
         name: 'Source Table',
-        type: columnTypes.VALUE,
+        type: columnTypes.TABLE_LINK,
         value: function(row) {
           const configuration = row.getIn(['configuration'], Map());
           return configuration.getIn(['storage', 'input', 'tables', 0, 'source'], 'Unknown');

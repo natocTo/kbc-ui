@@ -18,7 +18,7 @@ const TableCell = React.createClass({
   },
 
   render() {
-    if (this.props.type === columnTypes.STORAGE_LINK_DEFAULT_BUCKET) {
+    if (this.props.type === columnTypes.TABLE_LINK_DEFAULT_BUCKET) {
       const defaultBucketStage = this.props.component.getIn(['data', 'default_bucket_stage']);
       const sanitizedComponentId = this.props.component.get('id').replace(/[^a-zA-Z0-9-]/i, '-');
       const tableName = this.props.valueFn(this.props.row);
@@ -34,6 +34,19 @@ const TableCell = React.createClass({
         </span>);
       } else {
         const tableId = bucketId + '.' + tableName;
+        return (
+          <StorageApiTableLinkEx
+            tableId={tableId}
+          />
+        );
+      }
+    } else if (this.props.type === columnTypes.TABLE_LINK) {
+      const tableId = this.props.valueFn(this.props.row);
+      if (!tableId) {
+        return (<span>
+          Unable to determine table name.
+        </span>);
+      } else {
         return (
           <StorageApiTableLinkEx
             tableId={tableId}
