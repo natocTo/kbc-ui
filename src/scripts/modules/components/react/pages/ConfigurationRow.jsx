@@ -7,7 +7,7 @@ import InstalledComponentsActionCreators from '../../InstalledComponentsActionCr
 import descriptionExcerpt from '../../../../utils/descriptionExcerpt';
 import {isObsoleteComponent} from '../../../../modules/trash/utils';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
-import { componentNameAsString } from '../../../../react/common/ComponentName';
+import componentNameAsString from '../../../../react/common/componentNameAsString';
 
 export default React.createClass({
   mixins: [PureRenderMixin],

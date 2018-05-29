@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import { componentNameAsString } from '../../../../../react/common/ComponentName';
+import componentNameAsString from '../../../../../react/common/componentNameAsString';
 
 export default (component, jobId) => {
   return React.createClass({

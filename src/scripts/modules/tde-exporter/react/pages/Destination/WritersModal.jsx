@@ -4,7 +4,7 @@ import {Button, Modal} from 'react-bootstrap';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import {Loader} from '@keboola/indigo-ui';
 import {OAUTH_V2_WRITERS} from '../../../tdeCommon';
-import { componentNameAsString } from '../../../../../react/common/ComponentName';
+import componentNameAsString from '../../../../../react/common/componentNameAsString';
 
 export default React.createClass({
 
