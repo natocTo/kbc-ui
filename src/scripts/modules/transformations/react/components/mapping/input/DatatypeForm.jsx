@@ -15,14 +15,61 @@ export default React.createClass({
   mixins: [createStoreMixin(MetadataStore)],
 
   getStateFromStores: function() {
-    if (this.props.tableId) {
-      return {
-        hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(this.props.tableId),
-        tableColumnMetadata: MetadataStore.getTableColumnsMetadata(this.props.tableId)
-      };
-    }
-    return null;
+    return {
+      hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(this.props.tableId),
+      tableColumnMetadata: MetadataStore.getTableColumnsMetadata(this.props.tableId)
+    };
   },
+
+  _datatypesMap: new Immutable.Map({
+    NUMBER: {
+      name: 'NUMBER',
+      basetype: 'NUMERIC',
+      size: true
+    },
+    INTEGER: {
+      name: 'INTEGER',
+      basetype: 'INTEGER',
+      size: true
+    },
+    FLOAT: {
+      name: 'FLOAT',
+      basetype: 'FLOAT',
+      size: false
+    },
+    VARCHAR: {
+      name: 'VARCHAR',
+      basetype: 'STRING',
+      size: true
+    },
+    DATE: {
+      name: 'DATE',
+      basetype: 'DATE',
+      size: false
+    },
+    TIMESTAMP: {
+      name: 'TIMESTAMP',
+      basetype: 'TIMESTAMP',
+      size: false
+    },
+    TIMESTAMP_LTZ: {
+      name: 'TIMESTAMP_LTZ',
+      size: false
+    },
+    TIMESTAMP_NTZ: {
+      name: 'TIMESTAMP_NTZ',
+      size: false
+    },
+    TIMESTAMP_TZ: {
+      name: 'TIMESTAMP_TZ',
+      size: false
+    },
+    VARIANT: {
+      name: 'VARIANT',
+      size: false
+    }
+  }),
+
 
   getDataTypes: function(columnMetadata) {
     const datatypesMap = Immutable.fromJS(this._datatypesMap);
@@ -68,10 +115,22 @@ export default React.createClass({
   },
 
   getDefaultDatatypes: function() {
-    const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
-      return this.props.columns.indexOf(colname) > -1;
-    });
-    return this.getDefaultDataTypes(metadataSet);
+    if (this.state.hasMetadataDatatypes) {
+      const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
+        return this.props.columns.indexOf(colname) > -1;
+      });
+      return this.getDefaultDataTypes(metadataSet);
+    } else {
+      return this.props.columns.map((column) => {
+        // TODO: check for PK column
+        return Immutable.fromJS({
+          column: column,
+          type: 'VARCHAR',
+          length: null,
+          convertEmptyValuesToNull: false
+        });
+      });
+    }
   },
 
   renderColumn: function(column) {
