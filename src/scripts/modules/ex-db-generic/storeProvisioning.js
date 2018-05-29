@@ -147,6 +147,10 @@ export function createStore(componentId, configId) {
       return data.localState.get('editingCredentials');
     },
 
+    getTestedCredentials() {
+      return data.localState.get('testedCredentials');
+    },
+
     getNewCredentials() {
       let defaultNewCredentials = data.parameters.get('db', Map());
       if (!defaultNewCredentials.get('port')) {

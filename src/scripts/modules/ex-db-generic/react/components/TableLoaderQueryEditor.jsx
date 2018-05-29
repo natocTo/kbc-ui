@@ -18,7 +18,7 @@ export default React.createClass({
     if (isTestingConnection) {
       return (
         <div className="form-control-static">
-          <Loader/> Asserting connection validity ...
+          <Loader/> Asserting connection validity
         </div>
       );
     } else if (!validConnection) {
@@ -38,7 +38,7 @@ export default React.createClass({
     } else if (isLoadingSourceTables) {
       return (
         <div className="form-control-static">
-          <Loader/> Fetching table list from source database ...
+          <Loader/> Fetching table list from source database
         </div>
       );
     }

@@ -208,6 +208,7 @@ export function createActions(componentId) {
     saveNewCredentials(configId) {
       const store = getStore(configId);
       let newCredentials = store.getNewCredentials();
+      const testedCredentials = store.getTestedCredentials();
       newCredentials = updateProtectedProperties(newCredentials, store.getCredentials());
       let newData = store.configData.setIn(['parameters', 'db'], newCredentials);
       if (store.isRowConfiguration()) {
@@ -216,13 +217,16 @@ export function createActions(componentId) {
       const diffMsg = 'Save new credentials';
       return saveConfigData(configId, newData, ['isSavingCredentials'], diffMsg).then(() => {
         this.resetNewCredentials(configId);
-        this.updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, false);
+        if (!testedCredentials === newCredentials) {
+          this.updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, false);
+        }
         RoutesStore.getRouter().transitionTo(componentId, {config: configId});
       });
     },
 
     saveCredentialsEdit(configId) {
       const store = getStore(configId);
+      const testedCredentials = store.getTestedCredentials();
       let credentials = store.getEditingCredentials();
       credentials = updateProtectedProperties(credentials, store.getCredentials());
       let newConfigData = store.configData.setIn(['parameters', 'db'], credentials);
@@ -232,7 +236,9 @@ export function createActions(componentId) {
       const diffMsg = 'Update credentials';
       return saveConfigData(configId, newConfigData, ['isSavingCredentials'], diffMsg).then(() => {
         this.cancelCredentialsEdit(configId);
-        this.updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, false);
+        if (testedCredentials !== credentials) {
+          this.updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, false);
+        }
         RoutesStore.getRouter().transitionTo(componentId, {config: configId});
       });
     },
@@ -245,24 +251,25 @@ export function createActions(componentId) {
       const params = {
         configData: runData.toJS()
       };
-      return callDockerAction(componentId, 'testConnection', params);
+      return callDockerAction(componentId, 'testConnection', params).then(function(data) {
+        if (data.status === 'error') {
+          updateLocalState(configId, storeProvisioning.CONNECTION_ERROR_PATH, fromJS(data.message));
+          updateLocalState(configId, storeProvisioning.CONNECTION_VALID_PATH, false);
+        } else if (data.status === 'success') {
+          updateLocalState(configId, 'testedCredentials', testingCredentials);
+          updateLocalState(configId, storeProvisioning.CONNECTION_VALID_PATH, true);
+          updateLocalState(configId, storeProvisioning.CONNECTION_ERROR_PATH, null);
+        }
+        updateLocalState(configId, storeProvisioning.TESTING_CONNECTION_PATH, false);
+        updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, true);
+        return data;
+      });
     },
 
     testSavedCredentials(configId) {
       const store = getStore(configId);
       return this.testCredentials(configId, store.getCredentials()).then(function(data) {
-        var connectionValid = false;
-        if (data.status === 'error') {
-          updateLocalState(configId, storeProvisioning.CONNECTION_ERROR_PATH, fromJS(data.message));
-          updateLocalState(configId, storeProvisioning.CONNECTION_VALID_PATH, false);
-        } else if (data.status === 'success') {
-          updateLocalState(configId, storeProvisioning.CONNECTION_VALID_PATH, true);
-          updateLocalState(configId, storeProvisioning.CONNECTION_ERROR_PATH, null);
-          connectionValid = true;
-        }
-        updateLocalState(configId, storeProvisioning.TESTING_CONNECTION_PATH, false);
-        updateLocalState(configId, storeProvisioning.CONNECTION_TESTED_PATH, true);
-        return connectionValid;
+        return data.status === 'success';
       });
     },
     // Credentials actions end
