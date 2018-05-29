@@ -4,6 +4,7 @@ import fuzzy from 'fuzzy';
 import SearchRow from '../../../../react/common/SearchRow';
 import Immutable from 'immutable';
 import ConfigurationRowsTable from './ConfigurationRowsTable';
+import CreateConfigurationRowButton from './CreateConfigurationRowButton';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -13,16 +14,19 @@ export default React.createClass({
     configurationId: React.PropTypes.string.isRequired,
     componentId: React.PropTypes.string.isRequired,
     component: React.PropTypes.object.isRequired,
-    header: React.PropTypes.array,
-    columns: React.PropTypes.object,
-    filter: React.PropTypes.func,
     rowDelete: React.PropTypes.func.isRequired,
     rowEnableDisable: React.PropTypes.func.isRequired,
     rowDeletePending: React.PropTypes.func.isRequired,
     rowEnableDisablePending: React.PropTypes.func.isRequired,
     rowLinkTo: React.PropTypes.string.isRequired,
     onOrder: React.PropTypes.func.isRequired,
-    orderPending: React.PropTypes.object.isRequired
+    orderPending: React.PropTypes.object.isRequired,
+    onRowCreated: React.PropTypes.func.isRequired,
+    rowCreateEmptyConfig: React.PropTypes.func.isRequired,
+    objectName: React.PropTypes.string,
+    header: React.PropTypes.array,
+    columns: React.PropTypes.object,
+    filter: React.PropTypes.func
   },
 
   getDefaultProps() {
@@ -42,7 +46,8 @@ export default React.createClass({
       ],
       filter: function(row, query) {
         return fuzzy.test(query, row.get('name')) || fuzzy.test(query, row.get('description'));
-      }
+      },
+      objectName: 'Row'
     };
   },
 
@@ -119,6 +124,20 @@ export default React.createClass({
     }
   },
 
+  renderNewConfigRowButton() {
+    return (
+        <CreateConfigurationRowButton
+          componentType={this.props.component.get('type')}
+          objectName="Table"
+          componentId={this.props.componentId}
+          configId={this.props.configurationId}
+          emptyConfig={this.props.rowCreateEmptyConfig}
+          onRowCreated={this.props.onRowCreated}
+          type="button"
+        />
+    );
+  },
+
   render() {
     return (
       <div>
@@ -128,6 +147,7 @@ export default React.createClass({
             onChange={this.onChangeSearch}
             onSubmit={this.onChangeSearch}
           />
+          {this.renderNewConfigRowButton()}
         </div>
         {this.renderTable()}
       </div>

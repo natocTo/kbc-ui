@@ -65,12 +65,11 @@ export default React.createClass({
     return (
         <CreateConfigurationRowButton
           componentType={this.state.component.get('type')}
-          label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
+          objectName={state.settings.getIn(['row', 'name', 'singular'])}
           componentId={state.componentId}
           configId={state.configurationId}
           emptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
           onRowCreated={this.onRowCreated}
-          createChangeDescription={() => settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added'}
           type={type}
         />
     );
@@ -79,6 +78,8 @@ export default React.createClass({
   renderRowsTable() {
     const state = this.state;
     const settings = this.state.settings;
+    const createEmptyFn = settings.getIn(['row', 'onCreate']);
+    const createFn = settings.getIn(['row', 'onSave']);
     if (this.state.rows.count() === 0) {
       return (
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
@@ -123,6 +124,9 @@ export default React.createClass({
         orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).get('order-rows', Immutable.Map())}
         columns={columns}
         filter={filter}
+        onRowCreated={this.onRowCreated}
+        objectName={settings.getIn(['row', 'name', 'singular'])}
+        rowCreateEmptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
       />);
     }
   },
@@ -184,9 +188,6 @@ export default React.createClass({
                   />
                 </li>
               )}
-            <li>
-              {this.renderNewConfigRowButton('link')}
-            </li>
             <li>
               <DeleteConfigurationButton
                 componentId={this.state.componentId}
