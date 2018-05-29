@@ -4,6 +4,7 @@ import ConfigurationRow from './ConfigurationRow';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
 import ComponentDetailLink from '../../../../react/common/ComponentDetailLink';
+import ComponentBadge from '../../../../react/common/ComponentBadge';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -16,6 +17,10 @@ export default React.createClass({
     return (
       <div>
         <div className="kbc-header">
+          <ComponentBadge
+            component={this.props.component}
+            type="plain"
+          />
           <div className="kbc-title">
             <h2>
               <ComponentIcon component={this.props.component} size="32" />
