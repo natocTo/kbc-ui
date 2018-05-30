@@ -142,12 +142,18 @@ export default React.createClass({
     return (
       <div>
         <div className="kbc-inner-padding">
-          <SearchRow
-            query={this.state.query}
-            onChange={this.onChangeSearch}
-            onSubmit={this.onChangeSearch}
-          />
-          {this.renderNewConfigRowButton()}
+          <div className="row-search">
+            <div className="row-search-input">
+              <SearchRow
+                query={this.state.query}
+                onChange={this.onChangeSearch}
+                onSubmit={this.onChangeSearch}
+              />
+            </div>
+            <div className="row-search-action">
+              {this.renderNewConfigRowButton()}
+            </div>
+          </div>
         </div>
         {this.renderTable()}
       </div>
