@@ -1,18 +1,11 @@
 .badge-component {
   &-container {
-    &-plain {
-      display: flex;
-      flex-direction: row;
+    float: right;
+    margin-top: 5px;
+    &-selection {
       position: absolute;
       right: 9px;
       top: 9px;
-    }
-    &-description {
-      .badge-component-placeholder {
-        min-width: 92px;
-        display: flex;
-        justify-content: flex-end;
-      }
     }
   }
   &-row {
@@ -21,14 +14,12 @@
   &-cell {
     display: table-cell;
   }
-  &-description {
-
-  }
   &-placeholder {
     text-align: right;
     padding-right: 6px;
     line-height: 26px;
   }
+
   &-item {
     padding: 2px 7px 2px 9px;
     margin-left: 3px;

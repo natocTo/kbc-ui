@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
+import ComponentType from './ComponentType';
 import { Icon } from '@keboola/indigo-ui';
 import { ExternalLink } from '@keboola/indigo-ui';
-import ComponentType from './ComponentType';
-
 
 require('./Badges.less');
 
@@ -15,7 +14,7 @@ export default React.createClass({
     const badges = this.getBadges();
 
     return (
-      <div className="badge-component-container-block">
+      <div>
         {badges.map((badge, idx) =>
           <div className="badge-component-row" key={idx}>
             <div className="badge-component-cell badge-component-placeholder">
@@ -31,7 +30,6 @@ export default React.createClass({
       </div>
     );
   },
-
   getBadges() {
     const flags = this.resolveFlags();
     const componentType = ComponentType.getComponentType(this.props.component.get('type'));

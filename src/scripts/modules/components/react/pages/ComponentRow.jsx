@@ -17,9 +17,6 @@ export default React.createClass({
     return (
       <div>
         <div className="kbc-header">
-          <ComponentBadgeRow
-            component={this.props.component}
-          />
           <div className="kbc-title">
             <h2>
               <ComponentIcon component={this.props.component} size="32" />
@@ -28,6 +25,9 @@ export default React.createClass({
               </ComponentDetailLink>
             </h2>
           </div>
+          <ComponentBadgeRow
+            component={this.props.component}
+          />
         </div>
         <div className="table table-hover">
           <span className="tbody">
