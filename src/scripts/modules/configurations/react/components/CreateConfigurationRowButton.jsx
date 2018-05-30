@@ -18,14 +18,7 @@ export default React.createClass({
     configId: PropTypes.string.isRequired,
     onRowCreated: PropTypes.func.isRequired,
     emptyConfig: PropTypes.func.isRequired,
-    objectName: PropTypes.string.isRequired,
-    type: PropTypes.string
-  },
-
-  getDefaultProps() {
-    return {
-      type: 'link'
-    };
+    objectName: PropTypes.string.isRequired
   },
 
   label() {
@@ -87,21 +80,12 @@ export default React.createClass({
   },
 
   render() {
-    if (this.props.type === 'button') {
-      return (
-        <Button onClick={this.handleOpenButtonClick} bsStyle="success">
-          <i className="kbc-icon-plus" />{' '}{this.label()}
-          {this.renderModal()}
-        </Button>
-      );
-    } else {
-      return (
-        <a onClick={this.handleOpenButtonClick}>
-          <i className="kbc-icon-plus" />{' '}{this.label()}
-          {this.renderModal()}
-        </a>
-      );
-    }
+    return (
+      <Button onClick={this.handleOpenButtonClick} bsStyle="success">
+        <i className="kbc-icon-plus" />{' '}{this.label()}
+        {this.renderModal()}
+      </Button>
+    );
   },
 
   handleOpenButtonClick(e) {

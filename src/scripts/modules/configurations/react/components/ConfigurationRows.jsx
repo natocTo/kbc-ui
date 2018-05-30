@@ -133,7 +133,6 @@ export default React.createClass({
           configId={this.props.configurationId}
           emptyConfig={this.props.rowCreateEmptyConfig}
           onRowCreated={this.props.onRowCreated}
-          type="button"
         />
     );
   },

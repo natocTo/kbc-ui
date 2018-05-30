@@ -59,7 +59,7 @@ export default React.createClass({
     RoutesStore.getRouter().transitionTo(this.state.componentId + '-row', transitionParams);
   },
 
-  renderNewConfigRowButton(type) {
+  renderNewConfigRowButton() {
     const state = this.state;
     const settings = this.state.settings;
     return (
@@ -70,7 +70,6 @@ export default React.createClass({
           configId={state.configurationId}
           emptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
           onRowCreated={this.onRowCreated}
-          type={type}
         />
     );
   },
@@ -83,7 +82,7 @@ export default React.createClass({
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <div className="component-empty-state text-center">
             <p>No {settings.getIn(['row', 'name', 'plural']).toLowerCase()} created yet.</p>
-            {this.renderNewConfigRowButton('button')}
+            {this.renderNewConfigRowButton()}
           </div>
         </div>);
     } else {
