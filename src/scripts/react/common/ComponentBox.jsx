@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ComponentDetailLink from './ComponentDetailLink';
-import ComponentBadgeRow from './ComponentBadgeRow';
+import ComponentBadgeCell from './ComponentBadgeCell';
 import ComponentIcon from './ComponentIcon';
 import ComponentName from './ComponentName';
 
@@ -17,7 +17,7 @@ export default React.createClass({
           componentId={component.get('id')}
           type={component.get('type')}
       >
-        <ComponentBadgeRow
+        <ComponentBadgeCell
             component={component}
         />
         <ComponentIcon
