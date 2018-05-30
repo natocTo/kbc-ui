@@ -11,11 +11,11 @@ import Store from '../../ConfigurationsStore';
 // actions
 import Actions from '../../ConfigurationsActionCreators';
 
-// global components
-import SaveButtons from '../../../../react/common/SaveButtons';
-
 // utils
 import sections from '../../utils/sections';
+import isParsableConfiguration from '../../utils/isParsableConfiguration';
+
+import JsonConfiguration from '../components/JsonConfiguration';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
@@ -35,6 +35,8 @@ export default React.createClass({
       parseBySectionsFn
     );
 
+    const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId);
+
     const storedConfigurationSections = parseBySectionsFn(Store.getConfiguration(componentId, configurationId));
 
     return {
@@ -45,37 +47,29 @@ export default React.createClass({
       configurationId: configurationId,
       createBySectionsFn,
       parseBySectionsFn,
+      jsonConfigurationValue: Store.getEditingJsonConfigurationString(componentId, configurationId),
+      isJsonConfigurationSaving: Store.getPendingActions(componentId, configurationId).has('save-json'),
+      isJsonConfigurationValid: isJsonConfigurationValid,
+      isJsonConfigurationChanged: Store.isEditingJsonConfiguration(componentId, configurationId),
+      isJsonConfigurationParsable:
+        isJsonConfigurationValid &&
+        isParsableConfiguration(
+          Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId)),
+          parseBySectionsFn,
+          createBySectionsFn
+        ),
+
+      isParsableConfiguration: isParsableConfiguration(
+        Store.getConfiguration(componentId, configurationId),
+        parseBySectionsFn,
+        createBySectionsFn
+      ),
+      isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, parseBySectionsFn, createBySectionsFn),
       configurationBySections: configurationBySections,
       isSaving: Store.getPendingActions(componentId, configurationId).has('save-configuration'),
       isChanged: isChanged
 
     };
-  },
-
-  renderButtons() {
-    const {componentId, configurationId} = this.state;
-    return (
-      <div className="text-right">
-        <SaveButtons
-          isSaving={this.state.isSaving}
-          isChanged={this.state.isChanged}
-          onSave={this.handleSave}
-          onReset={() => Actions.resetConfiguration(componentId, configurationId)}
-        />
-        <br />
-      </div>
-    );
-  },
-
-  handleSave() {
-    const {componentId, configurationId, createBySectionsFn, parseBySectionsFn} = this.state;
-    return Actions.saveConfiguration(
-      componentId,
-      configurationId,
-      createBySectionsFn,
-      parseBySectionsFn,
-      'parameters edited'
-    );
   },
 
   onUpdateSection(sectionKey, diff) {
@@ -123,11 +117,92 @@ export default React.createClass({
     );
   },
 
+  renderForm() {
+    return (
+      <div>
+        {this.renderOpenJsonLink()}
+        <h2>Configuration</h2>
+        {this.renderSections()}
+      </div>
+    );
+  },
+
+  renderJsonEditor() {
+    const state = this.state;
+    return [
+      <div key="close">{this.renderCloseJsonLink()}</div>,
+      <JsonConfiguration
+        key="json-configuration"
+        isSaving={this.state.isJsonConfigurationSaving}
+        value={this.state.jsonConfigurationValue}
+        isEditingValid={this.state.isJsonConfigurationValid}
+        isChanged={this.state.isJsonConfigurationChanged}
+        onEditCancel={() => Actions.resetJsonConfiguration(state.componentId, state.configurationId)}
+        onEditChange={parameters =>
+          Actions.updateJsonConfiguration(state.componentId, state.configurationId, parameters)
+        }
+        onEditSubmit={() =>
+          Actions.saveJsonConfiguration(
+            state.componentId,
+            state.configurationId,
+            'Configuration edited manually'
+          )
+        }
+        showSaveModal={this.state.isParsableConfiguration && !this.state.isJsonConfigurationParsable}
+        saveModalTitle="Save Parameters"
+        saveModalBody={
+          <div>
+            The changes in the configuration are not compatible with the original visual form. Saving this configuration
+            will disable the visual representation of the whole configuration and you will be able to edit the
+            configuration in JSON editor only.
+          </div>
+        }
+      />
+    ];
+  },
+
+  renderOpenJsonLink() {
+    const state = this.state;
+    return (
+      <small>
+        <a onClick={() => Actions.openJsonEditor(state.componentId, state.configurationId)}>
+          Open JSON editor
+        </a>{' '}
+        (discards all unsaved changes)
+      </small>
+    );
+  },
+
+  renderCloseJsonLink() {
+    const state = this.state;
+    if (!this.state.isParsableConfiguration) {
+      return (
+        <small>
+          Can't close JSON editor, configuration is not compatible. Revert your changes to allow switching back to the
+          visual form.
+        </small>
+      );
+    }
+    return (
+      <small>
+        <a onClick={() => Actions.closeJsonEditor(state.componentId, state.configurationId, state)}>
+          Close JSON editor
+        </a>{' '}
+        (discards all unsaved changes)
+      </small>
+    );
+  },
+
   render() {
     return (
-      <span>
-        {this.renderSections()}
-      </span>
+      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+        {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration
+         ? this.renderJsonEditor()
+         : this.renderForm()}
+      </div>
+
     );
   }
+
+
 });
