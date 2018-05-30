@@ -53,7 +53,7 @@ const routeSettings = {
       },
       {
         name: 'Storage',
-        type: columnTypes.STORAGE_LINK_DEFAULT_BUCKET,
+        type: columnTypes.TABLE_LINK_DEFAULT_BUCKET,
         value: function(row) {
           const processorMoveFiles = row.getIn(['configuration', 'processors', 'after'], Immutable.List()).find(
             function(processor) {
