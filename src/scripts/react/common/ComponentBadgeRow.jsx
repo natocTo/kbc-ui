@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import ComponentType from './ComponentType';
 
-
 require('./Badges.less');
 
 export default React.createClass({
@@ -9,26 +8,17 @@ export default React.createClass({
     component: PropTypes.object.isRequired
   },
 
-  getDefaultProps() {
-    return ({
-      filterBadges: []
-    });
-  },
-
   render() {
-    const badges = this.props.component.get('flags');
+    const badges = this.getBadges();
 
     return (
-      <div className={'badge-component-container-plain'}>
+      <div className="badge-component-container-plain">
         {badges.map((badge, idx) =>
-          <div className="badge-component-row" key={idx}>
-            <div className="badge-component-placeholder">
-                <div className={'badge badge-component-item badge-component-item-' + badge.key}
-                  title={badge.description}
-                >
-                {badge.title}
-                </div>
-              </div>
+          <div className={'badge badge-component-item badge-component-item-' + badge.key}
+            title={badge.description}
+            key={idx}
+          >
+          {badge.title}
           </div>
         )}
       </div>
@@ -36,13 +26,13 @@ export default React.createClass({
   },
 
   getBadges() {
-    const flags = this.getFilterFlags();
+    const flags = this.props.component.get('flags');
     const componentType = ComponentType.getComponentType(this.props.component.get('type'));
     let badges = [];
     if (flags.contains('3rdParty')) {
       badges.push({
         title: <span>3<sup>rd</sup> party</span>,
-        description: `This is a third-party ${componentType} aaa supported by its vendor.`,
+        description: `This is a third-party ${componentType} supported by its vendor.`,
         key: '3rdParty'
       });
     }
@@ -54,5 +44,13 @@ export default React.createClass({
       });
     }
     return badges;
+  },
+
+  resolveFlags() {
+    if (this.props.component.getIn(['data', 'vendor', 'licenseUrl'])) {
+      return this.props.component.get('flags').push('hasLicence');
+    } else {
+      return this.props.component.get('flags');
+    }
   }
 });

@@ -18,12 +18,12 @@ export default React.createClass({
       <div className="badge-component-container-block">
         {badges.map((badge, idx) =>
           <div className="badge-component-row" key={idx}>
-            <div className="badge-component-placeholder">
+            <div className="badge-component-cell badge-component-placeholder">
                 <div className={'badge badge-component-item badge-component-item-' + badge.key}>
                 {badge.title}
                 </div>
               </div>
-              <div className="badge-component-description">
+              <div className="badge-component-cell badge-component-description">
                 {badge.description}
               </div>
           </div>
@@ -35,7 +35,6 @@ export default React.createClass({
   getBadges() {
     const flags = this.resolveFlags();
     const componentType = ComponentType.getComponentType(this.props.component.get('type'));
-
     let badges = [];
 
     if (!flags.contains('3rdParty')) {
