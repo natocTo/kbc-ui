@@ -16,7 +16,7 @@ export default React.createClass({
     return (
       <div className="badge-component-container">
         {badges.map((badge, idx) =>
-          <div className={'badge badge-component-item badge-component-item-' + badge.key}
+          <div className={'badge badge-component-item badge-component-item-title badge-component-item-' + badge.key}
             title={badge.description}
             key={idx}
           >
