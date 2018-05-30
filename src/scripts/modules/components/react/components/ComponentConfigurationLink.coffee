@@ -61,7 +61,7 @@ module.exports = React.createClass
       ,
         @props.children
     else
-      span null,
+      span className: @props.className,
         @props.children
 
   getComponentType: ->
