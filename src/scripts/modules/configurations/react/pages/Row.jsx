@@ -38,16 +38,14 @@ export default React.createClass({
     const row = Store.get(componentId, configurationId, rowId);
     const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId, rowId);
     const createBySectionsFn = sections.makeCreateFn(
-      settings.getIn(['row', 'onSave']),
       settings.getIn(['row', 'sections'])
     );
     const parseBySectionsFn = sections.makeParseFn(
-      settings.getIn(['row', 'onLoad']),
       settings.getIn(['row', 'sections'])
     );
     const storedConfigurationSections = parseBySectionsFn(
       Store.getConfiguration(componentId, configurationId, rowId)
-    ).get('sections');
+    );
 
     return {
       componentId: componentId,
@@ -222,9 +220,9 @@ export default React.createClass({
 
   onUpdateSection(sectionKey, diff) {
     const { configurationBySections, componentId, configurationId, rowId } = this.state;
-    const newConfigurationBySections = configurationBySections.setIn(
-      ['sections', sectionKey],
-      configurationBySections.getIn(['sections', sectionKey]).merge(Immutable.fromJS(diff))
+    const newConfigurationBySections = configurationBySections.set(
+      sectionKey,
+      configurationBySections.get(sectionKey).merge(Immutable.fromJS(diff))
     );
     const created = this.state.createBySectionsFn(newConfigurationBySections);
     const parsed = this.state.parseBySectionsFn(created);
@@ -246,7 +244,7 @@ export default React.createClass({
             isComplete={isComplete}
             disabled={this.state.isSaving}
             onChange={diff => this.onUpdateSection(key, diff)}
-            value={this.state.configurationBySections.getIn(['sections', key]).toJS()}
+            value={this.state.configurationBySections.get(key).toJS()}
           />
         </div>
       );

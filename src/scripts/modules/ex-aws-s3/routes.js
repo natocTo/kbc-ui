@@ -49,7 +49,7 @@ const routeSettings = {
       },
       {
         name: 'Storage',
-        type: columnTypes.TABLE_LINK_DEFAULT_BUCKET,
+        type: columnTypes.STORAGE_LINK_DEFAULT_BUCKET,
         value: function(row) {
           const processorMoveFiles = row.getIn(['configuration', 'processors', 'after'], Immutable.List()).find(function(processor) {
             return processor.getIn(['definition', 'component']) === 'keboola.processor-move-files';

@@ -238,14 +238,11 @@ module.exports = {
     const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
     const configurationBySections = ConfigurationRowsStore.getEditingConfigurationBySections(componentId, configurationId, rowId, parseFn, parseFnSections);
 
-    const configurationSectionsMerged = configurationBySections
-      .get('sections')
+    const configuration = configurationBySections
       .reduce((memo, sectionConfig, index) => {
         const createSectionFn = createFnSections.get(index);
         return memo.merge(createSectionFn(sectionConfig));
       }, Map());
-    const configurationRoot = configurationBySections.get('root');
-    const configuration = createFn(configurationRoot.merge(configurationSectionsMerged));
     return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited'))
       .then(function(response) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);

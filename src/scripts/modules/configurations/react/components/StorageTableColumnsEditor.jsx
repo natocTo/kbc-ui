@@ -84,8 +84,8 @@ export default React.createClass({
         {this.props.value.columns.map((column, index) => (
           <tr key={index}>
             <td>{column.id}</td>
-            {this.props.value.columnsMappings.map(mapping => (
-              <td key={index}>
+            {this.props.value.columnsMappings.map((mapping, mappingIndex) => (
+              <td key={mappingIndex}>
                 <mapping.render disabled={this.props.disabled} column={column} onChange={this.onChangeColumn} />
               </td>
             ))}

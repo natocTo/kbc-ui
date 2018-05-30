@@ -2,30 +2,41 @@ import {fromJS} from 'immutable';
 import StorageTableColumnsEditor from '../react/components/StorageTableColumnsEditor';
 
 export default (params) => {
-  if (!params) return null;
   const {
-    onLoadColumns, // remap columns object/array stored in config to localstate array columnsObject => columnsArray
-    onSaveColumns, // remap columns array from localstate to config representation (columnsArray) => columnsObject
-    initColumnFn, // initial value of column given by its name (columnName) => columnObject
-    columnsKey = 'columns', // property in config/localstate representing columns object/array
+    onLoadColumns, // (configuration) => columnsArray. Parse columns from configuration object and return array of columns objects
+    onSaveColumns, // (tableId, columnsList) => configuration_object. Return configuration object to save from given tableId and columnsList
+    initColumnFn, // (columnName) => columnObject. Initial value of column given by its name
+    parseTableId, // (configuration) => tableId. Parse tableId from configuration
     matchColumnKey = 'id', // used for matching columns objects with storage table columns by its name (columnName, columnObject) => true/false
     columnsMappings = [], // array of object containing render and title property
     isComplete = () => true, // is representation complete?
-    isColumnIgnored = column => column.get('type') === 'IGNORE'
-  } = params; // if ignored then won't be saved to input mapping columns property of configuration object
+    isColumnIgnored = column => column.get('type') === 'IGNORE' // if ignored then won't be saved to input mapping columns property of configuration object
+  } = params;
 
   return fromJS({
     onSave(localState) {
-      const localStateColumnsToSave = localState.get(columnsKey)
-        .filter(column => !isColumnIgnored(column));
-      return localState
-        .set(columnsKey, onSaveColumns(localStateColumnsToSave))
-        .delete('columnsMappings');
+      const tableId = localState.get('tableId');
+      const localStateColumnsToSave = localState
+        .get('columns').filter(column => !isColumnIgnored(column));
+      const configParametersWithColumns = onSaveColumns(tableId, localStateColumnsToSave);
+      const configStorageMapping = fromJS({
+        storage: {
+          input: {
+            tables: [
+              {
+                source: tableId,
+                columns: localStateColumnsToSave.map(column => column.get(matchColumnKey))
+              }
+            ]
+          }
+        }
+      });
+      return configStorageMapping.mergeDeep(configParametersWithColumns);
     },
 
     onLoad(configuration, tables) {
-      const configColumns = onLoadColumns(configuration.get(columnsKey));
-      const tableId = configuration.get('tableId');
+      const configColumns = onLoadColumns(configuration);
+      const tableId = parseTableId(configuration);
       const storageTable = tables.get(tableId);
       const storageTableColumns = storageTable.get('columns');
       const deletedColumns = configColumns
@@ -39,11 +50,11 @@ export default (params) => {
           initColumnFn(tableColumn)
         )
       );
-      return fromJS({[columnsKey]: columnsList, tableId: tableId, columnsMappings});
+      return fromJS({columns: columnsList, tableId: tableId, columnsMappings});
     },
 
-    onCreate() {
-      return fromJS({[columnsKey]: [], columnsMappings});
+    onCreate(name) {
+      return fromJS({'columns': [], columnsMappings, tableId: name});
     },
 
     render: StorageTableColumnsEditor,

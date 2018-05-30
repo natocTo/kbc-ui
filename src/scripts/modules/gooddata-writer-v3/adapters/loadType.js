@@ -1,17 +1,21 @@
 import {Map, fromJS} from 'immutable';
+import {parseParameters, createConfigParameters} from '../helpers/rowParametersTable';
 
 export default {
-  createConfiguration: (localState) => localState.remove('hasFact'),
-  parseConfiguration(rootParsedConfiguration) {
-    const hasFact = rootParsedConfiguration.get('columns').find(column => column.get('type') === 'fact');
+  createConfiguration: (localState) => createConfigParameters(localState.remove('hasFact')),
+
+  parseConfiguration(configuration) {
+    const parametersTable = parseParameters(configuration);
+    const hasFact = !!parametersTable.get('columns', Map()).find(column => column.get('type') === 'fact');
     return Map({
       hasFact,
-      incrementalLoad: rootParsedConfiguration.get('incrementalLoad', 0),
-      grain: rootParsedConfiguration.get('grain', null)
+      tableId: parametersTable.get('tableId'),
+      incrementalLoad: parametersTable.get('incrementalLoad', 0),
+      grain: parametersTable.get('grain', null)
     });
   },
 
-  createEmptyConfiguration() {
-    return fromJS({grain: null, incrementalLoad: 0});
+  createEmptyConfiguration(name) {
+    return fromJS({tableId: name, grain: null, incrementalLoad: 0});
   }
 };

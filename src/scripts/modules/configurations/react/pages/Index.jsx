@@ -62,15 +62,13 @@ export default React.createClass({
   renderNewConfigRowButton(type) {
     const state = this.state;
     const settings = this.state.settings;
-    const createEmptyFn = settings.getIn(['row', 'onCreate']);
-    const createFn = settings.getIn(['row', 'onSave']);
     return (
         <CreateConfigurationRowButton
           componentType={this.state.component.get('type')}
           label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
           componentId={state.componentId}
           configId={state.configurationId}
-          emptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
+          emptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
           onRowCreated={this.onRowCreated}
           createChangeDescription={() => settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added'}
           type={type}
