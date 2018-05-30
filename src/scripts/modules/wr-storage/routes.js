@@ -38,13 +38,13 @@ const routeSettings = {
         render: InputMappingSection,
         onSave: inputMappingAdapter.createConfiguration,
         onLoad: inputMappingAdapter.parseConfiguration,
-        onCreate: inputMappingAdapter.createEmptyLocalState
+        onCreate: inputMappingAdapter.createEmptyConfiguration
       },
       {
         render: DestinationSection,
         onSave: destinationAdapter.createConfiguration,
         onLoad: destinationAdapter.parseConfiguration,
-        onCreate: destinationAdapter.createEmptyLocalState
+        onCreate: destinationAdapter.createEmptyConfiguration
       }
     ],
     columns: [

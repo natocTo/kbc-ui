@@ -2,7 +2,6 @@ import { Map } from 'immutable';
 import TablesStore from '../../components/stores/StorageTablesStore';
 
 const repass = param => param;
-const returnEmptyMap = () => Map();
 const returnTrue = () => true;
 
 function parseBySections(sectionsParseFn, configuration) {
@@ -23,12 +22,14 @@ function createBySections(sectionsCreateFn, configurationBySections) {
 
 function createEmptyConfigBySections(
   sectionsCreateEmptyFn,
-  sectionsCreateFn,
   name,
   webalizedName
 ) {
-  const sectionsData = sectionsCreateEmptyFn.map(sectionCreateFn => sectionCreateFn(name, webalizedName));
-  return createBySections(sectionsCreateFn, sectionsData);
+  const configuration = sectionsCreateEmptyFn
+    .reduce(function(memo, sectionCreateEmptyFn) {
+      return memo.mergeDeep(sectionCreateEmptyFn(name, webalizedName));
+    }, Map());
+  return configuration;
 }
 
 function isCompleteBySections(sectionsIsCompleteFn, configuration) {
@@ -50,12 +51,18 @@ export default {
   },
 
   makeCreateEmptyFn(sections) {
-    const sectionsCreateFn = sections.map(section => section.get('onSave') || repass);
-    const sectionsCreateEmptyFn = sections.map(section => section.get('onCreate') || returnEmptyMap);
+    const sectionsCreateEmptyFn = sections.map(function(section) {
+      if (section.has('onCreate')) {
+        return section.get('onCreate');
+      }
+      // default, return onSave with empty localState
+      return function() {
+        return section.get('onSave')(Map());
+      };
+    });
     return (name, webalizedName) =>
       createEmptyConfigBySections(
         sectionsCreateEmptyFn,
-        sectionsCreateFn,
         name,
         webalizedName
       );

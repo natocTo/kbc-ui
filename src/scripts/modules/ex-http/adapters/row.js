@@ -118,6 +118,6 @@ export function parseConfiguration(configuration) {
 }
 
 export function createEmptyConfiguration(name, webalizedName) {
-  return Immutable.fromJS({name: webalizedName});
+  return createConfiguration(Immutable.fromJS({name: webalizedName}));
 }
 

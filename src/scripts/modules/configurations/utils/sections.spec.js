@@ -120,20 +120,19 @@ describe('sections makeCreateFn()', function() {
 });
 
 describe('sections makeCreateEmptyFn()', function() {
+  const sectionOnSave = function(localState) {
+    return Immutable.fromJS({
+      parameters: {
+        key1: localState.get('key1', '')
+      }
+    });
+  };
   const sectionsDefinition = Immutable.fromJS([
     {
       onCreate: function(name, webalized) {
-        return Immutable.fromJS({
-          key1: webalized
-        });
+        return sectionOnSave(Immutable.fromJS({key1: webalized}));
       },
-      onSave: function(localState) {
-        return Immutable.fromJS({
-          parameters: {
-            key1: localState.get('key1', '')
-          }
-        });
-      }
+      onSave: sectionOnSave
     },
     {
       onSave: function(localState) {

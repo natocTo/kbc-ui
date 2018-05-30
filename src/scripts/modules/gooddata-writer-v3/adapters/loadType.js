@@ -1,8 +1,12 @@
 import {Map, fromJS} from 'immutable';
 import {parseParameters, createConfigParameters} from '../helpers/rowParametersTable';
 
+const createConfiguration = (localState) => {
+  return createConfigParameters(localState.remove('hasFact'));
+};
+
 export default {
-  createConfiguration: (localState) => createConfigParameters(localState.remove('hasFact')),
+  createConfiguration: createConfiguration(),
 
   parseConfiguration(configuration) {
     const parametersTable = parseParameters(configuration);
@@ -16,6 +20,6 @@ export default {
   },
 
   createEmptyConfiguration(name) {
-    return fromJS({tableId: name, grain: null, incrementalLoad: 0});
+    return createConfiguration(fromJS({tableId: name, grain: null, incrementalLoad: 0}));
   }
 };
