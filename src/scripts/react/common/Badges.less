@@ -2,6 +2,23 @@
   float: none;
 }
 
+.badge-component-row {
+  display: table-row;
+}
+
+.badge-component-placeholder,
+.badge-component-description {
+  display: table-cell;
+
+}
+
+.badge-component-placeholder {
+  text-align: right;
+  padding-right: 6px;
+  line-height: 26px;
+}
+
+
 .badge-component {
   &-container {
     &-plain {
@@ -10,10 +27,6 @@
       position: absolute;
       right: 9px;
       top: 9px;
-      .badge-component-item-responsibility {
-        //don't show Keboola badge in component selection
-        display: none;
-      }
     }
     &-description {
       .badge-component-placeholder {
@@ -24,8 +37,8 @@
     }
   }
   &-row {
-    display: flex;
-    align-items: flex-start;
+    //display: flex;
+    //align-items: flex-start;
   }
   &-item {
     padding: 2px 7px 2px 9px;
@@ -47,8 +60,8 @@
     &-responsibility {
       background: #25B8EB;
       color: #fff;
-      &-icon{
-        color:#fff;
+      &-icon {
+        color: #fff;
         vertical-align: bottom;
         width: auto;
         height: 16px;

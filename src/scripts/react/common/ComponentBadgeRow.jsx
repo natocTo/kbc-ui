@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import { Icon } from '@keboola/indigo-ui';
 import ComponentType from './ComponentType';
 
 
@@ -40,14 +39,6 @@ export default React.createClass({
     const flags = this.getFilterFlags();
     const componentType = ComponentType.getComponentType(this.props.component.get('type'));
     let badges = [];
-
-    if (!flags.contains('3rdParty')) {
-      badges.push({
-        title: <span><Icon.Keboola className="badge-component-item-responsibility-icon" /> Keboola</span>,
-        description: `Support for this ${componentType} is provided by Keboola.`,
-        key: 'responsibility'
-      });
-    }
     if (flags.contains('3rdParty')) {
       badges.push({
         title: <span>3<sup>rd</sup> party</span>,
