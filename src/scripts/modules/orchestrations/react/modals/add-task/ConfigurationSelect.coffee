@@ -21,7 +21,7 @@ ConfigurationSelect = React.createClass
             h2 null,
               ComponentIcon component: @props.component
               ' '
-              ComponentName component: @props.component
+              ComponentName component: @props.component, showType: true
           div className: 'td text-right',
             a onClick: @_handleBack,
               span className: 'fa fa-chevron-left', null

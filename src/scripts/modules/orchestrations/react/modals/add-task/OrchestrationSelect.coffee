@@ -24,7 +24,7 @@ OrchestrationSelect = React.createClass
             h2 null,
               ComponentIcon component: @props.component
               ' '
-              ComponentName component: @props.component
+              ComponentName component: @props.component, showType: true
           div className: 'td',
             a className: 'pull-right', onClick: @_handleBack,
               span className: 'fa fa-chevron-left', null

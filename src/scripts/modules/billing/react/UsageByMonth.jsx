@@ -126,7 +126,7 @@ export default React.createClass({
       return (
         <span>
           <ComponentIcon component={componentFromStore} />
-          <ComponentName component={componentFromStore} />
+          <ComponentName component={componentFromStore} showType />
         </span>
       );
     } else if (componentSlug === 'storage-direct') {

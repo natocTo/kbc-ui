@@ -3,6 +3,7 @@ import React from 'react';
 import ComponentDetailLink from './ComponentDetailLink';
 import ComponentBadge from './ComponentBadge';
 import ComponentIcon from './ComponentIcon';
+import ComponentName from './ComponentName';
 
 export default React.createClass({
   propTypes: {
@@ -26,7 +27,7 @@ export default React.createClass({
             size="64"
         />
         <h2>
-            {component.get('name')}
+            <ComponentName component={component} />
         </h2>
         <p className="kbc-components-overview-description">
             {component.get('description')}
