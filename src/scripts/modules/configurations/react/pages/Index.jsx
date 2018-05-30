@@ -78,8 +78,6 @@ export default React.createClass({
   renderRowsTable() {
     const state = this.state;
     const settings = this.state.settings;
-    const createEmptyFn = settings.getIn(['row', 'onCreate']);
-    const createFn = settings.getIn(['row', 'onSave']);
     if (this.state.rows.count() === 0) {
       return (
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
@@ -126,7 +124,7 @@ export default React.createClass({
         filter={filter}
         onRowCreated={this.onRowCreated}
         objectName={settings.getIn(['row', 'name', 'singular'])}
-        rowCreateEmptyConfig={sections.makeCreateEmptyFn(createEmptyFn, createFn, settings.getIn(['row', 'sections']))}
+        rowCreateEmptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
       />);
     }
   },
