@@ -351,33 +351,6 @@ export default React.createClass({
     );
   },
 
-  // deprecated
-  renderFormFields() {
-    const state = this.state;
-    const { componentId, configurationId, rowId, settings } = this.state;
-    const configuration = Store.getEditingConfiguration(
-      componentId,
-      configurationId,
-      rowId,
-      settings.getIn(['row', 'detail', 'onLoad'])
-    );
-    const Configuration = this.state.settings.getIn(['row', 'detail', 'render']);
-    return (
-      <Configuration
-        onChange={diff =>
-          Actions.updateConfiguration(
-            state.componentId,
-            state.configurationId,
-            state.rowId,
-            configuration.merge(Immutable.fromJS(diff))
-          )
-        }
-        disabled={this.state.isSaving}
-        value={configuration.toJS()}
-      />
-    );
-  },
-
   renderJsonEditor() {
     const state = this.state;
     const settings = this.state.settings;

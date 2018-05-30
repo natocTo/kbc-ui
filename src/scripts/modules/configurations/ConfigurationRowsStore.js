@@ -71,16 +71,6 @@ let ConfigurationRowsStore = StoreUtils.createStore({
     );
   },
 
-  getEditingConfigurationBySections: function(componentId, configId, rowId, parseFn, parseFnSections) {
-    const initConfiguration = parseFnSections.map(
-      parseSectionFn => parseSectionFn(this.getConfiguration(componentId, configId, rowId))
-    );
-    return _store.getIn(
-      ['editing', componentId, configId, rowId, 'configuration'],
-      initConfiguration
-    );
-  },
-
   isEditingConfiguration: function(componentId, configId, rowId) {
     return _store.hasIn(['editing', componentId, configId, rowId, 'configuration']);
   },

@@ -12,7 +12,6 @@ import removeEmptyEncryptAttributes from '../components/utils/removeEmptyEncrypt
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
 import stringUtils from '../../utils/string';
 const { webalize } = stringUtils;
-import {Map} from 'immutable';
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
   const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
@@ -225,44 +224,6 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-  },
-
-
-  saveConfigurationBySections: function(componentId, configurationId, rowId, createFn, createFnSections, parseFn, parseFnSections, changeDescription) {
-    Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_START,
-      componentId: componentId,
-      configurationId: configurationId,
-      rowId: rowId
-    });
-    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const configurationBySections = ConfigurationRowsStore.getEditingConfigurationBySections(componentId, configurationId, rowId, parseFn, parseFnSections);
-
-    const configuration = configurationBySections
-      .reduce((memo, sectionConfig, index) => {
-        const createSectionFn = createFnSections.get(index);
-        return memo.merge(createSectionFn(sectionConfig));
-      }, Map());
-    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited'))
-      .then(function(response) {
-        VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS,
-          componentId: componentId,
-          configurationId: configurationId,
-          rowId: rowId,
-          row: response
-        });
-      }).catch(function(e) {
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_ERROR,
-          componentId: componentId,
-          configurationId: configurationId,
-          rowId: rowId,
-          error: e
-        });
-        throw e;
-      });
   },
 
   saveConfiguration: function(componentId, configurationId, rowId, createFn, parseFn, changeDescription) {
