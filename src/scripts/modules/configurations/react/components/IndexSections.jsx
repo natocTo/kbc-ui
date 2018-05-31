@@ -121,7 +121,6 @@ export default React.createClass({
     return (
       <div>
         {this.renderOpenJsonLink()}
-        <h2>Configuration</h2>
         {this.renderSections()}
       </div>
     );
@@ -164,12 +163,17 @@ export default React.createClass({
   renderOpenJsonLink() {
     const state = this.state;
     return (
-      <small>
-        <a onClick={() => Actions.openJsonEditor(state.componentId, state.configurationId)}>
-          Open JSON editor
-        </a>{' '}
-        (discards all unsaved changes)
-      </small>
+      <span>
+        <small>
+          <a onClick={() => Actions.openJsonEditor(state.componentId, state.configurationId)}>
+            Open JSON editor
+          </a>{' '}
+          (discards all unsaved changes)
+
+        </small>
+        <br/>
+        <br/>
+      </span>
     );
   },
 
@@ -195,7 +199,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+      <div>
         {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration
          ? this.renderJsonEditor()
          : this.renderForm()}
