@@ -5,7 +5,7 @@ export default React.createClass({
   propTypes: {
     componentId: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    children: PropTypes.string
+    children: PropTypes.any
   },
 
   render() {
@@ -15,6 +15,7 @@ export default React.createClass({
         params={{
           component: this.props.componentId
         }}
+        className="td"
       >
         {this.props.children}
       </Link>

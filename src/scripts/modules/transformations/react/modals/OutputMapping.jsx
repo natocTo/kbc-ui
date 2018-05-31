@@ -11,6 +11,7 @@ const MODE_CREATE = 'create', MODE_EDIT = 'edit';
 
 export default React.createClass({
   propTypes: {
+    transformationBucket: PropTypes.object.isRequired,
     mode: PropTypes.oneOf([MODE_CREATE, MODE_EDIT]).isRequired,
     mapping: PropTypes.object.isRequired,
     tables: PropTypes.object.isRequired,
@@ -20,6 +21,7 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
+    otherOutputMappings: PropTypes.object.isRequired,
     definition: PropTypes.object
   },
 
@@ -29,10 +31,20 @@ export default React.createClass({
     };
   },
 
+  isNameAlreadyInUse() {
+    if (this.props.backend === 'docker') {
+      return this.props.otherOutputMappings.map(function(outputMapping) {
+        return outputMapping.get('source');
+      }).includes(this.props.mapping.get('source'));
+    }
+    return false;
+  },
+
   isValid() {
     return !!this.props.mapping.get('source') &&
       !!this.props.mapping.get('destination') &&
-      validateStorageTableId(this.props.mapping.get('destination', ''));
+      validateStorageTableId(this.props.mapping.get('destination', '')) &&
+      !this.isNameAlreadyInUse();
   },
 
   getInitialState() {
@@ -66,12 +78,13 @@ export default React.createClass({
           onHide={this.close}
           show={this.state.showModal}
           bsSize="large"
-          >
+        >
           <Modal.Header closeButton={true}>
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <OutputMappingRowEditor
+              transformationBucket={this.props.transformationBucket}
               fill={true}
               value={this.props.mapping}
               tables={this.props.tables}
@@ -82,6 +95,7 @@ export default React.createClass({
               type={this.props.type}
               initialShowDetails={resolveOutputShowDetails(this.props.mapping)}
               definition={this.props.definition}
+              isNameAlreadyInUse={this.isNameAlreadyInUse()}
               />
           </Modal.Body>
           <Modal.Footer>

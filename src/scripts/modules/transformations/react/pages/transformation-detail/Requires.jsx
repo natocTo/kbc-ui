@@ -3,7 +3,10 @@ import _ from 'underscore';
 import Select from 'react-select';
 import {fromJS} from 'immutable';
 import RoutesStore from '../../../../../stores/RoutesStore';
+import ApplicationStore from '../../../../../stores/ApplicationStore';
 
+const allowedMixedBackends = ['docker', 'snowflake'];
+const allowedMixedBackendTypes = ['simple', 'python', 'r'];
 
 export default React.createClass({
   propTypes: {
@@ -12,7 +15,14 @@ export default React.createClass({
     requires: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
     onEditChange: PropTypes.func.isRequired,
-    bucketId: PropTypes.string.isRequired
+    bucketId: PropTypes.string.isRequired,
+    disabled: PropTypes.bool
+  },
+
+  getDefaultProps() {
+    return {
+      disabled: false
+    };
   },
 
   onValueClick: function(value) {
@@ -35,7 +45,7 @@ export default React.createClass({
             value={this.props.requires.toArray()}
             options={this.getSelectOptions(this.props.transformations, this.props.transformation)}
             multi={true}
-            disabled={this.props.isSaving}
+            disabled={this.props.isSaving || this.props.disabled}
             onChange={this.handleValueChange}
             placeholder="Add required transformation..."
             isLoading={this.props.isSaving}
@@ -50,14 +60,35 @@ export default React.createClass({
     );
   },
 
+  allowInterbackendDependencies(current, compared) {
+    if (!ApplicationStore.hasCurrentProjectFeature('transformations-mixed-backends')) {
+      return false;
+    }
+    if (!allowedMixedBackends.includes(current.get('backend'))) {
+      return false;
+    }
+    if (!allowedMixedBackends.includes(compared.get('backend'))) {
+      return false;
+    }
+    if (!allowedMixedBackendTypes.includes(current.get('type'))) {
+      return false;
+    }
+    if (!allowedMixedBackendTypes.includes(compared.get('type'))) {
+      return false;
+    }
+    return true;
+  },
+
   getSelectOptions: function(transformations, currentTransformation) {
+    const component = this;
     let options = _.sortBy(_.map(_.filter(transformations.toArray(), function(transformation) {
       return (
-        (
-          parseInt(transformation.get('phase'), 10) === parseInt(currentTransformation.get('phase'), 10)
-          && transformation.get('backend') === currentTransformation.get('backend')
-          && transformation.get('id') !== currentTransformation.get('id')
+        parseInt(transformation.get('phase'), 10) === parseInt(currentTransformation.get('phase'), 10)
+        && (
+          transformation.get('backend') === currentTransformation.get('backend')
+          || component.allowInterbackendDependencies(currentTransformation, transformation)
         )
+        && transformation.get('id') !== currentTransformation.get('id')
         || currentTransformation.get('requires').contains(transformation.get('id'))
       );
     }), function(transformation) {

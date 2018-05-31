@@ -14,7 +14,7 @@ export default React.createClass({
     configurationId: PropTypes.string.isRequired,
     filter: PropTypes.string.isRequired,
     componentId: PropTypes.string.isRequired,
-    actionsProvisioning: PropTypes.object.isRequired
+    actionCreators: PropTypes.object.isRequired
   },
 
   render() {
@@ -25,7 +25,7 @@ export default React.createClass({
           <CreateQueryElement
             isNav={true}
             configurationId={this.props.configurationId}
-            actionsProvisioning={this.props.actionsProvisioning}
+            actionCreators={this.props.actionCreators}
             componentId={this.props.componentId}
           />
           {this.rows()}
@@ -92,7 +92,6 @@ export default React.createClass({
   },
 
   handleFilterChange(newQuery) {
-    const actionCreators = this.props.actionsProvisioning.createActions(this.props.componentId);
-    actionCreators.setQueriesFilter(this.props.configurationId, newQuery);
+    this.props.actionCreators.setQueriesFilter(this.props.configurationId, newQuery);
   }
 });

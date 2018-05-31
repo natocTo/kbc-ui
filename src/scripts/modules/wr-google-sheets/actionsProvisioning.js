@@ -61,11 +61,17 @@ export default function(COMPONENT_ID, configId) {
     });
   }
 
+  function isTableExportEnabled(tableId, tables) {
+    const found = tables.find(t => t.get('tableId') === tableId);
+    return found && found.get('enabled');
+  }
+
   function saveTables(tables, mappings, savingPath, description) {
     const desc = description || 'Update tables';
+    const limitedMappings = mappings.map(t => isTableExportEnabled(t.get('source'), tables) ? t.delete('limit') : t.set('limit', 1));
     const data = store.configData
       .setIn(['parameters', 'tables'], tables)
-      .setIn(['storage', 'input', 'tables'], mappings)
+      .setIn(['storage', 'input', 'tables'], limitedMappings)
     ;
     return saveConfigData(data, savingPath, desc);
   }

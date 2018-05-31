@@ -51,6 +51,10 @@ createFromXhrError = (httpError) ->
     title = text
     text = httpError.response.body.message
 
+  if httpError.response.body?.errorMessage
+    title = text
+    text = httpError.response.body.errorMessage
+
   if !text
     text = 'Application error. Please reload the browser.'
 

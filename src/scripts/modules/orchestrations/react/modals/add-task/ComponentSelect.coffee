@@ -1,5 +1,6 @@
 React = require 'react'
 ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 
 {div, h2, a, table, tbody, tr, td, span} = React.DOM
 
@@ -30,7 +31,7 @@ ComponentSelect = React.createClass
           ,
             ComponentIcon component: component
             ' '
-            component.get('name')
+            ComponentName component: component
             ' '
             span className: 'kbc-icon-arrow-right pull-right'
     , @).toArray()
@@ -53,7 +54,7 @@ ComponentSelect = React.createClass
           ,
             ComponentIcon component: component
             ' '
-            component.get('name')
+            ComponentName component: component
             ' '
             span className: 'kbc-icon-arrow-right pull-right'
     , @).toArray()

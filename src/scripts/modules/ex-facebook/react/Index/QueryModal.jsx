@@ -48,14 +48,9 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <GraphAPIExplorerLink
-            ids={this.props.accounts.keySeq()}
-            query={this.query('query', Map())}
-            apiVersion={this.props.apiVersion}
-          />
-          <Tabs defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs">
+          <Tabs className="tabs-inside-modal" defaultActiveKey={1} animation={false} id="ex-facebook-query-modal-tabs">
             <Tab title="General" eventKey={1}>
-              <div className="row form-horizontal clearfix">
+              <div className="form-horizontal">
                 {this.renderTemplateSelect()}
                 {this.renderInput('Name', 'name', NAME_HELP, placeholders.name, this.nameInvalidReason)}
                 {this.renderInput('Endpoint', ['query', 'path'], this.enhanceHelp('endpoint', ENDPOINT_HELP), placeholders.path)}
@@ -64,7 +59,7 @@ export default React.createClass({
               </div>
             </Tab>
             <Tab title="Advanced" eventKey={2}>
-              <div className="row form-horizontal clearfix">
+              <div className="form-horizontal">
                 {this.renderDateRangeSelector()}
                 {this.renderInput('Since', ['query', 'since'], SINCE_HELP, 'yyyy-mm-dd or 15 days ago')}
                 {this.renderInput('Until', ['query', 'until'], UNTIL_HELP, 'yyyy-mm-dd or 15 days ago')}
@@ -74,6 +69,11 @@ export default React.createClass({
           </Tabs>
         </Modal.Body>
         <Modal.Footer>
+          <GraphAPIExplorerLink
+            ids={this.props.accounts.keySeq()}
+            query={this.query('query', Map())}
+            apiVersion={this.props.apiVersion}
+          />
           <ConfirmButtons
             isSaving={this.props.isSavingFn(this.query('id'))}
             onSave={this.handleSave}
@@ -81,6 +81,7 @@ export default React.createClass({
             placement="right"
             saveLabel={this.localState(['currentQuery', 'name'], false) ? 'Save Query' : 'Create'}
             isDisabled={this.isSavingDisabled()}
+            className="kbc-buttons-inline"
           />
         </Modal.Footer>
       </Modal>
@@ -118,33 +119,32 @@ export default React.createClass({
   renderDateRangeSelector() {
     return (
       <div className="form-group">
-        <div className="col-md-12">
-          <span className="pull-right">
+        <div className="col-xs-12">
+          <div className="text-right">
             <DateRangeSelector
               query={this.query()}
               updateQueryFn={(query) => this.updateLocalState(['query'], query)}
             />
-          </span>
+          </div>
         </div>
       </div>
     );
   },
 
   renderTemplateSelect() {
-    const templateSelector = (
+    return (
       <div className="form-group">
-        <div className="col-md-12">
-          <span className="pull-right">
+        <div className="col-xs-12">
+          <div className="text-right">
             <TemplateSelector
               templates={this.props.queryTemplates}
               query={this.query()}
               updateQueryFn={(query) => this.updateLocalState(['query'], query)}
             />
-          </span>
+          </div>
         </div>
       </div>
     );
-    return templateSelector;
   },
 
   renderFieldsInput(placeholder) {

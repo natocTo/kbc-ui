@@ -6,6 +6,7 @@ import ConfirmButtons from '../../../../../react/common/ConfirmButtons';
 import Select from 'react-select';
 import ChangedSinceInput from '../../../../components/react/components/generic/ChangedSinceFilterInput';
 import DataFilterRow from '../../../../components/react/components/generic/DataFilterRow';
+import ThoughtSpotTypeInput from './ThoughtSpotTypeInput';
 
 export default React.createClass({
   propTypes: {
@@ -17,14 +18,17 @@ export default React.createClass({
     onSave: React.PropTypes.func.isRequired,
     onHide: React.PropTypes.func.isRequired,
     show: React.PropTypes.bool.isRequired,
-    isSaving: React.PropTypes.bool.isRequired
+    isSaving: React.PropTypes.bool.isRequired,
+    componentId: PropTypes.string.isRequired,
+    customFieldsValues: PropTypes.object
   },
 
   getStateFromProps(props) {
     return {
       primaryKey: props.currentPK,
       mapping: props.currentMapping,
-      isIncremental: props.isIncremental
+      isIncremental: props.isIncremental,
+      customFieldsValues: props.customFieldsValues
     };
   },
 
@@ -35,6 +39,13 @@ export default React.createClass({
   componentWillReceiveProps(nextProps) {
     if (nextProps.isSaving) return;
     this.setState(this.getStateFromProps(nextProps));
+  },
+
+  renderCustomFields() {
+    if (this.props.componentId === 'keboola.wr-thoughtspot') {
+      return this.renderThoughtSpotTypeInput();
+    }
+    return null;
   },
 
   render() {
@@ -51,7 +62,8 @@ export default React.createClass({
         </Modal.Header>
         <Modal.Body>
           <div className="form form-horizontal">
-            <div className="form-group form-group-">
+            {this.renderCustomFields()}
+            <div className="form-group">
               <label className="control-label col-sm-3">
                 Load Type
               </label>
@@ -125,8 +137,7 @@ export default React.createClass({
 
   renderPKSelector() {
     return (
-
-      <div className="form-group form-group">
+      <div className="form-group">
         <label htmlFor="title" className="col-sm-3 control-label">
           Destination Table <div>Primary Key</div>
         </label>
@@ -150,14 +161,24 @@ export default React.createClass({
     );
   },
 
+  renderThoughtSpotTypeInput() {
+    return (
+      <ThoughtSpotTypeInput
+        value={this.state.customFieldsValues.get('type', 'standard')}
+        onChange={(value) => this.setState({
+          customFieldsValues: this.state.customFieldsValues.set('type', value)
+        })}
+      />
+    );
+  },
+
   getColumns() {
-    const result = this.props.columns.map((key) => {
+    return this.props.columns.map((key) => {
       return {
         'label': key,
         'value': key
       };
     }).toList().toJS();
-    return result;
   },
 
   closeModal() {
@@ -165,9 +186,13 @@ export default React.createClass({
   },
 
   handleSave() {
-    let pkToSave = [];
-    pkToSave = this.state.primaryKey ? this.state.primaryKey.split(',') : [];
-    this.props.onSave(this.state.isIncremental, fromJS(pkToSave), this.state.mapping).then(() =>
+    let pkToSave = this.state.primaryKey ? this.state.primaryKey.split(',') : [];
+    this.props.onSave(
+      this.state.isIncremental,
+      fromJS(pkToSave),
+      this.state.mapping,
+      this.state.customFieldsValues
+    ).then(() =>
       this.closeModal()
     );
   }

@@ -20,6 +20,12 @@ export default function(componentId, action, body) {
     .promise()
     .then(
       (response) => response.body,
-      (err) => err.response.body
+      (err) => {
+        if (err.response) {
+          return err.response.body;
+        } else {
+          return err;
+        }
+      }
     );
 }

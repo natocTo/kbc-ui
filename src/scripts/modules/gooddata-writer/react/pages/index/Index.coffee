@@ -77,7 +77,7 @@ module.exports = React.createClass
     # console.log writer?.toJS()
     div className: 'container-fluid',
       div className: 'col-md-9 kbc-main-content',
-        div className: 'kbc-inner-content-padding-fix with-bottom-border',
+        div className: 'kbc-inner-padding kbc-inner-padding-with-bottom-border',
           React.createElement ComponentDescription,
             componentId: 'gooddata-writer'
             configId: writer.get 'id'
@@ -95,13 +95,13 @@ module.exports = React.createClass
             ,
               'No GoodData project assigned with this configuration.'
         if @state.tablesByBucket.count()
-          div className: 'kbc-inner-content-padding-fix with-bottom-border',
+          div className: 'kbc-inner-padding kbc-inner-padding-with-bottom-border',
             React.createElement SearchRow,
               onChange: @_handleFilterChange
               query: @state.filter
         if @state.tablesByBucket.count()
           div null,
-            div className: 'kbc-inner-content-padding-fix text-right',
+            div className: 'kbc-inner-padding text-right',
               @_renderAddNewTable()
             @_renderTablesByBucketsPanel()
         else
@@ -204,10 +204,9 @@ module.exports = React.createClass
                   React.createElement Confirm,
                     title: 'Optimize SLI hash'
                     text: div null,
-                      p null, 'Optimizing SLI hashes is partially disabled since this is an advanced
+                      p null, 'Optimizing SLI hashes is an advanced
                       process which might damage your GD project.
-                      We insist on consulting with us before taking any further steps. '
-                      p null, 'Please contact us on: support@keboola.com'
+                      Proceed with caution. '
                     buttonLabel: 'Optimize'
                     buttonType: 'primary'
                     onConfirm: @_handleOptimizeSLI

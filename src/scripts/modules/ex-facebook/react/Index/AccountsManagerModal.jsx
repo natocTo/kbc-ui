@@ -73,8 +73,7 @@ export default React.createClass({
 
   isSavingDisabled() {
     const hasChanged = !this.props.accounts.equals(this.localState(['selected']));
-    const isEmpty = this.localState(['selected'], Map()).count() === 0;
-    return !hasChanged || isEmpty;
+    return !hasChanged;
   },
 
   renderConfigAccounts() {
@@ -106,11 +105,12 @@ export default React.createClass({
 
   renderError(error, code) {
     let message = 'Unexpected error';
+    const errorBody = error.get('error');
     try {
-      const jsError = JSON.parse(error).error;
+      const jsError = JSON.parse(errorBody).error;
       message = jsError.message || jsError;
     } catch (e) {
-      message = error;
+      message = error.get('message') || error;
     }
 
     return (

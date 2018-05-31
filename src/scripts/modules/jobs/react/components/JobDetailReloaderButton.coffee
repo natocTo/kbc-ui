@@ -17,11 +17,14 @@ JobDetailReloaderButton = React.createClass
     jobLoading: JobsStore.getIsJobLoading(@_getJobId())
 
   render: ->
-    React.DOM.span null,
-      if @state.jobLoading
-        React.DOM.span null,
-          ' '
-          Loader()
+    if @state.job
+      React.DOM.span null,
+        if @state.jobLoading
+          React.DOM.span null,
+            ' '
+            Loader()
+    else
+      null
 
 
 module.exports = JobDetailReloaderButton

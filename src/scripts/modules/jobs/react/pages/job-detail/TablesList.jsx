@@ -1,7 +1,10 @@
 import React from 'react';
+import { PanelWithDetails } from '@keboola/indigo-ui';
 
 import duration from '../../../../../utils/duration';
 import TableLinkEx from '../../../../components/react/components/StorageApiTableLinkEx';
+
+const VISIBLE_TABLES_LIMIT = 10;
 
 export default React.createClass({
   propTypes: {
@@ -9,50 +12,74 @@ export default React.createClass({
     allTablesIds: React.PropTypes.object.isRequired
   },
 
+  render() {
+    const tablesCount = this.props.tables.get('tables').count();
+    if (tablesCount > 0) {
+      if (tablesCount > VISIBLE_TABLES_LIMIT) {
+        return this.renderWithPanel();
+      } else {
+        return (
+          <ul>
+            {this.renderSlicedItems(0, tablesCount)}
+          </ul>
+        );
+      }
+    }
+    return (
+      <div className="text-muted">No tables.</div>
+    );
+  },
+
   duration(durationSeconds) {
     return duration(Math.round(durationSeconds));
   },
 
-  rows() {
-    const limit = 10;
-    let rows = this.props.tables
-                   .get('tables')
-                   .toSeq()
-                   .slice(0, limit)
-                   .map((table) => {
-                     return (
-                       <li key={table.get('id')}>
-                         <TableLinkEx
-                           moreTables={this.props.allTablesIds}
-                           tableId={table.get('id')}>
-                           {table.get('id')} <span className="text-muted">{this.duration(table.get('durationTotalSeconds'))}</span>
-                         </TableLinkEx>
-                       </li>
-                     );
-                   })
-                   .toArray();
-
-    const tablesCount = this.props.tables.get('tables').count();
-    if (tablesCount > limit) {
-      const message = tablesCount === 100 ? `More than ${tablesCount - limit} others.` : `${tablesCount - limit} others`;
-      rows.push(
-        <li key="more"><span>{message}</span></li>
-      );
-    }
-
-    return rows;
+  renderSlicedItems(start, count) {
+    return this.props.tables
+      .get('tables')
+      .sortBy((table) => {
+        return -table.get('durationTotalSeconds');
+      })
+      .toSeq()
+      .slice(start, count)
+      .map(this.renderListItem)
+      .toArray();
   },
 
-  render() {
-    const rows = this.rows();
-    if (rows.length) {
-      return (
-        <ul>{this.rows()}</ul>
-      );
-    } else {
-      return (
-        <div className="text-muted">No tables.</div>
-      );
-    }
+  renderListItem(table) {
+    return (
+      <li key={table.get('id')}>
+        <TableLinkEx
+          moreTables={this.props.allTablesIds}
+          tableId={table.get('id')}>
+          {table.get('id')}
+          <span className="text-muted">
+            {' ' + this.duration(table.get('durationTotalSeconds'))}
+          </span>
+        </TableLinkEx>
+      </li>
+    );
+  },
+
+  renderWithPanel() {
+    const tablesCount = this.props.tables.get('tables').count();
+    const headerRows = this.renderSlicedItems(0, VISIBLE_TABLES_LIMIT);
+    const panelContentRows = this.renderSlicedItems(VISIBLE_TABLES_LIMIT, tablesCount);
+    const labelOpen = tablesCount === 100 ? `More than ${tablesCount - VISIBLE_TABLES_LIMIT} others.` : `Show ${tablesCount - VISIBLE_TABLES_LIMIT} more tables`;
+    return (
+      <span>
+        <ul className="list-no-bottom-margin">
+          {headerRows}
+        </ul>
+        <PanelWithDetails
+          placement="bottom"
+          labelOpen={labelOpen}
+          labelCollapse="Show less">
+          <ul>
+            {panelContentRows}
+          </ul>
+        </PanelWithDetails>
+      </span>
+    );
   }
 });

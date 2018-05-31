@@ -6,6 +6,7 @@ _ = require 'underscore'
 underscoreString = require 'underscore.string'
 camelize = require 'underscore.string/camelize'
 fuzzy = require 'fuzzy'
+fuzzaldrin = require 'fuzzaldrin'
 StoreUtils = require '../../../utils/StoreUtils'
 ApplicationStore = require '../../../stores/ApplicationStore'
 
@@ -36,10 +37,14 @@ ComponentsStore = StoreUtils.createStore
     _store.hasIn ['componentsById', id]
 
   getFilteredForType: (type) ->
-    filter = @getComponentFilter(type)
+    filter = @getComponentFilter(type).toLowerCase()
     all = @getAllForType(type)
     all.filter (component) ->
-      fuzzy.match(filter, component.get 'name') || fuzzy.match(filter, component.get 'description')
+      description = component.get('description').toLowerCase()
+      fuzzy.match(filter, component.get('name')) ||
+        (fuzzaldrin.score(description, filter) > 0.09) ||
+        description.indexOf(filter) >= 0
+
 
   getComponentFilter: (type) ->
     _store.getIn(['filter', type]) || ''
@@ -96,6 +101,5 @@ Dispatcher.register (payload) ->
         component.get 'id'
       )
       ComponentsStore.emitChange()
-
 
 module.exports = ComponentsStore

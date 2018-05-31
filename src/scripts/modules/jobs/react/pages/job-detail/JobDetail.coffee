@@ -54,10 +54,10 @@ module.exports = React.createClass
   displayName: "JobDetail"
 
   getStateFromStores: ->
-    job = JobsStore.get RoutesStore.getCurrentRouteIntParam('jobId')
+    job = JobsStore.get(RoutesStore.getCurrentRouteIntParam('jobId'))
 
     configuration = new Map()
-    if job.hasIn ['params', 'config']
+    if job and job.hasIn ['params', 'config']
       config = job.getIn ['params', 'config']
       configuration = InstalledComponentsStore.getConfig(getComponentId(job), config?.toString())
 
@@ -74,6 +74,8 @@ module.exports = React.createClass
     activeAccordion: activeAccordion
 
   componentDidUpdate: (prevProps, prevState) ->
+    if not @state.job
+      return
     currentStatus = @state.job.get 'status'
     prevStatus = prevState.job.get 'status'
     return if currentStatus == prevStatus
@@ -92,13 +94,17 @@ module.exports = React.createClass
 
   render: ->
     job = @state.job
-    div {className: 'container-fluid'},
-      div {className: 'kbc-main-content'},
-        @_renderGeneralInfoRow(job)
-        @_renderRunInfoRow(job)
-        @_renderErrorResultRow(job) if job.get('status') == 'error'
-        @_renderAccordion(job)
-        @_renderLogRow(job)
+    if @state.job
+      div {className: 'container-fluid'},
+        div {className: 'kbc-main-content'},
+          @_renderGeneralInfoRow(job)
+          @_renderRunInfoRow(job)
+          @_renderErrorResultRow(job) if job.get('status') == 'error'
+          @_renderAccordion(job)
+          @_renderLogRow(job)
+    else
+      null
+
 
   _renderErrorDetails: (job) ->
     exceptionId = job.getIn ['result', 'exceptionId']
@@ -232,6 +238,7 @@ module.exports = React.createClass
               'Configuration'
             strong {className: 'col-md-9'},
               configurationLink
+              @._renderConfigVersion(job)
           div {className: 'row'},
             span {className: 'col-md-3'},
               'Created At'
@@ -265,6 +272,11 @@ module.exports = React.createClass
                 Duration({startTime: job.get('startTime'), endTime: job.get('endTime')})
               else
                 'N/A'
+
+  _renderConfigVersion: (job) ->
+    configVersion = job.getIn(['result', 'configVersion'], null)
+    if configVersion != null
+      ' - Version #' + configVersion
 
   _renderAccordion: (job) ->
     isTransformation = job.get('component') == 'transformation'
@@ -328,22 +340,23 @@ module.exports = React.createClass
         span {className: ''},
           ComponentIcon {component: component, size: '32'}
           ' '
-          ComponentName {component: component}
+          ComponentName {component: component, showType: true}
 
   _renderLogRow: (job) ->
-    div {className: 'row'},
-      div {className: 'col-md-12'},
-        h2 null, 'Log'
-        Events
-          link:
-            to: 'jobDetail'
-            params:
-              jobId: @state.job.get('id')
-            query:
-              q: @state.query
+    div null,
+      div className: 'form-group',
+        div className: 'col-xs-12',
+          h2 null, 'Log'
+      Events
+        link:
+          to: 'jobDetail'
           params:
-            runId: job.get('runId')
-          autoReload: true
+            jobId: @state.job.get('id')
+          query:
+            q: @state.query
+        params:
+          runId: job.get('runId')
+        autoReload: true
 
   _isGoodDataWriter: ->
     getComponentId(@state.job) == 'gooddata-writer'

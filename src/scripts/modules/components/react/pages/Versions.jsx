@@ -3,23 +3,22 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../stores/VersionsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import VersionRow from '../components/VersionRow';
-import {getPreviousVersion} from '../../../../utils/VersionsDiffUtils';
-import {Table} from 'react-bootstrap';
+import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
+import { Table } from 'react-bootstrap';
 import SearchRow from '../../../../react/common/SearchRow';
 import VersionsActionCreators from '../../VersionsActionCreators';
 import fuzzy from 'fuzzy';
-import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
-import {Map} from 'immutable';
-
-function simpleMatch(query, test) {
-  return test.toLocaleLowerCase().indexOf(query.toLowerCase()) >= 0;
-}
+import immutableMixin from 'react-immutable-render-mixin';
+import { Map } from 'immutable';
+import createVersionOnRollback from '../../../../utils/createVersionOnRollback';
+import createVersionOnCopy from '../../../../utils/createVersionOnCopy';
+import { simpleMatch } from '../../../../utils/utils';
 
 const ITEMS_PER_PAGE = 20;
 
 export default function(componentIdValue, configIdParam = 'config') {
   return React.createClass({
-    mixins: [createStoreMixin(VersionsStore, RoutesStore), ImmutableRenderMixin],
+    mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
     getStateFromStores() {
       var versions, filteredVersions, query;
@@ -88,8 +87,11 @@ export default function(componentIdValue, configIdParam = 'config') {
             isDiffDisabled={this.state.isPending || isMultiPending}
             previousVersion={previousVersion}
             previousVersionConfig={previousVersionConfig}
-            onPrepareVersionsDiffData= {() => this.prepareVersionsDiffData(version, previousVersion)}
+            onPrepareVersionsDiffData={() => this.prepareVersionsDiffData(version, previousVersion)}
             isLast={allVersions.first().get('version') === version.get('version')}
+            onChangeName={(name) => VersionsActionCreators.changeNewVersionName(this.state.componentId, this.state.configId, version.get('version'), name)}
+            onCopy={createVersionOnCopy(this.state.componentId, this.state.configId, version.get('version'), this.state.newVersionNames.get(version.get('version')))}
+            onRollback={createVersionOnRollback(this.state.componentId, this.state.configId, version.get('version'))}
           />
         );
       }, this).toArray();

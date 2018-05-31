@@ -108,6 +108,7 @@
         kbcApp.start({
           "data": {
             "components": params.components.components,
+            "services": params.components.services,
             "organizations": organizations,
             "maintainers": [
               {
@@ -158,7 +159,7 @@
               "canDoSupport": true,
               "canEditProjectLimits": true,
               "canEditProjectTypeAndBilling": true,
-              "xsrfToken": "hovno",
+              "xsrfToken": "token",
               "dockerRunnerUrl": "https://docker-runner.keboola.com",
               "urlTemplates": {
                 "createProject": "/admin/projects-new/create-project",
@@ -201,9 +202,10 @@
                   "kbc-limits",
                   "components-migration",
                   "transformation-openrefine",
-                  "docker-sandbox"
+                  "docker-sandbox",
+                  "validate-sql"
                 ],
-                "profileImageUrl": "https://secure.gravatar.com/avatar/hovno?s=40"
+                "profileImageUrl": "https://secure.gravatar.com/avatar/randomavatar?s=40"
 
               }
             }

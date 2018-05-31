@@ -1,1 +1,3 @@
 src/scripts/utils/codemirror/parser.js
+# Ignore indigo-ui lib if linked
+../indigo-ui

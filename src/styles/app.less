@@ -211,28 +211,18 @@ a .kbcComponentIcon-3rdParty-64px {
   padding-bottom: 5px;
 }
 
-.kb-sapi-component-icon small.thirdPartyLabel {
-}
-
-.kb-sapi-component-icon small.thirdPartyLabel span {
-}
-
-
 .kb-orchestrator-task-drag{
   padding: 0 !important;
 }
 
 .kbcVersionsButton {
   margin-right: 10px;
-
 }
 
 .kbc-label-rounded.kbc-label-block {
   display: inline-block;
   white-space: normal;
 }
-
-
 
 //TEMP HACK: ZKOPIROVAT DO INDIGO AZ BUDE PRILEZITOST, ZATIM JE TO BLOKOVANY
 .kbc-main-sidebar {
@@ -249,105 +239,11 @@ a .kbcComponentIcon-3rdParty-64px {
   padding: 0!important;
 }
 
-.kbc-main .kbc-overview-component .kbc-header{
-  margin-top: 15px;
-}
-
-.kbc-main .kbc-header.kbc-limits,
-.kbc-main .kbc-header.kbc-expiration{
-  padding: 30px 30px !important
-}
-
-.kbc-main .kbc-overview-component{
-  min-height: 90px;
-  .kbc-header{
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-}
-.kbc-main .kbc-overview-component:first-of-type{
-  .kbc-header{
-    margin-top: 0;
-  }
-}
-
-.kbc-overview-component-container {
-  &+.kbc-main-content{
-    margin-top: 10px;
-  }
-}
-
-.guide-mode.guide-mode-lesson-on .kbc-overview-component-container>.kbc-overview-component:first-child{
-  min-height: 0;
-}
-
-.guide-mode.guide-mode-lesson-on .kbc-overview-component-container{
-  margin-top: 50px !important;
-  &  + .kbc-main-content{
-    margin-top: 10px!important;
-  }
-}
-
-.migration-row {
-  padding: 30px;
-  border: 2px solid #FFD452;
-  background-color: #FFF6DC;
-  margin-bottom: 10px;
-  border-radius: 5px;
-
-  .alert {
-    background-image: url('../scripts/modules/home/react/media/ic_error.svg');
-    background-position: 100% 0;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    background-size: 75px 75px;
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  h3 {
-    color: #FF9D52;
-    font-size: 18px;
-    line-height: 23px;
-    margin-top: 0;
-    margin-bottom: 30px;
-    font-weight: bold;
-  }
-
-  &-content{
-    margin-bottom: 30px;
-    width: 80%;
-    color: #282d38;
-  }
-}
-
 //break content without white spaces
 .alert,
 .table-events > tbody > tr > td,
 .table > .tbody > .tr .td span{
   word-break: break-word;
-}
-
-// to add padding without incorrect "row" usage and not break anything
-.kbc-inner-content-padding-fix {
-  padding: 22px 22px 15px;
-  &.with-bottom-border {
-    border-bottom: 1px solid #e8e8ef;
-  }
-}
-// wrapper class to add margin to tablist
-.kbc-wrapper-tabs-margin-fix {
-  .nav {
-    &.nav-tabs {
-      margin-bottom: 1em;
-    }
-  }
-}
-// universal margin classes
-.bottom-margin-20px {
-  margin-bottom: 20px;
 }
 
 // hotfix for: https://github.com/keboola/kbc-ui/issues/1265
@@ -356,10 +252,14 @@ a .kbcComponentIcon-3rdParty-64px {
   overflow: auto;
 }
 
-.kbc-main .tab-pane {
-  padding-top: 15px;
-}
-
-.kbc-main .kb-orchestrations-main .tab-pane {
-  padding-top: 0;
+.row-search {
+  display: flex;
+  &-input {
+    margin-right: 10px;
+    flex-grow: 1;
+  }
+  &-action {
+    display: flex;
+    align-items: center;
+  }
 }

@@ -82,7 +82,7 @@ export default React.createClass({
           <Modal.Title>Change Date Range</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Tabs activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false} id="daterangemodaltab">
+          <Tabs className="tabs-inside-modal" activeKey={this.state.rangeType} onSelect={this.onSelectTab} animation={false} id="daterangemodaltab">
             <Tab eventKey="relative" title="Relative">
               {this.renderRelative()}
             </Tab>
@@ -134,7 +134,7 @@ export default React.createClass({
   renderPicker(name, extraProps) {
     return (
       <div className="form-group form-group-sm">
-        <label className="col-sm-1 control-label">
+        <label className="col-sm-3 control-label">
           {name}
         </label>
         <div className="col-sm-6">
@@ -170,23 +170,27 @@ export default React.createClass({
 
     return (
       <form className="form-horizontal">
-        <h4> Specify relative date range {' '}
-          <select
-            className="input-sm"
-            defaultValue=""
-            onChange={this.selectSuggestion}
-          >
-            {[].concat('').concat(Object.keys(SUGGESTIONS)).map((op) =>
-              (<option
-                 disabled={op === ''}
-                 key={op}
-                 value={op} >
-            {op === '' ? 'or choose from suggestions' : op}
-              </option>)
-             )}
-
-          </select>
-        </h4>
+        <div>
+          <p>Specify relative date range {' '}</p>
+          <div className="form-group form-group-sm">
+            <div className="col-sm-6 col-sm-offset-3">
+              <select
+                className="form-control"
+                defaultValue=""
+                onChange={this.selectSuggestion}
+              >
+                {[].concat('').concat(Object.keys(SUGGESTIONS)).map((op) =>
+                  (<option
+                     disabled={op === ''}
+                     key={op}
+                     value={op} >
+                {op === '' ? 'Choose from suggestions' : op}
+                  </option>)
+                 )}
+              </select>
+            </div>
+          </div>
+        </div>
         {this.renderRelativeInput('Since', startDateProps)}
         {this.renderRelativeInput('Until', endDateProps)}
       </form>
@@ -196,7 +200,7 @@ export default React.createClass({
   renderRelativeInput(name, extraProps) {
     return (
       <div className="form-group form-group-sm">
-        <label className="col-sm-1 control-label">
+        <label className="col-sm-3 control-label">
           {name}
         </label>
         <div className="col-sm-6">

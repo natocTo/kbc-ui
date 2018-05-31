@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import contactSupport from '../../../utils/contactSupport';
-import './expiration.less';
 import IntlMessageFormat from 'intl-messageformat';
+import {AlertBlock} from '@keboola/indigo-ui';
 
 const MESSAGES = {
   DAYS: '{days, plural, ' +
@@ -24,16 +24,9 @@ export default React.createClass({
     }
 
     return (
-        <div className="kbc-overview-component">
-          <div className="row kbc-header kbc-expiration">
-            <div className="alert alert-warning">
-              <h3>
-                This project will expire in {this.days()}
-              </h3>
-              <p>Please <a onClick={contactSupport}>contact support</a> for project plan upgrade.</p>
-            </div>
-          </div>
-        </div>
+      <AlertBlock type="warning" title={'This project will expire in '  + this.days()}>
+        <p>Please <a onClick={contactSupport}>contact support</a> for project plan upgrade.</p>
+      </AlertBlock>
     );
   },
 

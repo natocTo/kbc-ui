@@ -6,15 +6,17 @@ const MODE_BUTTON = 'button', MODE_LINK = 'link';
 
 export default React.createClass({
   propTypes: {
-    activateTooltip: React.PropTypes.string.isRequired,
-    deactivateTooltip: React.PropTypes.string.isRequired,
+    activateTooltip: React.PropTypes.string,
+    deactivateTooltip: React.PropTypes.string,
     isActive: React.PropTypes.bool.isRequired,
     isPending: React.PropTypes.bool,
     buttonDisabled: React.PropTypes.bool,
     onChange: React.PropTypes.func.isRequired,
     mode: React.PropTypes.oneOf([MODE_BUTTON, MODE_LINK]),
     tooltipPlacement: React.PropTypes.string,
-    buttonStyle: React.PropTypes.object
+    buttonStyle: React.PropTypes.object,
+    activateLabel: React.PropTypes.string,
+    deactivateLabel: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -23,7 +25,9 @@ export default React.createClass({
       isPending: false,
       mode: MODE_BUTTON,
       tooltipPlacement: 'top',
-      buttonStyle: {}
+      buttonStyle: {},
+      activateTooltip: 'Enable',
+      deactivateTooltip: 'Disable'
     };
   },
 
@@ -49,9 +53,9 @@ export default React.createClass({
     } else {
       return (
         <Tooltip placement={this.props.tooltipPlacement} tooltip={this.tooltip()}>
-          <button disabled={this.props.buttonDisabled}
+          <button disabled={this.props.buttonDisabled || this.props.isPending}
             style={this.props.buttonStyle} className="btn btn-link" onClick={this.handleClick}>
-            {this.renderIcon(this.props.isActive)}
+            {this.renderIcon()}
           </button>
         </Tooltip>
       );
@@ -60,22 +64,36 @@ export default React.createClass({
 
   renderLink() {
     return (
-      <a onClick={this.handleClick}>
+      <a onClick={this.handleClick} disabled={this.props.isPending || this.props.buttonDisabled}>
         {this.props.isPending ? <Loader className="fa-fw"/> : this.renderIcon(!this.props.isActive)} {this.tooltip()}
       </a>
     );
   },
 
-  renderIcon(isChecked) {
+  renderIcon() {
     return (
-      <Check isChecked={isChecked}/>
+      <Check isChecked={this.props.isActive}/>
     );
   },
 
+  renderLabel() {
+    if (this.props.isActive) {
+      if (this.props.deactivateLabel) {
+        return ' ' + this.props.deactivateLabel;
+      }
+    }
+    if (this.props.activateLabel) {
+      return ' ' + this.props.deactivateLabel;
+    }
+    return null;
+  },
+
   handleClick(e) {
+    if (this.props.isPending || this.props.buttonDisabled) {
+      return;
+    }
     this.props.onChange(!this.props.isActive);
     e.stopPropagation();
     e.preventDefault();
   }
-
 });

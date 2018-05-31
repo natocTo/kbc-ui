@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
-import Select from 'react-select';
-import {fromJS} from 'immutable';
+import Select from '../../../../../react/common/Select';
 
 export default React.createClass({
   propTypes: {
@@ -17,14 +16,16 @@ export default React.createClass({
           Packages
         </h2>
         <div className="form-group">
-          <Select.Creatable
+          <Select
             name="packages"
-            value={this.getValue()}
+            value={this.props.packages}
             multi={true}
             disabled={this.props.isSaving}
-            onChange={this.handleValueChange}
+            onChange={this.props.onEditChange}
             placeholder="Add packages..."
             isLoading={this.props.isSaving}
+            allowCreate={true}
+            trimMultiCreatedValues={true}
             />
           <span className="help-block">
             {this.hint()}
@@ -45,16 +46,5 @@ export default React.createClass({
         <span>These packages will be installed from PyPI to the Python script environment. Do not forget to load them using <code>import</code>.</span>
       );
     }
-  },
-
-  handleValueChange(newArray) {
-    const values = fromJS(newArray).map((item) => item.get('value'));
-    this.props.onEditChange(values);
-  },
-
-  getValue() {
-    return this.props.packages.map((item) => {
-      return {label: item, value: item};
-    }).toJS();
   }
 });

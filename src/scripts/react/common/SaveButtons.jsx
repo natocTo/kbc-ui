@@ -7,6 +7,8 @@ import React from 'react';
 import {Loader} from '@keboola/indigo-ui';
 import {Button} from 'react-bootstrap';
 
+import SaveButtonsModal from './SaveButtonsModal';
+
 // css
 require('./SaveButtons.less');
 
@@ -18,22 +20,35 @@ export default React.createClass({
     disabled: React.PropTypes.bool,
     saveStyle: React.PropTypes.string,
     onReset: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired
+    onSave: React.PropTypes.func.isRequired,
+    showModal: React.PropTypes.bool,
+    modalTitle: React.PropTypes.string,
+    modalBody: React.PropTypes.any
   },
 
   getDefaultProps() {
     return {
       saveStyle: 'success',
-      disabled: false
+      disabled: false,
+      showModal: false,
+      modalTitle: '',
+      modalBody: (<span />)
+    };
+  },
+
+  getInitialState() {
+    return {
+      modalOpen: false
     };
   },
 
   render() {
     return (
-      <div className="kbc-buttons kbc-save-buttons">
+      <span className="kbc-buttons kbc-save-buttons">
         {this.resetButton()}
+        {this.modal()}
         {this.saveButton()}
-      </div>
+      </span>
     );
   },
 
@@ -60,13 +75,36 @@ export default React.createClass({
     return true;
   },
 
+  onSaveButtonClick() {
+    if (!this.props.showModal) {
+      return this.props.onSave();
+    } else {
+      this.setState({modalOpen: true});
+    }
+  },
+
+  modal() {
+    const component = this;
+    return (
+      <SaveButtonsModal
+        title={this.props.modalTitle}
+        body={this.props.modalBody}
+        show={this.state.modalOpen}
+        onSave={this.props.onSave}
+        onHide={function() {
+          return component.setState({modalOpen: false});
+        }}
+      />
+    );
+  },
+
   saveButton() {
     return (
       <Button
         className="save-button"
         bsStyle={this.props.saveStyle}
         disabled={this.saveButtonDisabled()}
-        onClick={this.props.onSave}>
+        onClick={this.onSaveButtonClick}>
         {this.saveButtonText()}
       </Button>
     );

@@ -136,19 +136,19 @@ templateFn = (componentId) ->
       if componentId not in wontMigrateComponents
         React.createElement MigrationRow,
           componentId: componentId
-      div className: 'kbc-inner-content-padding-fix with-bottom-border',
+      div className: 'kbc-inner-padding kbc-inner-padding-with-bottom-border',
         ComponentDescription
           componentId: componentId
           configId: @state.configId
 
       if @_hasValidCredentials() and @_hasConfigTables()
-        div className: 'kbc-inner-content-padding-fix with-bottom-border',
+        div className: 'kbc-inner-padding kbc-inner-padding-with-bottom-border',
           React.createElement SearchRow,
             onChange: @_handleSearchQueryChange
             query: @state.localState.get('searchQuery') or ''
 
       if @_hasConfigTables()
-        div className: 'kbc-inner-content-padding-fix text-right',
+        div className: 'kbc-inner-padding text-right',
           @_renderAddNewTable()
 
       if @_hasValidCredentials() and @_hasConfigTables()
@@ -263,9 +263,9 @@ templateFn = (componentId) ->
   _renderHeaderRow: ->
     div className: 'tr',
       span className: 'th',
-        strong null, 'Table name'
+        strong null, 'Source Table'
       span className: 'th',
-        strong null, 'Database name'
+        strong null, 'Destination Table'
       if @isV2()
         span className: 'th',
           strong null, 'Incremental'

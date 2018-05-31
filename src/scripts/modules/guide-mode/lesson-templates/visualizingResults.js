@@ -26,7 +26,7 @@ export default {
       'markdown': 'Let’s assume you have <a href="https://www.tableau.com/products/desktop/download" target="_blank">Tableau Desktop</a> installed on your computer. Now you need to find the writer Tableau in the section **Writers**.'
       + `
 - Find **Tableau**. You can use the search feature to find it faster.
-- Click on <span class="btn btn-success btn-sm">More</span> and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
+- Click on component and continue with <span class="btn btn-success btn-sm">+ New Configuration</span>.
 - Name the configuration, e.g., _Guide writer_, and click on <span class="btn btn-success btn-sm">Create Configuration</span>.
 `,
       'mediaType': '',
@@ -44,8 +44,8 @@ export default {
       'markdown': 'Now add the table you want to send to Tableau. For each of its columns, you also need to specify whether it contains text or a number.'
       + `
 - Click on <span class="btn btn-success btn-sm">+ New Table</span>.
-- Select  *out.c-snowflake.CARS_POPULATION* as the source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>.
-- Specify a data type for each of the table's columns under TDE Data Type (COUNTRY -> string, CARS -> number, POPULATION -> number, PERSON_PER_CAR -> decimal). 
+- Select  *out.c-guide.cars_population* as the source table you want to add to Tableau and click <span class="btn btn-success btn-sm">Select</span>.
+- Specify a data type for each of the table's columns under TDE Data Type (name -> string, total_cars -> number, population -> number, cars_per_capita -> decimal). 
 - <span class="btn btn-success btn-sm">Save</span> the configuration.
 - To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.
 `,
@@ -63,7 +63,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Run Writer',
-      'markdown': 'To run the writer, click on <span class="btn btn-link btn-sm"><i class="fa fa-play"></i> Export tables to TDE</span>. After your Tableau Desktop Extract file is created, it can be downloaded by clicking on the link <a href="#" class="guide-link guide-link-fake">out.c_snowflake.cars_population.tde</a> and then loaded into Tableau Desktop. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the file to your computer, and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
+      'markdown': 'To run the writer, click on <span class="btn btn-link btn-sm"><i class="fa fa-play"></i> Export tables to TDE</span>. After your Tableau Desktop Extract file is created, it can be downloaded by clicking on the link <a href="#" class="guide-link guide-link-fake">out.c_guide.cars_population.tde</a> and then loaded into Tableau Desktop. <br/><br/> For the purposes of the Guide Mode, let’s say you have already downloaded the file to your computer, and opened it in Tableau. To see one of the many reports you can create, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'route': {
         'name': 'tde-exporter',
         'params': [

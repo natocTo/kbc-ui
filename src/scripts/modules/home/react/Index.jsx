@@ -4,14 +4,11 @@ import filesize from 'filesize';
 import underscoreString from 'underscore.string';
 import LimitsOverQuota from './LimitsOverQuota';
 import Expiration from './Expiration';
-import StorageBucketsStore from '../../components/stores/StorageBucketsStore';
 import InstalledComponentStore from '../../components/stores/InstalledComponentsStore';
 import TransformationsStore from '../../transformations/stores/TransformationsStore';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
-import storageActions from '../../components/StorageActionCreators';
 import DeprecatedComponents from './DeprecatedComponents';
 import DeprecatedTransformations from './DeprecatedTransformations';
-import DeprecatedStorage from './DeprecatedStorage';
 import EncryptionMigration from './EncryptionMigration';
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import { showWizardModalFn } from '../../guide-mode/stores/ActionCreators.js';
@@ -22,7 +19,7 @@ import { List } from 'immutable';
 
 export default React.createClass({
   mixins: [
-    createStoreMixin(InstalledComponentStore, TransformationsStore, StorageBucketsStore, WizardStore)
+    createStoreMixin(InstalledComponentStore, TransformationsStore, WizardStore)
   ],
 
   getStateFromStores() {
@@ -46,7 +43,6 @@ export default React.createClass({
       },
       limitsOverQuota: ApplicationStore.getLimitsOverQuota(),
       expires: ApplicationStore.getCurrentProject().get('expires'),
-      buckets: StorageBucketsStore.getAll(),
       installedComponents: InstalledComponentStore.getAll(),
       transformations: TransformationsStore.getAllTransformations(),
       projectHasGuideModeOn: ApplicationStore.getKbcVars().get('projectHasGuideModeOn'),
@@ -59,7 +55,6 @@ export default React.createClass({
     if (ApplicationStore.hasCurrentProjectFeature('transformation-mysql')) {
       componentsActions.loadComponentConfigsData('transformation');
     }
-    storageActions.loadBuckets();
   },
 
   openLessonModal(lessonNumber) {
@@ -82,9 +77,6 @@ export default React.createClass({
         }).count() > 0;
       }).count();
     }
-    if (this.state.buckets.filter((bucket) => bucket.get('backend') === 'mysql').count() > 0) {
-      componentCount++;
-    }
     if (typeof this.state.expires !== 'undefined') {
       componentCount += 1;
     }
@@ -98,7 +90,6 @@ export default React.createClass({
         <div className="kbc-overview-component-container">
           {this.state.projectHasGuideModeOn && (
             <Desk
-              linkToSettings={ApplicationStore.getProjectPageUrl('settings')}
               lessons={lessons}
               achievedLessonId={this.state.guideModeAchievedLessonId}
               openLessonModalFn={this.openLessonModal}
@@ -106,18 +97,13 @@ export default React.createClass({
           )}
           <Expiration expires={this.state.expires}/>
           <LimitsOverQuota limits={this.state.limitsOverQuota}/>
-
-          <DeprecatedStorage
-            buckets={this.state.buckets}
+          <DeprecatedTransformations
+            transformations={this.state.transformations}
           />
           <EncryptionMigration />
           <DeprecatedComponents
             components={this.state.installedComponents}
           />
-          <DeprecatedTransformations
-            transformations={this.state.transformations}
-          />
-
         </div>
         }
         <div className="kbc-main-content">

@@ -22,48 +22,27 @@ import configurationMovedToTrash from './react/components/notifications/configur
 import configurationMovedToTrashWithRestore from './react/components/notifications/configurationMovedToTrashWithRestore';
 
 const storeEncodedConfig = function(componentId, configId, dataToSave, changeDescription) {
-  var component, projectId;
-  component = InstalledComponentsStore.getComponent(componentId);
-  if (component.get('flags').includes('encrypt')) {
-    const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
-    projectId = ApplicationStore.getCurrentProject().get('id');
-    return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
-      const dataToSaveEncrypted = {
-        configuration: JSON.stringify(encryptedResponse.body),
-        changeDescription: changeDescription
-      };
-      return installedComponentsApi.updateComponentConfiguration(componentId, configId, dataToSaveEncrypted);
-    });
-  } else {
-    const dataToSavePrepared = {
-      configuration: JSON.stringify(dataToSave),
+  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
+  let projectId = ApplicationStore.getCurrentProject().get('id');
+  return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
+    const dataToSaveEncrypted = {
+      configuration: JSON.stringify(encryptedResponse.body),
       changeDescription: changeDescription
     };
-    return installedComponentsApi.updateComponentConfiguration(componentId, configId, dataToSavePrepared, changeDescription);
-  }
+    return installedComponentsApi.updateComponentConfiguration(componentId, configId, dataToSaveEncrypted);
+  });
 };
 
 const storeEncodedConfigRow = function(componentId, configId, rowId, dataToSave, changeDescription) {
-  var component;
-  component = InstalledComponentsStore.getComponent(componentId);
-  let dataToSavePrepared = dataToSave;
-  if (component.get('flags').includes('encrypt')) {
-    dataToSavePrepared = {
-      configuration: JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSavePrepared)))
+  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
+  let projectId = ApplicationStore.getCurrentProject().get('id');
+  return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
+    const dataToSaveEncrypted = {
+      configuration: JSON.stringify(encryptedResponse.body),
+      changeDescription: changeDescription
     };
-  } else {
-    dataToSavePrepared = {
-      configuration: JSON.stringify(dataToSavePrepared)
-    };
-  }
-  if (changeDescription) {
-    dataToSavePrepared.changeDescription = changeDescription;
-  }
-  if (component.get('flags').includes('encrypt')) {
-    return installedComponentsApi.updateConfigurationRowEncrypted(component.get('uri'), componentId, configId, dataToSavePrepared, changeDescription);
-  } else {
-    return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSavePrepared, changeDescription);
-  }
+    return installedComponentsApi.updateConfigurationRow(componentId, configId, rowId, dataToSaveEncrypted);
+  });
 };
 
 module.exports = {
@@ -116,14 +95,14 @@ module.exports = {
       componentId: componentId,
       configId: configId
     });
-    return installedComponentsApi.getComponentConfigData(componentId, configId).then(function(configData) {
+    return installedComponentsApi.getComponentConfiguration(componentId, configId).then(function(response) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS,
         componentId: componentId,
         configId: configId,
-        configData: configData
+        data: response
       });
-      return configData;
+      return response.configuration;
     }).catch(function(error) {
       dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_LOAD_ERROR,
@@ -260,13 +239,6 @@ module.exports = {
       path: path
     });
   },
-  startEditComponentConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_EDIT_START,
-      componentId: componentId,
-      configId: configId
-    });
-  },
   updateEditComponentConfigData: function(componentId, configId, newData) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGDATA_EDIT_UPDATE,
@@ -282,13 +254,6 @@ module.exports = {
       configId: configId
     });
   },
-  startEditComponentRawConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_START,
-      componentId: componentId,
-      configId: configId
-    });
-  },
   updateEditComponentRawConfigData: function(componentId, configId, newData) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_UPDATE,
@@ -300,13 +265,6 @@ module.exports = {
   cancelEditComponentRawConfigData: function(componentId, configId) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATA_EDIT_CANCEL,
-      componentId: componentId,
-      configId: configId
-    });
-  },
-  startEditComponentRawConfigDataParameters: function(componentId, configId) {
-    return dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_RAWCONFIGDATAPARAMETERS_EDIT_START,
       componentId: componentId,
       configId: configId
     });
@@ -714,13 +672,6 @@ module.exports = {
       throw e;
     });
   },
-  startEditTemplatedComponentConfigData: function(componentId, configId) {
-    return dispatcher.handleViewAction({
-      type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_START,
-      componentId: componentId,
-      configId: configId
-    });
-  },
   cancelEditTemplatedComponentConfigData: function(componentId, configId) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_TEMPLATED_CONFIGURATION_EDIT_CANCEL,
@@ -831,18 +782,19 @@ module.exports = {
       rowId: rowId,
       field: field
     });
+    let changeDescription;
     newValue = InstalledComponentsStore.getEditingConfigRow(componentId, configurationId, rowId, field);
     if (field === 'configuration') {
       data = newValue;
-      data.changeDescription = 'Update configuration';
+      changeDescription = 'Update configuration';
       calledFunction = storeEncodedConfigRow;
     } else {
       data = {};
-      data.changeDescription = 'Update ' + field;
+      changeDescription = 'Update ' + field;
       data[field] = newValue;
       calledFunction = installedComponentsApi.updateConfigurationRow;
     }
-    return calledFunction(componentId, configurationId, rowId, data).then(function(response) {
+    return calledFunction(componentId, configurationId, rowId, data, changeDescription).then(function(response) {
       VersionActionCreators.loadVersionsForce(componentId, configurationId);
       return dispatcher.handleViewAction({
         type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS,
@@ -863,5 +815,87 @@ module.exports = {
       });
       throw e;
     });
+  },
+  createConfigurationRow: function(componentId, configurationId, data, changeDescription) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      data: data
+    });
+    return installedComponentsApi.createConfigurationRow(componentId, configurationId, data, changeDescription)
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          data: response
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_CREATE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          error: e
+        });
+        throw e;
+      });
+  },
+  deleteConfigurationRow: function(componentId, configurationId, rowId, changeDescription) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId
+    });
+    return installedComponentsApi.deleteConfigurationRow(componentId, configurationId, rowId, changeDescription)
+      .then(function() {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_DELETE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
+  },
+  updateConfigurationRow: function(componentId, configurationId, rowId, data, changeDescription) {
+    dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_START,
+      componentId: componentId,
+      configurationId: configurationId,
+      rowId: rowId,
+      data: data
+    });
+    return installedComponentsApi.updateConfigurationRow(componentId, configurationId, rowId, data, changeDescription)
+      .then(function(response) {
+        VersionActionCreators.loadVersionsForce(componentId, configurationId);
+        return dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_SUCCESS,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          data: response
+        });
+      }).catch(function(e) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.INSTALLED_COMPONENTS_UPDATE_CONFIGURATION_ROW_ERROR,
+          componentId: componentId,
+          configurationId: configurationId,
+          rowId: rowId,
+          error: e
+        });
+        throw e;
+      });
   }
 };

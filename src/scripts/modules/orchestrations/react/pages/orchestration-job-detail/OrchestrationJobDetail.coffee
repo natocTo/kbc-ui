@@ -66,19 +66,22 @@ OrchestrationJobDetail = React.createClass
                 activeJobId: @state.job.get 'id'
           div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
             div {},
-              Tabs defaultActiveKey: @state.openedTab, animation: false, id: 'orchestration-job-detail-tabs',
-                Tab eventKey: 'overview', title: 'Overview',
-                  JobOverview(job: @state.job)
-                Tab eventKey: 'log', title: 'Log',
-                  Events
-                    link:
-                      to: 'orchestrationJob'
+              Tabs
+                defaultActiveKey: @state.openedTab
+                animation: false
+                id: 'orchestration-job-detail-tabs',
+                  Tab eventKey: 'overview', title: 'Overview', className: 'tab-pane-no-padding',
+                    JobOverview(job: @state.job)
+                  Tab eventKey: 'log', title: 'Log', className: 'tab-pane-no-padding',
+                    Events
+                      link:
+                        to: 'orchestrationJob'
+                        params:
+                          orchestrationId: @state.orchestrationId
+                          jobId: @state.job.get('id')
                       params:
-                        orchestrationId: @state.orchestrationId
-                        jobId: @state.job.get('id')
-                    params:
-                      runId: @state.job.get('runId')
-                    autoReload: @state.job.get('status') == 'waiting' ||  @state.job.get('status') == 'processing'
+                        runId: @state.job.get('runId')
+                      autoReload: @state.job.get('status') == 'waiting' ||  @state.job.get('status') == 'processing'
 
 
 

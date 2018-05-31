@@ -3,19 +3,17 @@ import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import RollbackVersionButton from '../../../../react/common/RollbackVersionButton';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
 import CopyVersionButton from '../../../../react/common/CopyVersionButton';
-import createVersionOnRollback from '../../../../utils/createVersionOnRollback';
-import createVersionOnCopy from '../../../../utils/createVersionOnCopy';
-import VersionsActionCreators from '../../VersionsActionCreators';
-import ImmutableRenderMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import VersionIcon from './VersionIcon';
 
 export default React.createClass({
-  mixins: [ImmutableRenderMixin],
+  mixins: [immutableMixin],
 
   propTypes: {
     componentId: React.PropTypes.string.isRequired,
     configId: React.PropTypes.string.isRequired,
     hideRollback: React.PropTypes.bool,
+    hideCopy: React.PropTypes.bool,
     version: React.PropTypes.object.isRequired,
     versionConfig: React.PropTypes.object.isRequired,
     previousVersion: React.PropTypes.object.isRequired,
@@ -28,11 +26,10 @@ export default React.createClass({
     isDiffPending: React.PropTypes.bool,
     isDiffDisabled: React.PropTypes.bool,
     onPrepareVersionsDiffData: React.PropTypes.func,
-    isLast: React.PropTypes.bool.isRequired
-  },
-
-  onChangeName(name) {
-    VersionsActionCreators.changeNewVersionName(this.props.componentId, this.props.configId, this.props.version.get('version'), name);
+    isLast: React.PropTypes.bool.isRequired,
+    onChangeName: React.PropTypes.func,
+    onCopy: React.PropTypes.func,
+    onRollback: React.PropTypes.func
   },
 
   renderRollbackButton() {
@@ -42,7 +39,7 @@ export default React.createClass({
     return (
       <RollbackVersionButton
         version={this.props.version}
-        onRollback={createVersionOnRollback(this.props.componentId, this.props.configId, this.props.version.get('version'))}
+        onRollback={this.props.onRollback}
         isDisabled={this.props.isRollbackDisabled}
         isPending={this.props.isRollbackPending}
         />
@@ -60,6 +57,22 @@ export default React.createClass({
         previousVersion={this.props.previousVersion}
         previousVersionConfig={this.props.previousVersionConfig}
       />
+    );
+  },
+
+  renderCopyButton() {
+    if (this.props.hideCopy) {
+      return null;
+    }
+    return (
+      <CopyVersionButton
+        version={this.props.version}
+        onCopy={this.props.onCopy}
+        onChangeName={this.props.onChangeName}
+        newVersionName={this.props.newVersionName}
+        isDisabled={this.props.isCopyDisabled}
+        isPending={this.props.isCopyPending}
+        />
     );
   },
 
@@ -89,14 +102,7 @@ export default React.createClass({
         <td className="text-right">
           {this.renderRollbackButton()}
           {this.props.version.get('version') > 1 ? this.renderDiffButton() : null}
-          <CopyVersionButton
-            version={this.props.version}
-            onCopy={createVersionOnCopy(this.props.componentId, this.props.configId, this.props.version.get('version'), this.props.newVersionName)}
-            onChangeName={this.onChangeName}
-            newVersionName={this.props.newVersionName}
-            isDisabled={this.props.isCopyDisabled}
-            isPending={this.props.isCopyPending}
-            />
+          {this.renderCopyButton()}
         </td>
       </tr>
     );

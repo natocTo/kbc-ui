@@ -16,6 +16,8 @@ import './ModalDialog.less';
 
 export default React.createClass({
 
+  displayName: 'TableBrowserModalDialog',
+
   propTypes: {
     moreTables: React.PropTypes.array,
     tableId: PropTypes.string.isRequired,
@@ -45,6 +47,10 @@ export default React.createClass({
 
   mixins: [immutableMixin],
 
+  componentDidMount() {
+    this.refs.close.focus();
+  },
+
   render() {
     const modalBody = this.renderModalBody();
     let tableLink = (<small className="disabled btn btn-link"> Explore in Console</small>);
@@ -66,7 +72,7 @@ export default React.createClass({
       >
         <Modal.Header>
           <button onClick={this.props.onHideFn}
-            type="button" className="close" data-dismiss="modal">&times;</button>
+            type="button" className="close" ref="close" data-dismiss="modal">&times;</button>
           <Modal.Title>
             {this.props.tableId}
             {tableLink}
@@ -124,7 +130,7 @@ export default React.createClass({
   renderModalBody() {
     return (
       <div>
-        <Tabs defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
+        <Tabs className="tabs-inside-modal" defaultActiveKey="general" animation={false} id={'modal' + this.props.tableId}>
           <Tab eventKey="general" title="General Info">
             {this.renderGeneralInfo()}
           </Tab>

@@ -115,17 +115,6 @@ dispatcher.register(function(payload) {
     case Constants.ActionTypes.VERSIONS_ROLLBACK_ERROR:
       return VersionsStore.emitChange();
 
-    case Constants.ActionTypes.VERSIONS_COPY_START:
-      return VersionsStore.emitChange();
-
-    case Constants.ActionTypes.VERSIONS_COPY_SUCCESS:
-      _store = _store.deleteIn(['newVersionNames', action.componentId, action.configId]);
-      return VersionsStore.emitChange();
-
-    case Constants.ActionTypes.VERSIONS_COPY_ERROR:
-      _store = _store.deleteIn(['newVersionNames', action.componentId, action.configId]);
-      return VersionsStore.emitChange();
-
     case Constants.ActionTypes.VERSIONS_NEW_NAME_CHANGE:
       _store = _store.setIn(['newVersionNames', action.componentId, action.configId, action.version], action.name);
       return VersionsStore.emitChange();

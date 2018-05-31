@@ -24,7 +24,7 @@ export default React.createClass({
   render() {
     const {event} = this.props;
     return (
-      <div>
+      <div className="event-detail-container">
         {this._backLink()}
         <h2>
           Event {event.get('id')}

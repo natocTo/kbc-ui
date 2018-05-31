@@ -13,11 +13,10 @@ const createRequest = function(method, path) {
 };
 
 const installedComponentsApi = {
-  getComponentConfigData: function(componentId, configId) {
+  getComponentConfiguration: function(componentId, configId) {
     const url = 'components/' + componentId + '/configs/' + configId;
     return createRequest('GET', url).promise().then(function(response) {
-      const ref = response.body;
-      return ref !== null ? ref.configuration : null;
+      return response.body;
     });
   },
   getComponents: function() {
@@ -73,18 +72,40 @@ const installedComponentsApi = {
       return response.body;
     });
   },
+  getComponentConfigRowVersions: function(componentId, configId, rowId) {
+    const url = 'components/' + componentId + '/configs/' + configId + '/rows/' + rowId + '/versions';
+    return createRequest('GET', url).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   getComponentConfigByVersion: function(componentId, configId, versionId) {
     const url = 'components/' + componentId + '/configs/' + configId + '/versions/' + versionId;
     return createRequest('GET', url).promise().then(function(response) {
       return response.body;
     });
   },
+  getComponentConfigRowByVersion: function(componentId, configId, rowId, versionId) {
+    const url = 'components/' + componentId + '/configs/' + configId + '/rows/' + rowId + '/versions/' + versionId;
+    return createRequest('GET', url).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
   rollbackVersion: function(componentId, configId, version) {
     const url = 'components/' + componentId + '/configs/' + configId + '/versions/' + version + '/rollback';
     return createRequest('POST', url).promise().then(function(response) {
       return response.body;
     });
   },
+  rollbackRowVersion: function(componentId, configId, rowId, version) {
+    const url = 'components/' + componentId + '/configs/' + configId + '/rows/' + rowId + '/versions/' + version + '/rollback';
+    return createRequest('POST', url).promise().then(function(response) {
+      return response.body;
+    });
+  },
+
+
   createConfigCopy: function(componentId, configId, version, name) {
     var config, description;
     if (componentId === 'transformation') {
@@ -121,10 +142,18 @@ const installedComponentsApi = {
       return response.body;
     });
   },
-  updateConfigurationRow: function(componentId, configurationId, rowId, data) {
-    return createRequest('PUT', 'components/' + componentId + '/configs/' + configurationId + '/rows/' + rowId).type('form').send(data).promise().then(function(response) {
-      return response.body;
-    });
+  updateConfigurationRow: function(componentId, configurationId, rowId, data, changeDescription) {
+    var formData = data;
+    if (changeDescription) {
+      formData.changeDescription = changeDescription;
+    }
+    return createRequest('PUT', 'components/' + componentId + '/configs/' + configurationId + '/rows/' + rowId)
+      .type('form')
+      .send(formData)
+      .promise()
+      .then(function(response) {
+        return response.body;
+      });
   },
   updateConfigurationRowEncrypted: function(componentUrl, componentId, configurationId, rowId, data) {
     return request('PUT', componentUrl + '/configs/' + configurationId + '/rows/' + rowId).set('X-StorageApi-Token', ApplicationStore.getSapiTokenString()).type('form').send(data).promise().then(function(response) {
@@ -137,6 +166,19 @@ const installedComponentsApi = {
       }
       return response.body;
     });
+  },
+  orderRows: function(componentId, configurationId, rowIds, changeDescription) {
+    const formData = {
+      rowsSortOrder: rowIds,
+      changeDescription: changeDescription
+    };
+    return createRequest('PUT', 'components/' + componentId + '/configs/' + configurationId)
+      .type('form')
+      .send(formData)
+      .promise()
+      .then(function(response) {
+        return response.body;
+      });
   }
 };
 

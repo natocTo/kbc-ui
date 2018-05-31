@@ -45,7 +45,7 @@ export default function(COMPONENT_ID, configId) {
 
     getRunSingleData(tid) {
       const table = findTable(tid).set('enabled', true);
-      const mapping = findMapping(table.get('tableId'));
+      const mapping = findMapping(table.get('tableId')).delete('limit');
       return configData
         .setIn(['parameters', 'tables'], List().push(table))
         .setIn(['storage', 'input', 'tables'], List().push(mapping))

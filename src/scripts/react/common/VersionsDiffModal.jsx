@@ -9,7 +9,7 @@ import date from '../../utils/date';
 const COLOR_ADD = '#cfc';
 const COLOR_REMOVE = '#fcc';
 
-const PROPS_TO_COMPARE = ['configuration', 'description', 'name'];
+const PROPS_TO_COMPARE = ['configuration', 'description', 'name', 'rowsSortOrder', 'isDisabled'];
 
 function prepareDiffObject(versionObj) {
   if (!versionObj) {
@@ -207,10 +207,10 @@ export default React.createClass({
     if (!isChanged && this.state.showChangedOnly) return null;
 
     const style = {
-      'margin-bottom': '0px',
-      'border-radius': '0',
+      'marginBottom': '0px',
+      'borderRadius': '0',
       'border': 'none',
-      'background-color': color
+      'backgroundColor': color
     };
 
     return <pre style={style}>{val}</pre>;

@@ -20,6 +20,7 @@ module.exports = React.createClass
     columnsValidation: React.PropTypes.object
     editButtons: React.PropTypes.object
     setAllColumnsType: React.PropTypes.object
+    disabledColumnFields: React.PropTypes.array
 
 
 
@@ -46,6 +47,7 @@ module.exports = React.createClass
         dataTypes: @props.dataTypes
         editColumnFn: @props.editColumnFn
         dataPreview: @props.dataPreview
+        disabledFields: @props.disabledColumnFields
       )
 
 
@@ -68,18 +70,8 @@ module.exports = React.createClass
                   ' Hide Ignored'
               if @props.editingColumns
                 @props.setAllColumnsType
-            th null,
-              span null,'Null'
-                ' '
-                React.createElement Hint,
-                  title: 'Nullable Column'
-                ,
-                  'Empty strings in the source data will be replaced with SQL '
-                  code null, 'NULL'
-                  '.'
-              if @props.editingColumns
-                @_createCheckbox()
-            th null, 'Default Value'
+            @_renderNullableHeader()
+            @_renderDefaultHeader()
             th null, @props.editButtons
         tbody null,
           if rows.count() > 0
@@ -90,6 +82,28 @@ module.exports = React.createClass
                 div className: 'text-center',
                   'No Columns.'
 
+
+  _renderNullableHeader: ->
+    if 'nullable' in @props.disabledColumnFields
+      th null, ''
+    else
+      th null,
+        span null,'Null'
+          ' '
+          React.createElement Hint,
+            title: 'Nullable Column'
+          ,
+            'Empty strings in the source data will be replaced with SQL '
+            code null, 'NULL'
+            '.'
+        if @props.editingColumns
+          @_createCheckbox()
+
+  _renderDefaultHeader: ->
+    if 'default' in @props.disabledColumnFields
+      th null, ''
+    else
+      th null, 'Default Value'
 
   _createCheckbox: (property) ->
     allColumnsIgnored = @props.editingColumns.reduce((memo, column) -> memo && column.get('type') == 'IGNORE',

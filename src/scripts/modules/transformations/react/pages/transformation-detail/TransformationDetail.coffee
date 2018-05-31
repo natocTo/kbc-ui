@@ -2,14 +2,16 @@ React = require('react')
 Link = React.createFactory(require('react-router').Link)
 Router = require 'react-router'
 Immutable = require 'immutable'
+classnames = require 'classnames'
 
 TransformationDetailStatic = React.createFactory(require './TransformationDetailStatic')
 
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TransformationsStore  = require('../../../stores/TransformationsStore')
 TransformationBucketsStore  = require('../../../stores/TransformationBucketsStore')
-StorageTablesStore  = require('../../../../components/stores/StorageTablesStore')
-StorageBucketsStore  = require('../../../../components/stores/StorageBucketsStore')
+StorageTablesStore = require('../../../../components/stores/StorageTablesStore')
+StorageBucketsStore = require('../../../../components/stores/StorageBucketsStore')
+ApplicationStore = require('../../../../../stores/ApplicationStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
 VersionsStore = require('../../../../components/stores/VersionsStore')
 TransformationsActionCreators = require '../../../ActionCreators'
@@ -18,9 +20,8 @@ ActivateDeactivateButton = React.createFactory(require('../../../../../react/com
 {Confirm, Loader} = require '../../../../../react/common/common'
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
 
-SqlDepModal = React.createFactory(require './../../modals/SqlDepModal')
-EditButtons = React.createFactory(require('../../../../../react/common/EditButtons'))
-
+SqlDepButton = React.createFactory(require('../../components/SqlDepButton').default)
+ValidateQueriesButton = React.createFactory(require('../../components/ValidateQueriesButton').default)
 sandboxUtils = require('../../../utils/sandboxUtils')
 
 {div, span, ul, li, a, em} = React.DOM
@@ -62,7 +63,7 @@ module.exports = React.createClass
     latestVersionId: latestVersionId
 
   getInitialState: ->
-    sandboxModalOpen: false
+    validateModalOpen: false
 
   resolveLinkDocumentationLink: ->
     documentationLink = "https://help.keboola.com/manipulation/transformations/"
@@ -74,7 +75,6 @@ module.exports = React.createClass
       subpageName = transformationType
 
     return documentationLink + subpageName
-
 
   _deleteTransformation: ->
     bucketId = @state.bucket.get('id')
@@ -125,6 +125,7 @@ module.exports = React.createClass
             isEditingValid: @state.isTransformationEditingValid
             isQueriesProcessing: @state.pendingActions.has 'queries-processing'
             highlightQueryNumber: @state.highlightQueryNumber
+            highlightingQueryDisabled: @state.validateModalOpen
       div className: 'col-md-3 kbc-main-sidebar',
         ul className: 'nav nav-stacked',
           li {},
@@ -134,11 +135,13 @@ module.exports = React.createClass
             ,
               span className: 'fa fa-search fa-fw'
               ' Overview'
-          li {},
+          li className: classnames(disabled: @state.transformation.get('disabled')),
             RunComponentButton(
               title: "Run transformation"
               component: 'transformation'
               mode: 'link'
+              disabled: @state.transformation.get('disabled')
+              disabledReason: if @state.transformation.get('disabled') then 'Transformation is disabled' else ''
               runParams: =>
                 configBucketId: @state.bucketId
                 transformations: [@state.transformation.get('id')]
@@ -165,10 +168,23 @@ module.exports = React.createClass
               backend == 'mysql' && transformationType == 'simple' or
               backend == 'snowflake'
             li {},
-              SqlDepModal
+              SqlDepButton
                 backend: backend
                 bucketId: @state.bucketId
                 transformationId: @state.transformationId
+
+          if backend == 'snowflake'
+            li {},
+              ValidateQueriesButton
+                backend: backend
+                bucketId: @state.bucketId
+                transformationId: @state.transformationId
+                modalOpen: @state.validateModalOpen
+                onModalOpen: =>
+                  @setState({validateModalOpen: true})
+                onModalClose: =>
+                  @setState({validateModalOpen: false})
+                isSaved: !@state.editingFields.get('queriesChanged', false)
           li {},
             a {},
               React.createElement Confirm,

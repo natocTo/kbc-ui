@@ -23,9 +23,11 @@ module.exports = React.createClass(
     mappingIndex: React.PropTypes.string.isRequired
     otherDestinations: React.PropTypes.object.isRequired
     definition: React.PropTypes.object
+    disabled: React.PropTypes.bool
 
   getDefaultProps: ->
     definition: Immutable.Map()
+    disabled: false
 
   render: ->
     span {className: 'table', style: {wordBreak: 'break-word'}},
@@ -71,7 +73,7 @@ module.exports = React.createClass(
                   @props.inputMapping.get 'destination'
             ]
           span {className: 'td col-xs-1 text-right kbc-no-wrap'},
-            if (@props.inputMapping.get('source') != '')
+            if (@props.inputMapping.get('source') != '' && !@props.disabled)
               React.createElement DeleteButton,
                 tooltip: 'Delete Input'
                 isPending: @props.pendingActions.get('delete-input-' + @props.mappingIndex)
@@ -83,18 +85,18 @@ module.exports = React.createClass(
                       @props.inputMapping.get('source')
                     "?"
                   onConfirm: @_handleDelete
-
-            React.createElement InputMappingModal,
-              mode: 'edit'
-              tables: @props.tables
-              backend: @props.transformation.get("backend")
-              type: @props.transformation.get("type")
-              mapping: @props.editingInputMapping
-              otherDestinations: @props.otherDestinations
-              onChange: @_handleChange
-              onCancel: @_handleCancel
-              onSave: @_handleSave
-              definition: @props.definition
+            if (!@props.disabled)
+              React.createElement InputMappingModal,
+                mode: 'edit'
+                tables: @props.tables
+                backend: @props.transformation.get("backend")
+                type: @props.transformation.get("type")
+                mapping: @props.editingInputMapping
+                otherDestinations: @props.otherDestinations
+                onChange: @_handleChange
+                onCancel: @_handleCancel
+                onSave: @_handleSave
+                definition: @props.definition
 
   _handleChange: (newMapping) ->
     actionCreators.updateTransformationEditingField(@props.bucket.get('id'),

@@ -35,7 +35,7 @@ defaultDataTypes =
 'DATE', 'DATETIME'
 ]
 
-{option, select, p, span, button, strong, div} = React.DOM
+{option, select, p, span, button, strong, div, ul, li} = React.DOM
 
 
 module.exports = (componentId) ->
@@ -84,7 +84,10 @@ templateFn = (componentId) ->
     dataPreview: null
 
   _prepareColumns: (configColumns, storageColumns) ->
-    storageColumns.map (storageColumn) ->
+    configColumnsNamesSet = configColumns.map((c) -> c.get('name')).toSet()
+    deletedColumns = configColumnsNamesSet.subtract(storageColumns)
+    allColumns = storageColumns.concat(deletedColumns)
+    allColumns.map (storageColumn) ->
       configColumnFound = configColumns.find( (cc) -> cc.get('name') == storageColumn)
       if configColumnFound
         configColumnFound
@@ -120,14 +123,22 @@ templateFn = (componentId) ->
       tableEditClassName = 'col-sm-4'
     div className: 'container-fluid',
       div className: 'kbc-main-content',
-        div className: 'row kbc-header',
-          @_renderTableEdit()
-          if isRenderIncremental
-            @_renderIncrementalSetup()
-          if isRenderIncremental
-            @_renderTableFiltersRow()
-          if isRenderIncremental
-            @_renderPrimaryKey()
+        div className: 'kbc-header',
+          ul className: 'list-group list-group-no-border',
+            li className: 'list-group-item',
+              @_renderTableEdit()
+              if componentId == 'keboola.wr-thoughtspot'
+                li className: 'list-group-item',
+                  @_renderThoughSpotTypeInput()
+              if isRenderIncremental
+                li className: 'list-group-item',
+                  @_renderIncrementalSetup()
+              if isRenderIncremental
+                li className: 'list-group-item',
+                  @_renderTableFiltersRow()
+              if isRenderIncremental
+                li className: 'list-group-item',
+                  @_renderPrimaryKey()
 
         ColumnsEditor
           onToggleHideIgnored: (e) =>
@@ -145,6 +156,7 @@ templateFn = (componentId) ->
           dataPreview: @state.dataPreview
           editButtons: @_renderEditButtons()
           setAllColumnsType: @_renderSetColumnsType()
+          disabledColumnFields: @_getDisabledColumnFields()
           onSetAllColumnsNull: (e) =>
             value = if e.target.checked then '1' else '0'
             @state.editingColumns.map (ec) =>
@@ -177,11 +189,11 @@ templateFn = (componentId) ->
     primaryKey = exportInfo.get('primaryKey', List())
     showIncrementalSetupPath = ['IncrementalSetup', 'show']
     tableMapping = @state.v2Actions.getTableMapping(@state.tableId)
-    span null,
-      p null,
-        strong className: 'col-sm-3',
+    div className: 'row',
+      div className: 'col-sm-3',
+        strong null,
           'Load Type'
-        ' '
+      div className: 'col-sm-9',
         button
           className: 'btn btn-link'
           style: {'paddingTop': 0, 'paddingBottom': 0}
@@ -200,32 +212,61 @@ templateFn = (componentId) ->
             c.get('dbName')
           isIncremental: isIncremental
           allTables: @state.allTables
-          onSave: (isIncremental, primaryKey, newMapping) =>
+          onSave: (isIncremental, primaryKey, newMapping, customFieldsValues) =>
             @state.v2Actions.updateV2State('savingIncremental', true)
             finishSaving =  => @state.v2Actions.updateV2State('savingIncremental', false)
-            newExportInfo = exportInfo.set('primaryKey', primaryKey).set('incremental', isIncremental)
+            newExportInfo = exportInfo
+              .set('primaryKey', primaryKey)
+              .set('incremental', isIncremental)
+              .mergeDeep(customFieldsValues)
+
             @setV2TableInfo(newExportInfo).then =>
               if newMapping != tableMapping
                 @state.v2Actions.setTableMapping(newMapping).then(finishSaving)
               else
                 finishSaving()
+          customFieldsValues: @_getCustomFieldsValues()
+          componentId: componentId
 
   _renderPrimaryKey: ->
-    v2State = @state.v2State
     exportInfo = @state.v2ConfigTable
     primaryKey = exportInfo.get('primaryKey', List())
-    p null,
-      strong className: 'col-sm-3',
-        'Primary Key'
-      ' '
-      button
-        className: 'btn btn-link'
-        style: {'paddingTop': 0, 'paddingBottom': 0}
-        disabled: !!@state.editingColumns
-        onClick: @showIncrementalSetupModal
-        primaryKey.join(', ') or 'N/A'
-        ' '
-        span className: 'kbc-icon-pencil'
+    div className: 'row',
+      div className: 'col-sm-3',
+        strong null,
+          'Primary Key'
+      div className: 'col-sm-9',
+        button
+          className: 'btn btn-link'
+          style: {'paddingTop': 0, 'paddingBottom': 0}
+          disabled: !!@state.editingColumns
+          onClick: @showIncrementalSetupModal
+          primaryKey.join(', ') or 'N/A'
+          ' '
+          span className: 'kbc-icon-pencil'
+
+  _renderThoughSpotTypeInput: ->
+    tableType = @state.v2ConfigTable.get('type', 'standard')
+    div className: 'row',
+      div className: 'col-sm-3',
+        strong null,
+          'Table Type'
+      div className: 'col-sm-9',
+        button
+          className: 'btn btn-link'
+          style: {'paddingTop': 0, 'paddingBottom': 0}
+          disabled: !!@state.editingColumns
+          onClick: @showIncrementalSetupModal
+          tableType.toUpperCase()
+          ' '
+          span className: 'kbc-icon-pencil'
+
+  _getCustomFieldsValues: ->
+    if componentId == 'keboola.wr-thoughtspot'
+      return Map({type: @state.v2ConfigTable.get('type', 'standard')})
+
+    return Map()
+
 
   _onEditColumn: (newColumn) ->
     cname = newColumn.get('name')
@@ -287,6 +328,9 @@ templateFn = (componentId) ->
   _getComponentDataTypes: ->
     DataTypes[componentId]?.typesList or defaultDataTypes
 
+  _getDisabledColumnFields: ->
+    DataTypes[componentId]?.disabledFields or []
+
   _getSizeParam: (dataType) ->
     dtypes = @_getComponentDataTypes()
     dt = _.find dtypes, (d) ->
@@ -315,38 +359,39 @@ templateFn = (componentId) ->
 
 
   _renderTableEdit: ->
-    p className: '',
-      strong className: 'col-sm-3', 'Database table name'
-      ' '
-      TableNameEdit
-        tableId: @state.tableId
-        table: @state.table
-        configId: @state.configId
-        tableExportedValue: @state.exportInfo?.get('export') or false
-        currentValue: @state.exportInfo?.get('name') or @state.tableId
-        isSaving: @state.isUpdatingTable
-        editingValue: @state.editingData.getIn(['editingDbNames', @state.tableId])
-        setEditValueFn: (value) =>
-          path = ['editingDbNames', @state.tableId]
-          WrDbActions.setEditingData(componentId, @state.configId, path, value)
-        componentId: componentId
+    div className: 'row',
+      div className: 'col-sm-3',
+        strong null, 'Database table name'
+      div className: 'col-sm-9',
+        TableNameEdit
+          tableId: @state.tableId
+          table: @state.table
+          configId: @state.configId
+          tableExportedValue: @state.exportInfo?.get('export') or false
+          currentValue: @state.exportInfo?.get('name') or @state.tableId
+          isSaving: @state.isUpdatingTable
+          editingValue: @state.editingData.getIn(['editingDbNames', @state.tableId])
+          setEditValueFn: (value) =>
+            path = ['editingDbNames', @state.tableId]
+            WrDbActions.setEditingData(componentId, @state.configId, path, value)
+          componentId: componentId
       ' '
   _renderTableFiltersRow: ->
     tableMapping = @state.v2Actions.getTableMapping(@state.tableId)
-    p null,
-      strong className: 'col-sm-3', 'Data Filter'
-      ' '
-    ,
-      button
-        className: 'btn btn-link'
-        style: {'paddingTop': 0, 'paddingBottom': 0}
-        disabled: !!@state.editingColumns
-        onClick: @showIncrementalSetupModal
-        React.createElement FiltersDescription,
-          value: tableMapping
-          rootClassName: ''
-        ' '
-        span className: 'kbc-icon-pencil'
+    div className: 'row',
+      div className: 'col-sm-3',
+        strong null, 'Data Filter'
+      div className: 'col-sm-9',
+        button
+          className: 'btn btn-link'
+          style: {'paddingTop': 0, 'paddingBottom': 0}
+          disabled: !!@state.editingColumns
+          onClick: @showIncrementalSetupModal
+          React.createElement FiltersDescription,
+            value: tableMapping
+            rootClassName: ''
+          ' '
+          span className: 'kbc-icon-pencil'
 
   _renderEditButtons: ->
     isValid = @state.columnsValidation?.reduce((memo, value) ->

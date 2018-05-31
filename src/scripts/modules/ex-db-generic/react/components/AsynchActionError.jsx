@@ -31,7 +31,7 @@ export default React.createClass({
             <p>
               {connectionTesting && (
                 <span>
-                  <Loader /> Retrying the database connection ...
+                  <Loader /> Retrying the database connection
                 </span>
               )}
             </p>
@@ -46,7 +46,7 @@ export default React.createClass({
           <p>
             {sourceTablesLoading ? (
               <span>
-                <Loader /> Retrying fetch of table list from source database ...
+                <Loader /> Retrying fetch of table list from source database
               </span>
             ) : (
               <button

@@ -9,7 +9,8 @@ export default React.createClass({
   mixins: [PureRenderMixin],
   propTypes: {
     transformation: PropTypes.object.isRequired,
-    bucketId: PropTypes.string.isRequired
+    bucketId: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired
   },
 
   getInitialState() {
@@ -21,9 +22,11 @@ export default React.createClass({
   },
 
   open() {
-    this.setState({
-      showModal: true
-    });
+    if (!this.props.disabled) {
+      this.setState({
+        showModal: true
+      });
+    }
   },
 
   close() {
@@ -81,15 +84,23 @@ export default React.createClass({
   },
 
   renderOpenButton() {
-    return (
-      <Tooltip tooltip="Change Transformation Phase" placement="top">
+    if (this.props.disabled) {
+      return (
         <span onClick={this.open} className="label kbc-label-rounded-small label-default kbc-cursor-pointer">
           Phase: {this.props.transformation.get('phase')}
-          {' '}
-          <span className="kbc-icon-pencil"/>
         </span>
-      </Tooltip>
-    );
+      );
+    } else {
+      return (
+        <Tooltip tooltip="Change Transformation Phase" placement="top">
+          <span onClick={this.open} className="label kbc-label-rounded-small label-default kbc-cursor-pointer">
+            Phase: {this.props.transformation.get('phase')}
+            {' '}
+            <span className="kbc-icon-pencil"/>
+          </span>
+        </Tooltip>
+      );
+    }
   },
 
   handlePhaseChange(e) {

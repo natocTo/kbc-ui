@@ -1,7 +1,7 @@
 React = require 'react'
 ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
 Button = React.createFactory(require('react-bootstrap').Button)
-Select = React.createFactory(require('react-select'))
+Select = React.createFactory(require('react-select').default)
 _ = require('underscore')
 
 module.exports = React.createClass

@@ -1,15 +1,12 @@
 import React from 'react';
 import {Map} from 'immutable';
-import Clipboard from '../../../../../react/common/Clipboard';
 
 import TestCredentialsButtonGroup from '../../../../../react/common/TestCredentialsButtonGroup';
-import {Input, FormControls} from './../../../../../react/common/KbcBootstrap';
+import {Input} from './../../../../../react/common/KbcBootstrap';
 import Tooltip from '../../../../../react/common/Tooltip';
-import SshTunnelRow from '../../../../../react/common/SshTunnelRow';
+import NonStaticSshTunnelRow from '../../../../../react/common/NonStaticSshTunnelRow';
 
 import SSLForm from './SSLForm';
-
-const StaticText = FormControls.Static;
 
 export default React.createClass({
   propTypes: {
@@ -26,17 +23,9 @@ export default React.createClass({
     actionCreators: React.PropTypes.object.isRequired
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
-  },
-
   getDefaultProps() {
     return {
-      onChange: function() {
-        return {
-          isValidEditingCredentials: true
-        };
-      }
+      onChange: () => null
     };
   },
 
@@ -51,6 +40,10 @@ export default React.createClass({
       value = parseInt(event.target.value, 10);
     }
     return this.props.onChange(this.props.credentials.set(propName, value));
+  },
+
+  handleCheckboxChange(propName, e) {
+    return this.props.onChange(this.props.credentials.set(propName, e.target.checked));
   },
 
   renderProtectedLabel(labelValue, alreadyEncrypted) {
@@ -72,12 +65,12 @@ export default React.createClass({
 
   createProtectedInput(labelValue, propName) {
     let savedValue = this.props.savedCredentials.get(propName);
-
     return (
           <Input
             key={propName}
             label={this.renderProtectedLabel(labelValue, !!savedValue)}
             type="password"
+            disabled={!this.props.enabled}
             labelClassName="col-xs-4"
             wrapperClassName="col-xs-8"
             placeholder={(savedValue) ? 'type new password to change it' : ''}
@@ -87,50 +80,32 @@ export default React.createClass({
   },
 
   createInput(labelValue, propName, type = 'text', isProtected = false) {
-    if (this.props.enabled) {
-      if (isProtected) {
-        return this.createProtectedInput(labelValue, propName);
-      } else {
-        return (
-          <Input
-            key={propName}
-            label={labelValue}
-            type={type}
-            labelClassName="col-xs-4"
-            wrapperClassName="col-xs-8"
-            value={this.props.credentials.get(propName)}
-            onChange={this.handleChange.bind(this, propName)}/>
-        );
-      }
-    } else if (isProtected) {
-      return (
-        <StaticText
-          key={propName}
-          label={labelValue}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          <Tooltip tooltip="Encrypted password">
-            <span className="fa fa-fw fa-lock"/>
-          </Tooltip>
-        </StaticText>
-      );
+    if (isProtected) {
+      return this.createProtectedInput(labelValue, propName);
     } else {
       return (
-        <StaticText
+        <Input
           key={propName}
           label={labelValue}
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8">
-          {this.props.credentials.get(propName)}
-          {(this.props.credentials.get(propName)) ? <Clipboard text={this.props.credentials.get(propName).toString()}/> : null}
-        </StaticText>
+          type={type}
+          disabled={!this.props.enabled}
+          labelClassName={(type === 'checkbox') ? '' : 'col-xs-4'}
+          wrapperClassName={(type === 'checkbox') ? 'col-xs-8 col-xs-offset-4' : 'col-xs-8'}
+          value={this.props.credentials.get(propName)}
+          checked={(type === 'checkbox') ? this.props.credentials.get(propName) : false}
+          onChange={
+            (type === 'checkbox') ?
+              this.handleCheckboxChange.bind(this, propName) :
+              this.handleChange.bind(this, propName)
+          }
+        />
       );
     }
   },
 
   renderFields() {
     return this.props.credentialsTemplate.getFields(this.props.componentId).map(function(field) {
-      return this.createInput(field[0], field[1], field[2], field[3]);
+      return this.createInput(field.label, field.name, field.type, field.protected);
     }, this);
   },
 
@@ -145,10 +120,11 @@ export default React.createClass({
   renderSshRow() {
     if (this.props.hasSshTunnel(this.props.componentId)) {
       return (
-        <SshTunnelRow
+        <NonStaticSshTunnelRow
           isEditing={this.props.enabled}
           data={this.props.credentials.get('ssh', Map())}
           onChange={this.sshRowOnChange}
+          disabledCheckbox={this.props.credentials.getIn(['ssl', 'enabled'], false)}
         />
       );
     }
@@ -161,6 +137,7 @@ export default React.createClass({
           isEditing={this.props.enabled}
           data={this.props.credentials.get('ssl', Map())}
           onChange={this.sslRowOnChange}
+          disabledCheckbox={this.props.credentials.getIn(['ssh', 'enabled'], false)}
         />
       );
     }
@@ -170,7 +147,7 @@ export default React.createClass({
     const { componentId, configId, enabled, isValidEditingCredentials, isEditing } = this.props;
     return (
       <form className="form-horizontal">
-        <div className="kbc-inner-content-padding-fix">
+        <div className="kbc-inner-padding">
           {this.renderFields()}
           {this.renderSshRow()}
           {this.renderSSLForm()}
@@ -186,4 +163,3 @@ export default React.createClass({
     );
   }
 });
-

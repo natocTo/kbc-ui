@@ -56,7 +56,7 @@ module.exports = React.createClass
             h2 null,
               'User specified database credentials'
 
-      div className: 'kbc-inner-content-padding-fix',
+      div className: 'kbc-inner-padding',
         _.map fields, (field) =>
           @_createInput(field[0], field[1], field[2], field[3], field[4], field[5], field[6], field[7])
         @_renderSshTunnelRow()
@@ -71,16 +71,8 @@ module.exports = React.createClass
     a {onClick: @_openSupportModal}, " Contact support"
 
   _snowflakeDescription: ->
-    timeout = ApplicationStore.getSapiToken().getIn(
-      ['owner','limits', 'keboola.wr-db-snowflake.statementTimeout', 'value'],
-      15
-    )
     span null,
-      'These are write credentials to the snowflake database provided by Keboola. All executed queries have '
-      timeout
-      ' seconds timeout and there can be 2 concurrent sessions running at most.'
-      @_renderContactUs()
-      ' if you would like to raise these limits.'
+      'These are write credentials to the snowflake database provided by Keboola.'
 
 
   _renderTestCredentials: ->
@@ -101,6 +93,7 @@ module.exports = React.createClass
         @props.changeCredentialsFn(@props.credentials.set('ssh', newSshData))
       data: @props.credentials.get('ssh', Map())
       isEditing: @props.isEditing
+      disabledCheckbox: false
 
   _createInput: (
     labelValue,

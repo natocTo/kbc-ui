@@ -14,7 +14,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <p className="bottom-margin-20px">
+        <p>
           Provide your own OAuth 2.0 credentials from <a href="https://console.developers.google.com" target="_blank">Google API Console</a>.
           <br />
           Follow these <a href="https://help.keboola.com/extractors/marketing-sales/google-analytics/#custom-oauth-credentials" target="_blank">instructions</a> to set up an application and obtain a pair of credentials.

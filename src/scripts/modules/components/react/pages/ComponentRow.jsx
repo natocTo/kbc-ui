@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ConfigurationRow from './ConfigurationRow';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
+import ComponentName from '../../../../react/common/ComponentName';
 import ComponentDetailLink from '../../../../react/common/ComponentDetailLink';
 
 export default React.createClass({
@@ -19,7 +20,7 @@ export default React.createClass({
             <h2>
               <ComponentIcon component={this.props.component} size="32" />
               <ComponentDetailLink type={ this.props.component.get('type') } componentId={ this.props.component.get('id') }>
-                {this.props.component.get('name')}
+                <ComponentName component={this.props.component} />
               </ComponentDetailLink>
             </h2>
           </div>

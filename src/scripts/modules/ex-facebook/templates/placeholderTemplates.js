@@ -1,8 +1,8 @@
 export default {
   'keboola.ex-instagram': {
-    'name': 'feed',
-    'path': 'e.g. feed or empty string',
-    'fields': 'caption,message,created_time,type,description'
+    'name': 'media',
+    'path': 'e.g. media or empty string',
+    'fields': 'id,caption,media_type,like_count,ig_id,comments_count,comments'
   },
   'keboola.ex-facebook': {
     'name': 'feed',

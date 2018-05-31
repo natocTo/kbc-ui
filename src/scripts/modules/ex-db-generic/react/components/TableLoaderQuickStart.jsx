@@ -18,7 +18,7 @@ export default React.createClass({
     if (isTestingConnection) {
       return (
         <div>
-          <Loader/> Asserting connection validity ...
+          <Loader/> Asserting connection validity
         </div>
       );
     } else if (!validConnection) {
@@ -36,7 +36,7 @@ export default React.createClass({
     } else if (isLoadingSourceTables) {
       return (
         <div>
-          <Loader/> Fetching table list from source database ...
+          <Loader/> Fetching table list from source database
         </div>
       );
     }

@@ -20,7 +20,8 @@ export default React.createClass({
     onSave: React.PropTypes.func.isRequired,
     placement: React.PropTypes.oneOf(['left', 'right']),
     showCancel: React.PropTypes.bool,
-    showSave: React.PropTypes.bool
+    showSave: React.PropTypes.bool,
+    className: React.PropTypes.string
   },
 
   getDefaultProps() {
@@ -38,7 +39,7 @@ export default React.createClass({
   render() {
     if (this.props.placement === 'left') {
       return (
-        <div className="kbc-buttons">
+        <div className={'kbc-buttons ' + this.props.className}>
           {this._saveButton()}
           {this._cancelButton()}
           {!this.props.showCancel && ' '}
@@ -47,7 +48,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <div className="kbc-buttons">
+        <div className={'kbc-buttons ' + this.props.className}>
           {this._loader()}
           {!this.props.showCancel && ' '}
           {this._cancelButton()}

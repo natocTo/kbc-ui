@@ -111,6 +111,7 @@ export default function(configId) {
     var params = {
       federationToken: true,
       notify: false,
+      isEncrypted: true,
       name: getLocalState().get('file').name,
       sizeBytes: getLocalState().get('file').size
     };
@@ -121,18 +122,20 @@ export default function(configId) {
 
     storageApi.prepareFileUpload(params).then(function(response) {
       var fileId = response.id;
-      // one retry, 10 minutes timeout
+      // no retries, no time limit
       const awsParams = {
         signatureVersion: 'v4',
-        maxRetries: 1,
+        maxRetries: 0,
+        region: response.region,
         httpOptions: {
-          timeout: 10 * 60 * 1000
+          timeout: 0
         }
       };
       const s3params = {
         Key: response.uploadParams.key,
         Bucket: response.uploadParams.bucket,
         ACL: response.uploadParams.acl,
+        ServerSideEncryption: response.uploadParams['x-amz-server-side-encryption'],
         Body: getLocalState().get('file')
       };
       const credentials = response.uploadParams.credentials;

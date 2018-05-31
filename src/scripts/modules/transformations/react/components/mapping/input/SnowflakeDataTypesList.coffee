@@ -19,17 +19,16 @@ module.exports = React.createClass
       React.DOM.div {className: "row"},
         React.DOM.span {className: "col-xs-12"},
         if !@props.datatypes.count()
-          React.DOM.p {}, React.DOM.small {}, "No data types set yet."
+          React.DOM.p {}, "No data types set yet."
         else
           ListGroup {},
             @props.datatypes.sort().map((datatype, key) ->
               ListGroupItem {key: key},
-                  React.DOM.small {},
-                    DatatypeLabel
-                      column: key
-                      datatype: datatype
-                    React.DOM.i
-                      className: "kbc-icon-cup kbc-cursor-pointer pull-right"
-                      onClick: ->
-                        component.props.handleRemoveDataType(key)
+                DatatypeLabel
+                  column: key
+                  datatype: datatype
+                React.DOM.i
+                  className: "kbc-icon-cup kbc-cursor-pointer pull-right"
+                  onClick: ->
+                    component.props.handleRemoveDataType(key)
             , @).toArray()

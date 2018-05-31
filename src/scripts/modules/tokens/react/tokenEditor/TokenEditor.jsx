@@ -130,6 +130,7 @@ export default React.createClass({
   renderDescriptionInput() {
     return (
       <input
+        autoFocus={!this.props.isEditing}
         placeholder="Describe token..."
         disabled={this.props.disabled}
         className="form-control"

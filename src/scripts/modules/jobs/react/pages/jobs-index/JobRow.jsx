@@ -24,7 +24,7 @@ export default React.createClass({
     return (
       <Link className="tr" to="jobDetail" params={this.linkParams()} query={this.linkQuery()}>
         <div className="td">
-          <ComponentIcon component={component} size="32"/> <ComponentName component={component}/>
+          <ComponentIcon component={component} size="32"/> <ComponentName component={component} showType />
         </div>
         <div className="td">
           { this.jobConfiguration() }

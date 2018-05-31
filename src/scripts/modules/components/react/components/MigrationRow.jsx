@@ -1,7 +1,8 @@
 import React from 'react';
 import Promise from 'bluebird';
 import _ from 'underscore';
-import {Alert, Modal, Table, Tabs, Tab} from 'react-bootstrap';
+import {Modal, Table, Tabs, Tab, Row, Col, Button} from 'react-bootstrap';
+import {AlertBlock} from '@keboola/indigo-ui';
 import {Check, Loader, RefreshIcon} from '@keboola/indigo-ui';
 import {fromJS, List, Map} from 'immutable';
 import {Link} from 'react-router';
@@ -157,7 +158,8 @@ export default React.createClass({
     }
 
     const configHelpText = 'List of all configurations to be migrated and their new counterparts';
-    const orchHelpText = 'List of orchestrations containing tasks of either the old db extractor or new db extractors. After a successful migration there should be only new db extractor tasks.';
+    const orchHelpText = 'List of orchestrations containing tasks of either the old component or new component. '
+      + 'After a successful migration there should be only new component\'s tasks.';
 
     const body = (
       !this.state.loadingStatus ?
@@ -168,7 +170,7 @@ export default React.createClass({
          </p>
          :
          <div>
-           <Tabs defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
+           <Tabs className="tabs-inside-modal" defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
 
              <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
                {this.renderConfigStatus()}
@@ -199,7 +201,7 @@ export default React.createClass({
       bsSize: 'large'
     };
     return (
-      <div className="migration-row">
+      <div className="kbc-overview-component-container">
         {this.renderInfoRow()}
         {this.renderModal(dialogTitle, body, footer, dialogProps)}
       </div>
@@ -208,13 +210,14 @@ export default React.createClass({
 
   renderMigrationButton() {
     return (
-      <button
+      <Button
+        bsStyle="primary"
         onClick={this.showModal}
         disabled={this.state.isLoading}
-        type="sumbit" className="btn btn-primary">
+      >
         Proceed to Migration
         {this.state.isLoading ? <Loader/> : null}
-      </button>
+      </Button>
     );
   },
 
@@ -228,15 +231,18 @@ export default React.createClass({
 
   renderInfoRow() {
     return (
-      <Alert bsStyle="warning">
-        <span>
-          <h3>This component has been deprecated</h3>
-          <div className="migration-row-content">
-            {this.getInfo()}
-          </div>
-        </span>
-          {this.renderMigrationButton()}
-      </Alert>
+      <AlertBlock type="warning" title="This component has been deprecated">
+        <Row>
+          <Col md={9}>
+          <span>
+            <p>
+              {this.getInfo()}
+            </p>
+          </span>
+            {this.renderMigrationButton()}
+          </Col>
+        </Row>
+      </AlertBlock>
     );
   },
 

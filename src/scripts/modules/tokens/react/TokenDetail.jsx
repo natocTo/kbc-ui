@@ -12,6 +12,10 @@ import createTokenEventsApi from '../TokenEventsApi';
 import SaveButtons from '../../../react/common/SaveButtons';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
 import TokenString from './Index/TokenString';
+import SendTokenModal from '../react/Index/SendTokenModal';
+import {Link} from 'react-router';
+// import Tooltip from '../../../react/common/Tooltip';
+import ApplicationActionCreators from '../../../actions/ApplicationActionCreators';
 
 const makeDetailPath = (tokenId) => (rest) => ['TokenDetail', tokenId].concat(rest || []);
 
@@ -28,17 +32,20 @@ export default React.createClass({
     const tokenDetailState = localState.getIn(path(), Map());
     const dirtyToken = tokenDetailState.get('dirtyToken', token || Map());
     const isSaving = tokenDetailState.get('isSaving', false);
+    const tokenToSend = tokenDetailState.get('sendToken', Map());
     const eventsApi = !isNew && createTokenEventsApi(tokenId);
 
     return {
       localState: localState,
+      tokenToSend: tokenToSend,
       isNew: isNew,
       token: token,
       tokenId: tokenId,
       dirtyToken: dirtyToken,
       isSaving: isSaving,
       allBuckets: BucketsStore.getAll(),
-      eventsApi: eventsApi
+      eventsApi: eventsApi,
+      isSendingToken: TokensStore.isSendingToken
     };
   },
 
@@ -69,22 +76,20 @@ export default React.createClass({
         <div className="kbc-main-content">
           {this.state.token ?
            <Tabs id="token-detail-tabs" animation={false}>
-             <Tab title="Overview" eventKey="overview" style={{paddingTop: 0}}>
-               <div className="kbc-inner-content-padding-fix">
-                 <div className="form form-horizontal" style={{marginLeft: 0, marginRight: 0}}>
-                   <div className="form-group">
-                     <div className="col-sm-12 text-right">
-                       <SaveButtons
-                         isSaving={this.state.isSaving}
-                         disabled={!this.isValid()}
-                         isChanged={!this.state.token.equals(this.state.dirtyToken)}
-                         onSave={this.handleSaveToken}
-                         onReset={this.handleClose}
-                       />
-                     </div>
+             <Tab title="Overview" eventKey="overview">
+               <div className="form form-horizontal">
+                 <div className="form-group">
+                   <div className="col-sm-12 text-right">
+                     <SaveButtons
+                       isSaving={this.state.isSaving}
+                       disabled={!this.isValid()}
+                       isChanged={!this.state.token.equals(this.state.dirtyToken)}
+                       onSave={this.handleSaveToken}
+                       onReset={this.handleClose}
+                     />
                    </div>
-                   {this.renderTokenEditor(true)}
                  </div>
+                 {this.renderTokenEditor(true)}
                </div>
              </Tab>
              <Tab title="Events" eventKey="events">
@@ -105,7 +110,7 @@ export default React.createClass({
   renderTokenEditor(isEditing) {
     return (
       <TokenEditor
-        disabled={!!this.state.isSaving || !!this.state.createdToken}
+        disabled={!!this.state.isSaving}
         isEditing={isEditing}
         token={this.state.dirtyToken}
         allBuckets={this.state.allBuckets}
@@ -115,12 +120,60 @@ export default React.createClass({
   },
 
   renderTokenCreated() {
+    const creatorLink = (
+      <Link to="tokens-detail" params={{tokenId: this.state.createdToken.get('id')}}>
+        {this.state.createdToken.get('description')}
+      </Link>
+    );
     return (
-      <div>
-        <p className="alert alert-success">Token {this.state.createdToken.get('description')} has been created. Make sure to copy it. You won't be able to see it again. </p>
-        <TokenString token={this.state.createdToken} />
+      <div className="text-center">
+        {this.renderTokenSendModal()}
+        <p className="alert alert-success">Token {creatorLink} has been created. </p>
+        <TokenString token={this.state.createdToken}
+          sendTokenComponent={this.renderTokenSendButton(this.state.createdToken)}/>
+
       </div>
     );
+  },
+
+  renderTokenSendButton(token) {
+    const onClickButton = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.updateLocalState('sendToken', token);
+    };
+    return (
+      <div
+        style={{cursor: 'pointer'}}
+        onClick={onClickButton}
+        className="btnf btn-linkf">
+        <span className="fa fa-fw fa-share"/>
+        {' '}
+        Send token via email
+      </div>
+    );
+  },
+
+
+  renderTokenSendModal() {
+    const token = this.state.tokenToSend;
+    const isSending = this.state.isSendingToken(token.get('id'));
+    return (
+      <SendTokenModal
+        token={token}
+        show={!!token.get('id')}
+        onHideFn={() => this.updateLocalState('sendToken', Map())}
+        onSendFn={(params) => this.sendToken(token, params)}
+        isSending={!!isSending}
+      />
+    );
+  },
+
+  sendToken(token, params) {
+    return TokensActions.sendToken(token.get('id'), params).then(() =>
+      ApplicationActionCreators.sendNotification({
+        message: `Token ${token.get('description')} sent to ${params.email}`
+      }));
   },
 
 
@@ -133,26 +186,26 @@ export default React.createClass({
       );
     }
     return (
-      <div className="kbc-inner-content-padding-fix">
+      <div className="kbc-inner-padding">
         <div className="form form-horizontal">
           {this.state.createdToken
-            ? this.renderTokenCreated()
-            : (
-              <div className="form-group">
-                <div className="col-sm-12 text-right">
-                  <ConfirmButtons
-                    isSaving={this.state.isSaving}
-                    isDisabled={!this.isValid()}
-                    onSave={this.handleSaveToken}
-                    onCancel={this.handleClose}
-                    saveLabel="Create"
-                    showCancel={false}
-                  />
-                </div>
-              </div>
-            )
+           ? this.renderTokenCreated()
+           : (
+             <div className="form-group">
+               <div className="col-sm-12 text-right">
+                 <ConfirmButtons
+                   isSaving={this.state.isSaving}
+                   isDisabled={!this.isValid()}
+                   onSave={this.handleSaveToken}
+                   onCancel={this.handleClose}
+                   saveLabel="Create"
+                   showCancel={false}
+                 />
+               </div>
+             </div>
+           )
           }
-          {this.renderTokenEditor(false)}
+          {!this.state.createdToken && this.renderTokenEditor(false)}
         </div>
       </div>
     );

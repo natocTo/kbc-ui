@@ -4,7 +4,7 @@
   "description": "Keboola Connection UI",
   "author": "Martin Halamicek",
   "dependencies": {
-    "@keboola/indigo-ui": "^2.1.2",
+    "@keboola/indigo-ui": "^4.1.0",
     "aws-sdk": "^2.4.7",
     "babel-core": "^6.3.15",
     "babel-loader": "^6.2.0",
@@ -30,11 +30,12 @@
     "file-loader": "~0.8.1",
     "filesize": "~2.0.4",
     "flux": "^2.0.0",
+    "fuzzaldrin": "^2.1.0",
     "fuzzy": "~0.1.0",
     "immutable": "~3.7.3",
     "intl": "^0.1.4",
     "intl-messageformat": "^1.1.0",
-    "json-editor": "^0.7.25",
+    "json-editor": "git+https://git@github.com/keboola/json-editor.git#58d676add027f42a13ed91db37bcf040a62a4780",
     "json-loader": "^0.5.4",
     "keen-js": "^3.4.0",
     "later": "~1.1.6",
@@ -67,10 +68,11 @@
     "react-radio-group": "~1.1.0",
     "react-remarkable": "^1.1.1",
     "react-router": "~0.13.3",
-    "react-select": "^1.0.0-rc.3",
+    "react-select": "^1.2.1",
     "react-textarea-autosize": "^2.3.1",
     "remarkable": "^1.6.2",
     "remove-markdown": "^0.1.0",
+    "sortablejs": "^1.7.0",
     "style-loader": "~0.13.0",
     "superagent": "~0.21.0",
     "underscore": "~1.7.0",
@@ -82,7 +84,9 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack/dev-server.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
+    "start-http": "webpack-dev-server --config webpack/dev-server.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline",
     "start-projects-list": "webpack-dev-server --config webpack/dev-server-projects-list.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline",
+    "start-settings-users": "webpack-dev-server --config webpack/dev-server-setting-user.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
     "build": "webpack --config webpack/production.config.js --profile --colors --bail && node webpack/generate-manifest.js",
     "pretest": "npm run lint",
     "test": "npm run jest",
@@ -94,7 +98,9 @@
   },
   "devDependencies": {
     "babel-eslint": "7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^1.0.7",
+    "deep-diff": "^0.3.8",
     "enzyme": "^2.6.0",
     "enzyme-to-json": "^1.4.5",
     "eslint": "^3.12.2",
@@ -119,7 +125,7 @@
       "^.+\\.(jsx|js|coffee)$": "<rootDir>/environment/jest/transform.js"
     },
     "moduleNameMapper": {
-      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/FileStub.js",
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/environment/jest/FileStub.js",
       "^.+\\.(css|less|scss|sass)$": "<rootDir>/environment/jest/CSSStub.js"
     },
     "setupFiles": [

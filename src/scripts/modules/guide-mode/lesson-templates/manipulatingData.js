@@ -8,7 +8,7 @@ export default {
       'backdrop': true,
       'isNavigationVisible': false,
       'title': 'Introduction',
-      'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (*CARS* and *POPULATION*) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage.',
+      'markdown': 'In this lesson, you will process the data you loaded into Storage in Lesson 2. <br/><br/> Using a simple transformation, you will join the tables (*cars* and *countries*) and compute the ratio of motor vehicles to persons per country. The result will be also kept in Storage.',
       'media': 'kbc_scheme_light_blue-tra.svg',
       'mediaType': 'img',
       'route': {
@@ -21,7 +21,7 @@ export default {
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Create Bucket',
-      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-sm">+ New Transformation Bucket</span> and name it, e.g., _Guide bucket_. Then click <span class="btn btn-success btn-sm">Create Bucket</span>.',
+      'markdown': 'Like tables in Storage, Transformations are organized into buckets. Before creating your transformation, you need to create a new bucket. <br/><br/> Click on <span class="btn btn-success btn-sm">+ New Transformation Bucket</span> and name it, e.g., _Guide_. Then click <span class="btn btn-success btn-sm">Create Bucket</span>.',
       'media': '',
       'mediaType': '',
       'route': {
@@ -59,11 +59,22 @@ export default {
       'markdown':
       'Next you need to specify what tables will be used in the transformation, what tables will be written to Storage as results, and what will happen with the data in the transformation:'
       + `<br><br>
-**Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.CARS* as the source table. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. <br> Repeat the steps for the second table *in.c-keboola-ex-db-snowflake.POPULATION*.
+**Input Mapping** — click <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.cars* as the Source. Accept the suggested destination. It’s the table's name inside the transformation. Click <span class="btn btn-success btn-sm">Create Input</span>. <br> Click again on <span class="btn btn-success btn-sm">+ New Input</span> and select *in.c-keboola-ex-db-snowflake.countries* as the Source. Accept the suggested destination. Click <span class="btn btn-success btn-sm">Create Input</span>.
 <br/><br/>
-**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and enter \`CARS_POPULATION\` as the source table. This table will be created in the transformation. Then set the destination to \`out.c-snowflake.CARS_POPULATION\`. It’s the name the new table *CARS_POPULATION* will have in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
+**Output Mapping** — click <span class="btn btn-success btn-sm">+ New Output</span> and type \`cars_population\` as the Source. This table will be created in the transformation. Then set the Destination. Set \`out\` stage. Accept \`c-guide\` as a bucket name. Accept \`cars_population\` as a table. It’s a name for the new table *cars_population* that will be created in Storage. Click <span class="btn btn-success btn-sm">Create Output</span>.
 <br/><br/>
-**Queries** — to create your output table, copy the following code and replace the default text with it: <br/> \`CREATE TABLE "CARS_POPULATION" AS SELECT "CARS".*, "POPULATION"."POPULATION", ("POPULATION"."POPULATION" / "CARS"."CARS") AS "PERSON_PER_CAR" FROM "CARS" JOIN "POPULATION" ON "CARS"."COUNTRY" = "POPULATION"."COUNTRY"\`.<br/> Then <span class="btn btn-success btn-sm">Save</span> it.
+**Queries** — to create your output table, copy the following code and replace the default text with it: <br/> 
+<pre style="word-break: keep-all;"><code>CREATE TABLE "cars_population" AS 
+SELECT 
+    "countries"."name", 
+    "cars"."total_cars", 
+    "countries"."population", 
+    ("cars"."total_cars" / "countries"."population") AS "cars_per_capita" 
+FROM "cars" 
+JOIN "countries" 
+    ON "cars"."country" = "countries"."name"
+</code></pre>
+<br/>Then <span class="btn btn-success btn-sm">Save</span> it.
 <br/><br/>
 To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.
 
@@ -99,7 +110,7 @@ To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa f
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Check Jobs',
-      'markdown': 'In the **Jobs** section, you can find all operations you have run in your project so far. <br/><br/> The status of your transformation job probably says **processing** now. It will change to **success** in a little while. Your input tables will be joined, the ratio of motor vehicles to persons per country will be calculated, and the output table *CARS_POPULATION* will be created. You can check the details of each job here too.' +
+      'markdown': 'In the **Jobs** section, you can find all operations you have run in your project so far. <br/><br/> The status of your transformation job probably says **processing** now. It will change to **success** in a little while. Your input tables will be joined, the ratio of motor vehicles to persons per country will be calculated, and the output table *cars_population* will be created. You can check the details of each job here too.' +
       '<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'media': '',
       'mediaType': '',
@@ -113,7 +124,7 @@ To continue, click <span class="btn btn-primary btn-sm">Next step <i class="fa f
       'backdrop': false,
       'isNavigationVisible': true,
       'title': 'Check Storage',
-      'markdown': 'To see what the final table looks like, check its data sample in Storage. Just click on the bucket **out.c-snowflake** on the left. Then click on the table *CARS_POPULATION* and select the tab **Data sample**.<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
+      'markdown': 'To see what the final table looks like, check its data sample in Storage. Just click on the bucket **out.c-guide** on the left. Then click on the table *cars_population* and select the tab **Data sample**.<br/><br/> When you are ready, click <span class="btn btn-primary btn-sm">Next step <i class="fa fa-chevron-right"></i></span>.',
       'media': '',
       'mediaType': '',
       'route': {

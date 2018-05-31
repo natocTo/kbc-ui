@@ -37,11 +37,11 @@ export default React.createClass({
           <div className="form form-horizontal" style={{marginLeft: 0, marginRight: 0}}>
             <div className="form-group">
               <label className="control-label col-sm-3">
-                Recipient email
+                Recipient
               </label>
               <div className="col-sm-9">
                 <input
-                  placeholder="email address of the recipient"
+                  placeholder="mail@example.com"
                   disabled={this.props.isSending}
                   className="form-control"
                   type="email"
@@ -56,7 +56,7 @@ export default React.createClass({
               </label>
               <div className="col-sm-9">
                 <textarea
-                  placeholder="message for the recipient"
+                  placeholder="Here's the token to upload your data"
                   disabled={this.props.isSending}
                   className="form-control"
                   type="textarea"
@@ -94,7 +94,7 @@ export default React.createClass({
     return (
       <div>
         <p className="alert alert-info">
-          Recipient will receive email containing link to token retrieval page, link will expire in 24 hours.
+          The recipient will receive an email with a link to retrieve the token. The link will expire in 24 hours.
         </p>
       </div>
     );

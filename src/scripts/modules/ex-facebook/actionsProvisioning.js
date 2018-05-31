@@ -181,7 +181,7 @@ export default function(COMPONENT_ID, configId) {
             isLoading: false,
             code: response.code,
             isError: isError,
-            error: isError ? response.error : null,
+            error: isError ? response : null,
             data: !isError ? response.map((a) => {delete a.perms; return a;}) : null
           }));
         })

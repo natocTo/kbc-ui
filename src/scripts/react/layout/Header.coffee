@@ -10,6 +10,9 @@ Link = React.createFactory(require('react-router').Link)
 RoutePendingIndicator = React.createFactory(require './RoutePendingIndicator')
 ComponentIcon = React.createFactory(require('../common/ComponentIcon').default)
 ComponentNameEdit = React.createFactory(require '../../modules/components/react/components/ComponentName')
+ConfiguratinRowName = React.createFactory(
+  require('../../modules/configurations/react/components/ConfigurationRowName').default
+)
 NotificationsAccess = require('../../react/common/NotificationsAccess').default
 
 {div, nav, span, a, h1} = React.DOM
@@ -90,12 +93,20 @@ Header = React.createClass
         breadcrumbs.push partElement
         breadcrumbs.push(span className: 'kbc-icon-arrow-right', key: 'arrow-' + part.get('name'))
       else if @state.component && part.getIn(['link', 'to']) == @state.component.get('id')
-        # last breadcrumb in case it is a component detail
-        # component name edit is enabled
+        # last breadcrumb in case it is a configuration
+        # configuration name edit is enabled
         breadcrumbs.push span key: part.get('name'),
           ComponentNameEdit
             componentId: @state.component.get 'id'
             configId: @state.currentRouteParams.get 'config'
+      else if @state.component && part.getIn(['link', 'to']) == @state.component.get('id') + '-row'
+        # last breadcrumb in case it is a component configuration row detail
+        # configuration row name edit is enabled
+        breadcrumbs.push span key: part.get('name'),
+          ConfiguratinRowName
+            componentId: @state.component.get 'id'
+            configId: @state.currentRouteParams.get 'config'
+            rowId: @state.currentRouteParams.get 'row'
       else if @state.currentRouteConfig?.get 'nameEdit'
         nameEdit = span key: 'name-edit-wrapper',
           @state.currentRouteConfig.get('nameEdit')(

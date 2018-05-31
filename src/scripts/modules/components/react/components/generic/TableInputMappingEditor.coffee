@@ -7,6 +7,7 @@ Input = React.createFactory Input
 SapiTableSelector = React.createFactory(require('../SapiTableSelector'))
 ChangedSinceFilterInput = require('./ChangedSinceFilterInput').default
 DataFilterRow = require('./DataFilterRow').default
+PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'TableInputMappingEditor'
@@ -24,22 +25,6 @@ module.exports = React.createClass
   getDefaultProps: ->
     showFileHint: true
     definition: Immutable.Map()
-
-  getInitialState: ->
-    showDetails: @props.initialShowDetails
-
-  _handleToggleShowDetails: (e) ->
-    @setState(
-      showDetails: e.target.checked
-    )
-
-  shouldComponentUpdate: (nextProps, nextState) ->
-    should = @props.value != nextProps.value ||
-        @props.tables != nextProps.tables ||
-        @props.disabled != nextProps.disabled ||
-        @state.showDetails != nextState.showDetails
-
-    should
 
   _handleChangeSource: (value) ->
     # use only table name from the table identifier
@@ -70,15 +55,6 @@ module.exports = React.createClass
   render: ->
     component = @
     React.DOM.div {className: 'form-horizontal clearfix'},
-      React.DOM.div {className: "row col-md-12"},
-        React.DOM.div className: 'form-group form-group-sm',
-          React.DOM.div className: 'col-xs-10 col-xs-offset-2',
-            Input
-              standalone: true
-              type: 'checkbox'
-              label: React.DOM.small {}, 'Show details'
-              checked: @state.showDetails
-              onChange: @_handleToggleShowDetails
       React.DOM.div {className: "row col-md-12"},
         React.DOM.div className: 'form-group',
           React.DOM.label className: 'col-xs-2 control-label', 'Source'
@@ -111,22 +87,23 @@ module.exports = React.createClass
                     "File will be available at"
                     React.DOM.code {}, "/data/in/tables/" + @_getFileName()
 
-      if @state.showDetails
-        React.createElement ColumnsSelectRow,
-          value: @props.value
-          disabled: @props.disabled
-          onChange: @props.onChange
-          allTables: @props.tables
+      React.DOM.div {className: "row col-md-12"},
+        PanelWithDetails
+          defaultExpanded: @props.initialShowDetails
+          React.DOM.div {className: 'form-horizontal clearfix'},
+            React.createElement ColumnsSelectRow,
+              value: @props.value
+              disabled: @props.disabled
+              onChange: @props.onChange
+              allTables: @props.tables
 
-      if @state.showDetails
-        React.createElement ChangedSinceFilterInput,
-          mapping: @props.value
-          disabled: @props.disabled
-          onChange: @props.onChange
+            React.createElement ChangedSinceFilterInput,
+              mapping: @props.value
+              disabled: @props.disabled
+              onChange: @props.onChange
 
-      if @state.showDetails
-        React.createElement DataFilterRow,
-          value: @props.value
-          disabled: @props.disabled
-          onChange: @props.onChange
-          allTables: @props.tables
+            React.createElement DataFilterRow,
+              value: @props.value
+              disabled: @props.disabled
+              onChange: @props.onChange
+              allTables: @props.tables

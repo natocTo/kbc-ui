@@ -52,7 +52,7 @@ export default React.createClass({
         {this.props.buttonText}
       </small>)
       :
-      (<span className="text-muted">
+      (<span className="text-muted" key="diff-button-icon-and-text">
         {this.renderIcon()}
         {this.props.buttonText}
       </span>),

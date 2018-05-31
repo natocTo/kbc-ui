@@ -25,8 +25,8 @@ module.exports = React.createClass
     restLines = null
     if List.isList(contactData)
       firstLine = strong(null, contactData.first())
-      restLines = contactData.rest().map (line) ->
-        span null,
+      restLines = contactData.rest().map (line, index) ->
+        span key: index,
           br()
           line
     address null,

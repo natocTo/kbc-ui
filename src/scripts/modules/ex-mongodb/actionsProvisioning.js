@@ -4,26 +4,15 @@ import componentsActions from '../components/InstalledComponentsActionCreators';
 import callDockerAction from '../components/DockerActionsApi';
 import RoutesStore from '../../stores/RoutesStore';
 
-import getDefaultPort from '../ex-db-generic/templates/defaultPorts';
-import {getProtectedProperties} from '../ex-db-generic/templates/credentials';
-
+import {getProtectedProperties} from './credentials';
 
 export function loadConfiguration(componentId, configId) {
   return componentsActions.loadComponentConfigData(componentId, configId);
 }
 
 export function createActions(componentId) {
-  function resetProtectedProperties(credentials) {
-    let result = credentials;
-    const props = getProtectedProperties(componentId);
-    for (let prop of props) {
-      result = result.set(prop, '');
-    }
-    return result;
-  }
-
   function updateProtectedProperties(newCredentials, oldCredentials) {
-    const props = getProtectedProperties(componentId);
+    const props = getProtectedProperties();
     let result = newCredentials;
     for (let prop of props) {
       const newValue = newCredentials.get(prop);
@@ -66,16 +55,6 @@ export function createActions(componentId) {
       updateLocalState(configId, 'queriesFilter', query);
     },
 
-    editCredentials(configId) {
-      const store = getStore(configId);
-      let credentials = store.getCredentials();
-      if (!credentials.get('port')) {
-        credentials = credentials.set('port', getDefaultPort(componentId));
-      }
-      credentials = resetProtectedProperties(credentials);
-      updateLocalState(configId, 'editingCredentials', credentials);
-    },
-
     cancelCredentialsEdit(configId) {
       removeFromLocalState(configId, ['isChangedCredentials'], null);
       removeFromLocalState(configId, ['editingCredentials'], null);
@@ -105,16 +84,8 @@ export function createActions(componentId) {
       return saveConfigData(configId, newData, ['pending', qid, 'enabled']);
     },
 
-    updateNewQuery(configId, newQuery) {
-      updateLocalState(configId, ['newQueries', 'query'], newQuery);
-    },
-
     resetNewCredentials(configId) {
       updateLocalState(configId, ['newCredentials'], null);
-    },
-
-    updateNewCredentials(configId, newCredentials) {
-      updateLocalState(configId, ['newCredentials'], newCredentials);
     },
 
     saveNewCredentials(configId) {
@@ -130,16 +101,19 @@ export function createActions(componentId) {
 
     prepareQueryToSave(query) {
       let newQuery = query;
-      newQuery = newQuery.set('name', newQuery.get('newName'));
-      newQuery = newQuery.delete('newName');
 
       const mode = newQuery.get('mode', 'mapping');
+
       if (mode === 'mapping') {
-        newQuery = newQuery.set('mapping', JSON.parse(newQuery.get('newMapping')));
+        const mapping = newQuery.get('mapping');
+        if (Map.isMap(mapping)) {
+          newQuery = newQuery.set('mapping', mapping.toJS());
+        } else {
+          newQuery = newQuery.set('mapping', JSON.parse(mapping));
+        }
       } else {
         newQuery = newQuery.delete('mapping');
       }
-      newQuery = newQuery.delete('newMapping');
       return newQuery;
     },
 
@@ -186,31 +160,37 @@ export function createActions(componentId) {
     updateEditingQuery(configId, query) {
       const queryId = query.get('id');
       updateLocalState(configId, ['editingQueries', queryId], query);
-    },
-
-    editQuery(configId, queryId) {
-      let query = getStore(configId).getConfigQuery(queryId);
-
-      query = query.set('newName', query.get('name'));
-      query = query.set('newMapping', JSON.stringify(query.get('mapping'), null, 2));
-
-      updateLocalState(configId, ['editingQueries', queryId], query);
+      if (!localState(configId).getIn(['isChanged', queryId], false)) {
+        updateLocalState(configId, ['isChanged', queryId], true);
+      }
     },
 
     cancelQueryEdit(configId, queryId) {
       removeFromLocalState(configId, ['editingQueries', queryId]);
     },
 
+    resetQueryEdit(configId, queryId) {
+      removeFromLocalState(configId, ['isChanged', queryId]);
+      const store = getStore(configId);
+      if (store.isNewQuery(queryId)) {
+        const newQuery = store.getNewQuery(queryId);
+        updateLocalState(configId, ['newQueries', queryId], newQuery);
+        updateLocalState(configId, ['editingQueries', queryId], newQuery);
+      } else {
+        removeFromLocalState(configId, ['editingQueries', queryId]);
+      }
+    },
+
     saveQueryEdit(configId, queryId) {
       const store = getStore(configId);
       let newQuery = store.getEditingQuery(queryId);
-      let newQueries = store.getQueries().filter( (q) => q.get('name') !== newQuery.get('name'));
+      let newQueries = store.getQueries().filter( (q) => q.get('id') !== newQuery.get('id'));
 
       newQuery = this.prepareQueryToSave(newQuery);
 
       newQueries = newQueries.push(newQuery);
       const newData = store.configData.setIn(['parameters', 'exports'], newQueries);
-      return saveConfigData(configId, newData, ['savingQueries']).then(() => {
+      return saveConfigData(configId, newData, ['isSaving', queryId]).then(() => {
         this.cancelQueryEdit(configId, queryId);
         removeFromLocalState(configId, ['isSaving', queryId]);
         removeFromLocalState(configId, ['isChanged', queryId]);

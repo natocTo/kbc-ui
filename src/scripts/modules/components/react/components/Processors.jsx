@@ -1,8 +1,12 @@
-import React, {PropTypes} from 'react';
-import Edit from './ProcessorsEdit';
+import React, { PropTypes } from 'react';
+import Input from './ProcessorsInput';
+import Clipboard from '../../../../react/common/Clipboard';
 import SaveButtons from '../../../../react/common/SaveButtons';
+import immutableMixin from 'react-immutable-render-mixin';
 
 export default React.createClass({
+  mixins: [immutableMixin],
+
   propTypes: {
     value: PropTypes.string.isRequired,
     isEditingValid: PropTypes.bool.isRequired,
@@ -20,15 +24,22 @@ export default React.createClass({
     return this.props.value;
   },
 
-
   render() {
     return (
       <div>
-        <h2 style={{lineHeight: '32px'}}>
+        <h2 style={{lineHeight: '32px', marginBottom: '10px'}}>
           Processors
-          {this.renderButtons()}
+          {' '}
+          <small>
+            <Clipboard text={this.props.value}/>
+          </small>
         </h2>
-        {this.scripts()}
+        {this.renderButtons()}
+        <Input
+          value={this.getValue()}
+          disabled={this.props.isSaving}
+          onChange={this.props.onEditChange}
+          />
       </div>
     );
   },
@@ -44,16 +55,6 @@ export default React.createClass({
           onReset={this.props.onEditCancel}
         />
       </span>
-    );
-  },
-
-  scripts() {
-    return (
-      <Edit
-        value={this.getValue()}
-        disabled={this.props.isSaving}
-        onChange={this.props.onEditChange}
-        />
     );
   }
 });

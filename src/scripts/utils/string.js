@@ -114,7 +114,7 @@ const REMOVE_DIACRITICS_MAP = [
   { base: 'y', letters: RegExp('[\u0079\u24E8\uFF59\u1EF3\u00FD\u0177\u1EF9\u0233\u1E8F\u00FF\u1EF7\u1E99\u1EF5\u01B4' +
     '\u024F\u1EFF]', 'g')},
   { base: 'z', letters: /[\u007A\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763]/g },
-  { base: '-', letters: /\s/g }
+  { base: '-', letters: /\s+/g }
 ];
 
 let removeDiacriticsCache = {};
@@ -136,11 +136,17 @@ export default {
     return str.replace(/[^a-zA-Z0-9-]/g, '-');
   },
 
-  webalize(string, separator = '-') {
-    return removeDiacritics(string)
-    .toLowerCase()
-    .replace(/\ /g, '-')
-      .replace(/[^a-z0-9\-]/g, '')
+  webalize(string, options = {}) {
+    const {separator = '-', caseSensitive = false} = options;
+    const caseHandledString = caseSensitive ? removeDiacritics(string) : removeDiacritics(string).toLowerCase();
+    return caseHandledString
+      .replace(caseSensitive ? /[^A-Za-z0-9\-_]/g : /[^a-z0-9\-_]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-(.*)$/g, '$1')
+      .replace(/^(.*)-$/g, '$1')
+      .replace(/_+/g, '_')
+      .replace(/^_+/, '')
+      .replace(/_+$/, '')
       .replace(/-/g, separator);
   },
 

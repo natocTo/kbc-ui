@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 // import {Table} from 'react-bootstrap';
 import {List, Map} from 'immutable';
+import TokenAge from './TokenAge';
 
 import Tooltip from '../../../../react/common/Tooltip';
 import Confirm from '../../../../react/common/Confirm';
@@ -32,7 +33,7 @@ export default React.createClass({
       <div>
         {this.renderTokenRefreshModal()}
         {this.renderTokenSendModal()}
-        <div className="kbc-inner-content-padding-fix with-bottom-border">
+        <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <p>
             Create new <a target="_blank" href="https://help.keboola.com/storage/tokens/">token</a> and limit access to specific buckets or components in you project.
             <Link to="tokens-detail" params={{tokenId: 'new-token'}} className="btn btn-success pull-right">
@@ -48,6 +49,9 @@ export default React.createClass({
               </div>
               <div className="th">
                 Created
+              </div>
+              <div className="th">
+                Refreshed
               </div>
               <div className="th">
                 Expires
@@ -130,6 +134,9 @@ export default React.createClass({
   },
 
   renderTokenDelete(token) {
+    if (token.has('admin')) {
+      return null;
+    }
     if (this.props.isDeletingFn(token)) {
       return <span className="btn btn-link"><Loader/></span>;
     }
@@ -166,20 +173,25 @@ export default React.createClass({
 
 
   renderTokenSendButton(token) {
-    const onClickButton = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.updateLocalState('sendToken', token);
-    };
-    return (
-      <button
-        onClick={onClickButton}
-        className="btn btn-link">
-        <Tooltip placement="top" tooltip="Send token">
-          <i className="fa fa-share" />
-        </Tooltip>
-      </button>
-    );
+    const isMaster = token.get('isMasterToken', false);
+    if (isMaster) {
+      return null;
+    } else {
+      const onClickButton = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.updateLocalState('sendToken', token);
+      };
+      return (
+        <button
+          onClick={onClickButton}
+          className="btn btn-link">
+          <Tooltip placement="top" tooltip="Send token via email">
+            <i className="fa fa-share"/>
+          </Tooltip>
+        </button>
+      );
+    }
   },
 
   renderTokenRefreshButton(token) {
@@ -233,6 +245,9 @@ export default React.createClass({
           <CreatedDate token={token} />
         </div>
         <div className="td">
+          <TokenAge token={token} />
+        </div>
+        <div className="td">
           <ExpiresInfo token={token} />
         </div>
         <div className="td">
@@ -250,7 +265,7 @@ export default React.createClass({
           {this.renderBucketsAccess(token)}
         </div>
         <div className="td text-right kbc-no-wrap">
-          {!token.has('admin') && this.renderTokenDelete(token)}
+          {this.renderTokenDelete(token)}
           {this.renderTokenSendButton(token)}
           {this.renderTokenRefreshButton(token)}
         </div>

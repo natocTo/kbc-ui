@@ -1,6 +1,7 @@
 import React from 'react';
 import {Map} from 'immutable';
 import classnames from 'classnames';
+import {Alert} from 'react-bootstrap';
 
 import createStoreMixin from '../../../../../react/mixins/createStoreMixin';
 
@@ -11,6 +12,7 @@ import VersionsStore from '../../../../components/stores/VersionsStore';
 
 import QueryTable from './QueryTable';
 import CreateQueryElement from '../../components/CreateQueryElement';
+import MigrateToRowsButton from '../../components/MigrateToRowsButton';
 import ComponentDescription from '../../../../components/react/components/ComponentDescription';
 import ComponentMetadata from '../../../../components/react/components/ComponentMetadata';
 import SidebarVersions from '../../../../components/react/components/SidebarVersionsWrapper';
@@ -71,7 +73,8 @@ export default function(componentId) {
         validConnection: ExDbStore.isConnectionValid(),
         isTestingConnection: ExDbStore.isTestingConnection(),
         hasConnectionBeenTested: ExDbStore.hasConnectionBeenTested(),
-        localState: ExDbStore.getLocalState()
+        localState: ExDbStore.getLocalState(),
+        isRowConfiguration: ExDbStore.isRowConfiguration()
       };
     },
 
@@ -89,6 +92,10 @@ export default function(componentId) {
 
     handleRefreshSourceTables() {
       return actionsProvisioning.reloadSourceTables(componentId, this.state.configId);
+    },
+
+    handleDismissMigrationAlert() {
+      return actionsCreators.dismissMigrationAlert(this.state.configId);
     },
 
     renderNewQueryLink() {
@@ -124,7 +131,9 @@ export default function(componentId) {
               queries={this.state.queriesFiltered}
               configurationId={this.state.configId}
               componentId={componentId}
-              pendingActions={this.state.pendingActions}/>
+              pendingActions={this.state.pendingActions}
+              isRowConfiguration={this.state.isRowConfiguration}
+            />
           );
         } else {
           return (
@@ -142,7 +151,7 @@ export default function(componentId) {
       } else if (
         actionsProvisioning.componentSupportsSimpleSetup(componentId)
         && this.state.hasCredentials
-        && !this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)
+        && !this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)
       ) {
         return (
           <div className="row component-empty-state text-center">
@@ -150,11 +159,11 @@ export default function(componentId) {
               <Quickstart
                 componentId={componentId}
                 configId={this.state.configId}
-                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath)}
-                isTestingConnection={this.state.localState.getIn(storeProvisioning.testingConnectionPath)}
-                validConnection={this.state.localState.getIn(storeProvisioning.connectionValidPath)}
-                sourceTables={this.state.localState.getIn(storeProvisioning.sourceTablesPath)}
-                sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
+                isLoadingSourceTables={this.state.localState.getIn(storeProvisioning.LOADING_SOURCE_TABLES_PATH) || false}
+                isTestingConnection={this.state.localState.getIn(storeProvisioning.TESTING_CONNECTION_PATH) || false}
+                validConnection={this.state.localState.getIn(storeProvisioning.CONNECTION_VALID_PATH) || false}
+                sourceTables={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_PATH)}
+                sourceTablesError={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)}
                 quickstart={this.state.localState.get('quickstart') || Map()}
                 onChange={actionsCreators.quickstartSelected}
                 onSubmit={actionsCreators.quickstart}
@@ -197,18 +206,44 @@ export default function(componentId) {
     },
 
     renderAsynchError() {
-      if (this.state.localState.getIn(storeProvisioning.connectionErrorPath) ||
-        this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)) {
+      if (this.state.localState.getIn(storeProvisioning.CONNECTION_ERROR_PATH) ||
+        this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)) {
         return (
-          <div className="kbc-inner-content-padding-fix">
+          <div className="kbc-inner-padding">
             <AsynchActionError
               componentId={componentId}
               configId={this.state.configId}
-              connectionTesting={this.state.localState.getIn(storeProvisioning.testingConnectionPath, false)}
-              connectionError={this.state.localState.getIn(storeProvisioning.connectionErrorPath)}
-              sourceTablesLoading={this.state.localState.getIn(storeProvisioning.loadingSourceTablesPath, false)}
-              sourceTablesError={this.state.localState.getIn(storeProvisioning.sourceTablesErrorPath)}
+              connectionTesting={this.state.localState.getIn(storeProvisioning.TESTING_CONNECTION_PATH, false)}
+              connectionError={this.state.localState.getIn(storeProvisioning.CONNECTION_ERROR_PATH)}
+              sourceTablesLoading={this.state.localState.getIn(storeProvisioning.LOADING_SOURCE_TABLES_PATH, false)}
+              sourceTablesError={this.state.localState.getIn(storeProvisioning.SOURCE_TABLES_ERROR_PATH)}
             />
+          </div>
+        );
+      }
+    },
+
+    renderMigrationToRowsButton() {
+      if (actionsProvisioning.componentSupportsConfigRows(componentId) && !this.state.isRowConfiguration) {
+        return (
+          <div className="row component-empty-state text-center">
+            <p>Please migrate the configuration to the newest format to unlock the latest features.</p>
+            <MigrateToRowsButton
+              componentId={componentId}
+              configId={this.state.configId}
+              pending={!!this.state.localState.getIn(['migration', 'pending'])}
+              completed={!!this.state.localState.getIn(['migration', 'completed'])}
+              actionsProvisioning={actionsProvisioning}
+            />
+          </div>
+        );
+      } else if (actionsProvisioning.componentSupportsConfigRows(componentId) &&
+        !!this.state.localState.getIn(['migration', 'completed'])) {
+        return (
+          <div className="row component-empty-state text-center">
+            <Alert bsStyle="success" closeLabel="X" onDismiss={this.handleDismissMigrationAlert}>
+              The configuration has been successfully migrated.
+            </Alert>
           </div>
         );
       }
@@ -228,6 +263,7 @@ export default function(componentId) {
               </div>
             </div>
             {this.renderCredentialsSetup()}
+            {this.renderMigrationToRowsButton()}
             {this.renderAsynchError()}
             {
               this.state.queries.count() > 0 ? (
