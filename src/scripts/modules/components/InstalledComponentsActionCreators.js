@@ -13,7 +13,6 @@ import RoutesStore from '../../stores/RoutesStore';
 import ComponentsStore from './stores/ComponentsStore';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import deleteComponentConfiguration from './utils/deleteComponentConfiguration';
-import removeEmptyEncryptAttributes from './utils/removeEmptyEncryptAttributes';
 import preferEncryptedAttributes from './utils/preferEncryptedAttributes';
 import {isObsoleteComponent} from '../trash/utils';
 import jobScheduledNotification from './react/components/notifications/jobScheduled';
@@ -22,7 +21,7 @@ import configurationMovedToTrash from './react/components/notifications/configur
 import configurationMovedToTrashWithRestore from './react/components/notifications/configurationMovedToTrashWithRestore';
 
 const storeEncodedConfig = function(componentId, configId, dataToSave, changeDescription) {
-  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
+  const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(dataToSave));
   let projectId = ApplicationStore.getCurrentProject().get('id');
   return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
     const dataToSaveEncrypted = {
@@ -34,7 +33,7 @@ const storeEncodedConfig = function(componentId, configId, dataToSave, changeDes
 };
 
 const storeEncodedConfigRow = function(componentId, configId, rowId, dataToSave, changeDescription) {
-  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(dataToSave)));
+  const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(dataToSave));
   let projectId = ApplicationStore.getCurrentProject().get('id');
   return installedComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
     const dataToSaveEncrypted = {

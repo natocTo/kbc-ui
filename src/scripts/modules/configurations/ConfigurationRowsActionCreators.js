@@ -8,13 +8,12 @@ import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
 import configurationRowDeleted from '../components/react/components/notifications/configurationRowDeleted';
 import Immutable from 'immutable';
-import removeEmptyEncryptAttributes from '../components/utils/removeEmptyEncryptAttributes';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
 import stringUtils from '../../utils/string';
 const { webalize } = stringUtils;
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
-  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
+  const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(configuration));
   const projectId = ApplicationStore.getCurrentProject().get('id');
   return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
     const dataToSaveEncrypted = {

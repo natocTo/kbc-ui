@@ -4,12 +4,11 @@ import ConfigurationsStore from './ConfigurationsStore';
 import InstalledComponentsApi from '../components/InstalledComponentsApi';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
-import removeEmptyEncryptAttributes from '../components/utils/removeEmptyEncryptAttributes';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
 import Immutable from 'immutable';
 
 const storeEncodedConfiguration = function(componentId, configurationId, configuration, changeDescription) {
-  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
+  const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(configuration));
   const projectId = ApplicationStore.getCurrentProject().get('id');
   return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
     const dataToSaveEncrypted = {
