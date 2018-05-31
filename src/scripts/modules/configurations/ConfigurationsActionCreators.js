@@ -47,13 +47,13 @@ module.exports = {
     const configuration = Immutable.fromJS(JSON.parse(ConfigurationsStore.getEditingJsonConfigurationString(componentId, configurationId)));
 
     return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription ? changeDescription : 'Configuration parameters edited manually')
-      .then(function() {
+      .then(function(storedConfiguration) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATIONS_SAVE_JSON_CONFIGURATION_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
-          value: configuration
+          value: Immutable.fromJS(storedConfiguration).get('configuration')
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({

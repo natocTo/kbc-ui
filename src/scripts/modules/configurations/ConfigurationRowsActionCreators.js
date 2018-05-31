@@ -186,14 +186,14 @@ module.exports = {
     const configuration = Immutable.fromJS(JSON.parse(ConfigurationRowsStore.getEditingJsonConfigurationString(componentId, configurationId, rowId)));
 
     return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited manually'))
-      .then(function() {
+      .then(function(storedConfiguration) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
-          value: configuration
+          value: Immutable.fromJS(storedConfiguration).get('configuration')
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({
