@@ -6,7 +6,7 @@ const createConfiguration = (localState) => {
 };
 
 export default {
-  createConfiguration: createConfiguration(),
+  createConfiguration: createConfiguration,
 
   parseConfiguration(configuration) {
     const parametersTable = parseParameters(configuration);
