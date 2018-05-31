@@ -5,8 +5,6 @@ import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import Immutable from 'immutable';
 
-import './expiration.less';
-
 export default React.createClass({
 
   mixins: [
