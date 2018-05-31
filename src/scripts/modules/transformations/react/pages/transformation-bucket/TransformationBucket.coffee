@@ -83,6 +83,7 @@ TransformationBucket = React.createClass
             )
           li {},
             a
+              className: 'btn btn-link',
               onClick: @_deleteTransformationBucket,
                 span className: 'fa kbc-icon-cup fa-fw'
                 ' Move to Trash'

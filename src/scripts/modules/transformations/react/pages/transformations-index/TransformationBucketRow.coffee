@@ -70,7 +70,7 @@ TransformationBucketRow = React.createClass(
   render: ->
     span {className: 'tr'},
       span {className: 'td col-xs-4'},
-        h4 {}, @props.bucket.get('name')
+        span {className: 'entity-name'}, @props.bucket.get('name')
       span {className: 'td col-xs-5'},
         small {}, descriptionExcerpt(@props.description) || em {}, 'No description'
       span {className: 'td col-xs-3 text-right kbc-no-wrap'},

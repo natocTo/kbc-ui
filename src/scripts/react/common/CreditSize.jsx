@@ -13,20 +13,20 @@ export default React.createClass({
     if (this.props.nanoCredits) {
       if (this.props.nanoCredits < 1000) {
         return (
-          <span>
-            {convertToCredits(this.props.nanoCredits, 9) + ' credits'}
+          <span className="dashboard-value">
+            {convertToCredits(this.props.nanoCredits, 9)} credits
           </span>
         );
       } else if (this.props.nanoCredits < 1000000) {
         return (
-          <span>
-            {convertToCredits(this.props.nanoCredits, 6) + ' credits'}
+          <span className="dashboard-value">
+            {convertToCredits(this.props.nanoCredits, 6)} credits
           </span>
         );
       } else {
         return (
-          <span>
-            {convertToCredits(this.props.nanoCredits, 3) + ' credits'}
+          <span className="dashboard-value">
+            {convertToCredits(this.props.nanoCredits, 3)} credits
           </span>
         );
       }

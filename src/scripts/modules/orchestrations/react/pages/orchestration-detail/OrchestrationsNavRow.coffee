@@ -44,7 +44,7 @@ OrchestrationRow = React.createClass
             JobStatusCircle status: lastExecutedJob?.get('status')
           span className: 'td',
             em null, disabled
-            strong null, @props.orchestration.get('name')
+            div {className: 'entity-name'}, @props.orchestration.get('name')
             span null, duration
             span className: 'kb-info clearfix pull-right',
               (FinishedWithIcon endTime: lastExecutedJob.get('endTime')) if lastExecutedJob?.get('endTime')

@@ -71,9 +71,11 @@ export default React.createClass({
         <div style={{marginBottom: '10em'}}>
           <h3>
             {'Project Power from '}
+            <small>
             {moment(this.state.dates.dateFrom).format('MMM D, YYYY')}
             {' to '}
             {moment(this.state.dates.dateTo).format('MMM D, YYYY')}
+            </small>
           </h3>
           {this.state.metricsData.map((item, index) => {
             if (!item.get('components').isEmpty()) {

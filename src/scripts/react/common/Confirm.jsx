@@ -36,7 +36,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log(this.props.childrenRootElement);
     const modal = <ConfirmModal show={this.state.showModal} onHide={this.closeModal} {...this.props} key="modal"/>;
     return this.props.childrenRootElement({onClick: this.onButtonClick, className: 'btn btn-link'}, [this.props.children, modal]);
   }

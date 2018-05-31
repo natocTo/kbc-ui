@@ -87,7 +87,8 @@ TransformationRow = React.createClass(
               span {className: 'label kbc-label-rounded-small label-default pull-left'},
                 @props.transformation.get('phase') || 1
               ' '
-              TransformationStore.getTransformationName(@props.bucket.get('id'), @props.transformation.get('id'))
+              span {className: 'entity-name'},
+                TransformationStore.getTransformationName(@props.bucket.get('id'), @props.transformation.get('id'))
           span {className: 'td col-xs-1', key: 'col2'},
             TransformationTypeLabel
               backend: @props.transformation.get 'backend'

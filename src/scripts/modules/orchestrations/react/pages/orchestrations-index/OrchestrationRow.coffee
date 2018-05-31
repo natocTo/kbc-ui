@@ -58,7 +58,8 @@ OrchestrationRow = React.createClass(
       (span {className: 'td'},
         (JobStatusCircle {status: lastExecutedJob?.get('status')})
         ' '
-        @props.orchestration.get('name')
+        span {className: 'entity-name'},
+          @props.orchestration.get('name')
       ),
       (span {className: 'td'},
         (FinishedWithIcon endTime: lastExecutedJob?.get('startTime')) if lastExecutedJob?.get('startTime')

@@ -188,12 +188,12 @@ module.exports = React.createClass
                 isSaved: !@state.editingFields.get('queriesChanged', false)
           li {},
             a
-              className: 'btn btn-link'
               React.createElement Confirm,
                 text: 'Delete transformation'
                 title: "Do you really want to delete the transformation #{@state.transformation.get('name')}?"
                 buttonLabel: 'Delete'
                 buttonType: 'danger'
+                childrenRootElement: React.DOM.a
                 onConfirm: @_deleteTransformation
               ,
                 span {},
