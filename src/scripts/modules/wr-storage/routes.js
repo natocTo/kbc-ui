@@ -26,7 +26,8 @@ const routeSettings = {
           options: { includeSaveButtons: true }
         }),
         onSave: targetProjectAdapter.createConfiguration,
-        onLoad: targetProjectAdapter.parseConfiguration
+        onLoad: targetProjectAdapter.parseConfiguration,
+        isComplete: targetProjectAdapter.isComplete
       }
     ]
   },

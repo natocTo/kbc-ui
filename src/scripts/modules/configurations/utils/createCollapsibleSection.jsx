@@ -5,6 +5,8 @@ import { PanelGroup, Panel } from 'react-bootstrap';
 export default (TitleComponent, InnerComponent, options = {}) => {
   return React.createClass({
 
+    displayName: 'CollapsibleSection',
+
     propTypes: {
       disabled: PropTypes.bool,
       isComplete: PropTypes.bool,
@@ -101,7 +103,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
           accordion={true}
           className="kbc-accordion kbc-panel-heading-with-table"
           activeKey={this.isAccordionOpen() ? 'content' : ''}
-          onSelect={activeTab => activeTab === 'content' && this.setState({contentManuallyOpen: !this.state.contentManuallyOpen})}
+          onSelect={activeTab => activeTab === 'content' && this.setState({contentManuallyOpen: !this.isAccordionOpen()})}
         >
           <Panel
             header={this.accordionHeader()}
