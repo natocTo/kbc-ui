@@ -103,7 +103,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
           accordion={true}
           className="kbc-accordion kbc-panel-heading-with-table"
           activeKey={this.isAccordionOpen() ? 'content' : ''}
-          onSelect={activeTab => activeTab === 'content' && this.setState({contentManuallyOpen: !this.state.contentManuallyOpen})}
+          onSelect={activeTab => activeTab === 'content' && this.setState({contentManuallyOpen: !this.isAccordionOpen()})}
         >
           <Panel
             header={this.accordionHeader()}
