@@ -120,7 +120,9 @@ export default React.createClass({
   renderForm() {
     return (
       <div>
-        {this.renderOpenJsonLink()}
+        <div className="kbc-inner-padding">
+          {this.renderOpenJsonLink()}
+        </div>
         {this.renderSections()}
       </div>
     );
@@ -171,8 +173,6 @@ export default React.createClass({
           (discards all unsaved changes)
 
         </small>
-        <br/>
-        <br/>
       </span>
     );
   },
@@ -201,7 +201,7 @@ export default React.createClass({
     return (
       <div>
         {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration
-         ? this.renderJsonEditor()
+         ? <div className="kbc-inner-padding">{this.renderJsonEditor()}</div>
          : this.renderForm()}
       </div>
 
