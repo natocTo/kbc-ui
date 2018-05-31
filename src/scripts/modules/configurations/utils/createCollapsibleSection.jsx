@@ -5,6 +5,8 @@ import { PanelGroup, Panel } from 'react-bootstrap';
 export default (TitleComponent, InnerComponent, options = {}) => {
   return React.createClass({
 
+    displayName: 'CollapsibleSection',
+
     propTypes: {
       disabled: PropTypes.bool,
       isComplete: PropTypes.bool,
