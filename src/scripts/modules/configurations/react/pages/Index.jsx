@@ -59,19 +59,17 @@ export default React.createClass({
     RoutesStore.getRouter().transitionTo(this.state.componentId + '-row', transitionParams);
   },
 
-  renderNewConfigRowButton(type) {
+  renderNewConfigRowButton() {
     const state = this.state;
     const settings = this.state.settings;
     return (
         <CreateConfigurationRowButton
           componentType={this.state.component.get('type')}
-          label={'New ' + state.settings.getIn(['row', 'name', 'singular'])}
+          objectName={state.settings.getIn(['row', 'name', 'singular'])}
           componentId={state.componentId}
           configId={state.configurationId}
           emptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
           onRowCreated={this.onRowCreated}
-          createChangeDescription={() => settings.getIn(['row', 'name', 'singular']) + ' ' + name + ' added'}
-          type={type}
         />
     );
   },
@@ -84,7 +82,7 @@ export default React.createClass({
         <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
           <div className="component-empty-state text-center">
             <p>No {settings.getIn(['row', 'name', 'plural']).toLowerCase()} created yet.</p>
-            {this.renderNewConfigRowButton('button')}
+            {this.renderNewConfigRowButton()}
           </div>
         </div>);
     } else {
@@ -123,6 +121,9 @@ export default React.createClass({
         orderPending={ConfigurationsStore.getPendingActions(state.componentId, state.configurationId).get('order-rows', Immutable.Map())}
         columns={columns}
         filter={filter}
+        onRowCreated={this.onRowCreated}
+        objectName={settings.getIn(['row', 'name', 'singular'])}
+        rowCreateEmptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
       />);
     }
   },
@@ -184,9 +185,6 @@ export default React.createClass({
                   />
                 </li>
               )}
-            <li>
-              {this.renderNewConfigRowButton('link')}
-            </li>
             <li>
               <DeleteConfigurationButton
                 componentId={this.state.componentId}

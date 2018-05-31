@@ -18,19 +18,15 @@ export default React.createClass({
     configId: PropTypes.string.isRequired,
     onRowCreated: PropTypes.func.isRequired,
     emptyConfig: PropTypes.func.isRequired,
-    label: PropTypes.string,
-    type: PropTypes.string,
-    createChangeDescription: PropTypes.func
+    objectName: PropTypes.string.isRequired
   },
 
-  getDefaultProps() {
-    return {
-      type: 'link',
-      label: 'Add Row',
-      createChangeDescription: function(name) {
-        return 'Row ' + name + ' added';
-      }
-    };
+  label() {
+    return 'Add ' + this.props.objectName;
+  },
+
+  createChangeDescription(name) {
+    return this.props.objectName + ' ' + name + ' added';
   },
 
   getInitialState() {
@@ -62,7 +58,7 @@ export default React.createClass({
       <Modal onHide={this.close} show={this.state.showModal}>
         <Modal.Header closeButton={true}>
           <Modal.Title>
-            {this.props.label}
+            {this.label()}
           </Modal.Title>
         </Modal.Header>
 
@@ -84,21 +80,12 @@ export default React.createClass({
   },
 
   render() {
-    if (this.props.type === 'button') {
-      return (
-        <Button onClick={this.handleOpenButtonClick} bsStyle="success">
-          <i className="kbc-icon-plus" />{' '}{this.props.label}
-          {this.renderModal()}
-        </Button>
-      );
-    } else {
-      return (
-        <a onClick={this.handleOpenButtonClick}>
-          <i className="kbc-icon-plus" />{' '}{this.props.label}
-          {this.renderModal()}
-        </a>
-      );
-    }
+    return (
+      <Button onClick={this.handleOpenButtonClick} bsStyle="success">
+        <i className="kbc-icon-plus" />{' '}{this.label()}
+        {this.renderModal()}
+      </Button>
+    );
   },
 
   handleOpenButtonClick(e) {
@@ -185,7 +172,7 @@ export default React.createClass({
       this.state.form.get('description'),
       this.props.emptyConfig,
       this.onRowCreated,
-      this.props.createChangeDescription(this.state.form.get('name'))
+      this.createChangeDescription(this.state.form.get('name'))
     ).catch(() => {
       this.setState({isSaving: false});
     });
