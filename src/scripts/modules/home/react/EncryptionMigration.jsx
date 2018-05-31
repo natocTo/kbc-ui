@@ -4,7 +4,8 @@ import InstalledComponentStore from '../../components/stores/InstalledComponents
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import componentsActions from '../../components/InstalledComponentsActionCreators';
 import Immutable from 'immutable';
-
+import { AlertBlock } from '@keboola/indigo-ui';
+import Modal from './EncryptionMigrationModal';
 export default React.createClass({
 
   mixins: [
@@ -15,8 +16,8 @@ export default React.createClass({
     const currentProject = ApplicationStore.getCurrentProject();
     const legacy = InstalledComponentStore.getAll().map(function(component) {
       const configurations = component.get('configurations').filter(function(configuration) {
-        return JSON.stringify(configuration.get('configuration', Immutable.Map()).toJS()).indexOf('KBC::') >= 0
-          || JSON.stringify(configuration.get('rows', Immutable.Map()).toJS()).indexOf('KBC::') >= 0;
+        return JSON.stringify(configuration.get('configuration', Immutable.Map()).toJS()).indexOf('KBC::Encrypted') >= 0
+          || JSON.stringify(configuration.get('rows', Immutable.Map()).toJS()).indexOf('KBC::Encrypted') >= 0;
       });
       if (configurations.count() > 0) {
         return component.set('configurations', configurations);
@@ -31,6 +32,12 @@ export default React.createClass({
     };
   },
 
+  getInitialState() {
+    return {
+      isModalOpen: false
+    };
+  },
+
   componentDidMount() {
     componentsActions.loadComponentsForce().then(function() {
       const components = InstalledComponentStore.getAll();
@@ -42,29 +49,53 @@ export default React.createClass({
     });
   },
 
+  showModal() {
+    this.setState({isModalOpen: true});
+  },
+
+  hideModal() {
+    this.setState({isModalOpen: false});
+  },
+
+
+  renderMigrateButton() {
+    let label = 'Migrate encryption';
+    if (this.state.processing) {
+      label = 'Migrating';
+    }
+    if (this.state.finished) {
+      label = 'Migrated';
+    }
+    return (
+      <button
+        className="btn btn-success"
+        onClick={this.showModal}
+        disabled={this.state.processing || this.state.finished}
+      >{label}</button>
+    );
+  },
+
   render() {
     const number = this.state.legacyEncryptedConfigurations.reduce(function(value, component) {
       return value + component.get('configurations').count();
     }, 0);
     return (
-      <div className="kbc-overview-component">
-        <div className="row kbc-header kbc-expiration kbc-deprecation">
-          <div className="alert alert-warning">
-            <h3>
-              Legacy encrypted configuration data
-            </h3>
-            <p>
-              This project contains {number} configurations with legacy encrypted values.
-            </p>
-            <p>
-              <button className="btn btn-success">Migrate</button>
-            </p>
-            <p>
-              Learn more about encryption migration <a href="http://status.keboola.com/" target="_blank">timeline and reasons (TODO)</a>.
-            </p>
-          </div>
-        </div>
-      </div>
+      <AlertBlock type="warning" title="Legacy encrypted configuration data">
+        <Modal
+          onHide={this.hideModal}
+          show={this.state.isModalOpen}
+          configurations={this.state.legacyEncryptedConfigurations}
+        />
+        <p>
+          This project contains {number} configurations with legacy encrypted values.
+        </p>
+        <p>
+          {this.renderMigrateButton()}
+        </p>
+        <p>
+          Learn more about encryption migration <a href="http://status.keboola.com/" target="_blank">timeline and reasons (TODO)</a>.
+        </p>
+      </AlertBlock>
     );
   }
 });
