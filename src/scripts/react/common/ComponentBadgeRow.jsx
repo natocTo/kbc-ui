@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import ComponentType from './ComponentType';
 import { Icon } from '@keboola/indigo-ui';
-import { ExternalLink } from '@keboola/indigo-ui';
 
 require('./Badges.less');
 
@@ -104,7 +103,7 @@ export default React.createClass({
     if (flags.contains('hasLicence')) {
       badges.push({
         title: <span><i className="fa fa-file-text-o fa-fw"/></span>,
-        description: <span>You agree to the <ExternalLink href={this.props.component.getIn(['data', 'vendor', 'licenseUrl'])}>vendor's license agreement</ExternalLink>.</span>,
+        description: 'You agree to the vendor\'s license agreement.',
         key: 'license'
       });
     }
