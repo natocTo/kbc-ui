@@ -1,6 +1,5 @@
 import React from 'react';
 import ImmutableRenderMixin from 'react-immutable-render-mixin';
-import './VersionIcon.less';
 
 export default React.createClass({
   mixins: [ImmutableRenderMixin],
