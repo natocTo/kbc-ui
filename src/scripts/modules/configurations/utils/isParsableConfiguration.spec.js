@@ -25,7 +25,7 @@ const parse = function(configuration) {
 describe('isParsableConfiguration', function() {
   it('empty configuration should be parsable', function() {
     const configuration = Immutable.fromJS({});
-    assert.equal(true, isParsableConfiguration(configuration, parse, create));
+    assert.equal(true, isParsableConfiguration(configuration, parse, create, null));
   });
   it('simple full configuration should be parsable', function() {
     const configuration = Immutable.fromJS({
@@ -36,7 +36,7 @@ describe('isParsableConfiguration', function() {
         key2: 'test4'
       }
     });
-    assert.equal(true, isParsableConfiguration(configuration, parse, create));
+    assert.equal(true, isParsableConfiguration(configuration, parse, create, null));
   });
   it('invalid configuration should not be parsable', function() {
     const configuration = Immutable.fromJS({
@@ -48,6 +48,6 @@ describe('isParsableConfiguration', function() {
         key2: 'test4'
       }
     });
-    assert.equal(false, isParsableConfiguration(configuration, parse, create));
+    assert.equal(false, isParsableConfiguration(configuration, parse, create, null));
   });
 });

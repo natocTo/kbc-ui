@@ -4,9 +4,10 @@ import TablesStore from '../../components/stores/StorageTablesStore';
 const repass = param => param;
 const returnTrue = () => true;
 
-function parseBySections(sectionsParseFn, configuration) {
+function parseBySections(sectionsParseFn, conformFn, configuration) {
   const tables = TablesStore.getAll();
-  const sectionsParsed = sectionsParseFn.map(parseSectionFn => parseSectionFn(configuration, tables));
+  const conformedConfiguration = conformFn(configuration);
+  const sectionsParsed = sectionsParseFn.map(parseSectionFn => parseSectionFn(conformedConfiguration, tables));
   return sectionsParsed;
 }
 
@@ -40,9 +41,9 @@ function isCompleteBySections(sectionsIsCompleteFn, configuration) {
 }
 
 export default {
-  makeParseFn(sections) {
+  makeParseFn(sections, conformFn) {
     const sectionsParseFn = sections.map(section => section.get('onLoad') || repass);
-    return configuration => parseBySections(sectionsParseFn, configuration);
+    return configuration => parseBySections(sectionsParseFn, conformFn || repass, configuration);
   },
 
   makeCreateFn(sections) {

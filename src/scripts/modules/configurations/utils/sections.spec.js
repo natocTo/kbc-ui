@@ -20,7 +20,7 @@ describe('sections makeParseFn()', function() {
     }
   ]);
   it('should map all valid values', function() {
-    const parseFn = sections.makeParseFn(sectionsDefinition);
+    const parseFn = sections.makeParseFn(sectionsDefinition, null);
     const configuration = Immutable.fromJS({
       parameters: {
         key1: 'val1',
@@ -38,7 +38,7 @@ describe('sections makeParseFn()', function() {
     assert.deepEqual(expected, parseFn(configuration).toJS());
   });
   it('should not map invalid values', function() {
-    const parseFn = sections.makeParseFn(sectionsDefinition);
+    const parseFn = sections.makeParseFn(sectionsDefinition, null);
     const configuration = Immutable.fromJS({
       parameters: {
         key1: 'val1',
@@ -237,7 +237,8 @@ describe('sections parse(create())', function() {
           }
         }
 
-      ])
+      ]),
+      null
     );
     const configuration = Immutable.fromJS({
       parameters: {
@@ -292,7 +293,8 @@ describe('sections parse(create())', function() {
           }
         }
 
-      ])
+      ]),
+      null
     );
     const configuration = Immutable.fromJS({
       parameters: {
@@ -328,7 +330,8 @@ describe('sections parse(create())', function() {
             });
           }
         }
-      ])
+      ]),
+      null
     );
     const configuration = Immutable.fromJS({
       parameters: {
