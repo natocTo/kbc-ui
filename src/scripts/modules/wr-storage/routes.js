@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import {Map, fromJS} from 'immutable';
 import React from 'react';
 
 import createRoute  from '../configurations/utils/createRoute';
@@ -32,6 +32,23 @@ const routeSettings = {
     ]
   },
   row: {
+    onConform: (configuration) => {
+      const configDraft = fromJS({
+        storage: {
+          input: {
+            tables: [
+              {
+                changed_since: ''
+              }
+            ]
+          }
+        },
+        parameters: {
+          incremental: false
+        }
+      });
+      return configDraft.mergeDeep(configuration);
+    },
     hasState: false,
     sections: [
       {
