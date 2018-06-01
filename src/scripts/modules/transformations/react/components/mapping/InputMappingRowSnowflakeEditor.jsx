@@ -25,14 +25,15 @@ export default React.createClass({
   mixins: [createStoreMixin(MetadataStore)],
 
   getStateFromStores() {
+    const source = this.props.value.get('source');
     return {
-      hasMetadataDatatypes: this.props.value.get('source') ? MetadataStore.tableHasMetadataDatatypes(this.props.value.get('source')) : false,
-      tableColumnMetadata: this.props.value.get('source') ? MetadataStore.getTableColumnsMetadata(this.props.value.get('source')) : Immutable.Map()
+      hasMetadataDatatypes: source ? MetadataStore.tableHasMetadataDatatypes(source) : false,
+      tableColumnMetadata: source ? MetadataStore.getTableColumnsMetadata(source) : Immutable.Map()
     };
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value.get('source') !== this.props.value.get('source')) {
+    if (nextProps.value.get('source') !== this.props.value.get('source') && nextProps.value.get('source') !== '') {
       this.setState({
         hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(nextProps.value.get('source')),
         tableColumnMetadata: MetadataStore.getTableColumnsMetadata(nextProps.value.get('source'))
