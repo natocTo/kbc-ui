@@ -11,7 +11,7 @@ ApplicationStore = require '../../../../stores/ApplicationStore'
 
 ComponentRow = require('./ComponentRow').default
 
-NewComponentSelection = require '../components/NewComponentSelection'
+NewComponentSelection = require('../components/NewComponentSelection').default
 
 {div, table, tbody, tr, td, ul, li, a, span, small, strong, h2} = React.DOM
 
