@@ -71,7 +71,7 @@ module.exports = React.createClass
         React.createElement NewComponentSelection,
           className: 'kbc-main-content'
           components: @state.components
-          componentFilter: @state.componentFilter
+          filter: @state.componentFilter
           componentType: @props.type
         ,
           div className: 'row',
