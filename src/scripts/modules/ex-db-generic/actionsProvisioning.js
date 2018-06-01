@@ -339,6 +339,9 @@ export function createActions(componentId) {
           runQuery = runQuery.delete('incrementalFetchingColumn');
           runQuery = runQuery.delete('incrementalFetchingLimit');
         } else {
+          if (runQuery.get('incrementalFetchingColumn') === '') {
+            runQuery = runQuery.delete('incrementalFetchingColumn');
+          }
           runQuery = runQuery.delete('query');
         }
         runQuery = runQuery.delete('advancedMode');
@@ -394,6 +397,9 @@ export function createActions(componentId) {
         newQuery = newQuery.delete('incrementalFetchingColumn');
         newQuery = newQuery.delete('incrementalFetchingLimit');
       } else {
+        if (newQuery.get('incrementalFetchingColumn') === '') {
+          newQuery = newQuery.delete('incrementalFetchingColumn');
+        }
         newQuery = newQuery.delete('query');
       }
       newQuery = newQuery.delete('advancedMode');
