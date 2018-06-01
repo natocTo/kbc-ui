@@ -1,13 +1,8 @@
 const getComponentType = function(type) {
-  switch (type) {
-    case 'extractor':
-      return 'extractor';
-    case  'writer':
-      return 'writer';
-    case 'application':
-      return 'application';
-    default:
-      return 'component';
+  if (['extractor', 'writer', 'application'].includes(type)) {
+    return type;
+  } else {
+    return 'component';
   }
 };
 
