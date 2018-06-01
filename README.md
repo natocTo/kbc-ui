@@ -71,7 +71,7 @@ We are using popular [Eslint](http://eslint.org/) with custom `.eslintrc` file
   * Linting is automatically run before test task
   * run `yarn lint` (`npm run lint`) - to run linting
   * run `yarn lint:fix` (`npm run lint:fix`) - to run linting with fixes (when fix is possible)
-  * run `yarn lint[:fix] -- VersionsDropdown` (`npm run lint[:fix] -- VersionsDropdown`) - to run lint only on files with this pattern (it is pretty fuzzy, maybe will match more files then you expect)
+  * run `yarn lint[:fix] -- VersionsDiffModal` (`npm run lint[:fix] -- VersionsDiffModal`) - to run lint only on files with this pattern (it is pretty fuzzy, maybe will match more files then you expect)
 
 ## Tests
 
@@ -83,7 +83,7 @@ Some [story](https://hackernoon.com/testing-react-components-with-jest-and-enzym
   * run `yarn jest` (`npm run jest`) - it runs just tests
   * run `yarn tdd` (`npm run tdd`) - it runs tests with watch and rerun on change
   * run `yarn jest:update` (`npm run jest:update`) - Updates snapshots (recommend to run it only with `-- TestName` to prevent overwriting other snapshots)
-  * run `yarn jest[:update] -- VersionsDropdown` (`npm run jest[:update]  -- VersionsDropdown`) - for run tests only for particular files selected by regexp
+  * run `yarn jest[:update] -- VersionsDiffModal` (`npm run jest[:update]  -- VersionsDiffModal`) - for run tests only for particular files selected by regexp
 
 ## HOW TO
 
