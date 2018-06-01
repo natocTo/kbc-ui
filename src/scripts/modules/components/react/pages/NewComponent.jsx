@@ -32,11 +32,10 @@ export default React.createClass({
           <NewComponentSelection
             className="kbc-main-content"
             components={this.state.components}
-            componentFilter={this.state.componentFilter}
+            filter={this.state.componentFilter}
             componentType={this.props.type}
             />
         </div>
     );
   }
-
 });
