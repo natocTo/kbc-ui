@@ -8,14 +8,12 @@ import ApplicationStore from '../../stores/ApplicationStore';
 import RoutesStore from '../../stores/RoutesStore';
 import configurationRowDeleted from '../components/react/components/notifications/configurationRowDeleted';
 import Immutable from 'immutable';
-import removeEmptyEncryptAttributes from '../components/utils/removeEmptyEncryptAttributes';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
 import stringUtils from '../../utils/string';
 const { webalize } = stringUtils;
-import {Map} from 'immutable';
 
 const storeEncodedConfigurationRow = function(componentId, configurationId, rowId, configuration, changeDescription) {
-  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
+  const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(configuration));
   const projectId = ApplicationStore.getCurrentProject().get('id');
   return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
     const dataToSaveEncrypted = {
@@ -187,14 +185,14 @@ module.exports = {
     const configuration = Immutable.fromJS(JSON.parse(ConfigurationRowsStore.getEditingJsonConfigurationString(componentId, configurationId, rowId)));
 
     return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' parameters edited manually'))
-      .then(function() {
+      .then(function(storedConfiguration) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
           type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_JSON_CONFIGURATION_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
           rowId: rowId,
-          value: configuration
+          value: Immutable.fromJS(storedConfiguration).get('configuration')
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({
@@ -225,44 +223,6 @@ module.exports = {
       configurationId: configurationId,
       rowId: rowId
     });
-  },
-
-
-  saveConfigurationBySections: function(componentId, configurationId, rowId, createFn, createFnSections, parseFn, parseFnSections, changeDescription) {
-    Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_START,
-      componentId: componentId,
-      configurationId: configurationId,
-      rowId: rowId
-    });
-    const row = ConfigurationRowsStore.get(componentId, configurationId, rowId);
-    const configurationBySections = ConfigurationRowsStore.getEditingConfigurationBySections(componentId, configurationId, rowId, parseFn, parseFnSections);
-
-    const configuration = configurationBySections
-      .reduce((memo, sectionConfig, index) => {
-        const createSectionFn = createFnSections.get(index);
-        return memo.merge(createSectionFn(sectionConfig));
-      }, Map());
-    return storeEncodedConfigurationRow(componentId, configurationId, rowId, configuration.toJS(), changeDescription ? changeDescription : ('Row ' + (row.get('name') !== '' ? row.get('name') : 'Untitled') + ' edited'))
-      .then(function(response) {
-        VersionActionCreators.loadVersionsForce(componentId, configurationId);
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS,
-          componentId: componentId,
-          configurationId: configurationId,
-          rowId: rowId,
-          row: response
-        });
-      }).catch(function(e) {
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_ERROR,
-          componentId: componentId,
-          configurationId: configurationId,
-          rowId: rowId,
-          error: e
-        });
-        throw e;
-      });
   },
 
   saveConfiguration: function(componentId, configurationId, rowId, createFn, parseFn, changeDescription) {

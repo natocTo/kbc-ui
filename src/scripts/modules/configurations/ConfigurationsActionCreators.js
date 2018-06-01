@@ -4,12 +4,11 @@ import ConfigurationsStore from './ConfigurationsStore';
 import InstalledComponentsApi from '../components/InstalledComponentsApi';
 import VersionActionCreators from '../components/VersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
-import removeEmptyEncryptAttributes from '../components/utils/removeEmptyEncryptAttributes';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
-import {Map} from 'immutable';
+import Immutable from 'immutable';
 
 const storeEncodedConfiguration = function(componentId, configurationId, configuration, changeDescription) {
-  const dataToSavePrepared = JSON.stringify(removeEmptyEncryptAttributes(preferEncryptedAttributes(configuration)));
+  const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(configuration));
   const projectId = ApplicationStore.getCurrentProject().get('id');
   return InstalledComponentsApi.encryptConfiguration(componentId, projectId, dataToSavePrepared).then(function(encryptedResponse) {
     const dataToSaveEncrypted = {
@@ -38,39 +37,67 @@ module.exports = {
     });
   },
 
-
-  saveConfigurationBySections: function(componentId, configurationId, createFn, createFnSections, parseFn, parseFnSections, changeDescription) {
+  saveJsonConfiguration: function(componentId, configurationId, changeDescription) {
     Dispatcher.handleViewAction({
-      type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_START,
+      type: Constants.ActionTypes.CONFIGURATIONS_SAVE_JSON_CONFIGURATION_START,
       componentId: componentId,
       configurationId: configurationId
     });
-    const configurationBySections = ConfigurationsStore.getEditingConfigurationBySections(componentId, configurationId, parseFn, parseFnSections);
+    const configuration = Immutable.fromJS(JSON.parse(ConfigurationsStore.getEditingJsonConfigurationString(componentId, configurationId)));
 
-    const configuration = configurationBySections
-      .reduce((memo, sectionConfig, index) => {
-        const createSectionFn = createFnSections.get(index);
-        return memo.merge(createSectionFn(sectionConfig));
-      }, Map());
-
-    return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription ? changeDescription : 'Configuration edited')
-      .then(function(response) {
+    return storeEncodedConfiguration(componentId, configurationId, configuration.toJS(), changeDescription ? changeDescription : 'Configuration parameters edited manually')
+      .then(function(storedConfiguration) {
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_SUCCESS,
+          type: Constants.ActionTypes.CONFIGURATIONS_SAVE_JSON_CONFIGURATION_SUCCESS,
           componentId: componentId,
           configurationId: configurationId,
-          configuration: response
+          value: Immutable.fromJS(storedConfiguration).get('configuration')
         });
       }).catch(function(e) {
         Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_ERROR,
+          type: Constants.ActionTypes.CONFIGURATIONS_SAVE_JSON_CONFIGURATION_ERROR,
           componentId: componentId,
           configurationId: configurationId,
           error: e
         });
         throw e;
       });
+  },
+
+  updateJsonConfiguration: function(componentId, configurationId, value) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_UPDATE_JSON_CONFIGURATION,
+      componentId: componentId,
+      configurationId: configurationId,
+      value: value
+    });
+  },
+
+  resetJsonConfiguration: function(componentId, configurationId) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_RESET_JSON_CONFIGURATION,
+      componentId: componentId,
+      configurationId: configurationId
+    });
+  },
+
+  openJsonEditor: function(componentId, configurationId) {
+    this.resetConfiguration(componentId, configurationId);
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_JSON_EDITOR_OPEN,
+      componentId: componentId,
+      configurationId: configurationId
+    });
+  },
+
+  closeJsonEditor: function(componentId, configurationId) {
+    this.resetJsonConfiguration(componentId, configurationId);
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_JSON_EDITOR_CLOSE,
+      componentId: componentId,
+      configurationId: configurationId
+    });
   },
 
 
