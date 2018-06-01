@@ -18,7 +18,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
     getInitialState() {
       return {
         isChanged: false,
-        value: this.props.value,
+        initValue: this.props.value,
         contentManuallyOpen: null
       };
     },
@@ -51,7 +51,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
                 <span className="td">
                   <h4>
                     {this.accordionArrow()}
-                    <TitleComponent value={options.includeSaveButtons ? this.state.value : this.props.value}/>
+                    <TitleComponent value={this.props.value}/>
                   </h4>
                 </span>
               </span>
@@ -69,7 +69,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
               isSaving={this.props.disabled}
               isChanged={this.state.isChanged}
               onSave={this.handleSave}
-              onReset={() => this.setState({value: this.props.value, isChanged: false})}
+              onReset={this.handleReset}
             />
             <br />
           </div>
@@ -77,23 +77,28 @@ export default (TitleComponent, InnerComponent, options = {}) => {
       );
     },
 
+    handleReset() {
+      this.setState({isChanged: false});
+      this.props.onChange(this.state.initValue);
+    },
+
     handleSave() {
-      this.props.onSave(this.state.value).then(
-        () => this.setState({isChanged: false})
+      this.props.onSave(this.props.value).then(
+        () => this.setState({isChanged: false, initValue: this.props.value})
       );
     },
 
     handleChange(diff) {
-      const newValue = {...this.state.value, ...diff};
-      this.setState({isChanged: true, value: newValue});
+      this.setState({isChanged: true});
+      this.props.onChange(diff);
     },
 
     renderContent() {
       return (
         <InnerComponent
           disabled={this.props.disabled}
-          onChange={options.includeSaveButtons ? this.handleChange : this.props.onChange}
-          value={options.includeSaveButtons ? this.state.value : this.props.value}
+          onChange={this.handleChange}
+          value={this.props.value}
         />);
     },
 
