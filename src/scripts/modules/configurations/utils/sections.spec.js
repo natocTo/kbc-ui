@@ -346,4 +346,41 @@ describe('sections parse(create())', function() {
     };
     assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
   });
+
+  it('should aggressively conform parsed config with missing value', function() {
+    const conformFn = (config) => config.setIn(['parameters', 'value'], true);
+    const onLoad = (config)  => config;
+    const onSave = (localState) => localState;
+    const configuration = Immutable.fromJS({
+      someValue: 1
+    });
+    const expected = {
+      parameters: {
+        value: true
+      },
+      someValue: 1
+    };
+    const rowSections = Immutable.fromJS([{onLoad, onSave}]);
+    const parseBySectionsFn = sections.makeParseFn(rowSections, conformFn);
+    const createBySectionsFn = sections.makeCreateFn(rowSections);
+    assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+  });
+
+  it('should conform parsed config with existing value', function() {
+    const conformFn = (config) => config.set('value', config.get('value', 0));
+    const onLoad = (config)  => config;
+    const onSave = (localState) => localState;
+    const configuration = Immutable.fromJS({
+      someValue: 1,
+      value: 43
+    });
+    const expected = {
+      value: 43,
+      someValue: 1
+    };
+    const rowSections = Immutable.fromJS([{onLoad, onSave}]);
+    const parseBySectionsFn = sections.makeParseFn(rowSections, conformFn);
+    const createBySectionsFn = sections.makeCreateFn(rowSections);
+    assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+  });
 });
