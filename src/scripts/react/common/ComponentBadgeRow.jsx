@@ -10,11 +10,11 @@ export default React.createClass({
   render() {
     return (
       <div className="badge-component-container">
-        {this.props.badges.map((badge, idx) =>
+        {this.props.badges.map((badge) =>
           <div
             className={'badge badge-component-item badge-component-item-title badge-component-item-' + badge.key}
-            title={badge.description}
-            key={idx}
+            title={badge.descriptionPlain}
+            key={badge.key}
           >
             {badge.title}
           </div>
