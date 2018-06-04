@@ -4,6 +4,7 @@ import ComponentDetailLink from './ComponentDetailLink';
 import ComponentBadgeCell from './ComponentBadgeCell';
 import ComponentIcon from './ComponentIcon';
 import ComponentName from './ComponentName';
+import { getComponentBadges } from './componentHelpers';
 
 export default React.createClass({
   propTypes: {
@@ -14,21 +15,19 @@ export default React.createClass({
     const component = this.props.component;
     return (
       <ComponentDetailLink
-          componentId={component.get('id')}
-          type={component.get('type')}
+        componentId={component.get('id')}
+        type={component.get('type')}
       >
         <ComponentBadgeCell
-            component={component}
+          badges={getComponentBadges(component)}
+          badgesFilter={['3rdParty', 'appInfo.beta']}
         />
-        <ComponentIcon
-            component={component}
-            size="64"
-        />
+        <ComponentIcon component={component} size="64" />
         <h2>
-            <ComponentName component={component} />
+          <ComponentName component={component}/>
         </h2>
         <p className="kbc-components-overview-description">
-            {component.get('description')}
+          {component.get('description')}
         </p>
       </ComponentDetailLink>
     );

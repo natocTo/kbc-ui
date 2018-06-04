@@ -6,7 +6,6 @@ ComponentsStore = require '../../../stores/ComponentsStore'
 InstalledComponentsStore = require '../../../stores/InstalledComponentsStore.coffee'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
-AppUsageInfo = React.createFactory(require '../new-component-form/AppUsageInfo.coffee')
 VendorInfo = React.createFactory(require './VendorInfo.coffee')
 ComponentDescription = React.createFactory(require './ComponentDescription.coffee')
 ConfigurationRow = require('../ConfigurationRow.jsx').default
@@ -16,7 +15,7 @@ AddComponentConfigurationButton = React.createFactory(require '../../components/
 
 FormHeader = require('../new-component-form/FormHeader')
 VendorInfo = require('../component-detail/VendorInfo')
-AppUsageInfo = require('../new-component-form/AppUsageInfo')
+AppUsageInfo = React.createFactory(require('../new-component-form/AppUsageInfo'))
 ComponentDescription = require '../component-detail/ComponentDescription'
 contactSupport = require('../../../../../utils/contactSupport').default
 MigrationRow = require('../../components/MigrationRow').default
@@ -61,7 +60,7 @@ module.exports = React.createClass
           withButtons: false
         div className: "row",
           div className: "col-md-6",
-            React.createElement AppUsageInfo,
+            AppUsageInfo
               component: @state.component
           div className: "col-md-6",
             React.createElement VendorInfo,

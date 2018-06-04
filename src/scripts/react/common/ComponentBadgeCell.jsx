@@ -1,15 +1,17 @@
 import React, {PropTypes} from 'react';
-import { getComponentType } from './componentHelpers';
 
-require('./Badges.less');
+import './Badges.less';
 
 export default React.createClass({
   propTypes: {
-    component: PropTypes.object.isRequired
+    badges: PropTypes.array.isRequired,
+    badgesFilter: PropTypes.array.isRequired
   },
 
   render() {
-    const badges = this.getBadges();
+    const badges = this.props.badgesFilter.length > 0
+      ? this.props.badges.filter((badge) => this.props.badgesFilter.includes(badge.key))
+      : this.props.badges;
 
     return (
       <div className="badge-component-container badge-component-container-selection">
@@ -18,30 +20,10 @@ export default React.createClass({
             title={badge.description}
             key={idx}
           >
-          {badge.title}
+            {badge.title}
           </div>
         )}
       </div>
     );
-  },
-  getBadges() {
-    const flags = this.props.component.get('flags');
-    const componentType = getComponentType(this.props.component.get('type'));
-    let badges = [];
-    if (flags.contains('3rdParty')) {
-      badges.push({
-        title: <span>3<sup>rd</sup> party</span>,
-        description: `This is a third-party ${componentType} supported by its vendor.`,
-        key: '3rdParty'
-      });
-    }
-    if (flags.contains('appInfo.beta')) {
-      badges.push({
-        title: 'Beta',
-        description: `The ${componentType} is public, but it's in beta stage.`,
-        key: 'appInfo.beta'
-      });
-    }
-    return badges;
   }
 });
