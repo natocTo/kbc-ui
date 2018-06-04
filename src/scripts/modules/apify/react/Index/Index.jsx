@@ -130,6 +130,7 @@ export default React.createClass({
         onHideFn={closeFn}
         {...actions.prepareLocalState(path.concat('data'))}
         loadCrawlers={actions.loadCrawlers}
+        loadActors={actions.loadActors}
         onSave={(params, inputTable) => actions.saveConfig(params, inputTable).then(closeFn)}
         isSaving={localState.get('saving') || false}
       />
@@ -190,7 +191,7 @@ export default React.createClass({
           {this.renderStaticFormGroup('User ID', user)}
           {this.renderStaticFormGroup('Dataset', <p className="form-control-static">{parameters.get('datasetId')}</p>)}
         </span>
-          );
+      );
     }
 
     if (!!executionId) {

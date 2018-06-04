@@ -23,12 +23,14 @@ export default React.createClass({
     action: PropTypes.string.isRequired,
     updateSettings: PropTypes.func.isRequired,
     crawlers: PropTypes.object.isRequired,
+    actors: PropTypes.object.isRequired,
     inputTableId: PropTypes.string,
     updateInputTableId: PropTypes.func.isRequired,
     step: PropTypes.number.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     parameters: PropTypes.object.isRequired,
     loadCrawlers: PropTypes.func.isRequired,
+    loadActors: PropTypes.func.isRequired,
     updateParameters: PropTypes.func.isRequired,
     selectTab: PropTypes.func.isRequired
   },
@@ -41,7 +43,7 @@ export default React.createClass({
             eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
             {this.renderActionForm()}
           </Tab>
-          {this.props.action === 'crawler' || this.props.action === 'dataset' ?
+          {['crawler', 'dataset', 'actor'].includes(this.props.action) ?
            <Tab title="Authentication" eventKey={AUTH_KEY}
              disabled={this.isTabDisabled(AUTH_KEY)}>
              {this.renderTokenForm()}
@@ -65,9 +67,33 @@ export default React.createClass({
         return this.renderCrawlerSettingsForm();
       case 'dataset':
         return this.renderDatasetSettingsForm();
+      case 'actor':
+        return this.renderActorSettingsForm();
       default:
         return null;
     }
+  },
+
+  renderActorSettingsForm() {
+    /* const editor = (
+     *   <CodeMirror
+     *     theme="solarized"
+     *     lineNumbers={false}
+     *     value={this.props.settings}
+     *     readOnly={false}
+     *     mode="application/json"
+     *     lineWrapping={true}
+     *     autofocus={false}
+     *     onChange={this.handleCrawlerSettingsChange}
+     *     lint={true}
+     *     gutters={['CodeMirror-lint-markers']}
+     *   />
+     * );     */
+    return (
+      <div className="form-horizontal">
+        {this.renderActorSelector()}
+      </div>
+    );
   },
 
   renderActionForm() {
@@ -82,6 +108,12 @@ export default React.createClass({
           label="Run Crawler"
           help="Will run specified crawler or wait if it is already running, and eventually retrieve its results if it finishes succesfully"
           value="crawler"
+        />
+        <Input
+          type="radio"
+          label="Run Actor"
+          help="Runs a specific Actor and retrieves its results if it finishes successfully."
+          value="actor"
         />
         <Input
           type="radio"

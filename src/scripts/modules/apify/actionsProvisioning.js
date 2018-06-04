@@ -60,7 +60,13 @@ export default function(configId) {
         configData: runData.toJS()
       };
       return callDockerAction(COMPONENT_ID, 'listCrawlers', params);
+    },
+    loadActors(settings) {
+      const runData = store.configData.setIn(['parameters'], settings);
+      const params = {
+        configData: runData.toJS()
+      };
+      return callDockerAction(COMPONENT_ID, 'listActors', params);
     }
-
   };
 }

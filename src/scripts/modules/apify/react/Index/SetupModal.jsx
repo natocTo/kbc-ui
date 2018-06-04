@@ -15,6 +15,7 @@ export default React.createClass({
     updateLocalState: PropTypes.func.isRequired,
     prepareLocalState: PropTypes.func.isRequired,
     loadCrawlers: PropTypes.func.isRequired,
+    loadActors: PropTypes.func.isRequired,
     isSaving: PropTypes.bool,
     onSave: PropTypes.func.isRequired
   },
@@ -148,10 +149,12 @@ export default React.createClass({
     let nextStep = 0;
     const isCrawlerAction = this.getAction() === 'crawler';
     const isDatasetAction = this.getAction() === 'dataset';
+    const isActorAction = this.getAction() === 'actor';
+
     switch (currentStep) {
       case CRAWLER_KEY:
         if (delta === 1) {
-          if (isCrawlerAction || isDatasetAction) {
+          if (isCrawlerAction || isDatasetAction || isActorAction) {
             nextStep = AUTH_KEY;
           } else {
             nextStep = OPTIONS_KEY;
@@ -167,7 +170,7 @@ export default React.createClass({
         break;
       case OPTIONS_KEY:
         if (delta === -1) {
-          if (isCrawlerAction || isDatasetAction) {
+          if (isCrawlerAction || isDatasetAction || isActorAction) {
             nextStep = AUTH_KEY;
           } else {
             nextStep = CRAWLER_KEY;
@@ -178,6 +181,7 @@ export default React.createClass({
         nextStep = currentStep;
     }
     if (nextStep === OPTIONS_KEY && isCrawlerAction) this.onLoadCrawlers();
+    if (nextStep === OPTIONS_KEY && isActorAction) this.onLoadActors();
     /* let newStep = this.step() + delta;
      * newStep = newStep === 0 ? AUTH_KEY : newStep;
      * newStep = newStep > 3 ? AUTH_KEY : newStep;
@@ -190,6 +194,8 @@ export default React.createClass({
       <TabbedWizard
         loadCrawlers={this.onLoadCrawlersForce}
         crawlers={this.localState('crawlers', Map())}
+        loadActors={this.onLoadActorsForce}
+        actors={this.localState('actors', Map())}
         step={this.step()}
         action={this.getAction()}
         selectTab={(s) => this.updateLocalState('step', s)}
@@ -224,32 +230,22 @@ export default React.createClass({
     );
   },
 
-  renderInputControl(propertyPath, placeholder) {
-    return (
-      <input
-        placeholder={placeholder}
-        type="text"
-        value={1}
-        onChange={() => null}
-        className="form-control"
-      />
-    );
+  onLoadActors() {
+    if (this.localState('actors')) return;
+    this.onLoadActorsForce();
   },
 
-
-  renderFormControl(controlLabel, control, helpText, errorMsg) {
-    return (
-      <div className={errorMsg ? 'form-group has-error' : 'form-group'}>
-        <label className="col-xs-2 control-label">
-          {controlLabel}
-        </label>
-        <div className="col-xs-10">
-          {control}
-          <span className="help-block">
-            {errorMsg || helpText}
-          </span>
-        </div>
-      </div>
+  onLoadActorsForce() {
+    this.updateLocalState(['actors'], Map({'loading': true, 'error': null}));
+    this.props.loadActors(this.parameters()).then((data) => {
+      const actors = {
+        data: data.status !== 'error' ? data : null,
+        loading: false,
+        error: data.status === 'error' ? 'Error: ' + data.message : null
+      };
+      return this.updateLocalState('actors', fromJS(actors));
+    }).catch(() =>
+      this.updateLocalState('actors', fromJS({loading: false, data: null, error: 'Error Loading Actors'}))
     );
   },
 
