@@ -15,7 +15,7 @@ AddComponentConfigurationButton = React.createFactory(require '../../components/
 
 FormHeader = require('../new-component-form/FormHeader')
 VendorInfo = require('../component-detail/VendorInfo')
-AppUsageInfo = React.createFactory(require('../new-component-form/AppUsageInfo'))
+AppUsageInfo = React.createFactory(require('../new-component-form/AppUsageInfo').default)
 ComponentDescription = require '../component-detail/ComponentDescription'
 contactSupport = require('../../../../../utils/contactSupport').default
 MigrationRow = require('../../components/MigrationRow').default
