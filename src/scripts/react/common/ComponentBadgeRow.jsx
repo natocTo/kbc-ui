@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import ComponentType from './ComponentType';
+import getComponentType from './componentType';
 import { Icon } from '@keboola/indigo-ui';
 
 require('./Badges.less');
@@ -27,7 +27,7 @@ export default React.createClass({
   },
   getBadges() {
     const flags = this.resolveFlags();
-    const componentType = ComponentType.getComponentType(this.props.component.get('type'));
+    const componentType = getComponentType(this.props.component.get('type'));
     let badges = [];
 
     if (!flags.contains('3rdParty')) {
