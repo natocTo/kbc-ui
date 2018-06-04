@@ -1,12 +1,9 @@
 import React, {PropTypes} from 'react';
-import {List} from 'immutable';
-import {InputGroup, FormControl, Tab, Tabs} from 'react-bootstrap';
+import {Tab, Tabs} from 'react-bootstrap';
 import RadioGroup from 'react-radio-group';
 import {Input} from '../../../../react/common/KbcBootstrap';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
-
-import Select from 'react-select';
-import {RefreshIcon} from '@keboola/indigo-ui';
+import ApifyObjectSelector from './ApifyObjectSelector';
 
 export const CRAWLER_KEY = 1;
 export const AUTH_KEY = 2;
@@ -199,53 +196,28 @@ export default React.createClass({
   },
 
   renderCrawlerSelector() {
-    const crawlersData = this.props.crawlers.get('data') || List();
-    const value = this.props.parameters.get('crawlerId');
-    const isLoading = this.props.crawlers.get('loading', false);
-    const error = this.props.crawlers.get('error');
-    const refresh = (
-      <span>
-        {isLoading ? 'Loading list of crawlers... ' : null}
-        <RefreshIcon
-          isLoading={isLoading}
-          onClick={this.props.loadCrawlers}/>
-      </span>
-
-    );
-    const staticElement = (
-      <FormControl.Static>
-        {error}
-        {refresh}
-      </FormControl.Static>
-    );
-    const options = crawlersData
-      .sortBy((c) => c.get('customId').toLowerCase())
-      .map((c) => {
-        return {value: c.get('id'), label: c.get('customId')};
-      }).toArray();
-    const selectControl = (
-      <InputGroup>
-        <Select
-          placeholder="Select crawler"
-          name="ids"
-          key="ids"
-          clearable={false}
-          multi={false}
-          options={options}
-          value={value}
-          onChange={({value: crawlerId}) =>
-            this.updateParameter('crawlerId', crawlerId)}/>
-        <InputGroup.Addon>{refresh}</InputGroup.Addon>
-      </InputGroup>);
     return (
-      <div className={error ? 'form-group has-error' : 'form-group'}>
-        <div className="col-xs-2 control-label">
-          Crawler
-        </div>
-        <div className="col-xs-10">
-          {isLoading || error ? staticElement : selectControl}
-        </div>
-      </div>
+      <ApifyObjectSelector
+        objectName="crawler"
+        objectLabelKey="customId"
+        object={this.props.crawlers}
+        selectedValue={this.props.parameters.get('crawlerId')}
+        onLoadObjectsList={this.props.loadCrawlers}
+        onSelect={(crawlerId) => this.updateParameter('crawlerId', crawlerId)}
+      />
+    );
+  },
+
+  renderActorSelector() {
+    return (
+      <ApifyObjectSelector
+        objectName="actor"
+        objectLabelKey="name"
+        object={this.props.actors}
+        selectedValue={this.props.parameters.get('actId')}
+        onLoadObjectsList={this.props.loadActors}
+        onSelect={(actId) => this.updateParameter('actId', actId)}
+      />
     );
   },
 
