@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import getComponentType from './componentType';
+import { getComponentType } from './componentHelpers';
 import { Icon } from '@keboola/indigo-ui';
 
 require('./Badges.less');
