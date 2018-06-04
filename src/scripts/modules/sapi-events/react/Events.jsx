@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 import Immutable from 'immutable';
-import PureRendererMixin from '../../../react/mixins/ImmutableRendererMixin';
+import PureRendererMixin from 'react-immutable-render-mixin';
 import _ from 'underscore';
 import {Link} from 'react-router';
 import {factory as eventsFactory} from '../EventsService';

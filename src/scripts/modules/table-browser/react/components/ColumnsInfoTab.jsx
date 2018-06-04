@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import _ from 'underscore';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
-import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 
 import Tooltip from '../../../../react/common/Tooltip';
 import enhancedColumnsTemplate from './EnhancedAnalysis/EnhancedComlumnsTemplate';

@@ -1,6 +1,6 @@
 import React from 'react';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
-import ImmutableRendererMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import ImmutableRendererMixin from 'react-immutable-render-mixin';
 import VersionIcon from './VersionIcon';
 
 module.exports = React.createClass({

@@ -2,7 +2,7 @@
 import React from 'react';
 import TableRow from './EventsTableRow';
 import {Loader} from '@keboola/indigo-ui';
-import PureRendererMixin from '../../../react/mixins/ImmutableRendererMixin';
+import PureRendererMixin from 'react-immutable-render-mixin';
 
 const {div} = React.DOM;
 

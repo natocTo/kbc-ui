@@ -1,5 +1,5 @@
 React = require 'react'
-pureRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+pureRendererMixin = require 'react-immutable-render-mixin'
 Immutable = require('immutable')
 
 TransformationRow = React.createFactory(require '../../components/TransformationRow')

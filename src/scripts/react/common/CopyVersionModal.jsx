@@ -2,7 +2,7 @@ import React from 'react';
 import {Input} from './KbcBootstrap';
 import {Modal} from 'react-bootstrap';
 import moment from 'moment';
-import ImmutableRenderMixin from '../mixins/ImmutableRendererMixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import ConfirmButtons from './ConfirmButtons';
 
 export default React.createClass({

@@ -1,5 +1,5 @@
 React = require 'react'
-pureRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+pureRendererMixin = require 'react-immutable-render-mixin'
 
 TableRow = React.createFactory(require './TableRow')
 {div, span, strong} = React.DOM

@@ -1,7 +1,7 @@
 React = require 'react'
 OrchestrationsNavRow = require './OrchestrationsNavRow'
 
-ImmutableRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRendererMixin = require 'react-immutable-render-mixin'
 
 {div} = React.DOM
 

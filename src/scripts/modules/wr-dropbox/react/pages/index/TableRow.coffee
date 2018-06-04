@@ -2,7 +2,7 @@ React = require 'react'
 {ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'
 {Loader} = require '@keboola/indigo-ui'
 {i, span, button, strong, div} = React.DOM
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 

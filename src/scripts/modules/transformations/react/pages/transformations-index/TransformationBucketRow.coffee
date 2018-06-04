@@ -1,5 +1,5 @@
 React = require 'react'
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 InstalledComponentsActionCreators = require '../../../../components/InstalledComponentsActionCreators'
 RunComponentButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 DeleteButton = React.createFactory(require '../../../../../react/common/DeleteButton')

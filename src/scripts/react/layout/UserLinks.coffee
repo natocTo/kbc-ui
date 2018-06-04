@@ -1,5 +1,5 @@
 React = require 'react'
-ImmutableRendererMixin = require '../../react/mixins/ImmutableRendererMixin'
+ImmutableRendererMixin = require 'react-immutable-render-mixin'
 ApplicationStore = require '../../stores/ApplicationStore'
 contactSupport = require('../../utils/contactSupport').default
 

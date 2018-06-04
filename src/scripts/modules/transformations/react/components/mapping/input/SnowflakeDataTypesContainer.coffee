@@ -1,6 +1,6 @@
 React = require 'react'
 Immutable = require 'immutable'
-ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 SnowflakeDataTypesList = React.createFactory(require('./SnowflakeDataTypesList'))
 SnowflakeDataTypesAddForm = React.createFactory(require('./SnowflakeDataTypesAddForm'))
 _ = require('underscore')

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import MetadataStore from '../../stores/MetadataStore';
-import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import MetadataActionCreators from '../../MetadataActionCreators';
 
 require('./MetadataEditField.less');

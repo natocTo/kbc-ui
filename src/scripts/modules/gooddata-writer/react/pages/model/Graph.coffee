@@ -2,7 +2,7 @@ React = require 'react'
 
 GraphCanvas = require '../../../../../react/common/GraphCanvas'
 Button = React.createFactory(require('react-bootstrap').Button)
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 
 graphUtils = require '../../../../../utils/graphUtils'
 

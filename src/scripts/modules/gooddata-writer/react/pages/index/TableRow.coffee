@@ -1,5 +1,5 @@
 React = require 'react'
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 Link = React.createFactory(require('react-router').Link)
 ActivateTableExportButton = require('../../components/ActivateTableExportButton').default
 {ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'

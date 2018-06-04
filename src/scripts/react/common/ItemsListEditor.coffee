@@ -1,5 +1,5 @@
 React = require 'react'
-ImmutableRenderMixin = require '../mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 _ = require('underscore')
 Immutable = require('immutable')
 Button = React.createFactory(require('react-bootstrap').Button)

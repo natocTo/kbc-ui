@@ -1,7 +1,7 @@
 React = require 'react'
 JobsTableRow = React.createFactory(require './JobsTableRow')
 RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
-ImmutableRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRendererMixin = require 'react-immutable-render-mixin'
 
 {table, thead, th, tr, td, tbody, div} = React.DOM
 

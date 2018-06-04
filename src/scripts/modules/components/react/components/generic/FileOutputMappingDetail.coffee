@@ -1,6 +1,6 @@
 React = require 'react'
 Link = React.createFactory(require('react-router').Link)
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 Check = React.createFactory(require('@keboola/indigo-ui').Check)
 ListGroup = React.createFactory(require('react-bootstrap').ListGroup)
 ListGroupItem = React.createFactory(require('react-bootstrap').ListGroupItem)

@@ -8,7 +8,7 @@ Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 
 RowEditor = require './RowEditor'
 
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 

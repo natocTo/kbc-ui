@@ -1,7 +1,7 @@
 React = require 'react'
 Link = React.createFactory(require('react-router').Link)
 Immutable = require('immutable')
-ImmutableRenderMixin = require '../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 InstalledComponentsActionCreators = require '../../../components/InstalledComponentsActionCreators'
 RunComponentButton = React.createFactory(require '../../../components/react/components/RunComponentButton')
 TransformationTypeLabel = React.createFactory(require './TransformationTypeLabel')

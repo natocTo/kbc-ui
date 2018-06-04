@@ -6,7 +6,7 @@ ApplicationStore = require '../../../../../stores/ApplicationStore'
 JobsStore = require('../../../stores/JobsStore')
 ComponentsStore  = require('../../../../components/stores/ComponentsStore')
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
-PureRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+PureRendererMixin = require 'react-immutable-render-mixin'
 {fromJS} = require 'immutable'
 
 Events = React.createFactory(require('../../../../sapi-events/react/Events').default)

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import {Table} from 'react-bootstrap';
 
