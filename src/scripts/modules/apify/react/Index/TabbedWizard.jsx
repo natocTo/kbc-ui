@@ -275,7 +275,7 @@ export default React.createClass({
 
   renderInputControl(propertyPath, placeholder) {
     const propValue = this.parameter(propertyPath, '');
-    const isEncrypted = propValue.includes('KBC::') && propValue.includes('Encrypted');
+    const isEncrypted = propValue.includes('KBC::') && (propValue.includes('Encrypted') || propValue.includes('Secure'));
     let value = '';
     let placeholderValue = '';
     if (isEncrypted ) {
