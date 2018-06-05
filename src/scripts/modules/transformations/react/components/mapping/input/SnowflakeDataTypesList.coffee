@@ -1,5 +1,5 @@
 React = require 'react'
-ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 { ListGroup, ListGroupItem } = require('react-bootstrap')
 ListGroup = React.createFactory ListGroup
 ListGroupItem = React.createFactory ListGroupItem

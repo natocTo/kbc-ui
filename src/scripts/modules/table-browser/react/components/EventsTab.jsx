@@ -4,7 +4,7 @@ import date from '../../../../utils/date';
 import underscoreString from 'underscore.string';
 import {Table} from 'react-bootstrap';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
-import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import EventDetail from '../../../sapi-events/react/EventDetail';
 
 export default React.createClass({

@@ -7,7 +7,7 @@ OrchestrationActiveButton = React.createFactory(require '../../components/Orches
 OrchestrationDeleteButton = React.createFactory(require '../../components/OrchestrationDeleteButton')
 OrchestrationRunButton = React.createFactory(require('../../components/OrchestrationRunButton').default)
 CronRecord = React.createFactory(require './../../components/CronRecord')
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 
 OrchestrationActionCreators = require '../../../ActionCreators'
 

@@ -4,7 +4,7 @@ moment = require 'moment'
 StatusLabel = React.createFactory require('../../../../../react/common/JobStatusLabel').default
 Immutable = require 'immutable'
 
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 {a, div, strong, span} = React.DOM
 Duration = require('../../../../../utils/duration')
 date = require '../../../../../utils/date'

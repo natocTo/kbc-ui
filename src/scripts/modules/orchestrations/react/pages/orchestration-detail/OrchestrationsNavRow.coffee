@@ -6,7 +6,7 @@ FinishedWithIcon = React.createFactory(require '../../../../../react/common/Fini
 JobStatusCircle = React.createFactory(require '../../../../../react/common/JobStatusCircle')
 Link = React.createFactory(require('react-router').Link)
 
-ImmutableRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRendererMixin = require 'react-immutable-render-mixin'
 
 { a, span, div, strong, em} = React.DOM
 

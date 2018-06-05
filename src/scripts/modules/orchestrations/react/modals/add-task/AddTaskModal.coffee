@@ -22,7 +22,7 @@ require './AddTaskModal.less'
 
 SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
 fuzzy = require 'fuzzy'
-immutableMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+immutableMixin = require 'react-immutable-render-mixin'
 
 
 STEP_COMPONENT_SELECT = 'componentSelect'

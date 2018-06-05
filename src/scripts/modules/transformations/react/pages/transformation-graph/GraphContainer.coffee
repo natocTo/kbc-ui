@@ -8,7 +8,7 @@ Graph = React.createFactory (require './Graph')
 TransformationsStore  = require('../../../stores/TransformationsStore')
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TransformationsActionCreators = require '../../../ActionCreators'
-immutableMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+immutableMixin = require 'react-immutable-render-mixin'
 
 module.exports = React.createClass
   displayName: 'GraphContainer'

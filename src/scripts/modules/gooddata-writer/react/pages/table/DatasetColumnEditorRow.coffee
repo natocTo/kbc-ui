@@ -16,7 +16,7 @@ FormGroup = React.createFactory FormGroup
 DateDimensionModal = React.createFactory(require './DateDimensionSelectModal')
 ColumnDataPreview = React.createFactory(require './ColumnDataPreview')
 DateFormatHint = React.createFactory(require './DateFormatHint')
-PureRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+PureRenderMixin = require 'react-immutable-render-mixin'
 
 
 {ColumnTypes, DataTypes, SortOrderOptions} = require '../../../constants'

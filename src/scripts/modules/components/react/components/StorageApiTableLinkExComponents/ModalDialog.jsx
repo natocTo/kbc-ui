@@ -7,7 +7,7 @@ import ColumnsInfoTab from './ColumnsInfoTab';
 import TableDescriptionTab from './TableDescriptionTab';
 
 import SapiTableLink from '../StorageApiTableLink';
-import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 
 import {Modal, Tabs, Tab} from 'react-bootstrap';
 import {RefreshIcon} from '@keboola/indigo-ui';

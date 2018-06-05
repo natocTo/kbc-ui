@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { List } from 'immutable';
 
 import DeleteButton from '../../../../../react/common/DeleteButton';
-import ImmutableRenderMixin from '../../../../../react/mixins/ImmutableRendererMixin';
+import ImmutableRenderMixin from 'react-immutable-render-mixin';
 import FileInputMappingModal from './FileInputMappingModal';
 
 export default React.createClass({

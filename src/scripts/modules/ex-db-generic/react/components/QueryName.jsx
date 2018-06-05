@@ -1,7 +1,7 @@
 import React from 'react';
 
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 
 export default function(componentId, storeProvisioning) {
   return React.createClass({

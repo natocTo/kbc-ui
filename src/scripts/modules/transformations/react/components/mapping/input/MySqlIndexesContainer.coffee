@@ -1,6 +1,6 @@
 React = require 'react'
 Immutable = require 'immutable'
-ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 MySqlIndexes = React.createFactory(require('./MySqlIndexes'))
 _ = require('underscore')
 

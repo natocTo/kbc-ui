@@ -2,7 +2,7 @@ React = require 'react'
 
 OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
 Popover = React.createFactory(require('react-bootstrap').Popover)
-PureRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+PureRenderMixin = require 'react-immutable-render-mixin'
 
 {span, ul, li, i} = React.DOM
 

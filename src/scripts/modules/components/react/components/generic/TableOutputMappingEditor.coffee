@@ -1,5 +1,5 @@
 React = require 'react'
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 _ = require('underscore')
 Immutable = require('immutable')
 Input = React.createFactory require('./../../../../../react/common/KbcBootstrap').Input

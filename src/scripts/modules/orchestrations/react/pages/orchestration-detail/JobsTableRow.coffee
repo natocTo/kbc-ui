@@ -6,7 +6,7 @@ Duration = React.createFactory(require '../../../../../react/common/Duration')
 JobStatusLabel = React.createFactory(require('../../../../../react/common/JobStatusLabel').default)
 date = require '../../../../../utils/date'
 
-ImmutableRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRendererMixin = require 'react-immutable-render-mixin'
 
 {tr, td, div, span} = React.DOM
 

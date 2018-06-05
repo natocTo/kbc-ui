@@ -9,7 +9,7 @@ OrchestrationStore = require '../../../stores/OrchestrationsStore'
 OrchestrationRow = React.createFactory(require './OrchestrationRow')
 SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
 RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
-ImmutableRendererMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRendererMixin = require 'react-immutable-render-mixin'
 
 NewOrchestrationButton = require '../../components/NewOrchestionButton'
 

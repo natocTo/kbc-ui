@@ -1,6 +1,6 @@
 React = require 'react'
 DeleteButton = require '../../../../../react/common/DeleteButton'
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../../../transformations/react/components/TableSizeLabel')
 TableBackendLabel = React.createFactory(require '../../../../transformations/react/components/TableBackendLabel')
 TableInputMappingModal = require('./TableInputMappingModal').default

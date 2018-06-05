@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import immutableMixin from '../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import Select from '../../../../react/common/Select';
 import {List} from 'immutable';

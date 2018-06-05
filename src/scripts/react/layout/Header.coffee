@@ -4,7 +4,7 @@ Immutable = require 'immutable'
 
 RoutesStore = require '../../stores/RoutesStore'
 ComponentsStore = require '../../modules/components/stores/ComponentsStore'
-immutableMixin = require '../../react/mixins/ImmutableRendererMixin'
+immutableMixin = require 'react-immutable-render-mixin'
 
 Link = React.createFactory(require('react-router').Link)
 RoutePendingIndicator = React.createFactory(require './RoutePendingIndicator')

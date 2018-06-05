@@ -7,7 +7,7 @@ Link = React.createFactory(require('react-router').Link)
 
 dockerProxyApi = require('../../../templates/dockerProxyApi').default
 
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 SapiTableLinkEx = React.createFactory(require('../../../../components/react/components/StorageApiTableLinkEx').default)
 

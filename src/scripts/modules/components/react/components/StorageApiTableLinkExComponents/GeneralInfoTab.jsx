@@ -4,7 +4,7 @@ import date from '../../../../../utils/date';
 import moment from 'moment';
 import _ from 'underscore';
 import {Table} from 'react-bootstrap';
-import immutableMixin from '../../../../../react/mixins/ImmutableRendererMixin';
+import immutableMixin from 'react-immutable-render-mixin';
 import EmptyState from '../../../../components/react/components/ComponentEmptyState';
 import filesize from 'filesize';
 import TableUpdatedByComponentInfo from '../../../../../react/common/TableUpdatedByComponentInfo';

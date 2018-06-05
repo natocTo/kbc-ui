@@ -1,6 +1,6 @@
 React = require 'react'
 Immutable = require 'immutable'
-ImmutableRenderMixin = require '../../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 RedshiftDataTypesAddForm = React.createFactory(require('./RedshiftDataTypesAddForm'))
 RedshiftDataTypesList = React.createFactory(require('./RedshiftDataTypesList'))
 _ = require('underscore')

@@ -4,7 +4,7 @@ Immutable = require('immutable')
 {Map, List} = Immutable
 _ = require('underscore')
 
-ImmutableRenderMixin = require '../../../../../react/mixins/ImmutableRendererMixin'
+ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TransformationsActionCreators = require '../../../ActionCreators'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
