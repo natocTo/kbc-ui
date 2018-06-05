@@ -159,7 +159,7 @@ module.exports = React.createClass
           React.DOM.label className: 'col-xs-2 control-label', 'Source'
           React.DOM.div className: 'col-xs-10',
             SapiTableSelector
-              value: @props.value.get("source")
+              value: @props.value.get("source", '')
               disabled: @props.disabled
               placeholder: "Source table"
               onSelectTableFn: @_handleChangeSource

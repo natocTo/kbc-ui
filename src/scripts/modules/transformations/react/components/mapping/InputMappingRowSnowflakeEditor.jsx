@@ -133,7 +133,7 @@ export default React.createClass({
             <label className="col-xs-2 control-label">Source</label>
             <div className="col-xs-10">
               <SapiTableSelector
-                value={this.props.value.get('source')}
+                value={this.props.value.get('source', '')}
                 disabled={this.props.disabled}
                 placeholder="Source Table"
                 onSelectTableFn={this._handleChangeSource}
