@@ -205,7 +205,7 @@ export default React.createClass({
       resultForm = (
         <span>
           {this.renderStaticFormGroup('User ID', user)}
-          {this.renderStaticFormGroup('Actor ID', <p className="form-control-static">{parameters.get('actId')}</p>)}
+          {this.renderStaticFormGroup('Actor ID', this.renderActorStatic(parameters))}
           {this.renderStaticFormGroup('Memory', <p className="form-control-static">{parameters.get('memory')}</p>)}
           {this.renderStaticFormGroup('Build', <p className="form-control-static">{parameters.get('build')}</p>)}
           {this.renderStaticFormGroup('Actor Input', actorInput)}
@@ -244,6 +244,19 @@ export default React.createClass({
       </p>
     );
   },
+
+  renderActorStatic(parameters) {
+    const actId = parameters.get('actId');
+    const url = `https://my.apify.com/acts/${actId}`;
+    return (
+      <p className="form-control-static">
+        <a target="_blank" rel="noopener noreferrer" href={url}>
+          {actId}
+        </a>
+      </p>
+    );
+  },
+
 
   renderStaticFormGroup(controlLabel, control, helpText) {
     return (
