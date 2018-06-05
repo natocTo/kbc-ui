@@ -94,8 +94,13 @@ export default React.createClass({
         '#token': paramsToSave.get('#token'),
         'userId': paramsToSave.get('userId')
       });
-    } else {
-      paramsToSave = paramsToSave.delete('actionType').delete('datasetId');
+    }
+    if (action === 'executionId') {
+      paramsToSave = Map({
+        executionId: paramsToSave.get('executionId'),
+        '#token': paramsToSave.get('#token'),
+        'userId': paramsToSave.get('userId')
+      });
     }
     this.props.onSave(paramsToSave.delete('action'), this.getInputTableId());
   },
