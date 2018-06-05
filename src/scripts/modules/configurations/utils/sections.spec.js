@@ -144,7 +144,7 @@ describe('sections makeCreateEmptyFn()', function() {
       }
     }
   ]);
-  it('should create valid empty conig', function() {
+  it('should create valid empty config', function() {
     const createEmptyFn = sections.makeCreateEmptyFn(sectionsDefinition);
     const expected = {
       parameters: {
