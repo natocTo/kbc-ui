@@ -7,6 +7,17 @@ services:
     ports:
       - "3000:3000"
     volumes:
+      - ./:/code
+    working_dir: /code
+    tty: true
+    stdin_open: true
+    command: sh -c 'yarn && yarn start'
+
+  node-cached:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
       - ./:/code:cached
     working_dir: /code
     tty: true
