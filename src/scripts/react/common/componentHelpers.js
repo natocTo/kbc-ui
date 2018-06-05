@@ -107,6 +107,5 @@ const getComponentBadges = (component) => {
 };
 
 export {
-  getComponentType,
   getComponentBadges
 };
