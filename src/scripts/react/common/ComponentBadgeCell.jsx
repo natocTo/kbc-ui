@@ -5,7 +5,13 @@ import './Badges.less';
 export default React.createClass({
   propTypes: {
     badges: PropTypes.array.isRequired,
-    badgesFilter: PropTypes.array.isRequired
+    badgesFilter: PropTypes.array
+  },
+
+  getDefaultProps() {
+    return {
+      badgesFilter: []
+    };
   },
 
   render() {
