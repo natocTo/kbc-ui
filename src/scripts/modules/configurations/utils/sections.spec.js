@@ -56,6 +56,34 @@ describe('sections makeParseFn()', function() {
     ];
     assert.deepEqual(expected, parseFn(configuration).toJS());
   });
+
+  it('should use provided conform function', function() {
+    const conformFn = function(configuration) {
+      let conformedConfiguration = configuration;
+      if (conformedConfiguration.hasIn(['parameters', 'myOldKey'])) {
+        conformedConfiguration = conformedConfiguration
+          .setIn(['parameters', 'key2'], conformedConfiguration.getIn(['parameters', 'myOldKey']))
+          .removeIn(['parameters', 'myOldKey']);
+      }
+      return conformedConfiguration;
+    };
+    const parseFn = sections.makeParseFn(sectionsDefinition, conformFn);
+    const configuration = Immutable.fromJS({
+      parameters: {
+        key1: 'val1',
+        myOldKey: 'val2'
+      }
+    });
+    const expected = [
+      {
+        key1: 'val1'
+      },
+      {
+        key2: 'val2'
+      }
+    ];
+    assert.deepEqual(expected, parseFn(configuration).toJS());
+  });
 });
 
 describe('sections makeCreateFn()', function() {
