@@ -22,6 +22,6 @@ export default {
       title: webalizedName,
       identifier: ''
     };
-    return Immutable.fromJS(initState);
+    return createConfiguration(Immutable.fromJS(initState));
   }
 };

@@ -13,27 +13,28 @@ export default (params) => {
     isColumnIgnored = column => column.get('type') === 'IGNORE' // if ignored then won't be saved to input mapping columns property of configuration object
   } = params;
 
-  return fromJS({
-    onSave(localState) {
-      const tableId = localState.get('tableId');
-      const localStateColumnsToSave = localState
-        .get('columns').filter(column => !isColumnIgnored(column));
-      const configParametersWithColumns = onSaveColumns(tableId, localStateColumnsToSave);
-      const configStorageMapping = fromJS({
-        storage: {
-          input: {
-            tables: [
-              {
-                source: tableId,
-                columns: localStateColumnsToSave.map(column => column.get(matchColumnKey))
-              }
-            ]
-          }
+  const onSave = function(localState) {
+    const tableId = localState.get('tableId');
+    const localStateColumnsToSave = localState
+      .get('columns').filter(column => !isColumnIgnored(column));
+    const configParametersWithColumns = onSaveColumns(tableId, localStateColumnsToSave);
+    const configStorageMapping = fromJS({
+      storage: {
+        input: {
+          tables: [
+            {
+              source: tableId,
+              columns: localStateColumnsToSave.map(column => column.get(matchColumnKey))
+            }
+          ]
         }
-      });
-      return configStorageMapping.mergeDeep(configParametersWithColumns);
-    },
+      }
+    });
+    return configStorageMapping.mergeDeep(configParametersWithColumns);
+  };
 
+  return fromJS({
+    onSave,
     onLoad(configuration, tables) {
       const configColumns = onLoadColumns(configuration);
       const tableId = parseTableId(configuration);
@@ -52,12 +53,10 @@ export default (params) => {
       );
       return fromJS({columns: columnsList, tableId: tableId, columnsMappings});
     },
-
     onCreate(name) {
-      return fromJS({'columns': [], columnsMappings, tableId: name});
+      return onSave(fromJS({'columns': [], columnsMappings, tableId: name}));
     },
-
     render: StorageTableColumnsEditor,
-    isComplete: isComplete
+    isComplete
   });
 };

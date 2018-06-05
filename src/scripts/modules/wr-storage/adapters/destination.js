@@ -25,13 +25,13 @@ const parseConfiguration = function(configuration) {
   });
 };
 
-const createEmptyLocalState = function(tableId) {
+const createEmptyConfiguration = function(tableId) {
   const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
-  return Immutable.fromJS({destination: tableName});
+  return createConfiguration(Immutable.fromJS({destination: tableName}));
 };
 
 export default {
   createConfiguration: createConfiguration,
   parseConfiguration: parseConfiguration,
-  createEmptyLocalState: createEmptyLocalState
+  createEmptyConfiguration: createEmptyConfiguration
 };

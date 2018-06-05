@@ -28,7 +28,7 @@ describe('row', function() {
 
   describe('createEmptyConfiguration()', function() {
     it('should return a default config with the webalized name filled in', function() {
-      assert.deepEqual(createEmptyConfiguration('My Test', 'my-test').toJS(), {name: 'my-test'});
+      assert.deepEqual(createEmptyConfiguration('My Test', 'my-test').toJS(), createConfiguration(Immutable.fromJS({name: 'my-test'})).toJS());
     });
   });
 });
