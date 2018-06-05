@@ -27,6 +27,7 @@ export default React.createClass({
     const staticElement = (
       <FormControl.Static>
         {error}
+        {' '}
         {this.renderRefresh()}
       </FormControl.Static>
     );

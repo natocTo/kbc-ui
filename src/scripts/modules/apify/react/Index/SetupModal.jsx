@@ -80,6 +80,17 @@ export default React.createClass({
         '#token': paramsToSave.get('#token'),
         'userId': paramsToSave.get('userId')
       });
+    }
+    if (action === 'actor') {
+      paramsToSave = Map({
+        actionType: 'runActor',
+        memory: paramsToSave.get('memory') || '2048',
+        build: paramsToSave.get('build') || 'latest',
+        input: crawlerSettings || {},
+        actId: paramsToSave.get('actId'),
+        '#token': paramsToSave.get('#token'),
+        'userId': paramsToSave.get('userId')
+      });
     } else {
       paramsToSave = paramsToSave.delete('actionType').delete('datasetId');
     }
@@ -93,7 +104,8 @@ export default React.createClass({
   },
 
   getSettings() {
-    let defaultValue = this.props.parameters.get('crawlerSettings', Map()) || Map();
+    const settingsKey  = this.getAction() === 'actor' ? 'input' : 'crawlerSettings';
+    let defaultValue = this.props.parameters.get(settingsKey, Map()) || Map();
     defaultValue = JSON.stringify(defaultValue, null, '  ');
     return this.localState('settings', defaultValue);
   },
@@ -114,9 +126,11 @@ export default React.createClass({
 
   getAction() {
     const params = this.parameters();
-    const otherAction = params.get('actionType') === 'getDatasetItems' ? 'dataset' : 'crawler';
-    let action = params.get('action', !!params.get('executionId') ? 'executionId' : otherAction);
-
+    let otherAction = params.get('actionType') === 'getDatasetItems' ? 'dataset' : 'crawler';
+    if (params.get('actionType') === 'runActor') {
+      otherAction = 'actor';
+    }
+    const action = params.get('action', !!params.get('executionId') ? 'executionId' : otherAction);
     return action;
   },
 
@@ -132,8 +146,13 @@ export default React.createClass({
     const hasSettingsValid = this.isSettingsValid();
     const isCrawlerAction = this.getAction() === 'crawler';
     const isDatasetAction = this.getAction() === 'dataset';
+    const isActorAction = this.getAction() === 'actor';
     const isLoadingCrawlers = this.localState(['crawlers', 'loading'], false);
     const hasDataset = !!this.parameters().get('datasetId');
+    if (isActorAction) {
+      const isLoadingActors = this.localState(['actors', 'loading'], false);
+      return !isLoadingActors && hasAuth && this.parameters().get('actId') && hasSettingsValid;
+    }
     if (isDatasetAction) {
       return !isLoadingCrawlers && hasAuth && hasDataset;
     }
