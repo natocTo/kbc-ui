@@ -126,7 +126,7 @@ export default React.createClass({
         <Input
           type="radio"
           label="Run Crawler"
-          help="Will run specified crawler or wait if it is already running, and eventually retrieve its results if it finishes succesfully"
+          help="Runs a specific Crawler and retrieves its results if it finishes successfully"
           value="crawler"
         />
         <Input
@@ -138,13 +138,13 @@ export default React.createClass({
         <Input
           type="radio"
           label="Retrieve results only"
-          help="Retrieve results of a crawler run specified by executionId"
+          help="Retrieves the results from a Crawler run specified by its Execution ID"
           value="executionId"
         />
         <Input
           type="radio"
           label="Retrieve items from dataset"
-          help="Retrieve items from specified Apify dataset"
+          help="Retrieves items from a Dataset specified by its ID or name"
           value="dataset"
         />
       </RadioGroup>
@@ -154,7 +154,7 @@ export default React.createClass({
   renderDatasetSettingsForm() {
     return (
       <div className="form-horizontal">
-        {this.renderInput('Dataset', 'datasetId', 'DatasetId or DatasetName of dataset you want to get items from', 'Enter dataset id or dataset name')}
+        {this.renderInput('Dataset', 'datasetId', 'ID or name of the Dataset to fetch the data from.', 'Enter dataset id or dataset name')}
       </div>
     );
   },
@@ -174,7 +174,7 @@ export default React.createClass({
         gutters={['CodeMirror-lint-markers']}
       />
     );
-    const eidHelp = 'Execution id of a crawler run to retrieve results from';
+    const eidHelp = 'Execution ID of the Crawler run to retrieve the results from';
     const executionIdControl = (
       <div className="form-horizontal">
         {this.renderInput('Execution ID', 'executionId', eidHelp, 'Enter Execution ID')}
@@ -194,7 +194,7 @@ export default React.createClass({
           <div className="col-xs-10">
             {editor}
             <div className="help-text">
-              Optional <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">crawler settings</a> JSON object which overrides default crawler settings for current run.
+              Optional parameter <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">crawler settings</a>. Specifies a JSON object with properties that override the default crawler settings. For more information, see documentation.
             </div>
           </div>
         </div>
@@ -218,7 +218,7 @@ export default React.createClass({
             value={this.props.inputTableId || ''}
           />
           <span className="help-block">
-            Optional parameter. Data from input table will be pushed to crawler, where you can access them through Apify keyvalue store. Keyvalue store ID will be save to customData attribute.
+            Optional parameter. Data from the input table will be pushed to crawler, where you can access them through the Key-value store. The ID of the Key-value store will be saved to the customData attribute of the crawler execution.
           </span>
         </div>
       </div>
