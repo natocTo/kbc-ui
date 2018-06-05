@@ -27,7 +27,7 @@ export default React.createClass({
     const component = ComponentStore.getComponent(componentId);
     const isChanged = Store.isEditingConfiguration(componentId, configurationId);
     const createBySectionsFn = sections.makeCreateFn(settings.getIn(['index', 'sections']));
-    const conformFn = settings.getIn(['index', 'onConform']);
+    const conformFn = settings.getIn(['index', 'onConform'], (config) => config);
     const parseBySectionsFn = sections.makeParseFn(
       settings.getIn(['index', 'sections']),
       conformFn
@@ -58,17 +58,15 @@ export default React.createClass({
       isJsonConfigurationParsable:
         isJsonConfigurationValid &&
         isParsableConfiguration(
-          Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId)),
+          conformFn(Immutable.fromJS(Store.getEditingJsonConfiguration(componentId, configurationId))),
           parseBySectionsFn,
-          createBySectionsFn,
-          conformFn
+          createBySectionsFn
         ),
 
       isParsableConfiguration: isParsableConfiguration(
-        Store.getConfiguration(componentId, configurationId),
+        conformFn(Store.getConfiguration(componentId, configurationId)),
         parseBySectionsFn,
-        createBySectionsFn,
-        conformFn
+        createBySectionsFn
       ),
       isJsonEditorOpen: Store.hasJsonEditor(componentId, configurationId, parseBySectionsFn, createBySectionsFn, conformFn),
       configurationBySections: configurationBySections,

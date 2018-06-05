@@ -1,11 +1,10 @@
 var Immutable = require('immutable');
 
-export default function(configuration, parseFunction, createFunction, conformFunction) {
+export default function(configuration, parseFunction, createFunction) {
   if (configuration.isEmpty()) {
     return true;
   }
-  const conformConfig = conformFunction || ((config) => config);
   const parsed = parseFunction(configuration);
   const reconstructed = createFunction(parsed);
-  return Immutable.is(conformConfig(configuration), reconstructed);
+  return Immutable.is(configuration, reconstructed);
 }
