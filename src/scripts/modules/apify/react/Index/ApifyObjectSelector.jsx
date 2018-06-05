@@ -22,54 +22,65 @@ export default React.createClass({
   },
 
   render() {
-    const objectsList = this.props.object.get('data', List()) || List();
-    const value = this.props.selectedValue;
     const isLoading = this.props.object.get('loading', false);
     const error = this.props.object.get('error');
-    const refresh = (
-      <span>
-        {isLoading ? 'Loading list of ' + this.props.objectName + 's... ' : null}
-        <RefreshIcon
-          isLoading={isLoading}
-          onClick={this.props.onLoadObjectsList}/>
-      </span>
-
-    );
     const staticElement = (
       <FormControl.Static>
         {error}
-        {refresh}
+        {this.renderRefresh()}
       </FormControl.Static>
     );
-    const options = objectsList
-      .sortBy((c) => c.get(this.props.objectLabelKey).toLowerCase())
-      .map((c) => {
-        return {value: c.get(this.props.objectIdKey), label: c.get(this.props.objectLabelKey)};
-      }).toArray();
-    const selectControl = (
-      <InputGroup>
-        <Select
-          placeholder={'Select' + this.props.objectName}
-          name="ids"
-          key="ids"
-          clearable={false}
-          multi={false}
-          options={options}
-          value={value}
-          onChange={({value: selectedId}) =>
-            this.props.onSelect(selectedId)}/>
-        <InputGroup.Addon>{refresh}</InputGroup.Addon>
-      </InputGroup>);
+
     return (
       <div className={error ? 'form-group has-error' : 'form-group'}>
         <div className="col-xs-2 control-label">
           {this.capitalizeFirstLetter(this.props.objectName)}
         </div>
         <div className="col-xs-10">
-          {isLoading || error ? staticElement : selectControl}
+          {isLoading || error ? staticElement : this.renderSelectControl()}
         </div>
       </div>
     );
+  },
+
+  renderRefresh() {
+    const isLoading = this.props.object.get('loading', false);
+    return (
+      <span>
+        {isLoading ? 'Loading list of ' + this.props.objectName + 's... ' : null}
+        <RefreshIcon
+          isLoading={isLoading}
+          onClick={this.props.onLoadObjectsList}/>
+      </span>
+    );
+  },
+
+  renderSelectControl() {
+    const value = this.props.selectedValue;
+    return (
+      <InputGroup>
+        <Select
+          placeholder={'Select ' + this.props.objectName}
+          name="ids"
+          key="ids"
+          clearable={false}
+          multi={false}
+          options={this.getOptions()}
+          value={value}
+          onChange={({value: selectedId}) =>
+            this.props.onSelect(selectedId)}/>
+        <InputGroup.Addon>{this.renderRefresh()}</InputGroup.Addon>
+      </InputGroup>);
+  },
+
+  getOptions() {
+    const objectsList = this.props.object.get('data', List()) || List();
+    const options = objectsList
+      .sortBy((c) => c.get(this.props.objectLabelKey).toLowerCase())
+      .map((c) => {
+        return {value: c.get(this.props.objectIdKey), label: c.get(this.props.objectLabelKey)};
+      }).toArray();
+    return options;
   },
 
   capitalizeFirstLetter(string) {
