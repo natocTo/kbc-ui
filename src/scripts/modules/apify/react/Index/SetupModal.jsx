@@ -67,11 +67,14 @@ export default React.createClass({
     if (action === 'crawler') {
       const crawlerId = paramsToSave.get('crawlerId');
       const crawler = this.localState(['crawlers', 'data']).find((c) => c.get('id') === crawlerId);
-      paramsToSave = paramsToSave
-        .set('customId', crawler.get('customId'))
-        .set('settingsLink', crawler.get('settingsLink'))
-        .set('crawlerSettings', crawlerSettings)
-        .delete('executionId');
+      paramsToSave = Map({
+        crawlerId: paramsToSave.get('crawlerId'),
+        customId: crawler.get('customId'),
+        settingsLink: crawler.get('settingsLink'),
+        crawlerSettings: crawlerSettings,
+        '#token': paramsToSave.get('#token'),
+        'userId': paramsToSave.get('userId')
+      });
     }
     if (action === 'dataset') {
       paramsToSave = Map({
