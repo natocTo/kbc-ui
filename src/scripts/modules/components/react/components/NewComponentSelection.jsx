@@ -2,7 +2,6 @@ import React from 'react';
 import ComponentsActionCreators from '../../ComponentsActionCreators';
 import SearchRow from '../../../../react/common/SearchRow';
 import ComponentBox from '../../../../react/common/ComponentBox';
-import './NewComponentSelection.less';
 
 export default React.createClass({
   propTypes: {

@@ -1,0 +1,52 @@
+.badge-component {
+  &-container {
+    float: right;
+    margin-top: 5px;
+    &-selection {
+      position: absolute;
+      right: 9px;
+      top: 9px;
+    }
+  }
+  &-row {
+    display: table-row;
+  }
+  &-cell {
+    display: table-cell;
+  }
+  &-placeholder {
+    text-align: right;
+    padding-right: 6px;
+    line-height: 26px;
+  }
+  &-item {
+    padding: 2px 7px 2px 9px;
+    margin-left: 3px;
+    font-size: 12px;
+    line-height: 16px;
+    &-title{
+      cursor: help;
+    }
+    &-excludeFromNewList {
+      background: #282d38;
+    }
+    &-fee {
+      background: #fbd062;
+      color: #282d38;
+    }
+    &-deprecated {
+      background: #e70b37;
+      color: #fff;
+    }
+    &-responsibility {
+      background: #25B8EB;
+      color: #fff;
+      &-icon {
+        color: #fff;
+        vertical-align: bottom;
+        width: auto;
+        height: 16px;
+      }
+    }
+  }
+}

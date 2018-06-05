@@ -1,9 +1,12 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 import ConfigurationRow from './ConfigurationRow';
 import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
 import ComponentDetailLink from '../../../../react/common/ComponentDetailLink';
+import ComponentBadgeRow from '../../../../react/common/ComponentBadgeRow';
+import { getComponentBadges } from '../../../../react/common/componentHelpers';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -24,6 +27,9 @@ export default React.createClass({
               </ComponentDetailLink>
             </h2>
           </div>
+          <ComponentBadgeRow
+            badges={getComponentBadges(this.props.component)}
+          />
         </div>
         <div className="table table-hover">
           <span className="tbody">
