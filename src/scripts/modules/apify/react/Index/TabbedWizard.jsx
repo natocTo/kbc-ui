@@ -75,23 +75,43 @@ export default React.createClass({
   },
 
   renderActorSettingsForm() {
-    /* const editor = (
-     *   <CodeMirror
-     *     theme="solarized"
-     *     lineNumbers={false}
-     *     value={this.props.settings}
-     *     readOnly={false}
-     *     mode="application/json"
-     *     lineWrapping={true}
-     *     autofocus={false}
-     *     onChange={this.handleCrawlerSettingsChange}
-     *     lint={true}
-     *     gutters={['CodeMirror-lint-markers']}
-     *   />
-     * );     */
     return (
       <div className="form-horizontal">
         {this.renderActorSelector()}
+        {this.renderInput(
+           'Memory',
+           'memory',
+           '(Optional) Specifies the amount of memory allocated for Actor run',
+           '2048'
+        )}
+        {this.renderInput(
+           'Build',
+           'build',
+           '(Optional) Tag or number of Actor build to run (e.g. latest or 1.2.34)',
+           'latest'
+        )}
+
+        <div className="form-group">
+          <div className="col-xs-2 control-label">
+            Actor Input
+          </div>
+          <div className="col-xs-10">
+            <CodeMirror
+              theme="solarized"
+              lineNumbers={false}
+              value={this.props.settings}
+              readOnly={false}
+              mode="application/json"
+              lineWrapping={true}
+              autofocus={false}
+              onChange={this.handleCrawlerSettingsChange}
+              lint={true}
+              gutters={['CodeMirror-lint-markers']}/>
+            <div className="help-text">
+              (Optional) Contains input for the Actor in JSON format
+            </div>
+          </div>
+        </div>
       </div>
     );
   },

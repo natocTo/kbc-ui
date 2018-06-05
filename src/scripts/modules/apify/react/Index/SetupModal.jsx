@@ -218,14 +218,18 @@ export default React.createClass({
 
   onLoadCrawlersForce() {
     this.updateLocalState(['crawlers'], Map({'loading': true, 'error': null}));
-    this.props.loadCrawlers(this.parameters()).then((data) => {
-      const crawlers = {
-        data: data.status !== 'error' ? data : null,
-        loading: false,
-        error: data.status === 'error' ? 'Error: ' + data.message : null
-      };
-      return this.updateLocalState('crawlers', fromJS(crawlers));
-    }).catch(() =>
+    this.props.loadCrawlers(this.parameters()).then(
+      (data) => {
+        const isError = data.status === 'error' || data.timeout;
+        const crawlers = {
+          data: !isError ? data : null,
+          loading: false,
+          error: isError ? 'Error: ' + data.message : null
+        };
+        return this.updateLocalState('crawlers', fromJS(crawlers));
+      },
+      (err) => this.updateLocalState('crawlers', fromJS({data: null, error: err, loading: false}))
+    ).catch(() =>
       this.updateLocalState('crawlers', fromJS({loading: false, data: null, error: 'Error Loading Crawlers'}))
     );
   },
@@ -237,14 +241,18 @@ export default React.createClass({
 
   onLoadActorsForce() {
     this.updateLocalState(['actors'], Map({'loading': true, 'error': null}));
-    this.props.loadActors(this.parameters()).then((data) => {
-      const actors = {
-        data: data.status !== 'error' ? data : null,
-        loading: false,
-        error: data.status === 'error' ? 'Error: ' + data.message : null
-      };
-      return this.updateLocalState('actors', fromJS(actors));
-    }).catch(() =>
+    this.props.loadActors(this.parameters()).then(
+      (data) => {
+        const isError = data.status === 'error' || data.timeout;
+        const actors = {
+          data: !isError ? data : null,
+          loading: false,
+          error: isError ? 'Error: ' + data.message : null
+        };
+        return this.updateLocalState('actors', fromJS(actors));
+      },
+      (err) => this.updateLocalState('actors', fromJS({data: null, error: err, loading: false}))
+    ).catch(() =>
       this.updateLocalState('actors', fromJS({loading: false, data: null, error: 'Error Loading Actors'}))
     );
   },
