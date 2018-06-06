@@ -26,6 +26,9 @@ OrchestrationsStore = require './stores/OrchestrationsStore'
 
 OrchestrationsActionCreators = require './ActionCreators'
 InstalledComponentsActionsCreators = require '../components/InstalledComponentsActionCreators'
+VersionsActionCreators = require '../components/VersionsActionCreators'
+
+createVersionsPageRoute = require('../../modules/components/utils/createVersionsPageRoute').default
 
 routes =
   name: 'orchestrations'
@@ -61,6 +64,9 @@ routes =
       ,
         (params) ->
           OrchestrationsActionCreators.loadOrchestrationJobs(parseInt(params.orchestrationId))
+      ,
+        (params) ->
+          VersionsActionCreators.loadVersions('orchestrator', params.orchestrationId)
     ]
     title: (routerState) ->
       orchestrationId = parseInt(routerState.getIn ['params', 'orchestrationId'])
@@ -92,6 +98,8 @@ routes =
       path: 'notifications'
       handler: OrchestrationNotifications
       headerButtonsHandler: OrchestrationNotificationsButtons
+    ,
+      createVersionsPageRoute 'orchestrator', 'orchestrationId'
     ]
   ]
 
