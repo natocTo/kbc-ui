@@ -9,6 +9,7 @@ OrchestrationJobsStore = require '../../../stores/OrchestrationJobsStore'
 RoutesStore = require '../../../../../stores/RoutesStore'
 
 # React components
+ComponentDescription = React.createFactory(require '../../../../components/react/components/ComponentDescription')
 OrchestrationsNav = React.createFactory(require './OrchestrationsNav')
 JobsTable = React.createFactory(require './JobsTable')
 JobsGraph = React.createFactory(require './JobsGraph')
@@ -62,6 +63,11 @@ OrchestrationDetail = React.createClass
                 orchestrations: @state.filteredOrchestrations
                 activeOrchestrationId: @state.orchestration.get 'id'
           div {className: 'col-md-9 kb-orchestrations-main kbc-main-content-with-nav'},
+            div className: 'row kbc-header',
+              ComponentDescription
+                componentId: 'orchestrator'
+                configId: @state.orchestration.get 'id'
+                  .toString()
             div className: 'table kbc-table-border-vertical kbc-detail-table',
               div className: 'tr',
                 div className: 'td',
