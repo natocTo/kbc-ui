@@ -7,6 +7,7 @@ OrchestrationsActionCreators = require '../../../ActionCreators'
 OrchestrationStore = require '../../../stores/OrchestrationsStore'
 OrchestrationJobsStore = require '../../../stores/OrchestrationJobsStore'
 RoutesStore = require '../../../../../stores/RoutesStore'
+VersionsStore = require '../../../../components/stores/VersionsStore'
 
 # React components
 ComponentDescription = React.createFactory(require '../../../../components/react/components/ComponentDescription')
@@ -18,8 +19,9 @@ Link = React.createFactory(require('react-router').Link)
 TasksSummary = React.createFactory(require './TasksSummary')
 CronRecord = React.createFactory(require '../../components/CronRecord')
 ScheduleModal = React.createFactory(require('../../modals/Schedule'))
+CreatedWithIcon = React.createFactory(require '../../../../../react/common/CreatedWithIcon')
 
-{div, h2, span, strong, br} = React.DOM
+{div, h2, span, strong, br, small} = React.DOM
 
 OrchestrationDetail = React.createClass
   displayName: 'OrchestrationDetail'
@@ -29,6 +31,7 @@ OrchestrationDetail = React.createClass
     orchestrationId = RoutesStore.getCurrentRouteIntParam 'orchestrationId'
     jobs = OrchestrationJobsStore.getOrchestrationJobs orchestrationId
     phases = OrchestrationStore.getOrchestrationTasks orchestrationId
+    versions = VersionsStore.getVersions 'orchestrator', orchestrationId.toString()
     tasks = List()
     phases.forEach (phase) ->
       tasks = tasks.concat(phase.get('tasks'))
@@ -39,6 +42,7 @@ OrchestrationDetail = React.createClass
       filteredOrchestrations: OrchestrationStore.getFiltered()
       filter: OrchestrationStore.getFilter()
       jobs: jobs
+      versions: versions
       graphJobs: jobs.filter (job) -> job.get('startTime') && job.get('endTime')
       jobsLoading: OrchestrationJobsStore.isLoading orchestrationId
     }
@@ -51,6 +55,20 @@ OrchestrationDetail = React.createClass
 
   _handleJobsReload: ->
     OrchestrationsActionCreators.loadOrchestrationJobsForce(@state.orchestration.get 'id')
+
+  _renderLastversion: ->
+    lastVersion = @state.versions.first()
+    console.log(lastVersion.toJS())
+    console.log(lastVersion.get 'created')
+    console.log(CreatedWithIcon
+      createdTime: lastVersion.get 'created'
+    )
+    span null,
+      lastVersion.getIn ['creatorToken', 'description'], 'unknown'
+      ' '
+      small {className: 'text-muted'},
+        '#' + lastVersion.get 'version'
+
 
   render: ->
     div {className: 'container-fluid'},
@@ -83,6 +101,15 @@ OrchestrationDetail = React.createClass
                   div className: 'row',
                     div className: 'col-lg-3 kbc-orchestration-detail-label', 'Assigned Token'
                     div className: 'col-lg-9', @state.orchestration.getIn ['token', 'description']
+                  div className: 'row',
+                    div className: 'col-lg-3 kbc-orchestration-detail-label', 'Updates'
+                    div className: 'col-lg-9',
+                      @_renderLastversion()
+                      br null
+                      Link to: 'orchestrator-versions', params:
+                        orchestrationId: @state.orchestration.get('id')
+                      ,
+                        'Show all versions'
                 div className: 'td',
                   div className: 'row',
                     div className: 'col-lg-3 kbc-orchestration-detail-label', 'Notifications '
