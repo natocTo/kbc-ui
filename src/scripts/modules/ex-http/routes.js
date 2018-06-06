@@ -15,7 +15,7 @@ import CredentialsForm from './react/components/Credentials';
 import React from 'react';
 import Immutable from 'immutable';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
-
+import conform from './adapters/conform';
 
 const routeSettings = {
   componentId: 'keboola.ex-http',
@@ -35,6 +35,7 @@ const routeSettings = {
     ]
   },
   row: {
+    onConform: conform,
     sections: [
       {
         render: ConfigurationForm,

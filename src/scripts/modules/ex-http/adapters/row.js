@@ -12,8 +12,7 @@ export function createConfiguration(localState) {
       delimiter: localState.get('delimiter', ','),
       enclosure: localState.get('enclosure', '"'),
       incremental: localState.get('incremental', false),
-      primary_key: localState.get('primaryKey', Immutable.List()),
-      columns: Immutable.List()
+      primary_key: localState.get('primaryKey', Immutable.List())
     }
   });
 
@@ -100,7 +99,7 @@ export function parseConfiguration(configuration) {
   }, null, Immutable.Map());
 
   let columnsFrom = processorCreateManifest.getIn(['parameters', 'columns_from'], 'header');
-  if (processorCreateManifest.getIn(['parameters', 'columns'], Immutable.List()).count() > 0) {
+  if (processorCreateManifest.hasIn(['parameters', 'columns'])) {
     columnsFrom = 'manual';
   }
 
