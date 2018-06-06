@@ -2,6 +2,7 @@ import React from 'react';
 
 import ComponentBadgeTable from '../../../../../react/common/ComponentBadgeTable';
 import { getComponentBadges } from '../../../../../react/common/componentHelpers';
+import '../../components/NewComponentSelection.less';
 
 const AppUsageInfo = ({ component }) => {
   return (
