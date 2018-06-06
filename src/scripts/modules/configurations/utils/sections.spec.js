@@ -20,7 +20,7 @@ describe('sections makeParseFn()', function() {
     }
   ]);
   it('should map all valid values', function() {
-    const parseFn = sections.makeParseFn(sectionsDefinition);
+    const parseFn = sections.makeParseFn(sectionsDefinition, null);
     const configuration = Immutable.fromJS({
       parameters: {
         key1: 'val1',
@@ -38,12 +38,40 @@ describe('sections makeParseFn()', function() {
     assert.deepEqual(expected, parseFn(configuration).toJS());
   });
   it('should not map invalid values', function() {
-    const parseFn = sections.makeParseFn(sectionsDefinition);
+    const parseFn = sections.makeParseFn(sectionsDefinition, null);
     const configuration = Immutable.fromJS({
       parameters: {
         key1: 'val1',
         key2: 'val2',
         invalidKey: 'val3'
+      }
+    });
+    const expected = [
+      {
+        key1: 'val1'
+      },
+      {
+        key2: 'val2'
+      }
+    ];
+    assert.deepEqual(expected, parseFn(configuration).toJS());
+  });
+
+  it('should use provided conform function', function() {
+    const conformFn = function(configuration) {
+      let conformedConfiguration = configuration;
+      if (conformedConfiguration.hasIn(['parameters', 'myOldKey'])) {
+        conformedConfiguration = conformedConfiguration
+          .setIn(['parameters', 'key2'], conformedConfiguration.getIn(['parameters', 'myOldKey']))
+          .removeIn(['parameters', 'myOldKey']);
+      }
+      return conformedConfiguration;
+    };
+    const parseFn = sections.makeParseFn(sectionsDefinition, conformFn);
+    const configuration = Immutable.fromJS({
+      parameters: {
+        key1: 'val1',
+        myOldKey: 'val2'
       }
     });
     const expected = [
@@ -144,7 +172,7 @@ describe('sections makeCreateEmptyFn()', function() {
       }
     }
   ]);
-  it('should create valid empty conig', function() {
+  it('should create valid empty config', function() {
     const createEmptyFn = sections.makeCreateEmptyFn(sectionsDefinition);
     const expected = {
       parameters: {
@@ -237,7 +265,8 @@ describe('sections parse(create())', function() {
           }
         }
 
-      ])
+      ]),
+      null
     );
     const configuration = Immutable.fromJS({
       parameters: {
@@ -292,7 +321,8 @@ describe('sections parse(create())', function() {
           }
         }
 
-      ])
+      ]),
+      null
     );
     const configuration = Immutable.fromJS({
       parameters: {
@@ -328,7 +358,8 @@ describe('sections parse(create())', function() {
             });
           }
         }
-      ])
+      ]),
+      null
     );
     const configuration = Immutable.fromJS({
       parameters: {
@@ -341,6 +372,43 @@ describe('sections parse(create())', function() {
         key: 'value'
       }
     };
+    assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+  });
+
+  it('should aggressively conform parsed config with missing value', function() {
+    const conformFn = (config) => config.setIn(['parameters', 'value'], true);
+    const onLoad = (config)  => config;
+    const onSave = (localState) => localState;
+    const configuration = Immutable.fromJS({
+      someValue: 1
+    });
+    const expected = {
+      parameters: {
+        value: true
+      },
+      someValue: 1
+    };
+    const rowSections = Immutable.fromJS([{onLoad, onSave}]);
+    const parseBySectionsFn = sections.makeParseFn(rowSections, conformFn);
+    const createBySectionsFn = sections.makeCreateFn(rowSections);
+    assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
+  });
+
+  it('should conform parsed config with existing value', function() {
+    const conformFn = (config) => config.set('value', config.get('value', 0));
+    const onLoad = (config)  => config;
+    const onSave = (localState) => localState;
+    const configuration = Immutable.fromJS({
+      someValue: 1,
+      value: 43
+    });
+    const expected = {
+      value: 43,
+      someValue: 1
+    };
+    const rowSections = Immutable.fromJS([{onLoad, onSave}]);
+    const parseBySectionsFn = sections.makeParseFn(rowSections, conformFn);
+    const createBySectionsFn = sections.makeCreateFn(rowSections);
     assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
   });
 });

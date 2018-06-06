@@ -68,13 +68,14 @@ let ConfigurationsStore = StoreUtils.createStore({
     return _store.hasIn(['editing', componentId, configurationId, 'configuration']);
   },
 
-  hasJsonEditor: function(componentId, configId, parseFn, createFn) {
+  hasJsonEditor: function(componentId, configId, parseFn, createFn, conformFn) {
     // FIXME?
     // force set opened JSON editor, if the configuration does not parse back to its original state
     // can this be done better? eg. calculate this property when storing the config in store in the first place?
     // this would require INSTALLED_COMPONENTS_CONFIGDATA_LOAD_SUCCESS, INSTALLED_COMPONENTS_CONFIGSDATA_LOAD_SUCCESS
     // events access the parseFn and createFn, probably from the RoutesStore?
-    if (!isParsableConfiguration(this.getConfiguration(componentId, configId), parseFn, createFn)) {
+    const conformedConfig = conformFn(this.getConfiguration(componentId, configId));
+    if (!isParsableConfiguration(conformedConfig, parseFn, createFn)) {
       _store = _store.setIn(['jsonEditor', componentId, configId], true);
     }
     return _store.hasIn(['jsonEditor', componentId, configId]);
