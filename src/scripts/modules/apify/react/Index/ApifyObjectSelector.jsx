@@ -24,13 +24,6 @@ export default React.createClass({
   render() {
     const isLoading = this.props.object.get('loading', false);
     const error = this.props.object.get('error');
-    const staticElement = (
-      <FormControl.Static>
-        {error}
-        {' '}
-        {this.renderRefresh()}
-      </FormControl.Static>
-    );
 
     return (
       <div className={error ? 'form-group has-error' : 'form-group'}>
@@ -38,7 +31,13 @@ export default React.createClass({
           {this.capitalizeFirstLetter(this.props.objectName)}
         </div>
         <div className="col-xs-10">
-          {isLoading || error ? staticElement : this.renderSelectControl()}
+          {isLoading || error ?
+           <FormControl.Static>
+             {error}
+             {' '}
+             {this.renderRefresh()}
+           </FormControl.Static>
+           : this.renderSelectControl()}
         </div>
       </div>
     );

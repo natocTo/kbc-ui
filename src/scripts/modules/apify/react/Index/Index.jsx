@@ -111,7 +111,11 @@ export default React.createClass({
   isConfigured() {
     const params = this.state.store.parameters;
     const hasAuth = (!!params.get('userId') && !!params.get('#token')) || !!params.get('executionId');
-    const hasCrawler = !!params.get('crawlerId') || !!params.get('executionId') || (params.get('actionType') === 'getDatasetItems' && params.get('datasetId')) || (params.get('actionType') === 'runActor' && params.get('actId'));
+    const hasCrawler =
+      !!params.get('crawlerId') ||
+      !!params.get('executionId') ||
+      (params.get('actionType') === 'getDatasetItems' && params.get('datasetId')) ||
+      (params.get('actionType') === 'runActor' && params.get('actId'));
     return hasAuth && hasCrawler;
   },
 
@@ -200,7 +204,7 @@ export default React.createClass({
     }
 
     if (isActorAction) {
-      const inputJson = parameters.get('input', Map()) || Map();
+      const inputJson = parameters.get('input', Map());
       const actorInput = this.renderStaticJsonEditor(inputJson.toJS());
       resultForm = (
         <span>
