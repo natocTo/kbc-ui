@@ -35,8 +35,7 @@ export const cases = {
               enclosure: '"',
               incremental: false,
               primary_key: [],
-              columns_from: 'header',
-              columns: []
+              columns_from: 'header'
             }
           },
           {
@@ -388,7 +387,6 @@ export const cases = {
               enclosure: '\'',
               incremental: false,
               primary_key: [],
-              columns: [],
               columns_from: 'auto'
             }
           }
@@ -432,7 +430,6 @@ export const cases = {
               enclosure: '\'',
               incremental: false,
               primary_key: [],
-              columns: [],
               columns_from: 'header'
             }
           },
@@ -497,7 +494,6 @@ export const cases = {
               enclosure: '\'',
               incremental: false,
               primary_key: [],
-              columns: [],
               columns_from: 'header'
             }
           },
