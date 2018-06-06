@@ -3,7 +3,7 @@ React = require 'react'
 FormHeader = React.createFactory(require './FormHeader')
 Input = React.createFactory(require('./../../../../../react/common/KbcBootstrap').Input)
 AppVendorInfo = React.createFactory(require './AppVendorInfo')
-AppUsageInfo = React.createFactory(require './AppUsageInfo')
+AppUsageInfo = React.createFactory(require('./AppUsageInfo').default)
 {div, p, form, label, span, h3} = React.DOM
 Immutable = require('immutable')
 
