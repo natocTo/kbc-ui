@@ -19,13 +19,13 @@ Link = React.createFactory(require('react-router').Link)
 TasksSummary = React.createFactory(require './TasksSummary')
 CronRecord = React.createFactory(require '../../components/CronRecord')
 ScheduleModal = React.createFactory(require('../../modals/Schedule'))
-CreatedWithIcon = React.createFactory(require '../../../../../react/common/CreatedWithIcon')
+CreatedWithIcon = React.createFactory(require('../../../../../react/common/CreatedWithIcon').default)
 
 {div, h2, span, strong, br, small} = React.DOM
 
 OrchestrationDetail = React.createClass
   displayName: 'OrchestrationDetail'
-  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore)]
+  mixins: [createStoreMixin(OrchestrationStore, OrchestrationJobsStore, VersionsStore)]
 
   getStateFromStores: ->
     orchestrationId = RoutesStore.getCurrentRouteIntParam 'orchestrationId'
@@ -56,19 +56,23 @@ OrchestrationDetail = React.createClass
   _handleJobsReload: ->
     OrchestrationsActionCreators.loadOrchestrationJobsForce(@state.orchestration.get 'id')
 
-  _renderLastversion: ->
+  _renderLastUpdate: ->
     lastVersion = @state.versions.first()
-    console.log(lastVersion.toJS())
-    console.log(lastVersion.get 'created')
-    console.log(CreatedWithIcon
-      createdTime: lastVersion.get 'created'
-    )
-    span null,
-      lastVersion.getIn ['creatorToken', 'description'], 'unknown'
-      ' '
-      small {className: 'text-muted'},
-        '#' + lastVersion.get 'version'
-
+    if !lastVersion.get 'version'
+      'unknown'
+    else
+      span null,
+        lastVersion.getIn ['creatorToken', 'description'], 'unknown'
+        ' '
+        small {className: 'text-muted'},
+          CreatedWithIcon
+            createdTime: lastVersion.get 'created'
+          ' #' + lastVersion.get 'version'
+            br null
+        Link to: 'orchestrator-versions', params:
+          orchestrationId: @state.orchestration.get('id')
+        ,
+        'Show all versions'
 
   render: ->
     div {className: 'container-fluid'},
@@ -97,19 +101,13 @@ OrchestrationDetail = React.createClass
                       ScheduleModal
                         crontabRecord: @state.orchestration.get 'crontabRecord'
                         orchestrationId: @state.orchestration.get 'id'
-
                   div className: 'row',
                     div className: 'col-lg-3 kbc-orchestration-detail-label', 'Assigned Token'
                     div className: 'col-lg-9', @state.orchestration.getIn ['token', 'description']
                   div className: 'row',
                     div className: 'col-lg-3 kbc-orchestration-detail-label', 'Updates'
                     div className: 'col-lg-9',
-                      @_renderLastversion()
-                      br null
-                      Link to: 'orchestrator-versions', params:
-                        orchestrationId: @state.orchestration.get('id')
-                      ,
-                        'Show all versions'
+                      @_renderLastUpdate()
                 div className: 'td',
                   div className: 'row',
                     div className: 'col-lg-3 kbc-orchestration-detail-label', 'Notifications '
