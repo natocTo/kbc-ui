@@ -62,13 +62,16 @@ OrchestrationDetail = React.createClass
       'unknown'
     else
       span null,
-        lastVersion.getIn ['creatorToken', 'description'], 'unknown'
-        ' '
+        lastVersion.getIn ['changeDescription'], ''
         small {className: 'text-muted'},
+          ' '
+          '#' + lastVersion.get 'version'
+          ' '
           CreatedWithIcon
             createdTime: lastVersion.get 'created'
-          ' #' + lastVersion.get 'version'
-            br null
+        br null
+        lastVersion.getIn ['creatorToken', 'description'], 'unknown'
+        br null
         Link to: 'orchestrator-versions', params:
           orchestrationId: @state.orchestration.get('id')
         ,
