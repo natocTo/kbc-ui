@@ -17,6 +17,7 @@ import { simpleMatch } from '../../../../utils/utils';
 const ITEMS_PER_PAGE = 20;
 
 export default function(componentIdValue, configIdParam = 'config', readOnlyMode = false) {
+  const readOnly = readOnlyMode;
   return React.createClass({
     mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
@@ -47,8 +48,7 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
         query: VersionsStore.getSearchFilter(componentId, configId),
         isPending: VersionsStore.isPendingConfig(componentId, configId),
         pendingActions: VersionsStore.getPendingVersions(componentId, configId),
-        pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId),
-        readOnlyMode: readOnlyMode
+        pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId)
       };
     },
 
@@ -83,8 +83,8 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
             isCopyDisabled={this.state.readOnlyMode || this.state.isPending}
             isRollbackPending={this.state.pendingActions.getIn([version.get('version'), 'rollback'], false)}
             isRollbackDisabled={this.state.readOnlyMode || this.state.isPending}
-            hideRollback={this.state.readOnlyMode || (i === 0)}
-            hideCopy={this.state.readOnlyMode}
+            hideRollback={readOnly || (i === 0)}
+            hideCopy={readOnly}
             isDiffPending={isMultiPending}
             isDiffDisabled={this.state.isPending || isMultiPending}
             previousVersion={previousVersion}
