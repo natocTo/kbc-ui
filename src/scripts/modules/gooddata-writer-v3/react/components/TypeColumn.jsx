@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {FormControl} from 'react-bootstrap';
+import ColumnDefinition from '../../helpers/ColumnDefinition';
 
 export default React.createClass({
   propTypes: {
@@ -10,11 +11,14 @@ export default React.createClass({
 
   render() {
     const {disabled, onChange, column} = this.props;
-    return (<FormControl
+    const definition = new ColumnDefinition(column);
+    return (
+      <FormControl
               type="text"
               disabled={disabled}
               onChange={e => onChange({...column, type: e.target.value})}
-              value={column.type}
-    />);
+              value={definition.type}
+      />
+    );
   }
 });
