@@ -99,7 +99,7 @@ routes =
       handler: OrchestrationNotifications
       headerButtonsHandler: OrchestrationNotificationsButtons
     ,
-      createVersionsPageRoute 'orchestrator', 'orchestrationId', null, true
+      createVersionsPageRoute('orchestrator', 'orchestrationId', null, {readOnlyMode: true})
     ]
   ]
 
