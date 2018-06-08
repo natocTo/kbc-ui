@@ -33,7 +33,11 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value.get('source') !== this.props.value.get('source') && nextProps.value.get('source') !== '') {
+    if (
+      nextProps.value.has('source')
+      && nextProps.value.get('source') !== this.props.value.get('source')
+      && nextProps.value.get('source') !== ''
+    ) {
       this.setState({
         hasMetadataDatatypes: MetadataStore.tableHasMetadataDatatypes(nextProps.value.get('source')),
         tableColumnMetadata: MetadataStore.getTableColumnsMetadata(nextProps.value.get('source'))
@@ -149,6 +153,131 @@ export default React.createClass({
     return null;
   },
 
+  snowflakeDatatypesMap: new Immutable.fromJS({
+    NUMBER: {
+      name: 'NUMBER',
+      basetype: 'NUMERIC',
+      size: true
+    },
+    INTEGER: {
+      name: 'INTEGER',
+      basetype: 'INTEGER',
+      size: true
+    },
+    FLOAT: {
+      name: 'FLOAT',
+      basetype: 'FLOAT',
+      size: false
+    },
+    VARCHAR: {
+      name: 'VARCHAR',
+      basetype: 'STRING',
+      size: true
+    },
+    DATE: {
+      name: 'DATE',
+      basetype: 'DATE',
+      size: false
+    },
+    TIMESTAMP: {
+      name: 'TIMESTAMP',
+      basetype: 'TIMESTAMP',
+      size: false
+    },
+    TIMESTAMP_LTZ: {
+      name: 'TIMESTAMP_LTZ',
+      size: false
+    },
+    TIMESTAMP_NTZ: {
+      name: 'TIMESTAMP_NTZ',
+      size: false
+    },
+    TIMESTAMP_TZ: {
+      name: 'TIMESTAMP_TZ',
+      size: false
+    },
+    VARIANT: {
+      name: 'VARIANT',
+      size: false
+    }
+  }),
+
+  getMetadataDataTypes(columnMetadata) {
+    const datatypes = columnMetadata.map((metadata, colname) => {
+      let datatypeLength = metadata.filter((entry) => {
+        return entry.get('key') === 'KBC.datatype.length';
+      });
+      if (datatypeLength.count() > 0) {
+        datatypeLength = datatypeLength.get(0);
+      }
+      let datatypeNullable = metadata.filter((entry) => {
+        return entry.get('key') === 'KBC.datatype.nullable';
+      });
+      if (datatypeNullable.count() > 0) {
+        datatypeNullable = datatypeNullable.get(0);
+      }
+      let basetype = metadata.filter((entry) => {
+        return entry.get('key') === 'KBC.datatype.basetype';
+      });
+
+      if (basetype.count() === 0) {
+        return null;
+      } else {
+        basetype = basetype.get(0);
+      }
+      let datatypeName = null;
+
+      let datatype = this.snowflakeDatatypesMap.map((mappedDatatype) => {
+        if (mappedDatatype.get('basetype') === basetype.get('value')) {
+          datatypeName = mappedDatatype.get('name');
+          return mappedDatatype;
+        }
+      });
+
+      return Immutable.fromJS({
+        column: colname,
+        type: datatypeName,
+        length: datatype.get(datatypeName).get('size') ? datatypeLength.get('value') : null,
+        convertEmptyValuesToNull: datatypeNullable.get('value')
+      });
+    });
+    return datatypes;
+  },
+
+  getDefaultDatatypes() {
+    if (this.state.hasMetadataDatatypes) {
+      const metadataSet = this.state.tableColumnMetadata.filter((metadata, colname) => {
+        return this._getFilteredColumns().indexOf(colname) > -1;
+      });
+      return this.getMetadataDataTypes(metadataSet);
+    } else {
+      return this._getFilteredColumns().map((column) => {
+        // TODO: check for PK column
+        return Immutable.fromJS({
+          column: column,
+          type: 'VARCHAR',
+          length: null,
+          convertEmptyValuesToNull: false
+        });
+      });
+    }
+  },
+
+  getDatatypes() {
+    const defaultDatatypes = this.getDefaultDatatypes();
+    const outputTypes = defaultDatatypes.map((defaultType) => {
+      const existingTypeFilter = this.props.value.get('datatypes').filter((existingType) => {
+        return existingType.get('column') === defaultType.get('column');
+      });
+      if (existingTypeFilter.count() > 0) {
+        return existingTypeFilter.get(0);
+      } else {
+        return defaultType;
+      }
+    });
+    return outputTypes;
+  },
+
   render() {
     return (
       <div className="form-horizontal clearfix">
@@ -257,10 +386,9 @@ export default React.createClass({
                 <label className="col-xs-2 control-label">Data types</label>
                 <div className="col-xs-10">
                   <DatatypeForm
-                    datatypes={this.props.value.get('datatypes', Immutable.Map())}
+                    datatypes={this.getDatatypes()}
                     columns={this._getFilteredColumns()}
-                    hasMetadataDatatypes={this.state.hasMetadataDatatypes}
-                    tableColumnMetadata={this.state.tableColumnMetadata}
+                    datatypesMap={this.snowflakeDatatypesMap}
                     disabled={this.props.disabled || !this.props.value.get('source')}
                     onChange={this._handleChangeDataTypes}
                   />
