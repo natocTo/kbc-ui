@@ -11,16 +11,8 @@ export default React.createClass({
     onChange: React.PropTypes.func
   },
 
-  handleColumnChange(newType) {
-    // replace the changed column
-    const datatypes = this.props.datatypes.map((type) => {
-      if (type.get('column') === newType.get('column')) {
-        return newType;
-      } else {
-        return type;
-      }
-    });
-    return this.props.onChange(datatypes);
+  handleDatatypeChange(newType) {
+    return this.props.onChange(this.props.datatypes.set(newType.get('column'), newType));
   },
 
   getTypeOptions() {
@@ -40,7 +32,7 @@ export default React.createClass({
       <DatatypeFormRow
         datatype={columnObject.get(column)}
         typeOptions={this.getTypeOptions()}
-        onChange={this.handleColumnChange}
+        onChange={this.handleDatatypeChange}
         disabled={this.props.disabled}
       />
     );

@@ -270,7 +270,7 @@ export default React.createClass({
         return existingType.get('column') === defaultType.get('column');
       });
       if (existingTypeFilter.count() > 0) {
-        return existingTypeFilter.get(0);
+        return existingTypeFilter.get(defaultType.get('column'));
       } else {
         return defaultType;
       }
