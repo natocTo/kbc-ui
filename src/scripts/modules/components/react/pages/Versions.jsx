@@ -80,9 +80,9 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
             configId={this.state.configId}
             newVersionName={this.state.newVersionNames.get(version.get('version'))}
             isCopyPending={this.state.pendingActions.getIn([version.get('version'), 'copy'], false)}
-            isCopyDisabled={this.state.readOnlyMode || this.state.isPending}
+            isCopyDisabled={readOnly || this.state.isPending}
             isRollbackPending={this.state.pendingActions.getIn([version.get('version'), 'rollback'], false)}
-            isRollbackDisabled={this.state.readOnlyMode || this.state.isPending}
+            isRollbackDisabled={readOnly || this.state.isPending}
             hideRollback={readOnly || (i === 0)}
             hideCopy={readOnly}
             isDiffPending={isMultiPending}
