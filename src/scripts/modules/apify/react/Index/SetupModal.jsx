@@ -15,6 +15,7 @@ export default React.createClass({
     updateLocalState: PropTypes.func.isRequired,
     prepareLocalState: PropTypes.func.isRequired,
     loadCrawlers: PropTypes.func.isRequired,
+    loadActors: PropTypes.func.isRequired,
     isSaving: PropTypes.bool,
     onSave: PropTypes.func.isRequired
   },
@@ -66,11 +67,14 @@ export default React.createClass({
     if (action === 'crawler') {
       const crawlerId = paramsToSave.get('crawlerId');
       const crawler = this.localState(['crawlers', 'data']).find((c) => c.get('id') === crawlerId);
-      paramsToSave = paramsToSave
-        .set('customId', crawler.get('customId'))
-        .set('settingsLink', crawler.get('settingsLink'))
-        .set('crawlerSettings', crawlerSettings)
-        .delete('executionId');
+      paramsToSave = Map({
+        crawlerId: paramsToSave.get('crawlerId'),
+        customId: crawler.get('customId'),
+        settingsLink: crawler.get('settingsLink'),
+        crawlerSettings: crawlerSettings,
+        '#token': paramsToSave.get('#token'),
+        'userId': paramsToSave.get('userId')
+      });
     }
     if (action === 'dataset') {
       paramsToSave = Map({
@@ -79,8 +83,24 @@ export default React.createClass({
         '#token': paramsToSave.get('#token'),
         'userId': paramsToSave.get('userId')
       });
-    } else {
-      paramsToSave = paramsToSave.delete('actionType').delete('datasetId');
+    }
+    if (action === 'actor') {
+      paramsToSave = Map({
+        actionType: 'runActor',
+        memory: paramsToSave.get('memory') || '2048',
+        build: paramsToSave.get('build') || 'latest',
+        input: crawlerSettings || {},
+        actId: paramsToSave.get('actId'),
+        '#token': paramsToSave.get('#token'),
+        'userId': paramsToSave.get('userId')
+      });
+    }
+    if (action === 'executionId') {
+      paramsToSave = Map({
+        executionId: paramsToSave.get('executionId'),
+        '#token': paramsToSave.get('#token'),
+        'userId': paramsToSave.get('userId')
+      });
     }
     this.props.onSave(paramsToSave.delete('action'), this.getInputTableId());
   },
@@ -92,7 +112,8 @@ export default React.createClass({
   },
 
   getSettings() {
-    let defaultValue = this.props.parameters.get('crawlerSettings', Map()) || Map();
+    const settingsKey  = this.getAction() === 'actor' ? 'input' : 'crawlerSettings';
+    let defaultValue = this.props.parameters.get(settingsKey, Map()) || Map();
     defaultValue = JSON.stringify(defaultValue, null, '  ');
     return this.localState('settings', defaultValue);
   },
@@ -113,9 +134,11 @@ export default React.createClass({
 
   getAction() {
     const params = this.parameters();
-    const otherAction = params.get('actionType') === 'getDatasetItems' ? 'dataset' : 'crawler';
-    let action = params.get('action', !!params.get('executionId') ? 'executionId' : otherAction);
-
+    let otherAction = params.get('actionType') === 'getDatasetItems' ? 'dataset' : 'crawler';
+    if (params.get('actionType') === 'runActor') {
+      otherAction = 'actor';
+    }
+    const action = params.get('action', !!params.get('executionId') ? 'executionId' : otherAction);
     return action;
   },
 
@@ -131,8 +154,13 @@ export default React.createClass({
     const hasSettingsValid = this.isSettingsValid();
     const isCrawlerAction = this.getAction() === 'crawler';
     const isDatasetAction = this.getAction() === 'dataset';
+    const isActorAction = this.getAction() === 'actor';
     const isLoadingCrawlers = this.localState(['crawlers', 'loading'], false);
     const hasDataset = !!this.parameters().get('datasetId');
+    if (isActorAction) {
+      const isLoadingActors = this.localState(['actors', 'loading'], false);
+      return !isLoadingActors && hasAuth && this.parameters().get('actId') && hasSettingsValid;
+    }
     if (isDatasetAction) {
       return !isLoadingCrawlers && hasAuth && hasDataset;
     }
@@ -148,10 +176,12 @@ export default React.createClass({
     let nextStep = 0;
     const isCrawlerAction = this.getAction() === 'crawler';
     const isDatasetAction = this.getAction() === 'dataset';
+    const isActorAction = this.getAction() === 'actor';
+
     switch (currentStep) {
       case CRAWLER_KEY:
         if (delta === 1) {
-          if (isCrawlerAction || isDatasetAction) {
+          if (isCrawlerAction || isDatasetAction || isActorAction) {
             nextStep = AUTH_KEY;
           } else {
             nextStep = OPTIONS_KEY;
@@ -167,7 +197,7 @@ export default React.createClass({
         break;
       case OPTIONS_KEY:
         if (delta === -1) {
-          if (isCrawlerAction || isDatasetAction) {
+          if (isCrawlerAction || isDatasetAction || isActorAction) {
             nextStep = AUTH_KEY;
           } else {
             nextStep = CRAWLER_KEY;
@@ -178,6 +208,7 @@ export default React.createClass({
         nextStep = currentStep;
     }
     if (nextStep === OPTIONS_KEY && isCrawlerAction) this.onLoadCrawlers();
+    if (nextStep === OPTIONS_KEY && isActorAction) this.onLoadActors();
     /* let newStep = this.step() + delta;
      * newStep = newStep === 0 ? AUTH_KEY : newStep;
      * newStep = newStep > 3 ? AUTH_KEY : newStep;
@@ -190,6 +221,8 @@ export default React.createClass({
       <TabbedWizard
         loadCrawlers={this.onLoadCrawlersForce}
         crawlers={this.localState('crawlers', Map())}
+        loadActors={this.onLoadActorsForce}
+        actors={this.localState('actors', Map())}
         step={this.step()}
         action={this.getAction()}
         selectTab={(s) => this.updateLocalState('step', s)}
@@ -212,44 +245,42 @@ export default React.createClass({
 
   onLoadCrawlersForce() {
     this.updateLocalState(['crawlers'], Map({'loading': true, 'error': null}));
-    this.props.loadCrawlers(this.parameters()).then((data) => {
-      const crawlers = {
-        data: data.status !== 'error' ? data : null,
-        loading: false,
-        error: data.status === 'error' ? 'Error: ' + data.message : null
-      };
-      return this.updateLocalState('crawlers', fromJS(crawlers));
-    }).catch(() =>
+    this.props.loadCrawlers(this.parameters()).then(
+      (data) => {
+        const isError = data.status === 'error' || data.timeout;
+        const crawlers = {
+          data: !isError ? data : null,
+          loading: false,
+          error: isError ? 'Error: ' + data.message : null
+        };
+        return this.updateLocalState('crawlers', fromJS(crawlers));
+      },
+      (err) => this.updateLocalState('crawlers', fromJS({data: null, error: err, loading: false}))
+    ).catch(() =>
       this.updateLocalState('crawlers', fromJS({loading: false, data: null, error: 'Error Loading Crawlers'}))
     );
   },
 
-  renderInputControl(propertyPath, placeholder) {
-    return (
-      <input
-        placeholder={placeholder}
-        type="text"
-        value={1}
-        onChange={() => null}
-        className="form-control"
-      />
-    );
+  onLoadActors() {
+    if (this.localState('actors')) return;
+    this.onLoadActorsForce();
   },
 
-
-  renderFormControl(controlLabel, control, helpText, errorMsg) {
-    return (
-      <div className={errorMsg ? 'form-group has-error' : 'form-group'}>
-        <label className="col-xs-2 control-label">
-          {controlLabel}
-        </label>
-        <div className="col-xs-10">
-          {control}
-          <span className="help-block">
-            {errorMsg || helpText}
-          </span>
-        </div>
-      </div>
+  onLoadActorsForce() {
+    this.updateLocalState(['actors'], Map({'loading': true, 'error': null}));
+    this.props.loadActors(this.parameters()).then(
+      (data) => {
+        const isError = data.status === 'error' || data.timeout;
+        const actors = {
+          data: !isError ? data : null,
+          loading: false,
+          error: isError ? 'Error: ' + data.message : null
+        };
+        return this.updateLocalState('actors', fromJS(actors));
+      },
+      (err) => this.updateLocalState('actors', fromJS({data: null, error: err, loading: false}))
+    ).catch(() =>
+      this.updateLocalState('actors', fromJS({loading: false, data: null, error: 'Error Loading Actors'}))
     );
   },
 

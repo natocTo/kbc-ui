@@ -111,7 +111,11 @@ export default React.createClass({
   isConfigured() {
     const params = this.state.store.parameters;
     const hasAuth = (!!params.get('userId') && !!params.get('#token')) || !!params.get('executionId');
-    const hasCrawler = !!params.get('crawlerId') || !!params.get('executionId') || (params.get('actionType') === 'getDatasetItems' && params.get('datasetId'));
+    const hasCrawler =
+      !!params.get('crawlerId') ||
+      !!params.get('executionId') ||
+      (params.get('actionType') === 'getDatasetItems' && params.get('datasetId')) ||
+      (params.get('actionType') === 'runActor' && params.get('actId'));
     return hasAuth && hasCrawler;
   },
 
@@ -130,6 +134,7 @@ export default React.createClass({
         onHideFn={closeFn}
         {...actions.prepareLocalState(path.concat('data'))}
         loadCrawlers={actions.loadCrawlers}
+        loadActors={actions.loadActors}
         onSave={(params, inputTable) => actions.saveConfig(params, inputTable).then(closeFn)}
         isSaving={localState.get('saving') || false}
       />
@@ -157,13 +162,14 @@ export default React.createClass({
     const crawler = this.renderCrawlerStatic(parameters);
     const crawlerSettings = parameters.get('crawlerSettings', Map()) || Map();
     const user = <p className="form-control-static">{parameters.get('userId')}</p>;
-    const settings = <div className="form-control-static"> {this.renderStaticCralwerSettings(crawlerSettings.toJS())}</div>;
+    const settings = this.renderStaticJsonEditor(crawlerSettings.toJS());
     const bucketId = this.state.store.outputBucket;
     const tableId = `${bucketId}.crawler-result`;
     const resultsTable = <p className="form-control-static"><SapiTableLinkEx tableId={tableId} /></p>;
     const executionId = parameters.get('executionId');
     const inputTableId = this.state.inputTableId;
     const isGetDatasetAction = parameters.get('actionType') === 'getDatasetItems';
+    const isActorAction = parameters.get('actionType') === 'runActor';
     const inputTableElement = (
       <p className="form-control-static">
         {inputTableId ?
@@ -190,11 +196,25 @@ export default React.createClass({
           {this.renderStaticFormGroup('User ID', user)}
           {this.renderStaticFormGroup('Dataset', <p className="form-control-static">{parameters.get('datasetId')}</p>)}
         </span>
-          );
+      );
     }
 
     if (!!executionId) {
       resultForm = this.renderStaticFormGroup('Execution ID', <p className="form-control-static">{executionId}</p>);
+    }
+
+    if (isActorAction) {
+      const inputJson = parameters.get('input', Map());
+      const actorInput = this.renderStaticJsonEditor(inputJson.toJS());
+      resultForm = (
+        <span>
+          {this.renderStaticFormGroup('User ID', user)}
+          {this.renderStaticFormGroup('Actor ID', this.renderActorStatic(parameters))}
+          {this.renderStaticFormGroup('Memory', <p className="form-control-static">{parameters.get('memory')}</p>)}
+          {this.renderStaticFormGroup('Build', <p className="form-control-static">{parameters.get('build')}</p>)}
+          {this.renderStaticFormGroup('Actor Input', actorInput)}
+        </span>
+      );
     }
 
     return (
@@ -229,6 +249,19 @@ export default React.createClass({
     );
   },
 
+  renderActorStatic(parameters) {
+    const actId = parameters.get('actId');
+    const url = `https://my.apify.com/acts/${actId}`;
+    return (
+      <p className="form-control-static">
+        <a target="_blank" rel="noopener noreferrer" href={url}>
+          {actId}
+        </a>
+      </p>
+    );
+  },
+
+
   renderStaticFormGroup(controlLabel, control, helpText) {
     return (
       <div className={'form-group'}>
@@ -245,21 +278,23 @@ export default React.createClass({
     );
   },
 
-  renderStaticCralwerSettings(data) {
+  renderStaticJsonEditor(data) {
     let value = '{}';
     if (data) {
       value = JSON.stringify(data, null, '  ');
     }
     return (
-      <CodeMirror
-        theme="solarized"
-        lineNumbers={false}
-        value={value}
-        readOnly={true}
-        cursorHeight={0}
-        mode="application/json"
-        lineWrapping={true}
-      />
+      <div className="form-control-static">
+        <CodeMirror
+          theme="solarized"
+          lineNumbers={false}
+          value={value}
+          readOnly={true}
+          cursorHeight={0}
+          mode="application/json"
+          lineWrapping={true}
+        />
+      </div>
     );
   },
 

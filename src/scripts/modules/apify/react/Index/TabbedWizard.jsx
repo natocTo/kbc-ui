@@ -1,12 +1,9 @@
 import React, {PropTypes} from 'react';
-import {List} from 'immutable';
-import {InputGroup, FormControl, Tab, Tabs} from 'react-bootstrap';
+import {Tab, Tabs} from 'react-bootstrap';
 import RadioGroup from 'react-radio-group';
 import {Input} from '../../../../react/common/KbcBootstrap';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
-
-import Select from 'react-select';
-import {RefreshIcon} from '@keboola/indigo-ui';
+import ApifyObjectSelector from './ApifyObjectSelector';
 
 export const CRAWLER_KEY = 1;
 export const AUTH_KEY = 2;
@@ -26,12 +23,14 @@ export default React.createClass({
     action: PropTypes.string.isRequired,
     updateSettings: PropTypes.func.isRequired,
     crawlers: PropTypes.object.isRequired,
+    actors: PropTypes.object.isRequired,
     inputTableId: PropTypes.string,
     updateInputTableId: PropTypes.func.isRequired,
     step: PropTypes.number.isRequired,
     updateLocalState: PropTypes.func.isRequired,
     parameters: PropTypes.object.isRequired,
     loadCrawlers: PropTypes.func.isRequired,
+    loadActors: PropTypes.func.isRequired,
     updateParameters: PropTypes.func.isRequired,
     selectTab: PropTypes.func.isRequired
   },
@@ -44,7 +43,7 @@ export default React.createClass({
             eventKey={CRAWLER_KEY} disabled={this.isTabDisabled(CRAWLER_KEY)}>
             {this.renderActionForm()}
           </Tab>
-          {this.props.action === 'crawler' || this.props.action === 'dataset' ?
+          {['crawler', 'dataset', 'actor'].includes(this.props.action) ?
            <Tab title="Authentication" eventKey={AUTH_KEY}
              disabled={this.isTabDisabled(AUTH_KEY)}>
              {this.renderTokenForm()}
@@ -68,9 +67,53 @@ export default React.createClass({
         return this.renderCrawlerSettingsForm();
       case 'dataset':
         return this.renderDatasetSettingsForm();
+      case 'actor':
+        return this.renderActorSettingsForm();
       default:
         return null;
     }
+  },
+
+  renderActorSettingsForm() {
+    return (
+      <div className="form-horizontal">
+        {this.renderActorSelector()}
+        {this.renderInput(
+           'Memory',
+           'memory',
+           '(Optional) Specifies the amount of memory allocated for Actor run',
+           '2048'
+        )}
+        {this.renderInput(
+           'Build',
+           'build',
+           '(Optional) Tag or number of Actor build to run (e.g. latest or 1.2.34)',
+           'latest'
+        )}
+
+        <div className="form-group">
+          <div className="col-xs-2 control-label">
+            Actor Input
+          </div>
+          <div className="col-xs-10">
+            <CodeMirror
+              theme="solarized"
+              lineNumbers={false}
+              value={this.props.settings}
+              readOnly={false}
+              mode="application/json"
+              lineWrapping={true}
+              autofocus={false}
+              onChange={this.handleCrawlerSettingsChange}
+              lint={true}
+              gutters={['CodeMirror-lint-markers']}/>
+            <div className="help-text">
+              (Optional) Contains input for the Actor in JSON format
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   },
 
   renderActionForm() {
@@ -83,19 +126,25 @@ export default React.createClass({
         <Input
           type="radio"
           label="Run Crawler"
-          help="Will run specified crawler or wait if it is already running, and eventually retrieve its results if it finishes succesfully"
+          help="Runs a specific Crawler and retrieves its results if it finishes successfully"
           value="crawler"
         />
         <Input
           type="radio"
+          label="Run Actor"
+          help="Runs a specific Actor and retrieves its results if it finishes successfully."
+          value="actor"
+        />
+        <Input
+          type="radio"
           label="Retrieve results only"
-          help="Retrieve results of a crawler run specified by executionId"
+          help="Retrieves the results from a Crawler run specified by its Execution ID"
           value="executionId"
         />
         <Input
           type="radio"
           label="Retrieve items from dataset"
-          help="Retrieve items from specified Apify dataset"
+          help="Retrieves items from a Dataset specified by its ID or name"
           value="dataset"
         />
       </RadioGroup>
@@ -105,7 +154,7 @@ export default React.createClass({
   renderDatasetSettingsForm() {
     return (
       <div className="form-horizontal">
-        {this.renderInput('Dataset', 'datasetId', 'DatasetId or DatasetName of dataset you want to get items from', 'Enter dataset id or dataset name')}
+        {this.renderInput('Dataset', 'datasetId', 'ID or name of the Dataset to fetch the data from.', 'Enter dataset id or dataset name')}
       </div>
     );
   },
@@ -125,7 +174,7 @@ export default React.createClass({
         gutters={['CodeMirror-lint-markers']}
       />
     );
-    const eidHelp = 'Execution id of a crawler run to retrieve results from';
+    const eidHelp = 'Execution ID of the Crawler run to retrieve the results from';
     const executionIdControl = (
       <div className="form-horizontal">
         {this.renderInput('Execution ID', 'executionId', eidHelp, 'Enter Execution ID')}
@@ -145,7 +194,7 @@ export default React.createClass({
           <div className="col-xs-10">
             {editor}
             <div className="help-text">
-              Optional <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">crawler settings</a> JSON object which overrides default crawler settings for current run.
+              Optional parameter <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">crawler settings</a>. Specifies a JSON object with properties that override the default crawler settings. For more information, see documentation.
             </div>
           </div>
         </div>
@@ -169,7 +218,7 @@ export default React.createClass({
             value={this.props.inputTableId || ''}
           />
           <span className="help-block">
-            Optional parameter. Data from input table will be pushed to crawler, where you can access them through Apify keyvalue store. Keyvalue store ID will be save to customData attribute.
+            Optional parameter. Data from the input table will be pushed to crawler, where you can access them through the Key-value store. The ID of the Key-value store will be saved to the customData attribute of the crawler execution.
           </span>
         </div>
       </div>
@@ -199,59 +248,34 @@ export default React.createClass({
   },
 
   renderCrawlerSelector() {
-    const crawlersData = this.props.crawlers.get('data') || List();
-    const value = this.props.parameters.get('crawlerId');
-    const isLoading = this.props.crawlers.get('loading', false);
-    const error = this.props.crawlers.get('error');
-    const refresh = (
-      <span>
-        {isLoading ? 'Loading list of crawlers... ' : null}
-        <RefreshIcon
-          isLoading={isLoading}
-          onClick={this.props.loadCrawlers}/>
-      </span>
-
-    );
-    const staticElement = (
-      <FormControl.Static>
-        {error}
-        {refresh}
-      </FormControl.Static>
-    );
-    const options = crawlersData
-      .sortBy((c) => c.get('customId').toLowerCase())
-      .map((c) => {
-        return {value: c.get('id'), label: c.get('customId')};
-      }).toArray();
-    const selectControl = (
-      <InputGroup>
-        <Select
-          placeholder="Select crawler"
-          name="ids"
-          key="ids"
-          clearable={false}
-          multi={false}
-          options={options}
-          value={value}
-          onChange={({value: crawlerId}) =>
-            this.updateParameter('crawlerId', crawlerId)}/>
-        <InputGroup.Addon>{refresh}</InputGroup.Addon>
-      </InputGroup>);
     return (
-      <div className={error ? 'form-group has-error' : 'form-group'}>
-        <div className="col-xs-2 control-label">
-          Crawler
-        </div>
-        <div className="col-xs-10">
-          {isLoading || error ? staticElement : selectControl}
-        </div>
-      </div>
+      <ApifyObjectSelector
+        objectName="crawler"
+        objectLabelKey="customId"
+        object={this.props.crawlers}
+        selectedValue={this.props.parameters.get('crawlerId')}
+        onLoadObjectsList={this.props.loadCrawlers}
+        onSelect={(crawlerId) => this.updateParameter('crawlerId', crawlerId)}
+      />
+    );
+  },
+
+  renderActorSelector() {
+    return (
+      <ApifyObjectSelector
+        objectName="actor"
+        objectLabelKey="name"
+        object={this.props.actors}
+        selectedValue={this.props.parameters.get('actId')}
+        onLoadObjectsList={this.props.loadActors}
+        onSelect={(actId) => this.updateParameter('actId', actId)}
+      />
     );
   },
 
   renderInputControl(propertyPath, placeholder) {
     const propValue = this.parameter(propertyPath, '');
-    const isEncrypted = propValue.includes('KBC::') && propValue.includes('Encrypted');
+    const isEncrypted = propValue.includes('KBC::') && (propValue.includes('Encrypted') || propValue.includes('Secure'));
     let value = '';
     let placeholderValue = '';
     if (isEncrypted ) {
