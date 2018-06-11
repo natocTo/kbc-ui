@@ -11,6 +11,7 @@ CronScheduler = require '../../../../react/common/CronScheduler'
 
 OrchestrationsApi = require '../../OrchestrationsApi'
 actionCreators = require '../../ActionCreators'
+VersionsActionCreators = require '../../../components/VersionsActionCreators'
 
 {div, i, a, strong, form, input, label} = React.DOM
 
@@ -96,6 +97,7 @@ module.exports = React.createClass
       console.log 'error', e
 
   _handleSaveSuccess: (response) ->
+    VersionsActionCreators.loadVersionsForce 'orchestrator', @props.orchestrationId.toString()
     actionCreators
     .receiveOrchestration response
     @setState

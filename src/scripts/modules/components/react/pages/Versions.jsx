@@ -16,7 +16,7 @@ import { simpleMatch } from '../../../../utils/utils';
 
 const ITEMS_PER_PAGE = 20;
 
-export default function(componentIdValue, configIdParam = 'config') {
+export default function(componentIdValue, configIdParam = 'config', readOnlyMode = false) {
   return React.createClass({
     mixins: [createStoreMixin(VersionsStore), immutableMixin],
 
@@ -79,10 +79,11 @@ export default function(componentIdValue, configIdParam = 'config') {
             configId={this.state.configId}
             newVersionName={this.state.newVersionNames.get(version.get('version'))}
             isCopyPending={this.state.pendingActions.getIn([version.get('version'), 'copy'], false)}
-            isCopyDisabled={this.state.isPending}
+            isCopyDisabled={readOnlyMode || this.state.isPending}
             isRollbackPending={this.state.pendingActions.getIn([version.get('version'), 'rollback'], false)}
-            isRollbackDisabled={this.state.isPending}
-            hideRollback={(i === 0)}
+            isRollbackDisabled={readOnlyMode || this.state.isPending}
+            hideRollback={readOnlyMode || (i === 0)}
+            hideCopy={readOnlyMode}
             isDiffPending={isMultiPending}
             isDiffDisabled={this.state.isPending || isMultiPending}
             previousVersion={previousVersion}

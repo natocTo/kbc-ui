@@ -8,6 +8,7 @@ OrchestrationStore = require './stores/OrchestrationsStore'
 OrchestrationJobsStore = require './stores/OrchestrationJobsStore'
 Promise = require 'bluebird'
 ApplicationActionCreators = require '../../actions/ApplicationActionCreators'
+VersionsActionCreators = require '../components/VersionsActionCreators'
 
 React = require 'react'
 {Link} = require 'react-router'
@@ -100,6 +101,8 @@ module.exports =
       type: constants.ActionTypes.ORCHESTRATION_LOAD
       orchestrationId: id
     )
+
+    VersionsActionCreators.loadVersionsForce 'orchestrator', id.toString()
 
     orchestrationsApi
     .getOrchestration(id)
@@ -256,6 +259,8 @@ module.exports =
         active: response.active
         orchestrationId: orchestrationId
       )
+
+      VersionsActionCreators.loadVersionsForce 'orchestrator', orchestrationId.toString()
     .catch (e) ->
       dispatcher.handleViewAction(
         type: constants.ActionTypes.ORCHESTRATION_ACTIVE_CHANGE_ERROR
