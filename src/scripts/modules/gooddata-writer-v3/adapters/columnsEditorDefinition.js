@@ -2,7 +2,8 @@ import {Map, fromJS} from 'immutable';
 import {parseParameters, createConfigParameters} from '../helpers/rowParametersTable';
 
 import TitleColumnInput from '../react/components/TitleColumnInput';
-import TypeColumn from '../react/components/TypeColumn';
+import ColumnType from '../react/components/ColumnType';
+import ColumnExtraFields from '../react/components/ColumnExtraFields';
 
 
 export default {
@@ -28,7 +29,12 @@ export default {
     },
     {
       title: 'Type',
-      render: TypeColumn
+      render: ColumnType
+    },
+    {
+      title: '',
+      render: ColumnExtraFields
+
     }
   ],
   isComplete: () => true
