@@ -27,48 +27,39 @@ const BASE_TYPES = [
 
 // export const mustHave;
 
-function checkEmpty(value) {
-  return !value && 'can not be empty';
+function checkEmpty(value, label) {
+  return !value && ((label || 'Value') + ' can not be empty');
 }
 
-function checkValueOf(values) {
-  return (value) => !values.includes(value) && 'invalid value ' + value;
-}
+/* function checkValueOf(values) {
+ *   return (value) => !values.includes(value) && 'invalid value ' + value;
+ * } */
 
-function composeValidation(...validationFns) {
-  return (value) =>
-    validationFns.reduce((memo, nextValidationFn) =>
-      memo ? memo : nextValidationFn(value)
-    );
-}
-
-export function makeDefinition(column) {
-  const {type, dataType} = column.type;
+function prepareFields(column) {
+  const {type, dataType} = column;
   return {
     type: {
       show: true,
-      invalidReason: checkValueOf(Types.keys())
+      invalidReason: checkEmpty(column.type, 'Type')
     },
     title: {
       show: BASE_TYPES.includes(type),
-      invalidReason: checkEmpty
+      invalidReason: checkEmpty(column.title, 'GoodData Title')
     },
 
     dataType: {
-      show: BASE_TYPES.includes(type),
-      invalidReason: composeValidation(checkEmpty, checkValueOf(DataTypes.keys()))
+      show: BASE_TYPES.includes(type)
     },
 
-    dataSize: {
-      show: [DataTypes.VARCHAR, DataTypes.DECIMAL].includes(dataType),
-      invalidReason: (value) => {
-        if (dataType === DataTypes.VARCHAR) {
-          return isNaN(value) && 'Invalid value ' + value;
-        }
-      }
+    dataTypeSize: {
+      show: BASE_TYPES.includes(type) && [DataTypes.VARCHAR, DataTypes.DECIMAL].includes(dataType),
+      invalidReason: (dataType === DataTypes.VARCHAR) ?
+                     isNaN(column.dataSize) && ('Invalid data size value ' + column.dataSize) :
+                     !/^\d+,\d+$/.test(column.dataSize) && 'Ivalid decimal format' + column.dataSize
     },
     reference: {
-      show: [Types.HYPERLINK, Types.LABEL].includes(type)
+      show: [Types.HYPERLINK, Types.LABEL].includes(type),
+      invalidReason: checkEmpty(column.reference, 'Reference')
     },
     schemaReference: {
       show: type === Types.REFERENCE
@@ -80,10 +71,13 @@ export function makeDefinition(column) {
       show: type === Types.ATTRIBUTE
     },
     format: {
-      show: type === Types.DATE
+      show: type === Types.DATE,
+      invalidReason: checkEmpty(column.format, 'Reference')
+
     },
     dateDimension: {
-      show: type === Types.DATE
+      show: type === Types.DATE,
+      invalidReason: checkEmpty(column.dateDimension, 'Date dimension')
     },
     identifier: {
       show: BASE_TYPES.includes(type)
@@ -94,5 +88,21 @@ export function makeDefinition(column) {
     identifierSortLabel: {
       show: type === Types.ATTRIBUTE
     }
+  };
+}
+
+function getInvalidReason(fields) {
+  return Object.keys(fields).reduce((memo, field) => {
+    const reason = fields[field].show ? fields[field].invalidReason : null;
+    return memo || reason;
+  }, false);
+}
+
+
+export default function(column) {
+  const fields = prepareFields(column);
+  return {
+    fields: fields,
+    invalidReason: getInvalidReason(fields)
   };
 }
