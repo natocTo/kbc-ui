@@ -121,8 +121,9 @@ export function prepareColumnContext(table, sectionContext) {
     }
     const rowColumns = configRowTables.first().get('columns', Map());
     const matchColumn = rowColumns.find(column => REFERENCABLE_COLUMN_TYPES.includes(column.get('type')));
+    const rowTableId = configRowTables.keySeq().first();
     if (matchColumn) {
-      return result.push(tableId);
+      return result.push(rowTableId);
     }
     return result;
   }, List());

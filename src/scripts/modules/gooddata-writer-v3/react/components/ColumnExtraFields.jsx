@@ -44,7 +44,6 @@ export default React.createClass({
     const {disabled, column} = this.props;
     return (
       <ReactSelect
-        bsize="small"
         autosize={false}
         clearable={false}
         value={column[fieldName]}
