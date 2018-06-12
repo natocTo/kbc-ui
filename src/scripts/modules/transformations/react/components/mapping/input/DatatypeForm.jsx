@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'underscore';
 import DatatypeFormRow from './DatatypeFormRow';
 
 export default React.createClass({
@@ -15,15 +14,6 @@ export default React.createClass({
     return this.props.onChange(this.props.datatypes.set(newType.get('column'), newType));
   },
 
-  getTypeOptions() {
-    return _.map(_.keys(this.props.datatypesMap.toJS()), (option) => {
-      return {
-        label: option,
-        value: option
-      };
-    });
-  },
-
   renderColumn(column) {
     const columnObject = this.props.datatypes.filter((type) => {
       return type.get('column') === column;
@@ -31,7 +21,7 @@ export default React.createClass({
     return (
       <DatatypeFormRow
         datatype={columnObject.get(column)}
-        typeOptions={this.getTypeOptions()}
+        datatypesMap={this.props.datatypesMap}
         onChange={this.handleDatatypeChange}
         disabled={this.props.disabled}
       />

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'underscore';
 import {Input} from './../../../../../../react/common/KbcBootstrap';
 import Select from 'react-select';
 
@@ -6,9 +7,16 @@ export default React.createClass({
 
   propTypes: {
     datatype: React.PropTypes.object.isRequired,
-    typeOptions: React.PropTypes.array.isRequired,
+    datatypesMap: React.PropTypes.object.isRequired,
     disabled: React.PropTypes.bool.isRequired,
     onChange: React.PropTypes.func.isRequired
+  },
+
+  lengthEnabled() {
+    const selectedType = this.props.datatypesMap.filter((datatype) => {
+      return datatype.get('name') === this.props.datatype.get('type');
+    });
+    return selectedType.get(this.props.datatype.get('type')).get('size');
   },
 
   handleTypeChange(newType) {
@@ -27,6 +35,15 @@ export default React.createClass({
     }
   },
 
+  getTypeOptions() {
+    return _.map(_.keys(this.props.datatypesMap.toJS()), (option) => {
+      return {
+        label: option,
+        value: option
+      };
+    });
+  },
+
   render() {
     return (
       <div className="row" key={this.props.datatype.get('column')}>
@@ -37,7 +54,7 @@ export default React.createClass({
           <Select
             name={this.props.datatype.get('column') + '_datatype'}
             value={this.props.datatype.get('type')}
-            options={this.props.typeOptions}
+            options={this.getTypeOptions()}
             onChange={this.handleTypeChange}
             disabled={this.props.disabled}
           />
@@ -48,7 +65,7 @@ export default React.createClass({
             type="text"
             value={this.props.datatype.get('length')}
             onChange={this.handleLengthChange}
-            disabled={this.props.disabled}
+            disabled={this.props.disabled || !this.lengthEnabled()}
             placeholder="Length, eg. 38,0"
           />
         </div>

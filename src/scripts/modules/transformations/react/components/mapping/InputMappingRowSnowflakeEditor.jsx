@@ -162,7 +162,7 @@ export default React.createClass({
     INTEGER: {
       name: 'INTEGER',
       basetype: 'INTEGER',
-      size: true
+      size: false
     },
     FLOAT: {
       name: 'FLOAT',
