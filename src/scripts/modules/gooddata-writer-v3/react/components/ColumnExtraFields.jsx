@@ -33,7 +33,7 @@ export default React.createClass({
   },
 
   renderColumnSelect(fieldName, options) {
-    const {disabled, onChange, column} = this.props;
+    const {disabled, column} = this.props;
     return (
       <ReactSelect
         bsize="small"
@@ -41,20 +41,27 @@ export default React.createClass({
         clearable={false}
         value={column[fieldName]}
         options={options}
-        onChange={e => onChange({...column, [fieldName]: e.value})}
+        onChange={e => this.onChangeColumn(fieldName, e.value)}
         disabled={disabled}
       />
     );
   },
 
   renderColumnInput(fieldName) {
-    const {disabled, onChange, column} = this.props;
+    const {disabled, column} = this.props;
     return (
       <FormControl
         type="text"
         disabled={disabled}
-        onChange={e => onChange({...column, [fieldName]: e.target.value})}
+        onChange={e => this.onChangeColumn(fieldName, e.target.value)}
         value={column[fieldName]}
       />);
+  },
+
+  onChangeColumn(property, value) {
+    const newColumn = ColumnDefinition(this.props.column)
+      .updateColumn(property, value)
+      .column;
+    this.props.onChange(newColumn);
   }
 });

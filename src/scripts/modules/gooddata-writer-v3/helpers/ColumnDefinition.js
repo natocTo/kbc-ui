@@ -99,10 +99,27 @@ function getInvalidReason(fields) {
 }
 
 
-export default function(column) {
+function filterHiddenFields(fields, column) {
+  return Object.keys(fields).reduce((result, field) => {
+    if (fields[field].show) {
+      result[field] = column[field];
+    }
+    return result;
+  }, {});
+}
+
+
+export default function makeColumnDefinition(column) {
   const fields = prepareFields(column);
   return {
+    column: column,
     fields: fields,
-    invalidReason: getInvalidReason(fields)
+    invalidReason: getInvalidReason(fields),
+    updateColumn: (property, value) => {
+      const updatedColumn = {...column, [property]: value};
+      const newFields = prepareFields(column);
+      const newColumn = filterHiddenFields(newFields, updatedColumn);
+      return makeColumnDefinition(newColumn);
+    }
   };
 }
