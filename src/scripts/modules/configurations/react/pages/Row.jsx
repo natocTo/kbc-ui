@@ -5,6 +5,8 @@ import Immutable from 'immutable';
 import Store from '../../ConfigurationRowsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
+import ConfigurationsStore from '../../ConfigurationsStore';
+import TablesStore from '../../../components/stores/StorageTablesStore';
 
 // actions
 import Actions from '../../ConfigurationRowsActionCreators';
@@ -25,7 +27,7 @@ import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 
 export default React.createClass({
-  mixins: [createStoreMixin(Store)],
+  mixins: [createStoreMixin(Store, TablesStore)],
 
   getStateFromStores() {
     const settings = RoutesStore.getRouteSettings();
@@ -38,9 +40,14 @@ export default React.createClass({
       settings.getIn(['row', 'sections'])
     );
     const conformFn = settings.getIn(['row', 'onConform'], (config) => config);
+    const context = Immutable.fromJS({
+      rawConfiguration: ConfigurationsStore.getRawConfiguration(componentId, configurationId),
+      allTables: TablesStore.getAll()
+    });
     const parseBySectionsFn = sections.makeParseFn(
       settings.getIn(['row', 'sections']),
-      conformFn
+      conformFn,
+      context
     );
     const storedConfigurationSections = parseBySectionsFn(
       Store.getConfiguration(componentId, configurationId, rowId)

@@ -1,13 +1,11 @@
 import { Map } from 'immutable';
-import TablesStore from '../../components/stores/StorageTablesStore';
 
 const repass = param => param;
 const returnTrue = () => true;
 
-function parseBySections(sectionsParseFn, conformFn, configuration) {
-  const tables = TablesStore.getAll();
+function parseBySections(sectionsParseFn, conformFn, configuration, context) {
   const conformedConfiguration = conformFn(configuration);
-  const sectionsParsed = sectionsParseFn.map(parseSectionFn => parseSectionFn(conformedConfiguration, tables));
+  const sectionsParsed = sectionsParseFn.map(parseSectionFn => parseSectionFn(conformedConfiguration, context));
   return sectionsParsed;
 }
 
@@ -41,9 +39,9 @@ function isCompleteBySections(sectionsIsCompleteFn, configuration) {
 }
 
 export default {
-  makeParseFn(sections, conformFn) {
+  makeParseFn(sections, conformFn, context) {
     const sectionsParseFn = sections.map(section => section.get('onLoad') || repass);
-    return configuration => parseBySections(sectionsParseFn, conformFn || repass, configuration);
+    return configuration => parseBySections(sectionsParseFn, conformFn || repass, configuration, context);
   },
 
   makeCreateFn(sections) {

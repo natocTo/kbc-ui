@@ -1,5 +1,6 @@
 import Dispatcher from '../../Dispatcher';
 import Constants from './ConfigurationsConstants';
+import RowConstants from './ConfigurationRowsConstants';
 import Immutable from 'immutable';
 import {Map} from 'immutable';
 import StoreUtils from '../../utils/StoreUtils';
@@ -20,6 +21,10 @@ let ConfigurationsStore = StoreUtils.createStore({
 
   getConfiguration: function(componentId, configurationId) {
     return _store.getIn(['configurations', componentId, configurationId, 'configuration'], Map());
+  },
+
+  getRawConfiguration: function(componentId, configurationId) {
+    return _store.getIn(['configurations', componentId, configurationId], Map());
   },
 
   isEditingJsonConfigurationValid: function(componentId, configId) {
@@ -115,6 +120,13 @@ Dispatcher.register(function(payload) {
 
     case Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_START:
       _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'save-configuration'], true);
+      return ConfigurationsStore.emitChange();
+
+    case RowConstants.ActionTypes.CONFIGURATION_ROWS_SAVE_CONFIGURATION_SUCCESS:
+      const {componentId, configurationId, rowId, row} = action;
+      const configRowsPath = ['configurations', componentId, configurationId, 'rows'];
+      const index = _store.getIn(configRowsPath).findIndex(configRow => configRow.get('id') === rowId);
+      _store = _store.setIn(configRowsPath.concat(index), Immutable.fromJS(row));
       return ConfigurationsStore.emitChange();
 
     case Constants.ActionTypes.CONFIGURATIONS_SAVE_CONFIGURATION_ERROR:
