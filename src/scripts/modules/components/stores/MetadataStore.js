@@ -104,6 +104,9 @@ var MetadataStore = StoreUtils.createStore({
     const componentId = componentFound && componentFound.get('value');
     const configId = configFound && configFound.get('value');
     const timestamp = configFound && configFound.get('timestamp');
+    if (!componentFound || !configFound) {
+      return null;
+    }
     return {
       'component': componentId,
       'config': configId,
@@ -114,10 +117,16 @@ var MetadataStore = StoreUtils.createStore({
   tableHasMetadataDatatypes: function(tableId) {
     const lastUpdateInfo = this.getTableLastUpdatedInfo(tableId);
     const tableColumnsMetadata = this.getTableColumnsMetadata(tableId);
-    const columnsWithBaseTypes = tableColumnsMetadata.filter((metadata) => {
-      return metadata.provider === lastUpdateInfo.component && metadata.key === 'KBC.datatype.baseType';
+    if (!tableColumnsMetadata || !lastUpdateInfo) {
+      return false;
+    }
+    const columnsWithBaseTypes = tableColumnsMetadata.filter((metadataList) => {
+      const columnHasDatatype = metadataList.filter((metadata) => {
+        return metadata.get('provider') === lastUpdateInfo.component && metadata.get('key') === 'KBC.datatype.basetype';
+      });
+      return columnHasDatatype.count() > 0;
     });
-    return !!columnsWithBaseTypes;
+    return columnsWithBaseTypes.count() > 0;
   }
 
 });
