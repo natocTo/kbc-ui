@@ -238,7 +238,7 @@ export default React.createClass({
         column: colname,
         type: datatypeName,
         length: datatype.get(datatypeName).get('size') ? datatypeLength.get('value') : null,
-        convertEmptyValuesToNull: datatypeNullable.get('value')
+        convertEmptyValuesToNull: !!datatypeNullable.get('value')
       });
     });
     return datatypes;

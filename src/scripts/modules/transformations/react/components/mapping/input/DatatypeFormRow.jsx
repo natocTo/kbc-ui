@@ -29,9 +29,9 @@ export default React.createClass({
 
   handleNullableChange(e) {
     if (e.target.checked) {
-      return this.props.onChange(this.props.datatype.set('convertEmptyValuesToNullValue'), true);
+      return this.props.onChange(this.props.datatype.set('convertEmptyValuesToNull'), true);
     } else {
-      return this.props.onChange(this.props.datatype.set('convertEmptyValuesToNullValue'), false);
+      return this.props.onChange(this.props.datatype.set('convertEmptyValuesToNull'), false);
     }
   },
 
@@ -73,7 +73,7 @@ export default React.createClass({
           <Input
             name={this.props.datatype.get('column') + '_nullable'}
             type="checkbox"
-            checked={this.props.datatype.get('convertEmptyValuesToNullValue') > 0}
+            checked={this.props.datatype.get('convertEmptyValuesToNull')}
             onChange={this.handleNullableChange}
             label={
               <span>Convert empty values to <code>null</code></span>
