@@ -1,4 +1,5 @@
 import keyMirror from 'fbjs/lib/keyMirror';
+import {List, Map, fromJS} from 'immutable';
 
 export const Types = keyMirror({
   ATTRIBUTE: null,
@@ -99,15 +100,34 @@ function getInvalidReason(fields) {
 }
 
 
-function filterHiddenFields(fields, column) {
+function deleteHiddenFields(fields, column) {
   return Object.keys(fields).reduce((result, field) => {
-    if (fields[field].show) {
-      result[field] = column[field];
+    if (!fields[field].show) {
+      delete result[field];
     }
     return result;
-  }, {});
+  }, column);
 }
-
+const REFERENCABLE_COLUMN_TYPES = [Types.CONNECTION_POINT, Types.ATTRIBUTE];
+export function prepareColumnContext(table, sectionContext) {
+  const configRows = sectionContext.getIn(['rawConfiguration', 'rows'], List()),
+    tableId = table.get('id'),
+    tablesPath = ['configuration', 'parameters', 'tables'];
+  const referencableTables = configRows.reduce((result, configRow) => {
+    const configRowTables =  configRow.getIn(tablesPath);
+    // ignore current table config row
+    if (configRowTables.has(tableId)) {
+      return result;
+    }
+    const rowColumns = configRowTables.first().get('columns', Map());
+    const matchColumn = rowColumns.find(column => REFERENCABLE_COLUMN_TYPES.includes(column.get('type')));
+    if (matchColumn) {
+      return result.push(tableId);
+    }
+    return result;
+  }, List());
+  return fromJS({referencableTables});
+}
 
 export default function makeColumnDefinition(column) {
   const fields = prepareFields(column);
@@ -118,7 +138,7 @@ export default function makeColumnDefinition(column) {
     updateColumn: (property, value) => {
       const updatedColumn = {...column, [property]: value};
       const newFields = prepareFields(column);
-      const newColumn = filterHiddenFields(newFields, updatedColumn);
+      const newColumn = deleteHiddenFields(newFields, updatedColumn);
       return makeColumnDefinition(newColumn);
     }
   };

@@ -7,7 +7,8 @@ export default React.createClass({
   propTypes: {
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
-    column: PropTypes.object.isRequired
+    column: PropTypes.object.isRequired,
+    context: PropTypes.object.isRequired
   },
 
   render() {
@@ -16,8 +17,15 @@ export default React.createClass({
     return (
       <span>
         {fields.dataType.show && this.renderDataType(fields.dataTypeSize)}
+        {fields.schemaReference.show && this.renderSchemaReference()}
       </span>
     );
+  },
+
+  renderSchemaReference() {
+    const selectOptions = this.props.context.referencableTables
+      .map(tableId => ({value: tableId, label: tableId}));
+    return this.renderColumnSelect('schemaReference', selectOptions);
   },
 
   renderDataType(dataSizeField) {
