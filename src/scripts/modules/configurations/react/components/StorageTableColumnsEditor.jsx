@@ -8,7 +8,8 @@ export default React.createClass({
     value: PropTypes.shape({
       tableId: PropTypes.string,
       columns: PropTypes.any,
-      columnsMappings: PropTypes.any
+      columnsMappings: PropTypes.any,
+      context: PropTypes.any
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -86,7 +87,9 @@ export default React.createClass({
             <td>{column.id}</td>
             {this.props.value.columnsMappings.map((mapping, mappingIndex) => (
               <td key={mappingIndex}>
-                <mapping.render disabled={this.props.disabled} column={column} onChange={this.onChangeColumn} />
+                <mapping.render
+                  context={this.props.value.context}
+                  disabled={this.props.disabled} column={column} onChange={this.onChangeColumn} />
               </td>
             ))}
             <td>

@@ -4,6 +4,7 @@ import {parseParameters, createConfigParameters} from '../helpers/rowParametersT
 import TitleColumnInput from '../react/components/TitleColumnInput';
 import ColumnType from '../react/components/ColumnType';
 import ColumnExtraFields from '../react/components/ColumnExtraFields';
+import {prepareColumnContext} from '../helpers/ColumnDefinition';
 
 
 export default {
@@ -22,6 +23,7 @@ export default {
       .map((column, id) => column.set('id', id))
       .valueSeq().toList();
   },
+  prepareColumnContext: prepareColumnContext,
   columnsMappings: [
     {
       title: 'GoodData Title',
