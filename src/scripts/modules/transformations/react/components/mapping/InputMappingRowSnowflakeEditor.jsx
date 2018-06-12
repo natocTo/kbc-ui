@@ -106,17 +106,30 @@ export default React.createClass({
     return this.props.onChange(this.props.value.set('datatypes', datatypes));
   },
 
-  _getColumns() {
+  getSelectedTable() {
     if (!this.props.value.get('source')) {
-      return [];
+      return Immutable.Map();
     }
     const selectedTable = this.props.tables.find((table) => {
       return table.get('id') === this.props.value.get('source');
     });
-    if (selectedTable) {
+    return selectedTable;
+  },
+
+  _getColumns() {
+    const selectedTable = this.getSelectedTable();
+    if (selectedTable.has('columns')) {
       return selectedTable.get('columns').toJS();
     }
     return [];
+  },
+
+  isPrimaryKeyColumn(column) {
+    const selectedTable = this.getSelectedTable();
+    if (selectedTable.has('primaryKey')) {
+      return selectedTable.get('primaryKey').has(column);
+    }
+    return Immutable.List();
   },
 
   _getColumnsOptions() {
@@ -251,15 +264,15 @@ export default React.createClass({
       });
       return this.getMetadataDataTypes(metadataSet);
     } else {
-      return this._getFilteredColumns().map((column) => {
-        // TODO: check for PK column
-        return Immutable.fromJS({
+      const defaultTypes = Immutable.fromJS(this._getFilteredColumns()).reduce((memo, column) => {
+        return memo.set(column, Immutable.fromJS({
           column: column,
           type: 'VARCHAR',
-          length: null,
+          length: this.isPrimaryKeyColumn(column) ? 255 : null,
           convertEmptyValuesToNull: false
-        });
-      });
+        }));
+      }, Immutable.Map());
+      return defaultTypes;
     }
   },
 
