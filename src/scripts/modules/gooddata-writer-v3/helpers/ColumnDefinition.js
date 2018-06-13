@@ -109,7 +109,8 @@ function deleteHiddenFields(fields, column) {
   }, column);
 }
 const REFERENCABLE_COLUMN_TYPES = [Types.CONNECTION_POINT, Types.ATTRIBUTE];
-export function prepareColumnContext(table, sectionContext) {
+
+export function prepareColumnContext(table, sectionContext, allColumns) {
   const configRows = sectionContext.getIn(['rawConfiguration', 'rows'], List()),
     tableId = table.get('id'),
     tablesPath = ['configuration', 'parameters', 'tables'];
@@ -120,14 +121,21 @@ export function prepareColumnContext(table, sectionContext) {
       return result;
     }
     const rowColumns = configRowTables.first().get('columns', Map());
-    const matchColumn = rowColumns.find(column => REFERENCABLE_COLUMN_TYPES.includes(column.get('type')));
+    const matchColumn = rowColumns.find(column => column.get('type') === Types.CONNECTION_POINT);
     const rowTableId = configRowTables.keySeq().first();
     if (matchColumn) {
       return result.push(rowTableId);
     }
     return result;
   }, List());
-  return fromJS({referencableTables});
+  const referencableColumns = allColumns
+    .filter(column => REFERENCABLE_COLUMN_TYPES.includes(column.get('type')))
+    .map(column => column.get('id'));
+  const sortLabelsColumns = allColumns.reduce((memo, column) => {
+    if (!column.get('reference')) return memo;
+    return memo.update(column.get('reference'), List(), labels => labels.push(column.get('id')));
+  }, Map());
+  return fromJS({referencableTables, referencableColumns, sortLabelsColumns});
 }
 
 export default function makeColumnDefinition(column) {
