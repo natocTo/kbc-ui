@@ -1,9 +1,9 @@
 import {Map, fromJS} from 'immutable';
 import {parseParameters, createConfigParameters} from '../helpers/rowParametersTable';
 
-import TitleColumnInput from '../react/components/TitleColumnInput';
-import ColumnType from '../react/components/ColumnType';
-import ColumnExtraFields from '../react/components/ColumnExtraFields';
+// import TitleColumnInput from '../react/components/TitleColumnInput';
+// import ColumnType from '../react/components/ColumnType';
+import ColumnSetup from '../react/components/ColumnSetup';
 import {prepareColumnContext} from '../helpers/ColumnDefinition';
 
 
@@ -26,16 +26,8 @@ export default {
   prepareColumnContext: prepareColumnContext,
   columnsMappings: [
     {
-      title: 'GoodData Title',
-      render: TitleColumnInput
-    },
-    {
-      title: 'Type',
-      render: ColumnType
-    },
-    {
-      title: '',
-      render: ColumnExtraFields
+      title: 'Preferences',
+      render: ColumnSetup
 
     }
   ],
