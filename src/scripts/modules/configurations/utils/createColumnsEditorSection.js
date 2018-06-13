@@ -53,7 +53,7 @@ export default (params) => {
           initColumnFn(tableColumn)
         )
       );
-      const columnContext = prepareColumnContext(storageTable, sectionContext);
+      const columnContext = prepareColumnContext(storageTable, sectionContext, columnsList);
       return fromJS({columns: columnsList, tableId: tableId, columnsMappings, context: columnContext});
     },
     onCreate(name) {
