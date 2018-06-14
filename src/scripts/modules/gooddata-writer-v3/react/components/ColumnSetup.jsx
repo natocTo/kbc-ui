@@ -31,6 +31,13 @@ export default React.createClass({
            Object.keys(DataTypes),
            fields.dataTypeSize.show && this.renderInput('dataTypeSize')
         )}
+        {fields.dateDimension.show &&
+         this.renderSelectGroup(
+           'Date Dimensions',
+           'dateDimension',
+           this.props.context.dimensions
+         )}
+        {fields.format.show && this.renderInputGroup('Date format', 'format')}
         {fields.schemaReference.show && this.renderSelectGroup(
            'Reference',
            'schemaReference',
@@ -45,27 +52,51 @@ export default React.createClass({
          this.renderSelectGroup(
            'Sort Label',
            'sortLabel',
-           this.props.context.sortLabelsColumns[column.id]
+           this.props.context.sortLabelsColumns[column.id],
+           this.renderSelectInput('sortOrder', ['ASC', 'DESC'], {strict: true})
          )}
+
+        {fields.identifier.show && this.renderInputGroup('Identifier', 'identifier')}
+        {fields.identifierLabel.show && this.renderInputGroup('Identifier Label', 'identifierLabel')}
+        {fields.identifierSortLabel.show && this.renderInputGroup('Identifier Sort Label', 'identifierSortLabel')}
+
       </Form>
     );
   },
 
-  renderControlGroup(label, control) {
+  renderControlGroup(label, control, extraControl) {
     return (
       <FormGroup  bsSize="small" className="col-sm-12">
         <Col sm={4} componentClass={ControlLabel}>{label}</Col>
         <Col sm={8}>
-          {control}
+          {
+            extraControl ?
+            [
+              <Col sm={8} key="control" style={{padding: '0'}}>
+                {control}
+              </Col>,
+              <Col sm={4} key="extracontrol" style={{paddingRight: '0'}}>
+                {extraControl}
+              </Col>
+            ]
+            : control
+          }
         </Col>
       </FormGroup>
     );
   },
 
   renderSelectGroup(label, fieldName, options, extraControl) {
-    const {disabled, column} = this.props;
     return this.renderControlGroup(
       label,
+      this.renderSelectInput(fieldName, options),
+      extraControl
+    );
+  },
+
+  renderSelectInput(fieldName, options, settings = {}) {
+    const {disabled, column} = this.props;
+    return (
       <FormControl
         componentClass="select"
         type="select"
@@ -75,10 +106,9 @@ export default React.createClass({
         options={options}
         onChange={e => this.onChangeColumn(fieldName, e.target.value)}
         disabled={disabled}>
-        <option value=""/>
+        {!settings.strict && <option value=""/>}
         {options.map(op => <option value={op} key={op}>{op}</option>)}
-      </FormControl>,
-      extraControl
+      </FormControl>
     );
   },
 
