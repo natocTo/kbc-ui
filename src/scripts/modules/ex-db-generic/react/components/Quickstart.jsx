@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Immutable from 'immutable';
-import Select from 'react-select';
 import TableLoader from './TableLoaderQuickStart';
+import {PanelWithDetails} from '@keboola/indigo-ui';
 
 export default React.createClass({
   displayName: 'Quickstart',
@@ -30,10 +30,22 @@ export default React.createClass({
     })));
   },
 
+  getSchemaGroups() {
+    if (this.props.sourceTables && this.props.sourceTables.count() > 0) {
+      const groupedTables = this.props.sourceTables.groupBy(table => table.get('schema'));
+      return groupedTables.reduce((memo, tableList, group) => {
+        return memo.push(Immutable.fromJS({
+          schema: group,
+          tables: tableList
+        }));
+      }, Immutable.List());
+    }
+  },
+
   getTableOptions() {
     if (this.props.sourceTables && this.props.sourceTables.count() > 0) {
       const groupedTables = this.props.sourceTables.groupBy(table => table.get('schema'));
-      return groupedTables.keySeq().map(function(group) {
+      return groupedTables.keySeq().map(function(tableList, group) {
         return {
           value: group,
           label: group,
@@ -70,29 +82,47 @@ export default React.createClass({
     }
   },
 
+  renderSchemaSection(schema, tables) {
+    const renderdedTables = tables.map((table) => {
+      return (
+        <div className="col-md-6">
+          <input
+            type="checkbox"
+            checked={this.props.quickstart.get(table.get('name'))}
+          /> <label>{table.get('name')}</label>
+        </div>
+      );
+    });
+    return (
+      <div className="row text-left">
+        <div className="col-md-12">
+          <label>
+            <strong>{schema}</strong>
+          </label> <input type="checkbox" checked={this.props.quickstart.get(schema)}/> select/unselect all
+          <PanelWithDetails defaultExpanded={this.props.quickstart.get(schema)}>
+            {renderdedTables}
+          </PanelWithDetails>
+        </div>
+      </div>
+    );
+  },
+
   render() {
+    const schemaGroups = this.getSchemaGroups();
+    const renderedSchemas = schemaGroups.map((schemaGroup) => {
+      return this.renderSchemaSection(schemaGroup.get('schema'), schemaGroup.get('tables'));
+    });
     var tableSelector = (
       <div>
         <div className="row text-left">
-          <div className="col-md-8 col-md-offset-2 help-block">
+          <div className="col-md-12 help-block">
           Select the tables you'd like to import to autogenerate your configuration. <br/>
           You can edit them later at any time.
           </div>
         </div>
-        <div className="row text-left">
-          <div className="col-md-8 col-md-offset-2">
-            <Select
-              multi={true}
-              matchProp="label"
-              name="quickstart"
-              value={this.getQuickstartValue(this.props.quickstart.get('tables'))}
-              placeholder="Select tables to copy"
-              onChange={this.handleSelectChange}
-              filterOptions={this.filterOptions}
-              optionRenderer={this.optionRenderer}
-              options={this.transformOptions(this.getTableOptions())}/>
-          </div>
-          <div className="col-md-2">
+        {renderedSchemas}
+        <div className="row text-center">
+          <div className="col-md-12">
             <button
               className="btn btn-success"
               onClick={this.quickstart}
