@@ -42,44 +42,12 @@ export default React.createClass({
     }
   },
 
-  getTableOptions() {
-    if (this.props.sourceTables && this.props.sourceTables.count() > 0) {
-      const groupedTables = this.props.sourceTables.groupBy(table => table.get('schema'));
-      return groupedTables.keySeq().map(function(tableList, group) {
-        return {
-          value: group,
-          label: group,
-          children: groupedTables.get(group).map(function(table) {
-            return {
-              value: {
-                schema: table.get('schema'),
-                tableName: table.get('name')
-              },
-              label: table.get('name')
-            };
-          }).toJS()
-        };
-      });
-    } else {
-      return [];
+  handleSelectAllSchemaChnage(e) {
+    this.props.quickstart.set(e.target.value, e.target.checked);
+    if (e.target.checked) {
+      return false;
     }
-  },
-
-  getQuickstartValue(tables) {
-    if (tables) {
-      let jsTables = tables;
-      if (tables.toJS) {
-        jsTables = tables.toJS();
-      }
-      return jsTables.map(function(table) {
-        return {
-          label: table.tableName,
-          value: table
-        };
-      });
-    } else {
-      return [];
-    }
+    return false;
   },
 
   renderSchemaSection(schema, tables) {
@@ -98,7 +66,7 @@ export default React.createClass({
         <div className="col-md-12">
           <label>
             <strong>{schema}</strong>
-          </label> <input type="checkbox" checked={this.props.quickstart.get(schema)}/> select/unselect all
+          </label> <input type="checkbox" checked={this.props.quickstart.get(schema)}/> select all / deselect all
           <PanelWithDetails defaultExpanded={this.props.quickstart.get(schema)}>
             {renderdedTables}
           </PanelWithDetails>
@@ -112,7 +80,7 @@ export default React.createClass({
     const renderedSchemas = schemaGroups.map((schemaGroup) => {
       return this.renderSchemaSection(schemaGroup.get('schema'), schemaGroup.get('tables'));
     });
-    var tableSelector = (
+    const tableSelector = (
       <div>
         <div className="row text-left">
           <div className="col-md-12 help-block">
