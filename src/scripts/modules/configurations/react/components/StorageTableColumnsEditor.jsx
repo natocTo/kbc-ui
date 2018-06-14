@@ -9,7 +9,8 @@ export default React.createClass({
       tableId: PropTypes.string,
       columns: PropTypes.any,
       columnsMappings: PropTypes.any,
-      context: PropTypes.any
+      context: PropTypes.any,
+      isColumnValidFn: PropTypes.func
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -61,7 +62,7 @@ export default React.createClass({
   render() {
     let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
-      <table className="table">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Column</th>
@@ -83,7 +84,7 @@ export default React.createClass({
     return (
       <tbody>
         {this.props.value.columns.map((column, index) => (
-          <tr key={index}>
+          <tr key={index} className={!this.props.value.isColumnValidFn(column) ? 'danger' : ''}>
             <td>{column.id}</td>
             {this.props.value.columnsMappings.map((mapping, mappingIndex) => (
               <td key={mappingIndex}>
