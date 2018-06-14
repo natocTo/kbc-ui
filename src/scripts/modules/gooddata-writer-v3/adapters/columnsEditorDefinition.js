@@ -5,10 +5,12 @@ import {parseParameters, createConfigParameters} from '../helpers/rowParametersT
 // import ColumnType from '../react/components/ColumnType';
 import ColumnSetup from '../react/components/ColumnSetup';
 import {prepareColumnContext} from '../helpers/ColumnDefinition';
+import ColumnDefinition from '../helpers/ColumnDefinition';
 
 
 export default {
-  initColumnFn: columnName => Map({id: columnName, type: 'IGNORE', title: columnName}),
+  isColumnValidFn: (column) => !ColumnDefinition(column).getInvalidReason(),
+  initColumnFn: columnName => Map(ColumnDefinition({id: columnName}).initColumn()),
   parseTableId: (configuration) => parseParameters(configuration).get('tableId'),
   matchColumnKey: 'id',
   isColumnIgnored: column => column.get('type') === 'IGNORE',
