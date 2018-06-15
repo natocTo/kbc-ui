@@ -1,8 +1,11 @@
 import React from 'react';
 
 import {fromJS, Map, List} from 'immutable';
+import Select from 'react-select';
 import TableLoader from './TableLoaderQuickStart';
 import {PanelWithDetails} from '@keboola/indigo-ui';
+
+const RENDERTYPE = 'checkbox';
 
 export default React.createClass({
   displayName: 'Quickstart',
@@ -31,7 +34,7 @@ export default React.createClass({
     })));
   },
 
-  handleSelectedTableChange(e) {
+  handleCheckedTableChange(e) {
     if (e.target.checked) {
       return this.props.onChange(
         this.props.configId,
@@ -48,6 +51,13 @@ export default React.createClass({
         )
       );
     }
+  },
+
+  handleSelectedTableChange(schema, newValue) {
+    return this.props.onChange(
+      this.props.configId,
+      this.props.selectedTables.setIn([schema], newValue)
+    );
   },
 
   handleSelectAllSchemaChnage(e) {
@@ -84,8 +94,37 @@ export default React.createClass({
     }
   },
 
-  renderSchemaSection(schema, tables) {
-    const renderdedTables = tables.map((table) => {
+  getTablesSelectedValue() {
+    return this.props.selectedTables.map((table) => {
+      return JSON.stringify(table.toJS());
+    });
+  },
+
+  getTablesSelectOptions(tables) {
+    return tables.map((table) => {
+      return {
+        label: table.get('name'),
+        value: JSON.stringify(table.toJS())
+      };
+    });
+  },
+
+  renderTableSelectBox(schema, tables) {
+    return (
+      <Select
+        multi={true}
+        matchProp="label"
+        name={schema}
+        value={this.getTablesSelectedValue}
+        placeholder="Select tables to copy"
+        onChange={this.handleSelectChange}
+        options={this.getTablesSelectOptions(tables)}
+      />
+    );
+  },
+
+  renderTableCheckboxes(schema, tables) {
+    const renderedTables = tables.map((table) => {
       const tableSelected = this.props.selectedTables.hasIn([table.get('schema'), table.get('name')]);
       return (
         <div className="col-md-6">
@@ -99,6 +138,14 @@ export default React.createClass({
       );
     });
     return (
+      <PanelWithDetails defaultExpanded={!!this.props.selectedTables.hasIn(schema)}>
+        {renderedTables}
+      </PanelWithDetails>
+    );
+  },
+
+  renderSchemaSection(schema, tables) {
+    return (
       <div className="row text-left">
         <div className="col-md-12">
           <label>
@@ -111,31 +158,51 @@ export default React.createClass({
             onChange={this.handleSelectAllSchemaChnage}
             checked={!!this.props.selectedTables.hasIn([schema])}
           /> select all / deselect all
-          <PanelWithDetails defaultExpanded={!!this.props.selectedTables.hasIn(schema)}>
-            {renderdedTables}
-          </PanelWithDetails>
+          {
+            RENDERTYPE === 'checkbox'
+              ? this.renderTableCheckboxes(schema, tables)
+              : this.renderTableSelectBox(schema, tables)
+          }
         </div>
       </div>
     );
   },
 
-  render() {
-    const schemaGroups = this.getSchemaGroups();
-    const renderedSchemas = schemaGroups.map((schemaGroup) => {
-      return this.renderSchemaSection(schemaGroup.get('schema'), schemaGroup.get('tables'));
-    });
-    const tableSelector = (
-      <div>
-        <div className="row text-left">
-          <div className="col-md-12 help-block">
-          Select the tables you'd like to import to autogenerate your configuration. <br/>
-          You can edit them later at any time.
+  getTableSelector() {
+    if (this.props.sourceTables) {
+      const schemaGroups = this.getSchemaGroups();
+      const renderedSchemas = schemaGroups.map((schemaGroup) => {
+        return this.renderSchemaSection(schemaGroup.get('schema'), schemaGroup.get('tables'));
+      });
+      return (
+        <div>
+          <div>
+            <div className="row text-left">
+              <div className="col-md-12 help-block">
+                Select the tables you'd like to import to autogenerate your configuration. <br/>
+                You can edit them later at any time.
+              </div>
+            </div>
+            {renderedSchemas}
+          </div>
+          <div className="row text-center">
+            <div className="col-md-12">
+              <button
+                className="btn btn-success"
+                onClick={this.quickstart}
+                disabled={!this.props.quickstart.get('tables') || this.props.quickstart.get('tables').count() === 0}
+              > Create
+              </button>
+            </div>
           </div>
         </div>
-        {renderedSchemas}
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
+  },
 
+  render() {
     return (
       <div className="row text-center">
         <TableLoader
@@ -144,19 +211,9 @@ export default React.createClass({
           isLoadingSourceTables={this.props.isLoadingSourceTables}
           isTestingConnection={this.props.isTestingConnection}
           validConnection={this.props.validConnection}
-          tableSelectorElement={tableSelector}
+          tableSelectorElement={this.getTableSelector()}
           refreshMethod={this.props.refreshMethod}
         />
-        <div className="row text-center">
-          <div className="col-md-12">
-            <button
-              className="btn btn-success"
-              onClick={this.quickstart}
-              disabled={!this.props.quickstart.get('tables') || this.props.quickstart.get('tables').count() === 0}
-            > Create
-            </button>
-          </div>
-        </div>
       </div>
     );
   }
