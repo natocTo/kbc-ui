@@ -17,7 +17,8 @@ export default React.createClass({
     quickstart: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
     onSubmit: React.PropTypes.func.isRequired,
-    refreshMethod: React.PropTypes.func.isRequired
+    refreshMethod: React.PropTypes.func.isRequired,
+    selectedTables: React.PropTypes.object
   },
 
   quickstart() {
@@ -30,33 +31,49 @@ export default React.createClass({
     })));
   },
 
+  handleSelectAllSchemaChnage(e) {
+    const schemaGroups = this.getSchemaGroups();
+    if (e.target.checked) {
+      // add all tables from this schema
+      const selectedSchema = schemaGroups.find((schemaGroup) => {
+        return schemaGroup.get('schema') === e.target.value;
+      });
+      return this.props.onChange(
+        this.props.configId,
+        this.props.selectedTables.setIn([e.target.value], selectedSchema.get('tables'))
+      );
+    } else {
+      // uncheck all schema tables
+      return this.props.onChange(
+        this.props.configId,
+        this.props.selectedTables.deleteIn([e.target.value])
+      );
+    }
+  },
+
   getSchemaGroups() {
     if (this.props.sourceTables && this.props.sourceTables.count() > 0) {
       const groupedTables = this.props.sourceTables.groupBy(table => table.get('schema'));
       return groupedTables.reduce((memo, tableList, group) => {
         return memo.push(Immutable.fromJS({
           schema: group,
-          tables: tableList
+          tables: tableList.reduce((outmemo, table) => {
+            return outmemo.set(table.get('name'), table);
+          }, Immutable.Map())
         }));
       }, Immutable.List());
     }
   },
 
-  handleSelectAllSchemaChnage(e) {
-    this.props.quickstart.set(e.target.value, e.target.checked);
-    if (e.target.checked) {
-      return false;
-    }
-    return false;
-  },
-
   renderSchemaSection(schema, tables) {
     const renderdedTables = tables.map((table) => {
+      const tableSelected = this.props.selectedTables.hasIn([table.get('schema'), table.get('name')]);
       return (
         <div className="col-md-6">
           <input
             type="checkbox"
-            checked={this.props.quickstart.get(table.get('name'))}
+            value={table}
+            checked={tableSelected}
           /> <label>{table.get('name')}</label>
         </div>
       );
@@ -65,9 +82,16 @@ export default React.createClass({
       <div className="row text-left">
         <div className="col-md-12">
           <label>
-            <strong>{schema}</strong>
-          </label> <input type="checkbox" checked={this.props.quickstart.get(schema)}/> select all / deselect all
-          <PanelWithDetails defaultExpanded={this.props.quickstart.get(schema)}>
+            <strong>{schema} </strong>
+          </label>
+          <input
+            name={schema}
+            value={schema}
+            type="checkbox"
+            onChange={this.handleSelectAllSchemaChnage}
+            checked={!!this.props.selectedTables.hasIn([schema])}
+          /> select all / deselect all
+          <PanelWithDetails defaultExpanded={!!this.props.selectedTables.hasIn(schema)}>
             {renderdedTables}
           </PanelWithDetails>
         </div>
@@ -89,16 +113,6 @@ export default React.createClass({
           </div>
         </div>
         {renderedSchemas}
-        <div className="row text-center">
-          <div className="col-md-12">
-            <button
-              className="btn btn-success"
-              onClick={this.quickstart}
-              disabled={!this.props.quickstart.get('tables') || this.props.quickstart.get('tables').count() === 0}
-            > Create
-            </button>
-          </div>
-        </div>
       </div>
     );
 
@@ -113,39 +127,18 @@ export default React.createClass({
           tableSelectorElement={tableSelector}
           refreshMethod={this.props.refreshMethod}
         />
+        <div className="row text-center">
+          <div className="col-md-12">
+            <button
+              className="btn btn-success"
+              onClick={this.quickstart}
+              disabled={!this.props.quickstart.get('tables') || this.props.quickstart.get('tables').count() === 0}
+            > Create
+            </button>
+          </div>
+        </div>
       </div>
     );
-  },
-
-  filterOptions(options, filterString, values) {
-    var filterOption = function(op) {
-      if (values && Immutable.fromJS(values).toMap().find(
-        function(item) {
-          return item.get('label') === op.label;
-        }, op)
-      ) {
-        return false;
-      }
-      var labelTest = String(op.label).toLowerCase();
-      var filterStr = filterString.toLowerCase();
-      return !filterStr || labelTest.indexOf(filterStr) >= 0;
-    };
-    return (options || []).filter(filterOption, this);
-  },
-
-  transformOptions(options) {
-    const option = (value, label, render, disabled = false) => ({value, label, render, disabled});
-
-    return options.reduce((acc, o) => {
-      const parent = option(o.value, o.label, (<strong style={{color: '#000'}}>Schema: {o.label}</strong>), true);
-      const children = o.children.map(c => option(c.value, c.label, <div>{c.label}</div>));
-
-      return acc.concat(parent).concat(children);
-    }, []);
-  },
-
-  optionRenderer(option) {
-    return option.render;
   }
 
 });

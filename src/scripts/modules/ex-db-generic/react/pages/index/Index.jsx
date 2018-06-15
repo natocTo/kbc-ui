@@ -168,6 +168,7 @@ export default function(componentId) {
                 onChange={actionsCreators.quickstartSelected}
                 onSubmit={actionsCreators.quickstart}
                 refreshMethod={this.handleRefreshSourceTables}
+                selectedTables={this.state.localState.getIn(['quickstart', 'tables']) || Map()}
               />
             </div>
           </div>
