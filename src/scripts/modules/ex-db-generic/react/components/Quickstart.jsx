@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Immutable from 'immutable';
+import {fromJS, Map, List} from 'immutable';
 import TableLoader from './TableLoaderQuickStart';
 import {PanelWithDetails} from '@keboola/indigo-ui';
 
@@ -22,13 +22,32 @@ export default React.createClass({
   },
 
   quickstart() {
-    this.props.onSubmit(this.props.configId, this.props.quickstart.get('tables'));
+    this.props.onSubmit(this.props.configId, this.props.selectedTables);
   },
 
   handleSelectChange(selected) {
-    return this.props.onChange(this.props.configId, Immutable.fromJS(selected.map(function(table) {
+    return this.props.onChange(this.props.configId, fromJS(selected.map(function(table) {
       return table.value;
     })));
+  },
+
+  handleSelectedTableChange(e) {
+    if (e.target.checked) {
+      return this.props.onChange(
+        this.props.configId,
+        this.props.selectedTables.setIn(
+          [fromJS(JSON.parse(e.target.value)).get('schema'), fromJS(JSON.parse(e.target.value)).get('name')],
+          fromJS(JSON.parse(e.target.value))
+        )
+      );
+    } else {
+      return this.props.onChange(
+        this.props.configId,
+        this.props.selectedTables.deleteIn(
+          [fromJS(JSON.parse(e.target.value)).get('schema'), fromJS(JSON.parse(e.target.value)).get('name')]
+        )
+      );
+    }
   },
 
   handleSelectAllSchemaChnage(e) {
@@ -55,13 +74,13 @@ export default React.createClass({
     if (this.props.sourceTables && this.props.sourceTables.count() > 0) {
       const groupedTables = this.props.sourceTables.groupBy(table => table.get('schema'));
       return groupedTables.reduce((memo, tableList, group) => {
-        return memo.push(Immutable.fromJS({
+        return memo.push(fromJS({
           schema: group,
           tables: tableList.reduce((outmemo, table) => {
             return outmemo.set(table.get('name'), table);
-          }, Immutable.Map())
+          }, Map())
         }));
-      }, Immutable.List());
+      }, List());
     }
   },
 
@@ -72,8 +91,9 @@ export default React.createClass({
         <div className="col-md-6">
           <input
             type="checkbox"
-            value={table}
+            value={JSON.stringify(table.toJS())}
             checked={tableSelected}
+            onChange={this.handleSelectedTableChange}
           /> <label>{table.get('name')}</label>
         </div>
       );

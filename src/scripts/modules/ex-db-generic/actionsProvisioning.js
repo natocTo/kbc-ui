@@ -452,19 +452,24 @@ export function createActions(componentId) {
 
     quickstart(configId, tableList) {
       const store = getStore(configId);
-      const queries = tableList.map(function(table) {
-        let query = store.generateNewQuery(null, componentSupportsSimpleSetup(componentId));
-        query = query.set('table', table);
-        query = query.set('name', table.get('tableName'));
-        const pkCols = getPKColumsFromSourceTable(table, store.getSourceTables(configId));
-        if (pkCols.count() > 0) {
-          query = query.set('primaryKey', pkCols.map((column) => {
-            return column.get('name');
-          }).toJS());
-        }
-        query = query.set('outputTable', store.getDefaultOutputTableId(table.get('tableName')));
-        return query;
-      });
+      const queries = tableList.reduce((schemaMemo, schema) => {
+        return schemaMemo.concat(schema.reduce((tableMemo, table) => {
+          let query = store.generateNewQuery(null, componentSupportsSimpleSetup(componentId));
+          query = query.set('table', Map({
+            'tableName': table.get('name'),
+            'schema': table.get('schema')
+          }));
+          query = query.set('name', table.get('name'));
+          const pkCols = table.get('columns').filter((column) => column.get('primaryKey') === true);
+          if (pkCols.count() > 0) {
+            query = query.set('primaryKey', pkCols.map((column) => {
+              return column.get('name');
+            }).toJS());
+          }
+          query = query.set('outputTable', store.getDefaultOutputTableId(table.get('name')));
+          return tableMemo.push(query);
+        }, List()));
+      }, List());
       const diffMsg = 'Quickstart config creation';
       if (store.isRowConfiguration()) {
         queries.map(function(query) {
