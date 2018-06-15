@@ -10,6 +10,7 @@ export default React.createClass({
       columns: PropTypes.any,
       columnsMappings: PropTypes.any,
       context: PropTypes.any,
+      initHeaderStateFn: PropTypes.func,
       isColumnValidFn: PropTypes.func
     }),
     onChange: PropTypes.func.isRequired,
@@ -24,7 +25,8 @@ export default React.createClass({
     return {
       loadingPreview: false,
       dataPreview: null,
-      dataPreviewError: null
+      dataPreviewError: null,
+      headerState: this.props.value.initHeaderStateFn(this.props.value.columns)
     };
   },
 
@@ -59,6 +61,18 @@ export default React.createClass({
       });
   },
 
+  renderHeaderCell(element) {
+    if (typeof element === 'string') {
+      return element;
+    }
+    const Element = element;
+    return (
+      <Element
+        headerState={this.state.headerState}
+        onChange={(newState) => this.setState({headerState: newState})} />
+    );
+  },
+
   render() {
     let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
@@ -66,7 +80,7 @@ export default React.createClass({
         <thead>
           <tr>
             <th>Column</th>
-            {headers.map((title, index) => <th key={index}>{title}</th>)}
+            {headers.map((title, index) => <th key={index}>{this.renderHeaderCell(title)}</th>)}
             <th>Content Preview</th>
           </tr>
         </thead>
@@ -90,7 +104,9 @@ export default React.createClass({
               <td key={mappingIndex}>
                 <mapping.render
                   context={this.props.value.context}
-                  disabled={this.props.disabled} column={column} onChange={this.onChangeColumn} />
+                  disabled={this.props.disabled}
+                  headerState={this.state.headerState}
+                  column={column} onChange={this.onChangeColumn} />
               </td>
             ))}
             <td>

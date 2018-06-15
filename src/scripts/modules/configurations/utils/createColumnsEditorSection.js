@@ -12,7 +12,8 @@ export default (params) => {
     isComplete = () => true, // is representation complete?
     isColumnIgnored = column => column.get('type') === 'IGNORE', // if ignored then won't be saved to input mapping columns property of configuration object
     prepareColumnContext = () => null, // (table, sectionContext) => result of this fn will be injected as 'context' prop to every column render component
-    isColumnValidFn = () => true // (column) => true/false
+    isColumnValidFn = () => true, // (column) => true/false
+    initHeaderStateFn = () => null // (columns) => headerState is passed to headerCell of column mappins
   } = params;
 
   const onSave = function(localState) {
@@ -54,7 +55,8 @@ export default (params) => {
         ) || initColumnFn(tableColumn)
       );
       const columnContext = prepareColumnContext(storageTable, sectionContext, columnsList);
-      return fromJS({columns: columnsList, tableId: tableId, columnsMappings, context: columnContext, isColumnValidFn});
+
+      return fromJS({columns: columnsList, tableId: tableId, columnsMappings, context: columnContext, isColumnValidFn, initHeaderStateFn});
     },
     onCreate(name) {
       return onSave(fromJS({'columns': [], columnsMappings, tableId: name}));
