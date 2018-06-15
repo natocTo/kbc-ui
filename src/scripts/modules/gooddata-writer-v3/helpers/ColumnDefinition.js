@@ -3,13 +3,13 @@ import {List, Map, fromJS} from 'immutable';
 
 export const Types = keyMirror({
   ATTRIBUTE: null,
-  IGNORE: null,
   CONNECTION_POINT: null,
   DATE: null,
   FACT: null,
   HYPERLINK: null,
   LABEL: null,
-  REFERENCE: null
+  REFERENCE: null,
+  IGNORE: null
 });
 
 export const DataTypes = keyMirror({
@@ -32,9 +32,14 @@ function checkEmpty(value, label) {
   return !value && ((label || 'Value') + ' can not be empty');
 }
 
-/* function checkValueOf(values) {
- *   return (value) => !values.includes(value) && 'invalid value ' + value;
- * } */
+function checkDataTypeSize(dataType, dataTypeSize) {
+  if (dataType === DataTypes.VARCHAR && isNaN(dataTypeSize)) {
+    return 'Data size must by valid number: ' + dataTypeSize;
+  }
+  if (dataType === DataTypes.DECIMAL && !/^\d+,\d+$/.test(dataTypeSize)) {
+    return 'Ivalid decimal format' + dataTypeSize;
+  }
+}
 
 function prepareFields(column) {
   const {type, dataType} = column;
@@ -56,9 +61,7 @@ function prepareFields(column) {
 
     dataTypeSize: {
       show: BASE_TYPES.includes(type) && [DataTypes.VARCHAR, DataTypes.DECIMAL].includes(dataType),
-      invalidReason: (dataType === DataTypes.VARCHAR) ?
-                     isNaN(column.dataSize) && ('Invalid data size value ' + column.dataSize) :
-                     !/^\d+,\d+$/.test(column.dataSize) && 'Ivalid decimal format' + column.dataSize,
+      invalidReason: checkDataTypeSize(dataType, column.dataTypeSize),
       defaultValue: column.dataType === DataTypes.VARCHAR ? '255' : '12,2',
       onChange: (newColumn, oldColumn) => {
         if (newColumn.dataType !== oldColumn.dataType) {
