@@ -8,7 +8,8 @@ export default React.createClass({
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     column: PropTypes.object.isRequired,
-    context: PropTypes.object.isRequired
+    context: PropTypes.object.isRequired,
+    headerState: PropTypes.object
   },
 
   render() {
@@ -55,13 +56,21 @@ export default React.createClass({
            this.props.context.sortLabelsColumns[column.id],
            this.renderSelectInput('sortOrder', ['ASC', 'DESC'], {strict: true})
          )}
-
-        {fields.identifier.show && this.renderInputGroup('Identifier', 'identifier')}
-        {fields.identifierLabel.show && this.renderInputGroup('Identifier Label', 'identifierLabel')}
-        {fields.identifierSortLabel.show && this.renderInputGroup('Identifier Sort Label', 'identifierSortLabel')}
-
+        {this.renderIdentifiers(fields)}
       </Form>
     );
+  },
+
+  renderIdentifiers(fields) {
+    if (this.props.headerState.showIdentifiers) {
+      return (
+        <span>
+          {fields.identifier.show && this.renderInputGroup('Identifier', 'identifier')}
+          {fields.identifierLabel.show && this.renderInputGroup('Identifier Label', 'identifierLabel')}
+          {fields.identifierSortLabel.show && this.renderInputGroup('Identifier Sort Label', 'identifierSortLabel')}
+        </span>
+      );
+    }
   },
 
   renderControlGroup(label, control, extraControl) {
