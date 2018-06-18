@@ -35,7 +35,7 @@ module.exports = React.createClass
       td null,
         span className: 'label label-info',
           @props.task.get('action')
-      td null,
+      td style: {wordBreak: 'break-word'},
         @_renderConfiguration()
       td null,
         input
@@ -51,7 +51,6 @@ module.exports = React.createClass
       config.get('name', parameters.get('config'))
     else
       React.createElement Tree, data: @props.task.get('actionParameters')
-
 
   _handleActiveChange: ->
     @props.onTaskUpdate @props.task.set('active', !@props.task.get('active'))
