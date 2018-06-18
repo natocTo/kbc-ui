@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-// import {Table} from 'react-bootstrap';
 import {List, Map} from 'immutable';
 import TokenAge from './TokenAge';
 
