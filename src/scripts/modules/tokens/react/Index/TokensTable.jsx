@@ -64,6 +64,9 @@ export default React.createClass({
               <div className="th">
                 Buckets
               </div>
+              <div className="th">
+                Tokens
+              </div>
               <div className="th" />
             </div>
           </div>
@@ -262,6 +265,9 @@ export default React.createClass({
         </div>
         <div className="td">
           {this.renderBucketsAccess(token)}
+        </div>
+        <div className="td">
+          {token.get('canManageBuckets', false) ? 'Yes' : 'No'}
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderTokenDelete(token)}

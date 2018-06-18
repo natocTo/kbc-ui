@@ -94,6 +94,14 @@ export default React.createClass({
              wrapperClassName="cols-sm-offset-3 col-sm-9"
            />
         )}
+        {this.renderFormGroup(
+          'Manage Tokens',
+          <div className="col-sm-9">
+            <p className="form-control-static">
+              {this.props.token.get('canManageBuckets', false) ? 'Yes' : 'No'}
+            </p>
+          </div>
+        )}
       </div>
     );
   },
