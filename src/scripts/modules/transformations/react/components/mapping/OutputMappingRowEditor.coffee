@@ -2,6 +2,8 @@ React = require 'react'
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 _ = require('underscore')
 Immutable = require('immutable')
+FormGroup = React.createFactory(require('react-bootstrap').FormGroup)
+FormControl = React.createFactory(require('react-bootstrap').FormControl)
 Input = React.createFactory require('./../../../../../react/common/KbcBootstrap').Input
 AutosuggestWrapper = require('./AutoSuggestWrapper').default
 Select = React.createFactory require('../../../../../react/common/Select').default
@@ -227,16 +229,16 @@ module.exports = React.createClass
                  value: @props.value.get("deleteWhereColumn", "")
                  onChange: @_handleChangeDeleteWhereColumn
              React.DOM.div className: 'col-xs-2',
-               Input
-                 type: 'select'
-                 name: 'deleteWhereOperator'
-                 value: @props.value.get("deleteWhereOperator")
-                 disabled: @props.disabled
-                 onChange: @_handleChangeDeleteWhereOperator
-                 groupClassName: "no-bottom-margin"
-               ,
-                 React.DOM.option {value: "eq"}, "= (IN)"
-                 React.DOM.option {value: "ne"}, "!= (NOT IN)"
+               FormGroup className: "no-bottom-margin",
+                 FormControl
+                   componentClass: "select"
+                   name: 'deleteWhereOperator'
+                   value: @props.value.get("deleteWhereOperator")
+                   disabled: @props.disabled
+                   onChange: @_handleChangeDeleteWhereOperator
+                 ,
+                   React.DOM.option {value: "eq"}, "= (IN)"
+                   React.DOM.option {value: "ne"}, "!= (NOT IN)"
              React.DOM.div className: 'col-xs-4',
                Select
                  name: 'deleteWhereValues'
