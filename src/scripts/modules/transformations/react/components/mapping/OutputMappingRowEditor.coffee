@@ -8,7 +8,6 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
 stringUtils = require('../../../../../utils/string').default
-PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
@@ -177,79 +176,77 @@ module.exports = React.createClass
              placeholder: 'Storage table where \
              the source table data will be loaded to - you can create a new table or use an existing one.'
      React.DOM.div {className: "row col-md-12"},
-       PanelWithDetails
-         defaultExpanded: @props.initialShowDetails
-         React.DOM.div {className: 'form-horizontal clearfix'},
-           React.DOM.div {className: "form-group"},
-             React.DOM.label {className: "control-label col-xs-2"},
-               React.DOM.span null,
-             React.DOM.div {className: "col-xs-10"},
-               Input
-                 standalone: true
-                 name: 'incremental'
-                 type: 'checkbox'
-                 label: 'Incremental'
-                 checked: @props.value.get("incremental")
-                 disabled: @props.disabled
-                 onChange: @_handleChangeIncremental
-                 help: "If the destination table exists in Storage,
-                   output mapping does not overwrite the table, it only appends the data to it.
-                   Uses incremental write to Storage."
-           React.DOM.div {className: "form-group"},
-             React.DOM.label {className: "control-label col-xs-2"},
-               React.DOM.span null,
-                 "Primary key"
-             React.DOM.div {className: "col-xs-10"},
-               Select
-                 name: 'primaryKey'
-                 value: @props.value.get('primaryKey')
-                 multi: true
-                 trimMultiCreatedValues: true
-                 disabled: @props.disabled
-                 allowCreate: (@_getColumns().size == 0)
-                 delimiter: ','
-                 placeholder: 'Add a column to primary key...'
-                 emptyStrings: false
-                 noResultsText: 'No matching column found'
-                 help: "Primary key of the table in Storage. If the table already exists, primary key must match."
-                 onChange: @_handleChangePrimaryKey
-                 options: @_getColumns().map((option) ->
-                   return {
-                     label: option
-                     value: option
-                   }
-                 ).toJS()
+       React.DOM.div {className: 'form-horizontal clearfix'},
+         React.DOM.div {className: "form-group"},
+           React.DOM.label {className: "control-label col-xs-2"},
+             React.DOM.span null,
+           React.DOM.div {className: "col-xs-10"},
+             Input
+               standalone: true
+               name: 'incremental'
+               type: 'checkbox'
+               label: 'Incremental'
+               checked: @props.value.get("incremental")
+               disabled: @props.disabled
+               onChange: @_handleChangeIncremental
+               help: "If the destination table exists in Storage,
+                 output mapping does not overwrite the table, it only appends the data to it.
+                 Uses incremental write to Storage."
+         React.DOM.div {className: "form-group"},
+           React.DOM.label {className: "control-label col-xs-2"},
+             React.DOM.span null,
+               "Primary key"
+           React.DOM.div {className: "col-xs-10"},
+             Select
+               name: 'primaryKey'
+               value: @props.value.get('primaryKey')
+               multi: true
+               trimMultiCreatedValues: true
+               disabled: @props.disabled
+               allowCreate: (@_getColumns().size == 0)
+               delimiter: ','
+               placeholder: 'Add a column to primary key...'
+               emptyStrings: false
+               noResultsText: 'No matching column found'
+               help: "Primary key of the table in Storage. If the table already exists, primary key must match."
+               onChange: @_handleChangePrimaryKey
+               options: @_getColumns().map((option) ->
+                 return {
+                   label: option
+                   value: option
+                 }
+               ).toJS()
 
-           if (@props.value.get("incremental") || @props.value.get("deleteWhereColumn", "") != "")
-             React.DOM.div className: 'form-group',
-               React.DOM.label className: 'col-xs-2 control-label', 'Delete rows'
-               React.DOM.div className: 'col-xs-4',
-                 React.createElement AutosuggestWrapper,
-                   suggestions: @_getColumns()
-                   placeholder: 'Select column'
-                   value: @props.value.get("deleteWhereColumn", "")
-                   onChange: @_handleChangeDeleteWhereColumn
-               React.DOM.div className: 'col-xs-2',
-                 Input
-                   type: 'select'
-                   name: 'deleteWhereOperator'
-                   value: @props.value.get("deleteWhereOperator")
-                   disabled: @props.disabled
-                   onChange: @_handleChangeDeleteWhereOperator
-                   groupClassName: "no-bottom-margin"
-                 ,
-                   React.DOM.option {value: "eq"}, "= (IN)"
-                   React.DOM.option {value: "ne"}, "!= (NOT IN)"
-               React.DOM.div className: 'col-xs-4',
-                 Select
-                   name: 'deleteWhereValues'
-                   value: @props.value.get('deleteWhereValues')
-                   multi: true
-                   disabled: @props.disabled
-                   allowCreate: true
-                   delimiter: ','
-                   placeholder: 'Add a value...'
-                   emptyStrings: true,
-                   onChange: @_handleChangeDeleteWhereValues
-               React.DOM.div className: 'col-xs-10 col-xs-offset-2 help-block bottom-margin',
-                 "Delete matching rows in the destination table before importing the result"
+         if (@props.value.get("incremental") || @props.value.get("deleteWhereColumn", "") != "")
+           React.DOM.div className: 'form-group',
+             React.DOM.label className: 'col-xs-2 control-label', 'Delete rows'
+             React.DOM.div className: 'col-xs-4',
+               React.createElement AutosuggestWrapper,
+                 suggestions: @_getColumns()
+                 placeholder: 'Select column'
+                 value: @props.value.get("deleteWhereColumn", "")
+                 onChange: @_handleChangeDeleteWhereColumn
+             React.DOM.div className: 'col-xs-2',
+               Input
+                 type: 'select'
+                 name: 'deleteWhereOperator'
+                 value: @props.value.get("deleteWhereOperator")
+                 disabled: @props.disabled
+                 onChange: @_handleChangeDeleteWhereOperator
+                 groupClassName: "no-bottom-margin"
+               ,
+                 React.DOM.option {value: "eq"}, "= (IN)"
+                 React.DOM.option {value: "ne"}, "!= (NOT IN)"
+             React.DOM.div className: 'col-xs-4',
+               Select
+                 name: 'deleteWhereValues'
+                 value: @props.value.get('deleteWhereValues')
+                 multi: true
+                 disabled: @props.disabled
+                 allowCreate: true
+                 delimiter: ','
+                 placeholder: 'Add a value...'
+                 emptyStrings: true,
+                 onChange: @_handleChangeDeleteWhereValues
+             React.DOM.div className: 'col-xs-10 col-xs-offset-2 help-block bottom-margin',
+               "Delete matching rows in the destination table before importing the result"
