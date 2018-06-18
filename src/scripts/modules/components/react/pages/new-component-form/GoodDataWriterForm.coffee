@@ -251,7 +251,6 @@ module.exports = React.createClass
         onChange: @_handleChange.bind @, 'pid'
         disabled: @props.isSaving
       div className: 'form-group',
-        # label className: 'col-xs-2 control-label', 'Use Beta Version'
         div className: 'col-xs-offset-3 col-xs-9',
           label null,
             input
