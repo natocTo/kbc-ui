@@ -257,7 +257,7 @@ module.exports = React.createClass
               type: 'checkbox'
               checked: @props.configuration.get('readModel')
               onChange: (e) =>
-                @props.onChange @props.configuration.set('readModel', event.target.checked)
+                @props.onChange @props.configuration.set('readModel', e.target.checked)
             ' Read project model to writer configuration'
       p className: 'col-xs-offset-3 help-text',
         'If checked, data bucket'
