@@ -17,7 +17,7 @@ createConfigByApi = (componentId, configuration) ->
 
 # Custom create method for GoodData writer
 createGoodDataWriter = (configuration) ->
-  writerId = string.webalize(configuration.get('name'), '_')
+  writerId = string.webalize(configuration.get('name'), {separator: '_'})
   params =
     writerId: writerId
     description: configuration.get 'description'
