@@ -26,8 +26,8 @@ import ConfigurationRows from '../components/ConfigurationRows';
 // import Credentials from '../components/Credentials';
 import IndexSections from '../components/IndexSections';
 
-// styles
-import '../../styles.less';
+// utils
+import sections from '../../utils/sections';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
