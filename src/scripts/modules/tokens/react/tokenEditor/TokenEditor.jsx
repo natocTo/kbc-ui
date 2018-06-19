@@ -99,10 +99,10 @@ export default React.createClass({
           'Manage Tokens',
           <div className="col-sm-9">
             <p className="form-control-static">
-              <Check isChecked={this.props.token.get('canManageBuckets', false)} />
+              <Check isChecked={this.props.token.get('canManageTokens', false)} />
             </p>
             <p className="help-block">
-              Token {this.props.token.get('canManageBuckets', false) ? 'has' : 'hasn\'t'}
+              Token {this.props.token.get('canManageTokens', false) ? 'has' : 'hasn\'t'}
               {' '}permission to manage (e.g. create) other tokens.
              </p>
           </div>

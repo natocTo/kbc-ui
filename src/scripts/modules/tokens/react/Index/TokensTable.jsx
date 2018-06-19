@@ -268,7 +268,7 @@ export default React.createClass({
           {this.renderBucketsAccess(token)}
         </div>
         <div className="td">
-          <Check isChecked={token.get('canManageBuckets', false)} />
+          <Check isChecked={token.get('canManageTokens', false)} />
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderTokenDelete(token)}
