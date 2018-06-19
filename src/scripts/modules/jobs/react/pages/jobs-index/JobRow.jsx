@@ -2,6 +2,8 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Link} from 'react-router';
 import JobStatusLabel from '../../../../../react/common/JobStatusLabel';
+import JobRunId from '../../../../../react/common/JobRunId';
+
 import ComponentIcon from '../../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../../react/common/ComponentName';
 import Duration from '../../../../../react/common/Duration';
@@ -23,6 +25,11 @@ export default React.createClass({
     const component = this.getComponent();
     return (
       <Link className="tr" to="jobDetail" params={this.linkParams()} query={this.linkQuery()}>
+        <div className="td">
+          <div className="entity-name">
+            <JobRunId runId={this.props.job.get('runId')} />
+          </div>
+        </div>
         <div className="td">
           <ComponentIcon component={component} size="32"/> <ComponentName component={component}/>
         </div>

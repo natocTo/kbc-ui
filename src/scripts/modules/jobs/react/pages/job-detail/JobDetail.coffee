@@ -213,6 +213,8 @@ module.exports = React.createClass
 
   _renderRunInfoRow: (job) ->
     componentId = getComponentId(job)
+    component = ComponentsStore.getComponent(componentId)
+    component = ComponentsStore.unknownComponent(componentId) if !component
     if @state.configuration.size != 0
       configurationLink = span null,
         React.createElement ComponentConfigurationLink,
@@ -235,6 +237,14 @@ module.exports = React.createClass
         div {className: 'td'},
           div {className: 'row'},
             span {className: 'col-md-3'},
+              'Component'
+            strong {className: 'col-md-9'},
+              ComponentIcon {component: component, size: "32"}
+              ' '
+              ComponentName {component: component}
+              ' '
+          div {className: 'row'},
+            span {className: 'col-md-3'},
               'Configuration'
             strong {className: 'col-md-9'},
               configurationLink
@@ -249,11 +259,6 @@ module.exports = React.createClass
               'Start'
             strong {className: 'col-md-9'},
               renderDate(job.get('startTime'))
-          div {className: 'row'},
-            span {className: 'col-md-3'},
-              'RunId'
-            strong {className: 'col-md-9'},
-              JobRunId {runId: job.get('runId')}
         div {className: 'td'},
           div className: 'row',
             span className: 'col-md-3', 'Status '
@@ -331,16 +336,11 @@ module.exports = React.createClass
 
 
   _renderGeneralInfoRow: (job) ->
-    componentId = getComponentId(job)
-    component = ComponentsStore.getComponent(componentId)
-    component = ComponentsStore.unknownComponent(componentId) if !component
-
     div {className: 'row'},
       div {className: 'col-md-6'},
-        span {className: ''},
-          ComponentIcon {component: component, size: '32'}
-          ' '
-          ComponentName {component: component}
+        span {className: 'entity-name'},
+          'Job '
+          JobRunId {runId: job.get('runId')}
 
   _renderLogRow: (job) ->
     div null,
