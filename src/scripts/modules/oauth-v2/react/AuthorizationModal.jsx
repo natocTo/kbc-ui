@@ -8,8 +8,6 @@ import * as oauthUtils from '../OauthUtils';
 import {Loader} from '@keboola/indigo-ui';
 import { Button, ButtonToolbar, Modal, Tabs, Tab } from 'react-bootstrap';
 
-import './AuthorizationModal.less';
-
 const DIRECT_TOKEN_COMPONENTS = ['keboola.ex-facebook', 'keboola.ex-facebook-ads', 'keboola.ex-instagram'];
 
 const CUSTOM_AUTHORIZATION_COMPONENTS = ['keboola.ex-google-analytics-v4'];

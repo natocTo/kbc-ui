@@ -26,9 +26,6 @@ import ConfigurationRows from '../components/ConfigurationRows';
 // import Credentials from '../components/Credentials';
 import IndexSections from '../components/IndexSections';
 
-// utils
-import sections from '../../utils/sections';
-
 // styles
 import '../../styles.less';
 

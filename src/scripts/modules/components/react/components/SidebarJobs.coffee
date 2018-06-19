@@ -6,8 +6,6 @@ JobRow = require './SidebarJobsRow'
 PureRenderMixin = require('react-addons-pure-render-mixin')
 {div, small} = React.DOM
 
-require('./SidebarJobs.less')
-
 ###
  jobs structure:
   isLoaded

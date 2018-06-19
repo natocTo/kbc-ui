@@ -3,7 +3,6 @@ import {Map} from 'immutable';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import SidebarVersionsRow from './SidebarVersionsRow';
 import {Link} from 'react-router';
-import './SidebarVersions.less';
 import {getPreviousVersion} from '../../../../utils/VersionsDiffUtils';
 import DiffVersionButton from '../../../../react/common/DiffVersionButton';
 module.exports = React.createClass({
