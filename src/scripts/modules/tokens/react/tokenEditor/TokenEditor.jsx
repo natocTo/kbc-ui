@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { Check } from '@keboola/indigo-ui';
 
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ExpiresInEdit from './ExpiresInEdit';
@@ -93,6 +94,18 @@ export default React.createClass({
              permission="write"
              wrapperClassName="cols-sm-offset-3 col-sm-9"
            />
+        )}
+        {this.props.isEditing && this.renderFormGroup(
+          'Manage Tokens',
+          <div className="col-sm-9">
+            <p className="form-control-static">
+              <Check isChecked={this.props.token.get('canManageBuckets', false)} />
+            </p>
+            <p className="help-block">
+              Token {this.props.token.get('canManageBuckets', false) ? 'has' : 'hasn\'t'}
+              {' '}permission to manage (e.g. create) other tokens.
+             </p>
+          </div>
         )}
       </div>
     );

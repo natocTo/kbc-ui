@@ -211,11 +211,6 @@ export default React.createClass({
     );
   },
 
-  prepareEventsQuery() {
-    const tokenId = this.state.tokenId;
-    return `token.id:${tokenId} OR (objectId:${tokenId} AND objectType:token)`;
-  },
-
   handleClose() {
     this.resetDirtyToken();
   },
