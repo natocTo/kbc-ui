@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { Check } from '@keboola/indigo-ui';
 
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ExpiresInEdit from './ExpiresInEdit';
@@ -98,7 +99,7 @@ export default React.createClass({
           'Manage Tokens',
           <div className="col-sm-9">
             <p className="form-control-static">
-              {this.props.token.get('canManageBuckets', false) ? 'Yes' : 'No'}
+              <Check isChecked={this.props.token.get('canManageBuckets', false)} />
             </p>
             <p className="help-block">
               Token {this.props.token.get('canManageBuckets', false) ? 'has' : 'hasn\'t'}

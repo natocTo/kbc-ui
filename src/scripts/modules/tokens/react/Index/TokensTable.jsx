@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {List, Map} from 'immutable';
+import { Check } from '@keboola/indigo-ui';
 import TokenAge from './TokenAge';
 
 import Tooltip from '../../../../react/common/Tooltip';
@@ -267,7 +268,7 @@ export default React.createClass({
           {this.renderBucketsAccess(token)}
         </div>
         <div className="td">
-          {token.get('canManageBuckets', false) ? 'Yes' : 'No'}
+          <Check isChecked={token.get('canManageBuckets', false)} />
         </div>
         <div className="td text-right kbc-no-wrap">
           {this.renderTokenDelete(token)}
