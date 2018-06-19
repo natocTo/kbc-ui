@@ -94,7 +94,7 @@ export default React.createClass({
              wrapperClassName="cols-sm-offset-3 col-sm-9"
            />
         )}
-        {this.renderFormGroup(
+        {this.props.isEditing && this.renderFormGroup(
           'Manage Tokens',
           <div className="col-sm-9">
             <p className="form-control-static">
