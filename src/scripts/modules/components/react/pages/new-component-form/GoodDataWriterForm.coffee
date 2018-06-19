@@ -13,8 +13,6 @@ ButtonToolbar = React.createFactory(require('react-bootstrap').ButtonToolbar)
 Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 
-require './AddConfigurationForm.less'
-
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 contactSupport = require('../../../../../utils/contactSupport').default
 

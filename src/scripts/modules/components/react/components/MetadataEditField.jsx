@@ -5,8 +5,6 @@ import MetadataStore from '../../stores/MetadataStore';
 import immutableMixin from 'react-immutable-render-mixin';
 import MetadataActionCreators from '../../MetadataActionCreators';
 
-require('./MetadataEditField.less');
-
 export default React.createClass({
 
   displayName: 'MetadataEditField',
