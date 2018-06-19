@@ -100,6 +100,10 @@ export default React.createClass({
             <p className="form-control-static">
               {this.props.token.get('canManageBuckets', false) ? 'Yes' : 'No'}
             </p>
+            <p className="help-block">
+              Token {this.props.token.get('canManageBuckets', false) ? 'has' : 'hasn\'t'}
+              {' '}permission to manage (e.g. create) other tokens.
+             </p>
           </div>
         )}
       </div>
