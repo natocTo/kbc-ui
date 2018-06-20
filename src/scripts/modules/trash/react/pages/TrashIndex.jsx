@@ -1,8 +1,6 @@
 import React from 'react';
 import {Map} from 'immutable';
 
-import './TrashIndex.less';
-
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';

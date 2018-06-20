@@ -2,9 +2,6 @@ import React, {PropTypes} from 'react';
 import CodeMirror from 'react-code-mirror';
 import resolveHighlightMode from './resolveHighlightMode';
 
-/* global require */
-require('./queries.less');
-
 export default React.createClass({
   propTypes: {
     script: PropTypes.string.isRequired,

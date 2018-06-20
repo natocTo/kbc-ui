@@ -5,8 +5,6 @@ import TemplateSelector from './ConfigurationTemplateSelector';
 import CodeMirror from 'react-code-mirror';
 import SaveButtons from '../../../../react/common/SaveButtons';
 
-/* global require */
-require('./configuration-json.less');
 require('codemirror/addon/lint/lint');
 require('../../../../utils/codemirror/json-lint');
 

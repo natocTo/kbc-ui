@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
-import './DestinationTableSelector.less';
 import stringUtils from '../../utils/string';
 const { webalize } = stringUtils;
 

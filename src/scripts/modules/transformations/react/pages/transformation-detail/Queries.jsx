@@ -6,7 +6,6 @@ import SaveButtons from '../../../../../react/common/SaveButtons';
 
 /* global require */
 require('codemirror/mode/sql/sql');
-require('./queries.less');
 
 export default React.createClass({
   mixins: [PureRenderMixin],
