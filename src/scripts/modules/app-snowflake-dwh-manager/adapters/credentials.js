@@ -1,7 +1,8 @@
-import Immutable, {fromJS, Map} from 'immutable';
+import {Map} from 'immutable';
+import {fromJS} from 'immutable/dist/immutable';
 
 export function createConfiguration(localState) {
-  const config = Immutable.fromJS({
+  return fromJS({
     parameters: {
       'master_host': localState.get('host'),
       'master_user': localState.get('user'),
@@ -10,21 +11,25 @@ export function createConfiguration(localState) {
       'warehouse': localState.get('warehouse')
     }
   });
-  return config;
 }
 
 export function parseConfiguration(configuration) {
   const params = configuration.get('parameters', Map());
-  const localState = fromJS({
+  return fromJS({
     host: params.get('master_host', ''),
     user: params.get('master_user', ''),
     password: params.get('#master_password', ''),
     database: params.get('master_database', ''),
     warehouse: params.get('warehouse', '')
   });
-  return localState;
 }
 
 export function isComplete(configuration) {
-  return configuration.getIn(['parameters', 'master_host'], '') !== '';
+  return (
+    configuration.getIn(['parameters', 'master_host'], '') !== ''
+    && configuration.getIn(['parameters', 'master_user'], '') !== ''
+    && configuration.getIn(['parameters', '#master_password'], '') !== ''
+    && configuration.getIn(['parameters', 'master_database'], '') !== ''
+    && configuration.getIn(['parameters', 'warehouse'], '') !== ''
+  );
 }

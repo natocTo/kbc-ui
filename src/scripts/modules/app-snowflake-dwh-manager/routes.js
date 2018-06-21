@@ -1,22 +1,19 @@
 import createRoute from '../configurations/utils/createRoute';
 import columnTypes from '../configurations/utils/columnTypeConstants';
-
-/* import {
- *   createConfiguration as rowCreateConfiguration,
- *   parseConfiguration as rowParseConfiguration,
- *   createEmptyConfiguration as rowCreateEmptyConfiguration
- * } from './adapters/row'; */
-
 import {
   createConfiguration as credentialsCreateConfiguration,
-  parseConfiguration as credentialsParseConfiguration,
-  isComplete as credentialsIsComplete
+  isComplete as credentialsIsComplete,
+  parseConfiguration as credentialsParseConfiguration
 } from './adapters/credentials';
-
-// import ConfigurationForm from './react/components/Configuration';
+import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import React from 'react';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
+
+import {
+  createConfiguration as rowCreateConfiguration,
+  parseConfiguration as rowParseConfiguration
+} from './adapters/row';
 
 const routeSettings = {
   componentId: 'keboola.app-snowflake-dwh-manager',
@@ -27,7 +24,7 @@ const routeSettings = {
         render: CollapsibleSection({
           title: 'Credentials',
           contentComponent: CredentialsForm,
-          options: { includeSaveButtons: true }
+          options: {includeSaveButtons: true}
         }),
         onSave: credentialsCreateConfiguration,
         onLoad: credentialsParseConfiguration,
@@ -37,12 +34,11 @@ const routeSettings = {
   },
   row: {
     sections: [
-      /* {
-       *   render: ConfigurationForm,
-       *   onSave: rowCreateConfiguration,
-       *   onCreate: rowCreateEmptyConfiguration,
-       *   onLoad: rowParseConfiguration
-       * } */
+      {
+        render: ConfigurationForm,
+        onSave: rowCreateConfiguration,
+        onLoad: rowParseConfiguration
+      }
     ],
     columns: [
       {
@@ -53,10 +49,46 @@ const routeSettings = {
         }
       },
       {
+        name: 'Entity',
+        type: columnTypes.VALUE,
+        value: function(row) {
+          let rowEntityType = 'Unknown';
+          if (row.getIn(['configuration', 'parameters', 'user'], false)) {
+            rowEntityType = 'User';
+          }
+          if (row.getIn(['configuration', 'parameters', 'business_schema'], false)) {
+            rowEntityType = 'Schema';
+          }
+          // let rowEntityName = 'Unknown';
+          let rowEntityName = row.get('name');
+          if (row.getIn(['configuration', 'parameters', 'user'], false)) {
+            rowEntityName = row.getIn(['configuration', 'parameters', 'user', 'email']);
+          }
+          if (row.getIn(['configuration', 'parameters', 'business_schema'], false)) {
+            rowEntityName = row.getIn(['configuration', 'parameters', 'business_schema', 'schema_name']);
+          }
+          let linkedSchemas = null;
+          if (row.getIn(['configuration', 'parameters', 'user'], false)) {
+            let schemas = row.getIn(['configuration', 'parameters', 'user', 'business_schemas'], []);
+            if (schemas) {
+              linkedSchemas = (
+                <small><br />
+                  Linked to:
+                  <ul>
+                    {schemas.map(e => <li>{e}</li>)}
+                  </ul>
+                </small>);
+            }
+          }
+
+          return <div>{rowEntityName} <small>({rowEntityType})</small> {linkedSchemas} </div>;
+        }
+      },
+      {
         name: 'Description',
         type: columnTypes.VALUE,
         value: function(row) {
-          return <small>{row.get('description') !== '' ? row.get('description') : 'No description'}</small>;
+          return row.get('description') !== '' ? row.get('description') : 'No description';
         }
       }
     ]

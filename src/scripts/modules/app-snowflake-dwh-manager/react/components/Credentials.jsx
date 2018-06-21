@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import { Input } from './../../../../react/common/KbcBootstrap';
+import {Input} from './../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -28,9 +28,10 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.host}
           onChange={e => onChange({host: e.target.value})}
-          placeholder="https://example.com"
+          placeholder="https://example.snowflakecomputing.com"
           disabled={this.props.disabled}
-          help="help blablabla"/>
+          help="URL of your Snowflake server"
+        />
         <Input
           type="text"
           label="User"
@@ -38,9 +39,8 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.user}
           onChange={e => onChange({user: e.target.value})}
-          placeholder=""
           disabled={this.props.disabled}
-          help="help blablabla"/>
+        />
         <Input
           type="password"
           label="Password"
@@ -48,9 +48,8 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.password}
           onChange={e => onChange({password: e.target.value})}
-          placeholder=""
           disabled={this.props.disabled}
-          help="help blablabla"/>
+        />
         <Input
           type="text"
           label="Database"
@@ -58,9 +57,9 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.database}
           onChange={e => onChange({database: e.target.value})}
-          placeholder="tba"
           disabled={this.props.disabled}
-          help="help blablabla"/>
+          help="You need to have privileges to create new schemas in this database"
+        />
         <Input
           type="text"
           label="Warehouse"
@@ -68,9 +67,8 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.warehouse}
           onChange={e => onChange({warehouse: e.target.value})}
-          placeholder="tba"
           disabled={this.props.disabled}
-          help="help blablabla"/>
+        />
       </div>
     );
   }
