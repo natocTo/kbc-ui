@@ -1,6 +1,6 @@
 React = require 'react'
 DurationWithIcon = React.createFactory(require '../../../../../react/common/DurationWithIcon')
-FinishedWithIcon = React.createFactory(require '../../../../../react/common/FinishedWithIcon')
+FinishedWithIcon = React.createFactory(require('../../../../../react/common/FinishedWithIcon').default)
 JobStatusCircle = React.createFactory(require '../../../../../react/common/JobStatusCircle')
 Link = React.createFactory(require('react-router').Link)
 OrchestrationActiveButton = React.createFactory(require '../../components/OrchestrationActiveButton')

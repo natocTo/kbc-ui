@@ -1,5 +1,3 @@
-
-
 module.exports =
   ComponentIcon: require('./ComponentIcon').default
   ComponentName: require('./ComponentName').default
@@ -8,7 +6,7 @@ module.exports =
   DurationWithIcon: require './DurationWithIcon'
   Finished: require('./Finished').default
   ValidUntil: require('./ValidUntil').default
-  FinishedWithIcon: require './FinishedWithIcon'
+  FinishedWithIcon: require('./FinishedWithIcon').default
   JobStatusCircle: require './JobStatusCircle'
   JobStatusLabel: require('./JobStatusLabel').default
   SearchRow: require('./SearchRow').default
