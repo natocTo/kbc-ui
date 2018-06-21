@@ -29,9 +29,6 @@ import IndexSections from '../components/IndexSections';
 // utils
 import sections from '../../utils/sections';
 
-// styles
-import '../../styles.less';
-
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 

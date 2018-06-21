@@ -11,8 +11,6 @@ Button = React.createFactory(require('react-bootstrap').Button)
 
 {div, form, p} = React.DOM
 
-require './AddConfigurationForm.less'
-
 module.exports = React.createClass
   displayName: 'ManualConfigurationForm'
   propTypes:

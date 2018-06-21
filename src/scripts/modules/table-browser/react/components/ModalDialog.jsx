@@ -11,7 +11,6 @@ import immutableMixin from 'react-immutable-render-mixin';
 
 import {Modal, Tabs, Tab} from 'react-bootstrap';
 import {RefreshIcon} from '@keboola/indigo-ui';
-import './ModalDialog.less';
 
 
 export default React.createClass({
