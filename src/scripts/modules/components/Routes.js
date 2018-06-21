@@ -15,6 +15,7 @@ import csvImportRoutes from '../csv-import/routes';
 import exS3Routes from '../ex-s3/routes';
 import exAwsS3Routes from '../ex-aws-s3/routes';
 import exHttpRoutes from '../ex-http/routes';
+import appSnowflakeDwhManagerRoutes from '../app-snowflake-dwh-manager/routes';
 import goodDataWriterRoutes from '../gooddata-writer/routes';
 import dropoxExtractorRoutes from '../ex-dropbox/routes';
 import dropoxExtractorRoutesV2 from '../ex-dropbox-v2/routes';
@@ -63,6 +64,7 @@ module.exports = {
       createComponentRoute('geneea-nlp-analysis', [geneeaGeneralRoutes]),
       createComponentRoute('geneea.nlp-analysis-v2', [geneeaV2Routes]),
       createComponentRoute('custom-science', [customScienceRoutes]),
+      createComponentRoute('keboola.app-snowflake-dwh-manager', [appSnowflakeDwhManagerRoutes]),
       createGenericDetailRoute('application')
     ]
   },
