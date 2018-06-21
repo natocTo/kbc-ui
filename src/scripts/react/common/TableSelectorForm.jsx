@@ -4,9 +4,6 @@
 import React from 'react';
 import TableSelector from './TableSelector';
 
-// css
-require('./TableSelectorForm.less');
-
 export default React.createClass({
 
   propTypes: {

@@ -8,9 +8,6 @@ import TableSelectorInput from './TableSelectorInput';
 import StorageTablesStore from '../../modules/components/stores/StorageTablesStore';
 import Tooltip from './Tooltip';
 
-// css
-require('./TableSelector.less');
-
 export default React.createClass({
 
   propTypes: {
