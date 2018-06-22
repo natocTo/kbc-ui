@@ -3,7 +3,8 @@ exports[`<SidebarNavigation /> should render standard navigation, without route 
   <ul
     className="kbc-nav-sidebar nav nav-sidebar">
     <li
-      className="">
+      className=""
+      key="home">
       <a
         href="/home">
         <span
@@ -14,7 +15,8 @@ exports[`<SidebarNavigation /> should render standard navigation, without route 
       </a>
     </li>
     <li
-      className="active">
+      className="active"
+      key="extractors">
       <a
         href="/extractors">
         <span
@@ -25,7 +27,8 @@ exports[`<SidebarNavigation /> should render standard navigation, without route 
       </a>
     </li>
     <li
-      className="">
+      className=""
+      key="transformations">
       <a
         href="/transformations">
         <span
@@ -36,7 +39,8 @@ exports[`<SidebarNavigation /> should render standard navigation, without route 
       </a>
     </li>
     <li
-      className="">
+      className=""
+      key="writers">
       <a
         href="/writers">
         <span
@@ -47,7 +51,8 @@ exports[`<SidebarNavigation /> should render standard navigation, without route 
       </a>
     </li>
     <li
-      className="">
+      className=""
+      key="orchestrations">
       <a
         href="/orchestrations">
         <span
@@ -58,7 +63,8 @@ exports[`<SidebarNavigation /> should render standard navigation, without route 
       </a>
     </li>
     <li
-      className="">
+      className=""
+      key="storage">
       <a
         href="/storage">
         <span
@@ -69,7 +75,8 @@ exports[`<SidebarNavigation /> should render standard navigation, without route 
       </a>
     </li>
     <li
-      className="">
+      className=""
+      key="jobs">
       <a
         href="/jobs">
         <span
@@ -80,7 +87,8 @@ exports[`<SidebarNavigation /> should render standard navigation, without route 
       </a>
     </li>
     <li
-      className="">
+      className=""
+      key="applications">
       <a
         href="/applications">
         <span
