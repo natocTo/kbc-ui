@@ -9,17 +9,6 @@ exports[`<FinishedWithIcon /> should render Invalid data title with empty endTim
 </span>
 `;
 
-exports[`<FinishedWithIcon /> should render with null endtTime 1`] = `
-<span
-  title="Invalid date">
-  <i
-    className="fa fa-calendar" />
-   
-  <Finished
-    endTime="" />
-</span>
-`;
-
 exports[`<FinishedWithIcon /> should render with some endTime 1`] = `
 <span
   title="2018-06-21 00:00:00">
