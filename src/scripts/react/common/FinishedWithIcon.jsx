@@ -3,11 +3,11 @@ import Finished from './Finished';
 import date from '../../utils/date';
 
 
-const FinishedWithIcon = (props) => (
-  <span title={date.format(props.endTime)}>
+const FinishedWithIcon = ({endTime}) => (
+  <span title={date.format(endTime)}>
     <i className="fa fa-calendar" />
     {' '}
-    <Finished endTime={props.endTime} />
+    <Finished endTime={endTime} />
   </span>
 );
 
