@@ -1,4 +1,7 @@
-import { shallow, render, mount } from 'enzyme';
+import { configure, shallow, render, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-14';
+
+configure({ adapter: new Adapter() });
 
 // Jest, Enzyme, Snapshots
 global.shallow = shallow;
