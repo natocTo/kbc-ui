@@ -3,8 +3,6 @@ import NewTransformationBucketButton from './NewTransformationBucketButton';
 import TransformationsEmptyImage from '../../../../../images/transformations-empty.png';
 import ApplicationStore from '../../../../stores/ApplicationStore';
 
-require('./EmptyStateIndex.less');
-
 export default React.createClass({
   imageUrl(image) {
     return ApplicationStore.getScriptsBasePath() + image;

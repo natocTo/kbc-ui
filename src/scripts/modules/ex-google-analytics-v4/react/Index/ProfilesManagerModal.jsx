@@ -8,8 +8,6 @@ import ProfilesPicker from '../../../google-utils/react/ProfilesPicker';
 import ApplicationActionCreators from '../../../../actions/ApplicationActionCreators';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 
-import './ProfilesManagerModal.less';
-
 export default React.createClass({
 
   propTypes: {

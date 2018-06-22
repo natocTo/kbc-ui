@@ -7,8 +7,6 @@ Link = React.createFactory(require('react-router').Link)
 
 {small, div, span} = React.DOM
 
-require('./TestCredentialsButtonGroup.less')
-
 module.exports = React.createClass
   displayName: 'TestCredentialsButtonGroup'
   propTypes:

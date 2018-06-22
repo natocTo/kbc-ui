@@ -2,7 +2,6 @@ import React from 'react';
 import NewTransformation from '../modals/NewTransformation';
 import TransformationBucketEmptyImage from '../../../../../images/transformation-bucket-empty.png';
 import ApplicationStore from '../../../../stores/ApplicationStore';
-require('./EmptyStateBucket.less');
 
 export default React.createClass({
   propTypes: {

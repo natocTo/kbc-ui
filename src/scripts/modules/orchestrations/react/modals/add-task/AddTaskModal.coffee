@@ -18,8 +18,6 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 OrchestrationStore = require '../../../stores/OrchestrationsStore'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
-require './AddTaskModal.less'
-
 SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
 fuzzy = require 'fuzzy'
 immutableMixin = require 'react-immutable-render-mixin'

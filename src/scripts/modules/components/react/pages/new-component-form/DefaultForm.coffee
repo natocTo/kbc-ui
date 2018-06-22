@@ -16,9 +16,6 @@ Button = React.createFactory(require('react-bootstrap').Button)
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 EmptyState = require('../../../react/components/ComponentEmptyState').default
 
-require './DefaultForm.less'
-
-
 module.exports = React.createClass
   displayName: 'NewComponentDefaultForm'
   propTypes:

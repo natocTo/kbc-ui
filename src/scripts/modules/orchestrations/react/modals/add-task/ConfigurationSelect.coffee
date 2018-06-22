@@ -4,8 +4,6 @@ ComponentName = React.createFactory(require('../../../../../react/common/Compone
 
 {div, h2, a, i, span} = React.DOM
 
-require './ConfigurationSelect.less'
-
 ConfigurationSelect = React.createClass
   displayName: 'ConfigurationSelect'
   propTypes:
