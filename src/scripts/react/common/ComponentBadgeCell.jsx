@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 
+import './Badges.less';
+
 export default React.createClass({
   propTypes: {
     badges: PropTypes.array.isRequired,
