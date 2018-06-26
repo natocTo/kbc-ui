@@ -12,6 +12,8 @@ import dimensionsAdapter from './adapters/dimensions';
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
 import ToggleProjectAccess from './react/components/ToggleProjectAccess';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
+import {parseParameters} from './helpers/rowParametersTable';
+
 
 import {Map} from 'immutable';
 import React from 'react';
@@ -33,6 +35,7 @@ const routeSettings = {
     ]
   },
   row: {
+    parseTableId: (row) => parseParameters(row).get('tableId'),
     hasState: false,
     sections: [
       {

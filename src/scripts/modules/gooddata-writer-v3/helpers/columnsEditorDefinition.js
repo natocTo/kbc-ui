@@ -9,7 +9,6 @@ import makeColumnDefinition from './makeColumnDefinition';
 export default {
   isColumnValidFn: (column) => !makeColumnDefinition(column).getInvalidReason(),
   initColumnFn: columnName => Map(makeColumnDefinition({id: columnName}).initColumn()),
-  parseTableId: (configuration) => parseParameters(configuration).get('tableId'),
   matchColumnKey: 'id',
   isColumnIgnored: column => column.get('type') === 'IGNORE',
   onSaveColumns: (tableId, columnsList) => {

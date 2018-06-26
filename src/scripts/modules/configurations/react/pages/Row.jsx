@@ -35,22 +35,26 @@ export default React.createClass({
     const rowId = RoutesStore.getCurrentRouteParam('row');
     const componentId = settings.get('componentId');
     const row = Store.get(componentId, configurationId, rowId);
+    const rowConfiguration = Store.getConfiguration(componentId, configurationId, rowId);
     const isJsonConfigurationValid = Store.isEditingJsonConfigurationValid(componentId, configurationId, rowId);
     const createBySectionsFn = sections.makeCreateFn(
       settings.getIn(['row', 'sections'])
     );
     const conformFn = settings.getIn(['row', 'onConform'], (config) => config);
-    const context = Immutable.fromJS({
-      rawConfiguration: ConfigurationsStore.getRawConfiguration(componentId, configurationId),
-      allTables: TablesStore.getAll()
-    });
+    let context = ConfigurationsStore.getConfigurationContext(componentId, configurationId);
+    const parseTableIdFn = settings.getIn(['row', 'parseTableId']);
+    if (parseTableIdFn) {
+      const tableId = parseTableIdFn(rowConfiguration);
+      const table = TablesStore.getAll().get(tableId);
+      context = context.set('table', table);
+    }
     const parseBySectionsFn = sections.makeParseFn(
       settings.getIn(['row', 'sections']),
       conformFn,
       context
     );
     const storedConfigurationSections = parseBySectionsFn(
-      Store.getConfiguration(componentId, configurationId, rowId)
+      rowConfiguration
     );
 
     return {

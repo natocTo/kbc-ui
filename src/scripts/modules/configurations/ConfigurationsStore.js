@@ -23,8 +23,14 @@ let ConfigurationsStore = StoreUtils.createStore({
     return _store.getIn(['configurations', componentId, configurationId, 'configuration'], Map());
   },
 
-  getRawConfiguration: function(componentId, configurationId) {
-    return _store.getIn(['configurations', componentId, configurationId], Map());
+  getConfigurationContext: function(componentId, configurationId) {
+    const rawConfig = _store.getIn(['configurations', componentId, configurationId], Map());
+    const rows = rawConfig.get('rows', Map()).map((row) => row.get('configuration'));
+    const configuration = rawConfig.get('configuration');
+    return Immutable.fromJS({
+      configuration,
+      rows
+    });
   },
 
   isEditingJsonConfigurationValid: function(componentId, configId) {

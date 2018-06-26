@@ -6,7 +6,6 @@ export default (params) => {
     onLoadColumns, // (configuration) => columnsArray. Parse columns from configuration object and return array of columns objects
     onSaveColumns, // (tableId, columnsList) => configuration_object. Return configuration object to save from given tableId and columnsList
     initColumnFn, // (columnName) => columnObject. Initial value of column given by its name
-    parseTableId, // (configuration) => tableId. Parse tableId from configuration
     matchColumnKey = 'id', // used for matching columns objects with storage table columns by its name (columnName, columnObject) => true/false
     columnsMappings = [], // array of object containing render and title property
     isComplete = () => true, // is representation complete?
@@ -39,10 +38,9 @@ export default (params) => {
   return fromJS({
     onSave,
     onLoad(configuration, sectionContext) {
-      const tables = sectionContext.get('allTables');
       const configColumns = onLoadColumns(configuration);
-      const tableId = parseTableId(configuration);
-      const storageTable = tables.get(tableId);
+      const storageTable = sectionContext.get('table');
+      const tableId = storageTable.get('id');
       const storageTableColumns = storageTable.get('columns');
       const deletedColumns = configColumns
         .filter(configColumn =>
@@ -54,7 +52,7 @@ export default (params) => {
           null
         ) || initColumnFn(tableColumn)
       );
-      const columnContext = prepareColumnContext(storageTable, sectionContext, columnsList);
+      const columnContext = prepareColumnContext(sectionContext, columnsList);
 
       return fromJS({columns: columnsList, tableId: tableId, columnsMappings, context: columnContext, isColumnValidFn, initHeaderStateFn});
     },

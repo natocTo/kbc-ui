@@ -162,9 +162,9 @@ export function initHeaderState(columns) {
 
 const REFERENCABLE_COLUMN_TYPES = [Types.CONNECTION_POINT, Types.ATTRIBUTE];
 
-export function prepareColumnContext(table, sectionContext, allColumns) {
+export function prepareColumnContext(sectionContext, allColumns) {
   const configRows = sectionContext.getIn(['rawConfiguration', 'rows'], List());
-  const tableId = table.get('id');
+  const tableId = sectionContext.getIn(['table', 'id']);
   const dimensionsPath = ['rawConfiguration', 'configuration', 'parameters', 'dimensions'];
   const tablesPath = ['configuration', 'parameters', 'tables'];
 
