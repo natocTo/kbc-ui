@@ -1,47 +1,16 @@
 @libsPath: "~";
-
 // imports Indigo-UI library
 @import '~@keboola/indigo-ui/lib/less/indigo';
 
-
 // imports app specific styles
+// here is the place form KBC theme (ideally by replacing less variables)
 @import './Guide';
 @import './Badges';
 
 // imports 3rd party themes
-@import (inline) '~codemirror/lib/codemirror.css';
-@import (inline) '~codemirror/theme/solarized.css';
-@import (inline) '~codemirror/addon/lint/lint.css';
-@import './react-select';
-@import './react-date-picker';
-@import './Autosuggest';
-@import './rc-switch';
-
-pre.CodeMirror-placeholder {
-  color: #717e9a;
-}
-
-.kbc-main-content .cm-s-solarized.CodeMirror {
-  box-shadow: none;
-  -webkit-box-shadow: none;
-}
-
-.kbc-main-content .CodeMirror {
-  height: auto;
-  background: none;
-  .CodeMirror-cursors {
-
-  }
-}
-
-.kbc-main-content .edit .CodeMirror {
-  min-height: 100px;
-}
-
-.kbc-main-content .static .CodeMirror-cursor {
-  display: none;
-}
-
-.kbc-main-content .edit .CodeMirror .CodeMirror-scroll {
-  min-height: 100px;
-}
+// lets reuse KBC theme variables
+@import 'theme-kbc-codemirror';
+@import 'theme-kbc-react-select';
+@import 'theme-kbc-react-date-picker';
+@import 'theme-kbc-autosuggest';
+@import 'theme-kbc-rc-switch';

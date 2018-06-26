@@ -1,0 +1,32 @@
+@import (inline) '~codemirror/lib/codemirror.css';
+@import (inline) '~codemirror/theme/solarized.css';
+@import (inline) '~codemirror/addon/lint/lint.css';
+
+pre.CodeMirror-placeholder {
+  color: #717e9a;
+}
+
+.kbc-main-content .cm-s-solarized.CodeMirror {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.kbc-main-content .CodeMirror {
+  height: auto;
+  background: none;
+  .CodeMirror-cursors {
+
+  }
+}
+
+.kbc-main-content .edit .CodeMirror {
+  min-height: 100px;
+}
+
+.kbc-main-content .static .CodeMirror-cursor {
+  display: none;
+}
+
+.kbc-main-content .edit .CodeMirror .CodeMirror-scroll {
+  min-height: 100px;
+}
