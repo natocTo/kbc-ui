@@ -234,11 +234,9 @@ export default React.createClass({
       <AlertBlock type="warning" title="This component has been deprecated">
         <Row>
           <Col md={9}>
-          <span>
             <p>
               {this.getInfo()}
             </p>
-          </span>
             {this.renderMigrationButton()}
           </Col>
         </Row>
