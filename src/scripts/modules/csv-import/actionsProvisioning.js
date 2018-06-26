@@ -203,9 +203,7 @@ export default function(configId) {
               if (store.settings.get('delimiter')) {
                 createTableParams.delimiter = store.settings.get('delimiter');
               }
-              if (store.settings.get('enclosure')) {
-                createTableParams.enclosure = store.settings.get('enclosure');
-              }
+              createTableParams.enclosure = store.settings.get('enclosure');
 
               storageApiActions.createTable(bucketId, createTableParams)
               .then(function() {
@@ -244,7 +242,7 @@ export default function(configId) {
 
               store.settings.get('incremental') && (loadTableParams.incremental = store.settings.get('incremental'));
               store.settings.get('delimiter') && (loadTableParams.delimiter = store.settings.get('delimiter'));
-              store.settings.get('enclosure') && (loadTableParams.enclosure = store.settings.get('enclosure'));
+              loadTableParams.enclosure = store.settings.get('enclosure');
 
               updateLocalState(['uploadingMessage'], 'Loading into table ' + tableId);
               updateLocalState(['uploadingProgress'], 90);
