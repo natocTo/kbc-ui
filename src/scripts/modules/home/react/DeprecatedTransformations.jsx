@@ -29,10 +29,9 @@ export default React.createClass({
     };
     var getBucketList = function(bucket, indexBucket) {
       return (
-        <div>
+        <div key={indexBucket}>
           <h4>
-            <span className={'kbc-transformation-icon'}/>
-            {React.createElement(Icon.Transformation, {className: 'icon-category'})}
+            <Icon.Transformation className="icon-category"/>
             {TransformationBucketsStore.get(indexBucket).get('name', indexBucket)}
           </h4>
           <ul className="list-unstyled">
