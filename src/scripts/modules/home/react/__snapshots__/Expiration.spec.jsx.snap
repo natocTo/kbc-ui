@@ -2,14 +2,19 @@ exports[`<Expiration /> should render expiration warning when expiration is clos
 <AlertBlock
   title="This project will expire in 1 day"
   type="warning">
-  <p>
-    Please 
-    <a
-      onClick={[Function]}>
-      contact support
-    </a>
-     for project plan upgrade.
-  </p>
+  <ul
+    className="list-unstyled list-no-padding">
+    <li>
+      <p>
+        Please 
+        <a
+          onClick={[Function]}>
+          contact support
+        </a>
+         for project plan upgrade.
+      </p>
+    </li>
+  </ul>
 </AlertBlock>
 `;
 
