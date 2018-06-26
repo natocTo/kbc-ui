@@ -2,7 +2,7 @@ import {Map, fromJS} from 'immutable';
 import {parseParameters, createConfigParameters} from './rowParametersTable';
 import PreferencesHeader from '../react/components/PreferencesHeader';
 import PreferencesColumn from '../react/components/PreferencesColumn';
-import {prepareColumnContext, initHeaderState} from './makeColumnDefinition';
+import {prepareColumnContext, getInitialShowAdvanced} from './makeColumnDefinition';
 import makeColumnDefinition from './makeColumnDefinition';
 
 
@@ -23,7 +23,7 @@ export default {
       .valueSeq().toList();
   },
   prepareColumnContext: prepareColumnContext,
-  initHeaderStateFn: initHeaderState,
+  getInitialShowAdvanced: getInitialShowAdvanced,
   columnsMappings: [
     {
       title: PreferencesHeader,

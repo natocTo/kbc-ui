@@ -9,7 +9,7 @@ export default React.createClass({
     disabled: PropTypes.bool.isRequired,
     column: PropTypes.object.isRequired,
     context: PropTypes.object.isRequired,
-    headerState: PropTypes.object
+    showAdvanced: PropTypes.bool
   },
 
   render() {
@@ -62,7 +62,7 @@ export default React.createClass({
   },
 
   renderIdentifiers(fields) {
-    if (this.props.headerState.showIdentifiers) {
+    if (this.props.showAdvanced) {
       return (
         <span>
           {fields.identifier.show && this.renderInputGroup('Identifier', 'identifier')}

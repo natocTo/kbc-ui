@@ -151,13 +151,12 @@ function deleteHiddenFields(fields, column) {
   }, column);
 }
 
-export function initHeaderState(columns) {
-  const showIdentifiers = columns.find(column => {
+export function getInitialShowAdvanced(columns) {
+  return !!columns.find(column => {
     return !!(column.identifier ||
            column.identifierLabel ||
            column.identifierSortLabel);
   });
-  return {showIdentifiers};
 }
 
 const REFERENCABLE_COLUMN_TYPES = [Types.CONNECTION_POINT, Types.ATTRIBUTE];

@@ -12,7 +12,7 @@ export default (params) => {
     isColumnIgnored = column => column.get('type') === 'IGNORE', // if ignored then won't be saved to input mapping columns property of configuration object
     prepareColumnContext = () => null, // (table, sectionContext) => result of this fn will be injected as 'context' prop to every column render component
     isColumnValidFn = () => true, // (column) => true/false
-    initHeaderStateFn = () => null // (columns) => headerState is passed to headerCell of column mappins
+    getInitialShowAdvanced = () => false // (columns) => get initial showadvanced value used in column mappings and header
   } = params;
 
   const onSave = function(localState) {
@@ -54,7 +54,7 @@ export default (params) => {
       );
       const columnContext = prepareColumnContext(sectionContext, columnsList);
 
-      return fromJS({columns: columnsList, tableId: tableId, columnsMappings, context: columnContext, isColumnValidFn, initHeaderStateFn});
+      return fromJS({columns: columnsList, tableId: tableId, columnsMappings, context: columnContext, isColumnValidFn, getInitialShowAdvanced});
     },
     onCreate(name) {
       return onSave(fromJS({'columns': [], columnsMappings, tableId: name}));

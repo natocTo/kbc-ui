@@ -10,7 +10,7 @@ export default React.createClass({
       columns: PropTypes.any,
       columnsMappings: PropTypes.any,
       context: PropTypes.any,
-      initHeaderStateFn: PropTypes.func,
+      getInitialShowAdvanced: PropTypes.func,
       isColumnValidFn: PropTypes.func
     }),
     onChange: PropTypes.func.isRequired,
@@ -26,7 +26,7 @@ export default React.createClass({
       loadingPreview: false,
       dataPreview: null,
       dataPreviewError: null,
-      headerState: this.props.value.initHeaderStateFn(this.props.value.columns)
+      showAdvanced: this.props.value.getInitialShowAdvanced(this.props.value.columns)
     };
   },
 
@@ -68,8 +68,8 @@ export default React.createClass({
     const Element = element;
     return (
       <Element
-        headerState={this.state.headerState}
-        onChange={(newState) => this.setState({headerState: newState})} />
+        showAdvanced={this.state.showAdvanced}
+        onChangeShowAdvanced={(newValue) => this.setState({showAdvanced: newValue})} />
     );
   },
 
@@ -105,7 +105,7 @@ export default React.createClass({
                 <mapping.render
                   context={this.props.value.context}
                   disabled={this.props.disabled}
-                  headerState={this.state.headerState}
+                  showAdvanced={this.state.showAdvanced}
                   column={column} onChange={this.onChangeColumn} />
               </td>
             ))}
