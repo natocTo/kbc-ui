@@ -162,13 +162,12 @@ export function getInitialShowAdvanced(columns) {
 const REFERENCABLE_COLUMN_TYPES = [Types.CONNECTION_POINT, Types.ATTRIBUTE];
 
 export function prepareColumnContext(sectionContext, allColumns) {
-  const configRows = sectionContext.getIn(['rawConfiguration', 'rows'], List());
+  const configRows = sectionContext.get('rows', List());
   const tableId = sectionContext.getIn(['table', 'id']);
-  const dimensionsPath = ['rawConfiguration', 'configuration', 'parameters', 'dimensions'];
-  const tablesPath = ['configuration', 'parameters', 'tables'];
+  const dimensionsPath = ['configuration', 'parameters', 'dimensions'];
 
   const referencableTables = configRows.reduce((result, configRow) => {
-    const configRowTables =  configRow.getIn(tablesPath);
+    const configRowTables =  configRow.getIn(['parameters', 'tables']);
     // ignore current table config row
     if (configRowTables.has(tableId)) {
       return result;
