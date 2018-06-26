@@ -38,12 +38,10 @@ export default React.createClass({
       return component.get('type');
     });
     let getComponentList = function(components, type) {
-      let ComponentIcon = Icon[StringUtils.capitalize(type)];
-
       return (
         <div key={type}>
           <h4>
-            <ComponentIcon className="icon-category"/>
+            {React.createElement(Icon[StringUtils.capitalize(type)], {className: 'icon-category'})}
             {StringUtils.capitalize(type)}s
           </h4>
           <ul className="list-unstyled">
