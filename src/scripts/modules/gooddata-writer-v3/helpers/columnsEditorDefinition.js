@@ -2,13 +2,13 @@ import {Map, fromJS} from 'immutable';
 import {parseParameters, createConfigParameters} from './rowParametersTable';
 import PreferencesHeader from '../react/components/PreferencesHeader';
 import PreferencesColumn from '../react/components/PreferencesColumn';
-import {prepareColumnContext, initHeaderState} from '../helpers/ColumnDefinition';
-import ColumnDefinition from './ColumnDefinition';
+import {prepareColumnContext, initHeaderState} from './makeColumnDefinition';
+import makeColumnDefinition from './makeColumnDefinition';
 
 
 export default {
-  isColumnValidFn: (column) => !ColumnDefinition(column).getInvalidReason(),
-  initColumnFn: columnName => Map(ColumnDefinition({id: columnName}).initColumn()),
+  isColumnValidFn: (column) => !makeColumnDefinition(column).getInvalidReason(),
+  initColumnFn: columnName => Map(makeColumnDefinition({id: columnName}).initColumn()),
   parseTableId: (configuration) => parseParameters(configuration).get('tableId'),
   matchColumnKey: 'id',
   isColumnIgnored: column => column.get('type') === 'IGNORE',

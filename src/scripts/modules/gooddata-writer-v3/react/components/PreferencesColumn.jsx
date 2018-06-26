@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {FormControl, Form, FormGroup, Col, ControlLabel} from 'react-bootstrap';
-import ColumnDefinition, {DataTypes, Types} from '../../helpers/ColumnDefinition';
+import makeColumnDefinition, {DataTypes, Types} from '../../helpers/makeColumnDefinition';
 // import ReactSelect from 'react-select';
 
 export default React.createClass({
@@ -14,7 +14,7 @@ export default React.createClass({
 
   render() {
     const {column} = this.props;
-    const {fields} = ColumnDefinition(column);
+    const {fields} = makeColumnDefinition(column);
 
     return (
       <Form horizontal>
@@ -140,7 +140,7 @@ export default React.createClass({
   },
 
   onChangeColumn(property, value) {
-    const newColumn = ColumnDefinition(this.props.column)
+    const newColumn = makeColumnDefinition(this.props.column)
       .updateColumn(property, value)
       .column;
     this.props.onChange(newColumn);
