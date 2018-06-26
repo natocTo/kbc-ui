@@ -19,8 +19,7 @@ classnames = require('classnames')
 
 {div, a, i, p} = React.DOM
 
-require '../../../styles/app.less'
-require '../../modules/guide-mode/react/Guide.less'
+require '../../../styles/kbc.less'
 
 App = React.createClass
   displayName: 'App'

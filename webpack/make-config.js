@@ -47,7 +47,7 @@ module.exports = function (options) {
           bundle: [
             'webpack-dev-server/client?http://0.0.0.0:3000',
             'webpack/hot/only-dev-server',
-            './src/styles/app.less',
+            './src/styles/kbc.less',
             './node_modules/intl/Intl.js',
             './node_modules/intl/locale-data/jsonp/en.js',
             options.entry
@@ -55,7 +55,7 @@ module.exports = function (options) {
           parts: [
             'webpack-dev-server/client?http://0.0.0.0:3000',
             'webpack/hot/only-dev-server',
-            './src/styles/app.less',
+            './src/styles/kbc.less',
             './src/scripts/parts'
           ]
         };
