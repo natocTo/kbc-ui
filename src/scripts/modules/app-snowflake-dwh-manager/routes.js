@@ -33,6 +33,10 @@ const routeSettings = {
     ]
   },
   row: {
+    name: {
+      singular: 'Entity',
+      plural: 'Entities'
+    },
     sections: [
       {
         render: ConfigurationForm,
