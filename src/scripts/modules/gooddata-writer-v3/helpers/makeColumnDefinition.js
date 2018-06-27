@@ -39,6 +39,7 @@ function checkDataTypeSize(dataType, dataTypeSize) {
   if (dataType === DataTypes.DECIMAL && !/^\d+,\d+$/.test(dataTypeSize)) {
     return 'Ivalid decimal format' + dataTypeSize;
   }
+  return false;
 }
 
 function prepareFields(column) {
