@@ -76,13 +76,11 @@ const routeSettings = {
           let linkedSchemas = null;
           if (row.getIn(['configuration', 'parameters', 'user'], false)) {
             let schemas = row.getIn(['configuration', 'parameters', 'user', 'business_schemas'], []);
-            if (schemas) {
+            if (schemas.size > 0) {
               linkedSchemas = (
                 <small><br />
-                  Linked to:
-                  <ul>
-                    {schemas.map(e => <li>{e}</li>)}
-                  </ul>
+                  {'Granted access to: '}
+                  {schemas.join(', ')}
                 </small>);
             }
           }
