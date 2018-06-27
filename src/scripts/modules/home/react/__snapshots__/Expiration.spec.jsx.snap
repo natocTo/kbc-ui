@@ -13,4 +13,4 @@ exports[`<Expiration /> should render expiration warning when expiration is clos
 </AlertBlock>
 `;
 
-exports[`<Expiration /> should render nothing when expiration is in long time 1`] = `null`;
+exports[`<Expiration /> should render nothing when expiration is in long time 1`] = `""`;

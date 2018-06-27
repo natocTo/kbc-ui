@@ -3,7 +3,8 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
   <ul
     className="kbc-nav-sidebar nav nav-sidebar">
     <li
-      className="">
+      className=""
+      key="home">
       <Component
         to="home">
         <a
@@ -17,7 +18,8 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
       </Component>
     </li>
     <li
-      className="active">
+      className="active"
+      key="extractors">
       <Component
         to="extractors">
         <a
@@ -31,7 +33,8 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
       </Component>
     </li>
     <li
-      className="">
+      className=""
+      key="transformations">
       <Component
         to="transformations">
         <a
@@ -45,7 +48,8 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
       </Component>
     </li>
     <li
-      className="">
+      className=""
+      key="writers">
       <Component
         to="writers">
         <a
@@ -59,7 +63,8 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
       </Component>
     </li>
     <li
-      className="">
+      className=""
+      key="orchestrations">
       <Component
         to="orchestrations">
         <a
@@ -73,7 +78,8 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
       </Component>
     </li>
     <li
-      className="">
+      className=""
+      key="storage">
       <Component
         to="storage">
         <a
@@ -87,7 +93,8 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
       </Component>
     </li>
     <li
-      className="">
+      className=""
+      key="jobs">
       <Component
         to="jobs">
         <a
@@ -101,7 +108,8 @@ exports[`<SidebarNavigation /> should render standard navigation, with route 1`]
       </Component>
     </li>
     <li
-      className="">
+      className=""
+      key="applications">
       <Component
         to="applications">
         <a

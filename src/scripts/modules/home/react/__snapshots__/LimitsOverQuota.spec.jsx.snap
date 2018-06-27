@@ -4,7 +4,8 @@ exports[`<LimitsOverQuota /> should render limits 1`] = `
   type="danger">
   <ul
     className="list-unstyled list-no-padding">
-    <li>
+    <li
+      key="0">
       <Link
         activeClassName="active"
         className=""
@@ -18,7 +19,8 @@ exports[`<LimitsOverQuota /> should render limits 1`] = `
         (12.88 GB of 107.37 GB)
       </Link>
     </li>
-    <li>
+    <li
+      key="1">
       <Link
         activeClassName="active"
         className=""
@@ -36,7 +38,7 @@ exports[`<LimitsOverQuota /> should render limits 1`] = `
 </AlertBlock>
 `;
 
-exports[`<LimitsOverQuota /> should render nothing for no limits 1`] = `null`;
+exports[`<LimitsOverQuota /> should render nothing for no limits 1`] = `""`;
 
 exports[`<LimitsOverQuota /> should render one limit 1`] = `
 <AlertBlock
@@ -44,7 +46,8 @@ exports[`<LimitsOverQuota /> should render one limit 1`] = `
   type="danger">
   <ul
     className="list-unstyled list-no-padding">
-    <li>
+    <li
+      key="0">
       <Link
         activeClassName="active"
         className=""
