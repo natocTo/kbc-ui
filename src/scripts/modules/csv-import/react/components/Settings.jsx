@@ -177,7 +177,7 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={this.props.settings.get('enclosure')}
           onChange={this.onChangeEnclosure}
-          help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
+          help="Field enclosure used in CSV file."
           disabled={this.props.disabled}
           />
       </div>

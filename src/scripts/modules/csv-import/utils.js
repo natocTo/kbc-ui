@@ -28,7 +28,7 @@ const createConfiguration = function(settings, configId) {
     config = config.set('delimiter', ',');
   }
 
-  if (settings.get('enclosure') && settings.get('enclosure') !== '') {
+  if (settings.has('enclosure')) {
     config = config.set('enclosure', settings.get('enclosure'));
   } else {
     config = config.set('enclosure', '"');
