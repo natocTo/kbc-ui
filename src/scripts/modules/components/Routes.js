@@ -35,6 +35,7 @@ import geneeaV2Routes from '../geneea-nlp-analysis-v2/routes';
 import customScienceRoutes from '../custom-science/Routes';
 import gooddataWriterV3Routes from '../gooddata-writer-v3/routes';
 import wrStorageRoutes from '../wr-storage/routes';
+import exStorageRoutes from '../ex-storage/routes';
 
 const extractor = injectProps({ type: 'extractor' });
 const writer = injectProps({ type: 'writer' });
@@ -113,6 +114,7 @@ module.exports = {
       createComponentRoute('keboola.ex-aws-s3', [exAwsS3Routes]),
       createComponentRoute('keboola.ex-email-attachments', [emailAttachmentsExtractorRoutes]),
       createComponentRoute('keboola.ex-http', [exHttpRoutes]),
+      createComponentRoute('keboola.ex-storage', [exStorageRoutes]),
       createGenericDetailRoute('extractor')
     ]
   },
