@@ -12,7 +12,8 @@ import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
 import {
   createConfiguration as rowCreateConfiguration,
-  parseConfiguration as rowParseConfiguration
+  parseConfiguration as rowParseConfiguration,
+  createEmptyConfiguration as rowCreateEmptyConfiguration
 } from './adapters/row';
 
 const routeSettings = {
@@ -41,7 +42,8 @@ const routeSettings = {
       {
         render: ConfigurationForm,
         onSave: rowCreateConfiguration,
-        onLoad: rowParseConfiguration
+        onLoad: rowParseConfiguration,
+        onCreate: rowCreateEmptyConfiguration
       }
     ],
     columns: [

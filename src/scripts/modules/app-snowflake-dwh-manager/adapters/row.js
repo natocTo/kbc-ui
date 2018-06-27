@@ -49,3 +49,7 @@ export function parseConfiguration(configuration) {
     type: 'schema'
   });
 }
+
+export function createEmptyConfiguration(name) {
+  return createConfiguration(Immutable.fromJS({type: 'schema', schema_name: name}));
+}
