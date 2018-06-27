@@ -24,7 +24,7 @@ export default React.createClass({
         <h3>Source</h3>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
-            Table
+            Table Name
           </Col>
           <Col sm={8}>
             <FormControl
