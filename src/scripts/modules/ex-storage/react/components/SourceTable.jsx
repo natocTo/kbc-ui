@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {Form, FormControl, FormGroup, ControlLabel, Col} from 'react-bootstrap';
+import {Form, FormControl, FormGroup, ControlLabel, Col, HelpBlock} from 'react-bootstrap';
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 import {PanelWithDetails} from '@keboola/indigo-ui';
 
@@ -35,6 +35,9 @@ export default React.createClass({
               }}
               disabled={this.props.disabled}
               />
+            <HelpBlock>
+              Table name in the source project. If the table ID is <code>in.c-main.mytable</code> use only the table name, <code>mytable</code>.
+            </HelpBlock>
           </Col>
         </FormGroup>
         <PanelWithDetails
