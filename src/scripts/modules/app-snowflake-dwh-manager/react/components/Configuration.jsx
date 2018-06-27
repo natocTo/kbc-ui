@@ -29,14 +29,14 @@ export default React.createClass({
     const {onChange, value} = this.props;
     return (
       <div className="form-horizontal">
-        <h2>{'Create new ' + (value.type === 'user' ? 'user' : 'schema')}</h2>
+        <h2>{(value.type === 'user' ? 'User' : 'Schema')}</h2>
         {value.type === 'user' ?
           <p>
-            When creating user, they get their own full access schema as well as read-only access to other specified schemas. Credentials of newly created user will be displayed in the job log. User is required to change the generated password after first login.
+            User gets their own full access schema as well as read-only access to other specified schemas. Credentials of newly created user will be displayed in the job log. User is required to change the generated password after first login.
           </p>
           :
           <p>
-          Alongside the newly created schema a user with full access is created to use in Snowflake Writer. The credentials will be displayed in the job log.
+           Each schema is assigned a user with full access to use in Snowflake Writer. The credentials will be displayed in the job log.
           </p>}
         <Input
           type="select"
