@@ -8,8 +8,8 @@ export function createConfiguration(localState) {
       parameters: {
         user: {
           email: localState.get('email'),
-          business_schemas: localState.get('business_schemas'),
-          disabled: localState.get('disabled')
+          business_schemas: localState.get('business_schemas', []),
+          disabled: localState.get('disabled', false)
         }
       }
     });
