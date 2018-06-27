@@ -40,7 +40,7 @@ export default React.createClass({
           </p>}
         <Input
           type="select"
-          label="Row type"
+          label="Type"
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
           value={value.type}
@@ -58,7 +58,7 @@ export default React.createClass({
         {value.type === 'schema' &&
       <Input
         type="text"
-        label="Schema name"
+        label="Name"
         labelClassName="col-xs-4"
         wrapperClassName="col-xs-8"
         value={value.schema_name}
@@ -73,11 +73,10 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.email}
           onChange={e => onChange({email: e.target.value})}
-          disabled={this.props.disabled}
-          help="Email address to log in to Snowflake. Password will be displayed in the job log and user will be required to change it upon first login" />}
+          disabled={this.props.disabled} />}
         {value.type === 'user' &&
         <FormGroup> <ControlLabel className="col-xs-4">
-          {'Business schemas'}
+          {'Schemas'}
         </ControlLabel>
           <div className="col-xs-8">
             <Select
@@ -94,8 +93,7 @@ export default React.createClass({
         <Input
           type="checkbox"
           label="Disabled"
-          labelClassName="col-xs-4"
-          wrapperClassName="col-xs-8"
+          wrapperClassName="col-xs-8 col-xs-offset-4"
           checked={value.disabled}
           onChange={e => onChange({disabled: e.target.checked})}
           disabled={this.props.disabled}
