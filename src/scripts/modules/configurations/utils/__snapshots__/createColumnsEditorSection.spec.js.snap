@@ -1,0 +1,156 @@
+exports[`columns editor section test test render 1`] = `
+<table
+  class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        Column
+      </th>
+      <th>
+        Column Setup
+      </th>
+      <th>
+        Content Preview
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      class="">
+      <td>
+        age
+      </td>
+      <td>
+        <span>
+          <div>
+            age
+          </div>
+          <div>
+            number
+          </div>
+          <div>
+            in.some.table
+          </div>
+          <div>
+            4
+          </div>
+          <span>
+             ignore column
+          </span>
+        </span>
+      </td>
+      <td>
+        <button
+          class="btn btn-link">
+          <span
+            class="fa fa-eye">
+            
+          </span>
+        </button>
+      </td>
+    </tr>
+    <tr
+      class="">
+      <td>
+        person
+      </td>
+      <td>
+        <span>
+          <div>
+            person
+          </div>
+          <div>
+            varchar
+          </div>
+          <div>
+            in.some.table
+          </div>
+          <div>
+            4
+          </div>
+          <span>
+             ignore column
+          </span>
+        </span>
+      </td>
+      <td>
+        <button
+          class="btn btn-link">
+          <span
+            class="fa fa-eye">
+            
+          </span>
+        </button>
+      </td>
+    </tr>
+    <tr
+      class="danger">
+      <td>
+        otherColumn
+      </td>
+      <td>
+        <span>
+          <div>
+            otherColumn
+          </div>
+          <div>
+            ignore
+          </div>
+          <div>
+            in.some.table
+          </div>
+          <div>
+            4
+          </div>
+          <span>
+             ignore column
+          </span>
+        </span>
+      </td>
+      <td>
+        <button
+          class="btn btn-link">
+          <span
+            class="fa fa-eye">
+            
+          </span>
+        </button>
+      </td>
+    </tr>
+    <tr
+      class="">
+      <td>
+        deletedColumn
+      </td>
+      <td>
+        <span>
+          <div>
+            deletedColumn
+          </div>
+          <div>
+            varchar
+          </div>
+          <div>
+            in.some.table
+          </div>
+          <div>
+            4
+          </div>
+          <span>
+             ignore column
+          </span>
+        </span>
+      </td>
+      <td>
+        <button
+          class="btn btn-link">
+          <span
+            class="fa fa-eye">
+            
+          </span>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
