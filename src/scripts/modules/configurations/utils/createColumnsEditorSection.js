@@ -10,7 +10,7 @@ export default (params) => {
     columnsMappings = [], // array of object containing render and title property
     isComplete = () => true, // is representation complete?
     isColumnIgnored = column => column.get('type') === 'IGNORE', // if ignored then won't be saved to input mapping columns property of configuration object
-    prepareColumnContext = () => null, // (table, sectionContext) => result of this fn will be injected as 'context' prop to every column render component
+    prepareColumnContext = () => null, // (sectionContext, columnsList) => result of this fn will be injected as 'context' prop to every column render component
     isColumnValidFn = () => true, // (column) => true/false
     getInitialShowAdvanced = () => false // (columns) => get initial showadvanced value used in column mappings and header
   } = params;
@@ -43,8 +43,9 @@ export default (params) => {
       const tableId = storageTable.get('id');
       const storageTableColumns = storageTable.get('columns');
       const deletedColumns = configColumns
-        .filter(configColumn =>
-          !storageTableColumns.find(tableColumn => tableColumn === configColumn.get(matchColumnKey)));
+        .map(configColumn => configColumn.get(matchColumnKey))
+        .filter(configColumnName =>
+          !storageTableColumns.find(tableColumn => tableColumn === configColumnName));
       const allTableColumns = storageTableColumns.concat(deletedColumns);
       const columnsList = allTableColumns.map(
         tableColumn => configColumns.find(
