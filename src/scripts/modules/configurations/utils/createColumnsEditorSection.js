@@ -52,9 +52,17 @@ export default (params) => {
           null
         ) || initColumnFn(tableColumn)
       );
+
       const columnContext = prepareColumnContext(sectionContext, columnsList);
 
-      return fromJS({columns: columnsList, tableId: tableId, columnsMappings, context: columnContext, isColumnValidFn, getInitialShowAdvanced});
+      return fromJS({
+        columns: columnsList,
+        tableId: tableId,
+        columnsMappings,
+        context: columnContext,
+        matchColumnKey,
+        isColumnValidFn,
+        getInitialShowAdvanced});
     },
     onCreate(name) {
       return onSave(fromJS({'columns': [], columnsMappings, tableId: name}));

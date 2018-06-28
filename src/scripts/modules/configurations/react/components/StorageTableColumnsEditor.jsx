@@ -6,6 +6,7 @@ import ColumnDataPreview from './ColumnDataPreview';
 export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
+      matchColumnKey: PropTypes.string,
       tableId: PropTypes.string,
       columns: PropTypes.any,
       columnsMappings: PropTypes.any,
@@ -90,16 +91,18 @@ export default React.createClass({
   },
 
   onChangeColumn(newValue) {
-    const newColumns = this.props.value.columns.map(column => (column.id === newValue.id ? newValue : column));
+    const {matchColumnKey} = this.props.value;
+    const newColumns = this.props.value.columns.map(column => (column[matchColumnKey] === newValue[matchColumnKey] ? newValue : column));
     this.props.onChange({ columns: newColumns });
   },
 
   renderBody() {
+    const {matchColumnKey} = this.props.value;
     return (
       <tbody>
         {this.props.value.columns.map((column, index) => (
           <tr key={index} className={!this.props.value.isColumnValidFn(column) ? 'danger' : ''}>
-            <td>{column.id}</td>
+            <td>{column[matchColumnKey]}</td>
             {this.props.value.columnsMappings.map((mapping, mappingIndex) => (
               <td key={mappingIndex}>
                 <mapping.render
@@ -111,7 +114,7 @@ export default React.createClass({
             ))}
             <td>
               <ColumnDataPreview
-                columnName={column.id}
+                columnName={column[matchColumnKey]}
                 tableData={this.state.dataPreview}
                 error={this.state.dataPreviewError}
               />
