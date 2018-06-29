@@ -1,4 +1,5 @@
 import React from 'react';
+import {Table} from 'react-bootstrap';
 import DatatypeFormRow from './DatatypeFormRow';
 
 export default React.createClass({
@@ -36,7 +37,27 @@ export default React.createClass({
       return this.renderColumn(column);
     });
     return (
-      <div>{renderedColumns}</div>
+      <Table responsive className="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              Column
+            </th>
+            <th>
+              Type
+            </th>
+            <th>
+              Length
+            </th>
+            <th>
+              Convert empty values to <code>null</code>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {renderedColumns}
+        </tbody>
+      </Table>
     );
   }
 });

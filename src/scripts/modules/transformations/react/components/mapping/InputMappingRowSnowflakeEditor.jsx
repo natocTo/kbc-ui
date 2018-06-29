@@ -395,18 +395,14 @@ export default React.createClass({
                   />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Data types</label>
-                <div className="col-xs-10">
-                  <DatatypeForm
-                    datatypes={this.getDatatypes()}
-                    columns={this._getFilteredColumns()}
-                    datatypesMap={this.snowflakeDatatypesMap}
-                    disabled={this.props.disabled || !this.props.value.get('source')}
-                    onChange={this._handleChangeDataTypes}
-                  />
-                </div>
-              </div>
+              <label className="control-label">Data types</label>
+              <DatatypeForm
+                datatypes={this.getDatatypes()}
+                columns={this._getFilteredColumns()}
+                datatypesMap={this.snowflakeDatatypesMap}
+                disabled={this.props.disabled || !this.props.value.get('source')}
+                onChange={this._handleChangeDataTypes}
+              />
             </div>
           </PanelWithDetails>
         </div>

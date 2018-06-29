@@ -46,30 +46,35 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row" key={this.props.datatype.get('column')}>
-        <div className="col-xs-2">
+      <tr key={this.props.datatype.get('column')}>
+        <td>
           <strong>{this.props.datatype.get('column')}</strong>
-        </div>
-        <div className="col-xs-4">
+        </td>
+        <td>
           <Select
             name={this.props.datatype.get('column') + '_datatype'}
             value={this.props.datatype.get('type')}
             options={this.getTypeOptions()}
             onChange={this.handleTypeChange}
             disabled={this.props.disabled}
+            autosize={false}
           />
-        </div>
-        <div className="col-xs-2">
-          <Input
-            name={this.props.datatype.get('column') + '_length'}
-            type="text"
-            value={this.props.datatype.get('length')}
-            onChange={this.handleLengthChange}
-            disabled={this.props.disabled || !this.lengthEnabled()}
-            placeholder="Length, eg. 38,0"
-          />
-        </div>
-        <div className="col-xs-4">
+        </td>
+        <td>
+          {
+            this.lengthEnabled()
+              ? <Input
+                name={this.props.datatype.get('column') + '_length'}
+                type="text"
+                value={this.props.datatype.get('length')}
+                onChange={this.handleLengthChange}
+                disabled={this.props.disabled || !this.lengthEnabled()}
+                placeholder="Length, eg. 38,0"
+              />
+              : null
+          }
+        </td>
+        <td>
           <Input
             name={this.props.datatype.get('column') + '_nullable'}
             type="checkbox"
@@ -79,8 +84,8 @@ export default React.createClass({
               <span>Convert empty values to <code>null</code></span>
             }
           />
-        </div>
-      </div>
+        </td>
+      </tr>
     );
   }
 });
