@@ -66,6 +66,7 @@ export default React.createClass({
               ? <Input
                 name={this.props.datatype.get('column') + '_length'}
                 type="text"
+                size={15}
                 value={this.props.datatype.get('length')}
                 onChange={this.handleLengthChange}
                 disabled={this.props.disabled || !this.lengthEnabled()}

@@ -293,42 +293,46 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="form-horizontal clearfix">
-        <div className="row col-md-12">
-          <div className="form-group">
-            <label className="col-xs-2 control-label">Source</label>
-            <div className="col-xs-10">
-              <SapiTableSelector
-                value={this.props.value.get('source', '')}
+      <div className="container-fluid">
+        <div className="row">
+          <div className="form-horizontal clearfix">
+            <div className="row col-md-12">
+              <div className="form-group">
+                <label className="col-xs-2 control-label">Source</label>
+                <div className="col-xs-10">
+                  <SapiTableSelector
+                    value={this.props.value.get('source', '')}
+                    disabled={this.props.disabled}
+                    placeholder="Source Table"
+                    onSelectTableFn={this._handleChangeSource}
+                    autoFocus={true}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row col-md-12">
+              <Input
+                type="text"
+                label="Destination"
+                value={this.props.value.get('destination')}
                 disabled={this.props.disabled}
-                placeholder="Source Table"
-                onSelectTableFn={this._handleChangeSource}
-                autoFocus={true}
+                placeholder="Destination table name in transformation DB"
+                onChange={this._handleChangeDestination}
+                labelClassName="col-xs-2"
+                wrapperClassName="col-xs-10"
+                bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
+                help={
+                  this.props.isDestinationDuplicate
+                    ? <span className="error">
+                          Duplicate Destination <code>{this.props.value.get('destination')}</code>.
+                      </span>
+                    : null
+                }
               />
             </div>
           </div>
         </div>
-        <div className="row col-md-12">
-          <Input
-            type="text"
-            label="Destination"
-            value={this.props.value.get('destination')}
-            disabled={this.props.disabled}
-            placeholder="Destination table name in transformation DB"
-            onChange={this._handleChangeDestination}
-            labelClassName="col-xs-2"
-            wrapperClassName="col-xs-10"
-            bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-            help={
-              this.props.isDestinationDuplicate
-                ? <span className="error">
-                      Duplicate Destination <code>{this.props.value.get('destination')}</code>.
-                  </span>
-                : null
-            }
-          />
-        </div>
-        <div className="row col-md-12">
+        <div className="row">
           <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
             <div className="form-horizontal clearfix">
               <div className="form-group">
@@ -396,14 +400,14 @@ export default React.createClass({
                 </div>
               </div>
               <label className="control-label">Data types</label>
-              <DatatypeForm
-                datatypes={this.getDatatypes()}
-                columns={this._getFilteredColumns()}
-                datatypesMap={this.snowflakeDatatypesMap}
-                disabled={this.props.disabled || !this.props.value.get('source')}
-                onChange={this._handleChangeDataTypes}
-              />
             </div>
+            <DatatypeForm
+              datatypes={this.getDatatypes()}
+              columns={this._getFilteredColumns()}
+              datatypesMap={this.snowflakeDatatypesMap}
+              disabled={this.props.disabled || !this.props.value.get('source')}
+              onChange={this._handleChangeDataTypes}
+            />
           </PanelWithDetails>
         </div>
       </div>

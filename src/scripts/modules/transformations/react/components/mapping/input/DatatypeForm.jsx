@@ -1,5 +1,6 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
+import {Input} from './../../../../../../react/common/KbcBootstrap';
 import DatatypeFormRow from './DatatypeFormRow';
 
 export default React.createClass({
@@ -50,7 +51,15 @@ export default React.createClass({
               Length
             </th>
             <th>
-              Convert empty values to <code>null</code>
+              <Input
+                name="convertAll"
+                type="checkbox"
+                checked={false}
+                onChange={this.handleNullableChange}
+                label={
+                  <span>Convert <strong>all</strong> empty values to <code>null</code></span>
+                }
+              />
             </th>
           </tr>
         </thead>
