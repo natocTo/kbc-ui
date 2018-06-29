@@ -411,4 +411,26 @@ describe('sections parse(create())', function() {
     const createBySectionsFn = sections.makeCreateFn(rowSections);
     assert.deepEqual(expected, createBySectionsFn(parseBySectionsFn(configuration)).toJS());
   });
+
+  it('should pass context to section parse section fn', function() {
+    const context = Immutable.fromJS({
+      table: {
+        id: 'in.some.table'
+      }
+    });
+    const onLoad = (config, sectionContext)  => config.set('tableId', sectionContext.getIn(['table', 'id']));
+    const configuration = Immutable.fromJS({
+      someValue: 1,
+      value: 43
+    });
+    const expectedSectionsLocalState = [{
+      someValue: 1,
+      value: 43,
+      tableId: 'in.some.table'
+    }];
+    const rowSections = Immutable.fromJS([{onLoad}]);
+    const parseBySectionsFn = sections.makeParseFn(rowSections, null, context);
+    const localState = parseBySectionsFn(configuration);
+    assert.deepEqual(expectedSectionsLocalState, localState.toJS());
+  });
 });
