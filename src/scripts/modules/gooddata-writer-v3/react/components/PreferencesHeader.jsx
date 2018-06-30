@@ -9,9 +9,9 @@ export default React.createClass({
   render() {
     const {showAdvanced} = this.props;
     return (
-      <span>
-        Preferences
-        <div className="checkbox">
+      <span className="text-center">
+        <div>Preferences</div>
+        <span className="checkbox">
           <label>
             <input
               checked={showAdvanced}
@@ -19,7 +19,7 @@ export default React.createClass({
               type="checkbox"/>
               Show Identifiers
           </label>
-        </div>
+        </span>
       </span>
     );
   }
