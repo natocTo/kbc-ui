@@ -140,10 +140,3 @@ module.exports =
         configurationId: configurationId
         error: e
       throw e
-
-
-  jobErrorNoteUpdated: (jobId, errorNote) ->
-    dispatcher.handleViewAction
-      type: constants.ActionTypes.JOB_ERROR_NOTE_UPDATED
-      jobId: jobId
-      errorNote: errorNote
