@@ -181,6 +181,7 @@ module.exports = React.createClass
 
     parts.push(
       React.DOM.button
+        key: 'contact-support-btn'
         className: 'btn btn-danger'
         onClick: @_contactSupport
         style:
