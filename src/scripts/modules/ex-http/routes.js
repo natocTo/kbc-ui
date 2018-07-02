@@ -24,7 +24,7 @@ const routeSettings = {
     sections: [
       {
         render: CollapsibleSection({
-          title: 'Base URL',
+          title: 'Base URL and Connection Options',
           contentComponent: CredentialsForm,
           options: { includeSaveButtons: true }
         }),

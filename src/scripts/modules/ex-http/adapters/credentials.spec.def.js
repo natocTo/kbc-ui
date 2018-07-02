@@ -1,7 +1,8 @@
 export const cases = {
   emptyWithDefaults: {
     localState: {
-      baseUrl: ''
+      baseUrl: '',
+      maxRedirects: ''
     },
     configuration: {
       parameters: {
@@ -12,11 +13,25 @@ export const cases = {
 
   simple: {
     localState: {
-      baseUrl: 'https://example.com'
+      baseUrl: 'https://example.com',
+      maxRedirects: ''
     },
     configuration: {
       parameters: {
         baseUrl: 'https://example.com'
+      }
+    }
+  },
+
+  simpleWithMaxRedirects: {
+    localState: {
+      baseUrl: 'https://example.com',
+      maxRedirects: 5
+    },
+    configuration: {
+      parameters: {
+        baseUrl: 'https://example.com',
+        maxRedirects: 5
       }
     }
   }
