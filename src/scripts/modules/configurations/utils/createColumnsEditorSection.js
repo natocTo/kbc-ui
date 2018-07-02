@@ -6,11 +6,13 @@ export default (params) => {
     onLoadColumns, // (configuration) => columnsArray. Parse columns from configuration object and return array of columns objects
     onSaveColumns, // (tableId, columnsList) => configuration_object. Return configuration object to save from given tableId and columnsList
     initColumnFn, // (columnName) => columnObject. Initial value of column given by its name
-    parseTableId, // (configuration) => tableId. Parse tableId from configuration
     matchColumnKey = 'id', // used for matching columns objects with storage table columns by its name (columnName, columnObject) => true/false
     columnsMappings = [], // array of object containing render and title property
     isComplete = () => true, // is representation complete?
-    isColumnIgnored = column => column.get('type') === 'IGNORE' // if ignored then won't be saved to input mapping columns property of configuration object
+    isColumnIgnored = column => column.get('type') === 'IGNORE', // if ignored then won't be saved to input mapping columns property of configuration object
+    prepareColumnContext = () => null, // (sectionContext, columnsList) => result of this fn will be injected as 'context' prop to every column render component
+    isColumnValidFn = () => true, // (column) => true/false
+    getInitialShowAdvanced = () => false // (columns) => get initial showadvanced value used in column mappings and header
   } = params;
 
   const onSave = function(localState) {
@@ -35,23 +37,33 @@ export default (params) => {
 
   return fromJS({
     onSave,
-    onLoad(configuration, tables) {
+    onLoad(configuration, sectionContext) {
       const configColumns = onLoadColumns(configuration);
-      const tableId = parseTableId(configuration);
-      const storageTable = tables.get(tableId);
+      const storageTable = sectionContext.get('table');
+      const tableId = storageTable.get('id');
       const storageTableColumns = storageTable.get('columns');
       const deletedColumns = configColumns
-        .filter(configColumn =>
-          !storageTableColumns.find(tableColumn => tableColumn === configColumn.get(matchColumnKey)));
+        .map(configColumn => configColumn.get(matchColumnKey))
+        .filter(configColumnName =>
+          !storageTableColumns.find(tableColumn => tableColumn === configColumnName));
       const allTableColumns = storageTableColumns.concat(deletedColumns);
       const columnsList = allTableColumns.map(
         tableColumn => configColumns.find(
           configColumn => configColumn.get(matchColumnKey) === tableColumn,
-          null,
-          initColumnFn(tableColumn)
-        )
+          null
+        ) || initColumnFn(tableColumn)
       );
-      return fromJS({columns: columnsList, tableId: tableId, columnsMappings});
+
+      const columnContext = prepareColumnContext(sectionContext, columnsList);
+
+      return fromJS({
+        columns: columnsList,
+        tableId: tableId,
+        columnsMappings,
+        context: columnContext,
+        matchColumnKey,
+        isColumnValidFn,
+        getInitialShowAdvanced});
     },
     onCreate(name) {
       return onSave(fromJS({'columns': [], columnsMappings, tableId: name}));

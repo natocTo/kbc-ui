@@ -2,13 +2,18 @@ import React, { PropTypes } from 'react';
 import storageApi from '../../../components/StorageApi';
 import { fromJS } from 'immutable';
 import ColumnDataPreview from './ColumnDataPreview';
+import classnames from 'classnames';
 
 export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
+      matchColumnKey: PropTypes.string,
       tableId: PropTypes.string,
       columns: PropTypes.any,
-      columnsMappings: PropTypes.any
+      columnsMappings: PropTypes.any,
+      context: PropTypes.any,
+      getInitialShowAdvanced: PropTypes.func,
+      isColumnValidFn: PropTypes.func
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -22,7 +27,8 @@ export default React.createClass({
     return {
       loadingPreview: false,
       dataPreview: null,
-      dataPreviewError: null
+      dataPreviewError: null,
+      showAdvanced: this.props.value.getInitialShowAdvanced(this.props.value.columns)
     };
   },
 
@@ -57,14 +63,22 @@ export default React.createClass({
       });
   },
 
+  renderHeaderCell(Element) {
+    return (
+      <Element
+        showAdvanced={this.state.showAdvanced}
+        onChangeShowAdvanced={(newValue) => this.setState({showAdvanced: newValue})} />
+    );
+  },
+
   render() {
     let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
-      <table className="table">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Column</th>
-            {headers.map((title, index) => <th key={index}>{title}</th>)}
+            {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
             <th>Content Preview</th>
           </tr>
         </thead>
@@ -74,24 +88,30 @@ export default React.createClass({
   },
 
   onChangeColumn(newValue) {
-    const newColumns = this.props.value.columns.map(column => (column.id === newValue.id ? newValue : column));
+    const {matchColumnKey} = this.props.value;
+    const newColumns = this.props.value.columns.map(column => (column[matchColumnKey] === newValue[matchColumnKey] ? newValue : column));
     this.props.onChange({ columns: newColumns });
   },
 
   renderBody() {
+    const {matchColumnKey} = this.props.value;
     return (
       <tbody>
         {this.props.value.columns.map((column, index) => (
-          <tr key={index}>
-            <td>{column.id}</td>
-            {this.props.value.columnsMappings.map((mapping, mappingIndex) => (
+          <tr key={index} className={classnames({danger: !this.props.value.isColumnValidFn(column)})}>
+            <td>{column[matchColumnKey]}</td>
+            {this.props.value.columnsMappings.map((Mapping, mappingIndex) => (
               <td key={mappingIndex}>
-                <mapping.render disabled={this.props.disabled} column={column} onChange={this.onChangeColumn} />
+                <Mapping.render
+                  context={this.props.value.context}
+                  disabled={this.props.disabled}
+                  showAdvanced={this.state.showAdvanced}
+                  column={column} onChange={this.onChangeColumn} />
               </td>
             ))}
             <td>
               <ColumnDataPreview
-                columnName={column.id}
+                columnName={column[matchColumnKey]}
                 tableData={this.state.dataPreview}
                 error={this.state.dataPreviewError}
               />
