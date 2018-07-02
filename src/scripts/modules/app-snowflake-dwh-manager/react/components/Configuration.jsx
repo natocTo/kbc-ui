@@ -41,13 +41,13 @@ export default React.createClass({
           help={value.type === 'user' ?
               <p>
                 User entity gets its own write access schema as well as read-only access to specified schemas (created by schema entity).
-                Snowflake user credentials will be displayed in the job log and the password mus be changed after the first login.
+                Snowflake user credentials will be displayed in the job log and the password must be changed after the first login.
               </p>
               :
               <p>
                 Schema entity will generate a Snowflake schema and a Snowflake user with write access to the schema.
                 This schema can be shared with user entities.
-                Snowflake user credentials will be displayed in the job log and the password mus be changed after the first login.
+                Snowflake user credentials will be displayed in the job log and the password must be changed after the first login.
               </p>
           }
         >
