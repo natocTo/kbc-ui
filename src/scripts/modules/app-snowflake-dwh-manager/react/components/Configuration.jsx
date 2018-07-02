@@ -54,7 +54,7 @@ export default React.createClass({
           </p>
           :
           <p>
-           Each schema is assigned a user with full access to use in Snowflake Writer. The credentials will be displayed in the job log.
+           User with full access is created with each schema to use in Snowflake Writer. User's credentials will be displayed in the job log. User is required to change the generated password after first login.
           </p>}
 
         {value.type === 'schema' &&
@@ -75,7 +75,8 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.email}
           onChange={e => onChange({email: e.target.value})}
-          disabled={this.props.disabled} />}
+          disabled={this.props.disabled}
+          help="Username will be generated from email" />}
         {value.type === 'user' &&
         <FormGroup> <ControlLabel className="col-xs-4">
           {'Schemas'}
