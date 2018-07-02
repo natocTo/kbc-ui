@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import Select from '../../../../react/common/Select';
-import {Immutable} from '../../../../helpers';
+import Immutable from 'immutable';
 import {ControlLabel, FormGroup} from 'react-bootstrap';
 
 export default React.createClass({

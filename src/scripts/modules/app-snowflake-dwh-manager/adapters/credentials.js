@@ -1,5 +1,4 @@
-import {Map} from 'immutable';
-import {fromJS} from 'immutable/dist/immutable';
+import { Map, fromJS } from 'immutable';
 
 export function createConfiguration(localState) {
   return fromJS({

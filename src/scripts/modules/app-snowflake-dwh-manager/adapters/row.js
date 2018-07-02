@@ -1,4 +1,4 @@
-import Immutable from 'immutable/dist/immutable';
+import Immutable from 'immutable';
 
 export function createConfiguration(localState) {
   const isUser = localState.get('type') === 'user';
