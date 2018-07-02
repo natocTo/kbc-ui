@@ -44,5 +44,6 @@ export function parseConfiguration(configuration) {
 }
 
 export function createEmptyConfiguration(tableId) {
-  return createConfiguration(Immutable.fromJS({source: tableId}));
+  const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
+  return createConfiguration(Immutable.fromJS({source: tableId, destination: tableName + '.csv'}));
 }

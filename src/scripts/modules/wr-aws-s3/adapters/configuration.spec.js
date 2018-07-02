@@ -28,7 +28,7 @@ describe('row', function() {
 
   describe('createEmptyConfiguration()', function() {
     it('should return a default config with the webalized name filled in', function() {
-      assert.deepEqual(createEmptyConfiguration('in.c-bucket.test').toJS(), createConfiguration(Immutable.fromJS({source: 'in.c-bucket.test'})).toJS());
+      assert.deepEqual(createEmptyConfiguration('in.c-bucket.test').toJS(), createConfiguration(Immutable.fromJS({source: 'in.c-bucket.test', destination: 'test.csv'})).toJS());
     });
   });
 });
