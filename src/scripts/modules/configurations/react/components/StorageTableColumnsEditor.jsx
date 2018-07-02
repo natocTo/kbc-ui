@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import storageApi from '../../../components/StorageApi';
 import { fromJS } from 'immutable';
 import ColumnDataPreview from './ColumnDataPreview';
+import classnames from 'classnames';
 
 export default React.createClass({
   propTypes: {
@@ -62,11 +63,7 @@ export default React.createClass({
       });
   },
 
-  renderHeaderCell(element) {
-    if (typeof element === 'string') {
-      return element;
-    }
-    const Element = element;
+  renderHeaderCell(Element) {
     return (
       <Element
         showAdvanced={this.state.showAdvanced}
@@ -81,7 +78,7 @@ export default React.createClass({
         <thead>
           <tr>
             <th>Column</th>
-            {headers.map((title, index) => <th key={index}>{this.renderHeaderCell(title)}</th>)}
+            {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
             <th>Content Preview</th>
           </tr>
         </thead>
@@ -101,11 +98,11 @@ export default React.createClass({
     return (
       <tbody>
         {this.props.value.columns.map((column, index) => (
-          <tr key={index} className={!this.props.value.isColumnValidFn(column) ? 'danger' : ''}>
+          <tr key={index} className={classnames({danger: !this.props.value.isColumnValidFn(column)})}>
             <td>{column[matchColumnKey]}</td>
-            {this.props.value.columnsMappings.map((mapping, mappingIndex) => (
+            {this.props.value.columnsMappings.map((Mapping, mappingIndex) => (
               <td key={mappingIndex}>
-                <mapping.render
+                <Mapping.render
                   context={this.props.value.context}
                   disabled={this.props.disabled}
                   showAdvanced={this.state.showAdvanced}
