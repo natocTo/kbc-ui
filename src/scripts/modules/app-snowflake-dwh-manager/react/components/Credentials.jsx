@@ -30,7 +30,7 @@ export default React.createClass({
           onChange={e => onChange({host: e.target.value})}
           placeholder="example.snowflakecomputing.com"
           disabled={this.props.disabled}
-          help="Your Snowflake instance"
+          help="Snowflake instance hostname"
         />
         <Input
           type="text"

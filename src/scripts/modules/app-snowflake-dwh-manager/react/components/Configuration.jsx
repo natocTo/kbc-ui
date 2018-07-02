@@ -37,7 +37,20 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.type}
           onChange={e => onChange({type: e.target.value})}
-          disabled={this.props.disabled}>
+          disabled={this.props.disabled}
+          help={value.type === 'user' ?
+              <p>
+                User entity gets its own write access schema as well as read-only access to specified schemas (created by schema entity).
+                Snowflake user credentials will be displayed in the job log and the password mus be changed after the first login.
+              </p>
+              :
+              <p>
+                Schema entity will generate a Snowflake schema and a Snowflake user with write access to the schema.
+                This schema can be shared with user entities.
+                Snowflake user credentials will be displayed in the job log and the password mus be changed after the first login.
+              </p>
+          }
+        >
           {this.allowedTypes.map((i) =>
             <option
               value={i.get('value')}
@@ -48,15 +61,6 @@ export default React.createClass({
           )}
         </Input>
         <h2>{(value.type === 'user' ? 'User' : 'Schema')}</h2>
-        {value.type === 'user' ?
-          <p>
-            User gets their own full access schema as well as read-only access to other specified schemas. Credentials of newly created user will be displayed in the job log. User is required to change the generated password after first login.
-          </p>
-          :
-          <p>
-           User with full access is created with each schema to use in Snowflake Writer. User's credentials will be displayed in the job log. User is required to change the generated password after first login.
-          </p>}
-
         {value.type === 'schema' &&
       <Input
         type="text"
@@ -66,7 +70,7 @@ export default React.createClass({
         value={value.schema_name}
         onChange={e => onChange({schema_name: e.target.value})}
         disabled={this.props.disabled}
-        help="Name of the schema to be created" />}
+        help="Name of the schema to be created." />}
         {value.type === 'user' &&
         <Input
           type="text"
@@ -76,7 +80,7 @@ export default React.createClass({
           value={value.email}
           onChange={e => onChange({email: e.target.value})}
           disabled={this.props.disabled}
-          help="Username will be generated from email" />}
+          help="Username will be generated from the email address." />}
         {value.type === 'user' &&
         <FormGroup> <ControlLabel className="col-xs-4">
           {'Schemas'}
@@ -89,7 +93,7 @@ export default React.createClass({
               delimiter=","
               onChange={newValue => onChange({business_schemas: newValue})}
               disabled={this.props.disabled}
-              help="List of schemas the user will have read-only access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user. " />
+              help="List of schemas the user will have read-only access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user." />
           </div>
         </FormGroup>}
         {value.type === 'user' &&
@@ -100,7 +104,7 @@ export default React.createClass({
           checked={value.disabled}
           onChange={e => onChange({disabled: e.target.checked})}
           disabled={this.props.disabled}
-          help="Disabled users cannot log in" />}
+          help="Disabled users cannot log in." />}
       </div>
     );
   }
