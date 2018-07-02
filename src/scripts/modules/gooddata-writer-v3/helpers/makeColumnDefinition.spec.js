@@ -1,4 +1,5 @@
-import makeColumnDefinition, {Types, DataTypes} from './makeColumnDefinition';
+import makeColumnDefinition from './makeColumnDefinition';
+import {Types, DataTypes} from './Constants';
 import assert from 'assert';
 
 describe('makeColumnDefinition', () => {

@@ -158,7 +158,7 @@ describe('columns editor section', () => {
       }
     );
   });
-  it('test test render', () => {
+  it('test render', () => {
     const editorSection = createColumnsEditorSection(editorSectionDefinition).toJS();
     const localState = editorSection.onLoad(configuration, sectionContext).toJS();
     const EditorComponent = editorSection.render;
