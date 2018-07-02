@@ -12,8 +12,25 @@ export default React.createClass({
     onChange: React.PropTypes.func
   },
 
+  getInitialState() {
+    return {
+      convertAll: false
+    };
+  },
+
   handleDatatypeChange(newType) {
     return this.props.onChange(this.props.datatypes.set(newType.get('column'), newType));
+  },
+
+  handleConvertAllChange(e) {
+    e.target.checked ? this.setState({convertAll: true}) : this.setState({convertAll: false});
+    return this.props.onChange(this.props.datatypes.map((datatype) => {
+      if (e.target.checked) {
+        return datatype.set('convertEmptyValuesToNull', true);
+      } else {
+        return datatype.set('convertEmptyValuesToNull', false);
+      }
+    }));
   },
 
   renderColumn(column) {
@@ -54,8 +71,8 @@ export default React.createClass({
               <Input
                 name="convertAll"
                 type="checkbox"
-                checked={false}
-                onChange={this.handleNullableChange}
+                checked={this.state.convertAll}
+                onChange={this.handleConvertAllChange}
                 label={
                   <span>Convert <strong>all</strong> empty values to <code>null</code></span>
                 }
