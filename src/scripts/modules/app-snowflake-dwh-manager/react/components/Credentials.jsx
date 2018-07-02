@@ -28,9 +28,9 @@ export default React.createClass({
           wrapperClassName="col-xs-8"
           value={value.host}
           onChange={e => onChange({host: e.target.value})}
-          placeholder="https://example.snowflakecomputing.com"
+          placeholder="example.snowflakecomputing.com"
           disabled={this.props.disabled}
-          help="URL of your Snowflake server"
+          help="Your Snowflake instance"
         />
         <Input
           type="text"
