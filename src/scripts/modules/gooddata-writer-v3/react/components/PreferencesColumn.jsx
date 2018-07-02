@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import {FormControl, Form, FormGroup, Col, ControlLabel} from 'react-bootstrap';
-import makeColumnDefinition, {DataTypes, Types} from '../../helpers/makeColumnDefinition';
+import makeColumnDefinition from '../../helpers/makeColumnDefinition';
+import {DataTypes, Types} from '../../helpers/Constants';
+
 // import ReactSelect from 'react-select';
 
 export default React.createClass({
