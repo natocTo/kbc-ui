@@ -47,7 +47,8 @@ export default React.createClass({
           disabled={this.props.disabled}
           help={(
             <span>
-              The maximum number of redirects to follow when downloading file. E.g. 5
+              The maximum number of redirects to follow when downloading files.
+              Leave empty to use default value (5).
             </span>
           )}
         />
