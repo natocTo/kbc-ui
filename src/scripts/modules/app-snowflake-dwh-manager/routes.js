@@ -75,7 +75,7 @@ const routeSettings = {
           }
           let linkedSchemas = null;
           if (row.getIn(['configuration', 'parameters', 'user'], false)) {
-            let schemas = row.getIn(['configuration', 'parameters', 'user', 'business_schemas'], []);
+            const schemas = row.getIn(['configuration', 'parameters', 'user', 'business_schemas'], []);
             if (schemas.size > 0) {
               linkedSchemas = (
                 <small><br />
