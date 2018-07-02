@@ -60,8 +60,8 @@ const routeSettings = {
         value: function(row) {
           const configuration = row.getIn(['configuration'], Immutable.Map());
           const prefix = configuration.getIn(['parameters', 'prefix'], '');
-          const filename = configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], '');
-          return (<code>{prefix + (filename !== '' ? filename : ' Unknown filename')}</code>);
+          const filename = configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], '') || ' Unknown filename';
+          return (<code>{prefix + filename}</code>);
         }
       }
     ]
