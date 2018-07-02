@@ -14,6 +14,7 @@ import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import Immutable from 'immutable';
+import React from 'react';
 
 const routeSettings = {
   componentId: 'keboola.wr-aws-s3',
@@ -58,10 +59,10 @@ const routeSettings = {
         type: columnTypes.VALUE,
         value: function(row) {
           const configuration = row.getIn(['configuration'], Immutable.Map());
-          const bucket = configuration.getIn(['parameters', 'bucket'], 'Unknown S3 bucket');
-          const prefix = configuration.getIn(['parameters', 'prefix'], 'Unknown prefix');
-          const filename = configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], 'Unknown filename');
-          return bucket + '/' + prefix + filename;
+          const bucket = configuration.getIn(['parameters', 'bucket'], '');
+          const prefix = configuration.getIn(['parameters', 'prefix'], '');
+          const filename = configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], '');
+          return (<code>{(bucket !== '' ? bucket : 'Unknown bucket ') + '/' + prefix + (filename !== '' ? filename : ' Unknown filename')}</code>);
         }
       }
     ]
