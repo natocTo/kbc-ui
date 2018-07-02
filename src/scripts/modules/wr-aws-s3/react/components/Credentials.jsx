@@ -8,7 +8,8 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
       awsAccessKeyId: PropTypes.string.isRequired,
-      awsSecretAccessKey: PropTypes.string.isRequired
+      awsSecretAccessKey: PropTypes.string.isRequired,
+      bucket: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -49,7 +50,20 @@ export default React.createClass({
           onChange={function(e) {
             props.onChange({awsSecretAccessKey: e.target.value});
           }}
-          help={(<span>The AWS Secret Access Key will be encrypted.</span>)}
+          help="The AWS Secret Access Key will be encrypted."
+          disabled={this.props.disabled}
+          />
+        <Input
+          type="text"
+          label="S3 Bucket"
+          labelClassName="col-xs-4"
+          wrapperClassName="col-xs-8"
+          placeholder="mybucket"
+          value={this.props.value.bucket}
+          onChange={function(e) {
+            props.onChange({bucket: e.target.value});
+          }}
+          help="Name of the target AWS S3 bucket."
           disabled={this.props.disabled}
           />
       </div>

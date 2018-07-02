@@ -6,7 +6,6 @@ export function createConfiguration(localState) {
   const filename = destination.substr(destination.lastIndexOf('/') + 1);
   const config = Immutable.fromJS({
     parameters: {
-      bucket: localState.get('bucket', ''),
       prefix: prefix
     },
     storage: {
@@ -39,7 +38,6 @@ export function parseConfiguration(configuration) {
   const prefix = configuration.getIn(['parameters', 'prefix'], '');
   const filename = configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], '');
   return Immutable.fromJS({
-    bucket: configuration.getIn(['parameters', 'bucket'], ''),
     destination: prefix + filename,
     source: configuration.getIn(['storage', 'input', 'tables', 0, 'source'], '')
   });

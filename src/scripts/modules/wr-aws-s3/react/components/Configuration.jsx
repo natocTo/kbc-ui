@@ -8,7 +8,6 @@ export default React.createClass({
 
   propTypes: {
     value: PropTypes.shape({
-      bucket: PropTypes.string.isRequired,
       source: PropTypes.string.isRequired,
       destination: PropTypes.string.isRequired
     }),
@@ -36,25 +35,6 @@ export default React.createClass({
           </Col>
         </FormGroup>
         <h3>Destination</h3>
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={4}>
-            S3 Bucket
-          </Col>
-          <Col sm={8}>
-            <FormControl
-              type="text"
-              value={this.props.value.bucket}
-              onChange={function(e) {
-                props.onChange({bucket: e.target.value.trim()});
-              }}
-              placeholder="mybucket"
-              disabled={this.props.disabled}
-              />
-            <HelpBlock>
-              Name of the target AWS S3 bucket.
-            </HelpBlock>
-          </Col>
-        </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
             Path

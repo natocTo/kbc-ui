@@ -34,8 +34,8 @@ describe('credentials', function() {
       assert.equal(isComplete(Immutable.fromJS({parameters: {accessKeyId: 'a'}})), false);
       assert.equal(isComplete(Immutable.fromJS({parameters: {'#secretAccessKey': 'a'}})), false);
     });
-    it('should return true when both parameters are filled', function() {
-      assert.equal(isComplete(Immutable.fromJS({parameters: {'accessKeyId': 'a', '#secretAccessKey': 'a'}})), true);
+    it('should return true when all parameters are filled', function() {
+      assert.equal(isComplete(Immutable.fromJS({parameters: {'accessKeyId': 'a', '#secretAccessKey': 'a', 'bucket': 'mybucket'}})), true);
     });
   });
 });

@@ -1,7 +1,6 @@
 export const cases = {
   emptyWithDefaults: {
     localState: {
-      bucket: '',
       source: '',
       destination: ''
     },
@@ -17,7 +16,6 @@ export const cases = {
         }
       },
       parameters: {
-        bucket: '',
         prefix: ''
       },
       processors: {
@@ -36,7 +34,6 @@ export const cases = {
   },
   simple: {
     localState: {
-      bucket: 'mybucket',
       destination: 'myprefix/data.csv',
       source: 'in.c-main.data'
     },
@@ -52,7 +49,6 @@ export const cases = {
         }
       },
       parameters: {
-        bucket: 'mybucket',
         prefix: 'myprefix/'
       },
       processors: {
@@ -71,7 +67,6 @@ export const cases = {
   },
   prefix: {
     localState: {
-      bucket: 'mybucket',
       destination: 'myprefix/nested/data.csv',
       source: 'in.c-main.data'
     },
@@ -87,7 +82,6 @@ export const cases = {
         }
       },
       parameters: {
-        bucket: 'mybucket',
         prefix: 'myprefix/nested/'
       },
       processors: {

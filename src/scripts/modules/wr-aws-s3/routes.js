@@ -22,7 +22,7 @@ const routeSettings = {
   index: {
     sections: [{
       render: CollapsibleSection({
-        title: 'AWS Credentials',
+        title: 'AWS Credentials and S3 Bucket',
         contentComponent: CredentialsForm,
         options: {includeSaveButtons: true}
       }),
@@ -59,10 +59,9 @@ const routeSettings = {
         type: columnTypes.VALUE,
         value: function(row) {
           const configuration = row.getIn(['configuration'], Immutable.Map());
-          const bucket = configuration.getIn(['parameters', 'bucket'], '');
           const prefix = configuration.getIn(['parameters', 'prefix'], '');
           const filename = configuration.getIn(['storage', 'input', 'tables', 0, 'destination'], '');
-          return (<code>{(bucket !== '' ? bucket : 'Unknown bucket ') + '/' + prefix + (filename !== '' ? filename : ' Unknown filename')}</code>);
+          return (<code>{prefix + (filename !== '' ? filename : ' Unknown filename')}</code>);
         }
       }
     ]

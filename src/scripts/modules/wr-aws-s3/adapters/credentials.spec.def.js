@@ -2,12 +2,14 @@ export const cases = {
   emptyWithDefaults: {
     localState: {
       awsAccessKeyId: '',
-      awsSecretAccessKey: ''
+      awsSecretAccessKey: '',
+      bucket: ''
     },
     configuration: {
       parameters: {
         accessKeyId: '',
-        '#secretAccessKey': ''
+        '#secretAccessKey': '',
+        'bucket': ''
       }
     }
   },
@@ -15,12 +17,14 @@ export const cases = {
   simple: {
     localState: {
       awsAccessKeyId: 'awsAccessKeyId',
-      awsSecretAccessKey: 'awsSecretAccessKey'
+      awsSecretAccessKey: 'awsSecretAccessKey',
+      bucket: 'mybucket'
     },
     configuration: {
       parameters: {
         accessKeyId: 'awsAccessKeyId',
-        '#secretAccessKey': 'awsSecretAccessKey'
+        '#secretAccessKey': 'awsSecretAccessKey',
+        'bucket': 'mybucket'
       }
     }
   }
