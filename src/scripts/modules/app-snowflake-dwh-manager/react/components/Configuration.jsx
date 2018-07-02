@@ -29,15 +29,7 @@ export default React.createClass({
     const {onChange, value} = this.props;
     return (
       <div className="form-horizontal">
-        <h2>{(value.type === 'user' ? 'User' : 'Schema')}</h2>
-        {value.type === 'user' ?
-          <p>
-            User gets their own full access schema as well as read-only access to other specified schemas. Credentials of newly created user will be displayed in the job log. User is required to change the generated password after first login.
-          </p>
-          :
-          <p>
-           Each schema is assigned a user with full access to use in Snowflake Writer. The credentials will be displayed in the job log.
-          </p>}
+        <h2>Entity</h2>
         <Input
           type="select"
           label="Type"
@@ -55,6 +47,16 @@ export default React.createClass({
             </option>
           )}
         </Input>
+        <h2>{(value.type === 'user' ? 'User' : 'Schema')}</h2>
+        {value.type === 'user' ?
+          <p>
+            User gets their own full access schema as well as read-only access to other specified schemas. Credentials of newly created user will be displayed in the job log. User is required to change the generated password after first login.
+          </p>
+          :
+          <p>
+           Each schema is assigned a user with full access to use in Snowflake Writer. The credentials will be displayed in the job log.
+          </p>}
+
         {value.type === 'schema' &&
       <Input
         type="text"
