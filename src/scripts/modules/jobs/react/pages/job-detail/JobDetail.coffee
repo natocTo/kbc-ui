@@ -26,7 +26,6 @@ ComponentConfigurationLink = require '../../../../components/react/components/Co
 ComponentConfigurationRowLink = React.createFactory(
   require('../../../../components/react/components/ComponentConfigurationRowLink')
 )
-ErrorNote = require('./ErrorNote').default
 
 contactSupport = require('../../../../../utils/contactSupport').default
 
@@ -64,7 +63,6 @@ module.exports = React.createClass
     job: job
     query: JobsStore.getQuery()
     configuration: configuration
-    canUpdateErrorNote: ApplicationStore.getKbcVars().get('canDoSupport')
 
   getInitialState: ->
     job = JobsStore.get RoutesStore.getCurrentRouteIntParam('jobId')
@@ -182,16 +180,8 @@ module.exports = React.createClass
     )
 
     parts.push(
-      div {key: 'errornote', style: {marginTop: "10px"}},
-        React.createElement ErrorNote,
-          jobId: job.get('id')
-          errorNote: job.get('errorNote')
-          onSave: @_handleErrorNoteSave
-          canEdit: @state.canUpdateErrorNote
-          key: 'errornote'
-    )
-    parts.push(
       React.DOM.button
+        key: 'contact-support-btn'
         className: 'btn btn-danger'
         onClick: @_contactSupport
         style:
@@ -366,6 +356,3 @@ module.exports = React.createClass
       subject: "Help with job #{@state.job.get('id')}"
       type: "direct"
     )
-
-  _handleErrorNoteSave: (errorNote) ->
-    ActionCreators.jobErrorNoteUpdated(@state.job.get('id'), errorNote)
