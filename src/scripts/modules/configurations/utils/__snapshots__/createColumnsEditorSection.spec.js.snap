@@ -1,4 +1,4 @@
-exports[`columns editor section test test render 1`] = `
+exports[`columns editor section test render 1`] = `
 <table
   class="table table-striped">
   <thead>
