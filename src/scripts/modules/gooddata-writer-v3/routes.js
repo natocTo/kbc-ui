@@ -16,7 +16,7 @@ import {parseParameters} from './helpers/rowParametersTable';
 
 
 import {Map} from 'immutable';
-import React from 'react';
+// import React from 'react';
 
 const routeSettings = {
   componentId: 'keboola.gooddata-writer',
@@ -69,20 +69,9 @@ const routeSettings = {
         name: 'GoodData Title',
         type: columnTypes.VALUE,
         value: function(row) {
-          const params = row.getIn(['configuration', 'parameters'], Map());
+          const params = row.getIn(['configuration', 'parameters', 'tables'], Map());
           const tableId = params.keySeq().first();
           return params.getIn([tableId, 'title']);
-        }
-      },
-      {
-        name: 'Description',
-        type: columnTypes.VALUE,
-        value: function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
         }
       }
     ]
