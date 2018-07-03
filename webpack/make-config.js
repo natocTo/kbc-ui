@@ -70,7 +70,7 @@ module.exports = function (options) {
     }
 
     return {
-        devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+        devtool: isDevelopment ? 'eval' : 'source-map',
         entry: entry,
         output: {
             path: isDevelopment ? './dist' : './dist/' + process.env.KBC_REVISION,
