@@ -128,7 +128,7 @@ export default React.createClass({
     return (
         <CreateConfigurationRowButton
           componentType={this.props.component.get('type')}
-          objectName="Table"
+          objectName={this.props.objectName}
           componentId={this.props.componentId}
           configId={this.props.configurationId}
           emptyConfig={this.props.rowCreateEmptyConfig}
