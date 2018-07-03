@@ -28,7 +28,11 @@ const routeSettings = {
     show: true,
     sections: [
       {
-        render: DimensionsSection,
+        render: CollapsibleSection({
+          title: 'Date Dimensions',
+          contentComponent: DimensionsSection,
+          options: {strechContentToBody: true}
+        }),
         onSave: dimensionsAdapter.createConfiguration,
         onLoad: dimensionsAdapter.parseConfiguration
       }
