@@ -7,7 +7,7 @@ export function createConfiguration(localState) {
     return Immutable.fromJS({
       parameters: {
         user: {
-          email: localState.get('email'),
+          email: localState.get('email', ''),
           business_schemas: localState.get('business_schemas', []),
           disabled: localState.get('disabled', false)
         }
@@ -18,7 +18,7 @@ export function createConfiguration(localState) {
     return Immutable.fromJS({
       parameters: {
         business_schema: {
-          schema_name: localState.get('schema_name')
+          schema_name: localState.get('schema_name', '')
         }
       }
     });
@@ -32,7 +32,7 @@ export function parseConfiguration(configuration) {
   if (isUser) {
     return Immutable.fromJS({
       type: 'user',
-      email: configuration.getIn(['parameters', 'user', 'email']),
+      email: configuration.getIn(['parameters', 'user', 'email'], ''),
       business_schemas: configuration.getIn(['parameters', 'user', 'business_schemas']),
       disabled: configuration.getIn(['parameters', 'user', 'disabled'], false)
     });
@@ -40,7 +40,7 @@ export function parseConfiguration(configuration) {
   if (isSchema) {
     return Immutable.fromJS({
       type: 'schema',
-      schema_name: configuration.getIn(['parameters', 'business_schema', 'schema_name'])
+      schema_name: configuration.getIn(['parameters', 'business_schema', 'schema_name'], '')
     });
   }
 
