@@ -24,11 +24,7 @@ function prepareFields(column) {
       defaultValue: Types.IGNORE
     },
     dbName: {
-      show: true,
-      defaultValue: column.name
-    },
-    name: {
-      show: false,
+      show: column.type !== Types.IGNORE,
       defaultValue: column.name
     }
   };
