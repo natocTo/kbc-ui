@@ -20,6 +20,11 @@ export default React.createClass({
     refreshMethod: React.PropTypes.func.isRequired
   },
 
+  shouldComponentUpdate(nextProps) {
+    const updateOnProps = ['isLoadingSourceTables', 'isTestingConnection', 'validConnection', 'sourceTables', 'sourceTablesError', 'quickstart'];
+    return updateOnProps.reduce((acc, prop) => acc || nextProps[prop] !== this.props[prop], false);
+  },
+
   quickstart() {
     this.props.onSubmit(this.props.configId, this.props.quickstart.get('tables'));
   },
