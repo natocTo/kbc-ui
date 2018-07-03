@@ -64,6 +64,9 @@ export default React.createClass({
   },
 
   renderHeaderCell(Element) {
+    if (!Element) {
+      return null;
+    }
     return (
       <Element
         showAdvanced={this.state.showAdvanced}
