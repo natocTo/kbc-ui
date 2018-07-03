@@ -1,10 +1,9 @@
 import React, {PropTypes} from 'react';
-// import {FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
-// import { PanelGroup, Panel } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewDimensionForm from './NewDimensionForm';
 import Confirm from '../../../../react/common/Confirm';
+import {Check} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -18,7 +17,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      newDimension: {},
+      newDimension: {template: 'gooddata'},
       showModal: false
     };
   },
@@ -31,7 +30,7 @@ export default React.createClass({
 
   closeModal() {
     if (!this.props.disabled) {
-      this.setState({showModal: false, newDimension: {}});
+      this.setState({showModal: false, newDimension: {template: 'gooddata'}});
     }
   },
 
@@ -40,7 +39,7 @@ export default React.createClass({
       <Modal onHide={this.closeModal} show={this.state.showModal}>
         <Modal.Header closeButton={true}>
           <Modal.Title>
-            + Create new dimenstions
+            Add Date Dimension
           </Modal.Title>
         </Modal.Header>
 
@@ -65,7 +64,8 @@ export default React.createClass({
   },
 
   isValid() {
-    return true;
+    const {name, template, templateId} = this.state.newDimension;
+    return name && (template === 'custom' ? templateId : true);
   },
 
   render() {
@@ -93,7 +93,7 @@ export default React.createClass({
                  return (
                    <tr key={dimName}>
                      <td> {dimName}</td>
-                     <td> {dim.includeTime ? 'yes' : 'no'}</td>
+                     <td> <Check isChecked={dim.includeTime}/></td>
                      <td> {dim.identifier}</td>
                      <td> {dim.template}</td>
                      <td> {this.renderDeleteButton(dimName)}</td>

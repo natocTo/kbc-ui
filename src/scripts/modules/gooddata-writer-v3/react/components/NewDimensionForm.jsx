@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Form, Col, Checkbox, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
+import {Form, Col, Checkbox, FormControl, FormGroup, ControlLabel, HelpBlock, Radio} from 'react-bootstrap';
 import RadioGroup from 'react-radio-group';
-import {Input} from '../../../../react/common/KbcBootstrap';
+// import {Input} from '../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -44,6 +44,7 @@ export default React.createClass({
           <Col sm={9}>
             <FormControl
               type="text"
+              placeholder="optional"
               disabled={disabled}
               onChange={e => this.handleChange({identifier: e.target.value})}
               value={value.identifier}
@@ -59,24 +60,9 @@ export default React.createClass({
               value={value.template}
               onChange={(e) => this.handleChange({template: e.target.value})}
             >
-              <Input
-                type="radio"
-                label="Gooddata "
-                help="Default date dimension provided by GoodData"
-                value="gooddata"
-              />
-              <Input
-                type="radio"
-                label="Keboola"
-                help="Default date dimension provided by Keboola. Added all week setups: Mon-Sun, Tue-Mon, Wed-Tue, Thu-Wed, Fri-Thu, Sat0Fri, Sun-Sat + Boolean value whether its weekend or working day"
-                value="keboola"
-              />
-              <Input
-                type="radio"
-                label="Custom"
-                help="Provide your own template. You can generate the csv file containing all necessary details and provide it ti Goog Data. More info: TODO"
-                value="custom"
-              />
+              {this.renderRadio('GoodData', 'gooddata', 'Default date dimension provided by GoodData')}
+              {this.renderRadio('Keboola', 'keboola', 'Default date dimension provided by Keboola. Added all week setups: Mon-Sun, Tue-Mon, Wed-Tue, Thu-Wed, Fri-Thu, Sat0Fri, Sun-Sat + Boolean value whether its weekend or working day')}
+              {this.renderRadio('Custom', 'custom', 'Provide your own template. You can generate the csv file containing all necessary details and provide it ti Goog Data. More info: TODO')}
             </RadioGroup>
           </Col>
         </FormGroup>
@@ -88,13 +74,26 @@ export default React.createClass({
                type="text"
                disabled={disabled}
                onChange={e => this.handleChange({templateId: e.target.value})}
-               value={value.template}
+               value={value.templateId}
              />
            </Col>
          </FormGroup>
         }
       </Form>
     );
+  },
+
+  renderRadio(name, value, helpText) {
+    return [
+      <Radio
+        isChecked={this.props.value.template === value}
+        key="radio"
+        type="radio"
+        value={value}>
+        {name}
+      </Radio>,
+      <HelpBlock key="help">{helpText}</HelpBlock>
+    ];
   }
 
 
