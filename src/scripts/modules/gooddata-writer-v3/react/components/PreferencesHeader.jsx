@@ -10,7 +10,6 @@ export default React.createClass({
     const {showAdvanced} = this.props;
     return (
       <span className="text-center">
-        <div>Preferences</div>
         <span className="checkbox">
           <label>
             <input
