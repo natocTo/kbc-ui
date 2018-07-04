@@ -1,8 +1,11 @@
 import {Map, fromJS} from 'immutable';
-import {parseParameters, createConfigParameters} from '../helpers/rowParametersTable';
+import {parseParameters, createConfigParameters, createInputMapping, parseInputMapping} from '../helpers/rowParametersTable';
 
 const createConfiguration = (localState) => {
-  return createConfigParameters(localState.remove('hasFact'));
+  const incrementalLoad = localState.get('incrementalLoad', 0);
+  const storage = incrementalLoad > 0 ? createInputMapping(Map({changed_since: incrementalLoad})) : Map();
+  const localStateToSave = localState.remove('hasFact').remove('incrementalLoad');
+  return storage.merge(createConfigParameters(localStateToSave));
 };
 
 export default {
@@ -14,7 +17,7 @@ export default {
     return Map({
       hasFact,
       tableId: parametersTable.get('tableId'),
-      incrementalLoad: parametersTable.get('incrementalLoad', 0),
+      incrementalLoad: parseInputMapping(configuration).get('changed_since', 0),
       grain: parametersTable.get('grain', null)
     });
   },
