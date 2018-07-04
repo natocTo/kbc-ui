@@ -20,22 +20,21 @@ export default React.createClass({
 
     return (
       <Form horizontal>
-        {fields.dbName.show && this.renderInputGroup('BigQuery Column Name', 'dbName')}
         {fields.type.show && this.renderSelectGroup(
            'Data Type',
            'type',
            Object.keys(Types)
         )}
-
+        {fields.dbName.show && this.renderInputGroup('BigQuery Column', 'dbName')}
       </Form>
     );
   },
 
   renderControlGroup(label, control, extraControl) {
     return (
-      <FormGroup  bsSize="small" className="col-sm-12">
+      <FormGroup className="col-sm-12">
         <Col sm={4} componentClass={ControlLabel}>
-          <span className="pull-right">{label}</span>
+          {label}
         </Col>
         <Col sm={8}>
           {

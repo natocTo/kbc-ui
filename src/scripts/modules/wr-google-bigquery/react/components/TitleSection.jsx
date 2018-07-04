@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
+import {Form, FormControl, FormGroup, ControlLabel, Col} from 'react-bootstrap';
 
 export default React.createClass({
   propTypes: {
@@ -13,17 +13,22 @@ export default React.createClass({
   render() {
     const {value, onChange, disabled} = this.props;
     return (
-      <form>
+      <Form horizontal>
+        <h3>BigQuery</h3>
         <FormGroup>
-          <ControlLabel>BigQuery Table Name</ControlLabel>
-          <FormControl
-            type="text"
-            disabled={disabled}
-            onChange={e => onChange({name: e.target.value})}
-            value={value.name}
-          />
+          <Col componentClass={ControlLabel} sm={4}>
+            Target Table Name
+          </Col>
+          <Col sm={8}>
+            <FormControl
+              type="text"
+              disabled={disabled}
+              onChange={e => onChange({name: e.target.value})}
+              value={value.name}
+            />
+          </Col>
         </FormGroup>
-      </form>
+      </Form>
     );
   }
 });
