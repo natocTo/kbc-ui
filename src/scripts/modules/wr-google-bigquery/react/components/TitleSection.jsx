@@ -15,9 +15,8 @@ export default React.createClass({
     return (
       <form>
         <FormGroup>
-          <ControlLabel>BigQuery Name</ControlLabel>
+          <ControlLabel>BigQuery Table Name</ControlLabel>
           <FormControl
-
             type="text"
             disabled={disabled}
             onChange={e => onChange({name: e.target.value})}

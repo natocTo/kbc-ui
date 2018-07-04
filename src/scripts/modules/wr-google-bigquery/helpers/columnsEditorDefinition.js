@@ -27,6 +27,7 @@ export default {
   },
   columnsMappings: [
     {
+      title: 'Preferences',
       render: PreferencesColumn
     }
   ],
