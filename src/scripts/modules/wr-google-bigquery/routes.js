@@ -1,9 +1,17 @@
 import createRoute  from '../configurations/utils/createRoute';
 import columnTypes  from '../configurations/utils/columnTypeConstants';
 import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
+import {CollapsibleSection} from '../configurations/utils/renderHelpers';
+
 import TitleSection from './react/components/TitleSection';
 import title from './adapters/title';
+
+import LoadTypeSection from './react/components/LoadTypeSection';
+import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
+import loadType from './adapters/loadType';
+
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
+
 import React from 'react';
 
 const routeSettings = {
@@ -21,6 +29,16 @@ const routeSettings = {
         onSave: title.createConfiguration,
         onLoad: title.parseConfiguration,
         onCreate: title.createEmptyConfiguration,
+        isComplete: () => true
+      },
+      {
+        render: CollapsibleSection({
+          title: LoadTypeSectionTitle,
+          contentComponent: LoadTypeSection
+        }),
+        onSave: loadType.createConfiguration,
+        onLoad: loadType.parseConfiguration,
+        onCreate: loadType.createEmptyConfiguration,
         isComplete: () => true
       },
       createColumnsEditorSection(columnsEditorDefinition)
