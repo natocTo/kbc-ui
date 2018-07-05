@@ -1,9 +1,9 @@
 import assert from 'assert';
 import Immutable from 'immutable';
-import adapter from './title';
-import { cases } from './title.spec.def';
+import adapter from './targetTable';
+import { cases } from './targetTable.spec.def';
 
-describe('title', function() {
+describe('targetTable', function() {
   describe('createConfiguration()', function() {
     it('should return an empty config with defaults from an empty local state', function() {
       assert.deepEqual(cases.emptyWithDefaults.configuration, adapter.createConfiguration(Immutable.fromJS({})).toJS());

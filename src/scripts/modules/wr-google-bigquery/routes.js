@@ -3,8 +3,8 @@ import columnTypes  from '../configurations/utils/columnTypeConstants';
 import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
-import TitleSection from './react/components/TitleSection';
-import title from './adapters/title';
+import TargetTableSection from './react/components/TargetTableSection';
+import targetTable from './adapters/targetTable';
 
 import LoadTypeSection from './react/components/LoadTypeSection';
 import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
@@ -25,10 +25,10 @@ const routeSettings = {
     hasState: false,
     sections: [
       {
-        render: TitleSection,
-        onSave: title.createConfiguration,
-        onLoad: title.parseConfiguration,
-        onCreate: title.createEmptyConfiguration,
+        render: TargetTableSection,
+        onSave: targetTable.createConfiguration,
+        onLoad: targetTable.parseConfiguration,
+        onCreate: targetTable.createEmptyConfiguration,
         isComplete: () => true
       },
       {
