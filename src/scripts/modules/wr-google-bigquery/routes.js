@@ -6,6 +6,9 @@ import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import TargetTableSection from './react/components/TargetTableSection';
 import targetTable from './adapters/targetTable';
 
+import TargetDatasetSection from './react/components/TargetDatasetSection';
+import targetDataset from './adapters/targetDataset';
+
 import LoadTypeSection from './react/components/LoadTypeSection';
 import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
 import loadType from './adapters/loadType';
@@ -18,7 +21,18 @@ const routeSettings = {
   componentId: 'keboola.wr-google-bigquery',
   componentType: 'writer',
   index: {
-    sections: []
+    sections: [
+      {
+        render: CollapsibleSection({
+          title: 'Google BigQuery Project and Dataset',
+          contentComponent: TargetDatasetSection,
+          options: { includeSaveButtons: true }
+        }),
+        onSave: targetDataset.createConfiguration,
+        onLoad: targetDataset.parseConfiguration,
+        isComplete: targetDataset.isComplete
+      }
+    ]
   },
   row: {
     parseTableId: (row) => row.getIn(['storage', 'input', 'tables', 0, 'source']),

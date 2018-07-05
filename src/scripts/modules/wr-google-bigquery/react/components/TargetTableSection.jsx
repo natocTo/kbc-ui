@@ -4,7 +4,7 @@ import {Form, FormControl, FormGroup, ControlLabel, Col} from 'react-bootstrap';
 export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
-      name: PropTypes.string
+      name: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
