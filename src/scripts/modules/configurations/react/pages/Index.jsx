@@ -9,10 +9,12 @@ import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
+import OauthStore from '../../../oauth-v2/Store';
 
 // actions
 import configurationRowsActions from '../../ConfigurationRowsActionCreators';
 import configurationsActions from '../../ConfigurationsActionCreators';
+
 
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
@@ -25,26 +27,35 @@ import CreateConfigurationRowButton from '../components/CreateConfigurationRowBu
 import ConfigurationRows from '../components/ConfigurationRows';
 // import Credentials from '../components/Credentials';
 import IndexSections from '../components/IndexSections';
+import AuthorizationRow from '../../../oauth-v2/react/AuthorizationRow';
 
 // utils
 import sections from '../../utils/sections';
+import * as oauthUtils from '../../../oauth-v2/OauthUtils';
+
+// constants
+import authorizationConstants from '../../utils/authoriaztionConstants';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore, OauthStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const settings = RoutesStore.getRouteSettings();
     const componentId = settings.get('componentId');
+    const configuration = ConfigurationsStore.get(componentId, configurationId);
+    const oauthCredentialsId = oauthUtils.getCredentialsId(configuration) || configurationId;
     return {
       componentId: componentId,
       component: ComponentsStore.getComponent(componentId),
       settings: settings,
       configurationId: configurationId,
-      configuration: ConfigurationsStore.get(componentId, configurationId),
+      configuration: configuration,
       latestJobs: LatestJobsStore.getJobs(componentId, configurationId),
       rows: ConfigurationRowsStore.getRows(componentId, configurationId),
-      isChanged: ConfigurationsStore.isEditingConfiguration(componentId, configurationId)
+      isChanged: ConfigurationsStore.isEditingConfiguration(componentId, configurationId),
+      oauthCredentialsId: oauthCredentialsId,
+      oauthCredentials: oauthUtils.getCredentials(componentId, oauthCredentialsId)
     };
   },
 
@@ -141,6 +152,28 @@ export default React.createClass({
     );
   },
 
+  renderAuthorization() {
+    if (this.state.settings.getIn(['index', 'authorization']) === authorizationConstants.OAUTH) {
+      return (
+        <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+          <AuthorizationRow
+            id={this.state.oauthCredentialsId}
+            configId={this.state.configurationId}
+            componentId={this.state.componentId}
+            credentials={this.state.oauthCredentials}
+            isResetingCredentials={ConfigurationsStore.getPendingActions(this.state.componentId, this.state.configurationId).has('reset-oauth')}
+            onResetCredentials={this.resetOauthCredentials}
+          />
+        </div>
+      );
+    }
+    return null;
+  },
+
+  resetOauthCredentials() {
+    configurationsActions.resetOauthCredentials(this.state.componentId, this.state.configurationId);
+  },
+
   render() {
     const settings = this.state.settings;
     const sidebarCustomItems = settings.getIn(['index', 'sidebarCustomItems'], Immutable.List());
@@ -153,7 +186,7 @@ export default React.createClass({
               configId={this.state.configurationId}
             />
           </div>
-          {/* <Credentials/> */}
+          {this.renderAuthorization()}
           <IndexSections />
           {this.renderRowsTable()}
         </div>

@@ -13,10 +13,12 @@ import _ from 'lodash';
 import fuzzy from 'fuzzy';
 import Immutable from 'immutable';
 import columnTypeConstants from './columnTypeConstants';
+import authorizationConstants from './authoriaztionConstants';
 import {createTablesRoute} from '../../table-browser/routes';
 
 // defaults
 const defaults = {
+  // TODO is this neccessary here?
   credentials: {
     show: false,
     detail: {
@@ -24,6 +26,9 @@ const defaults = {
         return true;
       }
     }
+  },
+  index: {
+    authorization: authorizationConstants.NONE
   },
   row: {
     hasState: false,

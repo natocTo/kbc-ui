@@ -1,5 +1,6 @@
 import createRoute  from '../configurations/utils/createRoute';
 import columnTypes  from '../configurations/utils/columnTypeConstants';
+import authoriaztion from '../configurations/utils/authoriaztionConstants';
 import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
@@ -21,6 +22,7 @@ const routeSettings = {
   componentId: 'keboola.wr-google-bigquery',
   componentType: 'writer',
   index: {
+    authorization: authoriaztion.OAUTH,
     sections: [
       {
         render: CollapsibleSection({

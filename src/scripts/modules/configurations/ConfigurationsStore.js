@@ -199,6 +199,19 @@ Dispatcher.register(function(payload) {
         .deleteIn(['jsonEditor', action.componentId, action.configurationId]);
       return ConfigurationsStore.emitChange();
 
+    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth', action.rowId], true);
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth']);
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_SUCCESS:
+      _store = _store
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth']);
+      return ConfigurationsStore.emitChange();
+
     default:
       break;
   }
