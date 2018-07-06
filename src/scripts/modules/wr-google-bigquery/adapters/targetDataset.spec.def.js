@@ -5,10 +5,6 @@ export const cases = {
       dataset: ''
     },
     configuration: {
-      parameters: {
-        project: '',
-        dataset: ''
-      }
     }
   },
   simple: {

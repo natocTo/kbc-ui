@@ -1,6 +1,9 @@
 import Immutable from 'immutable';
 
 const createConfiguration = function(localState) {
+  if (!localState.get('project') && !localState.get('dataset')) {
+    return Immutable.fromJS({});
+  }
   const config = Immutable.fromJS({
     parameters: {
       project: localState.get('project', ''),
