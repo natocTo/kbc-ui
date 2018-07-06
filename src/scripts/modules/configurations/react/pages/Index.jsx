@@ -24,7 +24,6 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import CreateConfigurationRowButton from '../components/CreateConfigurationRowButton';
 import ConfigurationRows from '../components/ConfigurationRows';
-// import Credentials from '../components/Credentials';
 import IndexSections from '../components/IndexSections';
 
 // utils
