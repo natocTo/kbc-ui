@@ -1,5 +1,4 @@
 const authorizationConstants = {
-  NONE: 'none',
   OAUTH: 'oauth'
 };
 

@@ -15,6 +15,7 @@ import Immutable from 'immutable';
 import columnTypeConstants from './columnTypeConstants';
 import authorizationConstants from './authoriaztionConstants';
 import {createTablesRoute} from '../../table-browser/routes';
+import {loadCredentialsFromConfig} from '../../oauth-v2/OauthUtils';
 
 // defaults
 const defaults = {
@@ -91,7 +92,9 @@ export default function(settings) {
       action: (params) => jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config)
     },
     requireData: [
-      (params) => installedComponentsActions.loadComponentConfigData(settingsWithDefaults.componentId, params.config),
+      (params) => installedComponentsActions.loadComponentConfigData(settingsWithDefaults.componentId, params.config).then(function() {
+        return loadCredentialsFromConfig(settingsWithDefaults.componentId, params.config);
+      }),
       (params) => versionsActions.loadVersions(settingsWithDefaults.componentId, params.config)
     ],
     childRoutes: []
