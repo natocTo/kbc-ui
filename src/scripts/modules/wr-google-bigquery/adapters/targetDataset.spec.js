@@ -5,8 +5,8 @@ import {cases} from './targetDataset.spec.def';
 
 describe('targetDataset', function() {
   describe('createConfiguration()', function() {
-    it('should return an empty config with defaults from an empty local state', function() {
-      assert.deepEqual(cases.emptyWithDefaults.configuration, adapter.createConfiguration(Immutable.fromJS({})).toJS());
+    it('should return an empty config from an empty local state', function() {
+      assert.deepEqual({}, adapter.createConfiguration(Immutable.fromJS({})).toJS());
     });
     Object.keys(cases).forEach(function(key) {
       it('should return a valid config for a local state with ' + key, function() {
