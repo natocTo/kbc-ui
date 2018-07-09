@@ -28,9 +28,6 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 import {getDefaultTable} from '../../utils';
 // import {Map} from 'immutable';
 
-// css
-require('./Index.less');
-
 // CONSTS
 const COMPONENT_ID = 'keboola.csv-import';
 

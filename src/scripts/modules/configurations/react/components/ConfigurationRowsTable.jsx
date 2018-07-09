@@ -4,8 +4,6 @@ import Row from './ConfigurationRowsTableRow';
 import classnames from 'classnames';
 import Sortable from 'sortablejs';
 
-require('./ConfigurationRowsTable.less');
-
 export default React.createClass({
   mixins: [immutableMixin],
 

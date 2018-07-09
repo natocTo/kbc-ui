@@ -3,9 +3,6 @@ import immutableMixin from 'react-immutable-render-mixin';
 import {ProgressBar} from 'react-bootstrap';
 import {Loader} from '@keboola/indigo-ui';
 
-// css
-require('./Upload.less');
-
 export default React.createClass({
   mixins: [immutableMixin],
 

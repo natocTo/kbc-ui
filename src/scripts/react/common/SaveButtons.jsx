@@ -9,9 +9,6 @@ import {Button} from 'react-bootstrap';
 
 import SaveButtonsModal from './SaveButtonsModal';
 
-// css
-require('./SaveButtons.less');
-
 export default React.createClass({
 
   propTypes: {

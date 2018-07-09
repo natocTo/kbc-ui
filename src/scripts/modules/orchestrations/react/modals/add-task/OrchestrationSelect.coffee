@@ -4,8 +4,6 @@ ComponentName = React.createFactory(require('../../../../../react/common/Compone
 
 {div, h2, a, i, span} = React.DOM
 
-require './ConfigurationSelect.less'
-
 OrchestrationSelect = React.createClass
   displayName: 'OrchestrationSelect'
   propTypes:
