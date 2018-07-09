@@ -13,9 +13,8 @@ import _ from 'lodash';
 import fuzzy from 'fuzzy';
 import Immutable from 'immutable';
 import columnTypeConstants from './columnTypeConstants';
-import authorizationConstants from './authoriaztionConstants';
 import {createTablesRoute} from '../../table-browser/routes';
-import {loadCredentialsFromConfig} from '../../oauth-v2/OauthUtils';
+import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/OauthUtils';
 
 // defaults
 const defaults = {
@@ -28,9 +27,7 @@ const defaults = {
       }
     }
   },
-  index: {
-    authorization: authorizationConstants.NONE
-  },
+  index: {},
   row: {
     hasState: false,
     name: {
@@ -93,7 +90,7 @@ export default function(settings) {
     },
     requireData: [
       (params) => installedComponentsActions.loadComponentConfigData(settingsWithDefaults.componentId, params.config).then(function() {
-        return loadCredentialsFromConfig(settingsWithDefaults.componentId, params.config);
+        return loadOauthCredentials(settingsWithDefaults.componentId, params.config);
       }),
       (params) => versionsActions.loadVersions(settingsWithDefaults.componentId, params.config)
     ],

@@ -1,5 +1,6 @@
 import React from 'react';
 import Immutable from 'immutable';
+
 // stores
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ConfigurationRowsStore from '../../ConfigurationRowsStore';
@@ -13,7 +14,6 @@ import ComponentsStore from '../../../components/stores/ComponentsStore';
 // actions
 import configurationRowsActions from '../../ConfigurationRowsActionCreators';
 import configurationsActions from '../../ConfigurationsActionCreators';
-
 
 // global components
 import RunComponentButton from '../../../components/react/components/RunComponentButton';

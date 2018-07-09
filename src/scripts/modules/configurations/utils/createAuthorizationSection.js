@@ -9,11 +9,12 @@ export default function(authorizationType) {
     AuthorizationComponent = OauthSection;
   }
   return {
-    // render: AuthorizationComponent,
     render: CollapsibleSection({
       title: 'Authorization',
       contentComponent: AuthorizationComponent,
-      options: { includeSaveButtons: false }
+      options: {
+        includeSaveButtons: false
+      }
     }),
     onLoad: function(configuration) {
       if (authorizationType === authorization.OAUTH) {
