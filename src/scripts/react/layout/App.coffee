@@ -19,7 +19,7 @@ classnames = require('classnames')
 
 {div, a, i, p} = React.DOM
 
-require '../../../styles/kbc.less'
+require '../../../styles/app.less'
 
 App = React.createClass
   displayName: 'App'
