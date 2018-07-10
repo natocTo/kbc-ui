@@ -1,6 +1,7 @@
 import React from 'react';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import VersionsStore from '../../stores/VersionsStore';
+import ComponentsStore from '../../stores/ComponentsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import VersionRow from '../components/VersionRow';
 import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
@@ -24,6 +25,7 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
       var versions, filteredVersions, query;
       const configId = RoutesStore.getCurrentRouteParam(configIdParam);
       const componentId = RoutesStore.getCurrentRouteParam('component') || componentIdValue;
+      const component = ComponentsStore.getComponent(componentId);
       versions = VersionsStore.getVersions(componentId, configId);
       query = VersionsStore.getSearchFilter(componentId, configId);
       filteredVersions = versions;
@@ -47,7 +49,8 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
         query: VersionsStore.getSearchFilter(componentId, configId),
         isPending: VersionsStore.isPendingConfig(componentId, configId),
         pendingActions: VersionsStore.getPendingVersions(componentId, configId),
-        pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId)
+        pendingMultiLoad: VersionsStore.getPendingMultiLoad(componentId, configId),
+        deprecated: component.get('flags').includes('deprecated')
       };
     },
 
@@ -83,7 +86,7 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
             isRollbackPending={this.state.pendingActions.getIn([version.get('version'), 'rollback'], false)}
             isRollbackDisabled={readOnlyMode || this.state.isPending}
             hideRollback={readOnlyMode || (i === 0)}
-            hideCopy={readOnlyMode}
+            hideCopy={readOnlyMode || this.state.deprecated}
             isDiffPending={isMultiPending}
             isDiffDisabled={this.state.isPending || isMultiPending}
             previousVersion={previousVersion}
