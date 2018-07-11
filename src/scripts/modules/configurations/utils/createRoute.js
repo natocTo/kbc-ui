@@ -8,6 +8,7 @@ import versionsActions from '../../components/VersionsActionCreators';
 import rowVersionsActions from '../RowVersionsActionCreators';
 import jobsActions from '../../jobs/ActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
+import ComponentsStore from '../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../ConfigurationRowsStore';
 import _ from 'lodash';
 import fuzzy from 'fuzzy';
@@ -90,7 +91,9 @@ export default function(settings) {
     },
     requireData: [
       (params) => installedComponentsActions.loadComponentConfigData(settingsWithDefaults.componentId, params.config).then(function() {
-        return loadOauthCredentials(settingsWithDefaults.componentId, params.config);
+        if (ComponentsStore.getComponent(settingsWithDefaults.componentId).get('flags').includes('genericDockerUI-authorization')) {
+          return loadOauthCredentials(settingsWithDefaults.componentId, params.config);
+        }
       }),
       (params) => versionsActions.loadVersions(settingsWithDefaults.componentId, params.config)
     ],

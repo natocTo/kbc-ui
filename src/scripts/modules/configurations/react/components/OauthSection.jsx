@@ -14,7 +14,7 @@ import AuthorizationRow from '../../../oauth-v2/react/AuthorizationRow';
 import * as oauthUtils from '../../../oauth-v2/OauthUtils';
 
 export default React.createClass({
-  mixins: [createStoreMixin(ConfigurationsStore, OauthStore)],
+  mixins: [createStoreMixin(ConfigurationsStore, OauthStore, RoutesStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
