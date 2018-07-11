@@ -5,8 +5,7 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
       incrementalLoad: PropTypes.number.isRequired,
-      grain: PropTypes.object,
-      hasFact: PropTypes.bool
+      grain: PropTypes.object
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -48,7 +47,6 @@ export default React.createClass({
             {' '} days will be uploaded
           </HelpBlock>
         </FormGroup>
-        {value.hasFact && <p> CONTAINS FACT </p>}
       </form>
     );
   }

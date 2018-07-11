@@ -4,7 +4,7 @@ import {parseParameters, createConfigParameters, createInputMapping, parseInputM
 const createConfiguration = (localState) => {
   const incrementalLoad = localState.get('incrementalLoad', 0);
   const storage = incrementalLoad > 0 ? createInputMapping(Map({changed_since: incrementalLoad})) : Map();
-  const localStateToSave = localState.remove('hasFact').remove('incrementalLoad');
+  const localStateToSave = localState.remove('incrementalLoad');
   return storage.merge(createConfigParameters(localStateToSave));
 };
 
@@ -13,9 +13,7 @@ export default {
 
   parseConfiguration(configuration) {
     const parametersTable = parseParameters(configuration);
-    const hasFact = !!parametersTable.get('columns', Map()).find(column => column.get('type') === 'fact');
     return Map({
-      hasFact,
       tableId: parametersTable.get('tableId'),
       incrementalLoad: parseInputMapping(configuration).get('changed_since', 0),
       grain: parametersTable.get('grain', null)
