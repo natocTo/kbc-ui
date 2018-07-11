@@ -11,9 +11,10 @@ export default function() {
         includeSaveButtons: false
       }
     }),
-    onLoad: function(configuration) {
+    onLoad: function(configuration, context) {
       return Immutable.fromJS({
-        oauthId: configuration.getIn(['authorization', 'oauth_api', 'id'], '')
+        oauthId: configuration.getIn(['authorization', 'oauth_api', 'id'], ''),
+        context: context
       });
     },
     onSave: function(localState) {

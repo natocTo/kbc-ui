@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 
 // stores
 import ComponentStore from '../../../components/stores/ComponentsStore';
+import ConfigurationsStore from '../../ConfigurationsStore';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
@@ -26,11 +27,13 @@ export default React.createClass({
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const component = ComponentStore.getComponent(componentId);
     const isChanged = Store.isEditingConfiguration(componentId, configurationId);
+    const context = ConfigurationsStore.getConfigurationContext(componentId, configurationId);
     const createBySectionsFn = sections.makeCreateFn(settings.getIn(['index', 'sections']));
     const conformFn = settings.getIn(['index', 'onConform'], (config) => config);
     const parseBySectionsFn = sections.makeParseFn(
       settings.getIn(['index', 'sections']),
-      conformFn
+      conformFn,
+      context
     );
 
     const configurationBySections = Store.getEditingConfiguration(

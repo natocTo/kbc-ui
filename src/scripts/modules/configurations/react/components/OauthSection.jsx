@@ -1,9 +1,6 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 // stores
 import ConfigurationsStore from '../../ConfigurationsStore';
-import RoutesStore from '../../../../stores/RoutesStore';
-import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import OauthStore from '../../../oauth-v2/Store';
 
 // actions
 import configurationsActions from '../../ConfigurationsActionCreators';
@@ -14,34 +11,27 @@ import AuthorizationRow from '../../../oauth-v2/react/AuthorizationRow';
 import * as oauthUtils from '../../../oauth-v2/OauthUtils';
 
 export default React.createClass({
-  mixins: [createStoreMixin(ConfigurationsStore, OauthStore, RoutesStore)],
-
-  getStateFromStores() {
-    const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const settings = RoutesStore.getRouteSettings();
-    const componentId = settings.get('componentId');
-    const configuration = ConfigurationsStore.get(componentId, configurationId);
-    const oauthCredentialsId = oauthUtils.getCredentialsId(configuration) || configurationId;
-    return {
-      componentId: componentId,
-      settings: settings,
-      configurationId: configurationId,
-      oauthCredentialsId: oauthCredentialsId,
-      oauthCredentials: oauthUtils.getCredentials(componentId, oauthCredentialsId)
-    };
+  propTypes: {
+    value: PropTypes.shape({
+      oauthId: PropTypes.string.isRequired,
+      context: PropTypes.object.isRequired
+    })
   },
 
-
   render() {
+    const configurationId = this.props.value.context.configurationId;
+    const componentId = this.props.value.context.componentId;
+    const oauthCredentialsId = this.props.value.oauthId;
+
     return (
       <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
         <AuthorizationRow
           showHeader={false}
-          id={this.state.oauthCredentialsId}
-          configId={this.state.configurationId}
-          componentId={this.state.componentId}
-          credentials={this.state.oauthCredentials}
-          isResetingCredentials={ConfigurationsStore.getPendingActions(this.state.componentId, this.state.configurationId).has('reset-oauth')}
+          id={oauthCredentialsId}
+          configId={configurationId}
+          componentId={componentId}
+          credentials={oauthUtils.getCredentials(componentId, oauthCredentialsId)}
+          isResetingCredentials={ConfigurationsStore.getPendingActions(componentId, configurationId).has('reset-oauth')}
           onResetCredentials={this.resetOauthCredentials}
         />
       </div>
@@ -49,6 +39,6 @@ export default React.createClass({
   },
 
   resetOauthCredentials() {
-    configurationsActions.resetOauthCredentials(this.state.componentId, this.state.configurationId);
+    configurationsActions.resetOauthCredentials(this.props.value.context.componentId, this.props.value.context.configurationId);
   }
 });

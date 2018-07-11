@@ -28,6 +28,8 @@ let ConfigurationsStore = StoreUtils.createStore({
     const rows = rawConfig.get('rows', Map()).map((row) => row.get('configuration'));
     const configuration = rawConfig.get('configuration');
     return Immutable.fromJS({
+      componentId,
+      configurationId,
       configuration,
       rows
     });
