@@ -28,7 +28,7 @@ export default React.createClass({
       <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
         <AuthorizationRow
           showHeader={false}
-          id={oauthCredentialsId}
+          id={oauthCredentialsId || configurationId}
           configId={configurationId}
           componentId={componentId}
           credentials={oauthUtils.getCredentials(componentId, oauthCredentialsId)}
