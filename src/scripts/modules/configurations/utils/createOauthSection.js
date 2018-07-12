@@ -1,6 +1,6 @@
-import Immutable from 'immutable';
 import OauthSection from '../react/components/OauthSection';
 import {CollapsibleSection} from '../utils/renderHelpers';
+import adapter from '../adapters/oauth';
 
 export default function() {
   return {
@@ -11,23 +11,8 @@ export default function() {
         includeSaveButtons: false
       }
     }),
-    onLoad: function(configuration, context) {
-      return Immutable.fromJS({
-        oauthId: configuration.getIn(['authorization', 'oauth_api', 'id'], ''),
-        context: context
-      });
-    },
-    onSave: function(localState) {
-      return Immutable.fromJS({
-        authorization: {
-          oauth_api: {
-            id: localState.get('oauthId')
-          }
-        }
-      });
-    },
-    isComplete: function(configuration) {
-      return configuration.hasIn(['authorization', 'oauth_api', 'id']);
-    }
+    onLoad: adapter.parseConfiguration,
+    onSave: adapter.createConfiguration,
+    isComplete: adapter.isComplete
   };
 }

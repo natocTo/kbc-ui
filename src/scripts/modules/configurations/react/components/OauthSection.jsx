@@ -14,13 +14,14 @@ export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
       oauthId: PropTypes.string.isRequired,
-      context: PropTypes.object.isRequired
+      componentId: PropTypes.string.isRequired,
+      configurationId: PropTypes.string.isRequired
     })
   },
 
   render() {
-    const configurationId = this.props.value.context.configurationId;
-    const componentId = this.props.value.context.componentId;
+    const configurationId = this.props.value.configurationId;
+    const componentId = this.props.value.componentId;
     const oauthCredentialsId = this.props.value.oauthId;
 
     return (
@@ -39,6 +40,6 @@ export default React.createClass({
   },
 
   resetOauthCredentials() {
-    configurationsActions.resetOauthCredentials(this.props.value.context.componentId, this.props.value.context.configurationId);
+    configurationsActions.resetOauthCredentials(this.props.value.componentId, this.props.value.configurationId);
   }
 });
