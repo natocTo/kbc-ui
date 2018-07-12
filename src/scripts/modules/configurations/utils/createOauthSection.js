@@ -1,6 +1,6 @@
-import OauthSection from '../react/components/OauthSection';
 import {CollapsibleSection} from '../utils/renderHelpers';
 import adapter from '../adapters/oauth';
+import OauthSection from '../react/components/OauthSection';
 
 export default function() {
   return {

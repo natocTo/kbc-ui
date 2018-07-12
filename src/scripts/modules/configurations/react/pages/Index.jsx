@@ -3,13 +3,13 @@ import Immutable from 'immutable';
 
 // stores
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
+import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../../ConfigurationRowsStore';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import ComponentsStore from '../../../components/stores/ComponentsStore';
 
 // actions
 import configurationRowsActions from '../../ConfigurationRowsActionCreators';
@@ -28,14 +28,19 @@ import IndexSections from '../components/IndexSections';
 
 // utils
 import sections from '../../utils/sections';
+import createOauthSection from '../../utils/createOauthSection';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    const settings = RoutesStore.getRouteSettings();
+    let settings = RoutesStore.getRouteSettings();
     const componentId = settings.get('componentId');
+    if (ComponentsStore.getComponent(componentId).get('flags').includes('genericDockerUI-authorization')) {
+      const updatedSections = settings.getIn(['index', 'sections'], Immutable.List()).unshift(Immutable.fromJS(createOauthSection()));
+      settings = settings.setIn(['index', 'sections'], updatedSections);
+    }
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     return {
       componentId: componentId,
@@ -154,7 +159,9 @@ export default React.createClass({
               configId={this.state.configurationId}
             />
           </div>
-          <IndexSections />
+          <IndexSections
+            settings={this.state.settings}
+          />
           {this.renderRowsTable()}
         </div>
         <div className="col-md-3 kbc-main-sidebar">

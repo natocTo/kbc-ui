@@ -7,11 +7,9 @@ StoreUtils = require '../utils/StoreUtils'
 _ = require 'underscore'
 JobsStore = require '../modules/jobs/stores/JobsStore'
 ComponentsConstants = require('../modules/components/Constants').ActionTypes
-ComponentsStore = require('../modules/components/stores/ComponentsStore')
 {GENERIC_DETAIL_PREFIX} = require('../modules/components/Constants').Routes
 Immutable = require('immutable')
 Constants = require '../constants/KbcConstants'
-createOauthSection = require('../modules/configurations/utils/createOauthSection').default
 
 _store = Map(
   router: null
@@ -64,16 +62,7 @@ getRouteTitle = (store, routeName) ->
 
 getRouteSettings = (store, routeName) ->
   route = getRoute(store, routeName)
-  if route
-    settings = route.get 'settings'
-    if ComponentsStore.getComponent(settings.get('componentId')).get('flags').includes('genericDockerUI-authorization')
-      settings = settings.setIn(
-        ['index', 'sections'],
-        settings.getIn(['index', 'sections'], List()).unshift(Immutable.fromJS(createOauthSection()))
-      )
-    return settings
-  else
-    return Map()
+  if route then route.get 'settings' else Map()
 
 getRouteIsRunning = (store, routeName) ->
   route = getRoute(store, routeName)
