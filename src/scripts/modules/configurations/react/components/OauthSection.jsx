@@ -25,17 +25,15 @@ export default React.createClass({
     const oauthCredentialsId = this.props.value.oauthId;
 
     return (
-      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-        <AuthorizationRow
-          showHeader={false}
-          id={oauthCredentialsId || configurationId}
-          configId={configurationId}
-          componentId={componentId}
-          credentials={oauthUtils.getCredentials(componentId, oauthCredentialsId)}
-          isResetingCredentials={ConfigurationsStore.getPendingActions(componentId, configurationId).has('reset-oauth')}
-          onResetCredentials={this.resetOauthCredentials}
-        />
-      </div>
+      <AuthorizationRow
+        showHeader={false}
+        id={oauthCredentialsId || configurationId}
+        configId={configurationId}
+        componentId={componentId}
+        credentials={oauthUtils.getCredentials(componentId, oauthCredentialsId)}
+        isResetingCredentials={ConfigurationsStore.getPendingActions(componentId, configurationId).has('reset-oauth')}
+        onResetCredentials={this.resetOauthCredentials}
+      />
     );
   },
 
