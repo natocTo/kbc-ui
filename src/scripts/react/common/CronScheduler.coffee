@@ -236,7 +236,7 @@ module.exports = React.createClass
 
   _handleChange: (propName, newValue) ->
     schedule = @_getSchedule()
-    if newValue
+    if newValue.length > 0
       schedule[propName] = _.unique newValue.map((option) ->
         option.value
       )
