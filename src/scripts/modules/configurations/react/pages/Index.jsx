@@ -28,19 +28,14 @@ import IndexSections from '../components/IndexSections';
 
 // utils
 import sections from '../../utils/sections';
-import createOauthSection from '../../utils/createOauthSection';
 
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
-    let settings = RoutesStore.getRouteSettings();
+    const settings = RoutesStore.getRouteSettings();
     const componentId = settings.get('componentId');
-    if (ComponentsStore.getComponent(componentId).get('flags').includes('genericDockerUI-authorization')) {
-      const updatedSections = settings.getIn(['index', 'sections'], Immutable.List()).unshift(Immutable.fromJS(createOauthSection()));
-      settings = settings.setIn(['index', 'sections'], updatedSections);
-    }
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     return {
       componentId: componentId,
@@ -159,9 +154,7 @@ export default React.createClass({
               configId={this.state.configurationId}
             />
           </div>
-          <IndexSections
-            settings={this.state.settings}
-          />
+          <IndexSections />
           {this.renderRowsTable()}
         </div>
         <div className="col-md-3 kbc-main-sidebar">

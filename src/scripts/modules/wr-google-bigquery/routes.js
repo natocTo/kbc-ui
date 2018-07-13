@@ -1,6 +1,7 @@
 import createRoute  from '../configurations/utils/createRoute';
 import columnTypes  from '../configurations/utils/columnTypeConstants';
 import createColumnsEditorSection from '../configurations/utils/createColumnsEditorSection';
+import createOauthSection from '../configurations/utils/createOauthSection';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 
 import TargetTableSection from './react/components/TargetTableSection';
@@ -22,6 +23,7 @@ const routeSettings = {
   componentType: 'writer',
   index: {
     sections: [
+      createOauthSection(),
       {
         render: CollapsibleSection({
           title: 'Google BigQuery Project and Dataset',

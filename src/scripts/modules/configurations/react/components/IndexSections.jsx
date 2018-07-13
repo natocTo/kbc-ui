@@ -21,12 +21,8 @@ import JsonConfiguration from '../components/JsonConfiguration';
 export default React.createClass({
   mixins: [createStoreMixin(InstalledComponentsStore, Store)],
 
-  propTypes: {
-    settings: React.PropTypes.object.isRequired
-  },
-
   getStateFromStores() {
-    const settings = this.props.settings;
+    const settings = RoutesStore.getRouteSettings();
     const componentId = settings.get('componentId');
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const component = ComponentStore.getComponent(componentId);
@@ -53,6 +49,7 @@ export default React.createClass({
     return {
       storedConfigurationSections,
       componentId: settings.get('componentId'),
+      settings: settings,
       component: component,
       configurationId: configurationId,
       createBySectionsFn,
@@ -104,7 +101,7 @@ export default React.createClass({
   },
 
   renderSections() {
-    const settingsSections = this.props.settings.getIn(['index', 'sections']);
+    const settingsSections = this.state.settings.getIn(['index', 'sections']);
     const {storedConfigurationSections} = this.state;
     const returnTrue = () => true;
     return settingsSections.map((section, key) => {
