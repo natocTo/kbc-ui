@@ -3,8 +3,6 @@ import {FormControl, Form, FormGroup, Col, ControlLabel} from 'react-bootstrap';
 import makeColumnDefinition from '../../helpers/makeColumnDefinition';
 import {Types} from '../../helpers/constants';
 
-// import ReactSelect from 'react-select';
-
 export default React.createClass({
   propTypes: {
     onChange: PropTypes.func.isRequired,
@@ -14,87 +12,48 @@ export default React.createClass({
     showAdvanced: PropTypes.bool
   },
 
-  render() {
-    const {column} = this.props;
-    const {fields} = makeColumnDefinition(column);
-
-    return (
-      <Form horizontal>
-        {fields.type.show && this.renderSelectGroup(
-           'Data Type',
-           'type',
-           Object.keys(Types)
-        )}
-        {fields.dbName.show && this.renderInputGroup('BigQuery Column', 'dbName')}
-      </Form>
-    );
-  },
-
-  renderControlGroup(label, control, extraControl) {
+  renderDbName() {
     return (
       <FormGroup className="col-sm-12">
         <Col sm={4} componentClass={ControlLabel}>
-          {label}
+          BigQuery Column
         </Col>
         <Col sm={8}>
-          {
-            extraControl ?
-            [
-              <Col sm={8} key="control" style={{padding: '0'}}>
-                {control}
-              </Col>,
-              <Col sm={4} key="extracontrol" style={{paddingRight: '0'}}>
-                {extraControl}
-              </Col>
-            ]
-            : control
-          }
+          <FormControl
+            type="text"
+            disabled={this.props.disabled}
+            onChange={e => this.onChangeColumn('dbName', e.target.value)}
+            value={this.props.column.dbName}
+          />
         </Col>
       </FormGroup>
     );
   },
 
-  renderSelectGroup(label, fieldName, options, extraControl) {
-    return this.renderControlGroup(
-      label,
-      this.renderSelectInput(fieldName, options),
-      extraControl
-    );
-  },
-
-  renderSelectInput(fieldName, options, settings = {}) {
-    const {disabled, column} = this.props;
+  render() {
+    const {fields} = makeColumnDefinition(this.props.column);
     return (
-      <FormControl
-        componentClass="select"
-        type="select"
-        autosize={false}
-        clearable={false}
-        value={column[fieldName]}
-        options={options}
-        onChange={e => this.onChangeColumn(fieldName, e.target.value)}
-        disabled={disabled}>
-        {!settings.strict && <option value=""/>}
-        {options.map(op => <option value={op} key={op}>{op}</option>)}
-      </FormControl>
-    );
-  },
+      <Form horizontal>
+        <FormGroup className="col-sm-12">
+          <Col sm={4} componentClass={ControlLabel}>
+            Data Type
+          </Col>
+          <Col sm={8}>
+            <FormControl
+              componentClass="select"
+              type="select"
+              autosize={false}
+              clearable={false}
+              value={this.props.column.type}
+              onChange={e => this.onChangeColumn('type', e.target.value)}
+              disabled={this.props.disabled}>
+              {Object.keys(Types).map(option => <option value={option} key={option}>{option}</option>)}
+            </FormControl>
 
-  renderInput(fieldName) {
-    const {disabled, column} = this.props;
-    return (
-      <FormControl
-        type="text"
-        disabled={disabled}
-        onChange={e => this.onChangeColumn(fieldName, e.target.value)}
-        value={column[fieldName]}
-      />);
-  },
-
-  renderInputGroup(label, fieldName) {
-    return this.renderControlGroup(
-      label,
-      this.renderInput(fieldName)
+          </Col>
+        </FormGroup>
+        {fields.dbName.show && this.renderDbName()}
+      </Form>
     );
   },
 
