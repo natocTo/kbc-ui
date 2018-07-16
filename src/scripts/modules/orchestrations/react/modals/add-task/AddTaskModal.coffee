@@ -8,6 +8,7 @@ ModalBody = React.createFactory(require('react-bootstrap').Modal.Body)
 ModalFooter = React.createFactory(require('react-bootstrap').Modal.Footer)
 
 ComponentSelect = React.createFactory(require './ComponentSelect')
+SearchSelect = React.createFactory(require './SearchSelect')
 ConfigurationSelect = React.createFactory(require './ConfigurationSelect')
 OrchestrationSelect = React.createFactory(require './OrchestrationSelect')
 ComponentsReloaderButton = require '../../components/ComponentsReloaderButton'
@@ -21,7 +22,7 @@ ApplicationStore = require '../../../../../stores/ApplicationStore'
 SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
 fuzzy = require 'fuzzy'
 immutableMixin = require 'react-immutable-render-mixin'
-
+Immutable = require 'immutable'
 
 STEP_COMPONENT_SELECT = 'componentSelect'
 STEP_CONFIGURATION_SELECT = 'configurationSelect'
@@ -60,10 +61,37 @@ AddTaskModal = React.createClass
     @state.components.filter (c) ->
       fuzzy.match(filter, c.get('name', '')) || fuzzy.match(filter, c.get('id', ''))
 
+  _getFilteredComponentsSearch: ->
+    filter = @props.searchQuery
+    filteredComponents = @state.components.filter (component) ->
+      configurationsMatch = component.get('configurations', Immutable.List()).filter((configuration) ->
+        fuzzy.match(filter, configuration.get('name', ''))
+      ).size > 0
+      fuzzy.match(filter, component.get('name', '')) ||
+        fuzzy.match(filter, component.get('id', '')) ||
+        configurationsMatch
+    filteredComponents.map (component) ->
+      component.set('configurations', component.get('configurations').filter((configuration) ->
+        fuzzy.match(filter, configuration.get('name', ''))
+      ))
+
   _getFilteredOrchestrations: ->
     filter = @props.searchQuery
     @state.orchestrations.filter ->
       fuzzy.match(filter, 'orchestrator')
+
+  _getFilteredOrchestrationsSearch: ->
+    filter = @props.searchQuery
+    filteredOrchestrations = @state.components.filter (orchestration) ->
+      configurationsMatch = orchestration.get('configurations', Immutable.List()).filter((configuration) ->
+        fuzzy.match(filter, configuration.get('name', ''))
+      ).size > 0
+      fuzzy.match(filter, 'orchestrator') ||
+        configurationsMatch
+    filteredOrchestrations.map (orchestration) ->
+      orchestration.set('configurations', orchestration.get('configurations').filter((configuration) ->
+        fuzzy.match(filter, configuration.get('name', ''))
+      ))
 
   render: ->
     Modal
@@ -83,10 +111,18 @@ AddTaskModal = React.createClass
                 query: @props.searchQuery
                 onChange: @props.onChangeSearchQuery
               div className: 'orchestration-task-modal-body',
-                ComponentSelect
-                  orchestrations: @_getFilteredOrchestrations()
-                  components: @_getFilteredComponents()
-                  onComponentSelect: @_handleComponentSelect
+                if @props.searchQuery.length >= 3
+                  SearchSelect
+                    orchestrations: @_getFilteredOrchestrationsSearch()
+                    components: @_getFilteredComponentsSearch()
+                    onComponentSelect: @_handleComponentSelect
+                    onConfigurationSelect: @_handleConfigurationSearchSelect
+                else
+                  ComponentSelect
+                    orchestrations: @_getFilteredOrchestrations()
+                    components: @_getFilteredComponents()
+                    onComponentSelect: @_handleComponentSelect
+
           when STEP_CONFIGURATION_SELECT
             div className: 'orchestration-task-modal-body',
               ConfigurationSelect
@@ -111,8 +147,11 @@ AddTaskModal = React.createClass
             'Cancel'
 
   _handleComponentSelect: (component) ->
+    originalComponent = @state.components.find((c) ->
+      component.get('id') == c.get('id')
+    )
     @setState
-      selectedComponent: component
+      selectedComponent: originalComponent
       currentStep:
         if component.get('id') == 'orchestrator'
           STEP_ORCHESTRATOR_CONFIGURATION_SELECT
@@ -130,6 +169,13 @@ AddTaskModal = React.createClass
   ###
   _handleConfigurationSelect: (configuration) ->
     @props.onConfigurationSelect(@state.selectedComponent, configuration, @props.phaseId)
+    @props.onHide()
+
+  _handleConfigurationSearchSelect: (component, configuration) ->
+    originalComponent = @state.components.find((c) ->
+      component.get('id') == c.get('id')
+    )
+    @props.onConfigurationSelect(originalComponent, configuration, @props.phaseId)
     @props.onHide()
 
 
