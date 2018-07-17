@@ -48,12 +48,13 @@ module.exports = React.createClass
   prepareDestinationFromSource: (sourceValue) ->
     if !@state.overwriteDestination
       return null
-    isFileMapping = !@props.definition.has('source')
+    isFileMapping = @props.backend == 'docker'
     lastDotIdx = sourceValue.lastIndexOf('.')
     if isFileMapping and lastDotIdx > 0
       sourceValue = sourceValue.substring(0, lastDotIdx)
     dstParser = @_parseDestination()
-    newDestination = dstParser.setPart('table', sourceValue)
+    webalizedSourceValue = stringUtils.webalize(sourceValue, {caseSensitive: true})
+    newDestination = dstParser.setPart('table', webalizedSourceValue)
     return newDestination.tableId
 
 

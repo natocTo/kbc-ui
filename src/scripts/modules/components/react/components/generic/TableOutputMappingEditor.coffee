@@ -8,6 +8,7 @@ AutosuggestWrapper = require('../../../../transformations/react/components/mappi
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
 PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
+webalize = require('../../../../../utils/string').default.webalize
 
 module.exports = React.createClass
   displayName: 'TableOutputMappingEditor'
@@ -40,12 +41,13 @@ module.exports = React.createClass
   prepareDestinationFromSource: (sourceValue) ->
     if !@state.overwriteDestination
       return null
-    isFileMapping = !@props.definition.has('source')
+    isFileMapping = true # generic components always use file system
     lastDotIdx = sourceValue.lastIndexOf('.')
     if isFileMapping and lastDotIdx > 0
       sourceValue = sourceValue.substring(0, lastDotIdx)
     dstParser = @_parseDestination()
-    newDestination = dstParser.setPart('table', sourceValue)
+    webalizedSourceValue = webalize(sourceValue, {caseSensitive: true})
+    newDestination = dstParser.setPart('table', webalizedSourceValue)
     return newDestination.tableId
 
   _handleChangeSource: (e) ->
