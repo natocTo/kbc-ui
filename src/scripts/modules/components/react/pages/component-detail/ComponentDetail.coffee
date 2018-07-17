@@ -114,14 +114,23 @@ module.exports = React.createClass
           div className: "kbc-title",
             h2 null, "Configurations"
             span className: "pull-right",
-              AddComponentConfigurationButton
-                disabled: @_isDeprecated()
-                component: state.component
+              if @state.configurations.count() <= CONFIGURATIONS_COUNT_LIMIT
+                AddComponentConfigurationButton
+                  disabled: @_isDeprecated()
+                  component: state.component
         if @state.configurations.count() > CONFIGURATIONS_COUNT_LIMIT
-          React.createElement SearchRow,
-            className: 'row kbc-search-row'
-            onChange: @_handleFilterChange
-            query: @state.configurationFilter
+          div className: 'col-md-12',
+            div className: 'row',
+              div className: 'col-md-9',
+                React.createElement SearchRow,
+                  className: 'row kbc-search-row'
+                  onChange: @_handleFilterChange
+                  query: @state.configurationFilter
+              div className: 'col-md-3',
+                AddComponentConfigurationButton
+                  disabled: @_isDeprecated()
+                  component: state.component
+
         if @_getFilteredConfigurations().count()
           div className: "table table-hover",
             div className: "tbody",
