@@ -146,6 +146,7 @@ module.exports = React.createClass
             disabled: @props.disabled
             placeholder: "File name"
             onFocus: @_handleFocusSource
+            onBlur: => @setState({overwriteDestination: false})
             onChange: @_handleChangeSource
             labelClassName: 'col-xs-2'
             wrapperClassName: 'col-xs-10'
