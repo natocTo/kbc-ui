@@ -31,6 +31,9 @@ module.exports = React.createClass
   getDefaultProps: ->
     definition: Immutable.Map()
 
+  getInitialState: ->
+    overwriteDestination: false
+
   _parseDestination: ->
     bucketName = stringUtils.webalize(@props.transformationBucket.get('name'))
     if not bucketName.startsWith('c-')
@@ -38,30 +41,43 @@ module.exports = React.createClass
     destination = @props.value.get('destination')
     tableIdParser.parse(destination, {defaultStage: 'out', defaultBucket: bucketName})
 
-  _handleBlurSource: (e) ->
+  _handleFocusSource: ->
+    if !@_parseDestination().parts.table
+      @setState({overwriteDestination: true})
+
+  prepareDestinationFromSource: (sourceValue) ->
+    if !@state.overwriteDestination
+      return null
     isFileMapping = !@props.definition.has('source')
-    sourceValue = e.target.value
     lastDotIdx = sourceValue.lastIndexOf('.')
     if isFileMapping and lastDotIdx > 0
       sourceValue = sourceValue.substring(0, lastDotIdx)
     dstParser = @_parseDestination()
-    if !dstParser.parts.table
-      newDestination = dstParser.setPart('table', sourceValue)
-      @_handleChangeDestination(newDestination.tableId)
+    newDestination = dstParser.setPart('table', sourceValue)
+    return newDestination.tableId
+
 
   _handleChangeSource: (e) ->
-    immutable = @props.value.withMutations (mapping) ->
-      mapping = mapping.set("source", e.target.value.trim())
-    @props.onChange(immutable)
+    newSource = e.target.value.trim()
+    newDestination = @prepareDestinationFromSource(newSource)
+    newMapping = @props.value
+    if newDestination
+      newMapping = @updateMappingWithDestination(newDestination)
+    newMapping = newMapping.set('source', newSource)
+    @props.onChange(newMapping)
 
-  _handleChangeDestination: (newValue) ->
-    value = @props.value.set("destination", newValue.trim())
+
+  updateMappingWithDestination: (newDestination) ->
+    value = @props.value.set("destination", newDestination.trim())
     if @props.tables.get(value.get("destination"))
       value = value.set(
         "primaryKey",
         @props.tables.getIn([value.get("destination"), "primaryKey"], Immutable.List())
       )
-    @props.onChange(value)
+    return value
+
+  _handleChangeDestination: (newValue) ->
+    @props.onChange(@updateMappingWithDestination(newValue))
 
   _updateDestinationPart: (partName, value) ->
     @_handleChangeDestination(@_parseDestination().setPart(partName,value).tableId)
@@ -139,9 +155,8 @@ module.exports = React.createClass
              value: @props.value.get("source")
              disabled: @props.disabled
              placeholder: "File name"
-             onBlur: @_handleBlurSource
+             onFocus: @_handleFocusSource
              onChange: @_handleChangeSource
-             onBlur: @_handleBlurSource
              labelClassName: 'col-xs-2'
              wrapperClassName: 'col-xs-10'
              help: React.DOM.span {},
@@ -160,7 +175,7 @@ module.exports = React.createClass
              value: @props.value.get("source")
              disabled: @props.disabled
              placeholder: "Source table in transformation DB"
-             onBlur: @_handleBlurSource
+             onFocus: @_handleFocusSource
              onChange: @_handleChangeSource
              labelClassName: 'col-xs-2'
              wrapperClassName: 'col-xs-10'
