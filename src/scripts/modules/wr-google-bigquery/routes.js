@@ -16,8 +16,6 @@ import loadType from './adapters/loadType';
 
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
 
-import React from 'react';
-
 const routeSettings = {
   componentId: 'keboola.wr-google-bigquery',
   componentType: 'writer',
@@ -68,21 +66,18 @@ const routeSettings = {
         }
       },
       {
-        name: 'BigQuery Name',
-        type: columnTypes.VALUE,
+        name: 'Source Table',
+        type: columnTypes.TABLE_LINK,
         value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'tables', 0, 'dbName'], 'Unknown');
+          const configuration = row.get('configuration');
+          return configuration.getIn(['storage', 'input', 'tables', 0, 'source'], 'Unknown');
         }
       },
       {
-        name: 'Description',
+        name: 'BigQuery Table',
         type: columnTypes.VALUE,
         value: function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
+          return row.getIn(['configuration', 'parameters', 'tables', 0, 'dbName'], 'Unknown');
         }
       }
     ]
