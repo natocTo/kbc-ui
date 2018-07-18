@@ -125,6 +125,7 @@ module.exports = React.createClass
                 React.createElement SearchRow,
                   onChange: @_handleFilterChange
                   query: @state.configurationFilter
+                  placeholder: 'Search by name, description or id'
               div className: 'row-search-action',
                 AddComponentConfigurationButton
                   disabled: @_isDeprecated()
