@@ -25,14 +25,14 @@ const storeEncodedConfigurationRow = function(componentId, configurationId, rowI
 };
 
 module.exports = {
-  create: function(componentId, configurationId, name, description, emptyConfigFn, createCallback, changeDescription) {
+  create: function(componentId, configurationId, name, friendlyName, description, emptyConfigFn, createCallback, changeDescription) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.CONFIGURATION_ROWS_CREATE_START,
       componentId: componentId,
       configurationId: configurationId
     });
     const data = {
-      name: name,
+      name: friendlyName,
       description: description,
       configuration: JSON.stringify(emptyConfigFn(name, webalize(name)).toJS())
     };
