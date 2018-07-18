@@ -2,6 +2,8 @@ import React from 'react';
 
 import ProjectsList from './List';
 
+import { Icon } from '@keboola/indigo-ui';
+
 
 export default React.createClass({
 
@@ -24,10 +26,13 @@ export default React.createClass({
       <div className={`kbc-project-select dropdown ${clName}`}>
         <button onClick={this._handleDropdownClick} title={this.props.currentProject.get('name')}>
           <span>
-            <span className="kbc-icon-picker-double" />
-              <span className="kbc-project-name">
-                {this.props.currentProject.get('name')}
-              </span>
+            <span className="kbc-project-name">
+              {this.props.currentProject.get('name')}
+              {this.state.open ?
+                <Icon.Times className="pull-right icon-size-16"/> :
+                <Icon.ArrowDown className="pull-right icon-size-16"/>
+              }
+            </span>
           </span>
         </button>
         <div className="dropdown-menu">
