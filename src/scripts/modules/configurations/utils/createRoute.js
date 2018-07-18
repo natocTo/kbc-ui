@@ -1,4 +1,3 @@
-import React from 'react';
 import Index from '../react/pages/Index';
 import Row from '../react/pages/Row';
 import Versions from '../react/pages/Versions';
@@ -13,7 +12,6 @@ import ConfigurationRowsStore from '../ConfigurationRowsStore';
 import _ from 'lodash';
 import fuzzy from 'fuzzy';
 import Immutable from 'immutable';
-import columnTypeConstants from './columnTypeConstants';
 import {createTablesRoute} from '../../table-browser/routes';
 import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/OauthUtils';
 
@@ -40,33 +38,7 @@ const defaults = {
         return Immutable.fromJS({});
       }
     },
-    columns: [
-      {
-        name: 'Name',
-        type: columnTypeConstants.VALUE,
-        value: function(row) {
-          return row.get('name') !== '' ? row.get('name') : 'Untitled';
-        }
-      },
-      {
-        name: 'Storage',
-        type: columnTypeConstants.TABLE_LINK_DEFAULT_BUCKET,
-        value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'name'], 'untitled');
-        }
-      },
-      {
-        name: 'Description',
-        type: 'value',
-        value: function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
-        }
-      }
-    ],
+    columns: [],
     searchFilter: function(row, query) {
       return fuzzy.test(query, row.get('name')) || fuzzy.test(query, row.get('description'));
     }
