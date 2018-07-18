@@ -41,6 +41,11 @@ export default React.createClass({
       configurationFilter: InstalledComponentsStore.getConfigurationFilter(this.props.type)
     };
   },
+  componentWillUnmount: function() {
+    InstalledComponentsActionCreators
+      .setInstalledComponentsConfigurationFilter(this.props.type, '');
+  },
+
   render() {
     if (this.state.installedComponents.count()) {
       return (
