@@ -34,5 +34,4 @@ describe('targetDataset', function() {
       assert.equal(adapter.isComplete(Immutable.fromJS({parameters: {'project': 'a', 'dataset': 'b'}})), true);
     });
   });
-
 });
