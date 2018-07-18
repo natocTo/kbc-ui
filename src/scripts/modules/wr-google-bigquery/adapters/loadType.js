@@ -6,7 +6,7 @@ const createConfiguration = function(localState) {
       input: {
         tables: [
           {
-            changed_since: localState.get('changedSince', false)
+            changed_since: localState.get('changedSince', '')
           }
         ]
       }
