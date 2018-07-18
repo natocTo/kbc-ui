@@ -17,15 +17,6 @@ import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/
 
 // defaults
 const defaults = {
-  // TODO is this neccessary here?
-  credentials: {
-    show: false,
-    detail: {
-      isComplete: function() {
-        return true;
-      }
-    }
-  },
   index: {},
   row: {
     hasState: false,
