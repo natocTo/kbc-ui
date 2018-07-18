@@ -41,8 +41,9 @@ export default React.createClass({
       tables = tables.push({label: table, value: table});
     }
     const {currentSource} = this.props;
-    if (!!currentSource && !tables.find(t => t.label === currentSource)) {
-      tables = tables.insert(0, {label: `Create new table ${currentSource}`, value: currentSource});
+    const webalizedSource = webalize(currentSource || '', {caseSensitive: true});
+    if (!!webalizedSource && !tables.find(t => t.label === webalizedSource)) {
+      tables = tables.insert(0, {label: `Create new table ${webalizedSource}`, value: webalizedSource});
     }
 
     return tables;
