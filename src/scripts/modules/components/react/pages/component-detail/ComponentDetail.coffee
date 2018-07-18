@@ -119,14 +119,13 @@ module.exports = React.createClass
                   disabled: @_isDeprecated()
                   component: state.component
         if @state.configurations.count() > CONFIGURATIONS_COUNT_LIMIT
-          div className: 'col-md-12',
-            div className: 'row',
-              div className: 'col-md-9',
+          div className: 'kbc-inner-padding',
+            div className: 'row-search',
+              div className: 'row-search-input',
                 React.createElement SearchRow,
-                  className: 'row kbc-search-row'
                   onChange: @_handleFilterChange
                   query: @state.configurationFilter
-              div className: 'col-md-3',
+              div className: 'row-search-action',
                 AddComponentConfigurationButton
                   disabled: @_isDeprecated()
                   component: state.component
