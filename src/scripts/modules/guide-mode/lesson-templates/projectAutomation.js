@@ -47,9 +47,9 @@ export default {
       'title': 'Configure Task',
       'markdown': 'As tasks, you will run the Snowflake extractor, transformation and Tableau writer configured in the previous lessons. Add the tasks one by one.'
                 + `
-- Click <span class="btn btn-success btn-sm">+ New task</span>, select your Snowflake extractor, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
-- Click <span class="btn btn-success btn-sm">+ New task</span> again. Select your Transformation from the list, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
-- Click <span class="btn btn-success btn-sm">+ New task</span> again. Select your Tableau writer from the list, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
+- Click <span class="btn btn-success btn-sm">+ New task</span>, select the Snowflake extractor component, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
+- Click <span class="btn btn-success btn-sm">+ New task</span> again. Select the Transformations component from the list, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
+- Click <span class="btn btn-success btn-sm">+ New task</span> again. Select the Tableau writer component from the list, then select your configuration by clicking on <i class="fa fa-plus-circle"></i>. <br><br>
 
 Then click <span class="btn btn-success btn-sm">Save</span> in the upper right corner.
 
