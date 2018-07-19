@@ -18,7 +18,7 @@ function inputMapping(mapping = {}) {
   return {
     input: {
       tables: [
-        {...mapping, source: tableId}
+        {...mapping}
       ]
     }
   };
@@ -34,8 +34,8 @@ const casesDefinition = {
       grain: []
     },
     configuration: {
-      storage: inputMapping({}),
-      parameters: makeParameters({})
+      storage: inputMapping({changed_since: '', incremental: false}),
+      parameters: makeParameters({grain: null})
     }
   },
 
@@ -49,13 +49,19 @@ const casesDefinition = {
       grain: ['a', 'b']
     },
     configuration: {
-      storage: inputMapping({columns: ['a', 'b', 'c']}),
+      storage: inputMapping({changed_since: '', incremental: false}),
       parameters: makeParameters({
         columns: {
           'a': {type: Types.ATTRIBUTE, title: 'a'},
           'b': {type: Types.ATTRIBUTE, title: 'b'},
           'c': {type: Types.ATTRIBUTE, title: 'c'}
         },
+        grain: ['a', 'b']
+      })
+    },
+    configurationToCreate: {
+      storage: inputMapping({changed_since: '', incremental: false}),
+      parameters: makeParameters({
         grain: ['a', 'b']
       })
     }
@@ -73,7 +79,7 @@ const casesDefinition = {
     },
     configuration: {
       storage: inputMapping({incremental: true, changed_since: '5 days ago'}),
-      parameters: makeParameters({})
+      parameters: makeParameters({grain: null})
     }
 
   }
@@ -83,10 +89,14 @@ const casesDefinition = {
 describe('load type adapter tests', () => {
   const casesKeys = Object.keys(casesDefinition);
   casesKeys.forEach(caseName => {
-    const {localState, configuration} = casesDefinition[caseName];
-    it('should test parse/create of ' + caseName + ' case', () => {
-      const parsed = loadType.parseConfiguration(fromJS(configuration)).toJS();
-      assert.deepEqual(localState, parsed);
+    const {localState, configuration, configurationToCreate} = casesDefinition[caseName];
+    const parsed = loadType.parseConfiguration(fromJS(configuration));
+    const reconstructed = loadType.createConfiguration(parsed);
+    it('should test parse of ' + caseName + ' case', () => {
+      assert.deepEqual(localState, parsed.toJS());
+    });
+    it('should test create of ' + caseName + ' case', () => {
+      assert.deepEqual(configurationToCreate || configuration, reconstructed.toJS());
     });
   });
 });
