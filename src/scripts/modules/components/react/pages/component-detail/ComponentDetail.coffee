@@ -92,7 +92,7 @@ module.exports = React.createClass
     return @state.component.get('flags').includes('deprecated')
 
   _handleFilterChange: (query) ->
-    InstalledComponentsActionCreators.setInstalledComponentsComponentDetailFilter(component.get('id'), query)
+    InstalledComponentsActionCreators.setInstalledComponentsComponentDetailFilter(@state.component.get('id'), query)
 
   _renderConfigurations: ->
     hasRedshift = ApplicationStore.getSapiToken().getIn ['owner', 'hasRedshift']
