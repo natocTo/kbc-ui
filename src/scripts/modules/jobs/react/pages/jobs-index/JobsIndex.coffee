@@ -5,7 +5,7 @@ JobsStore = require('../../../stores/JobsStore')
 RoutesStore = require '../../../../../stores/RoutesStore'
 ActionCreators = require('../../../ActionCreators')
 
-QueryRow = React.createFactory(require('./QueryRow'))
+QueryRow = React.createFactory(require('./QueryRow').default)
 JobRow = React.createFactory(require('./JobRow').default)
 
 {div, span,input, strong, form, button} = React.DOM
