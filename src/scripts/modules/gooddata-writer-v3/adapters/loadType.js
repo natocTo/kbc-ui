@@ -1,5 +1,6 @@
 import {Map, fromJS, List} from 'immutable';
-import {parseParameters, createConfigParameters, createInputMapping, parseInputMapping} from '../helpers/rowParametersTable';
+import {parseParameters, createConfigParameters} from '../helpers/rowTableParameters';
+import { createInputMapping, parseInputMapping } from '../helpers/inputMapping';
 import {Types} from '../helpers/Constants';
 
 const GRAIN_TYPES = [

@@ -12,7 +12,7 @@ import dimensionsAdapter from './adapters/dimensions';
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
 import ToggleProjectAccess from './react/components/ToggleProjectAccess';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
-import {parseParameters} from './helpers/rowParametersTable';
+import {parseParameters} from './helpers/rowTableParameters';
 
 
 import {Map} from 'immutable';
