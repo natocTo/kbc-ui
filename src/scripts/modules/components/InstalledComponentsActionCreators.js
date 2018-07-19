@@ -743,6 +743,13 @@ module.exports = {
       filter: query
     });
   },
+  setInstalledComponentsComponentDetailFilter: function(componentId, query) {
+    return dispatcher.handleViewAction({
+      type: constants.ActionTypes.INSTALLED_COMPONENTS_SEARCH_COMPONENT_DETAIL_FILTER_CHANGE,
+      componentId: componentId,
+      filter: query
+    });
+  },
   startConfigurationRowEdit: function(componentId, configurationId, rowId, field, fallbackValue) {
     return dispatcher.handleViewAction({
       type: constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_START,

@@ -51,7 +51,7 @@ module.exports = React.createClass
       component: component
       configurations: configurations
       deletingConfigurations: deletingConfigurations.get(component.get('id'), Immutable.Map())
-      configurationFilter: InstalledComponentsStore.getConfigurationFilter(component.get('type'))
+      configurationFilter: InstalledComponentsStore.getComponentDetailFilter(component.get('id'))
     state
 
   render: ->
@@ -92,7 +92,7 @@ module.exports = React.createClass
     return @state.component.get('flags').includes('deprecated')
 
   _handleFilterChange: (query) ->
-    InstalledComponentsActionCreators.setInstalledComponentsConfigurationFilter(@state.component.get('type'), query)
+    InstalledComponentsActionCreators.setInstalledComponentsComponentDetailFilter(component.get('id'), query)
 
   _renderConfigurations: ->
     hasRedshift = ApplicationStore.getSapiToken().getIn ['owner', 'hasRedshift']
