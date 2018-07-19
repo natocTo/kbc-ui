@@ -1,4 +1,4 @@
-import { Map, fromJS } from 'immutable/dist/immutable';
+import { Map, fromJS } from 'immutable';
 const inputMappingPath = ['storage', 'input', 'tables'];
 export function parseInputMapping(configuration) {
   return configuration.getIn(inputMappingPath.concat(0), Map());
