@@ -1,5 +1,7 @@
 React = require('react')
 Popover = React.createFactory(require('react-bootstrap').Popover)
+OverlayTrigger = React.createFactory(require('react-bootstrap').OverlayTrigger)
+
 
 {div, form, input,span, a} = React.DOM
 
@@ -18,10 +20,14 @@ QueryRow = React.createClass
   _doSearch: (event) ->
     @props.onSearch @state.query
     event.preventDefault()
-  _helpClicked: (event) ->
-    @setState
-      helpVisible: !helpVisible
-    event.preventDefault()
+  _renderPopover: =>
+    if (@state.helpVisible)
+      Popover
+        title: "Help"
+      ,
+        'XXXX'
+
+
   render: ->
     form {onSubmit: @_doSearch},
       div {className: 'row kbc-search kbc-search-row'},
@@ -32,12 +38,11 @@ QueryRow = React.createClass
           className: 'form-control'
           onChange: @_onQueryChange
           placeholder: 'search',
-        a {target: '_blank', href: 'http://example.com', onClick: @_helpClicked}, 'Help'
-        if (@state.helpVisible)
-          Popover
-            title: 'Help'
-            div {className: 'some'},
-              'XXXX'
-        else
+        OverlayTrigger
+          placement: 'left'
+          overlay: @_renderPopover()
+        ,
+          React.DOM.button className: 'btn btn-link',
+            React.DOM.span className: 'fa fa-eye'
 
 module.exports = QueryRow
