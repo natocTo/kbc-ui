@@ -10,51 +10,45 @@ export default React.createClass({
   propTypes: {
     transformations: PropTypes.object
   },
-  render() {
-    var getOddBucketList = function() {
-      return (getFilteredBucketList(1));
-    };
-    var getEvenBucketList = function() {
-      return (getFilteredBucketList(0));
-    };
-    var getFilteredBucketList = function(even) {
-      let idx = 0;
-      return (deprecatedTransformationsInBuckets.map(function(bucket, indexBucket) {
+  getOddBucketList() {
+    return (this.getFilteredBucketList(1));
+  },
+  getEvenBucketList() {
+    return (this.getFilteredBucketList(0));
+  },
+  getFilteredBucketList(even) {
+    let idx = 0;
+    return (
+      this.getDeprecatedTransformationsInBuckets().map(function(bucket, indexBucket) {
         idx++;
         if (idx % 2 === even) {
-          return (getBucketList(bucket, indexBucket)
+          return (
+            <div key={indexBucket}>
+              <h4>
+                <Icon.Transformation className="icon-category"/>
+                {TransformationBucketsStore.get(indexBucket).get('name', indexBucket)}
+              </h4>
+              <ul className="list-unstyled">
+                {bucket.map(function(transformation, indexTransformation) {
+                  return (
+                    <li key={indexTransformation}>
+                      <ComponentConfigurationRowLink
+                        componentId="transformation"
+                        configId={indexBucket}
+                        rowId={indexTransformation}
+                      >
+                        {TransformationsStore.getTransformation(indexBucket, indexTransformation).get('name', indexTransformation)}
+                      </ComponentConfigurationRowLink>
+                    </li>
+                  );
+                }).toSeq().toArray()}
+              </ul>
+            </div>
           );
         }
       }).toSeq().toArray());
-    };
-    var getBucketList = function(bucket, indexBucket) {
-      return (
-        <div key={indexBucket}>
-          <h4>
-            <Icon.Transformation className="icon-category"/>
-            {TransformationBucketsStore.get(indexBucket).get('name', indexBucket)}
-          </h4>
-          <ul className="list-unstyled">
-            {bucket.map(function(transformation, indexTransformation) {
-              return (
-                <li key={indexTransformation}>
-                  <ComponentConfigurationRowLink
-                    componentId="transformation"
-                    configId={indexBucket}
-                    rowId={indexTransformation}
-                  >
-                    {TransformationsStore.getTransformation(indexBucket, indexTransformation).get('name', indexTransformation)}
-                  </ComponentConfigurationRowLink>
-                </li>
-              );
-            }).toSeq().toArray()}
-          </ul>
-        </div>
-      );
-    };
-    if (!this.props.transformations) {
-      return null;
-    }
+  },
+  getDeprecatedTransformationsInBuckets() {
     var deprecatedTransformationsInBuckets = new Immutable.Map();
     this.props.transformations.forEach(function(bucket, index) {
       const deprecatedTransformations = bucket.filter(function(transformation) {
@@ -64,8 +58,13 @@ export default React.createClass({
         deprecatedTransformationsInBuckets = deprecatedTransformationsInBuckets.set(index, deprecatedTransformations);
       }
     });
-
-    if (deprecatedTransformationsInBuckets.isEmpty()) {
+    return deprecatedTransformationsInBuckets;
+  },
+  render() {
+    if (!this.props.transformations) {
+      return null;
+    }
+    if (this.getDeprecatedTransformationsInBuckets().isEmpty()) {
       return null;
     }
     return (
@@ -77,13 +76,14 @@ export default React.createClass({
         </p>
         <div className="row">
           <div className="col-md-6">
-            {getOddBucketList()}
+            {this.getOddBucketList()}
           </div>
           <div className="col-md-6">
-            {getEvenBucketList()}
+            {this.getEvenBucketList()}
           </div>
         </div>
       </AlertBlock>
     );
   }
-});
+})
+;
