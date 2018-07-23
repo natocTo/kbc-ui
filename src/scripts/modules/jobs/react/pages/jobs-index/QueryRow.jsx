@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
+import {OverlayTrigger, Popover} from 'react-bootstrap';
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -36,9 +37,21 @@ export default React.createClass({
             onChange={this.onQueryChange}
             placeholder="search"
           />
+            <OverlayTrigger
+              placement="bottom"
+              overlay={this.renderPopover()}
+            >
+              <i className={'btn btn-link fa fa-question'} />
+            </OverlayTrigger>
         </div>
       </form>
     );
+  },
+
+  renderPopover() {
+    return ( <Popover title="Quick help" id="job-search-popover" placement="bottom">
+
+    </Popover> );
   }
 
 });
