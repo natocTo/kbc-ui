@@ -296,21 +296,18 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="row">
           <div className="form-horizontal clearfix">
-            <div className="row col-md-12">
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Source</label>
-                <div className="col-xs-10">
-                  <SapiTableSelector
-                    value={this.props.value.get('source', '')}
-                    disabled={this.props.disabled}
-                    placeholder="Source Table"
-                    onSelectTableFn={this._handleChangeSource}
-                    autoFocus={true}
-                  />
-                </div>
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Source</label>
+              <div className="col-xs-10">
+                <SapiTableSelector
+                  value={this.props.value.get('source', '')}
+                  disabled={this.props.disabled}
+                  placeholder="Source Table"
+                  onSelectTableFn={this._handleChangeSource}
+                  autoFocus={true}
+                />
               </div>
             </div>
-            <div className="row col-md-12">
               <Input
                 type="text"
                 label="Destination"
@@ -329,7 +326,6 @@ export default React.createClass({
                     : null
                 }
               />
-            </div>
           </div>
         </div>
         <div className="row">
