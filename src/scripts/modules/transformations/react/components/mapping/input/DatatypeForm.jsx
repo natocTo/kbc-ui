@@ -49,7 +49,11 @@ export default React.createClass({
 
   render() {
     if (this.props.disabled) {
-      return null;
+      return (
+        <div className="help-block">
+          A source table must be selected to define data types.
+        </div>
+      );
     }
     const renderedColumns = this.props.columns.map((column) => {
       return this.renderColumn(column);
