@@ -55,7 +55,7 @@ export default React.createClass({
       return this.renderColumn(column);
     });
     return (
-      <Table responsive className="table table-striped">
+      <Table responsive striped hover>
         <thead>
           <tr>
             <th>
@@ -74,7 +74,7 @@ export default React.createClass({
                 checked={this.state.convertAll}
                 onChange={this.handleConvertAllChange}
                 label={
-                  <span>Convert <strong>all</strong> empty values to <code>null</code></span>
+                  <span>Set all empty values to <code>null</code></span>
                 }
               />
             </th>

@@ -12,6 +12,12 @@ export default React.createClass({
     onChange: React.PropTypes.func.isRequired
   },
 
+  getInitialState() {
+    return {
+      hovered: false
+    };
+  },
+
   lengthEnabled() {
     const selectedType = this.props.datatypesMap.filter((datatype) => {
       return datatype.get('name') === this.props.datatype.get('type');
@@ -44,9 +50,31 @@ export default React.createClass({
     });
   },
 
+  setHoveredTrue() {
+    return this.setState({
+      hovered: true
+    });
+  },
+
+  setHoveredFalse() {
+    return this.setState({
+      hovered: false
+    });
+  },
+
+  getCheckboxLabel() {
+    if (this.state.hovered) {
+      return (
+        <span>Empty values as <code>null</code></span>
+      );
+    } else {
+      return <span/>;
+    }
+  },
+
   render() {
     return (
-      <tr key={this.props.datatype.get('column')}>
+      <tr key={this.props.datatype.get('column')} onMouseEnter={this.setHoveredTrue} onMouseLeave={this.setHoveredFalse} >
         <td>
           <strong>{this.props.datatype.get('column')}</strong>
         </td>
@@ -81,9 +109,7 @@ export default React.createClass({
             type="checkbox"
             checked={this.props.datatype.get('convertEmptyValuesToNull')}
             onChange={this.handleNullableChange}
-            label={
-              <span>Convert empty values to <code>null</code></span>
-            }
+            label={this.getCheckboxLabel()}
           />
         </td>
       </tr>
