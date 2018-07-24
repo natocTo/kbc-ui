@@ -28,22 +28,27 @@ export default React.createClass({
   render() {
     return (
       <form onSubmit={this.doSearch}>
-        <div className="row kbc-search kbc-search-row">
-          <span className="kbc-icon-search" />
-          <input
-            type="text"
-            value={this.state.query}
-            className="form-control"
-            onChange={this.onQueryChange}
-            placeholder="search"
-          />
-            <OverlayTrigger
+        <div className="kbc-inner-padding">
+        <div className="row-search">
+          <div className="row-search-input">
+            <input
+              type="text"
+              value={this.state.query}
+              className="form-control"
+              onChange={this.onQueryChange}
+              placeholder="search"
+            />
+          </div>
+          <div className="row-search-action">
+             <OverlayTrigger
               trigger="click"
               placement="bottom"
               overlay={this.renderPopover()}
             >
-              <i className={'btn btn-link fa fa-question'} />
+             <i className={'btn btn-link fa fa-question'} />
             </OverlayTrigger>
+          </div>
+          </div>
         </div>
       </form>
     );
