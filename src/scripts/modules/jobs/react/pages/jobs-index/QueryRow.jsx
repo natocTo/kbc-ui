@@ -46,7 +46,7 @@ export default React.createClass({
               placement="bottom"
               overlay={this.renderQuickHelp()}
             >
-              <Button bsStyle="link">
+              <Button bsStyle="link"  title="Show Quick help">
                 <Icon.Help className={'icon-size-20'}/>
               </Button>
             </OverlayTrigger>
