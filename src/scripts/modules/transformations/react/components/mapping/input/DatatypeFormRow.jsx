@@ -68,7 +68,9 @@ export default React.createClass({
         <span>Empty values as <code>null</code></span>
       );
     } else {
-      return <span/>;
+      return (
+        <span>&nbsp;<code/></span>
+      );
     }
   },
 
