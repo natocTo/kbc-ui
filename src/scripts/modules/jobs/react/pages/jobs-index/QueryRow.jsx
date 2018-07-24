@@ -30,14 +30,14 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="kbc-inner-padding">
+      <div className="kbc-inner-padding kbc-row">
         <div className="row-search">
           <div className="row-search-input">
             <SearchRow
               query={this.state.query}
               onChange={this.onQueryChange}
               onSubmit={this.doSearch}
-              placeholder="search"
+              placeholder="Search by name or attributes"
             />
           </div>
           <div className="row-search-action">
