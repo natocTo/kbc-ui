@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
+import SearchRow from '../../../../../react/common/SearchRow';
+
 
 export default React.createClass({
   mixins: [immutableMixin],
@@ -27,17 +29,15 @@ export default React.createClass({
   },
   render() {
     return (
-      <form onSubmit={this.doSearch}>
         <div className="kbc-inner-padding">
         <div className="row-search">
           <div className="row-search-input">
-            <input
-              type="text"
-              value={this.state.query}
-              className="form-control"
-              onChange={this.onQueryChange}
-              placeholder="search"
-            />
+            <SearchRow
+                query={this.state.query}
+                onChange={this.onQueryChange}
+                onSubmit={this.doSearch}
+                placeholder="search"
+              />
           </div>
           <div className="row-search-action">
              <OverlayTrigger
@@ -45,12 +45,11 @@ export default React.createClass({
               placement="bottom"
               overlay={this.renderPopover()}
             >
-             <i className={'btn btn-link fa fa-question'} />
+              <i className={'btn btn-link fa fa-question'} />
             </OverlayTrigger>
           </div>
           </div>
         </div>
-      </form>
     );
   },
 
