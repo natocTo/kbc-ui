@@ -23,8 +23,6 @@ contactSupport = require('../../../../../utils/contactSupport').default
 MigrationRow = require('../../components/MigrationRow').default
 SearchRow = require('../../../../../react/common/SearchRow').default
 
-CONFIGURATIONS_COUNT_LIMIT = 2
-
 {a, div, label, h3, h2, span, p} = React.DOM
 
 module.exports = React.createClass
@@ -113,13 +111,6 @@ module.exports = React.createClass
         div className: "kbc-header",
           div className: "kbc-title",
             h2 null, "Configurations"
-            span className: "pull-right",
-              if @state.configurations.count() <= CONFIGURATIONS_COUNT_LIMIT
-                AddComponentConfigurationButton
-                  disabled: @_isDeprecated()
-                  component: state.component
-        if @state.configurations.count() > CONFIGURATIONS_COUNT_LIMIT
-          div className: 'kbc-inner-padding',
             div className: 'row-search',
               div className: 'row-search-input',
                 React.createElement SearchRow,
@@ -130,7 +121,6 @@ module.exports = React.createClass
                 AddComponentConfigurationButton
                   disabled: @_isDeprecated()
                   component: state.component
-
         if @_getFilteredConfigurations().count()
           div className: "table table-hover",
             div className: "tbody",
