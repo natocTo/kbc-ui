@@ -50,7 +50,7 @@ export default React.createClass({
   },
 
   renderPopover() {
-    return ( <Popover title="Quick help" id="job-search-popover" placement="bottom">
+    return ( <Popover title="Quick help" id="job-search-popover" className="popover-wide" placement="bottom">
       <h3>Search attributes</h3>
       <dl>
         <dt>
