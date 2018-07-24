@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
+import { Icon } from '@keboola/indigo-ui';
 import SearchRow from '../../../../../react/common/SearchRow';
 
 
@@ -29,27 +30,27 @@ export default React.createClass({
   },
   render() {
     return (
-        <div className="kbc-inner-padding">
+      <div className="kbc-inner-padding">
         <div className="row-search">
           <div className="row-search-input">
             <SearchRow
-                query={this.state.query}
-                onChange={this.onQueryChange}
-                onSubmit={this.doSearch}
-                placeholder="search"
-              />
+              query={this.state.query}
+              onChange={this.onQueryChange}
+              onSubmit={this.doSearch}
+              placeholder="search"
+            />
           </div>
           <div className="row-search-action">
-             <OverlayTrigger
+            <OverlayTrigger
               trigger="click"
               placement="bottom"
               overlay={this.renderPopover()}
             >
-              <i className={'btn btn-link fa fa-question'} />
+              <Icon.Help className={'icon-size-20'}/>
             </OverlayTrigger>
           </div>
-          </div>
         </div>
+      </div>
     );
   },
 
