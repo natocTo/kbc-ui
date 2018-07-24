@@ -39,6 +39,7 @@ export default React.createClass({
     });
     return (
       <DatatypeFormRow
+        key={column}
         datatype={columnObject.get(column)}
         datatypesMap={this.props.datatypesMap}
         onChange={this.handleDatatypeChange}
