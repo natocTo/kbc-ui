@@ -32,6 +32,11 @@ export default function(configId) {
     removeFromLocalState(['isChanged']);
   }
 
+  function editProcessorsReset() {
+    removeFromLocalState(['processors']);
+    removeFromLocalState(['isProcessorsChanged']);
+  }
+
   function editChange(field, newValue) {
     let settings = store.settings;
     settings = settings.set(field, newValue);
@@ -41,13 +46,31 @@ export default function(configId) {
     }
   }
 
+  function editProcessorsChange(newValue) {
+    store.processors = newValue;
+    updateLocalState(['processors'], newValue);
+    if (!getLocalState().get('isProcessorsChanged', false)) {
+      updateLocalState(['isProcessorsChanged'], true);
+    }
+  }
+
   function editSave() {
-    const config = store.configData.set('parameters', store.settings);
+    let config = store.configData.set('parameters', store.settings);
     updateLocalState(['isSaving'], true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config, 'Update parameters').then(() => {
       removeFromLocalState(['settings']);
       removeFromLocalState(['isSaving']);
       removeFromLocalState(['isChanged']);
+    });
+  }
+
+  function editProcessorsSave() {
+    let config = store.configData.set('processors', JSON.parse(store.processors));
+    updateLocalState(['isProcessorsSaving'], true);
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config, 'Update processors').then(() => {
+      removeFromLocalState(['processors']);
+      removeFromLocalState(['isProcessorsSaving']);
+      removeFromLocalState(['isProcessorsChanged']);
     });
   }
 
@@ -85,6 +108,10 @@ export default function(configId) {
     requestEmailAndInitConfig: requestEmailAndInitConfig,
     editReset: editReset,
     editSave: editSave,
-    editChange: editChange
+    editChange: editChange,
+    editProcessorsReset: editProcessorsReset,
+    editProcessorsSave: editProcessorsSave,
+    editProcessorsChange: editProcessorsChange
+
   };
 }

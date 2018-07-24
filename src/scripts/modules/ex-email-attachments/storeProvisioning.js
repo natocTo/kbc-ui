@@ -5,13 +5,15 @@ import InstalledComponentStore from '../components/stores/InstalledComponentsSto
 export const storeMixins = [InstalledComponentStore];
 
 export default function(configId) {
-  var settings;
+  var settings, processors;
   let localState = InstalledComponentStore.getLocalState(COMPONENT_ID, configId);
   const configData =  InstalledComponentStore.getConfigData(COMPONENT_ID, configId);
 
   settings = localState.get('settings', configData.get('parameters', Map()));
+  processors = localState.get('processors', JSON.stringify(configData.get('processors', Map().toJS()), ' ', 2));
   return {
     settings: settings,
+    processors: processors,
     configData: configData,
     error: localState.get('error'),
     requestedEmail: settings.get('email'),

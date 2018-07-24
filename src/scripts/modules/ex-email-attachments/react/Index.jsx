@@ -24,6 +24,7 @@ import ClipboardButton from '../../../react/common/Clipboard';
 import SapiTableLinkEx from '../../components/react/components/StorageApiTableLinkEx';
 import getDefaultBucket from '../../../utils/getDefaultBucket';
 import {FormGroup, FormControl, Form, ControlLabel, Col, InputGroup, Button, HelpBlock} from 'react-bootstrap';
+import Processors from '../../components/react/components/Processors';
 
 
 const COMPONENT_ID = 'keboola.ex-email-attachments';
@@ -43,7 +44,8 @@ export default React.createClass({
       tables: StorageTablesStore.getAll(),
       latestJobs: LatestJobsStore.getJobs(COMPONENT_ID, configId),
       localState: store.getLocalState(),
-      settings: store.settings
+      settings: store.settings,
+      processors: store.processors
     };
   },
 
@@ -129,6 +131,7 @@ export default React.createClass({
                     actions={this.state.actions}
                     localState={this.state.localState}
                 />
+                  {this.renderProcessors()}
             </div>
                 :
                 this.renderInitConfig()
@@ -216,5 +219,36 @@ export default React.createClass({
     }
 
     return false;
+  },
+
+  renderProcessors() {
+    if (this.state.processors === '{}') {
+      return null;
+    }
+    return (
+      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+        <Processors
+          value={this.state.processors}
+          onEditCancel={this.state.actions.editProcessorsReset}
+          onEditChange={this.state.actions.editProcessorsChange}
+          onEditSubmit={this.state.actions.editProcessorsSave}
+          isSaving={this.state.localState.get('isProcessorsSaving', false)}
+          isChanged={this.state.localState.hasIn(['isProcessorsChanged'])}
+          isEditingValid={this.onEditProcessorsIsValid()}
+        />
+      </div>
+    );
+  },
+
+  onEditProcessorsIsValid() {
+    if (this.state.processors === '{}' || this.state.processors === '') {
+      return true;
+    }
+    try {
+      JSON.parse(this.state.processors);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 });
