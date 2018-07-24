@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
-import {OverlayTrigger, Popover} from 'react-bootstrap';
+import {OverlayTrigger, Popover, Button} from 'react-bootstrap';
 import { Icon } from '@keboola/indigo-ui';
 import SearchRow from '../../../../../react/common/SearchRow';
 
@@ -44,9 +44,11 @@ export default React.createClass({
             <OverlayTrigger
               trigger="click"
               placement="bottom"
-              overlay={this.renderPopover()}
+              overlay={this.renderQuickHelp()}
             >
-              <Icon.Help className={'icon-size-20'}/>
+              <Button bsStyle="link">
+                <Icon.Help className={'icon-size-20'}/>
+              </Button>
             </OverlayTrigger>
           </div>
         </div>
@@ -54,7 +56,7 @@ export default React.createClass({
     );
   },
 
-  renderPopover() {
+  renderQuickHelp() {
     return ( <Popover title="Quick help" id="job-search-popover" className="popover-wide" placement="bottom">
       <h3>Search attributes</h3>
       <dl>
