@@ -65,7 +65,7 @@ export default function(configId) {
   }
 
   function editProcessorsSave() {
-    let config = store.configData.set('processors', JSON.parse(store.processors));
+    let config = store.configData.set('processors', JSON.parse(getLocalState().get('processors')));
     updateLocalState(['isProcessorsSaving'], true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config, 'Update processors').then(() => {
       removeFromLocalState(['processors']);

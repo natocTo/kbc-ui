@@ -228,7 +228,7 @@ export default React.createClass({
     return (
       <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
         <Processors
-          value={this.state.processors}
+          value={this.state.localState.get('processors', this.state.processors)}
           onEditCancel={this.state.actions.editProcessorsReset}
           onEditChange={this.state.actions.editProcessorsChange}
           onEditSubmit={this.state.actions.editProcessorsSave}
@@ -241,11 +241,11 @@ export default React.createClass({
   },
 
   onEditProcessorsIsValid() {
-    if (this.state.processors === '{}' || this.state.processors === '') {
+    if (this.state.localState.get('processors') === '{}' || this.state.localState.get('processors') === '') {
       return true;
     }
     try {
-      JSON.parse(this.state.processors);
+      JSON.parse(this.state.localState.get('processors'));
       return true;
     } catch (e) {
       return false;
