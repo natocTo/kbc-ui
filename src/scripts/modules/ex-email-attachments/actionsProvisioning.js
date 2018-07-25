@@ -65,7 +65,13 @@ export default function(configId) {
   }
 
   function editProcessorsSave() {
-    let config = store.configData.set('processors', JSON.parse(getLocalState().get('processors')));
+    const processorsJson = getLocalState().get('processors');
+    let config;
+    if (processorsJson === '' || JSON.stringify(JSON.parse(processorsJson)) === '{}') {
+      config = store.configData.delete('processors');
+    } else {
+      config = store.configData.set('processors', JSON.parse(processorsJson));
+    }
     updateLocalState(['isProcessorsSaving'], true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config, 'Update processors').then(() => {
       removeFromLocalState(['processors']);
