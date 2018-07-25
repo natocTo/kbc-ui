@@ -55,7 +55,7 @@ export default function(configId) {
   }
 
   function editSave() {
-    let config = store.configData.set('parameters', store.settings);
+    const config = store.configData.set('parameters', store.settings);
     updateLocalState(['isSaving'], true);
     return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config, 'Update parameters').then(() => {
       removeFromLocalState(['settings']);
