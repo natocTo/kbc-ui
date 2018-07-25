@@ -12,6 +12,7 @@ export default function(configId) {
   settings = localState.get('settings', configData.get('parameters', Map()));
   return {
     settings: settings,
+    processors: JSON.stringify(configData.get('processors', Map().toJS()), ' ', 2),
     configData: configData,
     error: localState.get('error'),
     requestedEmail: settings.get('email'),

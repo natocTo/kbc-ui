@@ -32,12 +32,25 @@ export default function(configId) {
     removeFromLocalState(['isChanged']);
   }
 
+  function editProcessorsReset() {
+    removeFromLocalState(['processors']);
+    removeFromLocalState(['isProcessorsChanged']);
+  }
+
   function editChange(field, newValue) {
     let settings = store.settings;
     settings = settings.set(field, newValue);
     updateLocalState(['settings'], settings);
     if (!getLocalState().get('isChanged', false)) {
       updateLocalState(['isChanged'], true);
+    }
+  }
+
+  function editProcessorsChange(newValue) {
+    store.processors = newValue;
+    updateLocalState(['processors'], newValue);
+    if (!getLocalState().get('isProcessorsChanged', false)) {
+      updateLocalState(['isProcessorsChanged'], true);
     }
   }
 
@@ -48,6 +61,22 @@ export default function(configId) {
       removeFromLocalState(['settings']);
       removeFromLocalState(['isSaving']);
       removeFromLocalState(['isChanged']);
+    });
+  }
+
+  function editProcessorsSave() {
+    const processorsJson = getLocalState().get('processors');
+    let config;
+    if (processorsJson === '' || JSON.stringify(JSON.parse(processorsJson)) === '{}') {
+      config = store.configData.delete('processors');
+    } else {
+      config = store.configData.set('processors', JSON.parse(processorsJson));
+    }
+    updateLocalState(['isProcessorsSaving'], true);
+    return componentsActions.saveComponentConfigData(COMPONENT_ID, configId, config, 'Update processors').then(() => {
+      removeFromLocalState(['processors']);
+      removeFromLocalState(['isProcessorsSaving']);
+      removeFromLocalState(['isProcessorsChanged']);
     });
   }
 
@@ -85,6 +114,10 @@ export default function(configId) {
     requestEmailAndInitConfig: requestEmailAndInitConfig,
     editReset: editReset,
     editSave: editSave,
-    editChange: editChange
+    editChange: editChange,
+    editProcessorsReset: editProcessorsReset,
+    editProcessorsSave: editProcessorsSave,
+    editProcessorsChange: editProcessorsChange
+
   };
 }
