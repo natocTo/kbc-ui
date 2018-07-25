@@ -7,7 +7,8 @@ export default React.createClass({
     query: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func,
     onSubmit: React.PropTypes.func,
-    className: React.PropTypes.string
+    className: React.PropTypes.string,
+    placeholder: React.PropTypes.string
   },
 
   getInitialState() {
@@ -19,7 +20,8 @@ export default React.createClass({
   getDefaultProps() {
     return {
       onChange: () => {},
-      onSubmit: (query) => query
+      onSubmit: (query) => query,
+      placeholder: 'Search'
     };
   },
 
@@ -43,7 +45,7 @@ export default React.createClass({
           type="text"
           value={this.state.query}
           className="form-control"
-          placeholder="Search"
+          placeholder={this.props.placeholder}
           ref="searchInput"
           onChange={this.onChange}
           autoFocus

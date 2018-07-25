@@ -158,6 +158,9 @@ InstalledComponentsStore = StoreUtils.createStore
   getConfigurationFilter: (type) ->
     _store.getIn ['filters', 'installedComponents', type], ''
 
+  getComponentDetailFilter: (componentId) ->
+    _store.getIn ['filters', 'installedComponents', componentId], ''
+
   getComponent: (componentId) ->
     _store.getIn ['components', componentId]
 
@@ -893,6 +896,10 @@ Dispatcher.register (payload) ->
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_SEARCH_CONFIGURATION_FILTER_CHANGE
       _store = _store.setIn ['filters', 'installedComponents', action.componentType], action.filter
+      InstalledComponentsStore.emitChange()
+
+    when constants.ActionTypes.INSTALLED_COMPONENTS_SEARCH_COMPONENT_DETAIL_FILTER_CHANGE
+      _store = _store.setIn ['filters', 'installedComponents', action.componentId], action.filter
       InstalledComponentsStore.emitChange()
 
     when constants.ActionTypes.INSTALLED_COMPONENTS_CONFIGURATION_ROW_EDIT_START

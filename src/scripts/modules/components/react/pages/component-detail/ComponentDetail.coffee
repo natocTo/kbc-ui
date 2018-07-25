@@ -1,9 +1,11 @@
 React = require 'react'
+fuzzy = require('fuzzy')
 
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 RoutesStore = require '../../../../../stores/RoutesStore'
 ComponentsStore = require '../../../stores/ComponentsStore'
 InstalledComponentsStore = require '../../../stores/InstalledComponentsStore.coffee'
+InstalledComponentsActionCreators = require '../../../InstalledComponentsActionCreators'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
 VendorInfo = React.createFactory(require './VendorInfo.coffee')
@@ -19,6 +21,7 @@ AppUsageInfo = React.createFactory(require('../new-component-form/AppUsageInfo')
 ComponentDescription = require '../component-detail/ComponentDescription'
 contactSupport = require('../../../../../utils/contactSupport').default
 MigrationRow = require('../../components/MigrationRow').default
+SearchRow = require('../../../../../react/common/SearchRow').default
 
 {a, div, label, h3, h2, span, p} = React.DOM
 
@@ -46,6 +49,7 @@ module.exports = React.createClass
       component: component
       configurations: configurations
       deletingConfigurations: deletingConfigurations.get(component.get('id'), Immutable.Map())
+      configurationFilter: InstalledComponentsStore.getComponentDetailFilter(component.get('id'))
     state
 
   render: ->
@@ -72,8 +76,21 @@ module.exports = React.createClass
                 component: @state.component
         @_renderConfigurations()
 
+  _getFilteredConfigurations: ->
+    filtered = @state.configurations
+    if @state.configurationFilter or @state.configurationFilter != ''
+      filterQuery = @state.configurationFilter
+      filtered = @state.configurations.filter (configuration) ->
+        fuzzy.match(filterQuery, configuration.get('name', '').toString()) or
+          fuzzy.match(filterQuery, configuration.get('id', '').toString()) or
+          fuzzy.match(filterQuery, configuration.get('description', '').toString())
+    return filtered
+
   _isDeprecated: ->
     return @state.component.get('flags').includes('deprecated')
+
+  _handleFilterChange: (query) ->
+    InstalledComponentsActionCreators.setInstalledComponentsComponentDetailFilter(@state.component.get('id'), query)
 
   _renderConfigurations: ->
     hasRedshift = ApplicationStore.getSapiToken().getIn ['owner', 'hasRedshift']
@@ -94,24 +111,34 @@ module.exports = React.createClass
         div className: "kbc-header",
           div className: "kbc-title",
             h2 null, "Configurations"
-            span className: "pull-right",
-              AddComponentConfigurationButton
-                disabled: @_isDeprecated()
-                component: state.component
-        div className: "table table-hover",
-          div className: "tbody",
-            @state.configurations
-            .sortBy (configuration) ->
-              configuration.get('name').toLowerCase()
-            .map((configuration) =>
-              React.createElement(ConfigurationRow,
-                component: @state.component,
-                config: configuration,
-                componentId: state.component.get('id'),
-                isDeleting: state.deletingConfigurations.has(configuration.get('id')),
-                key: configuration.get('id')
-              )
-            )
+            div className: 'row-search',
+              div className: 'row-search-input',
+                React.createElement SearchRow,
+                  onChange: @_handleFilterChange
+                  query: @state.configurationFilter
+                  placeholder: 'Search by name, description or id'
+              div className: 'row-search-action',
+                AddComponentConfigurationButton
+                  disabled: @_isDeprecated()
+                  component: state.component
+        if @_getFilteredConfigurations().count()
+          div className: "table table-hover",
+            div className: "tbody",
+              @_getFilteredConfigurations()
+                .map((configuration) =>
+                  React.createElement(ConfigurationRow,
+                    component: @state.component,
+                    config: configuration,
+                    componentId: state.component.get('id'),
+                    isDeleting: state.deletingConfigurations.has(configuration.get('id')),
+                    key: configuration.get('id')
+                  )
+                )
+        else
+          div className: 'kbc-header',
+            div className: 'kbc-title',
+              h2 null,
+                'No configurations found.'
     else
       div className: "row kbc-row",
         React.createElement ComponentEmptyState, null,
