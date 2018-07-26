@@ -79,9 +79,9 @@ export default React.createClass({
       <Table striped className="storage-table-columns-editor">
         <thead>
           <tr>
-            <th className="col-md-2">Column</th>
+            <th className="col-md-2">Column Name</th>
             {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
-            <th className="col-md-1" />
+            <th className="col-md-1">Preview</th>
           </tr>
         </thead>
         {this.renderBody()}
