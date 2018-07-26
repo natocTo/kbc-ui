@@ -1,11 +1,10 @@
 import React, {PropTypes} from 'react';
-import {ControlLabel, Table, Col, Form, FormGroup, FormControl} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 import storageApi from '../../../components/StorageApi';
 import {fromJS} from 'immutable';
 import ColumnDataPreview from './ColumnDataPreview';
 import classnames from 'classnames';
 require('./StorageTableColumnsEditor.less');
-import StorageApiLink from '../../../components/react/components/StorageApiTableLinkEx';
 
 export default React.createClass({
   propTypes: {
@@ -77,36 +76,16 @@ export default React.createClass({
   render() {
     let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
-      <div>
-        <Form horizontal>
-          <h3>Storage</h3>
-          <FormGroup>
-            <Col componentClass={ControlLabel} sm={4}>
-              Source Table
-            </Col>
-            <Col sm={8}>
-              <FormControl.Static>
-                <StorageApiLink
-                  tableId={this.props.value.tableId}
-                >
-                  {this.props.value.tableId}
-                </StorageApiLink>
-              </FormControl.Static>
-            </Col>
-          </FormGroup>
-        </Form>
-        <h3>Columns</h3>
-        <Table striped className="storage-table-columns-editor">
-          <thead>
-            <tr>
-              <th className="col-md-2">Name</th>
-              {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
-              <th className="col-md-1" />
-            </tr>
-          </thead>
-          {this.renderBody()}
-        </Table>
-      </div>
+      <Table striped className="storage-table-columns-editor">
+        <thead>
+          <tr>
+            <th className="col-md-2">Column</th>
+            {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
+            <th className="col-md-1" />
+          </tr>
+        </thead>
+        {this.renderBody()}
+      </Table>
     );
   },
 
