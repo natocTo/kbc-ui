@@ -1,8 +1,8 @@
 export const cases = {
   emptyWithDefaults: {
     localState: {
-      name: '',
-      table: ''
+      destination: '',
+      source: ''
     },
     configuration: {
       storage: {
@@ -26,8 +26,8 @@ export const cases = {
   },
   simple: {
     localState: {
-      name: 'test',
-      table: 'in.c-main.test'
+      destination: 'test',
+      source: 'in.c-main.test'
     },
     configuration: {
       storage: {

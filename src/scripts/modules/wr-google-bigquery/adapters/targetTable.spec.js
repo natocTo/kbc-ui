@@ -28,7 +28,7 @@ describe('targetTable', function() {
 
   describe('createEmptyConfiguration()', function() {
     it('should return a default configuration with the table details filled in', function() {
-      assert.deepEqual(adapter.createEmptyConfiguration('in.c-bucket.test').toJS(), adapter.createConfiguration(Immutable.fromJS({name: 'test', table: 'in.c-bucket.test'})).toJS());
+      assert.deepEqual(adapter.createEmptyConfiguration('in.c-bucket.test').toJS(), adapter.createConfiguration(Immutable.fromJS({destination: 'test', source: 'in.c-bucket.test'})).toJS());
     });
   });
 });

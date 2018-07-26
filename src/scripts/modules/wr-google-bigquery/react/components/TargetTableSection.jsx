@@ -1,10 +1,12 @@
 import React, {PropTypes} from 'react';
 import {Form, FormControl, FormGroup, ControlLabel, Col} from 'react-bootstrap';
+import StorageApiLink from '../../../components/react/components/StorageApiTableLinkEx';
 
 export default React.createClass({
   propTypes: {
     value: PropTypes.shape({
-      name: PropTypes.string.isRequired
+      source: PropTypes.string.isRequired,
+      destination: PropTypes.string.isRequired
     }),
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired
@@ -14,7 +16,20 @@ export default React.createClass({
     const {value, onChange, disabled} = this.props;
     return (
       <Form horizontal>
-        <h3>BigQuery</h3>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Source Table
+          </Col>
+          <Col sm={8}>
+            <FormControl.Static>
+              <StorageApiLink
+                tableId={this.props.value.source}
+              >
+                {this.props.value.source}
+              </StorageApiLink>
+            </FormControl.Static>
+          </Col>
+        </FormGroup>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
             Target Table Name
@@ -23,8 +38,8 @@ export default React.createClass({
             <FormControl
               type="text"
               disabled={disabled}
-              onChange={e => onChange({name: e.target.value})}
-              value={value.name}
+              onChange={e => onChange({destination: e.target.value})}
+              value={value.destination}
             />
           </Col>
         </FormGroup>

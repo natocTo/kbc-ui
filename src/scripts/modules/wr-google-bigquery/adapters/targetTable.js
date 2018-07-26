@@ -6,7 +6,7 @@ const createConfiguration = function(localState) {
       input: {
         tables: [
           {
-            source: localState.get('table', '')
+            source: localState.get('source', '')
           }
         ]
       }
@@ -14,8 +14,8 @@ const createConfiguration = function(localState) {
     parameters: {
       tables: [
         {
-          dbName: localState.get('name', ''),
-          tableId: localState.get('table', '')
+          dbName: localState.get('destination', ''),
+          tableId: localState.get('source', '')
         }
       ]
     }
@@ -25,14 +25,14 @@ const createConfiguration = function(localState) {
 
 const parseConfiguration = function(configuration) {
   return Immutable.fromJS({
-    name: configuration.getIn(['parameters', 'tables', 0, 'dbName'], ''),
-    table: configuration.getIn(['storage', 'input', 'tables', 0, 'source'], '')
+    destination: configuration.getIn(['parameters', 'tables', 0, 'dbName'], ''),
+    source: configuration.getIn(['storage', 'input', 'tables', 0, 'source'], '')
   });
 };
 
 const createEmptyConfiguration = function(tableId) {
   const tableName = tableId.substr(tableId.lastIndexOf('.') + 1);
-  return createConfiguration(Immutable.fromJS({name: tableName, table: tableId}));
+  return createConfiguration(Immutable.fromJS({destination: tableName, source: tableId}));
 };
 
 export default {
