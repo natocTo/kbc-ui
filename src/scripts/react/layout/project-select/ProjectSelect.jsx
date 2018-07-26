@@ -23,8 +23,8 @@ export default React.createClass({
 
   render() {
     return (
-        <Dropdown id="select-project-dropdown-button" className="kbc-project-select">
-          <Dropdown.Toggle onClick={this._handleDropdownClick}>
+        <Dropdown id="select-project-dropdown-button" className="kbc-project-select" onToggle={this._handleToggle}>
+          <Dropdown.Toggle noCaret>
               {this.state.open ?
                 <Icon.Times className="pull-right icon-size-16"/> :
                 <Icon.ArrowDown className="pull-right icon-size-16"/>
@@ -45,12 +45,7 @@ export default React.createClass({
     );
   },
 
-  setDropdownState(newState) {
-    this.setState({open: newState});
-  },
-
-  _handleDropdownClick(e) {
-    e.preventDefault();
-    this.setDropdownState(!this.state.open);
+  _handleToggle(e) {
+    this.setState({open: e});
   }
 });
