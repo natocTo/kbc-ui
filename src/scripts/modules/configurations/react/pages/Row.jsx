@@ -222,7 +222,7 @@ export default React.createClass({
             rowId={this.state.rowId}
           />
         </div>
-        <div className="kbc-inner-content-padding-fix with-bottom-border">
+        <div>
           {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration
             ? this.renderJsonEditor()
             : this.renderForm()}
@@ -356,8 +356,8 @@ export default React.createClass({
   renderForm() {
     return (
       <div className="kbc-configuration-row">
-        <div className="json-link">{this.renderOpenJsonLink()}</div>
-        <div className="save-buttons">{this.renderButtons()}</div>
+        <div className="json-link kbc-inner-content-padding-fix">{this.renderOpenJsonLink()}</div>
+        <div className="save-buttons kbc-inner-content-padding-fix">{this.renderButtons()}</div>
         <div className="sections">{this.renderSections()}</div>
       </div>
     );
@@ -366,41 +366,44 @@ export default React.createClass({
   renderJsonEditor() {
     const state = this.state;
     const settings = this.state.settings;
-    return [
-      <div key="close">{this.renderCloseJsonLink()}</div>,
-      <JsonConfiguration
-        key="json-configuration"
-        isSaving={this.state.isJsonConfigurationSaving}
-        value={this.state.jsonConfigurationValue}
-        isEditingValid={this.state.isJsonConfigurationValid}
-        isChanged={this.state.isJsonConfigurationChanged}
-        onEditCancel={() => Actions.resetJsonConfiguration(state.componentId, state.configurationId, state.rowId)}
-        onEditChange={parameters =>
-          Actions.updateJsonConfiguration(state.componentId, state.configurationId, state.rowId, parameters)
-        }
-        onEditSubmit={() => {
-          const changeDescription =
-            settings.getIn(['row', 'name', 'singular']) +
-            ' ' +
-            state.row.get('name') +
-            ' configuration edited manually';
-          return Actions.saveJsonConfiguration(
-            state.componentId,
-            state.configurationId,
-            state.rowId,
-            changeDescription
-          );
-        }}
-        showSaveModal={this.state.isParsableConfiguration && !this.state.isJsonConfigurationParsable}
-        saveModalTitle="Save Parameters"
-        saveModalBody={
-          <div>
-            The changes in the configuration are not compatible with the original visual form. Saving this configuration
-            will disable the visual representation of the whole configuration and you will be able to edit the
-            configuration in JSON editor only.
-          </div>
-        }
-      />
-    ];
+    return (
+      <div className="kbc-inner-content-padding-fix with-bottom-border kbc-configuration-row">
+        <div className="json-link " key="close">{this.renderCloseJsonLink()}</div>
+        <JsonConfiguration
+          showHeader={false}
+          key="json-configuration"
+          isSaving={this.state.isJsonConfigurationSaving}
+          value={this.state.jsonConfigurationValue}
+          isEditingValid={this.state.isJsonConfigurationValid}
+          isChanged={this.state.isJsonConfigurationChanged}
+          onEditCancel={() => Actions.resetJsonConfiguration(state.componentId, state.configurationId, state.rowId)}
+          onEditChange={parameters =>
+            Actions.updateJsonConfiguration(state.componentId, state.configurationId, state.rowId, parameters)
+          }
+          onEditSubmit={() => {
+            const changeDescription =
+              settings.getIn(['row', 'name', 'singular']) +
+              ' ' +
+              state.row.get('name') +
+              ' configuration edited manually';
+            return Actions.saveJsonConfiguration(
+              state.componentId,
+              state.configurationId,
+              state.rowId,
+              changeDescription
+            );
+          }}
+          showSaveModal={this.state.isParsableConfiguration && !this.state.isJsonConfigurationParsable}
+          saveModalTitle="Save Parameters"
+          saveModalBody={
+            <div>
+              The changes in the configuration are not compatible with the original visual form. Saving this configuration
+              will disable the visual representation of the whole configuration and you will be able to edit the
+              configuration in JSON editor only.
+            </div>
+          }
+        />
+      </div>
+    );
   }
 });
