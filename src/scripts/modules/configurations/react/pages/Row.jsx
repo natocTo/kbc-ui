@@ -26,6 +26,9 @@ import LatestRowVersions from '../components/SidebarRowVersionsWrapper';
 import isParsableConfiguration from '../../utils/isParsableConfiguration';
 import sections from '../../utils/sections';
 
+// styles
+require('./Row.less');
+
 export default React.createClass({
   mixins: [createStoreMixin(Store, TablesStore)],
 
@@ -352,11 +355,10 @@ export default React.createClass({
 
   renderForm() {
     return (
-      <div>
-        {this.renderOpenJsonLink()}
-        <h2>Configuration</h2>
-        {this.renderButtons()}
-        {this.renderSections()}
+      <div className="kbc-configuration-row">
+        <div className="json-link">{this.renderOpenJsonLink()}</div>
+        <div className="save-buttons">{this.renderButtons()}</div>
+        <div className="sections">{this.renderSections()}</div>
       </div>
     );
   },
