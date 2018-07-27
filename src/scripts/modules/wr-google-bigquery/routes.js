@@ -11,7 +11,6 @@ import TargetDatasetSection from './react/components/TargetDatasetSection';
 import targetDataset from './adapters/targetDataset';
 
 import LoadTypeSection from './react/components/LoadTypeSection';
-import LoadTypeSectionTitle from './react/components/LoadTypeSectionTitle';
 import loadType from './adapters/loadType';
 
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
@@ -42,18 +41,13 @@ const routeSettings = {
         render: TargetTableSection,
         onSave: targetTable.createConfiguration,
         onLoad: targetTable.parseConfiguration,
-        onCreate: targetTable.createEmptyConfiguration,
-        isComplete: () => true
+        onCreate: targetTable.createEmptyConfiguration
       },
       {
-        render: CollapsibleSection({
-          title: LoadTypeSectionTitle,
-          contentComponent: LoadTypeSection
-        }),
+        render: LoadTypeSection,
         onSave: loadType.createConfiguration,
         onLoad: loadType.parseConfiguration,
-        onCreate: loadType.createEmptyConfiguration,
-        isComplete: () => true
+        onCreate: loadType.createEmptyConfiguration
       },
       createColumnsEditorSection(columnsEditorDefinition)
     ],
