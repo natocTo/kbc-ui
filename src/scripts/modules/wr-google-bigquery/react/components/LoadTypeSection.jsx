@@ -18,39 +18,32 @@ export default React.createClass({
     return (
       <Form horizontal>
         <FormGroup>
-          <Col sm={12}>
-            <Col sm={4}>
-              <Radio
-                type="radio"
-                title="Full Load"
-                disabled={disabled}
-                onChange={() => onChange({incremental: false, changedSince: ''})}
-                checked={value.incremental === false}>
-                Full Load
-              </Radio>
-            </Col>
-            <Col sm={8}>
-              <HelpBlock>
-                Data in the target table will be replaced.
-              </HelpBlock>
-            </Col>
+          <Col componentClass={ControlLabel} sm={4}>
+            Load Type
           </Col>
-          <Col sm={12}>
-            <Col sm={4}>
-              <Radio
-                type="radio"
-                title="Incremental"
-                disabled={disabled}
-                onChange={() => onChange({incremental: true})}
-                checked={value.incremental === true}>
-                Incremental
-              </Radio>
-            </Col>
-            <Col sm={8}>
-              <HelpBlock>
-                Data will be appended to the target table.
-              </HelpBlock>
-            </Col>
+          <Col sm={8}>
+            <Radio
+              type="radio"
+              title="Full Load"
+              disabled={disabled}
+              onChange={() => onChange({incremental: false, changedSince: ''})}
+              checked={value.incremental === false}>
+              Full Load
+            </Radio>
+            <HelpBlock>
+              Data in the target table will be replaced.
+            </HelpBlock>
+            <Radio
+              type="radio"
+              title="Incremental"
+              disabled={disabled}
+              onChange={() => onChange({incremental: true})}
+              checked={value.incremental === true}>
+              Incremental
+            </Radio>
+            <HelpBlock>
+              Data will be appended to the target table.
+            </HelpBlock>
           </Col>
         </FormGroup>
         <FormGroup>

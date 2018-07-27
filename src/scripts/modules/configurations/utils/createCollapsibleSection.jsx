@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import SaveButtons from '../../../react/common/SaveButtons';
 import { PanelGroup, Panel } from 'react-bootstrap';
-require('./createCollapsibleSection.less');
 
 export default (TitleComponent, InnerComponent, options = {}) => {
   return React.createClass({
@@ -45,15 +44,15 @@ export default (TitleComponent, InnerComponent, options = {}) => {
 
     accordionHeader() {
       return (
-        <span className="kbc-configuration-collapsible">
+        <span>
           <span className="table">
             <span className="tbody">
               <span className="tr">
                 <span className="td">
-                  <div className="title">
+                  <h4>
                     {this.accordionArrow()}
                     <TitleComponent value={this.props.value}/>
-                  </div>
+                  </h4>
                 </span>
               </span>
             </span>

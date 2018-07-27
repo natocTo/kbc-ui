@@ -17,38 +17,27 @@ export default React.createClass({
     isChanged: PropTypes.bool.isRequired,
     showSaveModal: PropTypes.bool,
     saveModalTitle: PropTypes.string,
-    saveModalBody: PropTypes.any,
-    showHeader: PropTypes.bool
+    saveModalBody: PropTypes.any
   },
 
   getDefaultProps() {
     return {
-      value: '',
-      showHeader: true
+      value: ''
     };
   },
 
   render() {
     return (
       <div>
-        {this.renderHeader()}
+        <h2>
+          Configuration{' '}
+          <small>
+            <Clipboard text={this.props.value} />
+          </small>
+        </h2>
         {this.renderButtons()}
         <Input value={this.props.value} disabled={this.props.isSaving} onChange={this.props.onEditChange} />
       </div>
-    );
-  },
-
-  renderHeader() {
-    if (!this.props.showHeader) {
-      return null;
-    }
-    return (
-      <h2>
-        Configuration{' '}
-        <small>
-          <Clipboard text={this.props.value} />
-        </small>
-      </h2>
     );
   },
 
