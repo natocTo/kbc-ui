@@ -13,30 +13,14 @@ export default React.createClass({
     query: PropTypes.string.isRequired
   },
 
-  getInitialState() {
-    return {
-      query: this.props.query
-    };
-  },
-
-  onQueryChange(event) {
-    this.setState({
-      query: event.target.value
-    });
-  },
-  doSearch(event) {
-    this.props.onSearch(this.state.query);
-    event.preventDefault();
-  },
   render() {
     return (
       <div className="kbc-inner-padding kbc-row">
         <div className="row-search">
           <div className="row-search-input">
             <SearchRow
-              query={this.state.query}
-              onChange={this.onQueryChange}
-              onSubmit={this.doSearch}
+              query={this.props.query}
+              onSubmit={(query) => this.props.onSearch(query)}
               placeholder="Search by name or attributes"
             />
           </div>
