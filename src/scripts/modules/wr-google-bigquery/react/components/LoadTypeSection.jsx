@@ -13,6 +13,25 @@ export default React.createClass({
     disabled: PropTypes.bool.isRequired
   },
 
+  renderChangedInLast() {
+    if (this.props.value.incremental) {
+      return (
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Changed In Last
+          </Col>
+          <Col sm={8}>
+            <ChangedSinceInput
+              value={this.props.value.changedSince}
+              onChange={(newValue) => this.props.onChange({changedSince: newValue})}
+              disabled={this.props.disabled || this.props.value.incremental === false}
+            />
+          </Col>
+        </FormGroup>
+      );
+    }
+  },
+
   render() {
     const {value, onChange, disabled} = this.props;
     return (
@@ -46,18 +65,7 @@ export default React.createClass({
             </HelpBlock>
           </Col>
         </FormGroup>
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={4}>
-            Changed In Last
-          </Col>
-          <Col sm={8}>
-            <ChangedSinceInput
-              value={this.props.value.changedSince}
-              onChange={(newValue) => this.props.onChange({changedSince: newValue})}
-              disabled={this.props.disabled || this.props.value.incremental === false}
-            />
-          </Col>
-        </FormGroup>
+        {this.renderChangedInLast()}
       </Form>
     );
   }
