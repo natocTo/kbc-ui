@@ -16,9 +16,10 @@ export default React.createClass({
     const {value, onChange, disabled} = this.props;
     return (
       <Form horizontal>
+        <h3>Source</h3>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
-            Source Table
+            Storage Table
           </Col>
           <Col sm={8}>
             <FormControl.Static>
@@ -30,9 +31,10 @@ export default React.createClass({
             </FormControl.Static>
           </Col>
         </FormGroup>
+        <h3>Destination</h3>
         <FormGroup>
           <Col componentClass={ControlLabel} sm={4}>
-            Target Table Name
+            BigQuery Table Name
           </Col>
           <Col sm={8}>
             <FormControl
