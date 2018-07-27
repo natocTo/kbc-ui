@@ -1,33 +1,5 @@
 exports[`columns editor section test render 1`] = `
 <div>
-  <form
-    class="form-horizontal">
-    <h3>
-      Storage
-    </h3>
-    <div
-      class="form-group">
-      <label
-        class="col-sm-4 control-label">
-        Source Table
-      </label>
-      <div
-        class="col-sm-8">
-        <p
-          class="form-control-static">
-          <span>
-            <span
-              class="kbc-sapi-table-link">
-              in.some.table
-            </span>
-            <span>
-              
-            </span>
-          </span>
-        </p>
-      </div>
-    </div>
-  </form>
   <h3>
     Columns
   </h3>
@@ -37,14 +9,14 @@ exports[`columns editor section test render 1`] = `
       <tr>
         <th
           class="col-md-2">
-          Name
+          Column Name
         </th>
         <th>
           Column Setup
         </th>
         <th
           class="col-md-1">
-          
+          Preview
         </th>
       </tr>
     </thead>
