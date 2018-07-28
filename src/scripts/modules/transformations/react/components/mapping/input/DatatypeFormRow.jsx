@@ -84,6 +84,7 @@ export default React.createClass({
             onChange={this.handleTypeChange}
             disabled={this.props.disabled}
             autosize={false}
+            clearable={false}
           />
         </td>
         <td>
