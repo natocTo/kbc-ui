@@ -117,7 +117,7 @@ export default React.createClass({
   },
 
   _getColumns() {
-    return this.getSelectedTable().get('columns', Immutable.List()).toJS();
+    return this.getSelectedTable().get('columns', Immutable.List());
   },
 
   isPrimaryKeyColumn(column) {
@@ -125,28 +125,27 @@ export default React.createClass({
   },
 
   _getColumnsOptions() {
-    const columns = this._getColumns();
-    return _.map(columns, (column) => {
+    return this._getColumns().map((column) => {
       return {
         label: column,
         value: column
       };
-    });
+    }).toJS();
   },
 
   _getFilteredColumns() {
     return this.props.value.get('columns', Immutable.List()).count() > 0
-      ? this.props.value.get('columns').toJS()
+      ? this.props.value.get('columns')
       : this._getColumns();
   },
 
   _getFilteredColumnsOptions() {
-    return _.map(this._getFilteredColumns(), (column) => {
+    return this._getFilteredColumns().map((column) => {
       return {
         label: column,
         value: column
       };
-    });
+    }).toJS();
   },
 
   getChangedSinceValue() {
@@ -208,7 +207,7 @@ export default React.createClass({
   }),
 
   getMetadataDataTypes(columnMetadata) {
-    const datatypes = columnMetadata.map((metadata, colname) => {
+    return columnMetadata.map((metadata, colname) => {
       let datatypeLength = metadata.filter((entry) => {
         return entry.get('key') === 'KBC.datatype.length';
       });
@@ -246,7 +245,6 @@ export default React.createClass({
         convertEmptyValuesToNull: !!datatypeNullable.get('value')
       });
     });
-    return datatypes;
   },
 
   getDefaultDatatypes() {
