@@ -8,8 +8,8 @@ export default React.createClass({
     datatypes: React.PropTypes.object.isRequired,
     columns: React.PropTypes.array.isRequired,
     datatypesMap: React.PropTypes.object.isRequired,
-    disabled: React.PropTypes.bool,
-    onChange: React.PropTypes.func
+    onChange: React.PropTypes.func.isRequired,
+    disabled: React.PropTypes.bool
   },
 
   getInitialState() {
@@ -23,13 +23,9 @@ export default React.createClass({
   },
 
   handleConvertAllChange(e) {
-    e.target.checked ? this.setState({convertAll: true}) : this.setState({convertAll: false});
+    this.setState({convertAll: e.target.checked});
     return this.props.onChange(this.props.datatypes.map((datatype) => {
-      if (e.target.checked) {
-        return datatype.set('convertEmptyValuesToNull', true);
-      } else {
-        return datatype.set('convertEmptyValuesToNull', false);
-      }
+      return datatype.set('convertEmptyValuesToNull', e.target.checked);
     }));
   },
 
@@ -56,9 +52,6 @@ export default React.createClass({
         </div>
       );
     }
-    const renderedColumns = this.props.columns.map((column) => {
-      return this.renderColumn(column);
-    });
     return (
       <Table responsive striped hover>
         <thead>
@@ -86,7 +79,9 @@ export default React.createClass({
           </tr>
         </thead>
         <tbody>
-          {renderedColumns}
+          {this.props.columns.map((column) => {
+            return this.renderColumn(column);
+          })}
         </tbody>
       </Table>
     );

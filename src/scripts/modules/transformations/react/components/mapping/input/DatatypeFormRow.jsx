@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'underscore';
 import {Input} from './../../../../../../react/common/KbcBootstrap';
 import Select from 'react-select';
 
@@ -35,15 +34,11 @@ export default React.createClass({
   },
 
   handleNullableChange(e) {
-    if (e.target.checked) {
-      return this.props.onChange(this.props.datatype.set('convertEmptyValuesToNull'), true);
-    } else {
-      return this.props.onChange(this.props.datatype.set('convertEmptyValuesToNull'), false);
-    }
+    this.props.onChange(this.props.datatype.set('convertEmptyValuesToNull', e.target.checked));
   },
 
   getTypeOptions() {
-    return _.map(_.keys(this.props.datatypesMap.toJS()), (option) => {
+    return Object.keys(this.props.datatypesMap.toJS()).map(option => {
       return {
         label: option,
         value: option
@@ -52,13 +47,13 @@ export default React.createClass({
   },
 
   setHoveredTrue() {
-    return this.setState({
+    this.setState({
       hovered: true
     });
   },
 
   setHoveredFalse() {
-    return this.setState({
+    this.setState({
       hovered: false
     });
   },
