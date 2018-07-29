@@ -1,4 +1,4 @@
-import {Map, fromJS} from 'immutable/dist/immutable';
+import {Map, fromJS} from 'immutable';
 
 export function parseParameters(configuration) {
   const params = configuration.getIn(['parameters', 'tables'], Map());

@@ -109,7 +109,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
       const panelClassNames = {
         'kbc-accordion': true,
         'kbc-panel-heading-with-table': true,
-        'collapsible-section-content-no-padding': options.strechContentToBody
+        'collapsible-section-content-no-padding': options.stretchContentToBody
       };
       return (
         <PanelGroup

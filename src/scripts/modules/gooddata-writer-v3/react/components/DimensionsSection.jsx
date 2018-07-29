@@ -69,7 +69,7 @@ export default React.createClass({
   },
 
   render() {
-    const dimKeys = Object.keys(this.props.value.dimensions);
+    const dimensionKeys = Object.keys(this.props.value.dimensions);
     const dimensions = this.props.value.dimensions;
     const hasDimensions = Object.keys(dimensions).length > 0;
     return (
@@ -88,7 +88,7 @@ export default React.createClass({
            </thead>
            <tbody>
              {
-               dimKeys.map(dimName => {
+               dimensionKeys.map(dimName => {
                  const dim = dimensions[dimName];
                  return (
                    <tr key={dimName}>
