@@ -19,6 +19,7 @@ export default React.createClass({
       return (
         <PanelWithDetails
           defaultExpanded={this.props.value.changedSince !== ''}
+          placement="bottom"
           >
           <FormGroup>
             <Col componentClass={ControlLabel} sm={4}>
