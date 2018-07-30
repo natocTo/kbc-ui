@@ -36,13 +36,15 @@ const App = React.createClass({
           />
         </div>
         <div className="kbc-outer-content well">
-          <ProjectsList
-            organizations={this.props.organizations}
-            urlTemplates={this.props.urlTemplates}
-            projectTemplates={this.props.projectTemplates}
-            focus={true}
-            canCreateProject={this.props.canCreateProject}
-          />
+          <div className="indigo-temp">
+            <ProjectsList
+              organizations={this.props.organizations}
+              urlTemplates={this.props.urlTemplates}
+              projectTemplates={this.props.projectTemplates}
+              focus={true}
+              canCreateProject={this.props.canCreateProject}
+            />
+          </div>
         </div>
       </div>
     );
