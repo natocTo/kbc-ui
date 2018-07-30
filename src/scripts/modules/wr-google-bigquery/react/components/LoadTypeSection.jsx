@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {Form, Radio, HelpBlock, FormGroup, ControlLabel, Col} from 'react-bootstrap';
-import {PanelWithDetails} from '@keboola/indigo-ui';
 
 import ChangedSinceInput from '../../../../react/common/ChangedSinceInput';
 
@@ -17,22 +16,18 @@ export default React.createClass({
   renderChangedInLast() {
     if (this.props.value.incremental) {
       return (
-        <PanelWithDetails
-          defaultExpanded={this.props.value.changedSince !== ''}
-          >
-          <FormGroup>
-            <Col componentClass={ControlLabel} sm={4}>
-              Changed In Last
-            </Col>
-            <Col sm={8}>
-              <ChangedSinceInput
-                value={this.props.value.changedSince}
-                onChange={(newValue) => this.props.onChange({changedSince: newValue})}
-                disabled={this.props.disabled || this.props.value.incremental === false}
-              />
-            </Col>
-          </FormGroup>
-        </PanelWithDetails>
+        <FormGroup>
+          <Col componentClass={ControlLabel} sm={4}>
+            Changed In Last
+          </Col>
+          <Col sm={8}>
+            <ChangedSinceInput
+              value={this.props.value.changedSince}
+              onChange={(newValue) => this.props.onChange({changedSince: newValue})}
+              disabled={this.props.disabled || this.props.value.incremental === false}
+            />
+          </Col>
+        </FormGroup>
       );
     }
   },
