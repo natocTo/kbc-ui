@@ -15,7 +15,7 @@ const App = React.createClass({
   },
   render() {
     return (
-      <div className="kbc-outer-container">
+      <div className="kbc-outer-container indigo-temp">
         <div className="kbc-outer-logo">
           <span className="kbc-icon-keboola-logo" />
           <span className="kbc-notification">
