@@ -78,6 +78,7 @@ export default React.createClass({
     return (
       <div>
         <h3>Columns</h3>
+        <div className="storage-table-columns-editor-wrapper">
         <Table striped className="storage-table-columns-editor">
           <thead>
             <tr>
@@ -88,6 +89,7 @@ export default React.createClass({
           </thead>
           {this.renderBody()}
         </Table>
+        </div>
       </div>
     );
   },
