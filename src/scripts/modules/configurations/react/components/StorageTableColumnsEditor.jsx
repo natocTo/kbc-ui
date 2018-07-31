@@ -1,8 +1,10 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
+import {Table} from 'react-bootstrap';
 import storageApi from '../../../components/StorageApi';
-import { fromJS } from 'immutable';
+import {fromJS} from 'immutable';
 import ColumnDataPreview from './ColumnDataPreview';
 import classnames from 'classnames';
+require('./StorageTableColumnsEditor.less');
 
 export default React.createClass({
   propTypes: {
@@ -74,16 +76,21 @@ export default React.createClass({
   render() {
     let headers = this.props.value.columnsMappings.map(mapping => mapping.title);
     return (
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Column</th>
-            {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
-            <th>Content Preview</th>
-          </tr>
-        </thead>
-        {this.renderBody()}
-      </table>
+      <div>
+        <h3>Columns</h3>
+        <div className="storage-table-columns-editor-wrapper">
+        <Table striped className="storage-table-columns-editor">
+          <thead>
+            <tr>
+              <th className="col-md-2">Column Name</th>
+              {headers.map((title, index) => <th key={index}>{typeof title === 'string' ? title : this.renderHeaderCell(title)}</th>)}
+              <th className="col-md-1">Preview</th>
+            </tr>
+          </thead>
+          {this.renderBody()}
+        </Table>
+        </div>
+      </div>
     );
   },
 
@@ -99,7 +106,7 @@ export default React.createClass({
       <tbody>
         {this.props.value.columns.map((column, index) => (
           <tr key={index} className={classnames({danger: !this.props.value.isColumnValidFn(column)})}>
-            <td>{column[matchColumnKey]}</td>
+            <td className="column-name">{column[matchColumnKey]}</td>
             {this.props.value.columnsMappings.map((Mapping, mappingIndex) => (
               <td key={mappingIndex}>
                 <Mapping.render

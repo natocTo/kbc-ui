@@ -1,4 +1,3 @@
-import React from 'react';
 import Index from '../react/pages/Index';
 import Row from '../react/pages/Row';
 import Versions from '../react/pages/Versions';
@@ -8,23 +7,17 @@ import versionsActions from '../../components/VersionsActionCreators';
 import rowVersionsActions from '../RowVersionsActionCreators';
 import jobsActions from '../../jobs/ActionCreators';
 import InstalledComponentsStore from '../../components/stores/InstalledComponentsStore';
+import ComponentsStore from '../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../ConfigurationRowsStore';
 import _ from 'lodash';
 import fuzzy from 'fuzzy';
 import Immutable from 'immutable';
-import columnTypeConstants from './columnTypeConstants';
 import {createTablesRoute} from '../../table-browser/routes';
+import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/OauthUtils';
 
 // defaults
 const defaults = {
-  credentials: {
-    show: false,
-    detail: {
-      isComplete: function() {
-        return true;
-      }
-    }
-  },
+  index: {},
   row: {
     hasState: false,
     name: {
@@ -36,33 +29,7 @@ const defaults = {
         return Immutable.fromJS({});
       }
     },
-    columns: [
-      {
-        name: 'Name',
-        type: columnTypeConstants.VALUE,
-        value: function(row) {
-          return row.get('name') !== '' ? row.get('name') : 'Untitled';
-        }
-      },
-      {
-        name: 'Storage',
-        type: columnTypeConstants.TABLE_LINK_DEFAULT_BUCKET,
-        value: function(row) {
-          return row.getIn(['configuration', 'parameters', 'name'], 'untitled');
-        }
-      },
-      {
-        name: 'Description',
-        type: 'value',
-        value: function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
-        }
-      }
-    ],
+    columns: [],
     searchFilter: function(row, query) {
       return fuzzy.test(query, row.get('name')) || fuzzy.test(query, row.get('description'));
     }
@@ -86,7 +53,11 @@ export default function(settings) {
       action: (params) => jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config)
     },
     requireData: [
-      (params) => installedComponentsActions.loadComponentConfigData(settingsWithDefaults.componentId, params.config),
+      (params) => installedComponentsActions.loadComponentConfigData(settingsWithDefaults.componentId, params.config).then(function() {
+        if (ComponentsStore.getComponent(settingsWithDefaults.componentId).get('flags').includes('genericDockerUI-authorization')) {
+          return loadOauthCredentials(settingsWithDefaults.componentId, params.config);
+        }
+      }),
       (params) => versionsActions.loadVersions(settingsWithDefaults.componentId, params.config)
     ],
     childRoutes: []

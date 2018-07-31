@@ -38,6 +38,7 @@ import gooddataWriterV3Routes from '../gooddata-writer-v3/routes';
 import wrStorageRoutes from '../wr-storage/routes';
 import exStorageRoutes from '../ex-storage/routes';
 import wrAwsS3Routes from '../wr-aws-s3/routes';
+import wrGoogleBigQueryRoutes from '../wr-google-bigquery/routes';
 
 const extractor = injectProps({ type: 'extractor' });
 const writer = injectProps({ type: 'writer' });
@@ -173,6 +174,7 @@ module.exports = {
       createComponentRoute('keboola.gooddata-writer', [gooddataWriterV3Routes]),
       createComponentRoute('keboola.wr-storage', [wrStorageRoutes]),
       createComponentRoute('keboola.wr-aws-s3', [wrAwsS3Routes]),
+      createComponentRoute('keboola.wr-google-bigquery', [wrGoogleBigQueryRoutes]),
       createGenericDetailRoute('writer')
     ]
   }

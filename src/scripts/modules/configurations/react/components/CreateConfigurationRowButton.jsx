@@ -163,16 +163,22 @@ export default React.createClass({
     }
   },
 
+
   handleCreate() {
     this.setState({isSaving: true});
+    let friendlyName = this.state.form.get('name');
+    if (this.props.componentType === 'writer') {
+      friendlyName = friendlyName.substr(friendlyName.lastIndexOf('.') + 1);
+    }
     ConfigurationRowsActions.create(
       this.props.componentId,
       this.props.configId,
       this.state.form.get('name'),
+      friendlyName,
       this.state.form.get('description'),
       this.props.emptyConfig,
       this.onRowCreated,
-      this.createChangeDescription(this.state.form.get('name'))
+      this.createChangeDescription(friendlyName)
     ).catch(() => {
       this.setState({isSaving: false});
     });

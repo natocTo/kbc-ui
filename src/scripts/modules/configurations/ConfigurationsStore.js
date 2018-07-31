@@ -28,6 +28,8 @@ let ConfigurationsStore = StoreUtils.createStore({
     const rows = rawConfig.get('rows', Map()).map((row) => row.get('configuration'));
     const configuration = rawConfig.get('configuration');
     return Immutable.fromJS({
+      componentId,
+      configurationId,
       configuration,
       rows
     });
@@ -197,6 +199,19 @@ Dispatcher.register(function(payload) {
     case Constants.ActionTypes.CONFIGURATIONS_JSON_EDITOR_CLOSE:
       _store = _store
         .deleteIn(['jsonEditor', action.componentId, action.configurationId]);
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_START:
+      _store = _store.setIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth', action.rowId], true);
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_ERROR:
+      _store = _store.deleteIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth']);
+      return ConfigurationsStore.emitChange();
+
+    case Constants.ActionTypes.CONFIGURATIONS_RESET_OAUTH_SUCCESS:
+      _store = _store
+        .deleteIn(['pendingActions', action.componentId, action.configurationId, 'reset-oauth']);
       return ConfigurationsStore.emitChange();
 
     default:

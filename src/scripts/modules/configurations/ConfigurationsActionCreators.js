@@ -6,6 +6,7 @@ import VersionActionCreators from '../components/VersionsActionCreators';
 import ApplicationStore from '../../stores/ApplicationStore';
 import preferEncryptedAttributes from '../components/utils/preferEncryptedAttributes';
 import Immutable from 'immutable';
+import * as oauthUtils from '../oauth-v2/OauthUtils';
 
 const storeEncodedConfiguration = function(componentId, configurationId, configuration, changeDescription) {
   const dataToSavePrepared = JSON.stringify(preferEncryptedAttributes(configuration));
@@ -182,5 +183,29 @@ module.exports = {
         });
         throw e;
       });
+  },
+
+  resetOauthCredentials(componentId, configurationId) {
+    Dispatcher.handleViewAction({
+      type: Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_START,
+      componentId: componentId,
+      configurationId: configurationId
+    });
+
+    oauthUtils.deleteCredentialsAndConfigAuth(componentId, configurationId).then(function() {
+      Dispatcher.handleViewAction({
+        type: Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_SUCCESS,
+        componentId: componentId,
+        configurationId: configurationId
+      });
+    }).catch(function(e) {
+      Dispatcher.handleViewAction({
+        type: Constants.ActionTypes.CONFIGURATIONS_OAUTH_RESET_ERROR,
+        componentId: componentId,
+        configurationId: configurationId,
+        error: e
+      });
+      throw e;
+    });
   }
 };

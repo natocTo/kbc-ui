@@ -1,14 +1,15 @@
 import React from 'react';
 import Immutable from 'immutable';
+
 // stores
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
+import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ConfigurationRowsStore from '../../ConfigurationRowsStore';
 import ConfigurationsStore from '../../ConfigurationsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
-import ComponentsStore from '../../../components/stores/ComponentsStore';
 
 // actions
 import configurationRowsActions from '../../ConfigurationRowsActionCreators';
@@ -23,7 +24,6 @@ import LatestVersions from '../../../components/react/components/SidebarVersions
 import LatestJobs from '../../../components/react/components/SidebarJobs';
 import CreateConfigurationRowButton from '../components/CreateConfigurationRowButton';
 import ConfigurationRows from '../components/ConfigurationRows';
-// import Credentials from '../components/Credentials';
 import IndexSections from '../components/IndexSections';
 
 // utils
@@ -36,12 +36,13 @@ export default React.createClass({
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const settings = RoutesStore.getRouteSettings();
     const componentId = settings.get('componentId');
+    const configuration = ConfigurationsStore.get(componentId, configurationId);
     return {
       componentId: componentId,
       component: ComponentsStore.getComponent(componentId),
       settings: settings,
       configurationId: configurationId,
-      configuration: ConfigurationsStore.get(componentId, configurationId),
+      configuration: configuration,
       latestJobs: LatestJobsStore.getJobs(componentId, configurationId),
       rows: ConfigurationRowsStore.getRows(componentId, configurationId),
       isChanged: ConfigurationsStore.isEditingConfiguration(componentId, configurationId)
@@ -153,7 +154,6 @@ export default React.createClass({
               configId={this.state.configurationId}
             />
           </div>
-          {/* <Credentials/> */}
           <IndexSections />
           {this.renderRowsTable()}
         </div>

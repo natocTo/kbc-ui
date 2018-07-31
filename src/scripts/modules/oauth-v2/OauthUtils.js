@@ -4,7 +4,7 @@ import ApplicationStore from '../../stores/ApplicationStore';
 import OauthStore from './Store';
 import installedComponentsActions from '../components/InstalledComponentsActionCreators';
 import installedComponentsStore from '../components/stores/InstalledComponentsStore';
-import RouterStore from '../../stores/RoutesStore';
+import RoutesStore from '../../stores/RoutesStore';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import StorageApi from '../components/StorageApi';
 const configOauthPath = ['authorization', 'oauth_api', 'id'];
@@ -30,7 +30,7 @@ function processRedirectData(componentId, configId, id) {
 }
 
 function redirectToPath(path, params) {
-  const router = RouterStore.getRouter();
+  const router = RoutesStore.getRouter();
   router.transitionTo(path, params);
 }
 
