@@ -254,7 +254,7 @@ export default React.createClass({
       });
       return this.getMetadataDataTypes(metadataSet);
     } else {
-      const defaultTypes = Immutable.fromJS(this._getFilteredColumns()).reduce((memo, column) => {
+      return Immutable.fromJS(this._getFilteredColumns()).reduce((memo, column) => {
         return memo.set(column, Immutable.fromJS({
           column: column,
           type: 'VARCHAR',
@@ -262,13 +262,11 @@ export default React.createClass({
           convertEmptyValuesToNull: false
         }));
       }, Immutable.Map());
-      return defaultTypes;
     }
   },
 
   getDatatypes() {
-    const defaultDatatypes = this.getDefaultDatatypes();
-    const outputTypes = defaultDatatypes.map((defaultType) => {
+    return this.getDefaultDatatypes().map((defaultType) => {
       const existingTypeFilter = this.props.value.get('datatypes').filter((existingType) => {
         return existingType.get('column') === defaultType.get('column');
       });
@@ -278,124 +276,119 @@ export default React.createClass({
         return defaultType;
       }
     });
-    return outputTypes;
   },
 
   render() {
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="form-horizontal clearfix">
+      <div>
+        <div className="form-horizontal">
+          <div className="form-group">
+            <label className="col-xs-2 control-label">Source</label>
+            <div className="col-xs-10">
+              <SapiTableSelector
+                value={this.props.value.get('source', '')}
+                disabled={this.props.disabled}
+                placeholder="Source Table"
+                onSelectTableFn={this._handleChangeSource}
+                autoFocus={true}
+              />
+            </div>
+          </div>
+            <Input
+              type="text"
+              label="Destination"
+              value={this.props.value.get('destination')}
+              disabled={this.props.disabled}
+              placeholder="Destination table name in transformation DB"
+              onChange={this._handleChangeDestination}
+              labelClassName="col-xs-2"
+              wrapperClassName="col-xs-10"
+              bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
+              help={
+                this.props.isDestinationDuplicate
+                  ? <span className="error">
+                        Duplicate Destination <code>{this.props.value.get('destination')}</code>.
+                    </span>
+                  : null
+              }
+            />
+        </div>
+        <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
+          <div className="form-horizontal">
             <div className="form-group">
-              <label className="col-xs-2 control-label">Source</label>
+              <label className="col-xs-2 control-label">Columns</label>
               <div className="col-xs-10">
-                <SapiTableSelector
-                  value={this.props.value.get('source', '')}
+                <Select
+                  multi={true}
+                  name="columns"
+                  value={this.props.value.get('columns', Immutable.List()).toJS()}
+                  disabled={this.props.disabled || !this.props.value.get('source')}
+                  placeholder="All columns will be imported"
+                  onChange={this._handleChangeColumns}
+                  options={this._getColumnsOptions()}
+                />
+                <div className="help-block">
+                  Import only specified columns
+                </div>
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Changed in last</label>
+              <div className="col-xs-10">
+                <ChangedSinceInput
+                  value={this.getChangedSinceValue()}
                   disabled={this.props.disabled}
-                  placeholder="Source Table"
-                  onSelectTableFn={this._handleChangeSource}
-                  autoFocus={true}
+                  onChange={this._handleChangeChangedSince}
                 />
               </div>
             </div>
-              <Input
-                type="text"
-                label="Destination"
-                value={this.props.value.get('destination')}
-                disabled={this.props.disabled}
-                placeholder="Destination table name in transformation DB"
-                onChange={this._handleChangeDestination}
-                labelClassName="col-xs-2"
-                wrapperClassName="col-xs-10"
-                bsStyle={this.props.isDestinationDuplicate ? 'error' : null}
-                help={
-                  this.props.isDestinationDuplicate
-                    ? <span className="error">
-                          Duplicate Destination <code>{this.props.value.get('destination')}</code>.
-                      </span>
-                    : null
-                }
-              />
-          </div>
-        </div>
-        <div className="row">
-          <PanelWithDetails defaultExpanded={this.props.initialShowDetails}>
-            <div className="form-horizontal clearfix">
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Columns</label>
-                <div className="col-xs-10">
-                  <Select
-                    multi={true}
-                    name="columns"
-                    value={this.props.value.get('columns', Immutable.List()).toJS()}
-                    disabled={this.props.disabled || !this.props.value.get('source')}
-                    placeholder="All columns will be imported"
-                    onChange={this._handleChangeColumns}
-                    options={this._getColumnsOptions()}
-                  />
-                  <div className="help-block">
-                    Import only specified columns
-                  </div>
-                </div>
+            <div className="form-group">
+              <label className="col-xs-2 control-label">Data filter</label>
+              <div className="col-xs-4">
+                <Select
+                  name="whereColumn"
+                  value={this.props.value.get('whereColumn')}
+                  disabled={this.props.disabled || !this.props.value.get('source')}
+                  placeholder="Select column"
+                  onChange={this._handleChangeWhereColumn}
+                  options={this._getColumnsOptions()}
+                />
               </div>
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Changed in last</label>
-                <div className="col-xs-10">
-                  <ChangedSinceInput
-                    value={this.getChangedSinceValue()}
-                    disabled={this.props.disabled}
-                    onChange={this._handleChangeChangedSince}
-                  />
-                </div>
+              <div className="col-xs-2">
+                <Input
+                  type="select"
+                  name="whereOperator"
+                  value={this.props.value.get('whereOperator')}
+                  disabled={this.props.disabled}
+                  onChange={this._handleChangeWhereOperator}
+                >
+                  <option value="eq">= (IN)</option>
+                  <option value="ne">!= (NOT IN)</option>
+                </Input>
               </div>
-              <div className="form-group">
-                <label className="col-xs-2 control-label">Data filter</label>
-                <div className="col-xs-4">
-                  <Select
-                    name="whereColumn"
-                    value={this.props.value.get('whereColumn')}
-                    disabled={this.props.disabled || !this.props.value.get('source')}
-                    placeholder="Select column"
-                    onChange={this._handleChangeWhereColumn}
-                    options={this._getColumnsOptions()}
-                  />
-                </div>
-                <div className="col-xs-2">
-                  <Input
-                    type="select"
-                    name="whereOperator"
-                    value={this.props.value.get('whereOperator')}
-                    disabled={this.props.disabled}
-                    onChange={this._handleChangeWhereOperator}
-                  >
-                    <option value="eq">= (IN)</option>
-                    <option value="ne">!= (NOT IN)</option>
-                  </Input>
-                </div>
-                <div className="col-xs-4">
-                  <Select
-                    name="whereValues"
-                    value={this.props.value.get('whereValues')}
-                    multi={true}
-                    disabled={this.props.disabled}
-                    allowCreate={true}
-                    placeholder="Add a value..."
-                    emptyStrings={true}
-                    onChange={this._handleChangeWhereValues}
-                  />
-                </div>
+              <div className="col-xs-4">
+                <Select
+                  name="whereValues"
+                  value={this.props.value.get('whereValues')}
+                  multi={true}
+                  disabled={this.props.disabled}
+                  allowCreate={true}
+                  placeholder="Add a value..."
+                  emptyStrings={true}
+                  onChange={this._handleChangeWhereValues}
+                />
               </div>
-              <label className="control-label">Data types</label>
             </div>
-            <DatatypeForm
-              datatypes={this.getDatatypes()}
-              columns={this._getFilteredColumns()}
-              datatypesMap={this.snowflakeDatatypesMap}
-              disabled={this.props.disabled || !this.props.value.get('source')}
-              onChange={this._handleChangeDataTypes}
-            />
-          </PanelWithDetails>
-        </div>
+            <label className="control-label">Data types</label>
+          </div>
+          <DatatypeForm
+            datatypes={this.getDatatypes()}
+            columns={this._getFilteredColumns()}
+            datatypesMap={this.snowflakeDatatypesMap}
+            disabled={this.props.disabled || !this.props.value.get('source')}
+            onChange={this._handleChangeDataTypes}
+          />
+        </PanelWithDetails>
       </div>
     );
   }
