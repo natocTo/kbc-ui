@@ -33,14 +33,14 @@ TableInputMappingDetail = React.createClass(
   render: ->
     ListGroupItems = [
 
-      ListGroupItem {key: 'source'},
+      ListGroupItem {className: "row", key: 'source'},
         strong {className: "col-md-4"},
           'Source table'
         span {className: "col-md-6"},
           TableLinkEx
             tableId: @props.value.get('source')
 
-      ListGroupItem {key: 'columns'},
+      ListGroupItem {className: "row", key: 'columns'},
         strong {className: "col-md-4"},
           'Columns'
         span {className: "col-md-6"},
@@ -49,7 +49,7 @@ TableInputMappingDetail = React.createClass(
           else
             'Use all columns'
 
-      ListGroupItem {key: 'where_column'},
+      ListGroupItem {className: "row", key: 'where_column'},
         strong {className: "col-md-4"},
           'Filters'
         React.createElement FiltersDescription,

@@ -37,7 +37,7 @@ InputMappingDetail = React.createClass(
   render: ->
     ListGroupItems = [
 
-      ListGroupItem {key: 'source'},
+      ListGroupItem {className: "row", key: 'source'},
         strong {className: "col-md-4"},
           'Source table'
         span {className: "col-md-6"},
@@ -48,14 +48,14 @@ InputMappingDetail = React.createClass(
             'Not set'
 
       if (@props.transformationBackend == 'mysql' || @props.transformationBackend == 'redshift')
-        ListGroupItem {key: 'optional'},
+        ListGroupItem {className: "row", key: 'optional'},
           strong {className: "col-md-4"},
             'Optional'
           span {className: "col-md-6"},
             Check
               isChecked: @props.inputMapping.get('optional')
 
-      ListGroupItem {key: 'columns'},
+      ListGroupItem {className: "row", key: 'columns'},
         strong {className: "col-md-4"},
           'Columns'
         span {className: "col-md-6"},
@@ -64,7 +64,7 @@ InputMappingDetail = React.createClass(
           else
             'Use all columns'
 
-      ListGroupItem {key: 'whereColumn'},
+      ListGroupItem {className: "row", key: 'whereColumn'},
         strong {className: "col-md-4"},
           'Filters'
         span {className: "col-md-6"},
@@ -111,7 +111,7 @@ InputMappingDetail = React.createClass(
             'N/A'
 
       if @props.transformationBackend == 'mysql'
-        ListGroupItem {key: 'indexes'},
+        ListGroupItem {className: "row", key: 'indexes'},
           strong {className: "col-md-4"},
             'Indexes'
           span {className: "col-md-6"},
@@ -127,7 +127,7 @@ InputMappingDetail = React.createClass(
 
       if (@props.transformationBackend == 'mysql' || @props.transformationBackend == 'redshift' ||
           @props.transformationBackend == 'snowflake')
-        ListGroupItem {key: 'datatypes'},
+        ListGroupItem {className: "row", key: 'datatypes'},
           div className: 'clearfix',
             strong {className: "col-md-4"},
               'Data types'
@@ -144,7 +144,7 @@ InputMappingDetail = React.createClass(
                 'No data types set'
 
       if (@props.transformationBackend == 'redshift')
-        ListGroupItem {key: 'sortKey'},
+        ListGroupItem {className: "row", key: 'sortKey'},
           strong {className: "col-md-4"},
             'Sort key'
           span {className: "col-md-6"},
@@ -154,7 +154,7 @@ InputMappingDetail = React.createClass(
               'No sort key set'
 
       if (@props.transformationBackend == 'redshift')
-        ListGroupItem {key: 'distStyle'},
+        ListGroupItem {className: "row", key: 'distStyle'},
           strong {className: "col-md-4"},
             'Distribution'
           span {className: "col-md-6"},

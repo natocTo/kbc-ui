@@ -38,14 +38,14 @@ OutputMappingDetail = React.createClass(
   render: ->
     ListGroupItems = [
 
-      ListGroupItem {key: 'destination'},
+      ListGroupItem {className: "row", key: 'destination'},
         strong {className: "col-md-4"},
           'Destination table'
         span {className: "col-md-6"},
           TableLinkEx
             tableId: @props.outputMapping.get('destination')
 
-      ListGroupItem {key: 'primaryKey'},
+      ListGroupItem {className: "row", key: 'primaryKey'},
         strong {className: "col-md-4"},
           'Primary key'
         span {className: "col-md-6"},
@@ -54,14 +54,14 @@ OutputMappingDetail = React.createClass(
           else
             'N/A'
 
-      ListGroupItem {key: 'incremental'},
+      ListGroupItem {className: "row", key: 'incremental'},
         strong {className: "col-md-4"},
           'Incremental'
         span {className: "col-md-6"},
           Check
             isChecked: @props.outputMapping.get('incremental')
 
-      ListGroupItem {key: 'deleteWhere'},
+      ListGroupItem {className: "row", key: 'deleteWhere'},
         strong {className: "col-md-4"},
           'Delete rows'
         span {className: "col-md-6"},

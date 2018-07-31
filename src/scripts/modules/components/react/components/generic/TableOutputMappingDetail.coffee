@@ -32,7 +32,7 @@ TableInputMappingDetail = React.createClass(
   render: ->
     ListGroupItems = [
 
-      ListGroupItem {key: 'destination'},
+      ListGroupItem {className: "row", key: 'destination'},
         strong {className: "col-md-4"},
           'Destination table'
         span {className: "col-md-6"},
@@ -42,14 +42,14 @@ TableInputMappingDetail = React.createClass(
           else
             'Not set'
 
-      ListGroupItem {key: 'incremental'},
+      ListGroupItem {className: "row", key: 'incremental'},
         strong {className: "col-md-4"},
           'Incremental'
         span {className: "col-md-6"},
           Check
             isChecked: @props.value.get('incremental', false)
 
-      ListGroupItem {key: 'primary_key'},
+      ListGroupItem {className: "row", key: 'primary_key'},
         strong {className: "col-md-4"},
           'Primary key'
         span {className: "col-md-6"},
@@ -58,7 +58,7 @@ TableInputMappingDetail = React.createClass(
           else
             'N/A'
 
-      ListGroupItem {key: 'delete_where_column'},
+      ListGroupItem {className: "row", key: 'delete_where_column'},
         strong {className: "col-md-4"},
           'Delete rows'
         span {className: "col-md-6"},
