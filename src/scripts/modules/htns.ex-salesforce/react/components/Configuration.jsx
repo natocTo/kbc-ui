@@ -61,7 +61,7 @@ export default React.createClass({
               type="text"
               value={this.props.value.query}
               onChange={function(e) {
-                props.onChange({query: e.target.value.trim()});
+                props.onChange({query: e.target.value});
               }}
               placeholder="SELECT Id, Name FROM User"
               disabled={this.props.disabled}
