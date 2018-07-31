@@ -4,7 +4,7 @@ export const cases = {
       login: '',
       password: '',
       securityToken: '',
-      sandbox: false,
+      sandbox: false
     },
     configuration: {
       parameters: {
@@ -21,7 +21,7 @@ export const cases = {
       login: 'login',
       password: 'password',
       securityToken: 'securityToken',
-      sandbox: false,
+      sandbox: false
     },
     configuration: {
       parameters: {
@@ -39,7 +39,7 @@ export const cases = {
       login: 'login',
       password: 'password',
       securityToken: 'securityToken',
-      sandbox: true,
+      sandbox: true
     },
     configuration: {
       parameters: {

@@ -17,7 +17,6 @@ describe('row', function() {
 
   describe('parseConfiguration()', function() {
     it('should return empty localState with defaults from empty configuration', function() {
-      console.log(JSON.stringify(parseConfiguration(Immutable.fromJS({})).toJS()));
       assert.deepEqual(cases.emptyWithDefaults.localState, parseConfiguration(Immutable.fromJS({})).toJS());
     });
     Object.keys(cases).forEach(function(key) {
