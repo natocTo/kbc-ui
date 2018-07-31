@@ -294,26 +294,28 @@ export default React.createClass({
     const state = this.state;
     const settings = this.state.settings;
     return (
-      <div className="text-right">
-        <SaveButtons
-          isSaving={this.state.isSaving}
-          isChanged={this.state.isChanged}
-          onSave={function() {
-            const changeDescription =
-              settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' edited';
-            return Actions.saveConfiguration(
-              state.componentId,
-              state.configurationId,
-              state.rowId,
-              state.createBySectionsFn,
-              state.parseBySectionsFn,
-              changeDescription
-            );
-          }}
-          onReset={function() {
-            return Actions.resetConfiguration(state.componentId, state.configurationId, state.rowId);
-          }}
-        />
+      <div className="form-group">
+        <div className="text-right">
+          <SaveButtons
+            isSaving={this.state.isSaving}
+            isChanged={this.state.isChanged}
+            onSave={function() {
+              const changeDescription =
+                settings.getIn(['row', 'name', 'singular']) + ' ' + state.row.get('name') + ' edited';
+              return Actions.saveConfiguration(
+                state.componentId,
+                state.configurationId,
+                state.rowId,
+                state.createBySectionsFn,
+                state.parseBySectionsFn,
+                changeDescription
+              );
+            }}
+            onReset={function() {
+              return Actions.resetConfiguration(state.componentId, state.configurationId, state.rowId);
+            }}
+          />
+        </div>
       </div>
     );
   },
