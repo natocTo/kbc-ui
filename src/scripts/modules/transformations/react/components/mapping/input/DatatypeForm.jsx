@@ -6,7 +6,7 @@ import DatatypeFormRow from './DatatypeFormRow';
 export default React.createClass({
   propTypes: {
     datatypes: React.PropTypes.object.isRequired,
-    columns: React.PropTypes.array.isRequired,
+    columns: React.PropTypes.object.isRequired,
     datatypesMap: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
     disabled: React.PropTypes.bool
