@@ -77,7 +77,8 @@ export default React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string,
-    disabled: React.PropTypes.bool.isRequired
+    disabled: React.PropTypes.bool.isRequired,
+    helpBlock: React.PropTypes.string
   },
 
   getSelectOptions() {
@@ -140,6 +141,7 @@ export default React.createClass({
         <span className="help-block">
           Type in any range, e.g. <code>13 hours</code>.
           Supported time dimensions are <code>minutes</code>, <code>hours</code> and <code>days</code>.
+          {this.props.helpBlock && (<span>{' '}{this.props.helpBlock}</span>)}
         </span>
       </div>
     );
