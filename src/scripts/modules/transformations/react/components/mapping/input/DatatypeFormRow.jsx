@@ -44,6 +44,14 @@ export default React.createClass({
         label: option,
         value: option
       };
+    }).sort((valueA, valueB) => {
+      if (valueA.label < valueB.label) {
+        return -1;
+      }
+      if (valueA.label > valueB.label) {
+        return 1;
+      }
+      return 0;
     });
   },
 
