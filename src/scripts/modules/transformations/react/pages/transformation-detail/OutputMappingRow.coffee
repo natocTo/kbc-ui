@@ -73,6 +73,9 @@ OutputMappingRow = React.createClass(
                 ' '
                 TableBackendLabel
                   backend: @props.tables.getIn [@props.outputMapping.get('destination'), 'bucket', 'backend']
+                if @props.outputMapping.get 'incremental'
+                  span {className: 'label label-primary'},
+                    'Incremental'
               span {className: 'td col-xs-3', key: 'destination'},
                 @props.outputMapping.get('destination')
             ]
