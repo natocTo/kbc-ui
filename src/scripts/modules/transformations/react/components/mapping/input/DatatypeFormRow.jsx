@@ -26,11 +26,13 @@ export default React.createClass({
   },
 
   handleTypeChange(newType) {
-    return this.props.onChange(this.props.datatype.set('type', newType.value));
+    if (newType) {
+      this.props.onChange(this.props.datatype.set('type', newType.value));
+    }
   },
 
   handleLengthChange(e) {
-    return this.props.onChange(this.props.datatype.set('length', e.target.value));
+    this.props.onChange(this.props.datatype.set('length', e.target.value));
   },
 
   handleNullableChange(e) {

@@ -19,12 +19,12 @@ export default React.createClass({
   },
 
   handleDatatypeChange(newType) {
-    return this.props.onChange(this.props.datatypes.set(newType.get('column'), newType));
+    this.props.onChange(this.props.datatypes.set(newType.get('column'), newType));
   },
 
   handleConvertAllChange(e) {
     this.setState({convertAll: e.target.checked});
-    return this.props.onChange(this.props.datatypes.map((datatype) => {
+    this.props.onChange(this.props.datatypes.map((datatype) => {
       return datatype.set('convertEmptyValuesToNull', e.target.checked);
     }));
   },
