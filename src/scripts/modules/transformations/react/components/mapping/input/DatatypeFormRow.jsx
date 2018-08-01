@@ -66,7 +66,7 @@ export default React.createClass({
       );
     } else {
       return (
-        <span>&nbsp;<code/></span>
+        <span>&nbsp;</span>
       );
     }
   },
