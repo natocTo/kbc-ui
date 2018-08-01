@@ -53,7 +53,7 @@ export default React.createClass({
       );
     }
     return (
-      <Table responsive striped hover>
+      <Table striped hover>
         <thead>
           <tr>
             <th>
