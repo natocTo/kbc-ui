@@ -5,7 +5,6 @@ import Select from 'react-select';
 export default React.createClass({
 
   propTypes: {
-    key: React.PropTypes.string.isRequired,
     datatype: React.PropTypes.object.isRequired,
     datatypesMap: React.PropTypes.object.isRequired,
     disabled: React.PropTypes.bool.isRequired,
@@ -74,7 +73,7 @@ export default React.createClass({
 
   render() {
     return (
-      <tr key={this.props.key} onMouseEnter={this.setHoveredTrue} onMouseLeave={this.setHoveredFalse} >
+      <tr onMouseEnter={this.setHoveredTrue} onMouseLeave={this.setHoveredFalse} >
         <td>
           <strong>{this.props.datatype.get('column')}</strong>
         </td>
