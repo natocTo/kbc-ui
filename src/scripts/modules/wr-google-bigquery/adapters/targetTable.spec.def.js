@@ -9,7 +9,8 @@ export const cases = {
         input: {
           tables: [
             {
-              source: ''
+              source: '',
+              destination: ''
             }
           ]
         }
@@ -34,7 +35,8 @@ export const cases = {
         input: {
           tables: [
             {
-              source: 'in.c-main.test'
+              source: 'in.c-main.test',
+              destination: 'in.c-main.test.csv'
             }
           ]
         }

@@ -1,12 +1,17 @@
 import Immutable from 'immutable';
 
 const createConfiguration = function(localState) {
+  let destination = '';
+  if (localState.get('source')) {
+    destination = localState.get('source') + '.csv';
+  }
   const config = Immutable.fromJS({
     storage: {
       input: {
         tables: [
           {
-            source: localState.get('source', '')
+            source: localState.get('source', ''),
+            destination: destination
           }
         ]
       }
