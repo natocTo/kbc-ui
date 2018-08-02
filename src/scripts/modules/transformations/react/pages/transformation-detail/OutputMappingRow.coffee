@@ -54,7 +54,7 @@ OutputMappingRow = React.createClass(
                 TableBackendLabel
                   backend: @props.tables.getIn [@props.outputMapping.get('destination'), 'bucket', 'backend']
                 if @props.outputMapping.get 'incremental'
-                  span {className: 'label label-primary'},
+                  span {className: 'label label-default'},
                     'Incremental'
                 if @props.outputMapping.get('destination') != ''
                   @props.outputMapping.get('destination')
@@ -77,7 +77,7 @@ OutputMappingRow = React.createClass(
                 TableBackendLabel
                   backend: @props.tables.getIn [@props.outputMapping.get('destination'), 'bucket', 'backend']
                 if @props.outputMapping.get 'incremental'
-                  span {className: 'label label-primary'},
+                  span {className: 'label label-default'},
                     'Incremental'
               span {className: 'td col-xs-3', key: 'destination'},
                 @props.outputMapping.get('destination')
