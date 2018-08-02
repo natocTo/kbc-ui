@@ -9,9 +9,10 @@ const getComponentType = (type) => {
 };
 
 const getComponentBadges = (component) => {
-  const flags = component.getIn(['data', 'vendor', 'licenseUrl'])
-    ? component.get('flags').merge(['hasLicence'])
-    : component.get('flags');
+  const complexity = component.get('complexity');
+  var flags = component.getIn(['data', 'vendor', 'licenseUrl'])
+    ? component.get('flags').merge(['hasLicence']).push('complexity-' + complexity)
+    : component.get('flags').push('complexity-' + complexity);
   const componentType = getComponentType(component.get('type'));
 
   let badges = [];
@@ -101,6 +102,30 @@ const getComponentBadges = (component) => {
       description: <span>You agree to the <ExternalLink href={component.getIn(['data', 'vendor', 'licenseUrl'])}>vendor's license agreement</ExternalLink>.</span>,
       descriptionPlain: 'You agree to the vendor\'s license agreement.',
       key: 'license'
+    });
+  }
+  if (flags.contains('complexity-hard')) {
+    badges.push({
+      title: <span><i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/></span>,
+      description: `Configuration of this ${componentType} may take up to 1 hour and requires deep knowledge.`,
+      descriptionPlain: `Configuration of this ${componentType} may take up to 1 hour and requires deep knowledge.`,
+      key: 'complexity'
+    });
+  }
+  if (flags.contains('complexity-medium')) {
+    badges.push({
+      title: <span><i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/></span>,
+      description: `Configuration of this ${componentType} may take several minutes and requires advance knowledge.`,
+      descriptionPlain: `Configuration of this ${componentType} may take several minutes and requires advance knowledge.`,
+      key: 'complexity'
+    });
+  }
+  if (flags.contains('complexity-easy')) {
+    badges.push({
+      title: <span><i className="fa fa-clock-o"/></span>,
+      description: `Configuration of this ${componentType} can be easily done with just basic knowledge.`,
+      descriptionPlain: `Configuration of this ${componentType} can be easily done with just basic knowledge.`,
+      key: 'complexity'
     });
   }
   return badges;

@@ -20,7 +20,7 @@ export default React.createClass({
       >
         <ComponentBadgeCell
           badges={getComponentBadges(component)}
-          badgesFilter={['3rdParty', 'appInfo.beta']}
+          badgesFilter={['3rdParty', 'appInfo.beta', 'complexity']}
         />
         <ComponentIcon component={component} size="64" />
         <h2>
