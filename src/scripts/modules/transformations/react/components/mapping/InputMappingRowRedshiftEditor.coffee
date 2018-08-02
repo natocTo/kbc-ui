@@ -261,7 +261,7 @@ module.exports = React.createClass
                 onChange: @_handleChangeWhereOperator
               ,
                 React.DOM.option {value: "eq"}, "= (IN)"
-                React.DOM.option {value: "ne"}, "!= (NOT IN)"
+                React.DOM.option {value: "not eq"}, "!= (NOT IN)"
             React.DOM.div className: 'col-xs-4',
               Select
                 name: 'whereValues'

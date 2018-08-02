@@ -43,7 +43,7 @@ export default React.createClass({
             value={this.props.value.get('where_operator') || 'eq'}
             disabled={this.props.disabled}
             clearable={false}
-            options={[{label: '= (IN)', value: 'eq'}, {label: '!= (NOT IN)', value: 'ne'}]}
+            options={[{label: '= (IN)', value: 'eq'}, {label: '!= (NOT IN)', value: 'not eq'}]}
             onChange={this._handleChangeWhereOperator}/>
         </div>
         <div className="col-xs-4">
