@@ -32,8 +32,8 @@ export default React.createClass({
             value={this.getChangedSinceValue()}
             disabled={this.props.disabled}
             onChange={this.handleChangeChangedSince}
+            helpBlock={this.props.helpBlock}
           />
-          <span className="help-block">{this.props.helpBlock}</span>
         </div>
       </div>
     );
