@@ -4,13 +4,11 @@ import titleAdpater from './title';
 
 const tableId = 'in.some.table';
 function makeParameters(body = {}) {
-  const params = {
+  return {
     tables: {
       [tableId]: body
     }
   };
-  params.tables[tableId] = body;
-  return params;
 }
 
 
