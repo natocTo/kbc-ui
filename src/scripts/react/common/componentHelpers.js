@@ -111,24 +111,24 @@ const getComponentBadges = (component) => {
   if (flags.contains('complexity-hard')) {
     badges.push({
       title: <span><i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/></span>,
-      description: `Configuration of this ${componentType} may take up to 1 hour and requires deep knowledge.`,
-      descriptionPlain: `Configuration of this ${componentType} may take up to 1 hour and requires deep knowledge.`,
+      description: `You are required to have deep knowledge about this ${componentType}.`,
+      descriptionPlain: `You are required to have deep knowledge about this ${componentType}.`,
       key: 'complexity'
     });
   }
   if (flags.contains('complexity-medium')) {
     badges.push({
       title: <span><i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/></span>,
-      description: `Configuration of this ${componentType} may take several minutes and requires advance knowledge.`,
-      descriptionPlain: `Configuration of this ${componentType} may take several minutes and requires advance knowledge.`,
+      description: `You need to use documentation to set this ${componentType} up.`,
+      descriptionPlain: `You need to use documentation to set this ${componentType} up.`,
       key: 'complexity'
     });
   }
   if (flags.contains('complexity-easy')) {
     badges.push({
       title: <span><i className="fa fa-clock-o"/></span>,
-      description: `Configuration of this ${componentType} can be easily done with just basic knowledge.`,
-      descriptionPlain: `Configuration of this ${componentType} can be easily done with just basic knowledge.`,
+      description: `You can setup this ${componentType} in few minutes with just basic knowledge.`,
+      descriptionPlain: `You can setup this ${componentType} in few minutes with just basic knowledge.`,
       key: 'complexity'
     });
   }
