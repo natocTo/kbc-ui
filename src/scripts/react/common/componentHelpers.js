@@ -10,12 +10,16 @@ const getComponentType = (type) => {
 
 const getComponentBadges = (component) => {
   const complexity = component.get('complexity');
-  var flags = component.getIn(['data', 'vendor', 'licenseUrl'])
-    ? component.get('flags').merge(['hasLicence']).push('complexity-' + complexity)
-    : component.get('flags').push('complexity-' + complexity);
   const componentType = getComponentType(component.get('type'));
-
+  let flags = component.get('flags');
   let badges = [];
+
+  if (component.getIn(['data', 'vendor', 'licenseUrl'])) {
+    flags = flags.push('hasLicence');
+  }
+  if (complexity) {
+    flags = flags.push('complexity-' + complexity);
+  }
 
   if (flags.contains('3rdParty')) {
     badges.push({
