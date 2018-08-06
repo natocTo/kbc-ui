@@ -126,7 +126,7 @@ export default React.createClass({
             <code>endTime:[2018-06-21 TO *]</code>
           </dd>
         </dl>
-        <p>You can <a href="https://docs.keboola.com/management/jobs/#searching-the-jobs-log">find more complex examples in documentation</a></p>
+        <p>You can <a href="https://help.keboola.com/management/jobs/#searching-the-jobs-log">find more complex examples in documentation</a></p>
       </Popover>
     );
   }
