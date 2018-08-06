@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {OverlayTrigger, Popover, Button} from 'react-bootstrap';
-import { Icon } from '@keboola/indigo-ui';
+import { Icon, ExternalLink } from '@keboola/indigo-ui';
 import SearchRow from '../../../../../react/common/SearchRow';
 
 export default React.createClass({
@@ -126,7 +126,9 @@ export default React.createClass({
             <code>endTime:[2018-06-21 TO *]</code>
           </dd>
         </dl>
-        <p>You can <a href="https://help.keboola.com/management/jobs/#searching-the-jobs-log">find more complex examples in documentation</a></p>
+        <p>
+          You can <ExternalLink href="https://help.keboola.com/management/jobs/#searching-the-jobs-log">find more complex examples in documentation</ExternalLink>
+        </p>
       </Popover>
     );
   }
