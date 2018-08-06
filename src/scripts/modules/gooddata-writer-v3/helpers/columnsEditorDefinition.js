@@ -1,5 +1,5 @@
 import {Map, fromJS} from 'immutable';
-import {parseParameters, createConfigParameters} from './rowParametersTable';
+import {parseParameters, createConfigParameters} from './rowTableParameters';
 import PreferencesHeader from '../react/components/PreferencesHeader';
 import PreferencesColumn from '../react/components/PreferencesColumn';
 import makeColumnDefinition from './makeColumnDefinition';

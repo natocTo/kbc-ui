@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
 
 const LoadTypeSectionTitle = ({ value }) => (
-  <span> Load Type: {value.incrementalLoad === 0 ? 'Full Load' : 'Incremental Load'} </span>
+  <span>
+    Load Type: {!value.incremental ? 'Full Load' : 'Incremental Load'}
+    {value.grain.length > 0 && ' with fact grain'}
+  </span>
 );
 
 LoadTypeSectionTitle.propTypes = {

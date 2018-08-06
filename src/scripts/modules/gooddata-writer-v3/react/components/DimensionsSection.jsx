@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
-// import {FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
-import { PanelGroup, Panel } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import NewDimensionForm from './NewDimensionForm';
+import Confirm from '../../../../react/common/Confirm';
+import {Check} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -17,7 +17,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      newDimension: {},
+      newDimension: {template: 'gooddata'},
       showModal: false
     };
   },
@@ -30,7 +30,7 @@ export default React.createClass({
 
   closeModal() {
     if (!this.props.disabled) {
-      this.setState({showModal: false, newDimension: {}});
+      this.setState({showModal: false, newDimension: {template: 'gooddata'}});
     }
   },
 
@@ -39,7 +39,7 @@ export default React.createClass({
       <Modal onHide={this.closeModal} show={this.state.showModal}>
         <Modal.Header closeButton={true}>
           <Modal.Title>
-            + Create new dimenstions
+            Add Date Dimension
           </Modal.Title>
         </Modal.Header>
 
@@ -64,69 +64,95 @@ export default React.createClass({
   },
 
   isValid() {
-    return true;
+    const {name, template, templateId} = this.state.newDimension;
+    return name && (template === 'custom' ? templateId : true);
   },
 
   render() {
-    const dimKeys = Object.keys(this.props.value.dimensions);
+    const dimensionKeys = Object.keys(this.props.value.dimensions);
     const dimensions = this.props.value.dimensions;
+    const hasDimensions = Object.keys(dimensions).length > 0;
     return (
-      <div>
+      <div className="table-config-rows">
         {this.renderModal()}
-        <PanelGroup
-          accordion={true}
-          className="kbc-accordion kbc-panel-heading-with-table">
-          <Panel header={this.renderHeader()}>
-            <span>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Include Time</th>
-                    <th>Identifier</th>
-                    <th>Template</th>
-                    <th>{/* actions */}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    dimKeys.map(dimName => {
-                      const dim = dimensions[dimName];
-                      return (
-                        <tr key={dimName}>
-                          <td> {dimName}</td>
-                          <td> {dim.includeTime ? 'yes' : 'no'}</td>
-                          <td> {dim.identifier}</td>
-                          <td> {dim.template}</td>
-                          <td> delete todo</td>
-                        </tr>
-                      );
-                    })
-                  }
-                </tbody>
-              </table>
-            </span>
-          </Panel>
-        </PanelGroup>
+        {hasDimensions ?
+         <table className="table table-striped">
+           <thead>
+             <tr>
+               <th>Name</th>
+               <th>Include Time</th>
+               <th>Identifier</th>
+               <th>Template</th>
+               <th>{this.renderAddButton()}</th>
+             </tr>
+           </thead>
+           <tbody>
+             {
+               dimensionKeys.map(dimName => {
+                 const dim = dimensions[dimName];
+                 return (
+                   <tr key={dimName}>
+                     <td> {dimName}</td>
+                     <td> <Check isChecked={dim.includeTime}/></td>
+                     <td> {dim.identifier}</td>
+                     <td> {dim.template}</td>
+                     <td> {this.renderDeleteButton(dimName)}</td>
+                   </tr>
+                 );
+               })
+             }
+           </tbody>
+         </table>
+         : this.renderEmptyDimensions()
+        }
       </div>
     );
   },
 
-  renderHeader() {
+  renderEmptyDimensions() {
     return (
-      <span>
-        <div>
-          Dimensions
+      <div className="kbc-inner-padding">
+        <div className="component-empty-state text-center">
+          <p>No dimensions created yet</p>
+          {this.renderAddButton()}
         </div>
-        <div className="text-right">
-          <button
-            disabled={this.props.disabled}
-            onClick={this.openModal}
-            className="btn btn-success">
-            + New Dimensions
+      </div>
+    );
+  },
+
+  renderDeleteButton(dimensionName) {
+    return (
+      <div className="kbc-no-wrap">
+        <Confirm
+          title="Delete dimension"
+          text={`Do you really want to delete dimension ${dimensionName}?`}
+          buttonLabel="Delete"
+          onConfirm={() => this.handleDelete(dimensionName)}
+        >
+          <button disabled={this.props.disabled} className="btn btn-link">
+            <i className="kbc-icon-cup fa fa-fw"/>
           </button>
-        </div>
-      </span>
+        </Confirm>
+      </div>
+    );
+  },
+
+  handleDelete(dimensionName) {
+    const dimensionsToSave = {...this.props.value.dimensions};
+    delete dimensionsToSave[dimensionName];
+    this.props.onSave({dimensions: dimensionsToSave});
+  },
+
+  renderAddButton() {
+    return (
+      <div className="kbc-no-wrap">
+        <button
+          disabled={this.props.disabled}
+          onClick={this.openModal}
+          className="btn btn-success">
+          + New Date Dimension
+        </button>
+      </div>
     );
   },
 

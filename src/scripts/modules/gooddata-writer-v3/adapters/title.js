@@ -1,5 +1,5 @@
 import Immutable, {Map} from 'immutable';
-import {parseParameters, createConfigParameters} from '../helpers/rowParametersTable';
+import {parseParameters, createConfigParameters} from '../helpers/rowTableParameters';
 
 const createConfiguration = (localState) => {
   return createConfigParameters(localState);

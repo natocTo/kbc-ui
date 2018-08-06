@@ -12,11 +12,9 @@ import dimensionsAdapter from './adapters/dimensions';
 import columnsEditorDefinition from './helpers/columnsEditorDefinition';
 import ToggleProjectAccess from './react/components/ToggleProjectAccess';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
-import {parseParameters} from './helpers/rowParametersTable';
-
+import {parseParameters} from './helpers/rowTableParameters';
 
 import {Map} from 'immutable';
-import React from 'react';
 
 const routeSettings = {
   componentId: 'keboola.gooddata-writer',
@@ -28,7 +26,11 @@ const routeSettings = {
     show: true,
     sections: [
       {
-        render: DimensionsSection,
+        render: CollapsibleSection({
+          title: 'Date Dimensions',
+          contentComponent: DimensionsSection,
+          options: {stretchContentToBody: true}
+        }),
         onSave: dimensionsAdapter.createConfiguration,
         onLoad: dimensionsAdapter.parseConfiguration
       }
@@ -69,20 +71,9 @@ const routeSettings = {
         name: 'GoodData Title',
         type: columnTypes.VALUE,
         value: function(row) {
-          const params = row.getIn(['configuration', 'parameters'], Map());
+          const params = row.getIn(['configuration', 'parameters', 'tables'], Map());
           const tableId = params.keySeq().first();
           return params.getIn([tableId, 'title']);
-        }
-      },
-      {
-        name: 'Description',
-        type: columnTypes.VALUE,
-        value: function(row) {
-          return (
-            <small>
-              {row.get('description') !== '' ? row.get('description') : 'No description'}
-            </small>
-          );
         }
       }
     ]

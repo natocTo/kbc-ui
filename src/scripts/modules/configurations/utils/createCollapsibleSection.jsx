@@ -1,8 +1,14 @@
 import React, {PropTypes} from 'react';
 import SaveButtons from '../../../react/common/SaveButtons';
 import { PanelGroup, Panel } from 'react-bootstrap';
+import classnames from 'classnames';
+import './createCollapsibleSection.less';
 
 export default (TitleComponent, InnerComponent, options = {}) => {
+  const {
+    includeSaveButtons = false, // whether render save buttons
+    stretchContentToBody = false // wheter strech content to full width of panel body
+  } = options;
   return React.createClass({
 
     displayName: 'CollapsibleSection',
@@ -98,15 +104,21 @@ export default (TitleComponent, InnerComponent, options = {}) => {
         <InnerComponent
           disabled={this.props.disabled}
           onChange={this.handleChange}
+          onSave={this.props.onSave}
           value={this.props.value}
         />);
     },
 
     render() {
+      const panelClassNames = {
+        'kbc-accordion': true,
+        'kbc-panel-heading-with-table': true,
+        'collapsible-section-content-no-padding': stretchContentToBody
+      };
       return (
         <PanelGroup
           accordion={true}
-          className="kbc-accordion kbc-panel-heading-with-table"
+          className={classnames(panelClassNames)}
           activeKey={this.isAccordionOpen() ? 'content' : ''}
           onSelect={activeTab => activeTab === 'content' && this.setState({contentManuallyOpen: !this.isAccordionOpen()})}
         >
@@ -114,7 +126,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
             header={this.accordionHeader()}
             eventKey="content"
           >
-            {options.includeSaveButtons && this.renderButtons()}
+            {includeSaveButtons && this.renderButtons()}
             {this.renderContent()}
           </Panel>
         </PanelGroup>
