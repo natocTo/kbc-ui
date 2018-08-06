@@ -61,7 +61,7 @@ OutputMappingDetail = React.createClass(
               strong {},
                 @props.outputMapping.get('deleteWhereColumn')
               ' '
-              @props.outputMapping.get('deleteWhereOperator')
+              @_getDeleteWhereOperator()
               ' '
               strong {},
                 @props.outputMapping.get('deleteWhereValues').map((value) ->

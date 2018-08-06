@@ -33,6 +33,13 @@ InputMappingDetail = React.createClass(
   _isSourceTableInRedshift: ->
     @props.tables.getIn([@props.inputMapping.get('source'), 'bucket', 'backend']) == 'redshift'
 
+  _getDeleteWhereOperator: ->
+    operator = @props.inputMapping.get('whereOperator')
+    if operator == 'ne'
+      return 'not eq'
+    else
+      return "eq"
+
   render: ->
     ListGroupItems = [
 
@@ -73,7 +80,7 @@ InputMappingDetail = React.createClass(
               strong {},
                 @props.inputMapping.get('whereColumn')
               ' '
-              @props.inputMapping.get('whereOperator')
+              @_getDeleteWhereOperator()
               ' '
               strong {},
                 @props.inputMapping.get('whereValues').map((value) ->
