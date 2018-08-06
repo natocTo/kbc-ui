@@ -1,5 +1,6 @@
 React = require 'react'
 Immutable = require 'immutable'
+WhereOperator = React.createFactory(require('../../../../../react/common/WhereOperator').default)
 {span, div, p, ul, li, strong} = React.DOM
 
 module.exports = React.createClass
@@ -19,7 +20,7 @@ module.exports = React.createClass
           strong {},
             @props.value.get('where_column')
           ' '
-          @props.value.get('where_operator')
+          WhereOperator {backendOperator: @props.value.get('where_operator')}
           ' '
           strong {},
             @props.value.get('where_values', Immutable.List()).map((value) ->
