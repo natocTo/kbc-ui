@@ -16,15 +16,15 @@ describe('test input mapping helper', () => {
 
   const localState = fromJS({source: 'some.table'});
   const parsed = parseInputMapping(configuration);
-  it('should test parse empty im', () => {
+  it('should test parse empty input mapping', () => {
     assert.deepEqual(parseInputMapping(fromJS({})).toJS(), {});
   });
 
-  it('should test parse nonempty im', () => {
+  it('should test parse nonempty input mapping', () => {
     assert.deepEqual(parsed.toJS(), localState.toJS());
   });
 
-  it('should test create nonempty im', () => {
+  it('should test create nonempty input mapping', () => {
     const created = createInputMapping(localState);
     assert.deepEqual(created.toJS(), configuration.toJS());
   });

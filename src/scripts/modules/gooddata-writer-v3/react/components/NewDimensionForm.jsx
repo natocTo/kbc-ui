@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Form, Col, Checkbox, FormControl, FormGroup, ControlLabel, HelpBlock, Radio} from 'react-bootstrap';
 import RadioGroup from 'react-radio-group';
-// import {Input} from '../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
   propTypes: {

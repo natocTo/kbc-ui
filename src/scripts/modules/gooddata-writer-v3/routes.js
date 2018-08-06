@@ -14,9 +14,7 @@ import ToggleProjectAccess from './react/components/ToggleProjectAccess';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 import {parseParameters} from './helpers/rowTableParameters';
 
-
 import {Map} from 'immutable';
-// import React from 'react';
 
 const routeSettings = {
   componentId: 'keboola.gooddata-writer',
