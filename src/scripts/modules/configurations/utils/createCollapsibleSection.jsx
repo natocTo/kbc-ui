@@ -5,6 +5,10 @@ import classnames from 'classnames';
 import './createCollapsibleSection.less';
 
 export default (TitleComponent, InnerComponent, options = {}) => {
+  const {
+    includeSaveButtons = false, // whether render save buttons
+    stretchContentToBody = false // wheter strech content to full width of panel body
+  } = options;
   return React.createClass({
 
     displayName: 'CollapsibleSection',
@@ -109,7 +113,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
       const panelClassNames = {
         'kbc-accordion': true,
         'kbc-panel-heading-with-table': true,
-        'collapsible-section-content-no-padding': options.stretchContentToBody
+        'collapsible-section-content-no-padding': stretchContentToBody
       };
       return (
         <PanelGroup
@@ -122,7 +126,7 @@ export default (TitleComponent, InnerComponent, options = {}) => {
             header={this.accordionHeader()}
             eventKey="content"
           >
-            {options.includeSaveButtons && this.renderButtons()}
+            {includeSaveButtons && this.renderButtons()}
             {this.renderContent()}
           </Panel>
         </PanelGroup>
