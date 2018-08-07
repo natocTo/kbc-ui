@@ -15,7 +15,7 @@ const App = React.createClass({
   },
   render() {
     return (
-      <div className="kbc-outer-container indigo-temp">
+      <div className="kbc-outer-container">
         <div className="kbc-outer-logo">
           <span className="kbc-icon-keboola-logo" />
           <span className="kbc-notification">
@@ -36,15 +36,13 @@ const App = React.createClass({
           />
         </div>
         <div className="kbc-outer-content well">
-          <div className="indigo-temp">
-            <ProjectsList
-              organizations={this.props.organizations}
-              urlTemplates={this.props.urlTemplates}
-              projectTemplates={this.props.projectTemplates}
-              focus={true}
-              canCreateProject={this.props.canCreateProject}
-            />
-          </div>
+          <ProjectsList
+            organizations={this.props.organizations}
+            urlTemplates={this.props.urlTemplates}
+            projectTemplates={this.props.projectTemplates}
+            focus={true}
+            canCreateProject={this.props.canCreateProject}
+          />
         </div>
       </div>
     );

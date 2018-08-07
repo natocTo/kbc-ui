@@ -55,7 +55,7 @@ App = React.createClass
         homeUrl: @state.homeUrl
         notifications: @state.notifications
       React.createElement(FloatingNotifications)
-      div className: 'container-fluid indigo-temp',
+      div className: 'container-fluid',
         div className: 'row',
           div className: 'col-xs-3 kbc-sidebar',
             ProjectSelect
