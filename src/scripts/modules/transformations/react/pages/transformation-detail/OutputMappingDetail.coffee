@@ -25,15 +25,6 @@ OutputMappingDetail = React.createClass(
   getDefaultProps: ->
     definition: Immutable.Map()
 
-  _getTableBackend: (tableId) ->
-    table = @props.tables.find((table) ->
-      table.getIn(["bucket", "id"]) == tableId.substr(0, tableId.lastIndexOf("."))
-    )
-    if table
-      return table.getIn(['bucket', 'backend'])
-    else
-      return "N/A"
-
   render: ->
     ListGroupItems = [
 
