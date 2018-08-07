@@ -21,7 +21,7 @@ export default React.createClass({
               <p>
                 {this.state.error && this.state.error.getText()}
               </p>
-              {this.state.error && (
+              {this.state.error && this.state.error.getExceptionId() && (
                 <p>
                   {'Exception id: ' + this.state.error.getExceptionId()}
                 </p>
