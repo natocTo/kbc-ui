@@ -2,6 +2,8 @@ import React from 'react';
 
 import ProjectsList from './List';
 
+import { Icon } from '@keboola/indigo-ui';
+import { Dropdown } from 'react-bootstrap';
 
 export default React.createClass({
 
@@ -19,18 +21,20 @@ export default React.createClass({
   },
 
   render() {
-    const clName = this.state.open ? 'open' : '';
     return (
-      <div className={`kbc-project-select dropdown ${clName}`}>
-        <button onClick={this._handleDropdownClick} title={this.props.currentProject.get('name')}>
-          <span>
-            <span className="kbc-icon-picker-double" />
-              <span className="kbc-project-name">
-                {this.props.currentProject.get('name')}
-              </span>
-          </span>
-        </button>
-        <div className="dropdown-menu">
+      <Dropdown
+        id="select-project-dropdown-button"
+        className="kbc-project-select"
+        onToggle={this._handleToggle}
+      >
+        <Dropdown.Toggle noCaret>
+            {this.state.open ?
+              <Icon.Times className="pull-right icon-size-16"/> :
+              <Icon.ArrowDown className="pull-right icon-size-16"/>
+            }
+            {this.props.currentProject.get('name')}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
           <ProjectsList
             organizations={this.props.organizations}
             currentProjectId={this.props.currentProject.get('id')}
@@ -38,17 +42,13 @@ export default React.createClass({
             projectTemplates={this.props.projectTemplates}
             xsrf={this.props.xsrf}
             canCreateProject={this.props.canCreateProject}
-            focus={this.state.open} />
-        </div>
-      </div>);
+            focus={this.state.open}/>
+        </Dropdown.Menu>
+      </Dropdown>
+    );
   },
 
-  setDropdownState(newState) {
-    this.setState({open: newState});
-  },
-
-  _handleDropdownClick(e) {
-    e.preventDefault();
-    this.setDropdownState(!this.state.open);
+  _handleToggle(isOpen) {
+    this.setState({open: isOpen});
   }
 });
