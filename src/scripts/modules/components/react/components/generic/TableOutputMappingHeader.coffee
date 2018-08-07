@@ -3,7 +3,6 @@ Link = React.createFactory(require('react-router').Link)
 DeleteButton = require '../../../../../react/common/DeleteButton'
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../../../transformations/react/components/TableSizeLabel')
-TableBackendLabel = React.createFactory(require '../../../../transformations/react/components/TableBackendLabel')
 TableOutputMappingModal = require('./TableOutputMappingModal').default
 Immutable = require('immutable')
 
@@ -45,8 +44,6 @@ module.exports = React.createClass(
                 TableSizeLabel
                   size: @props.tables.getIn [@props.value.get('destination'), 'dataSizeBytes']
                 ' '
-                TableBackendLabel
-                  backend: @props.tables.getIn [@props.value.get('destination'), 'bucket', 'backend']
                 if @props.value.get('destination') != ''
                   @props.value.get('destination')
                 else
@@ -62,8 +59,6 @@ module.exports = React.createClass(
                 TableSizeLabel
                   size: @props.tables.getIn [@props.value.get('destination'), 'dataSizeBytes']
                 ' '
-                TableBackendLabel
-                  backend: @props.tables.getIn [@props.value.get('destination'), 'bucket', 'backend']
               span {className: 'td col-xs-3', key: 'destination'},
                 @props.value.get('destination')
             ]

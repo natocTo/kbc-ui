@@ -1,7 +1,6 @@
 React = require 'react'
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
-TableBackendLabel = React.createFactory(require '../../components/TableBackendLabel')
 TransformationTableTypeLabel = React.createFactory(require '../../components/TransformationTableTypeLabel')
 FileSize = React.createFactory(require('../../../../../react/common/FileSize').default)
 Check = React.createFactory(require('@keboola/indigo-ui').Check)
