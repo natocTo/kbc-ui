@@ -2,7 +2,6 @@ React = require 'react'
 DeleteButton = require '../../../../../react/common/DeleteButton'
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
-TableBackendLabel = React.createFactory(require '../../components/TableBackendLabel')
 TransformationTableTypeLabel = React.createFactory(require '../../components/TransformationTableTypeLabel')
 InputMappingModal = require('../../modals/InputMapping').default
 actionCreators = require '../../../ActionCreators'
@@ -42,9 +41,6 @@ module.exports = React.createClass(
               span {className: 'td col-xs-6', key: 'destination'},
                 TableSizeLabel {size: @props.tables.getIn [@props.inputMapping.get('source'), 'dataSizeBytes']}
                 ' '
-                TableBackendLabel {
-                  backend: @props.tables.getIn [@props.inputMapping.get('source'), 'bucket', 'backend']
-                }
                 if @props.inputMapping.get('source') != ''
                   @props.inputMapping.get('source')
                 else
@@ -55,9 +51,6 @@ module.exports = React.createClass(
               span {className: 'td col-xs-3', key: 'icons'},
                 TableSizeLabel {size: @props.tables.getIn [@props.inputMapping.get('source'), 'dataSizeBytes']}
                 ' '
-                TableBackendLabel {
-                  backend: @props.tables.getIn [@props.inputMapping.get('source'), 'bucket', 'backend']
-                }
               span {className: 'td col-xs-4', key: 'source'},
                 @props.inputMapping.get 'source', 'Not set'
               span {className: 'td col-xs-1', key: 'arrow'},

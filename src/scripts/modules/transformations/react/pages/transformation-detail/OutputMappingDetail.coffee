@@ -1,7 +1,6 @@
 React = require 'react'
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
-TableBackendLabel = React.createFactory(require '../../components/TableBackendLabel')
 TransformationTableTypeLabel = React.createFactory(require '../../components/TransformationTableTypeLabel')
 FileSize = React.createFactory(require '../../../../../react/common/FileSize')
 Check = React.createFactory(require('@keboola/indigo-ui').Check)
@@ -25,15 +24,6 @@ OutputMappingDetail = React.createClass(
 
   getDefaultProps: ->
     definition: Immutable.Map()
-
-  _getTableBackend: (tableId) ->
-    table = @props.tables.find((table) ->
-      table.getIn(["bucket", "id"]) == tableId.substr(0, tableId.lastIndexOf("."))
-    )
-    if table
-      return table.getIn(['bucket', 'backend'])
-    else
-      return "N/A"
 
   render: ->
     ListGroupItems = [

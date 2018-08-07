@@ -1,7 +1,6 @@
 React = require 'react'
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
-TableBackendLabel = React.createFactory(require '../../components/TableBackendLabel')
 DeleteButton = require '../../../../../react/common/DeleteButton'
 OutputMappingModal = require('../../modals/OutputMapping').default
 actionCreators = require '../../../ActionCreators'
@@ -51,8 +50,6 @@ OutputMappingRow = React.createClass(
                 TableSizeLabel
                   size: @props.tables.getIn [@props.outputMapping.get('destination'), 'dataSizeBytes']
                 ' '
-                TableBackendLabel
-                  backend: @props.tables.getIn [@props.outputMapping.get('destination'), 'bucket', 'backend']
                 if @props.outputMapping.get 'incremental'
                   span {className: 'label label-default'},
                     'Incremental'
@@ -74,8 +71,6 @@ OutputMappingRow = React.createClass(
                 TableSizeLabel
                   size: @props.tables.getIn [@props.outputMapping.get('destination'), 'dataSizeBytes']
                 ' '
-                TableBackendLabel
-                  backend: @props.tables.getIn [@props.outputMapping.get('destination'), 'bucket', 'backend']
                 if @props.outputMapping.get 'incremental'
                   span {className: 'label label-default'},
                     'Incremental'
