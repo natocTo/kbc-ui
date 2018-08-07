@@ -37,17 +37,18 @@ module.exports = React.createClass
   render: ->
     if !@props.organizations.count() && !@props.canCreateProject
       return React.createElement Emptylist
-    li className: 'dropdown-header kb-nav-search kbc-search',
-      span className: 'kbc-icon-search'
-      input
-        className: 'form-control'
-        placeholder: 'Search your projects'
-        value: @state.query
-        ref: 'searchInput'
-        onChange: @_handleQueryChange
-        onKeyDown: @_handleKeyDown
-      @_projectsList()
-      @_newProject() if @props.canCreateProject
+    ul className: 'list-unstyled',
+      li className: 'dropdown-header kb-nav-search kbc-search',
+        span className: 'kbc-icon-search'
+        input
+          className: 'form-control'
+          placeholder: 'Search your projects'
+          value: @state.query
+          ref: 'searchInput'
+          onChange: @_handleQueryChange
+          onKeyDown: @_handleKeyDown
+        @_projectsList()
+        @_newProject() if @props.canCreateProject
 
 
   _projectsList: ->
