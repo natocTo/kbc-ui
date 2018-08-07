@@ -5,7 +5,6 @@ import ProjectsList from './List';
 import { Icon } from '@keboola/indigo-ui';
 import { Dropdown } from 'react-bootstrap';
 
-
 export default React.createClass({
 
   propTypes: {
@@ -23,7 +22,11 @@ export default React.createClass({
 
   render() {
     return (
-      <Dropdown id="select-project-dropdown-button" className="kbc-project-select" onToggle={this._handleToggle}>
+      <Dropdown
+        id="select-project-dropdown-button"
+        className="kbc-project-select"
+        onToggle={this._handleToggle}
+      >
         <Dropdown.Toggle noCaret>
             {this.state.open ?
               <Icon.Times className="pull-right icon-size-16"/> :
