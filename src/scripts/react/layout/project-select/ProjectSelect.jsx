@@ -45,7 +45,7 @@ export default React.createClass({
     );
   },
 
-  _handleToggle(e) {
-    this.setState({open: e});
+  _handleToggle(isOpen) {
+    this.setState({open: isOpen});
   }
 });
