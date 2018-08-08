@@ -38,9 +38,9 @@ const getComponentBadges = (component) => {
   }
   if (flags.contains('excludeFromNewList')) {
     badges.push({
-      title: 'Alpha',
-      description: `This ${componentType} is private.`,
-      descriptionPlain: `This ${componentType} is private.`,
+      title: 'Experimental',
+      description: `This ${componentType} is not recommended for production use.`,
+      descriptionPlain: `This ${componentType} is not recommended for production use.`,
       key: 'excludeFromNewList'
     });
   }
