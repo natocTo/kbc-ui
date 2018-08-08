@@ -144,6 +144,20 @@ const getComponentBadges = (component) => {
       key: 'complexity'
     });
   }
+  if (component.get('documentationUrl')) {
+    badges.push({
+      title: (
+        <span>
+          <i className="fa fa-book "/> Documentation
+        </span>
+      ),
+      description: (
+        <span>Documentation for this {componentType} is <ExternalLink href={component.get('documentationUrl')}>available.</ExternalLink></span>
+      ),
+      descriptionPlain: `Documentation for this ${componentType} is available.`,
+      key: 'documentation'
+    });
+  }
   return badges;
 };
 
