@@ -4,7 +4,7 @@ import ComponentDetailLink from './ComponentDetailLink';
 import ComponentBadgeCell from './ComponentBadgeCell';
 import ComponentIcon from './ComponentIcon';
 import ComponentName from './ComponentName';
-import { getComponentBadges } from './componentHelpers';
+import { getComponentBadgesIncluding } from './componentHelpers';
 
 export default React.createClass({
   propTypes: {
@@ -19,8 +19,7 @@ export default React.createClass({
         type={component.get('type')}
       >
         <ComponentBadgeCell
-          badges={getComponentBadges(component)}
-          badgesFilter={['3rdParty', 'appInfo.beta', 'complexity']}
+          badges={getComponentBadgesIncluding(component, ['3rdParty', 'appInfo.beta', 'complexity'])}
         />
         <ComponentIcon component={component} size="64" />
         <h2>

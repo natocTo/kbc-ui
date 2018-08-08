@@ -6,7 +6,7 @@ import ComponentIcon from '../../../../react/common/ComponentIcon';
 import ComponentName from '../../../../react/common/ComponentName';
 import ComponentDetailLink from '../../../../react/common/ComponentDetailLink';
 import ComponentBadgeRow from '../../../../react/common/ComponentBadgeRow';
-import { getComponentBadges } from '../../../../react/common/componentHelpers';
+import { getComponentBadgesExcluding } from '../../../../react/common/componentHelpers';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -28,7 +28,7 @@ export default React.createClass({
             </h2>
           </div>
           <ComponentBadgeRow
-            badges={getComponentBadges(this.props.component)}
+            badges={getComponentBadgesExcluding(this.props.component, ['documentation'])}
           />
         </div>
         <div className="table table-hover">
