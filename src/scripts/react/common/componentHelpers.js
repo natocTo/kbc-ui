@@ -110,7 +110,12 @@ const getComponentBadges = (component) => {
   }
   if (flags.contains('complexity-hard')) {
     badges.push({
-      title: <span><i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/></span>,
+      title: (
+      <span>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+      </span>),
       description: `You are required to have deep knowledge about this ${componentType}.`,
       descriptionPlain: `You are required to have deep knowledge about this ${componentType}.`,
       key: 'complexity'
@@ -118,7 +123,11 @@ const getComponentBadges = (component) => {
   }
   if (flags.contains('complexity-medium')) {
     badges.push({
-      title: <span><i className="fa fa-clock-o"/> <i className="fa fa-clock-o"/></span>,
+      title: (
+      <span>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+      </span>),
       description: `You need to use documentation to set this ${componentType} up.`,
       descriptionPlain: `You need to use documentation to set this ${componentType} up.`,
       key: 'complexity'
@@ -126,7 +135,10 @@ const getComponentBadges = (component) => {
   }
   if (flags.contains('complexity-easy')) {
     badges.push({
-      title: <span><i className="fa fa-clock-o"/></span>,
+      title: (
+      <span>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+      </span>),
       description: `You can setup this ${componentType} in few minutes with just basic knowledge.`,
       descriptionPlain: `You can setup this ${componentType} in few minutes with just basic knowledge.`,
       key: 'complexity'
