@@ -43,12 +43,16 @@ export default React.createClass({
   },
 
   getOptions() {
-    const options = this.props.allComponents.map((component, componentId) => {
-      const componentRender = this.renderComponent(component);
-      const isHidden = component.get('flags').includes('excludeFromNewList');
-      return {label: componentId, value: componentId, componentRender, isHidden};
-    });
-    return options.toArray();
+    return this.props.allComponents
+      .sortBy((component) => {
+        return component.get('name');
+      })
+      .map((component, componentId) => {
+        const componentRender = this.renderComponent(component);
+        const isHidden = component.get('flags').includes('excludeFromNewList');
+        return {label: componentId, value: componentId, componentRender, isHidden};
+      })
+      .toArray();
   },
 
   renderComponent(component) {
