@@ -116,8 +116,8 @@ const getComponentBadges = (component) => {
         <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
         <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
       </span>),
-      description: `You are required to have deep knowledge about this ${componentType}.`,
-      descriptionPlain: `You are required to have deep knowledge about this ${componentType}.`,
+      description: `Hard setup. You are required to have deep knowledge about this ${componentType}.`,
+      descriptionPlain: `Hard setup. You are required to have deep knowledge about this ${componentType}.`,
       key: 'complexity'
     });
   }
@@ -128,8 +128,8 @@ const getComponentBadges = (component) => {
         <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
         <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
       </span>),
-      description: `You need to use documentation to set this ${componentType} up.`,
-      descriptionPlain: `You need to use documentation to set this ${componentType} up.`,
+      description: `Medium setup. You need to use documentation to set this ${componentType} up.`,
+      descriptionPlain: `Medium setup. You need to use documentation to set this ${componentType} up.`,
       key: 'complexity'
     });
   }
@@ -139,8 +139,8 @@ const getComponentBadges = (component) => {
       <span>
         <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
       </span>),
-      description: `You can setup this ${componentType} in few minutes with just basic knowledge.`,
-      descriptionPlain: `You can setup this ${componentType} in few minutes with just basic knowledge.`,
+      description: `Easy setup. You can setup this ${componentType} in few minutes with just basic knowledge.`,
+      descriptionPlain: `Easy setup. You can setup this ${componentType} in few minutes with just basic knowledge.`,
       key: 'complexity'
     });
   }
