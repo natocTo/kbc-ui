@@ -9,12 +9,17 @@ const getComponentType = (type) => {
 };
 
 const getComponentBadges = (component) => {
-  const flags = component.getIn(['data', 'vendor', 'licenseUrl'])
-    ? component.get('flags').merge(['hasLicence'])
-    : component.get('flags');
+  const complexity = component.get('complexity');
   const componentType = getComponentType(component.get('type'));
-
+  let flags = component.get('flags');
   let badges = [];
+
+  if (component.getIn(['data', 'vendor', 'licenseUrl'])) {
+    flags = flags.push('hasLicence');
+  }
+  if (complexity) {
+    flags = flags.push('complexity-' + complexity);
+  }
 
   if (flags.contains('3rdParty')) {
     badges.push({
@@ -101,6 +106,42 @@ const getComponentBadges = (component) => {
       description: <span>You agree to the <ExternalLink href={component.getIn(['data', 'vendor', 'licenseUrl'])}>vendor's license agreement</ExternalLink>.</span>,
       descriptionPlain: 'You agree to the vendor\'s license agreement.',
       key: 'license'
+    });
+  }
+  if (flags.contains('complexity-hard')) {
+    badges.push({
+      title: (
+      <span>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+      </span>),
+      description: `Hard setup. You are required to have deep knowledge about this ${componentType}.`,
+      descriptionPlain: `Hard setup. You are required to have deep knowledge about this ${componentType}.`,
+      key: 'complexity'
+    });
+  }
+  if (flags.contains('complexity-medium')) {
+    badges.push({
+      title: (
+      <span>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+      </span>),
+      description: `Medium setup. You need to use documentation to set this ${componentType} up.`,
+      descriptionPlain: `Medium setup. You need to use documentation to set this ${componentType} up.`,
+      key: 'complexity'
+    });
+  }
+  if (flags.contains('complexity-easy')) {
+    badges.push({
+      title: (
+      <span>
+        <i className="fa fa-clock-o badge-component-item-complexity-icon"/>
+      </span>),
+      description: `Easy setup. You can setup this ${componentType} in few minutes with just basic knowledge.`,
+      descriptionPlain: `Easy setup. You can setup this ${componentType} in few minutes with just basic knowledge.`,
+      key: 'complexity'
     });
   }
   return badges;
