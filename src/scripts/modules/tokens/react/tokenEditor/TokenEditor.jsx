@@ -9,6 +9,18 @@ import {List, Map} from 'immutable';
 import {Link} from 'react-router';
 import CreatedWithIcon from '../../../../react/common/CreatedWithIcon';
 import BucketsSelector from './BucketsSelector.jsx';
+import Immutable from 'immutable';
+
+const getAllComponents = () => {
+  const allComponents = ComponentsStore.getAll();
+  const newOrchestratorFlags = allComponents.getIn(['orchestrator', 'flags'], Immutable.List()).filter((flag) => {
+    return flag !== 'excludeFromNewList';
+  });
+  return allComponents
+    .setIn(['orchestrator', 'id'], 'orchestrator')
+    .setIn(['orchestrator', 'name'], 'Orchestrator')
+    .setIn(['orchestrator', 'flags'], newOrchestratorFlags);
+};
 
 export default React.createClass({
 
@@ -66,7 +78,7 @@ export default React.createClass({
                disabled={this.props.disabled}
                onChange={(components) => this.props.updateToken('componentAccess', components)}
                selectedComponents={this.props.token.get('componentAccess', List())}
-               allComponents={ComponentsStore.getAll()}
+               allComponents={getAllComponents()}
              />
              <span className="help-block">
                Token can run selected components
