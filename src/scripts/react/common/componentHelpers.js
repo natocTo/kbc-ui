@@ -144,9 +144,37 @@ const getComponentBadges = (component) => {
       key: 'complexity'
     });
   }
+  if (component.get('documentationUrl')) {
+    badges.push({
+      title: (
+        <span>
+          <i className="fa fa-question-circle "/> Documentation
+        </span>
+      ),
+      description: (
+        <span>Additional documentation for this {componentType} is <ExternalLink href={component.get('documentationUrl')}>available.</ExternalLink></span>
+      ),
+      descriptionPlain: `Additional documentation for this ${componentType} is available.`,
+      key: 'documentation'
+    });
+  }
   return badges;
 };
 
+const getComponentBadgesIncluding = (component, filter = []) => {
+  return getComponentBadges(component).filter((badge) => {
+    return filter.includes(badge.key);
+  });
+};
+
+const getComponentBadgesExcluding = (component, filter = []) => {
+  return getComponentBadges(component).filter((badge) => {
+    return !filter.includes(badge.key);
+  });
+};
+
 export {
-  getComponentBadges
+  getComponentBadges,
+  getComponentBadgesIncluding,
+  getComponentBadgesExcluding
 };
