@@ -161,6 +161,20 @@ const getComponentBadges = (component) => {
   return badges;
 };
 
+const getComponentBadgesIncluding = (component, filter = []) => {
+  return getComponentBadges(component).filter((badge) => {
+    return filter.includes(badge.key);
+  });
+};
+
+const getComponentBadgesExcluding = (component, filter = []) => {
+  return getComponentBadges(component).filter((badge) => {
+    return !filter.includes(badge.key);
+  });
+};
+
 export {
-  getComponentBadges
+  getComponentBadges,
+  getComponentBadgesIncluding,
+  getComponentBadgesExcluding
 };
