@@ -148,7 +148,7 @@ const getComponentBadges = (component) => {
     badges.push({
       title: (
         <span>
-          <i className="fa fa-book "/> Documentation
+          <i className="fa fa-question-circle "/> Documentation
         </span>
       ),
       description: (
