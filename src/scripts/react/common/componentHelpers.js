@@ -152,9 +152,9 @@ const getComponentBadges = (component) => {
         </span>
       ),
       description: (
-        <span>Documentation for this {componentType} is <ExternalLink href={component.get('documentationUrl')}>available.</ExternalLink></span>
+        <span>Additional documentation for this {componentType} is <ExternalLink href={component.get('documentationUrl')}>available.</ExternalLink></span>
       ),
-      descriptionPlain: `Documentation for this ${componentType} is available.`,
+      descriptionPlain: `Additional documentation for this ${componentType} is available.`,
       key: 'documentation'
     });
   }
