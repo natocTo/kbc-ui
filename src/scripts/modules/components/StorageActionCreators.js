@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import ApplicationStore from '../../stores/ApplicationStore';
 import dispatcher from '../../Dispatcher';
-import constants from './Constants';
+import * as constants from './Constants';
 import StorageBucketsStore from './stores/StorageBucketsStore';
 import StorageTablesStore from './stores/StorageTablesStore';
 
