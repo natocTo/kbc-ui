@@ -143,10 +143,10 @@ RoutesStore = StoreUtils.createStore
 
 
   getCurrentRouteParam: (paramName, defaultValue = null) ->
-    if (paramName == 'config')
+    if (paramName == 'config' || paramName == 'configId')
       return @getConfigId()
 
-    if (paramName == 'component')
+    if (paramName == 'component' || paramName == 'componentId')
       return @getComponentId()
 
     @getRouterState().getIn ['params', paramName], defaultValue
