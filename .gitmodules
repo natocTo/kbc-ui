@@ -1,6 +1,6 @@
 [submodule "react-codemod"]
 	path = react-codemod
-	url = git@github.com:reactjs/react-codemod.git
+	url = https://github.com/reactjs/react-codemod.git
 [submodule "codemod"]
 	path = codemod
-	url = git@github.com:keboola/kbc-ui-codemod.git
+	url = https://github.com/keboola/kbc-ui-codemod.git
