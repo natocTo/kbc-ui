@@ -17,6 +17,12 @@ import {CollapsibleSection} from '../configurations/utils/renderHelpers';
 const routeSettings = {
   componentId: 'htns.ex-salesforce',
   componentType: 'extractor',
+  hasLegacyUI: function(configuration) {
+    if (configuration.hasIn(['configuration', 'parameters', 'objects'])) {
+      return true;
+    }
+    return false;
+  },
   index: {
     sections: [{
       render: CollapsibleSection({

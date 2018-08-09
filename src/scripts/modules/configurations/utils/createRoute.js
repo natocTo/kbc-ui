@@ -1,4 +1,4 @@
-import Index from '../react/pages/Index';
+import IndexLegacyCompatibilityWrapper from '../react/pages/IndexLegacyCompatibilityWrapper';
 import Row from '../react/pages/Row';
 import Versions from '../react/pages/Versions';
 import installedComponentsActions from '../../components/InstalledComponentsActionCreators';
@@ -17,6 +17,9 @@ import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/
 
 // defaults
 const defaults = {
+  hasLegacyUI: function() {
+    return false;
+  },
   index: {},
   row: {
     hasState: false,
@@ -47,7 +50,7 @@ export default function(settings) {
       return InstalledComponentsStore.getConfig(settingsWithDefaults.componentId, configId).get('name');
     },
     isComponent: true,
-    defaultRouteHandler: Index,
+    defaultRouteHandler: IndexLegacyCompatibilityWrapper,
     poll: {
       interval: 10,
       action: (params) => jobsActions.loadComponentConfigurationLatestJobs(settingsWithDefaults.componentId, params.config)

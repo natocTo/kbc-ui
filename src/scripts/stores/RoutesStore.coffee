@@ -124,7 +124,31 @@ RoutesStore = StoreUtils.createStore
   getRouterState: ->
     _store.get 'routerState'
 
+  getComponentId: ->
+    if @getRouterState().hasIn(['params', 'component'])
+      return @getRouterState().getIn(['params', 'component'])
+    if @getRouterState().hasIn(['params', 'componentId'])
+      return @getRouterState().getIn(['params', 'componentId'])
+    settings = @getRouteSettings()
+    if (settings.has('componentId'))
+      return settings.get('componentId')
+    return null
+
+  getConfigId: ->
+    if @getRouterState().hasIn(['params', 'config'])
+      return @getRouterState().getIn(['params', 'config'])
+    if @getRouterState().hasIn(['params', 'configId'])
+      return @getRouterState().getIn(['params', 'configId'])
+    return null
+
+
   getCurrentRouteParam: (paramName, defaultValue = null) ->
+    if (paramName == 'config')
+      return @getConfigId()
+
+    if (paramName == 'component')
+      return @getComponentId()
+
     @getRouterState().getIn ['params', paramName], defaultValue
 
   getCurrentRouteIntParam: (paramName) ->
