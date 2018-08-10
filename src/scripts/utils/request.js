@@ -12,10 +12,10 @@ Request.prototype.promise = function() {
   var req = this;
   var promise = new Promise(function(resolve, reject) {
     return req.end(function(err, res) {
-      if (err) {
-        return reject(err);
-      } else if (!res.ok) {
+      if (res && !res.ok) {
         return reject(new HttpError(res));
+      } else if (err) {
+        return reject(err);
       } else {
         return resolve(res);
       }
