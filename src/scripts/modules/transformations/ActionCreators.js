@@ -1,5 +1,5 @@
 import dispatcher from '../../Dispatcher';
-import constants from './Constants';
+import * as constants from './Constants';
 import transformationsApi from './TransformationsApiAdapter';
 import installedComponentsApi from '../components/InstalledComponentsApi';
 import TransformationBucketsStore from './stores/TransformationBucketsStore';
