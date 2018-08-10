@@ -208,6 +208,7 @@ module.exports = React.createClass
         React.createElement ComponentConfigurationLink,
           componentId: componentId
           configId: @state.configuration.get 'id'
+          job: job
         ,
           @state.configuration.get 'name'
     else
