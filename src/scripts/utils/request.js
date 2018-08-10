@@ -9,8 +9,8 @@ request.serialize['application/x-www-form-urlencoded'] = function(data) {
 };
 
 Request.prototype.promise = function() {
-  var req = this;
-  var promise = new Promise(function(resolve, reject) {
+  const req = this;
+  const promise = new Promise(function(resolve, reject) {
     return req.end(function(err, res) {
       if (res && !res.ok) {
         return reject(new HttpError(res));
