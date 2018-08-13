@@ -12,3 +12,5 @@ RUN apt-get update -q \
   && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
   && apt-get update && apt-get install yarn -y \
   && yarn --version
+
+RUN yarn global add decaffeinate jscodeshift
