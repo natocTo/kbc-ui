@@ -22,8 +22,8 @@ module.exports = React.createClass
     job: React.PropTypes.object
 
   render: ->
-    transformationId = @props.job.getIn(['params', 'transformations', 0], null)
     if @props.componentId == 'transformation'
+      transformationId = @props.job.getIn(['params', 'transformations', 0], null)
       span null,
         Link
           className: @props.className
