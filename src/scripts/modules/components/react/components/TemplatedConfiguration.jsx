@@ -138,7 +138,7 @@ export default React.createClass({
     return (
       <Markdown
         source={this.state.component.get('configurationDescription')}
-        height="small"
+        size="small"
       />
     );
   }
