@@ -131,7 +131,7 @@ export default React.createClass({
                 schema: table.get('schema'),
                 tableName: table.get('name')
               },
-              label: table.get('name')
+              label: table.get('schema') + '.' + table.get('name')
             };
           }).toJS()
         };

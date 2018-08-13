@@ -48,7 +48,7 @@ export default React.createClass({
                 schema: table.get('schema'),
                 tableName: table.get('name')
               },
-              label: table.get('name')
+              label: table.get('schema') + '.' + table.get('name')
             };
           }).toJS()
         };
@@ -66,7 +66,7 @@ export default React.createClass({
       }
       return jsTables.map(function(table) {
         return {
-          label: table.tableName,
+          label: table.schema + '.' + table.tableName,
           value: table
         };
       });
