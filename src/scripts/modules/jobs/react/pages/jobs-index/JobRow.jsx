@@ -75,8 +75,12 @@ export default React.createClass({
     return (
       <span>
         <span title="bucket name">{config.get('name')}</span>
-        <span> / </span>
-        <span title="transformation name">{transformationName}</span>
+         {transformationId !== null &&
+           <span>
+             <span> / </span>
+             <span title="transformation name">{transformationName}</span>
+           </span>
+         }
       </span>
     );
   },
