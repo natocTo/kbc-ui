@@ -27,6 +27,7 @@ routes =
       ,
         (params, query) ->
           currentQuery = JobsStore.getQuery()
+          InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
           if params.jobId
             # job detail
             Promise.resolve()
@@ -61,8 +62,6 @@ routes =
         requireData: [
           (params) ->
             JobsActionCreators.loadJobDetail(parseInt(params.jobId))
-          ->
-            InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
         ]
         childRoutes: [ createTablesRoute('jobDetail')]
       ]
