@@ -61,6 +61,8 @@ routes =
         requireData: [
           (params) ->
             JobsActionCreators.loadJobDetail(parseInt(params.jobId))
+          ->
+            InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
         ]
         childRoutes: [ createTablesRoute('jobDetail')]
       ]
