@@ -260,8 +260,8 @@ module.exports = React.createClass
                 disabled: @props.disabled
                 onChange: @_handleChangeWhereOperator
               ,
-                React.DOM.option {value: "eq"}, "= (IN)"
-                React.DOM.option {value: "ne"}, "!= (NOT IN)"
+                React.DOM.option {value: "eq"}, "in"
+                React.DOM.option {value: "ne"}, "not in"
             React.DOM.div className: 'col-xs-4',
               Select
                 name: 'whereValues'

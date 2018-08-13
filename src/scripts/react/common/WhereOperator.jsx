@@ -7,9 +7,9 @@ export default React.createClass({
 
   render() {
     if (this.props.backendOperator === 'ne') {
-      return <span>not eq</span>;
+      return <span>not in</span>;
     } else {
-      return <span>eq</span>;
+      return <span>in</span>;
     }
   }
 });

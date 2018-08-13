@@ -212,8 +212,8 @@ export default React.createClass({
                     disabled={this.props.disabled}
                     onChange={this._handleChangeWhereOperator}
                   >
-                    <option value="eq">= (IN)</option>
-                    <option value="ne">!= (NOT IN)</option>
+                    <option value="eq">in</option>
+                    <option value="ne">not in</option>
                   </Input>
                 </div>
                 <div className="col-xs-4">
