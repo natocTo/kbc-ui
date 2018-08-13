@@ -24,23 +24,30 @@ module.exports = React.createClass
   render: ->
     transformationId = @props.job.getIn(['params', 'transformations', 0], null)
     if @props.componentId == 'transformation'
-      if transformationId == null
+      span null,
         Link
           className: @props.className
           to: 'transformationBucket'
-          params:
-            config: @props.configId
+          params: {config: @props.configId}
+          title: 'go to bucket'
         ,
-          @props.children
-      else
-        transformationName = TransformationStore.getTransformationName(@props.configId, transformationId)
-        Link
-          className: @props.className
-          to: 'transformationDetail'
-          params:
-            {row: transformationId, config: @props.configId}
-        ,
-          if transformationName then transformationName else  'transformation'
+        @props.children
+
+        if transformationId != null
+          transformationName = TransformationStore.getTransformationName(@props.configId, transformationId)
+          span null, ' / ',
+          Link
+            className: @props.className
+            to: 'transformationDetail'
+            title: 'go to transformation'
+            params:
+              {
+                row: transformationId,
+                config: @props.configId
+              }
+          ,
+            transformationName
+
     else if @props.componentId == 'orchestrator'
       Link
         className: @props.className
