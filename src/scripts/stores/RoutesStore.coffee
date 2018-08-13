@@ -130,7 +130,7 @@ RoutesStore = StoreUtils.createStore
     if @getRouterState().hasIn(['params', 'componentId'])
       return @getRouterState().getIn(['params', 'componentId'])
     settings = @getRouteSettings()
-    if (settings.has('componentId'))
+    if (settings && settings.has('componentId'))
       return settings.get('componentId')
     return null
 
