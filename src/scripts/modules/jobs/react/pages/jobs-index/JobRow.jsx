@@ -9,6 +9,7 @@ import Duration from '../../../../../react/common/Duration';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import TransformationStore from '../../../../transformations/stores/TransformationsStore';
+import ConfigurationRowsStore from '../../../../configurations/ConfigurationRowsStore';
 import date from '../../../../../utils/date';
 import getComponentId from '../../../getJobComponentId';
 
@@ -69,8 +70,18 @@ export default React.createClass({
         <span>{configId}</span>
       );
     }
+
     const transformationId = this.props.job.getIn(['params', 'transformations', 0], null);
     const transformationName = TransformationStore.getTransformationName(configId, transformationId);
+
+    const rowId = this.props.job.getIn(['params', 'row'], null);
+    const configurationRow = ConfigurationRowsStore.getRows(componentId, configId, rowId);
+
+    if (rowId) {
+      return (
+        <span> {config.get('name')} /// {configurationRow} </span>
+      );
+    }
 
     return (
       <span>
