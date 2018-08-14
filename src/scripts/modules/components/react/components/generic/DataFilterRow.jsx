@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Select from '../../../../../react/common/Select';
+import WhereOperatorConstants from '../../../../../react/common/WhereOperatorConstants';
 import ReactSelect from 'react-select';
 import _ from 'underscore';
 
@@ -43,7 +44,10 @@ export default React.createClass({
             value={this.props.value.get('where_operator') || 'eq'}
             disabled={this.props.disabled}
             clearable={false}
-            options={[{label: 'in', value: 'eq'}, {label: 'not in', value: 'ne'}]}
+            options={[
+              {label: WhereOperatorConstants.EQ_LABEL, value: WhereOperatorConstants.EQ_VALUE},
+              {label: WhereOperatorConstants.NOT_EQ_LABEL, value: WhereOperatorConstants.NOT_EQ_VALUE}
+            ]}
             onChange={this._handleChangeWhereOperator}/>
         </div>
         <div className="col-xs-4">

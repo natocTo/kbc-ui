@@ -8,6 +8,7 @@ import Select from '../../../../../react/common/Select';
 import SapiTableSelector from '../../../../components/react/components/SapiTableSelector';
 import SnowflakeDataTypesContainer from './input/SnowflakeDataTypesContainer';
 import ChangedSinceInput from '../../../../../react/common/ChangedSinceInput';
+import WhereOperatorConstants from '../../../../../react/common/WhereOperatorConstants';
 import {PanelWithDetails} from '@keboola/indigo-ui';
 
 export default React.createClass({
@@ -212,8 +213,8 @@ export default React.createClass({
                     disabled={this.props.disabled}
                     onChange={this._handleChangeWhereOperator}
                   >
-                    <option value="eq">in</option>
-                    <option value="ne">not in</option>
+                    <option value={WhereOperatorConstants.EQ_VALUE}>{WhereOperatorConstants.EQ_LABEL}</option>
+                    <option value={WhereOperatorConstants.NOT_EQ_VALUE}>{WhereOperatorConstants.NOT_EQ_LABEL}</option>
                   </Input>
                 </div>
                 <div className="col-xs-4">

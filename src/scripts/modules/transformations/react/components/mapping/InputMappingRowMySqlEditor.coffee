@@ -8,6 +8,7 @@ SapiTableSelector = React.createFactory(require('../../../../components/react/co
 MySqlIndexesContainer = React.createFactory(require("./input/MySqlIndexesContainer"))
 MySqlDataTypesContainer = React.createFactory(require("./input/MySqlDataTypesContainer"))
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
+WhereOperatorConstants = require('../../../../../react/common/WhereOperatorConstants').default
 
 
 module.exports = React.createClass
@@ -241,8 +242,8 @@ module.exports = React.createClass
                 disabled: @props.disabled
                 onChange: @_handleChangeWhereOperator
               ,
-                React.DOM.option {value: "eq"}, "in"
-                React.DOM.option {value: "ne"}, "not in"
+                React.DOM.option {value: WhereOperatorConstants.EQ_VALUE}, WhereOperatorConstants.EQ_LABEL
+                React.DOM.option {value: WhereOperatorConstants.NOT_EQ_VALUE}, WhereOperatorConstants.NOT_EQ_LABEL
             React.DOM.div className: 'col-xs-4',
               Select
                 name: 'whereValues'

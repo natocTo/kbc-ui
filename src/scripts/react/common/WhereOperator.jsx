@@ -1,4 +1,5 @@
 import React from 'react';
+import WhereOperatorConstants from './WhereOperatorConstants';
 
 export default React.createClass({
   propTypes: {
@@ -6,10 +7,10 @@ export default React.createClass({
   },
 
   render() {
-    if (this.props.backendOperator === 'ne') {
-      return <span>not in</span>;
+    if (this.props.backendOperator === WhereOperatorConstants.NOT_EQ_VALUE) {
+      return <span>{WhereOperatorConstants.NOT_EQ_LABEL}</span>;
     } else {
-      return <span>in</span>;
+      return <span>{WhereOperatorConstants.EQ_LABEL}</span>;
     }
   }
 });
