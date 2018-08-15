@@ -69,10 +69,7 @@ export default React.createClass({
             dialogTitle="Select Spreadsheet"
             buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select Spreadsheet'}
             onPickedFn={this.props.onSelectExisting}
-            buttonProps={{
-              bsStyle: 'default',
-              bsSize: 'large'
-            }}
+            buttonProps={{bsStyle: 'default'}}
             views={[
               ViewTemplates.sheets,
               ViewTemplates.teamDriveSheets,
@@ -103,10 +100,7 @@ export default React.createClass({
                 dialogTitle="Select Folder"
                 buttonLabel={this.props.valueFolder}
                 onPickedFn={this.props.onSelectFolder}
-                buttonProps={{
-                  bsStyle: 'default',
-                  bsSize: 'large'
-                }}
+                buttonProps={{bsStyle: 'default'}}
                 views={[
                   ViewTemplates.rootFolder,
                   ViewTemplates.teamDriveFolders,
