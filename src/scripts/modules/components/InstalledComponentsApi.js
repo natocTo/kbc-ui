@@ -39,7 +39,10 @@ const installedComponentsApi = {
       return response.body;
     });
   },
-  updateComponentConfiguration: function(componentId, configurationId, data) {
+  updateComponentConfiguration: function(componentId, configurationId, data, changeDescription) {
+    if (changeDescription) {
+      data.changeDescription = changeDescription;
+    }
     return createRequest('PUT', 'components/' + componentId + '/configs/' + configurationId).type('form').send(data).promise().then(function(response) {
       return response.body;
     });
