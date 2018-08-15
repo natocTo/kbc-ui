@@ -1,11 +1,16 @@
 import React, {PropTypes} from 'react';
 import Select from 'react-select';
+import _ from 'underscore';
 
 export default React.createClass({
 
   propTypes: {
     value: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired
+  },
+
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(nextProps.value, this.props.value);
   },
 
   render() {
