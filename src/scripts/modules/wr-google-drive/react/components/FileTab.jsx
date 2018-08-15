@@ -74,10 +74,7 @@ export default React.createClass({
             dialogTitle="Select File"
             buttonLabel={this.props.valueTitle ? this.props.valueTitle : 'Select File'}
             onPickedFn={this.props.onSelectExisting}
-            buttonProps={{
-              bsStyle: 'default',
-              bsSize: 'large'
-            }}
+            buttonProps={{bsStyle: 'default'}}
             views={[
               ViewTemplates.files,
               ViewTemplates.teamDriveFiles,
@@ -108,10 +105,7 @@ export default React.createClass({
                 dialogTitle="Select Folder"
                 buttonLabel={this.props.valueFolder}
                 onPickedFn={this.props.onSelectFolder}
-                buttonProps={{
-                  bsStyle: 'default',
-                  bsSize: 'large'
-                }}
+                buttonProps={{bsStyle: 'default'}}
                 views={[
                   ViewTemplates.rootFolder,
                   ViewTemplates.teamDriveFolders,
