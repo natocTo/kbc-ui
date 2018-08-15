@@ -2,7 +2,7 @@ React = require 'react'
 List = require('immutable').List
 
 JobTasks = React.createFactory(require './JobTasks')
-Duration = React.createFactory(require '../../../../../react/common/Duration')
+Duration = React.createFactory(require('../../../../../react/common/Duration').default)
 JobStatusLabel = React.createFactory(require('../../../../../react/common/common').JobStatusLabel)
 
 date = require '../../../../../utils/date'

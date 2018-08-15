@@ -2,7 +2,7 @@ module.exports =
   ComponentIcon: require('./ComponentIcon').default
   ComponentName: require('./ComponentName').default
   Confirm: require('./Confirm').default
-  Duration: require './Duration'
+  Duration: require('./Duration').default
   DurationWithIcon: require('./DurationWithIcon').default
   Finished: require('./Finished').default
   ValidUntil: require('./ValidUntil').default
