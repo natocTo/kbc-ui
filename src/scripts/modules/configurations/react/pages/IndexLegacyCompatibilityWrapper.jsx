@@ -7,9 +7,15 @@ import RoutesStore from '../../../../stores/RoutesStore';
 
 import Index from './Index';
 import GenericDockerDetail from '../../../components/react/pages/GenericDockerDetail';
+import LegacyUIMigration from '../components/LegacyUIMigration';
+import ConfigurationRowsStore from '../../ConfigurationRowsStore';
+import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
+import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 export default React.createClass({
-  getInitialState() {
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore)],
+
+  getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
     const settings = RoutesStore.getRouteSettings();
     const componentId = settings.get('componentId');
@@ -26,7 +32,10 @@ export default React.createClass({
   render() {
     if (!this.state.settings.getIn(['legacyUI', 'isMigrated'])(this.state.configuration)) {
       return (
-        <GenericDockerDetail/>
+        <div>
+          <LegacyUIMigration />
+          <GenericDockerDetail />
+        </div>
       );
     }
     return (
