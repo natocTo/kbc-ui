@@ -7,6 +7,7 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 SapiTableSelector = React.createFactory(require('../../../../components/react/components/SapiTableSelector'))
 ChangedSinceInput = React.createFactory(require('../../../../../react/common/ChangedSinceInput').default)
 PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
+whereOperatorConstants = require('../../../../../react/common/whereOperatorConstants').default
 
 module.exports = React.createClass
   displayName: 'InputMappingRowDockjerEditor'
@@ -191,8 +192,8 @@ module.exports = React.createClass
                   disabled: @props.disabled
                   onChange: @_handleChangeWhereOperator
                 ,
-                  React.DOM.option {value: "eq"}, "= (IN)"
-                  React.DOM.option {value: "ne"}, "!= (NOT IN)"
+                  React.DOM.option {value: whereOperatorConstants.EQ_VALUE}, whereOperatorConstants.EQ_LABEL
+                  React.DOM.option {value: whereOperatorConstants.NOT_EQ_VALUE}, whereOperatorConstants.NOT_EQ_LABEL
               React.DOM.div className: 'col-xs-4',
                 Select
                   name: 'whereValues'

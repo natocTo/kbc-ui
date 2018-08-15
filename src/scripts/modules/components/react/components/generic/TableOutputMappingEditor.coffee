@@ -9,6 +9,7 @@ DestinationTableSelector = require('../../../../../react/common/DestinationTable
 tableIdParser = require('../../../../../utils/tableIdParser').default
 PanelWithDetails = React.createFactory(require('@keboola/indigo-ui').PanelWithDetails)
 webalize = require('../../../../../utils/string').default.webalize
+whereOperatorConstants = require('../../../../../react/common/whereOperatorConstants').default
 
 module.exports = React.createClass
   displayName: 'TableOutputMappingEditor'
@@ -228,8 +229,8 @@ module.exports = React.createClass
                     onChange: @_handleChangeDeleteWhereOperator
                     groupClassName: "no-bottom-margin"
                   ,
-                    React.DOM.option {value: "eq"}, "= (IN)"
-                    React.DOM.option {value: "ne"}, "!= (NOT IN)"
+                    React.DOM.option {value: whereOperatorConstants.EQ_VALUE}, whereOperatorConstants.EQ_LABEL
+                    React.DOM.option {value: whereOperatorConstants.NOT_EQ_VALUE}, whereOperatorConstants.NOT_EQ_LABEL
                 React.DOM.div className: 'col-xs-4',
                   Select
                     name: 'deleteWhereValues'

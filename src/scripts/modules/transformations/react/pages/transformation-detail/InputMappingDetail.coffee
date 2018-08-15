@@ -3,6 +3,7 @@ ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
 TransformationTableTypeLabel = React.createFactory(require '../../components/TransformationTableTypeLabel')
 FileSize = React.createFactory(require('../../../../../react/common/FileSize').default)
+WhereOperator = React.createFactory(require('../../../../../react/common/WhereOperator').default)
 Check = React.createFactory(require('@keboola/indigo-ui').Check)
 ListGroup = React.createFactory(require('react-bootstrap').ListGroup)
 ListGroupItem = React.createFactory(require('react-bootstrap').ListGroupItem)
@@ -73,7 +74,7 @@ InputMappingDetail = React.createClass(
               strong {},
                 @props.inputMapping.get('whereColumn')
               ' '
-              @props.inputMapping.get('whereOperator')
+              WhereOperator {backendOperator: @props.inputMapping.get('whereOperator')}
               ' '
               strong {},
                 @props.inputMapping.get('whereValues').map((value) ->

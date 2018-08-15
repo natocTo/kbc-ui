@@ -3,6 +3,7 @@ ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
 TransformationTableTypeLabel = React.createFactory(require '../../components/TransformationTableTypeLabel')
 FileSize = React.createFactory(require '../../../../../react/common/FileSize')
+WhereOperator = React.createFactory(require('../../../../../react/common/WhereOperator').default)
 Check = React.createFactory(require('@keboola/indigo-ui').Check)
 {span, div, a, button, i, h4, small, em, ul, li, strong} = React.DOM
 numeral = require 'numeral'
@@ -61,7 +62,7 @@ OutputMappingDetail = React.createClass(
               strong {},
                 @props.outputMapping.get('deleteWhereColumn')
               ' '
-              @props.outputMapping.get('deleteWhereOperator')
+              WhereOperator {backendOperator: @props.outputMapping.get('deleteWhereOperator')}
               ' '
               strong {},
                 @props.outputMapping.get('deleteWhereValues').map((value) ->
