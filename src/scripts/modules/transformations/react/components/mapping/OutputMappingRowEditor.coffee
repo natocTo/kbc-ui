@@ -10,7 +10,7 @@ Select = React.createFactory require('../../../../../react/common/Select').defau
 DestinationTableSelector = require('../../../../../react/common/DestinationTableSelector').default
 tableIdParser = require('../../../../../utils/tableIdParser').default
 stringUtils = require('../../../../../utils/string').default
-WhereOperatorConstants = require('../../../../../react/common/WhereOperatorConstants').default
+whereOperatorConstants = require('../../../../../react/common/whereOperatorConstants').default
 
 module.exports = React.createClass
   displayName: 'OutputMappingRowEditor'
@@ -256,8 +256,8 @@ module.exports = React.createClass
                    disabled: @props.disabled
                    onChange: @_handleChangeDeleteWhereOperator
                  ,
-                   React.DOM.option {value: WhereOperatorConstants.EQ_VALUE}, WhereOperatorConstants.EQ_LABEL
-                   React.DOM.option {value: WhereOperatorConstants.NOT_EQ_VALUE}, WhereOperatorConstants.NOT_EQ_LABEL
+                   React.DOM.option {value: whereOperatorConstants.EQ_VALUE}, whereOperatorConstants.EQ_LABEL
+                   React.DOM.option {value: whereOperatorConstants.NOT_EQ_VALUE}, whereOperatorConstants.NOT_EQ_LABEL
              React.DOM.div className: 'col-xs-4',
                Select
                  name: 'deleteWhereValues'

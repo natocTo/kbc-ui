@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import Select from '../../../../../react/common/Select';
-import WhereOperatorConstants from '../../../../../react/common/WhereOperatorConstants';
+import whereOperatorConstants from '../../../../../react/common/whereOperatorConstants';
 import ReactSelect from 'react-select';
 import _ from 'underscore';
 
@@ -45,8 +45,8 @@ export default React.createClass({
             disabled={this.props.disabled}
             clearable={false}
             options={[
-              {label: WhereOperatorConstants.EQ_LABEL, value: WhereOperatorConstants.EQ_VALUE},
-              {label: WhereOperatorConstants.NOT_EQ_LABEL, value: WhereOperatorConstants.NOT_EQ_VALUE}
+              {label: whereOperatorConstants.EQ_LABEL, value: whereOperatorConstants.EQ_VALUE},
+              {label: whereOperatorConstants.NOT_EQ_LABEL, value: whereOperatorConstants.NOT_EQ_VALUE}
             ]}
             onChange={this._handleChangeWhereOperator}/>
         </div>
