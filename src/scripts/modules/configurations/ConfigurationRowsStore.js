@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import {Map} from 'immutable';
 import StoreUtils from '../../utils/StoreUtils';
 import fromJSOrdered from '../../utils/fromJSOrdered';
-import InstalledComponentsConstants from '../components/Constants';
+import * as InstalledComponentsConstants from '../components/Constants';
 import ConfigurationsConstants from './ConfigurationsConstants';
 import isParsableConfiguration from './utils/isParsableConfiguration';
 

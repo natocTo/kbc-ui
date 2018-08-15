@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import JobsActionCreators from '../../modules/jobs/ActionCreators';
 import dispatcher from '../../Dispatcher';
-import constants from './Constants';
+import * as constants from './Constants';
 import componentRunner from './ComponentRunner';
 import InstalledComponentsStore from './stores/InstalledComponentsStore';
 import installedComponentsApi from './InstalledComponentsApi';

@@ -4,7 +4,7 @@ import RowConstants from './ConfigurationRowsConstants';
 import Immutable from 'immutable';
 import {Map} from 'immutable';
 import StoreUtils from '../../utils/StoreUtils';
-import InstalledComponentsConstants from '../components/Constants';
+import * as InstalledComponentsConstants from '../components/Constants';
 import isParsableConfiguration from './utils/isParsableConfiguration';
 
 var _store = Map({

@@ -2,7 +2,7 @@ import StoreUtils from '../../../utils/StoreUtils';
 import Immutable from 'immutable';
 import dispatcher from '../../../Dispatcher';
 import MetadataConstants from '../MetadataConstants';
-import Constants from '../Constants';
+import * as Constants from '../Constants';
 
 import _ from 'underscore';
 
