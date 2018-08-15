@@ -24,12 +24,12 @@ ConfigureSandbox = React.createClass
   render: ->
     form className: 'form-horizontal',
       div className: 'form-group',
-        label className: 'col-sm-4 control-label', 'Backend'
-        div className: 'col-sm-6',
+        label className: 'col-sm-3 control-label', 'Backend'
+        div className: 'col-sm-9',
           p className: 'form-control-static', @state.backend
       div className: 'form-group',
-        label className: 'col-sm-4 control-label', 'Data'
-        div className: 'col-sm-6',
+        label className: 'col-sm-3 control-label', 'Data'
+        div className: 'col-sm-9',
           React.createElement Select,
             name: 'include'
             value: @state.include
@@ -39,8 +39,8 @@ ConfigureSandbox = React.createClass
             onChange: @_setInclude
             placeholder: 'Select buckets and tables...'
       div className: 'form-group',
-        label className: 'col-sm-4 control-label', 'Sample rows'
-        div className: 'col-sm-6',
+        label className: 'col-sm-3 control-label', 'Sample rows'
+        div className: 'col-sm-9',
           input
             type: 'number'
             placeholder: 'Number of rows'
@@ -49,8 +49,8 @@ ConfigureSandbox = React.createClass
             onChange: @_setRows
             ref: 'exclude'
       div className: 'form-group',
-        label className: 'col-sm-4 control-label'
-        div className: 'col-sm-6',
+        label className: 'col-sm-3 control-label'
+        div className: 'col-sm-9',
           label className: 'control-label',
             input
               type: 'checkbox'
