@@ -13,15 +13,13 @@ import {
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
+import legacyUIMigration from './migrations/legacyUIMigration';
 
 const routeSettings = {
   componentId: 'htns.ex-salesforce',
   componentType: 'extractor',
   hasLegacyUI: function(configuration) {
-    if (configuration.hasIn(['configuration', 'parameters', 'objects'])) {
-      return true;
-    }
-    return false;
+    return !legacyUIMigration.isMigrated(configuration);
   },
   index: {
     sections: [{
