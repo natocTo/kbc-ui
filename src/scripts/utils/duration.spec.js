@@ -1,5 +1,5 @@
 var assert = require('assert');
-var duration = require('./duration');
+var duration = require('./duration').default;
 
 describe('duration', function() {
   describe('duration without round param - default', function() {
