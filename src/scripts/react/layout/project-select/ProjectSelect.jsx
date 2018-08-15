@@ -32,7 +32,9 @@ export default React.createClass({
               <Icon.Times className="pull-right icon-size-16"/> :
               <Icon.ArrowDown className="pull-right icon-size-16"/>
             }
-            {this.props.currentProject.get('name')}
+            <span className="kbc-project-name">
+              {this.props.currentProject.get('name')}
+            </span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <ProjectsList

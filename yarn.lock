@@ -3,8 +3,8 @@
 
 
 "@keboola/indigo-ui@^5.0.0":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-5.1.4.tgz#be979cfdbcda03c46188de7a0afe1b8f0792398a"
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/@keboola/indigo-ui/-/indigo-ui-5.1.6.tgz#c91bde1b05913cc59ac6436e0349caa6e58d4e54"
   dependencies:
     bootstrap "^3.3.7"
     classnames "^2.1.0"
