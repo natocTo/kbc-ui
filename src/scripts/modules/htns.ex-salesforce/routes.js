@@ -18,9 +18,7 @@ import legacyUIMigration from './migrations/legacyUIMigration';
 const routeSettings = {
   componentId: 'htns.ex-salesforce',
   componentType: 'extractor',
-  hasLegacyUI: function(configuration) {
-    return !legacyUIMigration.isMigrated(configuration);
-  },
+  legacyUI: legacyUIMigration,
   index: {
     sections: [{
       render: CollapsibleSection({

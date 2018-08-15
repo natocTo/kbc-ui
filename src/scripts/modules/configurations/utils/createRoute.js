@@ -17,8 +17,10 @@ import {loadCredentialsFromConfig as loadOauthCredentials} from '../../oauth-v2/
 
 // defaults
 const defaults = {
-  hasLegacyUI: function() {
-    return false;
+  legacyUI: {
+    isMigrated: function() {
+      return true;
+    }
   },
   index: {},
   row: {

@@ -24,7 +24,7 @@ export default React.createClass({
   },
 
   render() {
-    if (this.state.settings.get('hasLegacyUI')(this.state.configuration)) {
+    if (!this.state.settings.getIn(['legacyUI', 'isMigrated'])(this.state.configuration)) {
       return (
         <GenericDockerDetail/>
       );
