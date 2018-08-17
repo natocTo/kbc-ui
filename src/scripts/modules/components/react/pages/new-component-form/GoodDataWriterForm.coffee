@@ -18,7 +18,6 @@ contactSupport = require('../../../../../utils/contactSupport').default
 
 {small, label, input, div, form, h3, p, span, a} = React.DOM
 
-
 module.exports = React.createClass
   displayName: 'GoodDataWriterDefaultForm'
   propTypes:
@@ -52,61 +51,60 @@ module.exports = React.createClass
           isSaving: @props.isSaving
           withButtons: false
       ModalBody null,
-        div className: 'container col-md-12',
-          form
-            className: 'form-horizontal'
-            onSubmit: @_handleSubmit
-          ,
-            div className: 'row',
-              Input
-                type: 'text'
-                label: 'Name'
-                ref: 'name'
-                value: @props.configuration.get 'name'
-                placeholder: "My #{@props.component.get('name')}"
-                labelClassName: 'col-xs-3'
-                wrapperClassName: 'col-xs-7'
-                onChange: @_handleChange.bind @, 'name'
-                disabled: @props.isSaving
-                autoFocus: true
-              Input
-                type: 'textarea'
-                label: 'Description'
-                value: @props.configuration.get 'description'
-                labelClassName: 'col-xs-3'
-                wrapperClassName: 'col-xs-7'
-                onChange: @_handleChange.bind @, 'description'
-                disabled: @props.isSaving
-            div className: 'row',
-              Input
-                type: 'radio'
-                label: 'Create new GoodData project'
-                name: 'mode'
-                value: GoodDataWriterModes.NEW
-                checked: @props.configuration.get('mode') == GoodDataWriterModes.NEW
-                onChange: @_handleChange.bind @, 'mode'
-                wrapperClassName: 'col-xs-offset-3 col-xs-9'
-              Input
-                type: 'radio'
-                name: 'mode'
-                value: GoodDataWriterModes.EXISTING
-                label: 'Use existing GoodData project'
-                checked: @props.configuration.get('mode') == GoodDataWriterModes.EXISTING
-                onChange: @_handleChange.bind @, 'mode'
-                wrapperClassName: 'col-xs-offset-3 col-xs-9'
-            if @props.configuration.get('mode') == GoodDataWriterModes.NEW
-              @_renderNewForm()
-            else
-              @_renderExistingForm()
-            @_renderCustomDomainForm()
+        form
+          className: 'form-horizontal'
+          onSubmit: @_handleSubmit
+        ,
+          Input
+            type: 'text'
+            label: 'Name'
+            ref: 'name'
+            value: @props.configuration.get 'name'
+            placeholder: "My #{@props.component.get('name')}"
+            labelClassName: 'col-xs-3'
+            wrapperClassName: 'col-xs-9'
+            onChange: @_handleChange.bind @, 'name'
+            disabled: @props.isSaving
+            autoFocus: true
+          Input
+            type: 'textarea'
+            label: 'Description'
+            value: @props.configuration.get 'description'
+            labelClassName: 'col-xs-3'
+            wrapperClassName: 'col-xs-9'
+            onChange: @_handleChange.bind @, 'description'
+            disabled: @props.isSaving
+          Input
+            type: 'radio'
+            label: 'Create new GoodData project'
+            name: 'mode'
+            value: GoodDataWriterModes.NEW
+            checked: @props.configuration.get('mode') == GoodDataWriterModes.NEW
+            onChange: @_handleChange.bind @, 'mode'
+            wrapperClassName: 'col-xs-offset-3 col-xs-9'
+          Input
+            type: 'radio'
+            name: 'mode'
+            value: GoodDataWriterModes.EXISTING
+            label: 'Use existing GoodData project'
+            checked: @props.configuration.get('mode') == GoodDataWriterModes.EXISTING
+            onChange: @_handleChange.bind @, 'mode'
+            wrapperClassName: 'col-xs-offset-3 col-xs-9'
+          if @props.configuration.get('mode') == GoodDataWriterModes.NEW
+            @_renderNewForm()
+          else
+            @_renderExistingForm()
+
+          @_renderCustomDomainForm()
+
+          div null,
+            'By creating a config, you agree with the'
+            a
+              href: 'http://www.gooddata.com/terms-of-use'
+              target: '_blank'
+              ' GoodData terms and conditions.'
 
       ModalFooter null,
-        small className: 'pull-left',
-          'By creating a config, you agree with the'
-          a
-            href: 'http://www.gooddata.com/terms-of-use'
-            target: '_blank'
-            ' GoodData terms and conditions.'
         ButtonToolbar null,
           if @props.isSaving
             span null,
@@ -126,18 +124,19 @@ module.exports = React.createClass
             'Create'
 
   _renderCustomDomainForm: ->
-    div className: 'row',
-      div className: 'col-xs-offset-3 col-xs-9',
-         h3 null,
-          label null,
-            input
-              type: 'checkbox'
-              checked: @props.configuration.get('customDomain')
-              onChange: =>
-                @props.onChange(@props.configuration.set('customDomain', !@props.configuration.get('customDomain')))
-            ' Custom Domain'
+    div null,
+      div className: 'form-group',
+        div className: 'col-xs-offset-3 col-xs-9',
+          div className: 'checkbox',
+            label null,
+              input
+                type: 'checkbox'
+                checked: @props.configuration.get('customDomain')
+                onChange: =>
+                  @props.onChange(@props.configuration.set('customDomain', !@props.configuration.get('customDomain')))
+              ' Custom Domain'
       if @props.configuration.get('customDomain')
-        span null,
+        div null,
           @_renderInput("Name", "domain", "Name of your domain")
           @_renderInput("Login", "username", "Login of domain administrator")
           @_renderInput("Password", "password", "Password of domain administrator", true)
@@ -157,15 +156,16 @@ module.exports = React.createClass
       value: @props.configuration.get(prop)
       placeholder: placeholder
       labelClassName: 'col-xs-3'
-      wrapperClassName: 'col-xs-7'
+      wrapperClassName: 'col-xs-9'
       onChange: @_handleChange.bind @, prop
       disabled: @props.isSaving
 
 
   _renderNewForm: ->
-    div className: 'row',
-      div className: 'col-xs-offset-3 col-xs-9',
-        h3 null, 'Auth token'
+    div null,
+      div className: 'form-group',
+        div className: 'col-xs-offset-3 col-xs-9',
+          h3 null, 'Auth token'
       Input
         type: 'radio'
         label: 'Production'
@@ -218,7 +218,7 @@ module.exports = React.createClass
           ' to enable production project.'
 
   _renderExistingForm: ->
-    div className: 'row',
+    div null,
       div className: 'col-xs-offset-3 col-xs-9',
         h3 null, 'GoodData Project Admin Credentials'
 
@@ -257,10 +257,10 @@ module.exports = React.createClass
               onChange: (e) =>
                 @props.onChange @props.configuration.set('readModel', e.target.checked)
             ' Read project model to writer configuration'
-      p className: 'col-xs-offset-3 help-text',
-        'If checked, data bucket'
-        React.DOM.code null, 'out.c-wr-gooddata-{writer_name}'
-        ' will be created  along with the configuration. The bucket cannot exist already.'
+          p className: 'help-block',
+            'If checked, data bucket '
+            React.DOM.code null, 'out.c-wr-gooddata-{writer_name}'
+            ' will be created  along with the configuration. The bucket cannot exist already.'
 
   _handleSubmit: (e) ->
     e.preventDefault()
