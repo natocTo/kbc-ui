@@ -13,8 +13,8 @@ module.exports = React.createClass
 
   render: ->
     div className: 'form-group',
-      label className: 'control-label col-xs-2', 'Vendor'
-      div className: 'col-xs-10',
+      label className: 'control-label col-xs-3', 'Vendor'
+      div className: 'col-xs-9',
         VendorInfo
         div null,
           "Application developed by"
@@ -23,8 +23,6 @@ module.exports = React.createClass
           type: 'checkbox'
           label: @_renderCheckboxLabel()
           checked: @props.licenseAgreed
-          wrapperClassName: 'col-xs-10'
-          labelClassName: 'col-xs-12'
           onChange: (event) =>
             @props.handleAgreedLicense(event.target.checked)
 
