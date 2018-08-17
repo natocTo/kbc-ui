@@ -48,9 +48,16 @@ EditInput = React.createFactory React.createClass
   _onChange: (e) ->
     @props.onChange e.target.value
 
+  _onSubmit: (e) ->
+    e.preventDefault()
+    @props.onSave()
+
   render: ->
     div className: 'form-inline kbc-inline-edit',
-      form style: {display: 'inline'},
+      form
+        style: {display: 'inline'}
+        onSubmit: @_onSubmit
+      ,
         Input
           ref: 'valueInput'
           type: 'text'
@@ -72,7 +79,6 @@ EditInput = React.createFactory React.createClass
             className: 'kbc-inline-edit-submit'
             bsStyle: 'info'
             disabled: @props.isSaving || !@props.isValid
-            onClick: @props.onSave
             type: 'submit'
           ,
             'Save'
