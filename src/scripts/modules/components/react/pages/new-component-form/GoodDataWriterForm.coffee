@@ -142,8 +142,9 @@ module.exports = React.createClass
           @_renderInput("Password", "password", "Password of domain administrator", true)
           @_renderInput("Backend url", "backendUrl", "https://secure.gooddata.com")
           div className: 'form-group',
-            label className: 'col-sm-offset-3 col-sm-5 control-label',
-              'Custom SSO'
+            div className: 'col-sm-offset-3 col-sm-9',
+              h3 null,
+                'Custom SSO'
           @_renderInput("Provider", "ssoProvider", "optional")
           @_renderInput("PGP Key", "ssoKey", "private key encoded in base64")
           @_renderInput("Key Passphrase", "ssoKeyPass", "optional")
