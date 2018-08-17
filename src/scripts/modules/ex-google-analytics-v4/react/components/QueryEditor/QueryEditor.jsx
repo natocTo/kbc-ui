@@ -122,14 +122,14 @@ export default React.createClass({
           <GaMultiSelect
             isLoadingMetadata={this.props.accountSegments.get('isLoading')}
             metadata={this.props.accountSegments.get('data', List()).toJS()}
-            name="Segments"
+            name="Segments (optional)"
             onSelectValue={this.onSelectSegment}
             selectedValues={this.getSelectedSegments()}
             isEditing={isEditing}
           />
           <div className="form-group">
             <label className="col-md-2 control-label">
-              Filters
+              Filters (optional)
             </label>
             <div className="col-md-10">
               {isEditing ?
