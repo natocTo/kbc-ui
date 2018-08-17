@@ -45,33 +45,31 @@ module.exports = React.createClass
           component: @props.component
           withButtons: false
       ModalBody null,
-        div className: 'container col-md-12',
-          form
-            className: 'form-horizontal'
-            onSubmit: @_handleSubmit
-          ,
-            div className: 'row',
-              Input
-                type: 'text'
-                label: 'Name'
-                ref: 'name'
-                autoFocus: true
-                value: @props.configuration.get 'name'
-                placeholder: "My #{@props.component.get('name')} #{@props.component.get('type')}"
-                labelClassName: 'col-xs-3'
-                wrapperClassName: 'col-xs-8'
-                onChange: @_handleChange.bind @, 'name'
-                disabled: @props.isSaving
-              Input
-                type: 'textarea'
-                label: 'Description'
-                value: @props.configuration.get 'description'
-                labelClassName: 'col-xs-3'
-                wrapperClassName: 'col-xs-8'
-                onChange: @_handleChange.bind @, 'description'
-                disabled: @props.isSaving
-              @_renderAppUsageInfo() if @_is3rdPartyApp()
-              @_renderAppVendorInfo() if @_is3rdPartyApp()
+        form
+          className: 'form-horizontal'
+          onSubmit: @_handleSubmit
+        ,
+          Input
+            type: 'text'
+            label: 'Name'
+            ref: 'name'
+            autoFocus: true
+            value: @props.configuration.get 'name'
+            placeholder: "My #{@props.component.get('name')} #{@props.component.get('type')}"
+            labelClassName: 'col-xs-3'
+            wrapperClassName: 'col-xs-9'
+            onChange: @_handleChange.bind @, 'name'
+            disabled: @props.isSaving
+          Input
+            type: 'textarea'
+            label: 'Description'
+            value: @props.configuration.get 'description'
+            labelClassName: 'col-xs-3'
+            wrapperClassName: 'col-xs-9'
+            onChange: @_handleChange.bind @, 'description'
+            disabled: @props.isSaving
+          @_renderAppUsageInfo() if @_is3rdPartyApp()
+          @_renderAppVendorInfo() if @_is3rdPartyApp()
       ModalFooter null,
         ButtonToolbar null,
           if @props.isSaving
@@ -99,11 +97,9 @@ module.exports = React.createClass
 
   _renderAppUsageInfo: ->
     div className: 'form-group',
-      label className: 'control-label col-xs-2', 'License'
-      div className: 'col-xs-10',
+      div className: 'col-xs-12',
         AppUsageInfo
           component: @props.component
-
 
   _is3rdPartyApp: ->
     @props.component.get('flags').contains('3rdParty')
