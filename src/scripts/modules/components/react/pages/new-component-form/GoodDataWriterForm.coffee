@@ -98,11 +98,11 @@ module.exports = React.createClass
           @_renderCustomDomainForm()
 
           div null,
-            'By creating a config, you agree with the'
+            'By creating a config, you agree with the '
             a
               href: 'http://www.gooddata.com/terms-of-use'
               target: '_blank'
-              ' GoodData terms and conditions.'
+              'GoodData terms and conditions.'
 
       ModalFooter null,
         ButtonToolbar null,
