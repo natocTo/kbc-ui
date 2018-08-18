@@ -290,7 +290,7 @@ module.exports = React.createClass
   _renderConfigVersion: (job) ->
     configVersion = job.getIn(['result', 'configVersion'], null)
     if configVersion != null
-      ' - Version #' + configVersion
+      ' / Version #' + configVersion
 
   _renderAccordion: (job) ->
     isTransformation = job.get('component') == 'transformation'
