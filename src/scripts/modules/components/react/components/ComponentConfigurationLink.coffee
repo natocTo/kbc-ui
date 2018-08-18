@@ -1,8 +1,8 @@
 React = require 'react'
 RoutesStore = require '../../../../stores/RoutesStore'
 ComponentsStore = require '../../stores/ComponentsStore'
-TransformationStore = require '../../../transformations/stores/TransformationsStore'
 {GENERIC_DETAIL_PREFIX} = require('../../Constants').Routes
+
 Link = React.createFactory require('react-router').Link
 {a, span} = React.DOM
 
@@ -19,35 +19,16 @@ module.exports = React.createClass
     componentId: React.PropTypes.string.isRequired
     configId: React.PropTypes.string.isRequired
     className: React.PropTypes.string
-    job: React.PropTypes.object
 
   render: ->
     if @props.componentId == 'transformation'
-      transformationId = @props.job.getIn(['params', 'transformations', 0], null)
-      span null,
-        Link
-          className: @props.className
-          to: 'transformationBucket'
-          params: {config: @props.configId}
-          title: 'go to bucket'
-        ,
+      Link
+        className: @props.className
+        to: 'transformationBucket'
+        params:
+          config: @props.configId
+      ,
         @props.children
-
-        if transformationId != null
-          transformationName = TransformationStore.getTransformationName(@props.configId, transformationId)
-          span null, ' / ',
-          Link
-            className: @props.className
-            to: 'transformationDetail'
-            title: 'go to transformation'
-            params:
-              {
-                row: transformationId,
-                config: @props.configId
-              }
-          ,
-            transformationName
-
     else if @props.componentId == 'orchestrator'
       Link
         className: @props.className
@@ -87,5 +68,4 @@ module.exports = React.createClass
     component = ComponentsStore.getComponent(@props.componentId)
     return 'extractor' if !component
     component.get 'type'
-
 
