@@ -6,6 +6,8 @@ ApplicationStore = require '../../../../../stores/ApplicationStore'
 JobsStore = require('../../../stores/JobsStore')
 ComponentsStore  = require('../../../../components/stores/ComponentsStore')
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+ConfigurationRowsStore = require '../../../../configurations/ConfigurationRowsStore'
+TransformationsStore = require '../../../../transformations/stores/TransformationsStore'
 PureRendererMixin = require 'react-immutable-render-mixin'
 {fromJS} = require 'immutable'
 
@@ -49,7 +51,7 @@ accordionHeader = (text, isActive) ->
                 text
 
 module.exports = React.createClass
-  mixins: [createStoreMixin(JobsStore, InstalledComponentsStore), PureRendererMixin]
+  mixins: [createStoreMixin(JobsStore, InstalledComponentsStore, ConfigurationRowsStore), PureRendererMixin]
   displayName: "JobDetail"
 
   getStateFromStores: ->
@@ -201,18 +203,38 @@ module.exports = React.createClass
       }},
         @_renderErrorDetails(job)
 
-  _renderRunInfoRow: (job) ->
+  _renderConfigurationLink: (job) ->
     componentId = getComponentId(job)
     if @state.configuration.size != 0
       configurationLink = span null,
         React.createElement ComponentConfigurationLink,
           componentId: componentId
           configId: @state.configuration.get 'id'
-          job: job
         ,
           @state.configuration.get 'name'
     else
       configurationLink = 'N/A'
+    return configurationLink
+
+  _renderConfigurationRowLink: (job) ->
+    componentId = getComponentId(job)
+    configId = @state.configuration.get 'id'
+    rowId = job.getIn(['params', 'transformations', 0], null)
+    rowName = TransformationsStore.getTransformationName(configId, rowId)
+    if (!rowId)
+      rowId = job.getIn(['params', 'row'], null)
+      rowName = ConfigurationRowsStore.get(componentId, configId, rowId).get('name', 'Untitled')
+    if (rowId)
+      span null,
+        ' / '
+        ComponentConfigurationRowLink
+          componentId: componentId
+          configId: configId
+          rowId: rowId
+        ,
+          rowName
+
+  _renderRunInfoRow: (job) ->
     jobStarted = ->
       job.get('startTime')
     renderDate = (pdate) ->
@@ -228,7 +250,8 @@ module.exports = React.createClass
             span {className: 'col-md-3'},
               'Configuration'
             strong {className: 'col-md-9'},
-              configurationLink
+              @._renderConfigurationLink(job)
+              @._renderConfigurationRowLink(job)
               @._renderConfigVersion(job)
           div {className: 'row'},
             span {className: 'col-md-3'},
