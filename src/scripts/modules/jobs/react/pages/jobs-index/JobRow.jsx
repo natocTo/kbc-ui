@@ -9,7 +9,7 @@ import Duration from '../../../../../react/common/Duration';
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
 import TransformationStore from '../../../../transformations/stores/TransformationsStore';
-import ConfigurationRowsStore from '../../../../configurations/ConfigurationRowsStore';
+// import ConfigurationRowsStore from '../../../../configurations/ConfigurationRowsStore';
 import date from '../../../../../utils/date';
 import getComponentId from '../../../getJobComponentId';
 
@@ -72,26 +72,26 @@ export default React.createClass({
     }
 
     const transformationId = this.props.job.getIn(['params', 'transformations', 0], null);
-    const transformationName = TransformationStore.getTransformationName(configId, transformationId);
-
+    /*
     const rowId = this.props.job.getIn(['params', 'row'], null);
-    const configurationRow = ConfigurationRowsStore.getRows(componentId, configId, rowId);
 
-    if (rowId) {
+    if (rowId !== null) {
+      const configurationRow = ConfigurationRowsStore.get(componentId, configId, rowId);
       return (
-        <span> {config.get('name')} /// {configurationRow} </span>
+        <span> {config.get('name')} / {configurationRow.get('name')} </span>
       );
     }
-
+    */
+    if (transformationId !== null) {
+      return (
+        <span>
+          {config.get('name')} / {TransformationStore.getTransformationName(configId, transformationId)}
+        </span>
+      );
+    }
     return (
       <span>
-        <span title="bucket name">{config.get('name')}</span>
-         {transformationId !== null &&
-           <span>
-             <span> / </span>
-             <span title="transformation name">{transformationName}</span>
-           </span>
-         }
+        {config.get('name')}
       </span>
     );
   },
