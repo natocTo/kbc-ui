@@ -4,24 +4,22 @@ import React from 'react';
 import InstalledComponentsStore from '../../../components/stores/InstalledComponentsStore';
 import ComponentsStore from '../../../components/stores/ComponentsStore';
 import ConfigurationsStore from '../../ConfigurationsStore';
+import MigrationsStore from '../../MigrationsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
 import actions from '../../MigrationsActionCreators';
 
+// components
+import {Loader} from '@keboola/indigo-ui';
+
 // styles
 require('./LegacyUIMigration.less');
 
 export default React.createClass({
 
-  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore)],
-
-  getInitialState() {
-    return {
-      pending: false
-    };
-  },
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, MigrationsStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
@@ -33,12 +31,26 @@ export default React.createClass({
       component: ComponentsStore.getComponent(componentId),
       settings: settings,
       configurationId: configurationId,
-      configuration: configuration
+      configuration: configuration,
+      pending: MigrationsStore.isPendingLegacyUIMigration(componentId, configurationId)
     };
   },
 
   migrateConfig() {
     actions.migrateLegacyUI(this.state.componentId, this.state.configurationId, this.state.settings.get('legacyUI'));
+  },
+
+  renderButtonLabel() {
+    if (this.state.pending) {
+      return (
+        <span>
+          <Loader />
+          {' '}
+          Migrating Configuration
+        </span>
+      );
+    }
+    return 'Migrate Configuration';
   },
 
   render() {
@@ -52,7 +64,7 @@ export default React.createClass({
               onClick={this.migrateConfig}
               disabled={this.state.pending}
             >
-              Migrate Configuration
+              {this.renderButtonLabel()}
             </button>
           </div>
         </div>

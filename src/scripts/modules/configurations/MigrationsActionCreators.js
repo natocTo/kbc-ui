@@ -36,12 +36,13 @@ module.exports = {
     return Promise
       .all(promises)
       .then(function() {
-        Dispatcher.handleViewAction({
-          type: Constants.ActionTypes.LEGACY_UI_MIGRATION_SUCCESS,
-          componentId: componentId,
-          configurationId: configurationId
+        InstalledComponentsActionCreators.loadComponentConfigDataForce(componentId, configurationId).then(function() {
+          Dispatcher.handleViewAction({
+            type: Constants.ActionTypes.LEGACY_UI_MIGRATION_SUCCESS,
+            componentId: componentId,
+            configurationId: configurationId
+          });
         });
-        InstalledComponentsActionCreators.loadComponentConfigDataForce(componentId, configurationId);
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         return ApplicationActionCreators.sendNotification({
           message: successNotification()

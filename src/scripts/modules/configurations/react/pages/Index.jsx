@@ -9,6 +9,7 @@ import ConfigurationsStore from '../../ConfigurationsStore';
 import RoutesStore from '../../../../stores/RoutesStore';
 import LatestJobsStore from '../../../jobs/stores/LatestJobsStore';
 import VersionsStore from '../../../components/stores/VersionsStore';
+import MigrationsStore from '../../MigrationsStore';
 import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 
 // actions
@@ -30,7 +31,7 @@ import IndexSections from '../components/IndexSections';
 import sections from '../../utils/sections';
 
 export default React.createClass({
-  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore)],
+  mixins: [createStoreMixin(InstalledComponentsStore, ConfigurationsStore, ConfigurationRowsStore, LatestJobsStore, VersionsStore, MigrationsStore)],
 
   getStateFromStores() {
     const configurationId = RoutesStore.getCurrentRouteParam('config');
