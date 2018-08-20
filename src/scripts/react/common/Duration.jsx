@@ -10,9 +10,7 @@ export default React.createClass({
   },
   render() {
     if (!this.props.startTime) {
-      return (
-        <span>{''}</span>
-      );
+      return null;
     }
 
     if (!this.props.endTime) {
