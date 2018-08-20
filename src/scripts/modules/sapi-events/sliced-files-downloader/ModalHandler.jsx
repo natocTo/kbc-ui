@@ -80,13 +80,10 @@ export default React.createClass({
     }
     if (job.isFinished) {
       if (job.status === 'success') {
-        this.setState({
-          isRunning: true,
-          jobId: job.id,
-          progress: 'Package was successfully created.',
-          progressStatus: 'success'
-        });
-        this.fetchCreatedFile(job);
+        setTimeout(
+          () => this.handleJobFinished(job),
+          2000 // wait for file to be available in search
+        );
       } else {
         this.setState({
           isRunning: false,
@@ -104,7 +101,7 @@ export default React.createClass({
     }
   },
 
-  fetchCreatedFile(job) {
+  handleJobFinished(job) {
     storageApi.getFiles({
       runId: job.runId
     }).then(this.handleFilesReceive).catch(() => {
@@ -119,7 +116,9 @@ export default React.createClass({
   handleFilesReceive(files) {
     this.setState({
       isRunning: false,
-      createdFile: fromJS(files[0])
+      createdFile: fromJS(files[0]),
+      progress: 'Package was successfully created.',
+      progressStatus: 'success'
     });
   },
 
