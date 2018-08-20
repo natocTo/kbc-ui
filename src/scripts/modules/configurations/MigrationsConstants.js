@@ -1,6 +1,6 @@
 import keyMirror from 'fbjs/lib/keyMirror';
 
-module.exports = {
+export default {
   ActionTypes: keyMirror({
     LEGACY_UI_MIGRATION_START: null,
     LEGACY_UI_MIGRATION_SUCCESS: null,
