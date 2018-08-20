@@ -79,11 +79,11 @@ module.exports = React.createClass
   _getFilteredConfigurations: ->
     filtered = @state.configurations
     if @state.configurationFilter or @state.configurationFilter != ''
-      filterQuery = @state.configurationFilter
+      filterQuery = @state.configurationFilter.toLowerCase()
       filtered = @state.configurations.filter (configuration) ->
-        fuzzy.match(filterQuery, configuration.get('name', '').toString()) or
-          fuzzy.match(filterQuery, configuration.get('id', '').toString()) or
-          fuzzy.match(filterQuery, configuration.get('description', '').toString())
+        configuration.get('name', '').toLowerCase().match(filterQuery) or
+          configuration.get('id', '').match(filterQuery) or
+          configuration.get('description', '').toLowerCase().match(filterQuery)
     return filtered
 
   _isDeprecated: ->
