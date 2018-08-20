@@ -9,7 +9,7 @@ import errorNotification from '../components/react/components/notifications/conf
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import VersionActionCreators from '../components/VersionsActionCreators';
 
-module.exports = {
+export default {
   migrateLegacyUI: function(componentId, configurationId, adapter) {
     Dispatcher.handleViewAction({
       type: Constants.ActionTypes.LEGACY_UI_MIGRATION_START,

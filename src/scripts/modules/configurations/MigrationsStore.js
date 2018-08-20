@@ -30,4 +30,4 @@ dispatcher.register(function(payload) {
   }
 });
 
-module.exports = MigrationsStore;
+export default MigrationsStore;
