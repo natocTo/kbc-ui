@@ -8,7 +8,6 @@ import Duration from '../../../../../react/common/Duration';
 
 import ComponentsStore from '../../../../components/stores/ComponentsStore';
 import InstalledComponentsStore from '../../../../components/stores/InstalledComponentsStore';
-import TransformationStore from '../../../../transformations/stores/TransformationsStore';
 import date from '../../../../../utils/date';
 import getComponentId from '../../../getJobComponentId';
 
@@ -56,7 +55,6 @@ export default React.createClass({
     }
 
     const configId = this.props.job.getIn(['params', 'config']);
-
     if (!configId) {
       return (
         <span>N/A</span>
@@ -70,18 +68,8 @@ export default React.createClass({
       );
     }
 
-    const transformationId = this.props.job.getIn(['params', 'transformations', 0], null);
-    if (transformationId !== null) {
-      return (
-        <span>
-          {config.get('name')} / {TransformationStore.getTransformationName(configId, transformationId)}
-        </span>
-      );
-    }
     return (
-      <span>
-        {config.get('name')}
-      </span>
+      <span>{config.get('name')}</span>
     );
   },
 
