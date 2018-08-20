@@ -1,5 +1,5 @@
 import React from 'react';
-import timeInWords, { durationFrom } from '../../utils/duration';
+import { timeInWords, durationFrom } from '../../utils/duration';
 
 export default React.createClass({
   propTypes: {

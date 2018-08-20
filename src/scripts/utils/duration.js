@@ -1,4 +1,4 @@
-export default function(duration, round) {
+export const timeInWords = (duration, round) => {
   const days = Math.floor(duration / 86400);
   const hours = Math.floor(duration % 86400 / 3600);
   const minutes = Math.floor(duration % 3600 / 60);
@@ -28,7 +28,7 @@ export default function(duration, round) {
       return '';
     }
   }
-}
+};
 
 // origin: https://github.com/travis-ci/travis-web/blob
 //                /aa06f3947eaeeedf594a59f0ce629ad4cd2763c6/assets/scripts

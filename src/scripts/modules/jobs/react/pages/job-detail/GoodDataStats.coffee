@@ -6,7 +6,7 @@ Immutable = require 'immutable'
 
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 {a, div, strong, span} = React.DOM
-Duration = require('../../../../../utils/duration')
+timeInWords = require('../../../../../utils/duration').timeInWords
 date = require '../../../../../utils/date'
 {Tree} = require '@keboola/indigo-ui'
 
@@ -58,7 +58,7 @@ module.exports = React.createClass
               @_renderCell(taskId.toString())
               @_renderCell(task.name)
               @_renderCell(started)
-              @_renderCell(Duration(duration))
+              @_renderCell(timeInWords(duration))
               @_renderCell(status)
               @_renderCell(@_renderLinkIf(details))
               @_renderCell(React.createElement Tree, {data: params})
