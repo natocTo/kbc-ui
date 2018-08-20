@@ -18,9 +18,9 @@ module.exports = {
     });
     const changeDescription = 'Migrating configuration to latest version';
     const configuration = ConfigurationsStore.get(componentId, configurationId);
-    const rows = adapter.get('getRowsCount')(configuration);
+    const rowsCount = adapter.get('getRowsCount')(configuration);
     let promises = [];
-    for (let i = 0; i < rows; i++) {
+    for (let i = 0; i < rowsCount; i++) {
       const configData = {
         name: adapter.get('getRowName')(configuration, i),
         configuration: JSON.stringify(adapter.get('getRowConfiguration')(configuration, i).toJS()),
