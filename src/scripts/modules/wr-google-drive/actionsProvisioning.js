@@ -66,11 +66,17 @@ export default function(COMPONENT_ID, configId) {
     return found && found.get('enabled');
   }
 
+  function tableExist(tableId, tables) {
+    return !!tables.find(t => t.get('tableId') === tableId);
+  }
+
   function saveTables(tables, mappings, savingPath, description) {
     const desc = description || 'Update tables';
-    const limitedMappings = mappings.map(t => isTableExportEnabled(t.get('source'), tables) ? t.delete('limit') : t.set('limit', 1));
+    const limitedMappings = mappings
+      .filter(mapping => tableExist(mapping.get('source'), tables))
+      .map(t => isTableExportEnabled(t.get('source'), tables) ? t.delete('limit') : t.set('limit', 1));
     const data = store.configData
-                      .setIn(['parameters', 'tables'], tables)
+      .setIn(['parameters', 'tables'], tables)
       .setIn(['storage', 'input', 'tables'], limitedMappings);
     return saveConfigData(data, savingPath, desc);
   }
