@@ -85,14 +85,16 @@ clearCredentials = (componentId, driver, token, configCredentials) ->
 
 module.exports =
   isProvisioningCredentials: (driver, credentials) ->
+    hasPlainPassword = credentials.has('password')
     host = credentials?.get('host')
     if driver == 'mysql'
-      return host == 'wr-db-aws.keboola.com'
+      return host == 'wr-db-aws.keboola.com' && hasPlainPassword
     if driver == 'redshift'
-      return underscoreString.include(host,'redshift.amazonaws.com') and underscoreString.include(host, 'sapi')
+      return underscoreString.include(host,'redshift.amazonaws.com') and
+        underscoreString.include(host, 'sapi') && hasPlainPassword
     if driver == 'snowflake'
-      return underscoreString.include(host,'keboola.snowflakecomputing.com') or
-          underscoreString.include(host,'keboola.eu-central-1.snowflakecomputing.com')
+      return (underscoreString.include(host,'keboola.snowflakecomputing.com') or
+          underscoreString.include(host,'keboola.eu-central-1.snowflakecomputing.com')) && hasPlainPassword
     return false
 
   getCredentials: (isReadOnly, driver, componentId, configId) ->

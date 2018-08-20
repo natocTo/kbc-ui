@@ -174,6 +174,7 @@ templateFn = (componentId, driver, isProvisioning) ->
     defaultPort = @_getDefaultPort()
     credentials = credentials.set 'port', defaultPort
     credentials = credentials.set 'driver', driver
+    credentials = credentials.delete 'password'
     WrDbActions.setEditingData componentId, @state.configId, 'creds', credentials
     @_updateLocalState('credentialsState', States.CREATE_NEW_CREDS)
 
