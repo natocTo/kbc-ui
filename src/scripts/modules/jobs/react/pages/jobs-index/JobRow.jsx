@@ -57,12 +57,12 @@ export default React.createClass({
     const configId = this.props.job.getIn(['params', 'config']);
     if (!configId) {
       return (
-        <span>N/A</span>
+        <span><em>N/A</em></span>
       );
     }
 
     const config = InstalledComponentsStore.getConfig(componentId, configId);
-    if (!config) {
+    if (!config || !config.get('name')) {
       return (
         <span>{configId}</span>
       );

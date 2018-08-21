@@ -33,7 +33,7 @@ contactSupport = require('../../../../../utils/contactSupport').default
 
 date = require '../../../../../utils/date'
 {Tree, NewLineToBr} = require '@keboola/indigo-ui'
-{strong,div, h2, span, h4, section, p, pre, code, br, blockquote, small} = React.DOM
+{strong,div, h2, span, h4, section, p, pre, code, br, blockquote, small, em} = React.DOM
 
 APPLICATION_ERROR = 'application'
 
@@ -208,14 +208,17 @@ module.exports = React.createClass
   _renderConfigurationLink: (job) ->
     componentId = getComponentId(job)
     if @state.configuration.size != 0
+      configId = @state.configuration.get('id')
       configurationLink = span null,
         React.createElement ComponentConfigurationLink,
           componentId: componentId
-          configId: @state.configuration.get 'id'
+          configId: configId
         ,
-          @state.configuration.get 'name'
+          @state.configuration.get('name', configId)
     else
-      configurationLink = 'N/A'
+      configurationLink =
+        em null,
+          'N/A'
     return configurationLink
 
   _renderConfigurationRowLink: (job) ->
@@ -225,8 +228,8 @@ module.exports = React.createClass
     rowName = TransformationsStore.getTransformationName(configId, rowId)
     if (!rowId)
       rowId = job.getIn(['params', 'row'], null)
-      rowName = ConfigurationRowsStore.get(componentId, configId, rowId).get('name', 'Untitled')
-    if (rowId)
+      rowName = ConfigurationRowsStore.get(componentId, configId, rowId).get('name')
+    if (rowId && rowName)
       span null,
         ' / '
         ComponentConfigurationRowLink
@@ -235,6 +238,9 @@ module.exports = React.createClass
           rowId: rowId
         ,
           rowName
+    if (rowId)
+      span null,
+        ' / ' + rowId
 
   _renderRunInfoRow: (job) ->
     jobStarted = ->
