@@ -2,7 +2,7 @@
 React = require 'react'
 Router = require 'react-router'
 
-Duration = React.createFactory(require '../../../../../react/common/Duration')
+Duration = React.createFactory(require('../../../../../react/common/Duration').default)
 JobStatusLabel = React.createFactory(require('../../../../../react/common/JobStatusLabel').default)
 date = require '../../../../../utils/date'
 
