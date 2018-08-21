@@ -4,8 +4,6 @@ import ConfigurationsStore from './ConfigurationsStore';
 import InstalledComponentsApi from '../components/InstalledComponentsApi';
 import InstalledComponentsActionCreators from '../components/InstalledComponentsActionCreators';
 import Promise from 'bluebird';
-import successNotification from '../components/react/components/notifications/configurationMigratedSuccess';
-import errorNotification from '../components/react/components/notifications/configurationMigratedError';
 import ApplicationActionCreators from '../../actions/ApplicationActionCreators';
 import VersionActionCreators from '../components/VersionsActionCreators';
 
@@ -45,7 +43,7 @@ export default {
         });
         VersionActionCreators.loadVersionsForce(componentId, configurationId);
         return ApplicationActionCreators.sendNotification({
-          message: successNotification()
+          message: 'Configuration migrated successfully.'
         });
       })
       .catch(function() {
@@ -55,7 +53,7 @@ export default {
           configurationId: configurationId
         });
         return ApplicationActionCreators.sendNotification({
-          message: errorNotification(),
+          message: 'Migration encountered an error. Please rollback to previous version and try again.',
           type: 'error'
         });
       });
