@@ -74,7 +74,7 @@
     "remove-markdown": "^0.1.0",
     "sortablejs": "^1.7.0",
     "style-loader": "~0.13.0",
-    "superagent": "~0.21.0",
+    "superagent": "~3.8.3",
     "underscore": "~1.7.0",
     "underscore.string": "~3.0.3",
     "url-loader": "~0.5.5",

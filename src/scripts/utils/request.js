@@ -9,17 +9,24 @@ request.serialize['application/x-www-form-urlencoded'] = function(data) {
 };
 
 Request.prototype.promise = function() {
-  var req = this;
-  var promise = new Promise(function(resolve, reject) {
-    return req.end(function(err, res) {
-      if (err) {
-        return reject(err);
-      } else if (!res.ok) {
-        return reject(new HttpError(res));
-      } else {
-        return resolve(res);
-      }
-    });
+  const req = this;
+  const promise = new Promise(function(resolve, reject) {
+    return req
+      .then(
+        responseOk => {
+          return resolve(responseOk);
+        },
+        responseNotOk => {
+          if (responseNotOk.response) {
+            return reject(new HttpError(responseNotOk.response));
+          } else {
+            return reject(responseNotOk);
+          }
+        }
+      )
+      .catch(error => {
+        return reject(error);
+      });
   });
   return promise.cancellable();
 };
