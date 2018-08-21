@@ -23,8 +23,7 @@ export default React.createClass({
 
   componentDidMount() {
     /* eslint react/no-did-mount-set-state: 0 */
-    var ele = document.getElementsByClassName('kbc-markdown');
-    var height = ele[0].parentElement.clientHeight;
+    const height = this.refs.container.offsetHeight;
     if (this.props.size === 'normal' && height < 150 || this.props.size === 'small' && height < 100) {
       this.setState({ellipseContent: false});
     } else {
@@ -34,7 +33,7 @@ export default React.createClass({
 
   render() {
     return (
-      <span className="kbc-markdown">
+      <div className="kbc-markdown" ref="container">
          {this.state.ellipseContent ? (
         <PanelWithDetails
           placement="bottom"
@@ -46,7 +45,7 @@ export default React.createClass({
       ) : (
         <Remarkable source={this.props.source}/>
       )}
-      </span>
+      </div>
     );
   }
 });
