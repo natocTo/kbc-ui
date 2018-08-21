@@ -1,11 +1,8 @@
 import React, { PropTypes } from 'react';
-import immutableMixin from 'react-immutable-render-mixin';
 import {Form, FormControl, FormGroup, ControlLabel, HelpBlock, Col, Checkbox} from 'react-bootstrap';
 
 
 export default React.createClass({
-  mixins: [immutableMixin],
-
   propTypes: {
     value: PropTypes.shape({
       object: PropTypes.string.isRequired,
