@@ -69,8 +69,7 @@ routes =
               if (job.get('component') != 'transformation' &&
                   job.hasIn(['params', 'config']) &&
                   job.hasIn(['params', 'row']))
-                configId = job.getIn(['params', 'config'])
-                return InstalledComponentsActionCreators.loadComponentConfigData(getComponentId(job), configId)
+                return InstalledComponentsActionCreators.loadComponentConfigsData(getComponentId(job))
             )
         ]
         childRoutes: [ createTablesRoute('jobDetail')]
