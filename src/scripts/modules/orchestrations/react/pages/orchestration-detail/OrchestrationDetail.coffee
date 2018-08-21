@@ -14,12 +14,12 @@ ComponentDescription = React.createFactory(require '../../../../components/react
 OrchestrationsNav = React.createFactory(require './OrchestrationsNav')
 JobsTable = React.createFactory(require './JobsTable')
 JobsGraph = React.createFactory(require './JobsGraph')
-SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
 Link = React.createFactory(require('react-router').Link)
 TasksSummary = React.createFactory(require './TasksSummary')
 CronRecord = React.createFactory(require '../../components/CronRecord')
 ScheduleModal = React.createFactory(require('../../modals/Schedule'))
 CreatedWithIcon = React.createFactory(require('../../../../../react/common/CreatedWithIcon').default)
+SearchBar = React.createFactory(require('@keboola/indigo-ui').SearchBar)
 
 {div, h2, span, strong, br, small} = React.DOM
 
@@ -83,7 +83,7 @@ OrchestrationDetail = React.createClass
         div {className: 'row kbc-row-orchestration-detail'},
           div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
             div {className: 'kbc-container'},
-              SearchRow(onChange: @_handleFilterChange, query: @state.filter)
+              SearchBar(onChange: @_handleFilterChange, query: @state.filter)
               OrchestrationsNav
                 orchestrations: @state.filteredOrchestrations
                 activeOrchestrationId: @state.orchestration.get 'id'
