@@ -26,9 +26,6 @@ routes =
         ->
           InstalledComponentsActionCreators.loadComponents()
       ,
-        ->
-          InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
-      ,
         (params, query) ->
           currentQuery = JobsStore.getQuery()
           if params.jobId
@@ -66,8 +63,14 @@ routes =
           (params) ->
             JobsActionCreators.loadJobDetail(parseInt(params.jobId)).then( ->
               job = JobsStore.get(parseInt(params.jobId))
-              configId = job.getIn(['params', 'config'])
-              InstalledComponentsActionCreators.loadComponentConfigData(getComponentId(job), configId)
+              if (job.get('component') == 'transformation' &&
+                  job.hasIn(['params', 'transformations', 0]))
+                return InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
+              if (job.get('component') != 'transformation' &&
+                  job.hasIn(['params', 'config']) &&
+                  job.hasIn(['params', 'row']))
+                configId = job.getIn(['params', 'config'])
+                return InstalledComponentsActionCreators.loadComponentConfigData(getComponentId(job), configId)
             )
         ]
         childRoutes: [ createTablesRoute('jobDetail')]
