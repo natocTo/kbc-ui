@@ -48,13 +48,3 @@ export function getRowConfiguration(configuration, index) {
 export function getRowState(configuration) {
   return configuration.get('state', Immutable.Map());
 }
-
-export default {
-  isMigrated,
-  getRootConfiguration,
-  getRootState,
-  getRowsCount,
-  getRowName,
-  getRowConfiguration,
-  getRowState
-};

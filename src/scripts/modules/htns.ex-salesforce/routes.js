@@ -13,7 +13,7 @@ import {
 import ConfigurationForm from './react/components/Configuration';
 import CredentialsForm from './react/components/Credentials';
 import {CollapsibleSection} from '../configurations/utils/renderHelpers';
-import legacyUIMigration from './migrations/legacyUIMigration';
+import * as legacyUIMigration from './migrations/legacyUIMigration';
 
 const routeSettings = {
   componentId: 'htns.ex-salesforce',

@@ -1,6 +1,6 @@
 import assert from 'assert';
 import Immutable from 'immutable';
-import legacyUIMigration from './legacyUIMigration';
+import * as legacyUIMigration from './legacyUIMigration';
 
 describe('legacyUIMigration', function() {
   describe('isMigrated()', function() {
