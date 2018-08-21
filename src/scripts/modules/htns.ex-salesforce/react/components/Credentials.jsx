@@ -15,7 +15,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <Form horizontal>
         <FormGroup>
@@ -26,8 +25,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.login}
-              onChange={function(e) {
-                props.onChange({login: e.target.value.trim()});
+              onChange={(event) => {
+                this.props.onChange({login: event.target.value.trim()});
               }}
               placeholder="john.doe@example.com"
               disabled={this.props.disabled}
@@ -42,8 +41,8 @@ export default React.createClass({
             <FormControl
               type="password"
               value={this.props.value.password}
-              onChange={function(e) {
-                props.onChange({password: e.target.value.trim()});
+              onChange={(event) => {
+                this.props.onChange({password: event.target.value.trim()});
               }}
               disabled={this.props.disabled}
               />
@@ -57,8 +56,8 @@ export default React.createClass({
             <FormControl
               type="password"
               value={this.props.value.securityToken}
-              onChange={function(e) {
-                props.onChange({securityToken: e.target.value.trim()});
+              onChange={(event) =>  {
+                this.props.onChange({securityToken: event.target.value.trim()});
               }}
               disabled={this.props.disabled}
               />
@@ -68,8 +67,8 @@ export default React.createClass({
           <Col smOffset={4} sm={8}>
             <Checkbox
               checked={this.props.value.sandbox}
-              onChange={function(e) {
-                props.onChange({sandbox: e.target.checked});
+              onChange={(event) =>  {
+                this.props.onChange({sandbox: event.target.checked});
               }}
             >Sandbox</Checkbox>
             <HelpBlock>

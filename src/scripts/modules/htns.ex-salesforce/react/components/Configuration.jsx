@@ -14,7 +14,6 @@ export default React.createClass({
   },
 
   render() {
-    const props = this.props;
     return (
       <Form horizontal>
         <FormGroup>
@@ -25,8 +24,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.object}
-              onChange={function(e) {
-                props.onChange({object: e.target.value.trim()});
+              onChange={(event) => {
+                this.props.onChange({object: event.target.value.trim()});
               }}
               placeholder="User"
               disabled={this.props.disabled}
@@ -40,8 +39,8 @@ export default React.createClass({
           <Col smOffset={4} sm={8}>
             <Checkbox
               checked={this.props.value.incremental}
-              onChange={function(e) {
-                props.onChange({incremental: e.target.checked});
+              onChange={(event) => {
+                this.props.onChange({incremental: event.target.checked});
               }}
             >Incremental</Checkbox>
             <HelpBlock>
@@ -57,8 +56,8 @@ export default React.createClass({
             <FormControl
               type="text"
               value={this.props.value.query}
-              onChange={function(e) {
-                props.onChange({query: e.target.value});
+              onChange={(event) => {
+                this.props.onChange({query: event.target.value});
               }}
               placeholder="SELECT Id, Name FROM User"
               disabled={this.props.disabled}
