@@ -276,7 +276,7 @@ Dispatcher.register (payload) ->
 
       # update breadcrumb title for generic-detail component route
       breadcrumbs = _store.get('breadcrumbs').map((breadcrumb) ->
-        linkParams = breadcrumb.getIn(['link', 'params'])
+        linkParams = breadcrumb.getIn(['link', 'params'], Map())
         routeName = breadcrumb.get('name')
         isConfigLink = linkParams.get('config') == configId
         isComponentLink = linkParams.get('component') == componentId
