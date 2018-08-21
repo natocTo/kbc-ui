@@ -233,7 +233,7 @@ module.exports = React.createClass
       rowId = job.getIn(['params', 'row'], null)
       rowName = ConfigurationRowsStore.get(componentId, configId, rowId).get('name')
     if (rowId && rowName)
-      span null,
+      return span null,
         ' / '
         ComponentConfigurationRowLink
           componentId: componentId
@@ -241,9 +241,8 @@ module.exports = React.createClass
           rowId: rowId
         ,
           rowName
-    if (rowId)
-      span null,
-        ' / ' + rowId
+    return span null,
+      ' / ' + rowId
 
   _renderRunInfoRow: (job) ->
     jobStarted = ->
