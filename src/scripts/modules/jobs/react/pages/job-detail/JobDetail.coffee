@@ -241,8 +241,10 @@ module.exports = React.createClass
           rowId: rowId
         ,
           rowName
-    return span null,
-      ' / ' + rowId
+    if (rowId)
+      return span null,
+        ' / ' + rowId
+    return null
 
   _renderRunInfoRow: (job) ->
     jobStarted = ->
