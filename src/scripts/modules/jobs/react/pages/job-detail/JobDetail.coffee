@@ -215,6 +215,9 @@ module.exports = React.createClass
           configId: configId
         ,
           @state.configuration.get('name', configId)
+    else if (job.hasIn(['params', 'config']))
+      configurationLink = span null,
+        job.getIn(['params', 'config'])
     else
       configurationLink =
         em null,
