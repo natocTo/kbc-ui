@@ -51,7 +51,7 @@ accordionHeader = (text, isActive) ->
                 text
 
 module.exports = React.createClass
-  mixins: [createStoreMixin(JobsStore, InstalledComponentsStore, ConfigurationRowsStore), PureRendererMixin]
+  mixins: [createStoreMixin(JobsStore, InstalledComponentsStore, ConfigurationRowsStore, TransformationsStore), PureRendererMixin]
   displayName: "JobDetail"
 
   getStateFromStores: ->
