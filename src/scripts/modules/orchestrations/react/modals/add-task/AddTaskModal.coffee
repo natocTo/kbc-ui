@@ -65,9 +65,13 @@ AddTaskModal = React.createClass
     @state.orchestrations.filter ->
       fuzzy.match(filter, 'orchestrator')
 
+  _handleOnHide: ->
+    @_handleComponentReset()
+    @props.onHide()
+
   render: ->
     Modal
-      onHide: @props.onHide
+      onHide: @_handleOnHide
       show: @props.show,
 
       ModalHeader closeButton: true,
@@ -106,7 +110,7 @@ AddTaskModal = React.createClass
         ButtonToolbar null,
           Button
             bsStyle: 'link'
-            onClick: @props.onHide
+            onClick: @_handleOnHide
           ,
             'Cancel'
 
@@ -130,7 +134,7 @@ AddTaskModal = React.createClass
   ###
   _handleConfigurationSelect: (configuration) ->
     @props.onConfigurationSelect(@state.selectedComponent, configuration, @props.phaseId)
-    @props.onHide()
+    @_handleOnHide()
 
 
 
