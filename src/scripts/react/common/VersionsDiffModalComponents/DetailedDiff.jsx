@@ -7,7 +7,7 @@ function multiDiffValueToString(value) {
   if (_.isArray(value)) {
     return value.join(',');
   }
-  // if (!value) return '';
+  if (!value) return '';
   return value.toString();
 }
 
