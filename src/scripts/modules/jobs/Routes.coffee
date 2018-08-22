@@ -9,6 +9,7 @@ JobsStore = require('./stores/JobsStore')
 Promise = require('bluebird')
 InstalledComponentsActionCreators = require('../components/InstalledComponentsActionCreators')
 {createTablesRoute} = require('../table-browser/routes')
+getComponentId = require('./getJobComponentId').default
 
 routes =
       name: 'jobs'
@@ -60,7 +61,16 @@ routes =
               JobsActionCreators.loadJobDetailForce(jobId)
         requireData: [
           (params) ->
-            JobsActionCreators.loadJobDetail(parseInt(params.jobId))
+            JobsActionCreators.loadJobDetail(parseInt(params.jobId)).then( ->
+              job = JobsStore.get(parseInt(params.jobId))
+              if (job.get('component') == 'transformation' &&
+                  job.hasIn(['params', 'transformations', 0]))
+                return InstalledComponentsActionCreators.loadComponentConfigsData('transformation')
+              if (job.get('component') != 'transformation' &&
+                  job.hasIn(['params', 'config']) &&
+                  job.hasIn(['params', 'row']))
+                return InstalledComponentsActionCreators.loadComponentConfigsData(getComponentId(job))
+            )
         ]
         childRoutes: [ createTablesRoute('jobDetail')]
       ]

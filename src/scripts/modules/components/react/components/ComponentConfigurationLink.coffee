@@ -69,4 +69,3 @@ module.exports = React.createClass
     return 'extractor' if !component
     component.get 'type'
 
-

@@ -6,6 +6,8 @@ ApplicationStore = require '../../../../../stores/ApplicationStore'
 JobsStore = require('../../../stores/JobsStore')
 ComponentsStore  = require('../../../../components/stores/ComponentsStore')
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
+ConfigurationRowsStore = require '../../../../configurations/ConfigurationRowsStore'
+TransformationsStore = require '../../../../transformations/stores/TransformationsStore'
 PureRendererMixin = require 'react-immutable-render-mixin'
 {fromJS} = require 'immutable'
 
@@ -31,7 +33,7 @@ contactSupport = require('../../../../../utils/contactSupport').default
 
 date = require '../../../../../utils/date'
 {Tree, NewLineToBr} = require '@keboola/indigo-ui'
-{strong,div, h2, span, h4, section, p, pre, code, br, blockquote, small} = React.DOM
+{strong,div, h2, span, h4, section, p, pre, code, br, blockquote, small, em} = React.DOM
 
 APPLICATION_ERROR = 'application'
 
@@ -49,7 +51,9 @@ accordionHeader = (text, isActive) ->
                 text
 
 module.exports = React.createClass
-  mixins: [createStoreMixin(JobsStore, InstalledComponentsStore), PureRendererMixin]
+  mixins: [createStoreMixin(
+    JobsStore, InstalledComponentsStore, ConfigurationRowsStore, TransformationsStore
+  ), PureRendererMixin]
   displayName: "JobDetail"
 
   getStateFromStores: ->
@@ -201,17 +205,48 @@ module.exports = React.createClass
       }},
         @_renderErrorDetails(job)
 
-  _renderRunInfoRow: (job) ->
+  _renderConfigurationLink: (job) ->
     componentId = getComponentId(job)
     if @state.configuration.size != 0
+      configId = @state.configuration.get('id')
       configurationLink = span null,
         React.createElement ComponentConfigurationLink,
           componentId: componentId
-          configId: @state.configuration.get 'id'
+          configId: configId
         ,
-          @state.configuration.get 'name'
+          @state.configuration.get('name', configId)
+    else if (job.hasIn(['params', 'config']))
+      configurationLink = span null,
+        job.getIn(['params', 'config'])
     else
-      configurationLink = 'N/A'
+      configurationLink =
+        em null,
+          'N/A'
+    return configurationLink
+
+  _renderConfigurationRowLink: (job) ->
+    componentId = getComponentId(job)
+    configId = @state.configuration.get 'id'
+    rowId = job.getIn(['params', 'transformations', 0], null)
+    rowName = TransformationsStore.getTransformationName(configId, rowId)
+    if (!rowId)
+      rowId = job.getIn(['params', 'row'], null)
+      rowName = ConfigurationRowsStore.get(componentId, configId, rowId).get('name')
+    if (rowId && rowName)
+      return span null,
+        ' / '
+        ComponentConfigurationRowLink
+          componentId: componentId
+          configId: configId
+          rowId: rowId
+        ,
+          rowName
+    if (rowId)
+      return span null,
+        ' / ' + rowId
+    return null
+
+  _renderRunInfoRow: (job) ->
     jobStarted = ->
       job.get('startTime')
     renderDate = (pdate) ->
@@ -227,7 +262,8 @@ module.exports = React.createClass
             span {className: 'col-md-3'},
               'Configuration'
             strong {className: 'col-md-9'},
-              configurationLink
+              @._renderConfigurationLink(job)
+              @._renderConfigurationRowLink(job)
               @._renderConfigVersion(job)
           div {className: 'row'},
             span {className: 'col-md-3'},
@@ -266,7 +302,7 @@ module.exports = React.createClass
   _renderConfigVersion: (job) ->
     configVersion = job.getIn(['result', 'configVersion'], null)
     if configVersion != null
-      ' - Version #' + configVersion
+      ' / Version #' + configVersion
 
   _renderAccordion: (job) ->
     isTransformation = job.get('component') == 'transformation'

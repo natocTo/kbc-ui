@@ -25,8 +25,16 @@ module.exports = React.createClass({
         query={this.props.query}
         onClick={this.props.onClick}
         >{this.props.children}</Link>);
-    } else {
-      return (<span>{this.props.children}</span>);
     }
+    return (<Link
+      className={this.props.className}
+      to={this.props.componentId + '-row'}
+      params={{
+        config: this.props.configId,
+        row: this.props.rowId
+      }}
+      query={this.props.query}
+      onClick={this.props.onClick}
+      >{this.props.children}</Link>);
   }
 });
