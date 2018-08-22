@@ -39,6 +39,7 @@ import wrStorageRoutes from '../wr-storage/routes';
 import exStorageRoutes from '../ex-storage/routes';
 import wrAwsS3Routes from '../wr-aws-s3/routes';
 import wrGoogleBigQueryRoutes from '../wr-google-bigquery/routes';
+import htnsExSalesforceRoutes from '../htns.ex-salesforce/routes';
 
 const extractor = injectProps({ type: 'extractor' });
 const writer = injectProps({ type: 'writer' });
@@ -119,6 +120,7 @@ module.exports = {
       createComponentRoute('keboola.ex-email-attachments', [emailAttachmentsExtractorRoutes]),
       createComponentRoute('keboola.ex-http', [exHttpRoutes]),
       createComponentRoute('keboola.ex-storage', [exStorageRoutes]),
+      createComponentRoute('htns.ex-salesforce', [htnsExSalesforceRoutes]),
       createGenericDetailRoute('extractor')
     ]
   },
