@@ -19,6 +19,14 @@ JobsStore = StoreUtils.createStore
   getJobs: (componentId, configurationId) ->
     _store.getIn [componentId, configurationId], new JobsRecord()
 
+  getRowJobs: (componentId, configurationId, rowId) ->
+    configJobs = _store.getIn [componentId, configurationId], new JobsRecord()
+    configJobs.set('jobs', configJobs.get('jobs').filter((job) ->
+      if (job.getIn(['params', 'row']) == rowId)
+        return true
+      return false
+    ))
+
 Dispatcher.register (payload) ->
   action = payload.action
 
