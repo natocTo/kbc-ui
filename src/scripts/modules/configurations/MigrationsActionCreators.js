@@ -14,7 +14,7 @@ export default {
       componentId: componentId,
       configurationId: configurationId
     });
-    const changeDescription = 'Migrating configuration to latest version';
+    const changeDescription = 'Migrating configuration to the latest version';
     const configuration = ConfigurationsStore.get(componentId, configurationId);
     const rowsCount = adapter.get('getRowsCount')(configuration);
     let promises = [];
