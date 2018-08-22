@@ -74,6 +74,10 @@ routes =
             transformationId = routerState.getIn(['params', 'row'])
             name = TransformationsStore.getTransformation(configId, transformationId).get 'name'
             name
+          poll:
+            interval: 10
+            action: (params) ->
+              JobsActionCreators.loadComponentConfigurationLatestJobs('transformation', params.config)
           nameEdit: (params) ->
             if (parseInt(params.row) > 0)
               return React.DOM.span null,

@@ -27,6 +27,14 @@ JobsStore = StoreUtils.createStore
       return false
     ))
 
+  getTransformationJobs: (configurationId, rowId) ->
+    configJobs = _store.getIn ['transformation', configurationId], new JobsRecord()
+    configJobs.set('jobs', configJobs.get('jobs').filter((job) ->
+      if (job.getIn(['params', 'transformations', 0]) == rowId)
+        return true
+      return false
+    ))
+
 Dispatcher.register (payload) ->
   action = payload.action
 
