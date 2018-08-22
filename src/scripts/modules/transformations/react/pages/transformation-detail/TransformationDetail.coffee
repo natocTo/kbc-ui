@@ -24,6 +24,10 @@ SqlDepButton = React.createFactory(require('../../components/SqlDepButton').defa
 ValidateQueriesButton = React.createFactory(require('../../components/ValidateQueriesButton').default)
 sandboxUtils = require('../../../utils/sandboxUtils')
 
+LatestRowVersions = React.createFactory(
+  require('../../../../configurations/react/components/SidebarRowVersionsWrapper').default
+)
+
 {div, span, ul, li, a, em} = React.DOM
 
 module.exports = React.createClass
@@ -202,3 +206,8 @@ module.exports = React.createClass
             ,
               span className: 'fa fa-question-circle fa-fw'
               ' Documentation'
+        LatestRowVersions
+          componentId: 'transformation'
+          configId: @state.bucketId
+          rowId: @state.transformationId
+

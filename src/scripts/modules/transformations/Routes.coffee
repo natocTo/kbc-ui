@@ -8,6 +8,7 @@ Sandbox = require('./react/pages/sandbox/Sandbox').default
 InstalledComponentsActionCreators = require('./../components/InstalledComponentsActionCreators')
 TransformationsActionCreators = require('./ActionCreators')
 VersionsActionCreators = require('../components/VersionsActionCreators')
+RowVersionsActionCreators = require('../configurations/RowVersionsActionCreators')
 ProvisioningActionCreators = require('../provisioning/ActionCreators')
 StorageActionCreators = require('../components/StorageActionCreators')
 TransformationsIndexReloaderButton = require './react/components/TransformationsIndexReloaderButton'
@@ -22,6 +23,7 @@ JobsActionCreators = require '../jobs/ActionCreators'
 injectProps = require('../components/react/injectProps').default
 {createTablesRoute} = require '../table-browser/routes'
 Immutable = require('immutable')
+TransformationVersions = require('./react/pages/TransformationVersions').default
 
 routes =
       name: 'transformations'
@@ -85,7 +87,12 @@ routes =
           requireData: [
             ->
               StorageActionCreators.loadTables()
+          ,
+            ->
               StorageActionCreators.loadBuckets()
+          ,
+            (params) -> RowVersionsActionCreators.loadVersions('transformation', params.config, params.row),
+
           ]
           childRoutes: [
             createTablesRoute('transformationDetail')
@@ -95,6 +102,11 @@ routes =
             title: (routerState) ->
               "Overview"
             defaultRouteHandler: TransformationGraph
+          ,
+            name: 'transformation-row-versions',
+            path: 'versions',
+            title: 'Versions',
+            defaultRouteHandler: TransformationVersions
           ]
         ]
       ,
