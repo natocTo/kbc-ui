@@ -12,10 +12,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import actions from '../../MigrationsActionCreators';
 
 // components
-import {Loader} from '@keboola/indigo-ui';
-
-// styles
-require('./LegacyUIMigration.less');
+import {Loader, AlertBlock} from '@keboola/indigo-ui';
 
 export default React.createClass({
 
@@ -50,14 +47,14 @@ export default React.createClass({
         </span>
       );
     }
-    return 'Migrate Configuration';
+    return 'Proceed to Migration';
   },
 
   render() {
     return (
-      <div className="container-fluid">
-        <div className="col-md-9 kbc-main-content migration">
-          <div className="row text-center">
+      <AlertBlock type="warning" title="This configuration is in a legacy format">
+        <div className="row">
+          <div className="col-md-9">
             <p>Please migrate the configuration to the newest format to unlock the latest features.</p>
             <button
               className="btn btn-success"
@@ -68,7 +65,7 @@ export default React.createClass({
             </button>
           </div>
         </div>
-      </div>
+      </AlertBlock>
     );
   }
 });
