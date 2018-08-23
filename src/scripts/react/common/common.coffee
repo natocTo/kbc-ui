@@ -9,7 +9,6 @@ module.exports =
   FinishedWithIcon: require('./FinishedWithIcon').default
   JobStatusCircle: require('./JobStatusCircle').default
   JobStatusLabel: require('./JobStatusLabel').default
-  SearchRow: require('./SearchRow').default
   CodeEditor: require('./CodeEditor').default
   Tooltip: require('./Tooltip').default
   ActivateDeactivateButton: require('./ActivateDeactivateButton').default
