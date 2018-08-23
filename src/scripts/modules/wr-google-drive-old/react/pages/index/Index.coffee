@@ -9,7 +9,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 Link = React.createFactory(require('react-router').Link)
 RowEditor = require './RowEditor'
 
-SearchRow = require('../../../../../react/common/SearchRow').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
 GdriveStore = require '../../../wrGdriveStore'
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 InstalledComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
@@ -87,8 +87,7 @@ module.exports = React.createClass
             @_renderAddNewTable()
             @_addNewTableButton()
       if @_isAuthorized() and @_isConfigured()
-        React.createElement SearchRow,
-          className: 'row kbc-search-row'
+        React.createElement SearchBar,
           onChange: @_handleSearchQueryChange
           query: @state.localState.get('searchQuery') or ''
       if @_isAuthorized() and @_isConfigured()

@@ -83,7 +83,8 @@ OrchestrationDetail = React.createClass
         div {className: 'row kbc-row-orchestration-detail'},
           div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
             div {className: 'kbc-container'},
-              SearchBar(onChange: @_handleFilterChange, query: @state.filter)
+              div {className: 'layout-master-detail-search'},
+                SearchBar(onChange: @_handleFilterChange, query: @state.filter)
               OrchestrationsNav
                 orchestrations: @state.filteredOrchestrations
                 activeOrchestrationId: @state.orchestration.get 'id'

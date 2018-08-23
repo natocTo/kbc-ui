@@ -21,7 +21,7 @@ import ComponentMetadata from '../../../components/react/components/ComponentMet
 import RunComponentButton from '../../../components/react/components/RunComponentButton';
 import DeleteConfigurationButton from '../../../components/react/components/DeleteConfigurationButton';
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
-import SearchRow from '../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import Confirm from '../../../../react/common/Confirm';
 import Tooltip from '../../../../react/common/Tooltip';
 import {Link} from 'react-router';
@@ -275,11 +275,13 @@ export default React.createClass({
   renderSarchForm() {
     if (this.hasQueries() > 0) {
       return (
-        <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-          <SearchRow
-            onChange={this.handleFilterChange}
-            query={this.state.queriesFilter}
-          />
+        <div className="row">
+          <div className="col-xs-12">
+            <SearchBar
+              onChange={this.handleFilterChange}
+              query={this.state.queriesFilter}
+            />
+          </div>
         </div>
       );
     }

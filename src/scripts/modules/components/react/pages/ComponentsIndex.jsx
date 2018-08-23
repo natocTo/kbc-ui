@@ -5,7 +5,7 @@ import createStoreMixin from '../../../../react/mixins/createStoreMixin';
 import InstalledComponentsStore from '../../stores/InstalledComponentsStore';
 import ComponentsStore from '../../stores/ComponentsStore';
 import InstalledComponentsActionCreators from '../../InstalledComponentsActionCreators';
-import SearchRow from '../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import ComponentRow from './ComponentRow';
 import NewComponentSelection from '../components/NewComponentSelection';
 
@@ -46,11 +46,14 @@ export default React.createClass({
       return (
         <div className="container-fluid">
           <div className="kbc-main-content kbc-components-list">
-            <SearchRow
-              className="row kbc-search-row"
-              onChange={this.handleFilterChange}
-              query={this.state.configurationFilter}
-            />
+            <div className="row">
+              <div className="col-xs-12">
+                <SearchBar
+                  onChange={this.handleFilterChange}
+                  query={this.state.configurationFilter}
+                />
+                </div>
+              </div>
             {this.state.installedComponentsFiltered.count()
               ? this.state.installedComponentsFiltered.map((component) => {
                 return (

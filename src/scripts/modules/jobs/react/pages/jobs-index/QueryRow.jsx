@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {OverlayTrigger, Popover, Button} from 'react-bootstrap';
-import { Icon, ExternalLink } from '@keboola/indigo-ui';
-import SearchRow from '../../../../../react/common/SearchRow';
+import { Icon, ExternalLink, SearchBar } from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
@@ -14,28 +13,30 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="kbc-inner-padding kbc-row">
-        <div className="row-search">
-          <div className="row-search-input">
-            <SearchRow
-              query={this.props.query}
-              onSubmit={(query) => this.props.onSearch(query)}
-              placeholder="Search by name or attributes"
-            />
-          </div>
-          <div className="row-search-action">
-            <OverlayTrigger
-              trigger="click"
-              placement="bottom"
-              overlay={this.renderQuickHelp()}
-            >
-              <Button bsStyle="link"  title="Show Quick help">
-                <Icon.Help className={'icon-size-20'}/>
-              </Button>
-            </OverlayTrigger>
-          </div>
+      <div className="row">
+        <div className="col-xs-12">
+          <SearchBar
+            query={this.props.query}
+            onSubmit={(query) => this.props.onSearch(query)}
+            placeholder="Search by name or attributes"
+            additionalActions={this.renderAdditionalActions()}
+          />
         </div>
       </div>
+    );
+  },
+
+  renderAdditionalActions() {
+    return (
+      <OverlayTrigger
+        trigger="click"
+        placement="bottom"
+        overlay={this.renderQuickHelp()}
+      >
+        <Button bsStyle="link" title="Show Quick help">
+          <Icon.Help className={'icon-size-20'}/>
+        </Button>
+      </OverlayTrigger>
     );
   },
 

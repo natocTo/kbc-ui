@@ -10,7 +10,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 
 # React components
 OrchestrationsNav = React.createFactory(require './../orchestration-detail/OrchestrationsNav')
-SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
+SearchBar = require('@keboola/indigo-ui').SearchBar
 Notifications = require './Notifications'
 
 {div, button} = React.DOM
@@ -66,7 +66,10 @@ module.exports = React.createClass
         div {className: 'row kbc-row-orchestration-detail'},
           div {className: 'col-md-3 kb-orchestrations-sidebar kbc-main-nav'},
             div {className: 'kbc-container'},
-              SearchRow(onChange: @_handleFilterChange, query: @state.filter)
+              div {className: 'layout-master-detail-search'},
+                React.createElement SearchBar,
+                  onChange: @_handleFilterChange,
+                  query: @state.filter
               OrchestrationsNav
                 orchestrations: @state.filteredOrchestrations
                 activeOrchestrationId: @state.orchestration.get 'id'

@@ -1,7 +1,7 @@
 import React from 'react';
 import immutableMixin from 'react-immutable-render-mixin';
 import fuzzy from 'fuzzy';
-import SearchRow from '../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import Immutable from 'immutable';
 import ConfigurationRowsTable from './ConfigurationRowsTable';
 import CreateConfigurationRowButton from './CreateConfigurationRowButton';
@@ -141,16 +141,14 @@ export default React.createClass({
     return (
       <div>
         <div className="kbc-inner-padding">
-          <div className="row-search">
-            <div className="row-search-input">
-              <SearchRow
+          <div className="row">
+            <div className="col-xs-12">
+              <SearchBar
                 query={this.state.query}
                 onChange={this.onChangeSearch}
                 onSubmit={this.onChangeSearch}
+                additionalActions={this.renderNewConfigRowButton()}
               />
-            </div>
-            <div className="row-search-action">
-              {this.renderNewConfigRowButton()}
             </div>
           </div>
         </div>

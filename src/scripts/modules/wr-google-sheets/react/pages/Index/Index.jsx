@@ -25,7 +25,7 @@ import EmptyState from '../../../../components/react/components/ComponentEmptySt
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import {Button} from 'react-bootstrap';
-import SearchRow from '../../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 
 export default function(COMPONENT_ID) {
   return React.createClass({
@@ -65,7 +65,11 @@ export default function(COMPONENT_ID) {
             <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
               {this.renderAuthorizedInfo()}
             </div>
-            {this.renderSearchRow()}
+            <div className="row">
+              <div className="col-xs-12">
+                {this.renderSearchRow()}
+              </div>
+            </div>
             {
               this.hasTables() ?
 
@@ -125,12 +129,10 @@ export default function(COMPONENT_ID) {
     renderSearchRow() {
       if (this.hasTables()) {
         return (
-          <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-            <SearchRow
-              onChange={this.handleSearchQueryChange}
-              query={this.state.localState.get('searchQuery', '')}
-            />
-          </div>
+          <SearchBar
+            onChange={this.handleSearchQueryChange}
+            query={this.state.localState.get('searchQuery', '')}
+          />
         );
       }
       return null;
