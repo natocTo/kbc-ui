@@ -21,7 +21,7 @@ AppUsageInfo = React.createFactory(require('../new-component-form/AppUsageInfo')
 ComponentDescription = require '../component-detail/ComponentDescription'
 contactSupport = require('../../../../../utils/contactSupport').default
 MigrationRow = require('../../components/MigrationRow').default
-SearchRow = require('../../../../../react/common/SearchRow').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
 
 {a, div, label, h3, h2, span, p} = React.DOM
 
@@ -74,6 +74,7 @@ module.exports = React.createClass
             div className: "col-md-12",
               React.createElement ComponentDescription,
                 component: @state.component
+        @_renderSearchBar()
         @_renderConfigurations()
 
   _getFilteredConfigurations: ->
@@ -92,6 +93,23 @@ module.exports = React.createClass
   _handleFilterChange: (query) ->
     InstalledComponentsActionCreators.setInstalledComponentsComponentDetailFilter(@state.component.get('id'), query)
 
+  _renderSearchBar: ->
+    state = @state
+    actions = (
+      AddComponentConfigurationButton
+        disabled: @_isDeprecated()
+        component: state.component
+    )
+    if @state.configurations.count()
+      div className: "row",
+        div className: "col-xs-12",
+          h2 null, "Configurations"
+          React.createElement SearchBar,
+            onChange: @_handleFilterChange
+            query: @state.configurationFilter
+            placeholder: 'Search by name, description or id'
+            additionalActions: actions
+
   _renderConfigurations: ->
     hasRedshift = ApplicationStore.getSapiToken().getIn ['owner', 'hasRedshift']
     needsRedshift = @state.component.get('flags').includes('appInfo.redshiftOnly')
@@ -107,38 +125,24 @@ module.exports = React.createClass
 
     state = @state
     if @state.configurations.count()
-      div null,
-        div className: "kbc-header",
-          div className: "kbc-title",
-            h2 null, "Configurations"
-            div className: 'row-search',
-              div className: 'row-search-input',
-                React.createElement SearchRow,
-                  onChange: @_handleFilterChange
-                  query: @state.configurationFilter
-                  placeholder: 'Search by name, description or id'
-              div className: 'row-search-action',
-                AddComponentConfigurationButton
-                  disabled: @_isDeprecated()
-                  component: state.component
-        if @_getFilteredConfigurations().count()
-          div className: "table table-hover",
-            div className: "tbody",
-              @_getFilteredConfigurations()
-                .map((configuration) =>
-                  React.createElement(ConfigurationRow,
-                    component: @state.component,
-                    config: configuration,
-                    componentId: state.component.get('id'),
-                    isDeleting: state.deletingConfigurations.has(configuration.get('id')),
-                    key: configuration.get('id')
-                  )
+      if @_getFilteredConfigurations().count()
+        div className: "table table-hover",
+          div className: "tbody",
+            @_getFilteredConfigurations()
+              .map((configuration) =>
+                React.createElement(ConfigurationRow,
+                  component: @state.component,
+                  config: configuration,
+                  componentId: state.component.get('id'),
+                  isDeleting: state.deletingConfigurations.has(configuration.get('id')),
+                  key: configuration.get('id')
                 )
-        else
-          div className: 'kbc-header',
-            div className: 'kbc-title',
-              h2 null,
-                'No configurations found.'
+              )
+      else
+        div className: 'kbc-header',
+          div className: 'kbc-title',
+            h2 null,
+              'No configurations found.'
     else
       div className: "row kbc-row",
         React.createElement ComponentEmptyState, null,
