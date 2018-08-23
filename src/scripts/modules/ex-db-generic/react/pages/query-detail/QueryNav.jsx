@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import SearchRow from '../../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import NavRow from './QueryNavRow';
 import CreateQueryElement from '../../components/CreateQueryElement';
 
@@ -20,7 +20,9 @@ export default React.createClass({
   render() {
     return (
       <div className="kbc-container">
-        <SearchRow query={this.props.filter} onChange={this.handleFilterChange} />
+        <div className="layout-master-detail-search">
+          <SearchBar query={this.props.filter} onChange={this.handleFilterChange} />
+        </div>
         <div className="list-group">
           <CreateQueryElement
             isNav={true}

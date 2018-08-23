@@ -23,7 +23,7 @@ import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import RunComponentButton from '../../../../components/react/components/RunComponentButton';
 
 import {Loader} from '@keboola/indigo-ui';
-import SearchRow from '../../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import * as actionsProvisioning from '../../../actionsProvisioning';
 import LastUpdateInfo from '../../../../../react/common/LastUpdateInfo';
 
@@ -268,16 +268,12 @@ export default function(componentId) {
             {
               this.state.queries.count() > 0 ? (
                 <div className="row">
-                  <div className="col-sm-9" style={{padding: '0px'}}>
-                    <SearchRow
+                  <div className="col-xs-12">
+                    <SearchBar
                       onChange={this.handleFilterChange}
                       query={this.state.queriesFilter}
+                      additionalActions={this.renderNewQueryLink()}
                     />
-                  </div>
-                  <div className="col-sm-3">
-                    <div className="text-right" style={{marginTop: '16px'}}>
-                      {this.renderNewQueryLink()}
-                    </div>
                   </div>
                 </div>
               ) : null
