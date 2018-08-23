@@ -6,7 +6,7 @@ import _ from 'underscore';
 import {Link} from 'react-router';
 import {factory as eventsFactory} from '../EventsService';
 import RoutesStore from '../../../stores/RoutesStore';
-import SearchRow from '../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import EventsTable from './EventsTable';
 import EventDetail from './EventDetail';
 import {Loader} from '@keboola/indigo-ui';
@@ -94,7 +94,7 @@ export default React.createClass({
     return (
       <div className="form-group">
         <div className="col-xs-12">
-          <SearchRow
+          <SearchBar
             query={this.state.searchQuery}
             onSubmit={this._handleQueryChange}
           />
