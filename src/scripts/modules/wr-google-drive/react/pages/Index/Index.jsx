@@ -68,7 +68,7 @@ export default function(COMPONENT_ID) {
              </div>
             <div className="row">
               <div className="col-xs-12">
-                {this.renderSearchRow()}
+                {this.renderSearchBar()}
               </div>
             </div>
             {
@@ -126,7 +126,7 @@ export default function(COMPONENT_ID) {
       );
     },
 
-    renderSearchRow() {
+    renderSearchBar() {
       if (this.hasTables()) {
         return (
           <SearchBar
