@@ -7,7 +7,7 @@ import InstalledComponentsStore from '../../../components/stores/InstalledCompon
 import InstaledComponentsActions from '../../../components/InstalledComponentsActionCreators';
 import Select from 'react-select';
 import SplashIcon from '../../../../react/common/SplashIcon';
-import SearchRow from '../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import DeletedComponentRow from '../components/DeletedComponentRow';
 import TrashHeaderButtons from '../components/TrashHeaderButtons';
 import SettingsTabs from '../../../../react/layout/SettingsTabs';
@@ -89,41 +89,37 @@ export default React.createClass({
       }
     ];
 
+    const additionalActions = (
+      <div className="searchbar-actions">
+        <Select
+          value={this.state.filterType}
+          onChange={(selected) => {
+            const query = selected !== null ? selected.value : '';
+            this.handleFilterChange(query, 'type');
+          }}
+          options={typeFilterOptions}
+          placeholder="All components"
+          className="settings-trash-select"
+        />
+        <TrashHeaderButtons/>
+      </div>
+    );
+
     return (
       <div className="container-fluid">
         <div className="kbc-main-content kbc-components-list">
-          <SettingsTabs active="settings-trash" />
-            <div className="tab-content">
-              <div className="tab-pane tab-pane-no-padding active">
-                <div className="kbc-trash-search clearfix">
-                  <div className="col-md-7">
-                    <SearchRow
-                      className="row kbc-search-row"
-                      query={this.state.filterName}
-                      onChange={(query) => this.handleFilterChange(query, 'name')}
-                    />
-                  </div>
-                  <div className="col-md-5">
-                    <div className="col-md-12">
-                      <div className="kbc-trash-controls">
-                        <div className="kbc-trash-buttons">
-                          <TrashHeaderButtons />
-                        </div>
-                        <div className="kbc-trash-filter">
-                          <Select
-                            value={this.state.filterType}
-                            onChange={(selected) => {
-                              const query = selected !== null ? selected.value : '';
-                              this.handleFilterChange(query, 'type');
-                            }}
-                            options={typeFilterOptions}
-                            placeholder="All components"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <SettingsTabs active="settings-trash"/>
+          <div className="tab-content ">
+            <div className="row">
+              <div className="col-xs-12">
+                <SearchBar
+                  query={this.state.filterName}
+                  onChange={(query) => this.handleFilterChange(query, 'name')}
+                  additionalActions={additionalActions}
+                />
+              </div>
+            </div>
+            <div className="tab-pane tab-pane-no-padding active">
               {this.renderRows()}
             </div>
           </div>
