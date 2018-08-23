@@ -95,10 +95,11 @@ module.exports = React.createClass
 
   _renderSearchBar: ->
     state = @state
-    actions = (
-      AddComponentConfigurationButton
-        disabled: @_isDeprecated()
-        component: state.component
+    additionalActions = (
+      div className: "searchbar-actions",
+        AddComponentConfigurationButton
+          disabled: @_isDeprecated()
+          component: state.component
     )
     if @state.configurations.count()
       div className: "row",
@@ -108,7 +109,7 @@ module.exports = React.createClass
             onChange: @_handleFilterChange
             query: @state.configurationFilter
             placeholder: 'Search by name, description or id'
-            additionalActions: actions
+            additionalActions: additionalActions
 
   _renderConfigurations: ->
     hasRedshift = ApplicationStore.getSapiToken().getIn ['owner', 'hasRedshift']

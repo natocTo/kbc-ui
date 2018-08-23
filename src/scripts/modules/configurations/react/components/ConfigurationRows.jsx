@@ -126,6 +126,7 @@ export default React.createClass({
 
   renderNewConfigRowButton() {
     return (
+      <div className="searchbar-actions">
         <CreateConfigurationRowButton
           componentType={this.props.component.get('type')}
           objectName={this.props.objectName}
@@ -134,6 +135,7 @@ export default React.createClass({
           emptyConfig={this.props.rowCreateEmptyConfig}
           onRowCreated={this.props.onRowCreated}
         />
+      </div>
     );
   },
 
