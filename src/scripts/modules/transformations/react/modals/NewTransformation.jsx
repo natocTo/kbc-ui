@@ -21,7 +21,7 @@ function prepareDataForCreate(data) {
         .set('queries', [
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
-          '-- and desired functionality.',
+          '-- and desired functionality.\n' +
           'CREATE VIEW `out_table` AS SELECT * FROM `in_table`;'
         ]);
       break;
@@ -31,7 +31,7 @@ function prepareDataForCreate(data) {
         .set('queries', [
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
-          '-- and desired functionality.',
+          '-- and desired functionality.\n' +
           'CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
         ]);
       break;
@@ -41,7 +41,7 @@ function prepareDataForCreate(data) {
         .set('queries', [
           '-- This is a sample query.\n' +
           '-- Adjust accordingly to your input mapping, output mapping\n' +
-          '-- and desired functionality.',
+          '-- and desired functionality.\n' +
           'CREATE TABLE "out_table" AS SELECT * FROM "in_table";'
         ]);
       break;
