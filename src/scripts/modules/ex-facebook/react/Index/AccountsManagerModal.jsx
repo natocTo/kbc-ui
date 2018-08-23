@@ -3,7 +3,7 @@ import {List, Map} from 'immutable';
 import {Modal} from 'react-bootstrap';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 import {Loader} from '@keboola/indigo-ui';
-import SearchRow from '../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 
 import EmptyState from '../../../components/react/components/ComponentEmptyState';
 
@@ -40,7 +40,7 @@ export default React.createClass({
             <div className="col-xs-6">
               <div>
                 <h4 className="text-center">All {getDesc('Pages')} of {this.props.authorizedDescription}</h4>
-                <SearchRow
+                <SearchBar
                   className="small"
                   query={this.localState(['filter'])}
                   onChange={(newVal) => this.updateLocalState(['filter'], newVal)}

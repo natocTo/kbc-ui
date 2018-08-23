@@ -6,7 +6,7 @@ import RoutesStore from '../../../../stores/RoutesStore';
 import VersionRow from '../components/VersionRow';
 import { getPreviousVersion } from '../../../../utils/VersionsDiffUtils';
 import { Table } from 'react-bootstrap';
-import SearchRow from '../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import VersionsActionCreators from '../../VersionsActionCreators';
 import fuzzy from 'fuzzy';
 import immutableMixin from 'react-immutable-render-mixin';
@@ -120,18 +120,26 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
     render() {
       if (this.state.filteredVersions.count() === 0 && this.state.versions.count() > 0) {
         return (
-            <div className="container-fluid">
-              <div className="kbc-main-content">
-                <SearchRow className="row kbc-search-row" onChange={this.onSearchChange} query={this.state.query}/>
-                <p className="row text-center">No results found.</p>
+          <div className="container-fluid">
+            <div className="kbc-main-content">
+              <div className="row">
+                <div className="col-xs-12">
+                  <SearchBar onChange={this.onSearchChange} query={this.state.query}/>
+                </div>
               </div>
+              <p className="row text-center">No results found.</p>
             </div>
+          </div>
         );
       }
       return (
           <div className="container-fluid">
             <div className="kbc-main-content">
-              <SearchRow className="row kbc-search-row" onChange={this.onSearchChange} query={this.state.query}/>
+              <div className="row">
+                <div className="col-xs-12">
+                  <SearchBar onChange={this.onSearchChange} query={this.state.query}/>
+                </div>
+              </div>
               <Table striped hover>
                 <thead>
                 <tr>

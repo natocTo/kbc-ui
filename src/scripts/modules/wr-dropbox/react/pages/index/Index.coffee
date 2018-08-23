@@ -8,7 +8,7 @@ AddNewTableModal = require('../../../../../react/common/AddNewTableModal').defau
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentEmptyState = require('../../../../components/react/components/ComponentEmptyState').default
 ComponentDescription = React.createFactory(ComponentDescription)
-SearchRow = require('../../../../../react/common/SearchRow').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
 InstalledComponentsStore = require '../../../../components/stores/InstalledComponentsStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
 OAuthStore = require('../../../../components/stores/OAuthStore')
@@ -99,10 +99,12 @@ module.exports = (componentId) ->
             div className: 'col-sm-4 kbc-buttons text-right',
               @_renderAddNewTable()
         if @state.hasCredentials and @_getInputTables().count() > 0
-          React.createElement SearchRow,
-            className: 'row kbc-search-row'
-            onChange: @_handleSearchQueryChange
-            query: @state.localState.get('searchQuery')
+          div className: 'row',
+            div className: 'col-sm-8',
+              React.createElement SearchBar,
+                className: 'row kbc-search-row'
+                onChange: @_handleSearchQueryChange
+                query: @state.localState.get('searchQuery')
         if @state.hasCredentials and @_getInputTables().count() > 0
           TablesByBucketsPanel
             renderTableRowFn: @_renderTableRow

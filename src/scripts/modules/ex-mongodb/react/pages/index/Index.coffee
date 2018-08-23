@@ -18,7 +18,7 @@ DeleteConfigurationButton = require '../../../../components/react/components/Del
 LatestJobs = React.createFactory(require '../../../../components/react/components/SidebarJobs')
 RunExtractionButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 Link = React.createFactory(require('react-router').Link)
-SearchRow = require('../../../../../react/common/SearchRow').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
 actionProvisioning = require '../../../actionsProvisioning'
 LatestVersions = React.createFactory(require('../../../../components/react/components/SidebarVersionsWrapper').default)
 
@@ -79,10 +79,11 @@ module.exports = (componentId) ->
                 'Setup Database Credentials'
 
         if @state.queries.count() > 1
-          div className: 'kbc-inner-padding kbc-inner-padding-with-bottom-border',
-            React.createElement SearchRow,
-              onChange: @_handleFilterChange
-              query: @state.queriesFilter
+          div className: 'row',
+            div className: 'col-xs-12',
+              React.createElement SearchBar,
+                onChange: @_handleFilterChange
+                query: @state.queriesFilter
 
         if @state.queries.count()
           if @state.queriesFiltered.count()
