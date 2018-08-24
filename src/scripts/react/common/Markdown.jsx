@@ -24,7 +24,7 @@ export default React.createClass({
   componentDidMount() {
     /* eslint react/no-did-mount-set-state: 0 */
     const height = this.refs.container.offsetHeight;
-    if (this.props.size === 'normal' && height < 150 || this.props.size === 'small' && height < 100) {
+    if (this.props.size === 'normal' && height < 300 || this.props.size === 'small' && height < 150) {
       this.setState({ellipseContent: false});
     } else {
       this.setState({ellipseContent: true});
