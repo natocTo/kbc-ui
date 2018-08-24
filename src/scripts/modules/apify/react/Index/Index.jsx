@@ -210,6 +210,7 @@ export default React.createClass({
         <span>
           {this.renderStaticFormGroup('User ID', user)}
           {this.renderStaticFormGroup('Actor ID', this.renderActorStatic(parameters))}
+          {this.renderStaticFormGroup('Input Table', inputTableElement)}
           {this.renderStaticFormGroup('Memory', <p className="form-control-static">{parameters.get('memory')}</p>)}
           {this.renderStaticFormGroup('Build', <p className="form-control-static">{parameters.get('build')}</p>)}
           {this.renderStaticFormGroup('Actor Input', actorInput)}
