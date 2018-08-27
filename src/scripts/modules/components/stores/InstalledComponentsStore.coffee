@@ -78,7 +78,7 @@ InstalledComponentsStore = StoreUtils.createStore
       component.get('type') == type
 
   getFilteredComponents: (type) ->
-    filterQuery = @getComponentFilter(type).trim()
+    filterQuery = @getComponentFilter(type)
 
     filteredConfigurations = @getAllForType(type)
       .map (component) ->
@@ -100,7 +100,7 @@ InstalledComponentsStore = StoreUtils.createStore
 
 
   getComponentFilter: (filterType) ->
-    _store.getIn ['filters', 'installedComponents', filterType], ''
+    (_store.getIn ['filters', 'installedComponents', filterType], '').trim()
 
   getTrashFilter: (filterType) ->
     _store.getIn ['filters', 'trash', filterType], ''
