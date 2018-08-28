@@ -1,8 +1,6 @@
 React = require 'react'
 
-ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactivateButton').default
-Confirm = require('../../../../../react/common/Confirm').default
-Tooltip = require('../../../../../react/common/Tooltip').default
+{ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'
 {span, button, strong, div} = React.DOM
 {Check, Loader} = require '@keboola/indigo-ui'
 Link = React.createFactory(require('react-router').Link)

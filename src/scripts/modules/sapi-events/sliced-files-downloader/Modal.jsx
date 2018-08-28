@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import ConfirmButtons from '../../../react/common/ConfirmButtons';
-import filesize from 'filesize';
+import { filesize } from '../../../utils/utils';
 
 export default React.createClass({
   propTypes: {

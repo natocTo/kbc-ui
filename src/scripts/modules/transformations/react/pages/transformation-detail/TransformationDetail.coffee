@@ -17,7 +17,7 @@ VersionsStore = require('../../../../components/stores/VersionsStore')
 TransformationsActionCreators = require '../../../ActionCreators'
 RunComponentButton = React.createFactory(require '../../../../components/react/components/RunComponentButton')
 ActivateDeactivateButton = React.createFactory(require('../../../../../react/common/ActivateDeactivateButton').default)
-Confirm = require('../../../../../react/common/Confirm').default
+{Confirm, Loader} = require '../../../../../react/common/common'
 CreateSandboxButton = require('../../components/CreateSandboxButton').default
 
 SqlDepButton = React.createFactory(require('../../components/SqlDepButton').default)
