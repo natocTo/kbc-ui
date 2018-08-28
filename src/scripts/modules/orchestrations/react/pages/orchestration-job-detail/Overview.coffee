@@ -3,7 +3,7 @@ List = require('immutable').List
 
 JobTasks = React.createFactory(require './JobTasks')
 Duration = React.createFactory(require('../../../../../react/common/Duration').default)
-JobStatusLabel = React.createFactory(require('../../../../../react/common/common').JobStatusLabel)
+JobStatusLabel = React.createFactory(require('../../../../../react/common/JobStatusLabel').default)
 
 date = require '../../../../../utils/date'
 {div, h2, small, span, strong} = React.DOM

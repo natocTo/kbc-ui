@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import _ from 'underscore';
 import {Alert} from 'react-bootstrap';
 
-import {CodeEditor} from '../../../../react/common/common';
+import CodeEditor from '../../../../react/common/CodeEditor';
 import Select from '../../../../react/common/Select';
 import TableSelectorForm from '../../../../react/common/TableSelectorForm';
 import Tooltip from '../../../../react/common/Tooltip';

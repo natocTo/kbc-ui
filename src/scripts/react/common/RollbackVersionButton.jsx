@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tooltip} from '../../react/common/common';
+import Tooltip from '../../react/common/Tooltip';
 import RollbackVersionModal from './RollbackVersionModal';
 import {Loader} from '@keboola/indigo-ui';
 

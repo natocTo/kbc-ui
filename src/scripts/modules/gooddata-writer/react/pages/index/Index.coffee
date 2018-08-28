@@ -19,7 +19,7 @@ TablesByBucketsPanel = require '../../../../components/react/components/TablesBy
 
 ActiveCountBadge = require './ActiveCountBadge'
 {Link} = require('react-router')
-{Confirm} = require '../../../../../react/common/common'
+Confirm = require('../../../../../react/common/Confirm').default
 {Loader} = require '@keboola/indigo-ui'
 
 LatestJobs = require '../../../../components/react/components/SidebarJobs'

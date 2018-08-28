@@ -15,7 +15,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TableRow = require './TableRow'
 
-{Tooltip} = require '../../../../../react/common/common'
+Tooltip = require('../../../../../react/common/Tooltip').default
 RunButtonModal = React.createFactory(require('../../../../components/react/components/RunComponentButton'))
 RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'

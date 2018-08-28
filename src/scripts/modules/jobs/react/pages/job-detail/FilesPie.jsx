@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import dimple from 'dimple/dist/dimple.v2.1.1.js';
-import {filesize} from '../../../../../utils/utils';
+import filesize from 'filesize';
 
 const WIDTH = 140;
 
