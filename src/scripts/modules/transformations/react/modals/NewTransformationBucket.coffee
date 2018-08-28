@@ -66,7 +66,7 @@ module.exports = React.createClass
                   className: 'form-control'
                   value: @state.description
                   onChange: @_setDescription
-                  ref: 'description',
+                  ref: 'description'
 
         ModalFooter null,
           ConfirmButtons
