@@ -5,10 +5,10 @@ _ = require 'underscore'
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
 
 TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
-ComponentIcon = require('../../../../../react/common/ComponentIcon').default
-ComponentName = require('../../../../../react/common/ComponentName').default
+ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 Tree = React.createFactory(require('@keboola/indigo-ui').Tree)
-Tooltip = require('../../../../../react/common/Tooltip').default
+Tooltip = React.createFactory(require('../../../../../react/common/Tooltip').default)
 
 {small, button, tr, td, span, div, i, input} = React.DOM
 
