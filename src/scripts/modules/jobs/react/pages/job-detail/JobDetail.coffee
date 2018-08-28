@@ -21,7 +21,7 @@ GoodDataStatsContainer = require('./GoodDataStatsContainer')
 {PanelGroup, Panel} = require 'react-bootstrap'
 Link = React.createFactory require('react-router').Link
 getComponentId = require('../../../getJobComponentId').default
-JobStatusLabel = React.createFactory(require('../../../../../react/common/common').JobStatusLabel)
+JobStatusLabel = React.createFactory(require('../../../../../react/common/JobStatusLabel').default)
 ActionCreators = require '../../../ActionCreators'
 
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'

@@ -11,7 +11,7 @@ import fuzzy from 'fuzzy';
 import immutableMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
 import createRowVersionOnRollback from '../../utils/createRowVersionOnRollback';
-import { simpleMatch } from '../../../../utils/utils';
+import simpleMatch from '../../../../utils/simpleMatch';
 
 const ITEMS_PER_PAGE = 20;
 

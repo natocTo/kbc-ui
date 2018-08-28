@@ -2,7 +2,7 @@ import React from 'react';
 import { MenuItem } from 'react-bootstrap';
 import CopyVersionModal from './CopyVersionModal';
 import {Loader} from '@keboola/indigo-ui';
-import {Tooltip} from '../../react/common/common';
+import Tooltip from '../../react/common/Tooltip';
 
 export default React.createClass({
 

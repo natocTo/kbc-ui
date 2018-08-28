@@ -1,15 +1,13 @@
 React = require 'react'
 Immutable = require 'immutable'
-common = require '../../../../../react/common/common'
 _ = require 'underscore'
 
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
 
 TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
-ComponentIcon = React.createFactory(common.ComponentIcon)
-ComponentName = React.createFactory(common.ComponentName)
+ComponentIcon = React.createFactory(require('../../../../../react/common/ComponentIcon').default)
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 Tree = React.createFactory(require('@keboola/indigo-ui').Tree)
-Check = React.createFactory(common.Check)
 Tooltip = React.createFactory(require('../../../../../react/common/Tooltip').default)
 
 {small, button, tr, td, span, div, i, input} = React.DOM

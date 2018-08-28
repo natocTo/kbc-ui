@@ -1,5 +1,6 @@
 React = require 'react'
-{ComponentIcon, ComponentName} = require '../../../../../react/common/common'
+ComponentIcon = require('../../../../../react/common/ComponentIcon').default
+ComponentName = require('../../../../../react/common/ComponentName').default
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
 TaskParametersEditModal = React.createFactory(require '../../modals/TaskParametersEdit')
 OrchestrationTaskRunButton = React.createFactory(require('../../components/OrchestrationTaskRunButton').default)
