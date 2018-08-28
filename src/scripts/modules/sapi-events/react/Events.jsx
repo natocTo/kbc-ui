@@ -6,7 +6,7 @@ import _ from 'underscore';
 import {Link} from 'react-router';
 import {factory as eventsFactory} from '../EventsService';
 import RoutesStore from '../../../stores/RoutesStore';
-import SearchRow from '../../../react/common/SearchRow';
+import {SearchRow} from '../../../react/common/common';
 import EventsTable from './EventsTable';
 import EventDetail from './EventDetail';
 import {Loader} from '@keboola/indigo-ui';

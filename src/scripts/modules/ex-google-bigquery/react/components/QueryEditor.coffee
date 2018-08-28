@@ -2,7 +2,7 @@ React = require 'react'
 ReactDOM = require 'react-dom'
 fuzzy = require 'fuzzy'
 string = require('../../../../utils/string').default
-CodeEditor = React.createFactory(require('../../../../react/common/CodeEditor').default)
+CodeEditor  = React.createFactory(require('../../../../react/common/common').CodeEditor)
 Select = React.createFactory require('../../../../react/common/Select').default
 
 AutoSuggestWrapperComponent = require('../../../transformations/react/components/mapping/AutoSuggestWrapper').default

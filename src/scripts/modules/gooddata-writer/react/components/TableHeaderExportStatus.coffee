@@ -3,7 +3,7 @@ createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 goodDataWriterStore = require '../../store'
 RoutesStore = require '../../../../stores/RoutesStore'
 
-Tooltip = require('../../../../react/common/Tooltip').default
+{Tooltip} = require '../../../../react/common/common'
 {Loader} = require '@keboola/indigo-ui'
 
 {button, span} = React.DOM

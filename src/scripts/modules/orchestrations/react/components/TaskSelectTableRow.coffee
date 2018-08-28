@@ -1,11 +1,13 @@
 React = require 'react'
 
+common = require('../../../../react/common/common')
+
 createStoreMixin = require('../../../../react/mixins/createStoreMixin')
 ComponentsStore = require '../../../components/stores/ComponentsStore'
 InstalledComponentsStore = require '../../../components/stores/InstalledComponentsStore'
 
-ComponentIcon = require('../../../../react/common/ComponentIcon').default
-ComponentName = require('../../../../react/common/ComponentName').default
+ComponentIcon = common.ComponentIcon
+ComponentName = common.ComponentName
 {Tree, Check} = require '@keboola/indigo-ui'
 
 {span, input} = React.DOM

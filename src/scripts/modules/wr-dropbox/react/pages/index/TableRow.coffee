@@ -1,7 +1,5 @@
 React = require 'react'
-ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactivateButton').default
-Confirm = require('../../../../../react/common/Confirm').default
-Tooltip = require('../../../../../react/common/Tooltip').default
+{ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'
 {Loader} = require '@keboola/indigo-ui'
 {i, span, button, strong, div} = React.DOM
 ImmutableRenderMixin = require 'react-immutable-render-mixin'

@@ -1,9 +1,7 @@
 React = require 'react'
 _ = require 'underscore'
 {fromJS} = require 'immutable'
-ActivateDeactivateButton = require('../../../../../react/common/ActivateDeactivateButton').default
-Confirm = require('../../../../../react/common/Confirm').default
-Tooltip = require('../../../../../react/common/Tooltip').default
+{ActivateDeactivateButton, Confirm, Tooltip} = require '../../../../../react/common/common'
 {a, small, button, option, span, i, button, strong, div, input} = React.DOM
 Link = React.createFactory(require('react-router').Link)
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)

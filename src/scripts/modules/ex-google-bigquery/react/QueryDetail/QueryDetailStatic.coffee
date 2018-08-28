@@ -1,5 +1,5 @@
 React = require 'react'
-CodeEditor = React.createFactory(require('../../../../react/common/CodeEditor').default)
+CodeEditor  = React.createFactory(require('../../../../react/common/common').CodeEditor)
 Check = React.createFactory(require('@keboola/indigo-ui').Check)
 SapiTableLinkEx = React.createFactory(require('../../../components/react/components/StorageApiTableLinkEx').default)
 {div, table, tbody, tr, td, ul, li, a, span, h2, p, strong, label, input} = React.DOM
