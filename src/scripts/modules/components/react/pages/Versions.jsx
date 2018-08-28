@@ -13,7 +13,7 @@ import immutableMixin from 'react-immutable-render-mixin';
 import { Map } from 'immutable';
 import createVersionOnRollback from '../../../../utils/createVersionOnRollback';
 import createVersionOnCopy from '../../../../utils/createVersionOnCopy';
-import { simpleMatch } from '../../../../utils/utils';
+import simpleMatch from '../../../../utils/simpleMatch';
 
 const ITEMS_PER_PAGE = 20;
 

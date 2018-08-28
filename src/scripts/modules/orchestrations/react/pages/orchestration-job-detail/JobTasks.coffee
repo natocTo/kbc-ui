@@ -7,12 +7,11 @@ Panel  = React.createFactory Panel
 PanelGroup = React.createFactory PanelGroup
 ComponentConfigurationLink = require '../../../../components/react/components/ComponentConfigurationLink'
 
-kbCommon = require '../../../../../react/common/common'
-ComponentIcon = React.createFactory(kbCommon.ComponentIcon)
-ComponentName = React.createFactory(kbCommon.ComponentName)
-Duration = React.createFactory(kbCommon.Duration)
+ComponentIcon = require('../../../../../react/common/ComponentIcon').default
+ComponentName = require('../../../../../react/common/ComponentName').default
+Duration = require('../../../../../react/common/Duration').default
 Tree = React.createFactory(require('@keboola/indigo-ui').Tree)
-JobStatusLabel = React.createFactory(kbCommon.JobStatusLabel)
+JobStatusLabel = require('../../../../../react/common/JobStatusLabel').default
 
 date = require '../../../../../utils/date'
 

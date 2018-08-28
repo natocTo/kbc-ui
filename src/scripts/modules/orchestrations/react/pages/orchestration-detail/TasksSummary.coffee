@@ -1,7 +1,7 @@
 React = require 'react'
 
 ComponentsStore = require '../../../../components/stores/ComponentsStore'
-ComponentName = React.createFactory(require('../../../../../react/common/common').ComponentName)
+ComponentName = React.createFactory(require('../../../../../react/common/ComponentName').default)
 
 module.exports = React.createClass
   displayName: 'TasksSummary'

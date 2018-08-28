@@ -1,5 +1,5 @@
 import React from 'react';
-import { filesize } from '../../../utils/utils';
+import filesize from 'filesize';
 import ModalHandler from '../sliced-files-downloader/ModalHandler';
 
 export default React.createClass({

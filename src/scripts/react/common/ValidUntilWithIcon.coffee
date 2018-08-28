@@ -1,5 +1,5 @@
 React = require 'react'
-ValidUntil = React.createFactory(require('./common').ValidUntil)
+ValidUntil = React.createFactory(require('./ValidUntil').default)
 date = require '../../utils/date'
 
 {span, i} = React.DOM
