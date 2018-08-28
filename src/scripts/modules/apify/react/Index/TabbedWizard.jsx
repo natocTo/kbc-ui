@@ -14,6 +14,11 @@ import CodeMirror from 'react-code-mirror';
 require('codemirror/addon/lint/lint');
 require('../../../../utils/codemirror/json-lint');
 
+const inputTableHelpText = {
+  'crawler': 'Optional parameter. Data from the input table will be pushed to crawler, where you can access them through the Key-value store. The ID of the Key-value store will be saved to the customData attribute of the crawler execution.',
+  'actor': 'Optional parameter. Data from the input table will be pushed to actor, where you can access them through the Key-value store. The ID of the Key-value store and key of record will be saved to the input of actor in attribute inputTableRecord.'
+};
+
 
 export default React.createClass({
 
@@ -78,6 +83,7 @@ export default React.createClass({
     return (
       <div className="form-horizontal">
         {this.renderActorSelector()}
+        {this.renderInputTableIdSelector('actor')}
         {this.renderInput(
            'Memory',
            'memory',
@@ -186,7 +192,7 @@ export default React.createClass({
       :
       <div className="form-horizontal">
         {this.renderCrawlerSelector()}
-        {this.renderInputTableIdSelector()}
+        {this.renderInputTableIdSelector('crawler')}
         <div className="form-group">
           <div className="col-xs-2 control-label">
             Crawler Settings
@@ -202,7 +208,7 @@ export default React.createClass({
     );
   },
 
-  renderInputTableIdSelector() {
+  renderInputTableIdSelector(helpTextKey) {
     const error = false;
 
     return (
@@ -218,7 +224,7 @@ export default React.createClass({
             value={this.props.inputTableId || ''}
           />
           <span className="help-block">
-            Optional parameter. Data from the input table will be pushed to crawler, where you can access them through the Key-value store. The ID of the Key-value store will be saved to the customData attribute of the crawler execution.
+            {inputTableHelpText[helpTextKey]}
           </span>
         </div>
       </div>
