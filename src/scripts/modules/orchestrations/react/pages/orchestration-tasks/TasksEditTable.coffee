@@ -43,7 +43,7 @@ TasksEditTable = React.createClass
             th style: {width: '12%'}, 'Action'
             th style: {width: '8%'}, 'Active'
             th style: {width: '8%'}, 'Continue on Failure'
-            th style: {width: '10%'},
+            th style: {width: '10%'}, ''
         tbody null,
           if @props.tasks.count()
             @renderPhasedTasksRows()

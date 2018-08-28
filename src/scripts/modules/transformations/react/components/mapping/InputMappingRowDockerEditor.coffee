@@ -138,7 +138,8 @@ module.exports = React.createClass
             labelClassName: 'col-xs-2'
             wrapperClassName: 'col-xs-10'
             bsStyle: if @props.isDestinationDuplicate then 'error' else null
-            help: if @props.isDestinationDuplicate then React.DOM.span {'className': 'error'},
+            help:
+              if @props.isDestinationDuplicate then React.DOM.span {'className': 'error'},
                 'Duplicate destination '
                 React.DOM.code {}, @props.value.get("destination")
                 '.'

@@ -83,7 +83,7 @@ module.exports = React.createClass
         @props.testCredentialsFn(@props.credentials)
       componentId: @props.componentId,
       configId: @props.configId,
-      isEditing: @props.isEditing,
+      isEditing: @props.isEditing
 
   _renderSshTunnelRow: ->
     if not hasSshTunnel(@props.componentId) or @props.isProvisioning
