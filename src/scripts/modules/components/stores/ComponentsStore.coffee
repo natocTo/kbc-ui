@@ -47,7 +47,7 @@ ComponentsStore = StoreUtils.createStore
 
 
   getComponentFilter: (type) ->
-    _store.getIn(['filter', type]) || ''
+    (_store.getIn(['filter', type]) || '').trim()
 
   hasComponentLegacyUI: (id) ->
     _store.getIn(['componentsById', id], Map()).get 'hasUI'
