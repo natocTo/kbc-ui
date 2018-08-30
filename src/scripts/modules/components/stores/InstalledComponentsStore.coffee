@@ -100,7 +100,7 @@ InstalledComponentsStore = StoreUtils.createStore
 
 
   getComponentFilter: (filterType) ->
-    _store.getIn ['filters', 'installedComponents', filterType], ''
+    (_store.getIn ['filters', 'installedComponents', filterType], '').trim()
 
   getTrashFilter: (filterType) ->
     _store.getIn ['filters', 'trash', filterType], ''
