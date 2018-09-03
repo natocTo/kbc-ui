@@ -40,7 +40,7 @@ module.exports = React.createClass
       return React.createElement Emptylist
     div null,
       ul className: 'list-unstyled',
-        li className: 'dropdown-header kb-nav-search kbc-search',
+        li className: 'dropdown-header kb-nav-search',
           React.createElement SearchBar,
             onChange: @_handleQueryChange
             query: @state.query

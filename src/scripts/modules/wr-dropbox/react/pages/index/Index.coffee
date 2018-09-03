@@ -102,7 +102,6 @@ module.exports = (componentId) ->
           div className: 'row',
             div className: 'col-sm-8',
               React.createElement SearchBar,
-                className: 'row kbc-search-row'
                 onChange: @_handleSearchQueryChange
                 query: @state.localState.get('searchQuery')
         if @state.hasCredentials and @_getInputTables().count() > 0
