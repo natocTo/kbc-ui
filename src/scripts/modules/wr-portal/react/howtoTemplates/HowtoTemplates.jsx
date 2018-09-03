@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import Markdown from '../../../../react/common/Markdown';
+import Remarkable from 'react-remarkable';
 import sasTemplate  from './sasTemplate';
 
 export default React.createClass({
@@ -10,7 +10,7 @@ export default React.createClass({
   render() {
     const source = this.getSourceTemplate();
     return (
-      <Markdown
+      <Remarkable
         source={source}
       />
     );
@@ -24,5 +24,4 @@ export default React.createClass({
         return '';
     }
   }
-
 });

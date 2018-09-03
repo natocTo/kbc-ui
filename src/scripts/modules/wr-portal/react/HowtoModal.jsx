@@ -23,16 +23,12 @@ export default React.createClass({
         </Modal.Header>
 
         <Modal.Body>
-          <div className="row">
-            <HowtoTemplates
-              componentId={this.props.componentId}
-            />
-          </div>
+          <HowtoTemplates
+            componentId={this.props.componentId}
+          />
         </Modal.Body>
-
       </Modal>
     );
   }
-
 
 });

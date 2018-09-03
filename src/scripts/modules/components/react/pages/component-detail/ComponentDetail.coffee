@@ -9,7 +9,6 @@ InstalledComponentsActionCreators = require '../../../InstalledComponentsActionC
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
 VendorInfo = React.createFactory(require './VendorInfo.coffee')
-ComponentDescription = React.createFactory(require './ComponentDescription.coffee')
 ConfigurationRow = require('../ConfigurationRow.jsx').default
 Immutable = require 'immutable'
 ComponentEmptyState = require('../../components/ComponentEmptyState').default
@@ -18,7 +17,7 @@ AddComponentConfigurationButton = React.createFactory(require '../../components/
 FormHeader = require('../new-component-form/FormHeader')
 VendorInfo = require('../component-detail/VendorInfo')
 AppUsageInfo = React.createFactory(require('../new-component-form/AppUsageInfo').default)
-ComponentDescription = require '../component-detail/ComponentDescription'
+ComponentDescription = require './ComponentDescription'
 contactSupport = require('../../../../../utils/contactSupport').default
 MigrationRow = require('../../components/MigrationRow').default
 SearchRow = require('../../../../../react/common/SearchRow').default
