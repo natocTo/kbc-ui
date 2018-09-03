@@ -46,10 +46,16 @@ module.exports = React.createClass
             query: @state.query
             placeholder: 'Search your projects'
             onKeyDown: @_handleKeyDown
-            ref: 'searchInput'
+            className: @_getSearchbarClassName()
       @_projectsList()
       @_newProject() if @props.canCreateProject
 
+  _getSearchbarClassName: ->
+    parentComponent = this._reactInternalInstance._currentElement._owner._instance.__proto__.constructor.displayName
+    if parentComponent != 'App'
+      return "searchbar-inverse"
+    else
+      return null
 
   _projectsList: ->
     organizations = @_organizationsFiltered()
