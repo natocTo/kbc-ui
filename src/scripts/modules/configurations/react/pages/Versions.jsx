@@ -120,7 +120,7 @@ export default React.createClass({
           <div className="kbc-main-content">
             <div className="row">
               <div className="col-xs-12">
-                <SearchBar className="row kbc-search-row" onChange={this.onSearchChange} query={this.state.query}/>
+                <SearchBar onChange={this.onSearchChange} query={this.state.query}/>
               </div>
             </div>
             <p className="row text-center">No results found.</p>
@@ -133,7 +133,7 @@ export default React.createClass({
         <div className="kbc-main-content">
           <div className="row">
             <div className="col-xs-12">
-              <SearchBar className="row kbc-search-row" onChange={this.onSearchChange} query={this.state.query}/>
+              <SearchBar onChange={this.onSearchChange} query={this.state.query}/>
             </div>
           </div>
           <Table striped hover>
