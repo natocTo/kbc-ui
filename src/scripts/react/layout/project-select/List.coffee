@@ -2,6 +2,7 @@ React = require 'react'
 fuzzy = require 'fuzzy'
 {List, Map} = require 'immutable'
 Tooltip = require('../../common/Tooltip').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
 _ = require 'underscore'
 
 NewProjectModal = require('../NewProjectModal').default
@@ -40,14 +41,12 @@ module.exports = React.createClass
     div null,
       ul className: 'list-unstyled',
         li className: 'dropdown-header kb-nav-search kbc-search',
-          span className: 'kbc-icon-search'
-          input
-            className: 'form-control'
-            placeholder: 'Search your projects'
-            value: @state.query
-            ref: 'searchInput'
+          React.createElement SearchBar,
             onChange: @_handleQueryChange
+            query: @state.query
+            placeholder: 'Search your projects'
             onKeyDown: @_handleKeyDown
+            ref: 'searchInput'
       @_projectsList()
       @_newProject() if @props.canCreateProject
 
@@ -118,12 +117,12 @@ module.exports = React.createClass
   _organizationUrl: (id) ->
     _.template(@props.urlTemplates.get('organization'))(organizationId: id)
 
-  _handleQueryChange: (event) ->
+  _handleQueryChange: (changedQuery) ->
     @setState
-      query: event.target.value
+      query: changedQuery
 
-  _handleKeyDown: (event) ->
-    switch event.key
+  _handleKeyDown: (keyDown) ->
+    switch keyDown
       when 'ArrowDown' then @_selectNextProjectOrOrganization()
       when 'ArrowUp' then @_selectPreviousProjectOrOrganization()
       when 'Enter' then @_goToSelectedProjectOrOrganization()
