@@ -1,3 +1,3 @@
-module.exports = require("./make-config")({
-	isDevelopment: false
+module.exports = require('./make-config')({
+  isDevelopment: false
 });
