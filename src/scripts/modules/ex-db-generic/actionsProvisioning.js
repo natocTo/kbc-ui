@@ -248,7 +248,9 @@ export function createActions(componentId) {
       const store = getStore(configId);
       const testingCredentials = updateProtectedProperties(credentials, store.getCredentials());
       let runData = store.configData.setIn(['parameters', 'db'], testingCredentials);
-      runData = runData.setIn(['parameters', 'tables'], List());
+      if (!store.isRowConfiguration()) {
+        runData = runData.setIn(['parameters', 'tables'], List());
+      }
       const params = {
         configData: runData.toJS()
       };
