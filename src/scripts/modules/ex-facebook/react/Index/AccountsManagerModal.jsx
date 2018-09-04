@@ -134,11 +134,11 @@ export default React.createClass({
       allCaption = 'Filtered';
       data = data.filter((a) => {
         return a.get('name')
-                .toLowerCase()
-                .includes(this.localState(['filter']).toLowerCase()) ||
+          .toLowerCase()
+          .includes(this.localState(['filter']).toLowerCase()) ||
                a.get('id')
-                .toLowerCase()
-                .includes(this.localState(['filter']).toLowerCase());
+                 .toLowerCase()
+                 .includes(this.localState(['filter']).toLowerCase());
       });
     }
 
@@ -199,7 +199,7 @@ export default React.createClass({
   selectAllAccounts(accountsList) {
     const selected = this.localState(['selected'], Map());
     const accounts = accountsList.reduce((memo, a) => memo.set(a.get('id'), a),
-                                         selected);
+      selected);
     this.updateLocalState(['selected'], accounts);
   },
 

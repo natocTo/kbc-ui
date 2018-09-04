@@ -49,11 +49,11 @@ export default React.createClass({
             {this.renderActionForm()}
           </Tab>
           {['crawler', 'dataset', 'actor'].includes(this.props.action) ?
-           <Tab title="Authentication" eventKey={AUTH_KEY}
-             disabled={this.isTabDisabled(AUTH_KEY)}>
-             {this.renderTokenForm()}
-           </Tab>
-           : null
+            <Tab title="Authentication" eventKey={AUTH_KEY}
+              disabled={this.isTabDisabled(AUTH_KEY)}>
+              {this.renderTokenForm()}
+            </Tab>
+            : null
           }
           <Tab title="Specification"
             eventKey={OPTIONS_KEY} disabled={this.isTabDisabled(OPTIONS_KEY)} >
@@ -85,16 +85,16 @@ export default React.createClass({
         {this.renderActorSelector()}
         {this.renderInputTableIdSelector('actor')}
         {this.renderInput(
-           'Memory',
-           'memory',
-           '(Optional) Specifies the amount of memory allocated for Actor run.',
-           '2048'
+          'Memory',
+          'memory',
+          '(Optional) Specifies the amount of memory allocated for Actor run.',
+          '2048'
         )}
         {this.renderInput(
-           'Build',
-           'build',
-           '(Optional) Tag or number of Actor build to run (e.g. latest or 1.2.34)',
-           'latest'
+          'Build',
+          'build',
+          '(Optional) Tag or number of Actor build to run (e.g. latest or 1.2.34)',
+          'latest'
         )}
 
         <div className="form-group">
@@ -189,22 +189,22 @@ export default React.createClass({
     const action = this.props.action;
     return (
       action === 'executionId' ? executionIdControl
-      :
-      <div className="form-horizontal">
-        {this.renderCrawlerSelector()}
-        {this.renderInputTableIdSelector('crawler')}
-        <div className="form-group">
-          <div className="col-xs-2 control-label">
+        :
+        <div className="form-horizontal">
+          {this.renderCrawlerSelector()}
+          {this.renderInputTableIdSelector('crawler')}
+          <div className="form-group">
+            <div className="col-xs-2 control-label">
             Crawler Settings
-          </div>
-          <div className="col-xs-10">
-            {editor}
-            <div className="help-text">
+            </div>
+            <div className="col-xs-10">
+              {editor}
+              <div className="help-text">
               Optional parameter. Specifies a JSON object with properties that override the default crawler settings. For more information, see <a href="https://www.apify.com/docs#crawlers" target="_blank" rel="noopener noreferrer">documentation</a>.
+              </div>
             </div>
           </div>
         </div>
-      </div>
     );
   },
 

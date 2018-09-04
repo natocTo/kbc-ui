@@ -20,8 +20,8 @@ export default React.createClass({
     const spreadsheet = (this.props.type === 'new') ? this.renderFolderPicker() : this.renderSpreadsheetPicker();
     return (
       <div className="form-horizontal">
-      {this.renderTypeRadio()}
-      {spreadsheet}
+        {this.renderTypeRadio()}
+        {spreadsheet}
       </div>
     );
   },

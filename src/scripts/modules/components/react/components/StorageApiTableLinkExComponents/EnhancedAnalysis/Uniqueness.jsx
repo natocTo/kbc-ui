@@ -17,11 +17,11 @@ Columns that have few distinct values repeatedly (such as categories) will have 
       const tooltip = isid === 'yes' ? 'Identifying the table row' : 'Probably identifying the table row';
       return (
         <span>
-            <div>{val}</div>
-            <Tooltip tooltip={tooltip} placement="top">
-              <Label caption={idLabel} />
-            </Tooltip>
-          </span>
+          <div>{val}</div>
+          <Tooltip tooltip={tooltip} placement="top">
+            <Label caption={idLabel} />
+          </Tooltip>
+        </span>
       );
     }
   }

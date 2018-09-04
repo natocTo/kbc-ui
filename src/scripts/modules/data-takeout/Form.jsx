@@ -26,17 +26,17 @@ export default React.createClass({
           label="S3 Region"
           value={this.props.parameters.get('s3region')}
           onChange={this.handleChange.bind(this, 's3region')}
-          >
-            {this.regionOptions()}
-          </Input>
+        >
+          {this.regionOptions()}
+        </Input>
         {this.input('S3 Bucket', 's3bucket', 'my-bucket')}
         {this.input('S3 Path', 's3path', 'Optional path in S3')}
         <Input type="checkbox"
-           wrapperClassName="col-xs-offset-4 col-xs-8"
-           label="Export project structure only"
-           help="Only bucket and table metadata and component configurations will be exported."
-           checked={this.props.parameters.get('onlyStructure')}
-           onChange={this.handleOnlyStructureChange}
+          wrapperClassName="col-xs-offset-4 col-xs-8"
+          label="Export project structure only"
+          help="Only bucket and table metadata and component configurations will be exported."
+          checked={this.props.parameters.get('onlyStructure')}
+          onChange={this.handleOnlyStructureChange}
         />
         <div className="form-group">
           <div className="col-xs-offset-4 col-xs-8">

@@ -38,7 +38,7 @@ export default React.createClass({
         readOnly={this.props.readOnly}
         cursorHeight={parseInt(this.props.readOnly, 10)}
         style={this.props.style || this.style()}
-        />
+      />
     );
   },
 

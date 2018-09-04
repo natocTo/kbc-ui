@@ -138,13 +138,13 @@ export default React.createClass({
             <h3 style={{lineHeight: '32px'}}>
               CSV Upload Settings
               <span className="pull-right">
-              <SaveButtons
-                isSaving={this.state.localState.get('isSaving', false)}
-                isChanged={this.state.localState.get('isChanged', false)}
-                onReset={this.state.actions.editReset}
-                onSave={this.state.actions.editSave}
-              />
-            </span>
+                <SaveButtons
+                  isSaving={this.state.localState.get('isSaving', false)}
+                  isChanged={this.state.localState.get('isChanged', false)}
+                  onReset={this.state.actions.editReset}
+                  onSave={this.state.actions.editSave}
+                />
+              </span>
             </h3>
             {this.renderSettings()}
           </div>

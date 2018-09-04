@@ -84,7 +84,7 @@ export default React.createClass({
     const newConfigurationBySections = configurationBySections.set(
       sectionKey,
       configurationBySections.get(sectionKey)
-                             .merge(Immutable.fromJS(diff)));
+        .merge(Immutable.fromJS(diff)));
     const created = this.state.createBySectionsFn(newConfigurationBySections);
     const parsed = this.state.parseBySectionsFn(created);
     return Actions.updateConfiguration(componentId, configurationId, parsed);
@@ -95,7 +95,7 @@ export default React.createClass({
     const newConfigurationBySections = configurationBySections.set(
       sectionKey,
       configurationBySections.get(sectionKey)
-                             .merge(Immutable.fromJS(diff)));
+        .merge(Immutable.fromJS(diff)));
     const created = this.state.createBySectionsFn(newConfigurationBySections);
     return Actions.saveForcedConfiguration(componentId, configurationId, created);
   },
@@ -208,8 +208,8 @@ export default React.createClass({
     return (
       <div>
         {this.state.isJsonEditorOpen || !this.state.isParsableConfiguration
-         ? <div className="kbc-inner-padding">{this.renderJsonEditor()}</div>
-         : this.renderForm()}
+          ? <div className="kbc-inner-padding">{this.renderJsonEditor()}</div>
+          : this.renderForm()}
       </div>
 
     );

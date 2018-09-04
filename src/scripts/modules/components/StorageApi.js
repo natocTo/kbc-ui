@@ -146,33 +146,33 @@ var storageApi = {
 
   loadDataIntoWorkspace: function(workspaceId, params) {
     return createRequest('POST', 'workspaces/' + workspaceId + '/load').type('form').send(params).promise()
-    .then(function(response) {
-      return response.body;
-    });
+      .then(function(response) {
+        return response.body;
+      });
   },
 
   saveBucketMetadata: function(bucketId, data, provider) {
     var payload = this.prepareMetadataPayload(data, provider);
     return createRequest('POST', 'buckets/' + bucketId + '/metadata').type('form').send(payload).promise()
-    .then(function(response) {
-      return response.body;
-    });
+      .then(function(response) {
+        return response.body;
+      });
   },
 
   saveTableMetadata: function(tableId, data, provider) {
     var payload = this.prepareMetadataPayload(data, provider);
     return createRequest('POST', 'tables/' + tableId + '/metadata').type('form').send(payload).promise()
-    .then(function(response) {
-      return response.body;
-    });
+      .then(function(response) {
+        return response.body;
+      });
   },
 
   saveColumnMetadata: function(columnId, data, provider) {
     var payload = this.prepareMetadataPayload(data, provider);
     return createRequest('POST', 'columns/' + columnId + '/metadata').type('form').send(payload).promise()
-    .then(function(response) {
-      return response.body;
-    });
+      .then(function(response) {
+        return response.body;
+      });
   },
 
   saveMetadata: function(objectType, objectId, data) {
@@ -193,7 +193,6 @@ var storageApi = {
       case 'column':
         return 'columns/' + objectId + '/metadata';
       default:
-
     }
   },
 

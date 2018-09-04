@@ -28,13 +28,13 @@ export default React.createClass({
         onToggle={this._handleToggle}
       >
         <Dropdown.Toggle noCaret>
-            {this.state.open ?
-              <Icon.Times className="pull-right icon-size-16"/> :
-              <Icon.ArrowDown className="pull-right icon-size-16"/>
-            }
-            <span className="kbc-project-name">
-              {this.props.currentProject.get('name')}
-            </span>
+          {this.state.open ?
+            <Icon.Times className="pull-right icon-size-16"/> :
+            <Icon.ArrowDown className="pull-right icon-size-16"/>
+          }
+          <span className="kbc-project-name">
+            {this.props.currentProject.get('name')}
+          </span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <ProjectsList

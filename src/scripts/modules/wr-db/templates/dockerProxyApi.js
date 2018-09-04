@@ -27,8 +27,8 @@ const tablesPath = ['storage', 'input', 'tables'];
 function updateTablesMapping(data, table) {
   const tableId = table.get('tableId');
   const columns = table.get('items')
-        .filter((c) => c.get('type') !== 'IGNORE')
-        .map( (c) => c.get('name'));
+    .filter((c) => c.get('type') !== 'IGNORE')
+    .map( (c) => c.get('name'));
   var mappingTable = fromJS({
     source: tableId,
     destination: tableId + '.csv'
@@ -73,13 +73,13 @@ export default function(componentId) {
     if (!dataTypes.default) return List();
     const defaultType = fromJS(dataTypes.default);
     return tableColumns.map((c) =>
-                            Map({
-                              'name': c,
-                              'dbName': c,
-                              'nullable': false,
-                              'default': '',
-                              'size': ''
-                            }).merge(defaultType));
+      Map({
+        'name': c,
+        'dbName': c,
+        'nullable': false,
+        'default': '',
+        'size': ''
+      }).merge(defaultType));
   }
 
   return {
@@ -121,18 +121,18 @@ export default function(componentId) {
       return this.loadConfigData(configId).then(
         (data) => {
           const tables = data.getIn(tablesPath, List())
-                .map((t) => {
-                  if (t.get('source') === tableId) {
-                    let merged = t.merge(mapping);
-                    // if mapping has both changed_since and days, delete days property, #1247
-                    if (merged.has('days') && merged.has('changed_since')) {
-                      return merged.delete('days');
-                    }
-                    return merged;
-                  } else {
-                    return t;
-                  }
-                });
+            .map((t) => {
+              if (t.get('source') === tableId) {
+                let merged = t.merge(mapping);
+                // if mapping has both changed_since and days, delete days property, #1247
+                if (merged.has('days') && merged.has('changed_since')) {
+                  return merged.delete('days');
+                }
+                return merged;
+              } else {
+                return t;
+              }
+            });
           const dataToSave = data.setIn(tablesPath, tables);
           const msg = `Update data filter of ${tableId}`;
           return this.saveConfigData(configId, dataToSave, msg);
@@ -144,13 +144,13 @@ export default function(componentId) {
       return this.loadConfigData(configId).then(
         (data) => {
           const tables = data.getIn(['parameters', 'tables'], List())
-                .map((t) => {
-                  if (t.get('tableId') === tableId) {
-                    return tableData;
-                  } else {
-                    return t;
-                  }
-                }, tableData);
+            .map((t) => {
+              if (t.get('tableId') === tableId) {
+                return tableData;
+              } else {
+                return t;
+              }
+            }, tableData);
           var dataToSave = data.setIn(['parameters', 'tables'], tables);
           const msg = `Update parameters of ${tableId}`;
           return this.saveConfigData(configId, dataToSave, msg);
@@ -199,14 +199,14 @@ export default function(componentId) {
         (data) => {
           var newTable = null;
           const tables = data.getIn(['parameters', 'tables'], List())
-                .map((t) => {
-                  if (t.get('tableId') === tableId) {
-                    newTable = t.set('items', fromJS(columnsToSave).filter((c) => c.get('type') !== 'IGNORE'));
-                    return newTable;
-                  } else {
-                    return t;
-                  }
-                }, newTable);
+            .map((t) => {
+              if (t.get('tableId') === tableId) {
+                newTable = t.set('items', fromJS(columnsToSave).filter((c) => c.get('type') !== 'IGNORE'));
+                return newTable;
+              } else {
+                return t;
+              }
+            }, newTable);
           var dataToSave = data.setIn(['parameters', 'tables'], tables);
           dataToSave = updateTablesMapping(dataToSave, newTable);
           const msg = `Update columns of ${tableId}`;
@@ -222,8 +222,8 @@ export default function(componentId) {
           const paramTables = data.getIn(['parameters', 'tables']).filter((t) => t.get('tableId') !== tableId);
           const mappingTables = data.getIn(tablesPath, List()).filter((t) => t.get('source') !== tableId);
           const dataToSave = data
-                .setIn(['parameters', 'tables'], paramTables)
-                .setIn(tablesPath, mappingTables);
+            .setIn(['parameters', 'tables'], paramTables)
+            .setIn(tablesPath, mappingTables);
           const msg = `Remove ${tableId}`;
           return this.saveConfigData(configId, dataToSave, msg);
         }

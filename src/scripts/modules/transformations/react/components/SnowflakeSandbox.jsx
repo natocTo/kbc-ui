@@ -61,16 +61,16 @@ var SnowflakeSandbox = React.createClass({
               disabled={this.state.pendingActions.size > 0}
               modalRunButtonDisabled={this.state.sandboxConfiguration.get('include', Immutable.List()).size === 0}
             >
-                <ConfigureSandbox
-                  backend="snowflake"
-                  tables={this.state.tables}
-                  buckets={this.state.buckets}
-                  onChange={(params) => {
-                    component.setState({
-                      sandboxConfiguration: Immutable.fromJS(params)
-                    });
-                  }}/>
-              </RunComponentButton>
+              <ConfigureSandbox
+                backend="snowflake"
+                tables={this.state.tables}
+                buckets={this.state.buckets}
+                onChange={(params) => {
+                  component.setState({
+                    sandboxConfiguration: Immutable.fromJS(params)
+                  });
+                }}/>
+            </RunComponentButton>
           </div>
           <div>
             <a

@@ -37,8 +37,8 @@ export default React.createClass({
           {this.props.localState.get('saving', false) ? <Loader/> : null}
           <Button bsStyle="link" onClick={this.close}>Cancel</Button>
           <Button bsStyle="success"
-                  disabled={this.props.localState.get('saving', false) || !this.isValid()}
-                  onClick={() => this.saveNewTable()}>
+            disabled={this.props.localState.get('saving', false) || !this.isValid()}
+            onClick={() => this.saveNewTable()}>
             Create Table
           </Button>
         </Modal.Footer>
@@ -49,9 +49,9 @@ export default React.createClass({
   renderButton() {
     return (
       <Button
-          disabled={this.props.isDisabled}
-          onClick={this.onAddNewTableButtonClick}
-          bsStyle="success">
+        disabled={this.props.isDisabled}
+        onClick={this.onAddNewTableButtonClick}
+        bsStyle="success">
         <i className="kbc-icon-plus"/>New Table
       </Button>
     );
@@ -61,34 +61,34 @@ export default React.createClass({
     const data = this.props.localState;
     const sapiSelector = (
       <SapiTableSelector
-          onSelectTableFn={(e) => {
-            let tmpData = this.props.localState;
-            tmpData = tmpData.set('title', e);
-            tmpData = tmpData.set('value', e);
-            this.props.updateLocalStateFn([], tmpData);
-          }
-          }
-          value={this.props.localState.get('value')}
-          allowedBuckets={['out', 'in']}
-          excludeTableFn={this.isTableConfigured}
-          placeholder="out.c-main.data"
-          autoFocus
+        onSelectTableFn={(e) => {
+          let tmpData = this.props.localState;
+          tmpData = tmpData.set('title', e);
+          tmpData = tmpData.set('value', e);
+          this.props.updateLocalStateFn([], tmpData);
+        }
+        }
+        value={this.props.localState.get('value')}
+        allowedBuckets={['out', 'in']}
+        excludeTableFn={this.isTableConfigured}
+        placeholder="out.c-main.data"
+        autoFocus
       />
     );
     return (
       <div className="form form-horizontal">
         {this.renderFormElement('Storage Table', sapiSelector)}
         {this.renderFormElement('Title',
-                                (<input
-                                     className="form-control"
-                                     value={data.get('title')}
-                                     onChange={this.valueSetter('title')}/>))}
+          (<input
+            className="form-control"
+            value={data.get('title')}
+            onChange={this.valueSetter('title')}/>))}
         {this.renderFormElement('Identifier',
-                                (<input
-                                     placeholder="optional"
-                                     className="form-control"
-                                     value={data.get('identifier')}
-                                     onChange={this.valueSetter('identifier')}/>))}
+          (<input
+            placeholder="optional"
+            className="form-control"
+            value={data.get('identifier')}
+            onChange={this.valueSetter('identifier')}/>))}
       </div>
     );
   },

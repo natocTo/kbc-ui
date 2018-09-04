@@ -126,14 +126,14 @@ export default React.createClass({
 
   renderNewConfigRowButton() {
     return (
-        <CreateConfigurationRowButton
-          componentType={this.props.component.get('type')}
-          objectName={this.props.objectName}
-          componentId={this.props.componentId}
-          configId={this.props.configurationId}
-          emptyConfig={this.props.rowCreateEmptyConfig}
-          onRowCreated={this.props.onRowCreated}
-        />
+      <CreateConfigurationRowButton
+        componentType={this.props.component.get('type')}
+        objectName={this.props.objectName}
+        componentId={this.props.componentId}
+        configId={this.props.configurationId}
+        emptyConfig={this.props.rowCreateEmptyConfig}
+        onRowCreated={this.props.onRowCreated}
+      />
     );
   },
 

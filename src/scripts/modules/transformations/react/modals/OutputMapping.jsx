@@ -96,7 +96,7 @@ export default React.createClass({
               initialShowDetails={resolveOutputShowDetails(this.props.mapping)}
               definition={this.props.definition}
               isNameAlreadyInUse={this.isNameAlreadyInUse()}
-              />
+            />
           </Modal.Body>
           <Modal.Footer>
             <ConfirmButtons
@@ -105,7 +105,7 @@ export default React.createClass({
               onCancel={this.handleCancel}
               onSave={this.handleSave}
               isDisabled={!this.isValid()}
-              />
+            />
           </Modal.Footer>
         </Modal>
       </span>

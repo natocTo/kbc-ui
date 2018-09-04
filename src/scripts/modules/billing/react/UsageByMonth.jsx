@@ -79,9 +79,9 @@ export default React.createClass({
             if (!item.get('components').isEmpty()) {
               return (
                 <Panel collapsible={true}
-                       defaultExpanded={index === 0}
-                       header={this.daySummary(item)}
-                       key={item.get('dateFrom') + '-' + item.get('dateTo')}>
+                  defaultExpanded={index === 0}
+                  header={this.daySummary(item)}
+                  key={item.get('dateFrom') + '-' + item.get('dateTo')}>
                   <Table fill className="table">
                     <tbody>
                       {List([item.get('components').sort(sortComponentsByStorageIoDesc).map(this.dayComponents)])}

@@ -33,7 +33,7 @@ export default React.createClass({
       <div>
         {this.props.profiles.map( (profile) =>
           <ProfileInfo profile={profile} />
-         )}
+        )}
       </div>
     );
   }

@@ -75,7 +75,7 @@ export default React.createClass({
                 <Tab key="direct" eventKey="direct" title="Direct token insert">
                   {this.renderDirectTokenInsert()}
                 </Tab>
-               : null
+                : null
               }
               {CUSTOM_AUTHORIZATION_COMPONENTS.includes(this.props.componentId) ?
                 <Tab key="custom" eventKey="custom" title="Custom authorization">

@@ -45,7 +45,7 @@ export default React.createClass({
         onChange={this.onChange}
         help={this.props.help}
         disabled={this.props.disabled}
-        />
+      />
     );
   }
 });

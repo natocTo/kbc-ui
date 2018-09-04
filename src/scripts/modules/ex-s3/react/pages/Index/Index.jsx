@@ -64,7 +64,7 @@ export default React.createClass({
               isChanged={this.state.localState.get('isChanged', false)}
               onSave={this.state.actions.editSave}
               onReset={this.state.actions.editReset}
-                />
+            />
           </div>
         </div>
       </div>
@@ -139,10 +139,10 @@ export default React.createClass({
           <ul className="nav nav-stacked">
             <li>
               <RunComponentButton
-                  title="Run"
-                  component={COMPONENT_ID}
-                  mode="link"
-                  runParams={() => ({config: this.state.configId})}
+                title="Run"
+                component={COMPONENT_ID}
+                mode="link"
+                runParams={() => ({config: this.state.configId})}
               >
                 <span>You are about to run an extraction.</span>
               </RunComponentButton>

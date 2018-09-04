@@ -29,7 +29,7 @@ export default React.createClass({
         <div
           className="thead"
           key="table-header"
-          >
+        >
           <div className="tr">
             <div className="th">
               <strong> Name </strong>
@@ -71,7 +71,7 @@ export default React.createClass({
             <span className="text-muted">
               Untitled
             </span>
-            }
+          }
         </span>
         <span className="td kbc-break-all">
           <StorageTableLink tableId={query.get('outputTable')} />
@@ -87,14 +87,14 @@ export default React.createClass({
             query={query}
             onDeleteFn={() => this.props.deleteQueryFn(query.get('id'))}
             isPending={this.props.isPendingFn(['deleteQuery', query.get('id')])}
-            />
+          />
           <ActivateDeactivateButton
             activateTooltip="Enable Query"
             deactivateTooltip="Disable Query"
             isActive={query.get('enabled')}
             isPending={this.props.isPendingFn(['toggleQuery', query.get('id')])}
             onChange={() => this.handleToggleQuery(query)}
-            />
+          />
           <RunExtractionButton
             title="Run Extraction"
             component={this.props.componentId}
@@ -104,7 +104,7 @@ export default React.createClass({
                 configData: this.props.getRunSingleQueryDataFn(query.get('id'))
               };
             }}
-            >
+          >
             You are about to run an extraction.
           </RunExtractionButton>
         </span>
