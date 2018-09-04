@@ -18,35 +18,27 @@ module.exports = function(options) {
     })
   ];
 
-  if (isDevelopment) {
-    plugins.push(new webpack.NoErrorsPlugin());
-  } else {
-    plugins.push(
-      new webpack.optimize.ModuleConcatenationPlugin(),
-      new webpack.PrefetchPlugin('react'),
-      new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment'),
-      new webpack.LoaderOptionsPlugin({
-        minimize: true,
-        options: {
-          context: __dirname,
-          coffeelint: {
-            configFile: path.resolve(__dirname, '../coffeelint.json')
-          }
+  plugins.push(
+    new webpack.PrefetchPlugin('react'),
+    new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment'),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      options: {
+        context: __dirname,
+        coffeelint: {
+          configFile: path.resolve(__dirname, '../coffeelint.json')
         }
-      }),
-      new ExtractTextPlugin({
-        filename: 'bundle.min.css',
-        allChunks: true
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true
-      }),
-      new CompressionPlugin({
-        asset: '[file]',
-        test: /\.(js|css)$/
-      })
-    );
-  }
+      }
+    }),
+    new ExtractTextPlugin({
+      filename: 'bundle.min.css',
+      allChunks: true
+    }),
+    new CompressionPlugin({
+      asset: '[file]',
+      test: /\.(js|css)$/
+    })
+  );
 
   var entry = [];
   if (isDevelopment) {
@@ -74,12 +66,18 @@ module.exports = function(options) {
   }
 
   return {
+    mode: isDevelopment ? 'development' : 'production',
     devtool: isDevelopment ? 'eval' : 'source-map',
     entry: entry,
     output: {
       path: path.resolve(__dirname, isDevelopment ? '../dist' : '../dist/' + process.env.KBC_REVISION),
       filename: isDevelopment ? '[name].js' : '[name].min.js',
       publicPath: isDevelopment ? '/scripts/' : ''
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all'
+      }
     },
     plugins: plugins,
     resolve: {
@@ -115,7 +113,17 @@ module.exports = function(options) {
         {
           test: /\.coffee$/,
           exclude: /node_modules/,
-          use: isDevelopment ? ['react-hot-loader', 'coffee-loader'] : ['coffee-loader']
+          use: [
+            isDevelopment ? 'react-hot-loader' : false,
+            {
+              loader: 'coffee-loader',
+              options: {
+                transpile: {
+                  presets: ['env']
+                }
+              }
+            }
+          ].filter(Boolean)
         },
         {
           test: /\.less$/,
