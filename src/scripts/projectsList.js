@@ -49,7 +49,7 @@ const App = React.createClass({
   }
 });
 
-global.kbcApp = {
+module.exports = {
   start: function(appOptions) {
     document.body.className = 'kbc-outer-page kbc-projects-list';
     return ReactDOM.render(

@@ -351,7 +351,7 @@ const App = React.createClass({
   }
 });
 
-global.kbcApp = {
+module.exports = {
   start: function() {
     return ReactDOM.render(React.createElement(App), document.getElementById('react'));
   },
