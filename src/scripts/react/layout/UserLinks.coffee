@@ -2,6 +2,7 @@ React = require 'react'
 ImmutableRendererMixin = require 'react-immutable-render-mixin'
 ApplicationStore = require '../../stores/ApplicationStore'
 contactSupport = require('../../utils/contactSupport').default
+ExternalLink = React.createFactory(require('@keboola/indigo-ui').ExternalLink)
 
 {div, ul, li, a, span} = React.DOM
 
@@ -36,3 +37,9 @@ module.exports = React.createClass
           a href: ApplicationStore.getProjectPageUrl('settings-users'),
             span className: 'fa fa-user'
             ' Users & Settings '
+
+        li null,
+          ExternalLink
+            href: 'https://portal.productboard.com/ltulbdlwnurf2accjn3ukkww',
+            span className: 'fa fa-tasks'
+            ' Keboola Roadmap '
