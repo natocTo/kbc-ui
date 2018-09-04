@@ -55,18 +55,18 @@ export default React.createClass({
 
           <Modal.Header closeButton>
             { this.getStepPosition() === 'center' ? (
-                this.getModalTitleExtended()
+              this.getModalTitleExtended()
             ) : (
-                this.getModalTitle()
+              this.getModalTitle()
             )}
           </Modal.Header>
           <Modal.Body className="guide-modal-body">
             <ReactCSSTransitionGroup
-                transitionName={'guide-wizard-animated-' + this.props.direction}
-                transitionEnterTimeout={200}
-                transitionLeaveTimeout={200}
+              transitionName={'guide-wizard-animated-' + this.props.direction}
+              transitionEnterTimeout={200}
+              transitionLeaveTimeout={200}
             >
-                {this.getModalBody()}
+              {this.getModalBody()}
             </ReactCSSTransitionGroup>
           </Modal.Body>
           <Modal.Footer>
@@ -86,11 +86,11 @@ export default React.createClass({
             <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
           }
           <div className="guide-media">
-          {this.renderMedia()}
+            {this.renderMedia()}
           </div>
           {this.isCongratulations() &&
           <span className="guide-congratulations">
-              <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
+            <Remarkable source={this.getStepMarkdown()} options={{'html': true}}/>
           </span>
           }
           {this.isNavigationVisible() && this.renderNavigation()}
@@ -306,12 +306,12 @@ export default React.createClass({
   },
   renderNextLessonLink() {
     return (
-        <Button bsStyle="link" onClick={(e) => {
-          e.preventDefault();
-          showWizardModalFn(this.getLessonId() + 1);
-        }}>
+      <Button bsStyle="link" onClick={(e) => {
+        e.preventDefault();
+        showWizardModalFn(this.getLessonId() + 1);
+      }}>
           Lesson {this.getLessonId() + 1}
-        </Button>
+      </Button>
     );
   },
   closeLessonModal() {

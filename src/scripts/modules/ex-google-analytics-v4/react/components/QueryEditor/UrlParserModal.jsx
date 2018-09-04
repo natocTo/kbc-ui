@@ -46,8 +46,8 @@ export default React.createClass({
               </label>
               <div className="col-sm-9  pre-scrollable">
                 {parsedQuery ?
-                 this.renderParsedQuery()
-                 : <p className="form-control-static">n/a</p>
+                  this.renderParsedQuery()
+                  : <p className="form-control-static">n/a</p>
                 }
               </div>
             </div>

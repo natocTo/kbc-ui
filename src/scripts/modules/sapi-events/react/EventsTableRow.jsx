@@ -20,14 +20,14 @@ export default React.createClass({
     };
     const rowClass = classnames('td', classmap[this.props.event.get('type')]);
     return (
-        <Link {...this.linkProps()}>
-          <div className={rowClass}>
-            {format(this.props.event.get('created'))}
-          </div>
-          <div className={rowClass}>
-            <NewLineToBr text={this.props.event.get('message')} />
-          </div>
-        </Link>
+      <Link {...this.linkProps()}>
+        <div className={rowClass}>
+          {format(this.props.event.get('created'))}
+        </div>
+        <div className={rowClass}>
+          <NewLineToBr text={this.props.event.get('message')} />
+        </div>
+      </Link>
     );
   },
 

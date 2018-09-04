@@ -102,13 +102,13 @@ const PhaseEditRow = React.createClass({
 
         <td>
           <div className="pull-right">
-              <button
-                className="btn btn-link"
-                style={{padding: '2px'}}
-                onClick={this.toggleTaskAdd}>
-                <i className="kbc-icon-plus"/>
+            <button
+              className="btn btn-link"
+              style={{padding: '2px'}}
+              onClick={this.toggleTaskAdd}>
+              <i className="kbc-icon-plus"/>
                 New task
-              </button>
+            </button>
           </div>
         </td>
 

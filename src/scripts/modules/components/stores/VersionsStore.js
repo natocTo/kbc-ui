@@ -79,7 +79,6 @@ dispatcher.register(function(payload) {
   action = payload.action;
 
   switch (action.type) {
-
     case Constants.ActionTypes.VERSIONS_LOAD_START:
       _store = _store.setIn(['loadingVersions', action.componentId, action.configId], true);
       return VersionsStore.emitChange();

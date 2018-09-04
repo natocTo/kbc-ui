@@ -12,20 +12,20 @@ export default React.createClass({
 
   render() {
     return (
-     <table className="table table-striped">
-       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Include Time</th>
-          <th>Identifier</th>
-          <th>Template</th>
-          <th />
-        </tr>
-       </thead>
-       <tbody>
-        {this.props.dimensions.map(this.renderRow)}
-       </tbody>
-     </table>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Include Time</th>
+            <th>Identifier</th>
+            <th>Template</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.dimensions.map(this.renderRow)}
+        </tbody>
+      </table>
     );
   },
 

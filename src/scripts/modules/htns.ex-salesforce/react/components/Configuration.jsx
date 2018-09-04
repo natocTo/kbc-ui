@@ -29,7 +29,7 @@ export default React.createClass({
               }}
               placeholder="User"
               disabled={this.props.disabled}
-              />
+            />
             <HelpBlock>
               Salesforce object identifier, eg. Account.
             </HelpBlock>
@@ -61,10 +61,10 @@ export default React.createClass({
               }}
               placeholder="SELECT Id, Name FROM User"
               disabled={this.props.disabled}
-              />
-              <HelpBlock>
+            />
+            <HelpBlock>
                 Specify the SOQL query for the given object. If the SOQL is not specified, extractor will download all available columns.
-              </HelpBlock>
+            </HelpBlock>
           </Col>
         </FormGroup>
       </Form>

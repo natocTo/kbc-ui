@@ -40,9 +40,9 @@ export default React.createClass({
             {this.renderVizualization()}
           </div>
           <div>
-          <h3>
-            {limit.get('name')}
-          </h3>
+            <h3>
+              {limit.get('name')}
+            </h3>
           </div>
           <div className="kbc-limit-values">
             <h4>{this.limit()}</h4>
@@ -96,7 +96,7 @@ export default React.createClass({
         <SwitchButton
           limit={limit}
           canEdit={canEdit}
-          />
+        />
       );
     }
     return null;

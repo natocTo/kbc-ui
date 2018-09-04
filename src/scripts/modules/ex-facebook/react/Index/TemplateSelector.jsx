@@ -24,9 +24,9 @@ export default React.createClass({
       >
         {this.props.templates.map((t) =>
           <MenuItem eventKey={t.get('id')}>
-              {t.get('name')}
+            {t.get('name')}
           </MenuItem>
-         ).toArray()}
+        ).toArray()}
       </DropdownButton>
     );
   },

@@ -190,43 +190,43 @@ export default React.createClass({
       return (
         <div className="section">
           <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Dropbox File</th>
-              <th>Bucket</th>
-              <th />
-              <th>Output Table</th>
-              <th />
-            </tr>
-          </thead>
+            <thead>
+              <tr>
+                <th>Dropbox File</th>
+                <th>Bucket</th>
+                <th />
+                <th>Output Table</th>
+                <th />
+              </tr>
+            </thead>
             <tbody>
-            {
-              selectedFiles.toJS().map((table, index) => {
-                const handleDeletingSingleElement = this.handleDeletingSingleElement.bind(this, index);
-                const handleUploadingSingleElement = this.handleUploadingSingleElement.bind(this, index);
-                return (
-                  <tr key={index}>
+              {
+                selectedFiles.toJS().map((table, index) => {
+                  const handleDeletingSingleElement = this.handleDeletingSingleElement.bind(this, index);
+                  const handleUploadingSingleElement = this.handleUploadingSingleElement.bind(this, index);
+                  return (
+                    <tr key={index}>
                       <td>{table.file}</td>
                       <td>{table.bucket}</td>
                       <td>&gt;</td>
                       <td><SapiTableLinkEx tableId={table.output} /></td>
                       <td className="text-right">
-                      {this.state.isSaving ? <Loader /> : <button className="btn btn-link" onClick={handleDeletingSingleElement}><i className="fa kbc-icon-cup" /></button>}
-                      <RunButtonModal
-                        title="Upload"
-                        icon="fa fa-fw fa-play"
-                        mode="button"
-                        component="ex-dropbox"
-                        runParams={handleUploadingSingleElement}
+                        {this.state.isSaving ? <Loader /> : <button className="btn btn-link" onClick={handleDeletingSingleElement}><i className="fa kbc-icon-cup" /></button>}
+                        <RunButtonModal
+                          title="Upload"
+                          icon="fa fa-fw fa-play"
+                          mode="button"
+                          component="ex-dropbox"
+                          runParams={handleUploadingSingleElement}
                         >
                         You are about to upload <strong>1 csv file</strong> from your Dropbox.
                         The result will be stored into selected buckets.
-                      </RunButtonModal>
-                    </td>
-                  </tr>
-                );
-              })
-            }
+                        </RunButtonModal>
+                      </td>
+                    </tr>
+                  );
+                })
+              }
             </tbody>
           </table>
         </div>
@@ -240,9 +240,9 @@ export default React.createClass({
         <div className="row component-empty-state text-center">
           <p>No Dropbox account authorized!</p>
           <AuthorizeModal
-              configId={this.state.configId}
-              componentId={componentId}
-              redirectRouterPath="ex-dropbox-oauth-redirect"
+            configId={this.state.configId}
+            componentId={componentId}
+            redirectRouterPath="ex-dropbox-oauth-redirect"
           />
         </div>
       );
@@ -295,7 +295,7 @@ export default React.createClass({
               disabled={!this.canRunUpload()}
               disabledReason="A Dropbox account must be authorized and a table selected."
               runParams={this.runParams()}
-              >
+            >
               You are about to run upload of <strong>{this.state.configData.getIn(['parameters', 'config', 'dropboxFiles'], List()).count()} csv files</strong> from your Dropbox.
               The result will be stored into selected bucket(s).
             </RunButtonModal>
@@ -337,12 +337,12 @@ export default React.createClass({
           isPending={this.state.isDeletingCredentials}
           onChange={this.deleteCredentials}
         >
-        <Confirm
-          text={`Do you really want to reset the authorization of ${description}? The tables configured for upload will not be reset.`}
-          title={`Reset Authorization ${description}`}
-          buttonLabel="Reset"
-          onConfirm={this.deleteCredentials}
-        />
+          <Confirm
+            text={`Do you really want to reset the authorization of ${description}? The tables configured for upload will not be reset.`}
+            title={`Reset Authorization ${description}`}
+            buttonLabel="Reset"
+            onConfirm={this.deleteCredentials}
+          />
         </ActivateDeactivateButton>
       );
     } else {

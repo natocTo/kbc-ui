@@ -97,16 +97,16 @@
     "lint:fix": "node environment/scripts/eslint.js --fix"
   },
   "devDependencies": {
-    "babel-eslint": "7.0.0",
+    "babel-eslint": "7.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^1.0.7",
     "deep-diff": "^0.3.8",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-14": "^1.0.5",
     "enzyme-to-json": "^3.3.4",
-    "eslint": "^3.12.2",
-    "eslint-loader": "^1.6.1",
-    "eslint-plugin-react": "6.4.1",
+    "eslint": "^5.5.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-react": "6.10.3",
     "exports-loader": "^0.6.3",
     "jest": "^18.0.0",
     "mocha": "^2.4.5"

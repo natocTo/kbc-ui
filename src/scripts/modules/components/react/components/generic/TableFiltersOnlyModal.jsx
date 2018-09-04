@@ -71,7 +71,7 @@ export default React.createClass({
             onSave={this.handleSave}
             onCancel={this.props.onResetAndHide}
             isSaving={this.props.isSaving}
-            />
+          />
         </Modal.Footer>
       </Modal>
     );

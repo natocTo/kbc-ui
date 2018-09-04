@@ -41,35 +41,35 @@ export default React.createClass({
           <Tabs className="tabs-inside-modal" activeKey={step} defaultActiveKey={1} animation={false} id="wr-google-sheets-sheet-modal-tabs">
             <Tab title="Source" eventKey={1} disabled={step !== 1}>
               <InputTab
-                 onSelect={this.onChangeInputMapping}
-                 tables={storageTables}
-                 mapping={this.localState(['mapping'], Map())}
-                 exclude={this.localState(['exclude'], Map())}
-               />
+                onSelect={this.onChangeInputMapping}
+                tables={storageTables}
+                mapping={this.localState(['mapping'], Map())}
+                exclude={this.localState(['exclude'], Map())}
+              />
             </Tab>
             <Tab title="Destination" eventKey={2} disabled={step !== 3}>
               <SpreadsheetTab
-                  onSelectExisting={(data) => {
-                    this.updateLocalState(['sheet'].concat('fileId'), data[0].id);
-                    this.updateLocalState(['sheet'].concat('title'), data[0].name);
-                  }}
+                onSelectExisting={(data) => {
+                  this.updateLocalState(['sheet'].concat('fileId'), data[0].id);
+                  this.updateLocalState(['sheet'].concat('title'), data[0].name);
+                }}
                 onSelectFolder={(data) => {
                   this.updateLocalState(['sheet'].concat(['folder', 'id']), data[0].id);
                   this.updateLocalState(['sheet'].concat(['folder', 'title']), data[0].name);
                 }}
-                  onChangeTitle={(e) => this.updateLocalState(['sheet'].concat('title'), e.target.value)}
-                  onSwitchType={this.onSwitchType}
-                  valueTitle={this.sheet('title', '')}
-                  valueFolder={this.sheet(['folder', 'title'], '/')}
-                  type={this.localState('uploadType', 'new')}
-                  />
+                onChangeTitle={(e) => this.updateLocalState(['sheet'].concat('title'), e.target.value)}
+                onSwitchType={this.onSwitchType}
+                valueTitle={this.sheet('title', '')}
+                valueFolder={this.sheet(['folder', 'title'], '/')}
+                type={this.localState('uploadType', 'new')}
+              />
             </Tab>
             <Tab title="Options" eventKey={3} disabled={step !== 3}>
               <SheetTab
                 onChangeSheetTitle={this.onChangeSheetTitle}
                 onChangeAction={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}                 valueSheetTitle={this.sheet('sheetTitle')}
                 valueAction={this.sheet('action')}
-                />
+              />
             </Tab>
           </Tabs>
         </Modal.Body>

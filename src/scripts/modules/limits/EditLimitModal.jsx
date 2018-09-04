@@ -45,7 +45,7 @@ export default React.createClass({
             ref="limitEditForm"
             method="post"
             action={this.state.actionUrl}
-            >
+          >
             <p>
               You can change the limit because you are superadmin. This feature is hidden for all other users.
             </p>
@@ -60,24 +60,24 @@ export default React.createClass({
               help={limit.get('id')}
               labelClassName="col-sm-6"
               wrapperClassName="col-sm-4"
-              />
+            />
             <input
               type="hidden"
               name="limitName"
               value={limit.get('id')}
-              />
+            />
             <input
               type="hidden"
               name="projectId"
               value={this.state.projectId}
-              />
+            />
             <input
               type="hidden"
               name="xsrf"
               value={this.state.xsrf}
-              />
+            />
             {redirectToInput}
-            </form>
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <ButtonToolbar>

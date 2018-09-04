@@ -181,12 +181,12 @@ export default React.createClass({
               >
                 {[].concat('').concat(Object.keys(SUGGESTIONS)).map((op) =>
                   (<option
-                     disabled={op === ''}
-                     key={op}
-                     value={op} >
-                {op === '' ? 'Choose from suggestions' : op}
+                    disabled={op === ''}
+                    key={op}
+                    value={op} >
+                    {op === '' ? 'Choose from suggestions' : op}
                   </option>)
-                 )}
+                )}
               </select>
             </div>
           </div>

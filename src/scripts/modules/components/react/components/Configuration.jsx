@@ -54,7 +54,7 @@ export default React.createClass({
       <Markdown
         source={this.props.editHelp}
         size="small"
-        />
+      />
     );
   },
 

@@ -43,27 +43,27 @@ export default React.createClass({
             ref="projectCreateForm"
             method="post"
             action={this.props.urlTemplates.get('createProject')}
-            >
-              <Input
-                label="Name"
-                name="name"
-                ref="name"
-                autoFocus={true}
-                value={this.state.name}
-                onChange={this.handleNameChange}
-                type="text"
-                placeholder="My Project"
-                labelClassName="col-sm-4"
-                wrapperClassName="col-sm-6"
-                />
+          >
+            <Input
+              label="Name"
+              name="name"
+              ref="name"
+              autoFocus={true}
+              value={this.state.name}
+              onChange={this.handleNameChange}
+              type="text"
+              placeholder="My Project"
+              labelClassName="col-sm-4"
+              wrapperClassName="col-sm-6"
+            />
             {this.organization()}
             <Input
               type="hidden"
               name="xsrf"
               value={this.props.xsrf}
-              />
+            />
             {this.typesGroup()}
-            </form>
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
@@ -73,7 +73,7 @@ export default React.createClass({
             saveStyle="primary"
             onCancel={this.props.onHide}
             onSave={this.handleCreate}
-            />
+          />
         </Modal.Footer>
       </Modal>
     );
@@ -86,7 +86,7 @@ export default React.createClass({
           type="hidden"
           name="organizationId"
           value={this.props.selectedOrganizationId}
-          />
+        />
       );
     } else {
       return (
@@ -123,9 +123,9 @@ export default React.createClass({
           </label>
           <div className="col-sm-6">
             <p className="form-control-static">
-                    <span className="help-block">
+              <span className="help-block">
                       Project can be upgraded anytime later.
-                    </span>
+              </span>
             </p>
           </div>
         </div>
@@ -147,7 +147,7 @@ export default React.createClass({
           onChange={this.handleTypeChange}
           wrapperClassName="col-xs-offset-4 col-xs-6"
           key={template.get('stringId')}
-          />
+        />
       );
     });
   },

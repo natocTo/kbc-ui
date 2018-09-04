@@ -201,7 +201,7 @@ export default function(componentId) {
                 <EmptyState>
                   <p> No profiles selected </p>
                   <button type="button" className="btn btn-success"
-                          onClick={this.showProfilesModal}>
+                    onClick={this.showProfilesModal}>
                     Select Profiles
                   </button>
                 </EmptyState>

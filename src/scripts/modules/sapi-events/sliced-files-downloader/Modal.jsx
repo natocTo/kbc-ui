@@ -61,10 +61,10 @@ export default React.createClass({
     }
     return (
       <div className="pull-left" style={{padding: '6px 15px'}}>
-         <span className={'text-' + this.props.progressStatus}>
-           {this.renderStatusIcon(this.props.progressStatus)} {this.props.progress}
-           <span />
-         </span>
+        <span className={'text-' + this.props.progressStatus}>
+          {this.renderStatusIcon(this.props.progressStatus)} {this.props.progress}
+          <span />
+        </span>
       </div>
     );
   },

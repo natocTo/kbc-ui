@@ -18,9 +18,9 @@ export function saveCredentials(configId) {
   }
 
   const config = template(store.getConfig(COMPONENT_ID, configId).get('name'),
-      store.getConfigData(COMPONENT_ID, configId))
-      .setIn(['parameters', 'config', 'username'], credentials.get('username'))
-      .setIn(['parameters', 'config', '#password'], credentials.get('#password'));
+    store.getConfigData(COMPONENT_ID, configId))
+    .setIn(['parameters', 'config', 'username'], credentials.get('username'))
+    .setIn(['parameters', 'config', '#password'], credentials.get('#password'));
 
   return actions.saveComponentConfigData(COMPONENT_ID, configId, config);
 }
@@ -88,10 +88,10 @@ export function initFromWizard(configId) {
     foundTemplate = jobsTemplates.find((tmpl) => tmpl.get('id') === newTemplateId),
     config = template(store.getConfig(COMPONENT_ID, configId).get('name'),
       store
-      .getConfigData(COMPONENT_ID, configId)
-      .setIn(['parameters', 'config', 'jobs'], foundTemplate.get('template'))
-      .setIn(['parameters', 'config', 'username'], credentials.get('username'))
-      .setIn(['parameters', 'config', '#password'], credentials.get('#password'))
+        .getConfigData(COMPONENT_ID, configId)
+        .setIn(['parameters', 'config', 'jobs'], foundTemplate.get('template'))
+        .setIn(['parameters', 'config', 'username'], credentials.get('username'))
+        .setIn(['parameters', 'config', '#password'], credentials.get('#password'))
     );
 
   return actions.saveComponentConfigData(COMPONENT_ID, configId, config)

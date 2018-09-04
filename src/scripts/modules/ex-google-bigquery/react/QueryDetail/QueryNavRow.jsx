@@ -16,7 +16,7 @@ export default React.createClass({
         className="list-group-item"
         to={`${ROUTE_PREFIX + COMPONENT_ID}-query`}
         params={this.linkParams()}
-        >
+      >
         <strong>{this.props.query.get('name')}</strong>
       </Link>
     );

@@ -41,7 +41,7 @@ export default React.createClass({
         onCancel={this.redirectToIndex}
         onSave={this.save}
         onEditStart={() => {}}
-        />
+      />
     );
   },
 

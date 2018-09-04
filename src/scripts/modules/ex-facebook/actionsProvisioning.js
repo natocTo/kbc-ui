@@ -186,12 +186,12 @@ export default function(COMPONENT_ID, configId) {
           }));
         })
         .catch((error) =>
-               updateLocalState(path, fromJS({
-                 isLoading: false,
-                 isError: true,
-                 error: error,
-                 data: []
-               })));
+          updateLocalState(path, fromJS({
+            isLoading: false,
+            isError: true,
+            error: error,
+            data: []
+          })));
     }
   };
 }

@@ -95,14 +95,14 @@ export default React.createClass({
         jobId: null,
         isCreated: true
       }),
-      (errorJob) =>
-        this.setState({
-          isRunning: false,
-          progress: 'Load finished with an error. ',
-          jobId: errorJob.id,
-          progressStatus: 'danger',
-          isCreated: true
-        })
+    (errorJob) =>
+      this.setState({
+        isRunning: false,
+        progress: 'Load finished with an error. ',
+        jobId: errorJob.id,
+        progressStatus: 'danger',
+        isCreated: true
+      })
     ).catch((error) => {
       this.setState({
         isRunning: false,

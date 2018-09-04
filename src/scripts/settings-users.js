@@ -168,28 +168,28 @@ const App = React.createClass({
 
                   <div className="tab-content">
                     <div className="tab-pane tab-pane-no-padding active">
-                        <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-                          <div className="row">
-                            <div className="col-md-9">
+                      <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
+                        <div className="row">
+                          <div className="col-md-9">
                               All users have full permissions in the project and can add or remove other users
                               from it.
-                            </div>
-                            <div className="col-md-3 text-right">
-                              <a
-                                href="#"
-                                className="kb-add-new-administrator-modal btn btn-success"
-                                data-toggle="tooltip"
-                                title="Add new user"
-                              >
-                                <i className="kbc-icon-plus" />New User
-                              </a>
-                            </div>
                           </div>
-
-
+                          <div className="col-md-3 text-right">
+                            <a
+                              href="#"
+                              className="kb-add-new-administrator-modal btn btn-success"
+                              data-toggle="tooltip"
+                              title="Add new user"
+                            >
+                              <i className="kbc-icon-plus" />New User
+                            </a>
+                          </div>
                         </div>
-                        <table className="table table-striped table-hover">
-                          <thead>
+
+
+                      </div>
+                      <table className="table table-striped table-hover">
+                        <thead>
                           <tr>
                             <th />
                             <th>Name</th>
@@ -209,8 +209,8 @@ const App = React.createClass({
                               <span className="fa" />Actions
                             </th>
                           </tr>
-                          </thead>
-                          <tbody>
+                        </thead>
+                        <tbody>
                           <tr className="">
                             <td style={{ position: 'relative' }}>
                               <img
@@ -229,13 +229,13 @@ const App = React.createClass({
                               <strong>spying:)</strong>
                             </td>
                             <td>
-                                <span
-                                  className="kb-date-convert"
-                                  data-date="2016-07-22T15:37:20+0200"
-                                  title="2016-07-22T15:37:20+0200"
-                                >
+                              <span
+                                className="kb-date-convert"
+                                data-date="2016-07-22T15:37:20+0200"
+                                title="2016-07-22T15:37:20+0200"
+                              >
                                   2016-07-22 15:37
-                                </span>
+                              </span>
                             </td>
                             <td />
                             <td>
@@ -289,13 +289,13 @@ const App = React.createClass({
                             </td>
                             <td />
                             <td>
-                                <span
-                                  className="kb-date-convert"
-                                  data-date="2016-04-19T16:41:44+0200"
-                                  title="2016-04-19T16:41:44+0200"
-                                >
+                              <span
+                                className="kb-date-convert"
+                                data-date="2016-04-19T16:41:44+0200"
+                                title="2016-04-19T16:41:44+0200"
+                              >
                                   2016-04-19 16:41
-                                </span>
+                              </span>
                             </td>
                             <td />
                             <td>
@@ -333,10 +333,10 @@ const App = React.createClass({
                               </div>
                             </td>
                           </tr>
-                          </tbody>
-                        </table>
-                        </div>
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
