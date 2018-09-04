@@ -1,4 +1,3 @@
-import './jsdom';
 import './renderers';
 
 /* eslint-disable no-console */

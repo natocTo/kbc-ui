@@ -1,15 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`<LimitsOverQuota /> should render limits 1`] = `
 <AlertBlock
   title="Project is over quota"
-  type="danger">
+  type="danger"
+>
   <ul
-    className="list-unstyled list-no-padding">
+    className="list-unstyled list-no-padding"
+  >
     <li
-      key="0">
+      key="0"
+    >
       <Link
         activeClassName="active"
         className=""
-        to="settings-limits">
+        to="settings-limits"
+      >
         <strong>
           Section 1
            - 
@@ -20,11 +26,13 @@ exports[`<LimitsOverQuota /> should render limits 1`] = `
       </Link>
     </li>
     <li
-      key="1">
+      key="1"
+    >
       <Link
         activeClassName="active"
         className=""
-        to="settings-limits">
+        to="settings-limits"
+      >
         <strong>
           Section 2
            - 
@@ -43,15 +51,19 @@ exports[`<LimitsOverQuota /> should render nothing for no limits 1`] = `""`;
 exports[`<LimitsOverQuota /> should render one limit 1`] = `
 <AlertBlock
   title="Project is over quota"
-  type="danger">
+  type="danger"
+>
   <ul
-    className="list-unstyled list-no-padding">
+    className="list-unstyled list-no-padding"
+  >
     <li
-      key="0">
+      key="0"
+    >
       <Link
         activeClassName="active"
         className=""
-        to="settings-limits">
+        to="settings-limits"
+      >
         <strong>
           Section 1
            - 
