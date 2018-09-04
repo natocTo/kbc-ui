@@ -74,8 +74,8 @@ class OauthV2WriterRow extends Component {
     let data = this.props.componentData.set('folder', Map());
     if (id) {
       data = this.props.componentData
-        .setIn(['folder', 'id'], id)
-        .setIn(['folder', 'title'], title);
+                 .setIn(['folder', 'id'], id)
+                 .setIn(['folder', 'title'], title);
     }
     this.props.updateLocalState([this.props.componentId, 'saving'], true);
     return this.props.setConfigDataFn(path, data).then(() =>

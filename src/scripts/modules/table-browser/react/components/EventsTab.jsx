@@ -81,25 +81,25 @@ export default React.createClass({
           </div>
         </div>
         {this.props.detailEventId ? this.renderDetail()
-          :
-          <Table responsive className="table table-striped table-hover">
-            <thead className="thead">
-              <tr className="tr">
-                <th className="th">
+         :
+         <Table responsive className="table table-striped table-hover">
+           <thead className="thead">
+             <tr className="tr">
+               <th className="th">
                  Created
-                </th>
-                <th className="th">
+               </th>
+               <th className="th">
                  Event
-                </th>
-                <th className="th">
+               </th>
+               <th className="th">
                  Creator
-                </th>
-              </tr>
-            </thead>
-            <tbody className="tbody">
-              {rows}
-            </tbody>
-          </Table>
+               </th>
+             </tr>
+           </thead>
+           <tbody className="tbody">
+             {rows}
+           </tbody>
+         </Table>
         }
       </div>
     );

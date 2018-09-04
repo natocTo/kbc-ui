@@ -56,8 +56,8 @@ export default React.createClass({
         <div className="help-block">
           <small>The CSV file is larger than 100MB, your upload may not be successful.
             Please refer to <a
-            href="https://developers.keboola.com/integrate/storage/api/importer/">documentation</a>
-          {' '}to perform a manual import using command line or other tools.
+              href="https://developers.keboola.com/integrate/storage/api/importer/">documentation</a>
+            {' '}to perform a manual import using command line or other tools.
           </small>
         </div>
       );

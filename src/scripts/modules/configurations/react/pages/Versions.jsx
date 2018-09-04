@@ -130,17 +130,17 @@ export default React.createClass({
           <SearchRow className="row kbc-search-row" onChange={this.onSearchChange} query={this.state.query}/>
           <Table striped hover>
             <thead>
-              <tr>
-                <th>#</th>
-                <th />
-                <th>Description</th>
-                <th>Changed</th>
-                <th>Created by</th>
-                <th />
-              </tr>
+            <tr>
+              <th>#</th>
+              <th />
+              <th>Description</th>
+              <th>Changed</th>
+              <th>Created by</th>
+              <th />
+            </tr>
             </thead>
             <tbody>
-              {this.renderVersionRows()}
+            {this.renderVersionRows()}
             </tbody>
           </Table>
           {this.state.filteredVersions.count() > this.state.page * ITEMS_PER_PAGE ?

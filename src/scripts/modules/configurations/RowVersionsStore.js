@@ -67,6 +67,7 @@ dispatcher.register(function(payload) {
   action = payload.action;
 
   switch (action.type) {
+
     case Constants.ActionTypes.ROW_VERSIONS_LOAD_START:
       _store = _store.setIn(['loadingVersions', action.componentId, action.configId, action.rowId], true);
       return RowVersionsStore.emitChange();

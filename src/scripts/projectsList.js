@@ -49,17 +49,20 @@ const App = React.createClass({
   }
 });
 
-global.kbcApp = {
+module.exports = {
   start: function(appOptions) {
     document.body.className = 'kbc-outer-page kbc-projects-list';
-    return ReactDOM.render(React.createElement(App, {
-      user: Immutable.fromJS(appOptions.data.kbc.admin),
-      urlTemplates: Immutable.fromJS(appOptions.data.kbc.urlTemplates),
-      projectTemplates: Immutable.fromJS(appOptions.data.projectTemplates),
-      maintainers: Immutable.fromJS(appOptions.data.maintainers),
-      organizations: Immutable.fromJS(appOptions.data.organizations),
-      canCreateProject: appOptions.data.kbc.canCreateProject
-    }), document.body);
+    return ReactDOM.render(
+      React.createElement(App, {
+        user: Immutable.fromJS(appOptions.data.kbc.admin),
+        urlTemplates: Immutable.fromJS(appOptions.data.kbc.urlTemplates),
+        projectTemplates: Immutable.fromJS(appOptions.data.projectTemplates),
+        maintainers: Immutable.fromJS(appOptions.data.maintainers),
+        organizations: Immutable.fromJS(appOptions.data.organizations),
+        canCreateProject: appOptions.data.kbc.canCreateProject
+      }),
+      document.body
+    );
   },
   helpers: require('./helpers')
 };

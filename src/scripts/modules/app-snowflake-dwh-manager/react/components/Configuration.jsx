@@ -39,16 +39,16 @@ export default React.createClass({
           onChange={e => onChange({type: e.target.value})}
           disabled={this.props.disabled}
           help={value.type === 'user' ?
-            <p>
+              <p>
                 User entity gets its own write access schema as well as read-only access to specified schemas (created by schema entity).
                 Snowflake user credentials will be displayed in the job log and the password must be changed after the first login.
-            </p>
-            :
-            <p>
+              </p>
+              :
+              <p>
                 Schema entity will generate a Snowflake schema and a Snowflake user with write access to the schema.
                 This schema can be shared with user entities.
                 Snowflake user credentials will be displayed in the job log and the password must be changed after the first login.
-            </p>
+              </p>
           }
         >
           {this.allowedTypes.map((i) =>
@@ -85,16 +85,16 @@ export default React.createClass({
         <FormGroup> <ControlLabel className="col-xs-4">
           {'Schemas'}
         </ControlLabel>
-        <div className="col-xs-8">
-          <Select
-            allowCreate={true}
-            multi={true}
-            value={value.business_schemas}
-            delimiter=","
-            onChange={newValue => onChange({business_schemas: newValue})}
-            disabled={this.props.disabled}
-            help="List of schemas the user will have read-only access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user." />
-        </div>
+          <div className="col-xs-8">
+            <Select
+              allowCreate={true}
+              multi={true}
+              value={value.business_schemas}
+              delimiter=","
+              onChange={newValue => onChange({business_schemas: newValue})}
+              disabled={this.props.disabled}
+              help="List of schemas the user will have read-only access to. There is no validation yet, so make sure that there are no typos and schemas exist before creating the user." />
+          </div>
         </FormGroup>}
         {value.type === 'user' &&
         <Input

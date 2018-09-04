@@ -28,9 +28,9 @@ export default {
   'mode': {
     name: 'Mode',
     desc: (<span>
-      <div>Continuous - Highly distinctive values (Time series are continuous)</div>
-      <div>Categories - Many rows contain the same values and there are finite possibilities.</div>
-      <div>Useless - Almost all rows contain fewer than 2 distinct values</div></span>)
+            <div>Continuous - Highly distinctive values (Time series are continuous)</div>
+            <div>Categories - Many rows contain the same values and there are finite possibilities.</div>
+            <div>Useless - Almost all rows contain fewer than 2 distinct values</div></span>)
   },
 
   'monotonic': {

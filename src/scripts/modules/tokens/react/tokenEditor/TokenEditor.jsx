@@ -38,74 +38,74 @@ export default React.createClass({
     return (
       <div>
         {this.renderFormGroup(
-          'Description',
-          <div className="col-sm-9">
-            {this.renderDescriptionInput()}
-          </div>
+           'Description',
+           <div className="col-sm-9">
+             {this.renderDescriptionInput()}
+           </div>
         )}
         {this.renderFormGroup(
-          'Expires In',
-          isAdminToken ?
-            <div className="col-sm-9">
-              <p className="form-control-static">
+           'Expires In',
+           isAdminToken ?
+           <div className="col-sm-9">
+             <p className="form-control-static">
                This is a user admin token that is valid as long as the user exists.
-              </p>
-            </div>
-            :
-            this.renderCustomExpires()
+             </p>
+           </div>
+           :
+           this.renderCustomExpires()
         )}
         {this.props.isEditing && this.renderFormGroup(
-          'Created',
-          <div className="col-sm-9">
-            <p className="form-control-static">
-              <CreatedWithIcon createdTime={this.props.token.get('created')} />
-              {this.renderCreatorTokenLink()}
-            </p>
-          </div>
+           'Created',
+           <div className="col-sm-9">
+             <p className="form-control-static">
+               <CreatedWithIcon createdTime={this.props.token.get('created')} />
+               {this.renderCreatorTokenLink()}
+             </p>
+           </div>
         )}
         {this.renderFormGroup(
-          'Files',
-          this.renderFileUploadsAccessInput()
+           'Files',
+           this.renderFileUploadsAccessInput()
         )}
         {this.renderFormGroup(
-          'Components & Buckets',
-          this.renderBucketsAndComponentsAccessInput()
+           'Components & Buckets',
+           this.renderBucketsAndComponentsAccessInput()
         )}
         {isCustomAccess && this.renderFormGroup(
-          '',
-          <div className="col-sm-offset-3 col-sm-9">
-            <ComponentsSelector
-              disabled={this.props.disabled}
-              onChange={(components) => this.props.updateToken('componentAccess', components)}
-              selectedComponents={this.props.token.get('componentAccess', List())}
-              allComponents={getAllComponents()}
-            />
-            <span className="help-block">
+           '',
+           <div className="col-sm-offset-3 col-sm-9">
+             <ComponentsSelector
+               disabled={this.props.disabled}
+               onChange={(components) => this.props.updateToken('componentAccess', components)}
+               selectedComponents={this.props.token.get('componentAccess', List())}
+               allComponents={getAllComponents()}
+             />
+             <span className="help-block">
                Token can run selected components
-            </span>
-          </div>
+             </span>
+           </div>
         )}
         {isCustomAccess && this.renderFormGroup(
-          '',
-          <BucketsSelector
-            disabled={this.props.disabled}
-            bucketPermissions={this.props.token.get('bucketPermissions', Map())}
-            onChange={(permissions) => this.props.updateToken('bucketPermissions', permissions)}
-            allBuckets={this.props.allBuckets}
-            permission="read"
-            wrapperClassName="cols-sm-offset-3 col-sm-9"
-          />
+           '',
+           <BucketsSelector
+             disabled={this.props.disabled}
+             bucketPermissions={this.props.token.get('bucketPermissions', Map())}
+             onChange={(permissions) => this.props.updateToken('bucketPermissions', permissions)}
+             allBuckets={this.props.allBuckets}
+             permission="read"
+             wrapperClassName="cols-sm-offset-3 col-sm-9"
+           />
         )}
         {isCustomAccess && this.renderFormGroup(
-          '',
-          <BucketsSelector
-            disabled={this.props.disabled}
-            bucketPermissions={this.props.token.get('bucketPermissions', Map())}
-            onChange={(permissions) => this.props.updateToken('bucketPermissions', permissions)}
-            allBuckets={this.props.allBuckets}
-            permission="write"
-            wrapperClassName="cols-sm-offset-3 col-sm-9"
-          />
+           '',
+           <BucketsSelector
+             disabled={this.props.disabled}
+             bucketPermissions={this.props.token.get('bucketPermissions', Map())}
+             onChange={(permissions) => this.props.updateToken('bucketPermissions', permissions)}
+             allBuckets={this.props.allBuckets}
+             permission="write"
+             wrapperClassName="cols-sm-offset-3 col-sm-9"
+           />
         )}
         {this.props.isEditing && this.renderFormGroup(
           'Manage Tokens',
@@ -116,7 +116,7 @@ export default React.createClass({
             <p className="help-block">
               Token {this.props.token.get('canManageTokens', false) ? 'has' : 'hasn\'t'}
               {' '}permission to manage (e.g. create) other tokens.
-            </p>
+             </p>
           </div>
         )}
       </div>
@@ -126,17 +126,17 @@ export default React.createClass({
   renderCustomExpires() {
     return (
       this.props.isEditing ?
-        <div className="col-sm-9">
-          <p className="form-control-static">
-            <ExpiresInfo withIcon={true} token={this.props.token} />
-          </p>
-        </div>
-        :
-        <ExpiresInEdit
-          disabled={this.props.disabled}
-          value={this.props.token.get('expiresIn', null)}
-          onChange={(value) => this.props.updateToken('expiresIn', value)}
-        />
+      <div className="col-sm-9">
+        <p className="form-control-static">
+          <ExpiresInfo withIcon={true} token={this.props.token} />
+        </p>
+      </div>
+      :
+      <ExpiresInEdit
+        disabled={this.props.disabled}
+        value={this.props.token.get('expiresIn', null)}
+        onChange={(value) => this.props.updateToken('expiresIn', value)}
+      />
     );
   },
 

@@ -21,7 +21,7 @@ export default React.createClass({
         <OverlayTrigger overlay={this.tooltip()} ref="overlay">
           <span>
             <ClipboardButton style={{cursor: 'pointer'}} component="span" data-clipboard-text={this.props.text}
-              onError={this.handleError} onSuccess={this.handleAfterCopy}>
+                             onError={this.handleError} onSuccess={this.handleAfterCopy}>
               <span className="fa fa-fw fa-copy"/> {this.props.label}
             </ClipboardButton>
           </span>

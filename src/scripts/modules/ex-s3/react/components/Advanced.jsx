@@ -32,7 +32,7 @@ export default React.createClass({
           onChange={this.onChangeDelimiter}
           help={(<span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
           disabled={this.props.disabled}
-        />
+          />
         <Input
           type="text"
           label="Enclosure"
@@ -42,7 +42,7 @@ export default React.createClass({
           onChange={this.onChangeEnclosure}
           help={(<span>Field enclosure used in CSV file. Default value is <code>"</code>.</span>)}
           disabled={this.props.disabled}
-        />
+          />
       </div>
     );
   }

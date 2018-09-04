@@ -16,8 +16,8 @@ export default React.createClass({
   render() {
     return (
       <a
-        target="_blank"
-        href={this.tableUrl()}>{this.props.children}</a>
+         target="_blank"
+         href={this.tableUrl()}>{this.props.children}</a>
     );
   }
 

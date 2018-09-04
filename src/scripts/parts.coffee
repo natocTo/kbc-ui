@@ -4,7 +4,7 @@
 
 require './utils/react-shim'
 
-global.kbcApp =
+module.exports =
   helpers: require './helpers'
   parts:
     ProjectSelect: require('./react/layout/project-select/ProjectSelect').default

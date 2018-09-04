@@ -42,7 +42,7 @@ export default React.createClass({
         onRollback={this.props.onRollback}
         isDisabled={this.props.isRollbackDisabled}
         isPending={this.props.isRollbackPending}
-      />
+        />
     );
   },
 
@@ -72,7 +72,7 @@ export default React.createClass({
         newVersionName={this.props.newVersionName}
         isDisabled={this.props.isCopyDisabled}
         isPending={this.props.isCopyPending}
-      />
+        />
     );
   },
 

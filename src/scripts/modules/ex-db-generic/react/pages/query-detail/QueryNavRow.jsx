@@ -14,16 +14,16 @@ export default React.createClass({
         className="list-group-item"
         to={`ex-db-generic-${this.props.componentId}-query`}
         params={this.linkParams()}
-      >
+        >
         {(this.props.isEditing) ? (
-          <strong>
-            {this.renderName()} *
-          </strong>
-        ) : (
-          <span>
-            {this.renderName()}
-          </span>
-        )
+            <strong>
+              {this.renderName()} *
+            </strong>
+          ) : (
+            <span>
+              {this.renderName()}
+            </span>
+          )
         }
       </Link>
     );

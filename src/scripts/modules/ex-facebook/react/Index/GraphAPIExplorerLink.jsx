@@ -38,12 +38,12 @@ export default React.createClass({
     const queryIds = this.query('ids');
     const ids = queryIds ? queryIds : this.props.ids.take(50).join(',');
     const paramsStr = this.props.query
-      .delete('path')
-      .reduce((memo, value, key) => {
-        const pair = key === 'ids' ? `ids=${ids}` : `${key}=${value}`;
-        const result = memo.first ? `${memo.result}?${pair}` : `${memo.result}&${pair}`;
-        return {first: false, result: result};
-      }, {first: true, result: path});
+                          .delete('path')
+                          .reduce((memo, value, key) => {
+                            const pair = key === 'ids' ? `ids=${ids}` : `${key}=${value}`;
+                            const result = memo.first ? `${memo.result}?${pair}` : `${memo.result}&${pair}`;
+                            return {first: false, result: result};
+                          }, {first: true, result: path});
     return `path=${encodeURIComponent(paramsStr.result)}&${version}`;
   },
 

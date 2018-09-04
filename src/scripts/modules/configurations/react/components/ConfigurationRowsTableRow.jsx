@@ -104,8 +104,8 @@ const TableRow = React.createClass({
           };
         }}
       >
-        {this.renderRunModalContent()}
-      </RunComponentButton>
+          {this.renderRunModalContent()}
+        </RunComponentButton>
       )
     ];
   },

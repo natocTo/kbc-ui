@@ -72,16 +72,16 @@ export default React.createClass({
         </div>
         <div className="col-md-8">
           {isPython ?
-            <JupyterCredentials
-              validUntil={this.state.validUntil}
-              credentials={this.state.credentials}
-              isLoading={this.state.isLoading}
-              isCreating={this.state.pendingActions.get('create')}/>
-            :
-            <RStudioCredentials
-              credentials={this.state.credentials}
-              validUntil={this.state.validUntil}
-              isCreating={this.state.pendingActions.get('create')}/>
+           <JupyterCredentials
+             validUntil={this.state.validUntil}
+             credentials={this.state.credentials}
+             isLoading={this.state.isLoading}
+             isCreating={this.state.pendingActions.get('create')}/>
+           :
+           <RStudioCredentials
+             credentials={this.state.credentials}
+             validUntil={this.state.validUntil}
+             isCreating={this.state.pendingActions.get('create')}/>
           }
         </div>
         <div className="col-md-3">
@@ -118,9 +118,9 @@ export default React.createClass({
         </div>
         <div>
           {this.isPythonTransformation() ?
-            <ExtendJupyterCredentials/>
-            :
-            <ExtendRStudioCredentials/>
+           <ExtendJupyterCredentials/>
+           :
+           <ExtendRStudioCredentials/>
           }
         </div>
       </div>

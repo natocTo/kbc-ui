@@ -28,26 +28,26 @@ export default React.createClass({
         <div className="row">
           {grouped.entrySeq().map(function([type, components]) {
             return (
-              <div className="col-md-6" key={type}>
-                <h4>
-                  <span className={'kbc-' + type + '-icon'}/>
+            <div className="col-md-6" key={type}>
+              <h4>
+                <span className={'kbc-' + type + '-icon'}/>
                   {StringUtils.capitalize(type)}s
-                </h4>
-                <ul className="list-unstyled">
-                  {components.entrySeq().map(function([index, component]) {
-                    return (
-                      <li key={index}>
-                        <ComponentDetailLink
-                          type={component.get('type')}
-                          componentId={component.get('id')}
-                        >
-                          <ComponentName component={component} />
-                        </ComponentDetailLink>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+              </h4>
+              <ul className="list-unstyled">
+              {components.entrySeq().map(function([index, component]) {
+                return (
+                  <li key={index}>
+                    <ComponentDetailLink
+                      type={component.get('type')}
+                      componentId={component.get('id')}
+                    >
+                      <ComponentName component={component} />
+                    </ComponentDetailLink>
+                  </li>
+                );
+              })}
+              </ul>
+          </div>
             );
           })}
         </div>

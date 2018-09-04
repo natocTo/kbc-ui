@@ -25,15 +25,15 @@ export default React.createClass({
       <Popover id="data-preview" title={`Preview - ${this.props.columnName}`}>
         {
           !this.props.tableData ?
-            <span>{this.props.error ? this.props.error : 'Loading data...'}</span>
-            :
-            <ul>
-              {this.getColumnValues()
-                .map((value, index) =>
-                  <li key={index}>{value}</li>
-                ).toArray()
-              }
-            </ul>
+          <span>{this.props.error ? this.props.error : 'Loading data...'}</span>
+          :
+          <ul>
+            {this.getColumnValues()
+                 .map((value, index) =>
+                   <li key={index}>{value}</li>
+                 ).toArray()
+            }
+          </ul>
         }
       </Popover>
     );

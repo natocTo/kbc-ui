@@ -146,7 +146,7 @@ export default React.createClass({
             saveLabel="Create Transformation"
             onCancel={this.close}
             onSave={this.handleCreate}
-          />
+            />
         </Modal.Footer>
       </Modal>
     );
@@ -206,7 +206,7 @@ export default React.createClass({
           onChange={this.handleChange.bind(this, 'backend')}
           labelClassName="col-sm-4"
           wrapperClassName="col-sm-6"
-        >
+          >
           {this.backendOptions()}
         </Input>
       </form>

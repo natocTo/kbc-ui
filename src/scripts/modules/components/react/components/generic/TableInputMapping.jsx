@@ -161,7 +161,7 @@ export default React.createClass({
             configId={this.props.configId}
             mapping={this.props.editingValue.toMap().get('new-mapping', Immutable.Map())}
             otherDestinations={this.inputMappingDestinations()}
-          />
+            />
         </div>
       );
     }

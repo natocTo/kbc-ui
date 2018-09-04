@@ -40,12 +40,12 @@ export default React.createClass({
         eventKey={file.get('id')}
       >
         {isLoading ? <span> Loading sheets... </span>
-          :
-          <div className="row">
-            <ListGroup key={file.get('id')}>
-              {this.getFileSheets().map(this.renderSheetItem).toArray()}
-            </ListGroup>
-          </div>
+         :
+         <div className="row">
+           <ListGroup key={file.get('id')}>
+             {this.getFileSheets().map(this.renderSheetItem).toArray()}
+           </ListGroup>
+         </div>
         }
       </Panel>
 
@@ -74,10 +74,10 @@ export default React.createClass({
     );
     return (
       sheet.get('isSaved') ?
-        <Tooltip tooltip="Already configured in the project">
-          {item}
-        </Tooltip>
-        : item
+      <Tooltip tooltip="Already configured in the project">
+        {item}
+      </Tooltip>
+      : item
 
     );
   },

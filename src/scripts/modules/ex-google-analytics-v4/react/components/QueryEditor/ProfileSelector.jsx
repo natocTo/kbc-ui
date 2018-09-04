@@ -76,7 +76,7 @@ export default React.createClass({
           <option value={item.get('id')}>
             {item.get('name')}
           </option>
-        )}
+         )}
       </optgroup>
     );
 

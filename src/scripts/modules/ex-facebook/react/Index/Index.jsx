@@ -80,36 +80,36 @@ export default function(COMPONENT_ID) {
             </div>
             {
               this.isAuthorized() || this.state.store.hasAccounts ?
-                <div className="row">
-                  {this.renderAccountsInfo('col-xs-12')}
-                </div>
-                : null
+              <div className="row">
+                {this.renderAccountsInfo('col-xs-12')}
+              </div>
+              : null
             }
-            {
-              (this.isAuthorized() && this.state.store.hasAccounts) || this.state.store.hasQueries ?
-                <div className="row" style={{'padding-left': 0, 'padding-right': 0}}>
-                  {this.state.store.hasQueries ?
-                    <QueriesTable
-                      componentId={COMPONENT_ID}
-                      bucketId={getDefaultBucket('in', COMPONENT_ID, this.state.configId)}
-                      allTables={this.state.allTables}
-                      queries={this.state.store.queries}
-                      configId={this.state.configId}
-                      accounts={this.state.store.accounts}
-                      deleteQueryFn={this.state.actions.deleteQuery}
-                      onStartEdit={this.showQueryModal}
-                      isPendingFn={this.state.store.isPending}
-                      toggleQueryEnabledFn={this.state.actions.toggleQueryEnabledFn}
-                      getRunSingleQueryDataFn={this.state.store.getRunSingleQueryData}
-                      accountDescFn={getAccountDesc}
-                      addQueryButton={this.renderAddQueryLink()}
-                    />
-                    :
-                    this.renderEmptyQueries()
-                  }
-                </div>
-                : null
-            }
+          {
+            (this.isAuthorized() && this.state.store.hasAccounts) || this.state.store.hasQueries ?
+            <div className="row" style={{'padding-left': 0, 'padding-right': 0}}>
+              {this.state.store.hasQueries ?
+               <QueriesTable
+                 componentId={COMPONENT_ID}
+                 bucketId={getDefaultBucket('in', COMPONENT_ID, this.state.configId)}
+                 allTables={this.state.allTables}
+                 queries={this.state.store.queries}
+                 configId={this.state.configId}
+                 accounts={this.state.store.accounts}
+                 deleteQueryFn={this.state.actions.deleteQuery}
+                 onStartEdit={this.showQueryModal}
+                 isPendingFn={this.state.store.isPending}
+                 toggleQueryEnabledFn={this.state.actions.toggleQueryEnabledFn}
+                 getRunSingleQueryDataFn={this.state.store.getRunSingleQueryData}
+                 accountDescFn={getAccountDesc}
+                 addQueryButton={this.renderAddQueryLink()}
+               />
+               :
+               this.renderEmptyQueries()
+              }
+            </div>
+            : null
+          }
           </div>
           <div className="col-md-3 kbc-main-sidebar">
             <ComponentMetadata
@@ -297,7 +297,7 @@ export default function(COMPONENT_ID) {
               this.state.actions.updateLocalState(['AccountsManagerModal'], Map());
               this.state.actions.updateLocalState(['ShowAccountsManagerModal'], false);
             }
-          }
+                   }
           accounts={this.state.store.accounts}
           authorizedDescription={this.state.oauthCredentials.get('authorizedFor')}
           syncAccounts={this.state.store.syncAccounts}
@@ -337,13 +337,13 @@ export default function(COMPONENT_ID) {
     renderEmptyQueries() {
       return (
         this.isAuthorized() ?
-          <div className="row">
-            <EmptyState>
-              <p>No Queries Configured</p>
-              {this.renderAddQueryLink()}
-            </EmptyState>
-          </div>
-          : null
+        <div className="row">
+          <EmptyState>
+            <p>No Queries Configured</p>
+            {this.renderAddQueryLink()}
+          </EmptyState>
+        </div>
+        : null
       );
     },
 

@@ -162,7 +162,7 @@ module.exports = React.createClass({
         classnames({
           'text-muted': this.props.disabled || this.state.isLoading
         })}
-      onClick={this.onOpenButtonClick}
+        onClick={this.onOpenButtonClick}
       >
         {this.renderModal()}
         {this.tooltipWrapper(body)}

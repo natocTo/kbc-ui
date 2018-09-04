@@ -30,7 +30,7 @@ export default React.createClass({
           rowId={this.props.transformationId}
           query={{highlightQueryNumber: this.props.queryNumber}}
           onClick={this.props.onClick}
-        >
+          >
           Transformation {this.state.transformation.get('name')}, query #{this.props.queryNumber}
         </ComponentConfigurationRowLink>
         <br />

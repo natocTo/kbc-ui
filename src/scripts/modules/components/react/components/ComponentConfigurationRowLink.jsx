@@ -24,7 +24,7 @@ module.exports = React.createClass({
         }}
         query={this.props.query}
         onClick={this.props.onClick}
-      >{this.props.children}</Link>);
+        >{this.props.children}</Link>);
     }
     return (<Link
       className={this.props.className}
@@ -35,6 +35,6 @@ module.exports = React.createClass({
       }}
       query={this.props.query}
       onClick={this.props.onClick}
-    >{this.props.children}</Link>);
+      >{this.props.children}</Link>);
   }
 });

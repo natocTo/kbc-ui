@@ -57,7 +57,7 @@ const TableCell = React.createClass({
       return (
         <span>
           {this.props.valueFn(this.props.row)}
-        </span>
+       </span>
       );
     }
   }

@@ -23,7 +23,7 @@ module.exports = React.createClass({
         placeholder="Choose a name..."
         tooltipPlacememnt="bottom"
         fallbackValue={fallbackValue}
-      />
+        />
     );
   }
 });

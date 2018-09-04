@@ -58,7 +58,7 @@ export default React.createClass({
                 />
                 <span className="help-block">
                   Select a existing phase name or type new phase name.
-                </span>
+                  </span>
               </div>
             </div>
           </div>

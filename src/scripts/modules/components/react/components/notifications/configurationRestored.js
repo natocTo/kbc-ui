@@ -9,12 +9,12 @@ export default (componentId, configurationId, configuration) => {
 
     render: function() {
       return (<ConfigurationCopiedNotification
-        message={'Configuration ' + (configuration.get('name')) + ' was '}
-        linkLabel="restored"
-        componentId={componentId}
-        configId={configurationId}
-        onClick={this.props.onClick}
-      />
+          message={'Configuration ' + (configuration.get('name')) + ' was '}
+          linkLabel="restored"
+          componentId={componentId}
+          configId={configurationId}
+          onClick={this.props.onClick}
+        />
       );
     }
   });

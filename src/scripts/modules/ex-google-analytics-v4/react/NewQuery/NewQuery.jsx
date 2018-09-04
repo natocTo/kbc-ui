@@ -49,11 +49,11 @@ export default function(componentId) {
 
     render() {
       return (
-        <div className="container-fluid">
-          <div className="kbc-main-content">
-            {this.renderQueryEditor()}
+          <div className="container-fluid">
+            <div className="kbc-main-content">
+              {this.renderQueryEditor()}
+            </div>
           </div>
-        </div>
       );
     },
 

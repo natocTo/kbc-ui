@@ -51,7 +51,7 @@ export default React.createClass({
       return (
         <Markdown
           source={this.props.value.get('description', '')}
-        />
+          />
       );
     }
     return null;
@@ -73,7 +73,7 @@ export default React.createClass({
           </option>
         );
       }
-      , this);
+    , this);
   },
 
   getSelectedValue() {

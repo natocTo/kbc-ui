@@ -158,7 +158,7 @@ export default React.createClass({
               this.props.isDestinationDuplicate
                 ? <span className="error">
                       Duplicate Destination <code>{this.props.value.get('destination')}</code>.
-                </span>
+                  </span>
                 : null
             }
           />

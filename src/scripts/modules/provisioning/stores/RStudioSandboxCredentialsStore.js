@@ -37,6 +37,7 @@ Dispatcher.register(function(payload) {
   var action, credentials;
   action = payload.action;
   switch (action.type) {
+
     case Constants.ActionTypes.CREDENTIALS_RSTUDIO_SANDBOX_LOAD:
       _store = _store.set('isLoading', true);
       return RStudioSandboxCredentialsStore.emitChange();

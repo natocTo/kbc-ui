@@ -161,7 +161,7 @@ export default React.createClass({
 
     return (
       <Tooltip key="tooltip" tooltip={tooltip} placement="top">
-        <span>{action}</span>
+         <span>{action}</span>
       </Tooltip>
     );
   },

@@ -96,12 +96,12 @@ export default React.createClass({
 
   renderFilesSelectorEmptyState() {
     return (
-      <EmptyState>
-        <small>
-          <p>Requires temporal authorization of a Google account after which a short-lived access token is obtained to load spreadsheet documents from the selected account. </p>
-          <p>Google authorization uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
-        </small>
-      </EmptyState>
+         <EmptyState>
+           <small>
+             <p>Requires temporal authorization of a Google account after which a short-lived access token is obtained to load spreadsheet documents from the selected account. </p>
+             <p>Google authorization uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
+           </small>
+         </EmptyState>
     );
   },
 
@@ -115,14 +115,14 @@ export default React.createClass({
         </h3>
         <div className="kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table">
           {files.count() > 0 ?
-            files.map((file) =>
-              <SheetsSelector
-                file={file}
-                onSelectFile={this.selectFile}
-                selectSheet={this.selectSheet}
-              />
-            ) :
-            <EmptyState> No Files Selected </EmptyState>
+           files.map((file) =>
+            <SheetsSelector
+              file={file}
+              onSelectFile={this.selectFile}
+              selectSheet={this.selectSheet}
+            />
+           ) :
+           <EmptyState> No Files Selected </EmptyState>
           }
         </div>
       </div>
@@ -212,8 +212,8 @@ export default React.createClass({
               files.map((f) =>
                 f.getIn(['sheetsApi', 'sheets']).map((s) =>
                   this.renderSelectedItem(f, s))
-                  .toArray())
-                .toArray()
+                 .toArray())
+                   .toArray()
             }
           </ul>
           :
@@ -230,7 +230,7 @@ export default React.createClass({
     const sheetId = sheet.get('sheetId');
     const sheetToUpdate = sheet.set('selected', !isSelected);
     const newSheets = this.getFileSheets(file.get('id')).get('sheets')
-      .map((s) => s.get('sheetId') === sheetId ? sheetToUpdate : s);
+                          .map((s) => s.get('sheetId') === sheetId ? sheetToUpdate : s);
     this.updateFile(file.get('id'), file.setIn(['sheetsApi', 'sheets'], newSheets));
   },
 
@@ -254,20 +254,20 @@ export default React.createClass({
     const files = this.props.localState.get('files', List());
     const itemsToSave = files.map((f) =>
       f.getIn(['sheetsApi', 'sheets'])
-        .filter((s) => !!s.get('selected'))
-        .map((s) => {
-          return fromJS({
-            fileId: f.get('id'),
-            fileTitle: f.get('name'),
-            sheetId: s.get('sheetId'),
-            sheetTitle: s.get('sheetTitle')
-          });
-        })).flatten(true);
+       .filter((s) => !!s.get('selected'))
+       .map((s) => {
+         return fromJS({
+           fileId: f.get('id'),
+           fileTitle: f.get('name'),
+           sheetId: s.get('sheetId'),
+           sheetTitle: s.get('sheetTitle')
+         });
+       })).flatten(true);
     this.props.onSaveSheets(itemsToSave).then(() => {
       const newFiles = files.map((f) => {
         const newSheets = f.getIn(['sheetsApi', 'sheets'], List())
-          .map((s) => s.set('isSaved', s.get('isSaved') || !!s.get('selected'))
-            .set('selected', false));
+                           .map((s) => s.set('isSaved', s.get('isSaved') || !!s.get('selected'))
+                                        .set('selected', false));
         return f.setIn(['sheetsApi', 'sheets'], newSheets);
       }
       );

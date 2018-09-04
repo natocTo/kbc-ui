@@ -25,7 +25,7 @@ export default React.createClass({
             isLoading={this.props.isSaving}
             allowCreate={true}
             trimMultiCreatedValues={true}
-          />
+            />
           <span className="help-block">
             The latest file with a given tag will be saved to <code>/data/in/user/&#123;tag&#125;</code>.
           </span>

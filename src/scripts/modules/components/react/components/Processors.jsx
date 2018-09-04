@@ -39,7 +39,7 @@ export default React.createClass({
           value={this.getValue()}
           disabled={this.props.isSaving}
           onChange={this.props.onEditChange}
-        />
+          />
       </div>
     );
   },

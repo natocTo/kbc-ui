@@ -32,12 +32,12 @@ export default React.createClass({
         </div>
         <div className="col-xs-10">
           {isLoading || error ?
-            <FormControl.Static>
-              {error}
-              {' '}
-              {this.renderRefresh()}
-            </FormControl.Static>
-            : this.renderSelectControl()}
+           <FormControl.Static>
+             {error}
+             {' '}
+             {this.renderRefresh()}
+           </FormControl.Static>
+           : this.renderSelectControl()}
         </div>
       </div>
     );
