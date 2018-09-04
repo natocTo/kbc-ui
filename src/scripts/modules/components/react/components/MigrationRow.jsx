@@ -161,29 +161,27 @@ export default React.createClass({
     const orchHelpText = 'List of orchestrations containing tasks of either the old component or new component. '
       + 'After a successful migration there should be only new component\'s tasks.';
 
-    const body = (
-      !this.state.loadingStatus ?
-        (<span>
-          {this.state.error ?
-            <p className="alert alert-danger">
+    const body = !this.state.loadingStatus ? (
+      <span>
+        {this.state.error ?
+          <p className="alert alert-danger">
            Error Loading status: {this.state.error}
-            </p>
-            :
-            <div>
-              <Tabs className="tabs-inside-modal" defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
+          </p>
+          :
+          <div>
+            <Tabs className="tabs-inside-modal" defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
 
-                <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
-                  {this.renderConfigStatus()}
-                </Tab>
-                <Tab eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
-                  {this.renderOrhcestrationsStatus()}
-                </Tab>
-              </Tabs>
-            </div>
-          }
-        </span>)
-        : 'Loading migration status...'
-    );
+              <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
+                {this.renderConfigStatus()}
+              </Tab>
+              <Tab eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
+                {this.renderOrhcestrationsStatus()}
+              </Tab>
+            </Tabs>
+          </div>
+        }
+      </span>
+    ) : 'Loading migration status...';
     const dialogTitle = this.renderDialogTitle();
     const footer = (
       <ConfirmButtons

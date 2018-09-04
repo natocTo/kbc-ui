@@ -116,7 +116,6 @@ const App = React.createClass({
                         <span className="kbc-user-name">Vladimír Kriška</span>
                         <span className="kbc-user-email">email address</span>
                       </button>
-
                     </div>
                   </div>
                 </div>
@@ -206,7 +205,8 @@ const App = React.createClass({
                             <th>Joined</th>
                             <th>Expires</th>
                             <th className="kbc-action-column">
-                              <span className="fa" />Actions
+                              <span className="fa" />
+                              Actions
                             </th>
                           </tr>
                         </thead>
@@ -241,7 +241,8 @@ const App = React.createClass({
                             <td>
                               <div className="kbc-action-column">
                                 <a href="#" className="kb-confirm text-muted">
-                                  <span className="kbc-icon-cup" />Remove
+                                  <span className="kbc-icon-cup" />
+                                  Remove
                                 </a>
                               </div>
                             </td>
@@ -268,7 +269,8 @@ const App = React.createClass({
                             <td>
                               <div className="kbc-action-column">
                                 <a href="#" className="kb-confirm text-muted">
-                                  <span className="kbc-icon-cup" />Remove
+                                  <span className="kbc-icon-cup" />
+                                  Remove
                                 </a>
                               </div>
                             </td>
@@ -301,7 +303,8 @@ const App = React.createClass({
                             <td>
                               <div className="kbc-action-column">
                                 <a href="#" className="kb-confirm text-muted">
-                                  <span className="kbc-icon-cup" />Remove
+                                  <span className="kbc-icon-cup" />
+                                  Remove
                                 </a>
                               </div>
                             </td>
@@ -328,7 +331,8 @@ const App = React.createClass({
                             <td>
                               <div className="kbc-action-column">
                                 <a href="#" className="kb-confirm text-muted">
-                                  <span className="fa fa-sign-out" />Leave
+                                  <span className="fa fa-sign-out" />
+                                  Leave
                                 </a>
                               </div>
                             </td>
