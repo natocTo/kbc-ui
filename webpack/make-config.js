@@ -48,7 +48,7 @@ module.exports = function(options) {
     entry = {
       bundle: [
         './src/styles/kbc.less',
-        './node_modules/intl/index.js',
+        './node_modules/intl/Intl.js',
         './node_modules/intl/locale-data/jsonp/en.js',
         options.entry
       ],
@@ -56,7 +56,7 @@ module.exports = function(options) {
     };
   } else {
     entry = {
-      bundle: ['./node_modules/intl/index.js', './node_modules/intl/locale-data/jsonp/en.js', './src/scripts/app'],
+      bundle: ['./node_modules/intl/Intl.js', './node_modules/intl/locale-data/jsonp/en.js', './src/scripts/app'],
       parts: ['./src/scripts/parts']
     };
   }
