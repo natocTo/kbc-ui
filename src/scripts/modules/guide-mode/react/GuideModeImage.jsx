@@ -12,7 +12,7 @@ export default React.createClass({
   render() {
     return (
       <span>
-         <Image className="center-block" src={this.getImagePath()} responsive />
+        <Image className="center-block" src={this.getImagePath()} responsive />
       </span>
     );
   }

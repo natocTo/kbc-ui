@@ -162,8 +162,8 @@ export default function(configId, componentId) {
       }
       const queries = [queryRequest];
       const data = store.configData
-            .setIn(['parameters', 'queries'], queries)
-            .setIn(['parameters', 'outputBucket'], store.outputBucket);
+        .setIn(['parameters', 'queries'], queries)
+        .setIn(['parameters', 'outputBucket'], store.outputBucket);
       const params = {
         configData: data.toJS()
       };
@@ -180,19 +180,19 @@ export default function(configId, componentId) {
           return parseCsv(result.data);
         })
         .then((parsedCsvData) =>
-              updateLocalState(path, fromJS({
-                isLoading: false,
-                isError: false,
-                error: null,
-                data: parsedCsvData
-              })))
+          updateLocalState(path, fromJS({
+            isLoading: false,
+            isError: false,
+            error: null,
+            data: parsedCsvData
+          })))
         .catch((error) =>
-               updateLocalState(path, fromJS({
-                 isLoading: false,
-                 isError: true,
-                 error: error,
-                 data: null
-               })));
+          updateLocalState(path, fromJS({
+            isLoading: false,
+            isError: true,
+            error: error,
+            data: null
+          })));
     },
 
     loadAccountSegments() {
@@ -223,19 +223,19 @@ export default function(configId, componentId) {
           });
         })
         .then((segmentsData) =>
-              updateLocalState(path, fromJS({
-                isLoading: false,
-                isError: false,
-                error: null,
-                data: segmentsData
-              })))
+          updateLocalState(path, fromJS({
+            isLoading: false,
+            isError: false,
+            error: null,
+            data: segmentsData
+          })))
         .catch((error) =>
-               updateLocalState(path, fromJS({
-                 isLoading: false,
-                 isError: true,
-                 error: error,
-                 data: []
-               })));
+          updateLocalState(path, fromJS({
+            isLoading: false,
+            isError: true,
+            error: error,
+            data: []
+          })));
     }
   };
 }

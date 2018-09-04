@@ -90,18 +90,18 @@ export default React.createClass({
           eventKey="settings"
         >
           <Form horizontal>
-              {this.renderButtons()}
+            {this.renderButtons()}
             <br/>
             <CsvDelimiterInput
-                placeholder="Field delimeter used in CSV files"
-                label="Delimiter"
-                labelClassName="col-sm-4"
-                wrapperClassName="col-sm-8"
-                value={this.props.delimiter}
-                onChange={this.onChangeDelimiter}
-                help={(
-                    <span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
-                disabled={false}
+              placeholder="Field delimeter used in CSV files"
+              label="Delimiter"
+              labelClassName="col-sm-4"
+              wrapperClassName="col-sm-8"
+              value={this.props.delimiter}
+              onChange={this.onChangeDelimiter}
+              help={(
+                <span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
+              disabled={false}
             />
             <FormGroup>
               <Col componentClass={ControlLabel} sm={4}>
@@ -109,10 +109,10 @@ export default React.createClass({
               </Col>
               <Col sm={8}>
                 <FormControl
-                    type="text"
-                    placeholder="Field enclosure used in CSV files"
-                    value={this.props.enclosure}
-                    onChange={this.onChangeEnclosure}
+                  type="text"
+                  placeholder="Field enclosure used in CSV files"
+                  value={this.props.enclosure}
+                  onChange={this.onChangeEnclosure}
                 />
                 <HelpBlock>Field enclosure used in CSV file. Default value is <code>"</code>.</HelpBlock>
               </Col>
@@ -138,8 +138,8 @@ export default React.createClass({
             <FormGroup>
               <Col sm={8} smPush={4}>
                 <Checkbox
-                    checked={this.props.incremental}
-                    onChange={this.onChangeIncremental}>
+                  checked={this.props.incremental}
+                  onChange={this.onChangeIncremental}>
                   Incremental load
                 </Checkbox>
                 <HelpBlock>If incremental load is turned on, table will be updated instead of rewritten. Tables with

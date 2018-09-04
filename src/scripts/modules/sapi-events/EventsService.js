@@ -7,7 +7,6 @@ import api from './EventsApi';
 const CHANGE_EVENT = 'change';
 
 class EventsService {
-
   constructor(api1, defaultParams) {
     this.loadNew = this.loadNew.bind(this);
     this.api = api1;

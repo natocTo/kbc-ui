@@ -74,8 +74,8 @@ export default function(configId, componentId) {
       const storedCredentials = configData.getIn(['parameters', 'db']);
       const testingCredentials = updateProtectedProperties(credentials, storedCredentials);
       let runData = configData
-          .setIn(['parameters', 'tables'], List())
-          .delete('storage');
+        .setIn(['parameters', 'tables'], List())
+        .delete('storage');
 
       runData = runData.setIn(['parameters', 'db'], testingCredentials);
       const params = {

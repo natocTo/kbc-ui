@@ -42,12 +42,12 @@ export default React.createClass({
 
     return (
       <div onMouseEnter={ () => this.props.onMouseEnter(id)}
-           onMouseLeave={ () => this.props.onMouseLeave(id)} >
+        onMouseLeave={ () => this.props.onMouseLeave(id)} >
         <Alert
           onDismiss={this.onCancel}
           bsStyle={classMap[notification.get('type')]}
           style={this.opacity()}
-          >
+        >
           {this.renderNotificationBody(notification)}
         </Alert>
       </div>

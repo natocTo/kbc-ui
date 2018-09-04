@@ -30,7 +30,7 @@ export default React.createClass({
               }}
               placeholder="john.doe@example.com"
               disabled={this.props.disabled}
-              />
+            />
           </Col>
         </FormGroup>
         <FormGroup>
@@ -45,7 +45,7 @@ export default React.createClass({
                 this.props.onChange({password: event.target.value.trim()});
               }}
               disabled={this.props.disabled}
-              />
+            />
           </Col>
         </FormGroup>
         <FormGroup>
@@ -60,7 +60,7 @@ export default React.createClass({
                 this.props.onChange({securityToken: event.target.value.trim()});
               }}
               disabled={this.props.disabled}
-              />
+            />
           </Col>
         </FormGroup>
         <FormGroup>

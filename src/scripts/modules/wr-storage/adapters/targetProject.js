@@ -21,6 +21,6 @@ export default {
   isComplete: function(configuration) {
     return configuration.getIn(['parameters', 'url'], '') !== ''
       && configuration.getIn(['parameters', '#token'], '') !== ''
-      ;
+    ;
   }
 };

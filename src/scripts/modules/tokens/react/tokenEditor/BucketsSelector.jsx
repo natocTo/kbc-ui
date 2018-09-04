@@ -34,8 +34,8 @@ export default React.createClass({
 
   getSelectedPermissions() {
     return this.props
-               .bucketPermissions.filter((perm) => perm === this.props.permission)
-               .keySeq().toArray();
+      .bucketPermissions.filter((perm) => perm === this.props.permission)
+      .keySeq().toArray();
   },
 
   valueRenderer(op) {
@@ -44,9 +44,9 @@ export default React.createClass({
 
   getOptions() {
     return this.props.allBuckets
-               .filter((b, bid) => this.props.bucketPermissions.has(bid) ? this.props.bucketPermissions.get(bid) === this.props.permission : true)
-               .sortBy((_, bid) => bid.toLowerCase())
-               .map((b, bid) => ({key: bid, label: bid, value: bid})).toArray();
+      .filter((b, bid) => this.props.bucketPermissions.has(bid) ? this.props.bucketPermissions.get(bid) === this.props.permission : true)
+      .sortBy((_, bid) => bid.toLowerCase())
+      .map((b, bid) => ({key: bid, label: bid, value: bid})).toArray();
   },
 
   handleSelect(bucketsArray) {

@@ -51,7 +51,7 @@ export default React.createClass({
                 props.onChange({token: e.target.value});
               }}
               disabled={this.props.disabled}
-              />
+            />
             <HelpBlock>Use token with permissions limited only to write to a single target bucket.</HelpBlock>
           </Col>
         </FormGroup>

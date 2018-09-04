@@ -40,7 +40,7 @@ export default React.createClass({
               More information is available in the <a href="https://help.keboola.com/writers/aws-s3/">documentation</a>.
             </span>
           )}
-          />
+        />
         <Input
           type="password"
           label="Secret Access Key"
@@ -52,7 +52,7 @@ export default React.createClass({
           }}
           help="The AWS Secret Access Key will be encrypted."
           disabled={this.props.disabled}
-          />
+        />
         <Input
           type="text"
           label="S3 Bucket"
@@ -65,7 +65,7 @@ export default React.createClass({
           }}
           help="Name of the target AWS S3 bucket."
           disabled={this.props.disabled}
-          />
+        />
       </div>
     );
   }

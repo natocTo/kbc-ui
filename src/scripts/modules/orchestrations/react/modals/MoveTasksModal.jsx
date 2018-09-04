@@ -79,13 +79,13 @@ export default React.createClass({
 
   getPhasesOptions() {
     const result = this.props.phases
-                       .filter((pid) => pid !== this.props.ignorePhaseId)
-                       .map((key) => {
-                         return {
-                           'label': key,
-                           'value': key
-                         };
-                       });
+      .filter((pid) => pid !== this.props.ignorePhaseId)
+      .map((key) => {
+        return {
+          'label': key,
+          'value': key
+        };
+      });
     const phases = this.state.value !== null
       ? result.concat({label: this.state.value, value: this.state.value})
       : result;

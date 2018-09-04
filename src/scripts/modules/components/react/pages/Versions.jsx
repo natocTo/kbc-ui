@@ -120,20 +120,20 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
     render() {
       if (this.state.filteredVersions.count() === 0 && this.state.versions.count() > 0) {
         return (
-            <div className="container-fluid">
-              <div className="kbc-main-content">
-                <SearchRow className="row kbc-search-row" onChange={this.onSearchChange} query={this.state.query}/>
-                <p className="row text-center">No results found.</p>
-              </div>
-            </div>
-        );
-      }
-      return (
           <div className="container-fluid">
             <div className="kbc-main-content">
               <SearchRow className="row kbc-search-row" onChange={this.onSearchChange} query={this.state.query}/>
-              <Table striped hover>
-                <thead>
+              <p className="row text-center">No results found.</p>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div className="container-fluid">
+          <div className="kbc-main-content">
+            <SearchRow className="row kbc-search-row" onChange={this.onSearchChange} query={this.state.query}/>
+            <Table striped hover>
+              <thead>
                 <tr>
                   <th>#</th>
                   <th />
@@ -142,21 +142,21 @@ export default function(componentIdValue, configIdParam = 'config', readOnlyMode
                   <th>Created by</th>
                   <th />
                 </tr>
-                </thead>
-                <tbody>
+              </thead>
+              <tbody>
                 {this.renderVersionRows()}
-                </tbody>
-              </Table>
-              {this.state.filteredVersions.count() > this.state.page * ITEMS_PER_PAGE ?
-                  <div className="kbc-block-with-padding">
-                    <button onClick={this.onShowMore} className="btn btn-default btn-large text-center">
+              </tbody>
+            </Table>
+            {this.state.filteredVersions.count() > this.state.page * ITEMS_PER_PAGE ?
+              <div className="kbc-block-with-padding">
+                <button onClick={this.onShowMore} className="btn btn-default btn-large text-center">
                       More..
-                    </button>
-                  </div>
-                  : null
-              }
-            </div>
+                </button>
+              </div>
+              : null
+            }
           </div>
+        </div>
       );
     }
   });

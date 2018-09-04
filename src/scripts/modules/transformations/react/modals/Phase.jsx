@@ -58,13 +58,13 @@ export default React.createClass({
                   </p>
                   <p>
                     Phase # <input
-                              type="number"
-                              className="form-control"
-                              value={parseInt(this.state.phase, 10)}
-                              onChange={this.handlePhaseChange}
-                              disabled={this.state.isSaving}
-                              style={{width: '50px', display: 'inline-block'}}
-                            />
+                      type="number"
+                      className="form-control"
+                      value={parseInt(this.state.phase, 10)}
+                      onChange={this.handlePhaseChange}
+                      disabled={this.state.isSaving}
+                      style={{width: '50px', display: 'inline-block'}}
+                    />
                   </p>
                 </div>
               </div>
@@ -118,9 +118,9 @@ export default React.createClass({
     });
     actionCreators
       .changeTransformationProperty(this.props.bucketId,
-                                    this.props.transformation.get('id'),
-                                    'phase',
-                                    this.state.phase
+        this.props.transformation.get('id'),
+        'phase',
+        this.state.phase
       )
       .then(() => this.close())
       .catch((e) => {

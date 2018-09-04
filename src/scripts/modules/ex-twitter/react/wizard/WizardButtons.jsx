@@ -22,13 +22,13 @@ export default React.createClass({
         <DeleteConfigurationButton
           componentId={this.props.componentId}
           configId={this.props.configId}
-          />
+        />
         {this.props.previousAction ?
           <Button
             bsStyle="link"
             style={{marginLeft: '10px'}}
             onClick={this.props.previousAction}
-            >
+          >
             Previous
           </Button> : null
         }
@@ -38,7 +38,7 @@ export default React.createClass({
             style={{marginLeft: '10px'}}
             onClick={this.props.nextAction}
             disabled={!this.props.nextActionEnabled}
-            >
+          >
             Continue
           </Button> : null
         }
@@ -47,7 +47,7 @@ export default React.createClass({
             bsStyle="success"
             style={{marginLeft: '10px'}}
             onClick={this.props.saveAction}
-            >
+          >
             Save
           </Button> : null
         }

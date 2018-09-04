@@ -121,18 +121,18 @@ export default React.createClass({
     return (
       <form className="form-horizontal" onSubmit={this.handleSubmit}>
         {this.props.componentType === 'writer' ?
-         this.renderTableSelector()
-         :
-         <Input
-           type="text"
-           value={this.state.form.get('name')}
-           autoFocus={true}
-           onChange={this.handleChange.bind(this, 'name')}
-           placeholder="Name"
-           label="Name"
-           ref="name"
-           labelClassName="col-sm-4"
-           wrapperClassName="col-sm-6"/>
+          this.renderTableSelector()
+          :
+          <Input
+            type="text"
+            value={this.state.form.get('name')}
+            autoFocus={true}
+            onChange={this.handleChange.bind(this, 'name')}
+            placeholder="Name"
+            label="Name"
+            ref="name"
+            labelClassName="col-sm-4"
+            wrapperClassName="col-sm-6"/>
         }
         <Input
           type="textarea"

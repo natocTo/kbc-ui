@@ -124,7 +124,7 @@ export default React.createClass({
             <ComponentMetadata
               componentId={componentId}
               configId={this.state.configId}
-              />
+            />
           </div>
           <ul className="nav nav-stacked">
             <li className={classnames({disabled: this.state.editing})}>
@@ -135,7 +135,7 @@ export default React.createClass({
                 runParams={ () => ({config: this.state.configId}) }
                 disabledReason="Configuration is not saved."
                 disabled={this.state.editing}
-                >
+              >
                 You are about to run the analysis job of selected task(s).
               </RunComponentButton>
             </li>
@@ -143,7 +143,7 @@ export default React.createClass({
               <DeleteConfigurationButton
                 componentId={componentId}
                 configId={this.state.configId}
-                />
+              />
             </li>
           </ul>
           <LatestJobs
@@ -170,7 +170,7 @@ export default React.createClass({
     return (
       <div className="row">
         {this.renderFormElement('Input Table',
-           <SapiTableSelector
+          <SapiTableSelector
             placeholder="Select..."
             value={this.getEditingValue('intable')}
             onSelectTableFn= {intableChange}
@@ -184,8 +184,8 @@ export default React.createClass({
             className="form-control"
             value={this.getEditingValue(params.OUTPUT)}
             onChange= {(event) => this.updateEditingValue(params.OUTPUT, event.target.value)}
-          placeholder="e.g. out.c-main.result"/>,
-         'Prefix of the output table id, if is only a bucket id then it must end with dot \'.\'', !outputValid)
+            placeholder="e.g. out.c-main.result"/>,
+          'Prefix of the output table id, if is only a bucket id then it must end with dot \'.\'', !outputValid)
         }
         {this.renderDomainSelect('The source domain from which the document originates.')}
         {this.renderFormElement('Language',
@@ -250,7 +250,7 @@ export default React.createClass({
         }}
       >
         <span className="kbc-icon-pencil"/>
-    </button>);
+      </button>);
     return (
       <span>
         Data Filter
@@ -286,9 +286,9 @@ export default React.createClass({
         <div className="checkbox">
           <label>
             <input
-             type="checkbox"
-             checked={checked}
-             onChange={onChange}/>
+              type="checkbox"
+              checked={checked}
+              onChange={onChange}/>
             <span>
               {info.name}
             </span>
@@ -352,7 +352,7 @@ export default React.createClass({
         onChange= {({value: newValue}) => this.updateEditingValue(column, newValue)}
         options= {this.getColumns()}
       />
-    , description);
+      , description);
     return result;
   },
   findDomainNameByValue(value) {
@@ -405,10 +405,10 @@ export default React.createClass({
   renderIntableStatic() {
     const tableId = this.state.intable;
     const link = (<p
-        label="Input Table"
-        className="form-control-static">
-        <SapiTableLinkEx
-          tableId={tableId}/></p>
+      label="Input Table"
+      className="form-control-static">
+      <SapiTableLinkEx
+        tableId={tableId}/></p>
     );
     return this.renderFormElement((<span>Input Table</span>), link);
   },
@@ -420,7 +420,7 @@ export default React.createClass({
         labelClassName="col-sm-3"
         wrapperClassName="col-sm-9">
         {isBetaCheckobx ? <Check
-         isChecked={value}/> : value || 'n/a'}
+          isChecked={value}/> : value || 'n/a'}
       </StaticText>
     );
   },

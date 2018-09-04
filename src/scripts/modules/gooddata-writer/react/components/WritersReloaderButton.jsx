@@ -22,7 +22,7 @@ export default React.createClass({
       <RefreshIcon
         isLoading={this.state.isLoading}
         onClick={this.handleClick}
-        />
+      />
     );
   },
 

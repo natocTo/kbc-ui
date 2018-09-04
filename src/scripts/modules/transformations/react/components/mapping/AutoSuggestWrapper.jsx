@@ -55,11 +55,11 @@ export default React.createClass({
   fetchSuggestions(options) {
     const input = options.value;
     const suggestions = this.props.suggestions
-                            .filter((item) => this.props.filterSuggestionsFn(input, item))
-                            .sortBy(this.props.sortSuggestionsByFn)
-                            .slice(0, 10)
-                            .map(this.props.mapSuggestionsFn)
-                            .toList();
+      .filter((item) => this.props.filterSuggestionsFn(input, item))
+      .sortBy(this.props.sortSuggestionsByFn)
+      .slice(0, 10)
+      .map(this.props.mapSuggestionsFn)
+      .toList();
 
     this.setState({suggestions: suggestions});
   },

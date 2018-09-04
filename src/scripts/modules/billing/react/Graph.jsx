@@ -60,10 +60,10 @@ export default React.createClass({
           <h3>
             {'Project Power for last month '}
             <small>
-            {'from '}
-            {moment(this.state.dates.dateFrom).format('MMM D, YYYY')}
-            {' to '}
-            {moment(this.state.dates.dateTo).format('MMM D, YYYY')}
+              {'from '}
+              {moment(this.state.dates.dateFrom).format('MMM D, YYYY')}
+              {' to '}
+              {moment(this.state.dates.dateTo).format('MMM D, YYYY')}
             </small>
           </h3>
           <GraphVisualization data={this.state.metricsData}/>

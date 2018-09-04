@@ -255,9 +255,9 @@ export default React.createClass({
         </div>
         <div className="td">
           {token.get('canReadAllFileUploads') ?
-           'All files'
-           :
-           'Own files'
+            'All files'
+            :
+            'Own files'
           }
 
         </div>

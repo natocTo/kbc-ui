@@ -19,9 +19,9 @@ export default React.createClass({
     const stage = this.props.parts.stage;
     const bucket = this.props.parts.bucket;
     const buckets = this.props.buckets
-                        .filter(b => b.get('stage') === stage)
-                        .map(b => ({label: b.get('name'), value: b.get('name')}))
-                        .toList();
+      .filter(b => b.get('stage') === stage)
+      .map(b => ({label: b.get('name'), value: b.get('name')}))
+      .toList();
     if (!!bucket && !buckets.find(b => b.label === bucket)) {
       return buckets.push({label: bucket, value: bucket});
     } else {
@@ -34,9 +34,9 @@ export default React.createClass({
     const bucketId = parts.stage + '.' + parts.bucket;
     const table = parts.table;
     let tables = this.props.tables
-                       .filter(t => t.getIn(['bucket', 'id']) === bucketId)
-                       .map(t => ({label: t.get('name'), value: t.get('name')}))
-                       .toList();
+      .filter(t => t.getIn(['bucket', 'id']) === bucketId)
+      .map(t => ({label: t.get('name'), value: t.get('name')}))
+      .toList();
     if (!!table && !tables.find(t => t.label === table)) {
       tables = tables.push({label: table, value: table});
     }

@@ -75,8 +75,8 @@ export default React.createClass({
           </div>
           {
             this.state.showJsonEditor ?
-            this.renderJsonEditor() :
-            this.renderTemplatesEditor()
+              this.renderJsonEditor() :
+              this.renderTemplatesEditor()
           }
         </div>
       </div>

@@ -67,15 +67,15 @@ export default React.createClass({
   createProtectedInput(labelValue, propName) {
     let savedValue = this.props.savedCredentials.get(propName);
     return (
-          <Input
-            key={propName}
-            label={this.renderProtectedLabel(labelValue, !!savedValue)}
-            type="password"
-            labelClassName="col-xs-4"
-            wrapperClassName="col-xs-8"
-            placeholder={(savedValue) ? 'type new password to change it' : ''}
-            value={this.props.credentials.get(propName)}
-            onChange={this.handleChange.bind(this, propName)}/>
+      <Input
+        key={propName}
+        label={this.renderProtectedLabel(labelValue, !!savedValue)}
+        type="password"
+        labelClassName="col-xs-4"
+        wrapperClassName="col-xs-8"
+        placeholder={(savedValue) ? 'type new password to change it' : ''}
+        value={this.props.credentials.get(propName)}
+        onChange={this.handleChange.bind(this, propName)}/>
     );
   },
 

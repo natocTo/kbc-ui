@@ -97,7 +97,6 @@ dispatcher.register(function(payload) {
   action = payload.action;
 
   switch (action.type) {
-
     case MetadataConstants.ActionTypes.METADATA_EDIT_START:
       _store = _store.setIn(
         ['editingMetadata', action.objectType, action.objectId, action.metadataKey],
@@ -145,7 +144,6 @@ dispatcher.register(function(payload) {
       });
       return MetadataStore.emitChange();
     default:
-
   }
 });
 

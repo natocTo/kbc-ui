@@ -8,9 +8,9 @@ export default React.createClass({
 
   render() {
     return (
-        <span>
-          {this.props.size ? fileSize(this.props.size) : 'N/A'}
-        </span>
+      <span>
+        {this.props.size ? fileSize(this.props.size) : 'N/A'}
+      </span>
     );
   }
 

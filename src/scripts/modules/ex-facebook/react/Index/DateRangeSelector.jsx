@@ -68,9 +68,9 @@ export default React.createClass({
       >
         {TEMPLATES.map((t) =>
           <MenuItem eventKey={t.name}>
-              {t.name}
+            {t.name}
           </MenuItem>
-         )}
+        )}
       </DropdownButton>
     );
   },
@@ -79,8 +79,8 @@ export default React.createClass({
     // const id = e.target.value;
     const template = TEMPLATES.find((t) => t.name === id);
     const newQuery = this.props.query
-                         .setIn(['query', 'since'], template.since)
-                         .setIn(['query', 'until'], template.until);
+      .setIn(['query', 'since'], template.since)
+      .setIn(['query', 'until'], template.until);
     this.props.updateQueryFn(newQuery);
     const newText = template.name + ' date range';
     this.setState({text: newText});

@@ -21,14 +21,14 @@ import AdvancedSettings from './AdvancedSettings';
 
 const StaticText = FormControls.Static;
 import {params,
-        getInTable,
-        updateLocalState,
-        updateEditingValue,
-        updateEditingMapping,
-        getInputMapping,
-        startEditing,
-        resetEditingMapping,
-        getEditingValue} from '../actions';
+  getInTable,
+  updateLocalState,
+  updateEditingValue,
+  updateEditingMapping,
+  getInputMapping,
+  startEditing,
+  resetEditingMapping,
+  getEditingValue} from '../actions';
 
 import createStoreMixin from '../../../react/mixins/createStoreMixin';
 import RoutesStore from '../../../stores/RoutesStore';
@@ -136,7 +136,7 @@ export default React.createClass({
             <ComponentMetadata
               componentId={componentId}
               configId={this.state.configId}
-              />
+            />
           </div>
           <ul className="nav nav-stacked">
             <li className={classnames({disabled: this.state.editing})}>
@@ -147,7 +147,7 @@ export default React.createClass({
                 runParams={ () => ({config: this.state.configId}) }
                 disabledReason="Configuration is not saved."
                 disabled={this.state.editing}
-                >
+              >
                 You are about to run the analysis job of selected task(s).
               </RunComponentButton>
             </li>
@@ -155,7 +155,7 @@ export default React.createClass({
               <DeleteConfigurationButton
                 componentId={componentId}
                 configId={this.state.configId}
-                />
+              />
             </li>
           </ul>
           <LatestJobs
@@ -185,7 +185,7 @@ export default React.createClass({
     return (
       <div>
         {this.renderFormElement('Input Table',
-           <SapiTableSelector
+          <SapiTableSelector
             placeholder="Select..."
             value={this.getEditingValue('intable')}
             onSelectTableFn= {this.intableChange}
@@ -213,13 +213,13 @@ export default React.createClass({
         }
 
 
-      {this.renderFormElement('Correction',
-                              this.renderEnumSelect(params.CORRECTION, ['none', 'basic', 'aggressive']),
-                              'Indicates whether common typos should be corrected before analysis')}
-      {this.renderFormElement('Diacritization',
-                              this.renderEnumSelect(params.DIACRITIC, ['none', 'auto', 'yes']),
-                              'Before analysing Czech text where diacritics are missing, add all the wedges and accents. For example, Muj ctyrnohy pritel is changed to Můj čtyřnohý přítel.')}
-      {this.renderEditCheckBox(params.BETA, 'Use Beta Version', "Use Geneea's beta server (use only when instructed to do so)")}
+        {this.renderFormElement('Correction',
+          this.renderEnumSelect(params.CORRECTION, ['none', 'basic', 'aggressive']),
+          'Indicates whether common typos should be corrected before analysis')}
+        {this.renderFormElement('Diacritization',
+          this.renderEnumSelect(params.DIACRITIC, ['none', 'auto', 'yes']),
+          'Before analysing Czech text where diacritics are missing, add all the wedges and accents. For example, Muj ctyrnohy pritel is changed to Můj čtyřnohý přítel.')}
+        {this.renderEditCheckBox(params.BETA, 'Use Beta Version', "Use Geneea's beta server (use only when instructed to do so)")}
         {this.renderAnalysisTypesSelect()}
         {this.renderAdvancedSettings()}
       </div>
@@ -296,7 +296,7 @@ export default React.createClass({
         }}
       >
         <span className="kbc-icon-pencil"/>
-    </button>);
+      </button>);
     return (
       <span>
         Input Data Filter
@@ -332,9 +332,9 @@ export default React.createClass({
         <div className="checkbox" key={value}>
           <label>
             <input
-             type="checkbox"
-             checked={checked}
-             onChange={onChange}/>
+              type="checkbox"
+              checked={checked}
+              onChange={onChange}/>
             <span>
               {info.name}
             </span>
@@ -421,7 +421,7 @@ export default React.createClass({
         }}
         options= {this.getColumns()}
       />
-    , description);
+      , description);
     return result;
   },
 
@@ -491,20 +491,20 @@ export default React.createClass({
           {this.renderResultLabel()}
         </label>
         <div className="col-sm-9 ">
-        <ul className="nav nav-stacked">
-          <li>
-            <SapiTableLinkEx
-              tableId={`${bucketId}.analysis-result-documents`}/>
-          </li>
-          <li>
-            <SapiTableLinkEx
-              tableId={`${bucketId}.analysis-result-entities`}/>
-          </li>
-          <li>
-            <SapiTableLinkEx
-              tableId={`${bucketId}.analysis-result-relations`}/>
-          </li>
-        </ul>
+          <ul className="nav nav-stacked">
+            <li>
+              <SapiTableLinkEx
+                tableId={`${bucketId}.analysis-result-documents`}/>
+            </li>
+            <li>
+              <SapiTableLinkEx
+                tableId={`${bucketId}.analysis-result-entities`}/>
+            </li>
+            <li>
+              <SapiTableLinkEx
+                tableId={`${bucketId}.analysis-result-relations`}/>
+            </li>
+          </ul>
         </div>
       </div>
     );
@@ -545,8 +545,8 @@ export default React.createClass({
         labelClassName="col-sm-3"
         wrapperClassName="col-sm-9">
         {isBetaCheckobx ? <Check
-                            isChecked={value}/>
-         : value || 'n/a'}
+          isChecked={value}/>
+          : value || 'n/a'}
       </StaticText>
     );
   },

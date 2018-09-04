@@ -50,7 +50,7 @@ export default React.createClass({
           onDeleteFn={() => this.handleDelete(queryId)}
           isPending={this.state.store.isPending(['deleteQuery', queryId])}
           tooltipPlacement="bottom"
-          />
+        />
         <ActivateDeactivateButton
           activateTooltip="Enable Query"
           deactivateTooltip="Disable Query"
@@ -58,7 +58,7 @@ export default React.createClass({
           isPending={this.state.store.isPending(['toggleQuery', queryId])}
           onChange={() => this.handleToggle(queryId)}
           tooltipPlacement="bottom"
-          />
+        />
         <RunExtractionButton
           title="Run Extraction"
           component={COMPONENT_ID}
@@ -69,7 +69,7 @@ export default React.createClass({
             };
           }}
           tooltipPlacement="bottom"
-          >
+        >
           You are about to run an extraction.
         </RunExtractionButton>
       </div>

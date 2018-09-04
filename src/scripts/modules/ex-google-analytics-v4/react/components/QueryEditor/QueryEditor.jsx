@@ -44,16 +44,16 @@ export default React.createClass({
             </label>
             <div className="col-md-6">
               {isEditing ?
-               <input
-                 type="text"
-                 className="form-control"
-                 value={query.get('name')}
-                 placeholder="e.g. Untitled Query"
-                 onChange={this.onChangeTextPropFn('name')}/>
-               :
-               <p className="form-control-static">
-                 {query.get('name')}
-               </p>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={query.get('name')}
+                  placeholder="e.g. Untitled Query"
+                  onChange={this.onChangeTextPropFn('name')}/>
+                :
+                <p className="form-control-static">
+                  {query.get('name')}
+                </p>
               }
             </div>
             <div className="col-md-2 checkbox">
@@ -74,21 +74,21 @@ export default React.createClass({
             </label>
             <div className="col-md-8">
               {isEditing ?
-               <div className="input-group">
-                 <div className="input-group-addon">
-                   <small>{this.props.outputBucket}</small>.
-                 </div>
-                 <input
-                   type="text"
-                   className="form-control"
-                   value={query.get('outputTable')}
-                   placeholder={sanitizeTableName(query.get('name'))}
-                   onChange={this.onChangeTextPropFn('outputTable')}/>
-               </div>
-               :
-               <p className="form-control-static">
-                 <SapiTableLinkEx tableId={outTableId} />
-               </p>
+                <div className="input-group">
+                  <div className="input-group-addon">
+                    <small>{this.props.outputBucket}</small>.
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={query.get('outputTable')}
+                    placeholder={sanitizeTableName(query.get('name'))}
+                    onChange={this.onChangeTextPropFn('outputTable')}/>
+                </div>
+                :
+                <p className="form-control-static">
+                  <SapiTableLinkEx tableId={outTableId} />
+                </p>
               }
             </div>
           </div>
@@ -133,16 +133,16 @@ export default React.createClass({
             </label>
             <div className="col-md-10">
               {isEditing ?
-               <input
-                 type="text"
-                 placeholder="e.g ga:sourceMedium=~(something)"
-                 className="form-control"
-                 value={query.getIn(['query', 'filtersExpression'])}
-                 onChange={this.onChangeTextPropFn(['query', 'filtersExpression'])}/>
-               :
-               <p className="form-control-static">
-                 {query.getIn(['query', 'filtersExpression']) || 'N/A'}
-               </p>
+                <input
+                  type="text"
+                  placeholder="e.g ga:sourceMedium=~(something)"
+                  className="form-control"
+                  value={query.getIn(['query', 'filtersExpression'])}
+                  onChange={this.onChangeTextPropFn(['query', 'filtersExpression'])}/>
+                :
+                <p className="form-control-static">
+                  {query.getIn(['query', 'filtersExpression']) || 'N/A'}
+                </p>
               }
 
             </div>
@@ -155,16 +155,16 @@ export default React.createClass({
             </label>
             <div className="col-md-9 pull-left">
               {isEditing ?
-               <span className="btn btn-link form-control-static"
-                 onClick={this.openOptionsDialogModal}>
-                 {query.get('antisampling') || 'None'}
-                 {' '}
-                 <span className="kbc-icon-pencil" />
-               </span>
-               :
-               <p className="form-control-static">
-                 {query.get('antisampling') || 'None'}
-               </p>
+                <span className="btn btn-link form-control-static"
+                  onClick={this.openOptionsDialogModal}>
+                  {query.get('antisampling') || 'None'}
+                  {' '}
+                  <span className="kbc-icon-pencil" />
+                </span>
+                :
+                <p className="form-control-static">
+                  {query.get('antisampling') || 'None'}
+                </p>
               }
             </div>
           </div>

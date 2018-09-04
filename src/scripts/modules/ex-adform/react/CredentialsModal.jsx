@@ -23,7 +23,7 @@ export default React.createClass({
           <CredentialsForm
             credentials={this.props.credentials}
             onChange={this.props.onChange}
-            />
+          />
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
@@ -31,7 +31,7 @@ export default React.createClass({
             isDisabled={this.props.isSaving || !this.isValid()}
             onSave={this.handleSave}
             onCancel={this.props.onHide}
-            />
+          />
         </Modal.Footer>
       </Modal>
     );
