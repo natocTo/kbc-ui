@@ -98,6 +98,7 @@
   },
   "devDependencies": {
     "babel-eslint": "7.2.3",
+    "babel-jest": "^23.4.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^1.0.7",
     "deep-diff": "^0.3.8",
@@ -108,35 +109,7 @@
     "eslint-loader": "^2.1.0",
     "eslint-plugin-react": "6.10.3",
     "exports-loader": "^0.6.3",
-    "jest": "^18.0.0",
+    "jest": "^23.5.0",
     "mocha": "^2.4.5"
-  },
-  "jest": {
-    "cacheDirectory": "<rootDir>/node_modules/.cache/jest",
-    "testPathDirs": [
-      "<rootDir>/src/scripts"
-    ],
-    "moduleFileExtensions": [
-      "jsx",
-      "js",
-      "coffee",
-      "json"
-    ],
-    "transform": {
-      "^.+\\.(jsx|js|coffee)$": "<rootDir>/environment/jest/transform.js"
-    },
-    "moduleNameMapper": {
-      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/environment/jest/FileStub.js",
-      "^.+\\.(css|less|scss|sass)$": "<rootDir>/environment/jest/CSSStub.js"
-    },
-    "setupFiles": [
-      "<rootDir>/environment/tests/_setup"
-    ],
-    "snapshotSerializers": [
-      "<rootDir>/node_modules/enzyme-to-json/serializer"
-    ],
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [],
-    "testRegex": "\\.(test|spec)\\.(js|jsx)$"
   }
 }

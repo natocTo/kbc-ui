@@ -1,11 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`<Expiration /> should render expiration warning when expiration is close 1`] = `
 <AlertBlock
   title="This project will expire in 1 day"
-  type="warning">
+  type="warning"
+>
   <p>
     Please 
     <a
-      onClick={[Function]}>
+      onClick={[Function]}
+    >
       contact support
     </a>
      for project plan upgrade.

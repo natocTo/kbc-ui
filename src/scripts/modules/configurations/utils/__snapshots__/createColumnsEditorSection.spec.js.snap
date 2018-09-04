@@ -1,32 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`columns editor section test render 1`] = `
 <div>
   <h3>
     Columns
   </h3>
   <div
-    class="storage-table-columns-editor-wrapper">
+    class="storage-table-columns-editor-wrapper"
+  >
     <table
-      class="storage-table-columns-editor table table-striped">
+      class="storage-table-columns-editor table table-striped"
+    >
       <thead>
         <tr>
           <th
-            class="col-md-2">
+            class="col-md-2"
+          >
             Column Name
           </th>
           <th>
             Column Setup
           </th>
           <th
-            class="col-md-1">
+            class="col-md-1"
+          >
             Preview
           </th>
         </tr>
       </thead>
       <tbody>
         <tr
-          class="">
+          class=""
+        >
           <td
-            class="column-name">
+            class="column-name"
+          >
             age
           </td>
           <td>
@@ -50,18 +58,20 @@ exports[`columns editor section test render 1`] = `
           </td>
           <td>
             <button
-              class="btn btn-link">
+              class="btn btn-link"
+            >
               <span
-                class="fa fa-eye">
-                
-              </span>
+                class="fa fa-eye"
+              />
             </button>
           </td>
         </tr>
         <tr
-          class="">
+          class=""
+        >
           <td
-            class="column-name">
+            class="column-name"
+          >
             person
           </td>
           <td>
@@ -85,18 +95,20 @@ exports[`columns editor section test render 1`] = `
           </td>
           <td>
             <button
-              class="btn btn-link">
+              class="btn btn-link"
+            >
               <span
-                class="fa fa-eye">
-                
-              </span>
+                class="fa fa-eye"
+              />
             </button>
           </td>
         </tr>
         <tr
-          class="danger">
+          class="danger"
+        >
           <td
-            class="column-name">
+            class="column-name"
+          >
             otherColumn
           </td>
           <td>
@@ -120,18 +132,20 @@ exports[`columns editor section test render 1`] = `
           </td>
           <td>
             <button
-              class="btn btn-link">
+              class="btn btn-link"
+            >
               <span
-                class="fa fa-eye">
-                
-              </span>
+                class="fa fa-eye"
+              />
             </button>
           </td>
         </tr>
         <tr
-          class="">
+          class=""
+        >
           <td
-            class="column-name">
+            class="column-name"
+          >
             deletedColumn
           </td>
           <td>
@@ -155,11 +169,11 @@ exports[`columns editor section test render 1`] = `
           </td>
           <td>
             <button
-              class="btn btn-link">
+              class="btn btn-link"
+            >
               <span
-                class="fa fa-eye">
-                
-              </span>
+                class="fa fa-eye"
+              />
             </button>
           </td>
         </tr>
