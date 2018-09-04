@@ -206,15 +206,15 @@ export default function(configId) {
               createTableParams.enclosure = store.settings.get('enclosure');
 
               storageApiActions.createTable(bucketId, createTableParams)
-                .then(function() {
-                  createTableMetadata();
-                  resetUploadState();
-                  resetForm();
-                  resultSuccess('CSV file successfully imported.');
-                }).catch(function(e) {
-                  resetUploadState();
-                  resultError(e);
-                });
+              .then(function() {
+                createTableMetadata();
+                resetUploadState();
+                resetForm();
+                resultSuccess('CSV file successfully imported.');
+              }).catch(function(e) {
+                resetUploadState();
+                resultError(e);
+              });
             };
 
             if (!bucketsStore.hasBucket(bucketId)) {

@@ -21,18 +21,18 @@ export default React.createClass({
     return (
       <Form horizontal>
         {fields.type.show && this.renderSelectGroup(
-          'Type',
-          'type',
-          Object.keys(Types)
+           'Type',
+           'type',
+           Object.keys(Types)
         )}
 
         {fields.title.show && this.renderInputGroup('Title', 'title')}
 
         {fields.dataType.show && this.renderSelectGroup(
-          'Data Type',
-          'dataType',
-          Object.keys(DataTypes),
-          fields.dataTypeSize.show && this.renderInput('dataTypeSize')
+           'Data Type',
+           'dataType',
+           Object.keys(DataTypes),
+           fields.dataTypeSize.show && this.renderInput('dataTypeSize')
         )}
         {fields.dateDimension.show &&
          this.renderSelectGroup(
@@ -42,14 +42,14 @@ export default React.createClass({
          )}
         {fields.format.show && this.renderInputGroup('Date format', 'format')}
         {fields.schemaReference.show && this.renderSelectGroup(
-          'Reference',
-          'schemaReference',
-          this.props.context.referencableTables
+           'Reference',
+           'schemaReference',
+           this.props.context.referencableTables
         )}
         {fields.reference.show && this.renderSelectGroup(
-          'Reference',
-          'reference',
-          this.props.context.referencableColumns
+           'Reference',
+           'reference',
+           this.props.context.referencableColumns
         )}
         {fields.sortLabel.show && this.props.context.sortLabelsColumns[column.id] &&
          this.renderSelectGroup(
@@ -84,15 +84,15 @@ export default React.createClass({
         <Col sm={8}>
           {
             extraControl ?
-              [
-                <Col sm={8} key="control" style={{padding: '0'}}>
-                  {control}
-                </Col>,
-                <Col sm={4} key="extracontrol" style={{paddingRight: '0'}}>
-                  {extraControl}
-                </Col>
-              ]
-              : control
+            [
+              <Col sm={8} key="control" style={{padding: '0'}}>
+                {control}
+              </Col>,
+              <Col sm={4} key="extracontrol" style={{paddingRight: '0'}}>
+                {extraControl}
+              </Col>
+            ]
+            : control
           }
         </Col>
       </FormGroup>

@@ -238,16 +238,16 @@ export default React.createClass({
           <div className="form-group">
             <label> Google configuration </label>
             {this.hasProject() ?
-              this.renderProjectInfo()
-              :
-              <EmptyState>
-                <p> No configuration found </p>
-                <button type="button" className="btn btn-success"
-                  onClick={this.showProjectsModal}
-                >
+             this.renderProjectInfo()
+             :
+             <EmptyState>
+               <p> No configuration found </p>
+               <button type="button" className="btn btn-success"
+                 onClick={this.showProjectsModal}
+               >
                  Configure
-                </button>
-              </EmptyState>
+               </button>
+             </EmptyState>
             }
           </div>
         </div>

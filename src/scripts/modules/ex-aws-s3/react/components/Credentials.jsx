@@ -40,7 +40,7 @@ export default React.createClass({
               More information is available in the <a href="https://help.keboola.com/extractors/other/aws-s3/">documentation</a>.
             </span>
           )}
-        />
+          />
         <Input
           type="password"
           label="Secret Access Key"
@@ -52,7 +52,7 @@ export default React.createClass({
           }}
           help={(<span>The AWS Secret Access Key will be encrypted.</span>)}
           disabled={this.props.disabled}
-        />
+          />
       </div>
     );
   }

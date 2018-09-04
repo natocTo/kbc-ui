@@ -71,11 +71,6 @@ module.exports = function(options) {
       publicPath: isDevelopment ? '/scripts/' : '',
       library: 'kbcApp'
     },
-    optimization: {
-      splitChunks: {
-        chunks: 'all'
-      }
-    },
     plugins: plugins,
     resolve: {
       extensions: ['*', '.js', '.jsx', '.coffee']

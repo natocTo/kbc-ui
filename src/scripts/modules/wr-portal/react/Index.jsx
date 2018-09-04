@@ -127,15 +127,15 @@ export default function(componentId) {
 
     renderHowto() {
       return (
-        <a onClick={() => this.updateLocalState(['showHowto'], true)}>
-          <span className="fa fa-question-circle fa-fw"/>
+          <a onClick={() => this.updateLocalState(['showHowto'], true)}>
+            <span className="fa fa-question-circle fa-fw"/>
             How To Connect
-          <HowtoModal
-            show={!!this.state.localState.get('showHowto')}
-            onHide={() => this.updateLocalState(['showHowto'], false)}
-            componentId={componentId}
-          />
-        </a>
+            <HowtoModal
+              show={!!this.state.localState.get('showHowto')}
+              onHide={() => this.updateLocalState(['showHowto'], false)}
+              componentId={componentId}
+            />
+          </a>
       );
     },
 

@@ -20,18 +20,18 @@ export default React.createClass({
     if (!this.props.loadingProfilerData) {
       profilerInfo = [
         (<span style={{'padding': 0}} className="col-xs-3">
-          { this.renderResultsStatus()}
+            { this.renderResultsStatus()}
         </span>)
         ,
         (<span style={{'padding': 0}} className="col-xs-4">
-          {this.renderRunStatus()}
-        </span>)
+        {this.renderRunStatus()}
+         </span>)
       ];
     }
     return (
       <span className="col-xs-12" style={{'padding': 0}}>
         <span style={{'padding': 0}}
-          className="col-xs-5">
+              className="col-xs-5">
           Enhanced Analysis:
         </span>
         {profilerInfo}
@@ -62,7 +62,7 @@ export default React.createClass({
       return (
         <span> <Loader />{' '}
           <Link to="jobDetail"
-            params={{jobId: runningJob.get('id')}}>
+                params={{jobId: runningJob.get('id')}}>
             Analyzing...
           </Link>
         </span>
@@ -73,8 +73,8 @@ export default React.createClass({
       } else {
         return (
           <Button style={{padding: 0}}
-            className="btn btn-link"
-            onClick={this.props.onRunAnalysis}>
+                  className="btn btn-link"
+                  onClick={this.props.onRunAnalysis}>
             Run Analysis
           </Button>
         );

@@ -28,7 +28,7 @@ export default React.createClass({
               options={this.props.templates}
               onChange={this.props.onChange}
               placeholder="Select template"
-            />
+              />
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -39,7 +39,7 @@ export default React.createClass({
             isDisabled={!this.isValid()}
             onSave={this.handleSave}
             onCancel={this.props.onHide}
-          />
+            />
         </Modal.Footer>
       </Modal>
     );

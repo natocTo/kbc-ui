@@ -66,9 +66,9 @@ export default React.createClass({
           <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
             {this.renderSetupModal()}
             {this.isConfigured() ?
-              this.renderStatic()
-              :
-              this.renderStartSetup()
+             this.renderStatic()
+             :
+             this.renderStartSetup()
             }
           </div>
         </div>
@@ -173,8 +173,8 @@ export default React.createClass({
     const inputTableElement = (
       <p className="form-control-static">
         {inputTableId ?
-          <SapiTableLinkEx tableId={inputTableId} />
-          : 'N/A'
+         <SapiTableLinkEx tableId={inputTableId} />
+         : 'N/A'
         }
       </p>
     );
@@ -241,10 +241,10 @@ export default React.createClass({
     return (
       <p className="form-control-static">
         {parameters.get('settingsLink') ?
-          <a target="_blank" rel="noopener noreferrer" href={parameters.get('settingsLink')}>
-            {cname}
-          </a>
-          : <span> {cname} </span>
+         <a target="_blank" rel="noopener noreferrer" href={parameters.get('settingsLink')}>
+           {cname}
+         </a>
+         : <span> {cname} </span>
         }
       </p>
     );

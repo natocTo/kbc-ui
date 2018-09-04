@@ -36,12 +36,12 @@ export default React.createClass({
             <div className="tbody">
               {this.props.ranges.map((r, idx) => this.renderRange(r, idx))}
               {this.props.isEditing && this.props.ranges.count() < 2 ?
-                <div className="tr">
-                  <button className="btn btn-link" onClick={this.addRange}>
+               <div className="tr">
+                 <button className="btn btn-link" onClick={this.addRange}>
                    Add Date Range
-                  </button>
-                </div>
-                : null
+                 </button>
+               </div>
+               : null
               }
             </div>
           </div>
@@ -55,13 +55,13 @@ export default React.createClass({
     const idx = modalData.get('idx', null);
     const range = modalData.get('range', Map());
     return (
-      <DateRangeModal
-        show={ idx !== null}
-        startDate={range.get('startDate')}
-        endDate={range.get('endDate')}
-        onCancel={() => this.props.updateLocalState('rangeModal', Map())}
-        onSet={(startDate, endDate) => this.updateRange(startDate, endDate, idx)}
-      />);
+        <DateRangeModal
+          show={ idx !== null}
+          startDate={range.get('startDate')}
+          endDate={range.get('endDate')}
+          onCancel={() => this.props.updateLocalState('rangeModal', Map())}
+          onSet={(startDate, endDate) => this.updateRange(startDate, endDate, idx)}
+        />);
   },
 
   renderRange(range, idx) {

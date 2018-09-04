@@ -64,7 +64,7 @@ export default React.createClass({
               onChange={this.handleChange}
               readOnly={this.props.disabled ? 'nocursor' : false}
               placeholder="-- Your SQL goes here..."
-            />
+              />
           </div>
           <div className="small help-block">
             {this.help()}

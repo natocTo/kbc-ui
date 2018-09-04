@@ -27,11 +27,11 @@ export default React.createClass({
         {this.renderEnableCheckbox()}
         {this.isEnabled() ?
           <span>
-            {this.createInput('SSH host', 'sshHost', 'text', false)}
+           {this.createInput('SSH host', 'sshHost', 'text', false)}
             {this.createInput('SSH user', 'user', 'text', false)}
             {this.createInput('SSH port', 'sshPort', 'number', false)}
             {this.renderPublicKey()}
-          </span>
+         </span>
           : null
         }
       </div>
@@ -74,9 +74,9 @@ export default React.createClass({
         </label>
         <div className="col-sm-8">
           {(publicKey ?
-            <pre>
+              <pre>
               {publicKey}
-              {this.renderClipboard(publicKey)}
+                {this.renderClipboard(publicKey)}
             </pre> : null
           )}
           {(this.props.isEditing ? this.renderKeyGen(publicKey) : null)}
@@ -98,10 +98,10 @@ export default React.createClass({
         </button>
         {this.state.isGenerating ? <Loader /> : null}
         {(this.state.isKeygenError ?
-          <span className="text-danger">
-            <span className="fa fa-fw fa-meh-o" />
+            <span className="text-danger">
+              <span className="fa fa-fw fa-meh-o" />
               Unable to Generate SSH keys. Try it again.
-          </span> : null
+            </span> : null
         )}
       </span>
     );

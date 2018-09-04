@@ -29,7 +29,7 @@ export default React.createClass({
           configId={this.props.bucketId}
           rowId={this.props.transformationId}
           onClick={this.props.onClick}
-        >
+          >
           Transformation {this.state.transformation.get('name')}, output mapping of {this.props.tableId}
         </ComponentConfigurationRowLink>
         <br />

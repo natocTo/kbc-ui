@@ -9,7 +9,7 @@ function loadSheetsApi() {
 export function listSheets(fileId) {
   return loadSheetsApi()
     .then( () =>
-      gapi().client.sheets.spreadsheets.get({
-        spreadsheetId: fileId
-      }));
+           gapi().client.sheets.spreadsheets.get({
+             spreadsheetId: fileId
+           }));
 }

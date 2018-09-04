@@ -26,7 +26,7 @@ export default React.createClass({
             isLoading={this.props.isSaving}
             allowCreate={true}
             trimMultiCreatedValues={true}
-          />
+            />
           <span className="help-block">
             {this.hint()}
           </span>

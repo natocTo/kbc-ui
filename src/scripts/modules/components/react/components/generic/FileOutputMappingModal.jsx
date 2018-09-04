@@ -119,19 +119,19 @@ export default React.createClass({
       isSaving: true
     });
     this.props
-      .onSave()
-      .then(() => {
-        this.setState({
-          isSaving: false
+        .onSave()
+        .then(() => {
+          this.setState({
+            isSaving: false
+          });
+          this.closeModal();
+        })
+        .catch((e) => {
+          this.setState({
+            isSaving: false
+          });
+          throw e;
         });
-        this.closeModal();
-      })
-      .catch((e) => {
-        this.setState({
-          isSaving: false
-        });
-        throw e;
-      });
   }
 
 });

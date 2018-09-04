@@ -63,15 +63,15 @@ export default React.createClass({
       <Modal.Body>
         <div className="row">
           {this.renderFormElement(
-            '',
-            <SapiTableSelector
-              placeholder="select a table and the bucket will get selected automatically"
-              value={this.props.localState.get('table')}
-              onSelectTableFn={this.selectTable}
-              excludeTableFn= {this.filterRedshiftTables}
-            />, '')
+             '',
+             <SapiTableSelector
+               placeholder="select a table and the bucket will get selected automatically"
+               value={this.props.localState.get('table')}
+               onSelectTableFn={this.selectTable}
+               excludeTableFn= {this.filterRedshiftTables}
+             />, '')
           }
-          {this.renderFormElement('Selected Bucket', this.props.localState.get('bucketId') || 'N/A')}
+             {this.renderFormElement('Selected Bucket', this.props.localState.get('bucketId') || 'N/A')}
         </div>
       </Modal.Body>
     );

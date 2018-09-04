@@ -38,8 +38,8 @@ export default React.createClass({
           {this.props.isSaving ? <Loader/> : null}
           <Button bsStyle="link" onClick={this.close}>Close</Button>
           <Button bsStyle="primary"
-            disabled={this.props.isSaving || this.state.task === ''}
-            onClick={() => this.props.onChangeWriterFn(this.state.task)}>Change</Button>
+                  disabled={this.props.isSaving || this.state.task === ''}
+                  onClick={() => this.props.onChangeWriterFn(this.state.task)}>Change</Button>
         </Modal.Footer>
       </Modal>
     );

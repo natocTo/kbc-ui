@@ -25,12 +25,12 @@ export default React.createClass({
           unCheckedChildren={'x'}
           checked={limit.get('limitValue')}
           onChange={this.handleChange}
-        />
+          />
         <EditLimitModal
           limit={limit}
           onHide={this.closeModal}
           isOpen={this.state.isOpen}
-        />
+          />
       </span>
     );
   },

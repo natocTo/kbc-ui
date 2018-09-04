@@ -68,8 +68,8 @@ export default React.createClass({
                 extensions={['.csv']} >
                 <Button bsStyle="success">
                   <i className={Array.isArray(this.props.selectedDropboxFiles) && this.props.selectedDropboxFiles.length > 0 ?
-                    'fa fa-fw fa-check-circle-o'
-                    : 'fa fa-fw fa-dropbox'} />
+                                'fa fa-fw fa-check-circle-o'
+                              : 'fa fa-fw fa-dropbox'} />
                   Choose from Dropbox
                 </Button>
               </DropboxChooser>

@@ -29,9 +29,9 @@ export default React.createClass({
   render() {
     if (this.props.dataPreviewError) {
       return (
-        <EmptyState>
-          {this.props.dataPreviewError}
-        </EmptyState>
+          <EmptyState>
+            {this.props.dataPreviewError}
+          </EmptyState>
       );
     }
 
@@ -224,10 +224,10 @@ export default React.createClass({
     const data = this.props.dataPreview;
     const columnIndex = data.first().indexOf(columnName);
     const result = data
-      .shift()
-      .map( (row) => {
-        return row.get(columnIndex);
-      });
+    .shift()
+    .map( (row) => {
+      return row.get(columnIndex);
+    });
     return result;
   },
 

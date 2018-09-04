@@ -41,7 +41,7 @@ export default React.createClass({
     return !!simpleMatch(filter, data.group) ||
            !!simpleMatch(filter, data.name) ||
            !!simpleMatch(filter, data.id);
-    // data.desc.search(filterEscaped) >= 0;
+           // data.desc.search(filterEscaped) >= 0;
   },
 
   escapeRegExp(str) {
@@ -92,7 +92,7 @@ export default React.createClass({
       .map((i) => alldata.find((pi) => pi.id === i));
 
     const restData = alldata.filter((d) => !order.includes(d.id))
-      .sort((a, b) => a.attributes.group.localeCompare(b.attributes.group));
+                            .sort((a, b) => a.attributes.group.localeCompare(b.attributes.group));
     return orderedData.concat(restData);
   },
 
@@ -144,8 +144,8 @@ export default React.createClass({
         <div className={this.props.wrapperClassName}>
           <p className="form-control-static">
             {(this.props.selectedValues.length > 0) ?
-              this.props.selectedValues.map((val, idx) => this.renderStaticOption(val, idx))
-              : 'N/A'
+             this.props.selectedValues.map((val, idx) => this.renderStaticOption(val, idx))
+             : 'N/A'
             }
           </p>
         </div>

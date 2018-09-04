@@ -32,7 +32,7 @@ export default React.createClass({
               }}
               placeholder="mytable"
               disabled={this.props.disabled}
-            />
+              />
             <HelpBlock>
               Name of the table stored in the target project's bucket.
             </HelpBlock>

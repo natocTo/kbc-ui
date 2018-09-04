@@ -56,7 +56,7 @@ export default React.createClass({
         backend={this.props.transformation.get('type')}
         disabled={this.props.isSaving}
         onChange={this.props.onEditChange}
-      />
+        />
     );
   }
 });

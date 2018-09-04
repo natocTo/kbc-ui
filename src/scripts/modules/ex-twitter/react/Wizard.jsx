@@ -63,7 +63,7 @@ export default React.createClass({
               label="Screen name"
               help="User timeline will be fetched."
               disabled={this.isStatic()}
-            />
+              />
           </div>
         </WizardStep>
         <WizardStep step={Steps.STEP_MENTIONS} title="Mentions" buttons={mentionsButtons}>
@@ -72,18 +72,18 @@ export default React.createClass({
           </div>
         </WizardStep>
         <WizardStep step={Steps.STEP_FOLLOWERS} title="Followers List" buttons={followersButtons}>
-          <div className="col-md-8">
-            <InputAutoFocused
-              type="text"
-              currentStep={this.props.step}
-              value={this.props.settings.get('followersScreenName')}
-              onChange={this.onFollowersChange}
-              label="Screen name"
-              autoFocus={true}
-              help="Account's followers will be fetched."
-              disabled={this.isStatic()}
-            />
-          </div>
+            <div className="col-md-8">
+              <InputAutoFocused
+                type="text"
+                currentStep={this.props.step}
+                value={this.props.settings.get('followersScreenName')}
+                onChange={this.onFollowersChange}
+                label="Screen name"
+                autoFocus={true}
+                help="Account's followers will be fetched."
+                disabled={this.isStatic()}
+                />
+            </div>
         </WizardStep>
         <WizardStep step={Steps.STEP_SEARCH} title="Search Tweets" buttons={searchButtons}>
           <div className="col-md-8">
@@ -95,7 +95,7 @@ export default React.createClass({
               label="Query"
               autoFocus={true}
               disabled={this.isStatic()}
-            />
+              />
           </div>
         </WizardStep>
       </WizardCommon>
@@ -115,17 +115,17 @@ export default React.createClass({
     });
     return (
       <WizardStep step={Steps.STEP_AUTHORIZATION} title="Authorization" buttons={buttons}>
-        <div className="col-md-12">
-          <AuthorizationRow
-            id={this.props.oauthCredentialsId}
-            configId={this.props.configId}
-            componentId={COMPONENT_ID}
-            credentials={this.props.oauthCredentials}
-            isResetingCredentials={false}
-            onResetCredentials={this.deleteCredentials}
-            showHeader={false}
-          />
-        </div>
+          <div className="col-md-12">
+            <AuthorizationRow
+              id={this.props.oauthCredentialsId}
+              configId={this.props.configId}
+              componentId={COMPONENT_ID}
+              credentials={this.props.oauthCredentials}
+              isResetingCredentials={false}
+              onResetCredentials={this.deleteCredentials}
+              showHeader={false}
+              />
+          </div>
       </WizardStep>
     );
   },

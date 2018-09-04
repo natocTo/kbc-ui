@@ -47,12 +47,12 @@ export default React.createClass({
                 </p>
                 <p>
                 Api Version <input
-                    id="version"
-                    type="text"
-                    className="form-control"
-                    value={value}
-                    onChange={this.handleVersionChange}
-                    style={{width: '100px', display: 'inline-block'}}/>
+                              id="version"
+                              type="text"
+                              className="form-control"
+                              value={value}
+                              onChange={this.handleVersionChange}
+                              style={{width: '100px', display: 'inline-block'}}/>
                 </p>
               </div>
             </div>

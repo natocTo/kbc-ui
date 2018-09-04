@@ -58,20 +58,20 @@ export default React.createClass({
       <div className="col-md-9 kbc-main-content">
         <div className="row kbc-header">
           <ComponentDescription
-            componentId={componentId}
-            configId={this.state.configId}
+              componentId={componentId}
+              configId={this.state.configId}
           />
         </div>
         <div className="row">
           <div className="col-md-12">
             <TableInputMapping
-              componentId={componentId}
-              tables={this.state.tables}
-              pendingActions={this.state.pendingActions}
-              openMappings={this.state.openMappings}
-              editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'tables'], List())}
-              configId={this.state.configId}
-              value={this.state.configData.getIn(['storage', 'input', 'tables'], List())}/>
+                componentId={componentId}
+                tables={this.state.tables}
+                pendingActions={this.state.pendingActions}
+                openMappings={this.state.openMappings}
+                editingValue={this.state.editingConfigData.getIn(['storage', 'input', 'tables'], List())}
+                configId={this.state.configId}
+                value={this.state.configData.getIn(['storage', 'input', 'tables'], List())}/>
           </div>
           <div className="col-md-12">
             <h2>Repisitory:</h2>
@@ -105,16 +105,16 @@ export default React.createClass({
 
     return (
       <InlineEditText
-        text={isEditing ? editingValue : value}
-        editTooltip={tooltip}
-        placeholder={placeholder}
-        onEditStart={this.onEditSet(param, value)}
-        onEditCancel={this.onEditCancel(param)}
-        onEditChange={this.onEditChange(param)}
-        onEditSubmit={this.onSubmit(param)}
-        isEditing={isEditing}
-        isSaving={!!savingValue && savingValue !== value}
-        isValid={isValid}
+          text={isEditing ? editingValue : value}
+          editTooltip={tooltip}
+          placeholder={placeholder}
+          onEditStart={this.onEditSet(param, value)}
+          onEditCancel={this.onEditCancel(param)}
+          onEditChange={this.onEditChange(param)}
+          onEditSubmit={this.onSubmit(param)}
+          isEditing={isEditing}
+          isSaving={!!savingValue && savingValue !== value}
+          isValid={isValid}
       />
     );
   },
@@ -144,25 +144,25 @@ export default React.createClass({
       <div className="col-md-3 kbc-main-sidebar">
         <div classNmae="kbc-buttons kbc-text-light">
           <ComponentMetadata
-            componentId={componentId}
-            configId={this.state.configId}
+              componentId={componentId}
+              configId={this.state.configId}
           />
         </div>
         <ul className="nav nav-stacked">
           <li>
             <RunComponentButton
-              title="Run"
-              component={componentId}
-              mode="link"
-              runParams={() => ({config: this.state.configId})}
+                title="Run"
+                component={componentId}
+                mode="link"
+                runParams={() => ({config: this.state.configId})}
             >
               You are about to run component.
             </RunComponentButton>
           </li>
           <li>
             <DeleteConfigurationButton
-              componentId={componentId}
-              configId={this.state.configId}
+                componentId={componentId}
+                configId={this.state.configId}
             />
           </li>
         </ul>

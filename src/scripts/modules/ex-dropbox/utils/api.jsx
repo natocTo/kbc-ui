@@ -17,10 +17,10 @@ function createRequest(method, path, token) {
 export default {
   getCsvFilesFromDropbox(token) {
     return createRequest('POST', '/search/auto', token)
-      .send('query=csv')
-      .promise()
-      .then((response) => {
-        return response.body;
-      });
+    .send('query=csv')
+    .promise()
+    .then((response) => {
+      return response.body;
+    });
   }
 };

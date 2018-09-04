@@ -50,12 +50,12 @@ export default React.createClass({
         <th>
           {c}
           {c === 'id' ?
-            <button style={{'padding-left': '2px', 'padding-bottom': 0, 'padding-top': 0}}
-              onClick={() => this.setState({showIds: !this.state.showIds})}
-              className="btn btn-link btn-sm">
-              {this.state.showIds ? 'Hide' : 'Show'}
-            </button>
-            : null}
+           <button style={{'padding-left': '2px', 'padding-bottom': 0, 'padding-top': 0}}
+             onClick={() => this.setState({showIds: !this.state.showIds})}
+             className="btn btn-link btn-sm">
+             {this.state.showIds ? 'Hide' : 'Show'}
+           </button>
+           : null}
 
         </th>
       );
@@ -123,8 +123,8 @@ export default React.createClass({
           {isLoading ? <Loader /> : null}
         </button>
         {isError ?
-          this.renderError(error)
-          : null}
+         this.renderError(error)
+         : null}
       </div>
     );
   }

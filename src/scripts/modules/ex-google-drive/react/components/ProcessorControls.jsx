@@ -34,7 +34,7 @@ export default React.createClass({
                 value={this.props.headerRowValue}
                 type="number"
                 className="form-control form-control-sm"
-              />
+                />
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default React.createClass({
               value={value}
               type={type}
               className="form-control form-control-sm"
-            />
+              />
           </div>
         </div>
         <div className="col-sm-4">

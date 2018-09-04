@@ -142,7 +142,7 @@ export default React.createClass({
           onChange={this.onChangeIncremental}
           help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
           disabled={this.props.disabled}
-        />
+          />
         <div className="form-group">
           <div className="col-xs-4 control-label">Primary Key</div>
           <div className="col-xs-8">
@@ -169,7 +169,7 @@ export default React.createClass({
           onChange={this.onChangeDelimiter}
           help={(<span>Field delimiter used in CSV file. Default value is <code>,</code>. Use <code>\t</code> for tabulator.</span>)}
           disabled={this.props.disabled}
-        />
+          />
         <Input
           type="text"
           label="Enclosure"
@@ -179,7 +179,7 @@ export default React.createClass({
           onChange={this.onChangeEnclosure}
           help="Field enclosure used in CSV file."
           disabled={this.props.disabled}
-        />
+          />
       </div>
     );
   }

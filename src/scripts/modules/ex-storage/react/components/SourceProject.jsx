@@ -50,7 +50,7 @@ export default React.createClass({
                 props.onChange({token: e.target.value});
               }}
               disabled={this.props.disabled}
-            />
+              />
             <HelpBlock>Use a token with permissions limited only to read from a single bucket in the source project.</HelpBlock>
           </Col>
         </FormGroup>

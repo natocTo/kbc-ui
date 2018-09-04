@@ -55,7 +55,7 @@ export default React.createClass({
                   value={this.props.google.get('storage', '')}
                   placeholder="gs://"
                   onChange= {(e) => this.updateEditingValue('storage', e.target.value)}
-                />
+                  />
               </div>
             </div>
           </div>
@@ -126,7 +126,7 @@ export default React.createClass({
                 value={this.props.google.get('storage', '')}
                 placeholder="gs://some-bucket-name"
                 onChange= {(e) => this.updateEditingValue('storage', e.target.value)}
-              />
+                />
               <div className="help-block">Existing Google Cloud Storage bucket. There will be data temporarily exported, before load to KBC.</div>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default React.createClass({
       <Modal
         show={this.props.show}
         onHide={this.props.onHideFn}
-      >
+        >
         <Modal.Header closeButton>
           <Modal.Title>
             Google configuration
@@ -164,7 +164,7 @@ export default React.createClass({
             onCancel={this.props.onHideFn}
             placement="right"
             saveLabel="Save Changes"
-          />
+            />
 
         </Modal.Footer>
       </Modal>

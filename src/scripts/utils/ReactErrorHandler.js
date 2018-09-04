@@ -11,12 +11,12 @@ let errorPlaceholder = <noscript/>;
 
 if (process.env.__DEV__) {
   errorPlaceholder = (
-    <span
-      style={{
-        background: 'red',
-        color: 'white'
-      }}
-    >
+      <span
+    style={{
+      background: 'red',
+      color: 'white'
+    }}
+      >
       Render error!
     </span>
   );

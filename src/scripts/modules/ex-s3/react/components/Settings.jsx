@@ -98,7 +98,7 @@ export default React.createClass({
           onChange={this.onChangeS3Bucket}
           placeholder="MyS3Bucket"
           disabled={this.props.disabled}
-        />
+          />
         <Input
           type="text"
           label="Key"
@@ -109,7 +109,7 @@ export default React.createClass({
           placeholder="myfolder/myfile.csv"
           help={(<span>Do not include bucket name or wildcard asterisk.</span>)}
           disabled={this.props.disabled}
-        />
+          />
         <Input
           type="checkbox"
           label="Wildcard"
@@ -118,7 +118,7 @@ export default React.createClass({
           onChange={this.onChangeWildcard}
           help={(<span>If wildcard is turned on, all files in S3 with the defined prefix will be downloaded. Please note, that all files need to have the same header.</span>)}
           disabled={this.props.disabled}
-        />
+          />
         <TableSelectorForm
           labelClassName="col-xs-4"
           wrapperClassName="col-xs-8"
@@ -139,7 +139,7 @@ export default React.createClass({
           onChange={this.onChangeIncremental}
           help={(<span>If incremental load is turned on, table will be updated instead of rewritten. Tables with primary key will update rows, tables without primary key will append rows.</span>)}
           disabled={this.props.disabled}
-        />
+          />
         <div className="form-group">
           <div className="col-xs-4 control-label">Primary Key</div>
           <div className="col-xs-8">

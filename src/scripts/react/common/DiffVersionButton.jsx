@@ -47,15 +47,15 @@ export default React.createClass({
     const tooltipMsg = `Compare with previous (#${this.props.previousVersion.get('version')} to #${this.props.version.get('version')})`;
     const content = [
       this.props.isSmall ?
-        (<small key="diff-button-icon-and-text">
-          {this.renderIcon()}
-          {this.props.buttonText}
-        </small>)
-        :
-        (<span className="text-muted" key="diff-button-icon-and-text">
-          {this.renderIcon()}
-          {this.props.buttonText}
-        </span>),
+      (<small key="diff-button-icon-and-text">
+        {this.renderIcon()}
+        {this.props.buttonText}
+      </small>)
+      :
+      (<span className="text-muted" key="diff-button-icon-and-text">
+        {this.renderIcon()}
+        {this.props.buttonText}
+      </span>),
       this.renderDiffModal()
     ];
 
@@ -68,9 +68,9 @@ export default React.createClass({
 
     const element =
       this.props.buttonAsSpan ?
-        <span {...elemProps}> {content}</span>
-        :
-        <button {...elemProps}> {content} </button>;
+      <span {...elemProps}> {content}</span>
+      :
+      <button {...elemProps}> {content} </button>;
 
     return (
       <Tooltip tooltip={this.props.tooltipMsg || tooltipMsg} placement="top">

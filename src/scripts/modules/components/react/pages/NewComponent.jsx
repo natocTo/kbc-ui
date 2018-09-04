@@ -28,14 +28,14 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container-fluid">
-        <NewComponentSelection
-          className="kbc-main-content"
-          components={this.state.components}
-          filter={this.state.componentFilter}
-          componentType={this.props.type}
-        />
-      </div>
+        <div className="container-fluid">
+          <NewComponentSelection
+            className="kbc-main-content"
+            components={this.state.components}
+            filter={this.state.componentFilter}
+            componentType={this.props.type}
+            />
+        </div>
     );
   }
 });

@@ -58,8 +58,8 @@ export function authorizeGoogleAccount(scope, email, callbackFn, preloadPromise)
 export function injectGapiScript() {
   const scripts = document.body.getElementsByTagName('script');
   const apiScript = _.find(scripts, (s) =>
-    s.src === apiUrl
-  );
+                           s.src === apiUrl
+                          );
   if (!apiScript && _.isUndefined(window.gapi)) {
     let script = document.createElement('script');
     script.src = apiUrl;

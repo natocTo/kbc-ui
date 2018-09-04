@@ -23,7 +23,7 @@ export default React.createClass({
           onHide={this.closeModal}
           isOpen={this.state.isOpen}
           redirectTo={this.props.redirectTo}
-        />
+          />
       </Button>
     );
   },

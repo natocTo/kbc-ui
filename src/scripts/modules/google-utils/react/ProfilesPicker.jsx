@@ -31,18 +31,18 @@ export default React.createClass({
         {this.renderProfilesPicker()}
 
         {profiles ?
-          <span>
-            <h3>Select Profiles of {email} </h3>
-            {this.renderWarning(email)}
-            {this.renderLoadedProfiles(profiles)}
-          </span>
-          :
-          <EmptyState>
-            <small>
-              <p>Requires temporary authorization of a Google account after which a short-lived access token is obtained to load profiles from the selected account. </p>
-              <p>Google authorization uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
-            </small>
-          </EmptyState>
+         <span>
+           <h3>Select Profiles of {email} </h3>
+           {this.renderWarning(email)}
+           {this.renderLoadedProfiles(profiles)}
+         </span>
+         :
+         <EmptyState>
+           <small>
+             <p>Requires temporary authorization of a Google account after which a short-lived access token is obtained to load profiles from the selected account. </p>
+             <p>Google authorization uses a pop up window, hence disable windows pop up blocking for this site in the browser settings please.</p>
+           </small>
+         </EmptyState>
         }
       </div>
     );
@@ -108,15 +108,15 @@ export default React.createClass({
         <div className="row">
           <ListGroup>
             {first ?
-              profile.map((pItem) =>
-                <ListGroupItem
-                  active={this.isSelected(pItem)}
-                  onClick={() => this.onProfileClick(pItem)}>
-                  <div className="text-center">
-                    {pItem.get('name')} ({pItem.get('id')})
-                  </div>
-                </ListGroupItem>).toArray()
-              : <ListGroupItem>No profiles found</ListGroupItem>}
+             profile.map((pItem) =>
+              <ListGroupItem
+                active={this.isSelected(pItem)}
+                onClick={() => this.onProfileClick(pItem)}>
+                <div className="text-center">
+                  {pItem.get('name')} ({pItem.get('id')})
+                </div>
+              </ListGroupItem>).toArray()
+            : <ListGroupItem>No profiles found</ListGroupItem>}
           </ListGroup>
         </div>
       </Panel>

@@ -14,9 +14,9 @@ export default React.createClass({
   renderActiveItem(order) {
     if (order < this.props.currentBadge) {
       return (
-        <div className="guide-timeline-circle-item guide-timeline-circle-active">
-          <Image src={this.getImagePath()}/>
-        </div>
+          <div className="guide-timeline-circle-item guide-timeline-circle-active">
+            <Image src={this.getImagePath()}/>
+          </div>
       );
     } else {
       return null;
@@ -26,24 +26,24 @@ export default React.createClass({
     var rows = [];
     for (var i = 0; i < this.props.badgeCount; i++) {
       rows.push(
-        <div className="guide-timeline-cell">
-          <div className={'guide-timeline-circle guide-timeline-circle' + i}>
-            <div className="guide-timeline-circle-item guide-timeline-circle-passive">
-              {i + 1}
+          <div className="guide-timeline-cell">
+            <div className={'guide-timeline-circle guide-timeline-circle' + i}>
+              <div className="guide-timeline-circle-item guide-timeline-circle-passive">
+                  {i + 1}
+              </div>
+                {this.renderActiveItem(i)}
             </div>
-            {this.renderActiveItem(i)}
           </div>
-        </div>
       );
     }
     return rows;
   },
   render() {
     return (
-      <div className="guide-timeline-row">
-        {this.getItems()}
+        <div className="guide-timeline-row">
+            {this.getItems()}
 
-      </div>
+        </div>
     );
   }
 });

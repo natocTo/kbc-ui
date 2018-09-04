@@ -55,7 +55,7 @@ export default React.createClass({
           isChanged={this.props.isChanged}
           onSave={this.props.onEditSubmit}
           onReset={this.props.onEditCancel}
-        />
+            />
       </span>
     );
   },
@@ -70,7 +70,7 @@ export default React.createClass({
         onChange={this.props.onEditChange}
         highlightQueryNumber={this.props.highlightQueryNumber}
         highlightingQueryDisabled={this.props.highlightingQueryDisabled}
-      />
+        />
     );
   }
 });

@@ -12,21 +12,21 @@ const  IMPORT_EXPORT_EVENTS = ['tableImportStarted', 'tableImportDone', 'tableIm
 
 function runExportDataSample(tableId, onSucceed, onFail) {
   return storageApi
-    .tableDataPreview(tableId, {limit: 10})
-    .then(onSucceed)
-    .catch((error) => {
-      let dataPreviewError = null;
-      if (error.response && error.response.body) {
-        if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
-          dataPreviewError = 'Data sample cannot be displayed. Too many columns.';
-        } else {
-          dataPreviewError = error.response.body.message;
-        }
+  .tableDataPreview(tableId, {limit: 10})
+  .then(onSucceed)
+  .catch((error) => {
+    let dataPreviewError = null;
+    if (error.response && error.response.body) {
+      if (error.response.body.code === 'storage.maxNumberOfColumnsExceed') {
+        dataPreviewError = 'Data sample cannot be displayed. Too many columns.';
       } else {
-        throw new Error(JSON.stringify(error));
+        dataPreviewError = error.response.body.message;
       }
-      return onFail(dataPreviewError);
-    });
+    } else {
+      throw new Error(JSON.stringify(error));
+    }
+    return onFail(dataPreviewError);
+  });
 }
 
 export default function(tableId) {
@@ -48,10 +48,10 @@ export default function(tableId) {
 
   const exportDataSample = () => {
     const onSucceed = (csv) =>
-      setLocalState({
-        loadingPreview: false,
-        dataPreview: fromJS(csv)
-      });
+    setLocalState({
+      loadingPreview: false,
+      dataPreview: fromJS(csv)
+    });
 
     const onFail = (dataPreviewError) => setLocalState({
       loadingPreview: false,
@@ -108,12 +108,12 @@ export default function(tableId) {
   const onRunEnhancedAnalysis = () => {
     setLocalState({isCallingRunAnalysis: true});
     startDataProfilerJob(tableId)
-      .then( () => {
-        findEnhancedJob().then(() => setLocalState({isCallingRunAnalysis: false}));
-      })
-      .catch(() => setLocalState({isCallingRunAnalysis: false}));
+    .then( () => {
+      findEnhancedJob().then(() => setLocalState({isCallingRunAnalysis: false}));
+    })
+    .catch(() => setLocalState({isCallingRunAnalysis: false}));
   };
-  // ----END-- redhift tables enhanced lg analysis functions-------
+ // ----END-- redhift tables enhanced lg analysis functions-------
 
   // Events service provisioning
   const handleEventsChange = () => {

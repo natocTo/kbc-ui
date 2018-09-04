@@ -83,7 +83,7 @@ export default React.createClass({
             onChange={this.onSettingsChange}
             isSaving={this.state.isSaving}
             onSave={this.onSave}
-          />
+            />
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata
@@ -110,7 +110,7 @@ export default React.createClass({
             <ComponentDescription
               componentId={this.state.component.get('id')}
               configId={this.state.config.get('id')}
-            />
+              />
           </div>
           <div className="row">
             <AuthorizationRow
@@ -121,7 +121,7 @@ export default React.createClass({
               isResetingCredentials={false}
               onResetCredentials={this.deleteCredentials}
               showHeader={false}
-            />
+              />
           </div>
           <Wizard
             step={this.state.wizardStep}
@@ -138,7 +138,7 @@ export default React.createClass({
             onEditCancel={this.onEditCancel}
             isConfigured={true}
             isEditing={this.state.isEditing}
-          />
+            />
         </div>
         <div className="col-md-3 kbc-main-sidebar">
           <ComponentMetadata
@@ -153,7 +153,7 @@ export default React.createClass({
                 mode="link"
                 runParams={this.runParams()}
                 disabledReason="Component is not configured yet"
-              >
+                >
                 You are about to run component.
               </RunComponentButton>
             </li>
@@ -166,7 +166,7 @@ export default React.createClass({
               <DeleteConfigurationButton
                 componentId={this.state.component.get('id')}
                 configId={this.state.config.get('id')}
-              />
+                />
             </li>
           </ul>
           <LatestJobs

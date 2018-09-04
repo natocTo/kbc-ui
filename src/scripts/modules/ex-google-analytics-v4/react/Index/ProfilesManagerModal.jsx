@@ -96,19 +96,19 @@ export default React.createClass({
         <h3> Review Selected Profiles To Extract Data From {this.props.authorizedEmail ? this.props.authorizedEmail : 'n/a'}</h3>
 
         {profiles.count() > 0 ?
-          <ul>
-            {profiles.map( (profile) =>
-              <li>
-                <ProfileInfo profile={profile} />
-                <span onClick={() => this.deselectProfile(profile.get('id'))} className="kbc-icon-cup kbc-cursor-pointer" />
+         <ul>
+           {profiles.map( (profile) =>
+             <li>
+               <ProfileInfo profile={profile} />
+               <span onClick={() => this.deselectProfile(profile.get('id'))} className="kbc-icon-cup kbc-cursor-pointer" />
 
-              </li>
+             </li>
             )}
-          </ul>
-          :
-          <EmptyState>
+         </ul>
+         :
+         <EmptyState>
            No profiles selected.
-          </EmptyState>
+         </EmptyState>
         }
       </div>
     );

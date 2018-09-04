@@ -42,7 +42,7 @@ export default React.createClass({
     return (
       <Tooltip placement={this.props.tooltipPlacement} tooltip={this.props.label}>
         <button disabled={this.props.buttonDisabled || this.props.isPending}
-          className="btn btn-link" onClick={this.onClick}>
+                className="btn btn-link" onClick={this.onClick}>
           {this.renderIcon()}
         </button>
       </Tooltip>

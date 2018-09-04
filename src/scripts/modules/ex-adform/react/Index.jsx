@@ -27,7 +27,7 @@ import {saveCredentials,
   initFromWizard,
   prefillFromTemplate,
   changeWizardStep
-} from '../actions';
+  } from '../actions';
 
 import templates from '../jobsTemplates';
 import {Button} from 'react-bootstrap';
@@ -47,8 +47,8 @@ export default React.createClass({
       componentId = 'ex-adform',
       localState = InstalledComponentStore.getLocalState(componentId, configId),
       parameters = parameterPasswordCompatibility(InstalledComponentStore
-        .getConfigData(componentId, configId)
-        .get('parameters', Map())
+          .getConfigData(componentId, configId)
+          .get('parameters', Map())
       );
 
     return {
@@ -94,7 +94,7 @@ export default React.createClass({
               isSaving={this.state.isSaving}
               componentId={this.state.componentId}
               configurationId={this.state.config.get('id')}
-            />
+              />
           </div>
         </div>
       );
@@ -109,7 +109,7 @@ export default React.createClass({
             <ComponentDescription
               componentId={this.state.componentId}
               configId={this.state.config.get('id')}
-            />
+              />
           </div>
           <div className="row">
             {this.renderHelp()}
@@ -124,7 +124,7 @@ export default React.createClass({
               isValid={this.isValidJobsData()}
               headerText="Resources"
               help={this.renderPrefillFromTemplate()}
-            />
+              />
           </div>
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -133,7 +133,7 @@ export default React.createClass({
             <ComponentMetadata
               componentId={this.state.componentId}
               configId={this.state.config.get('id')}
-            />
+              />
           </div>
           <ul className="nav nav-stacked">
             <li>
@@ -149,7 +149,7 @@ export default React.createClass({
                 mode="link"
                 runParams={this.runParams()}
                 disabledReason="The component is not configured yet"
-              >
+                >
                 You are about to run the component.
               </RunComponentButton>
             </li>
@@ -157,7 +157,7 @@ export default React.createClass({
               <DeleteConfigurationButton
                 componentId={this.state.componentId}
                 configId={this.state.config.get('id')}
-              />
+                />
             </li>
           </ul>
           <LatestJobs
@@ -178,7 +178,7 @@ export default React.createClass({
             isSaving={this.state.isSaving}
             onChange={this.updateCredentials}
             onSave={this.saveCredentials}
-          />
+            />
         </div>
       </div>
     );
@@ -222,7 +222,7 @@ export default React.createClass({
             <Button
               bsStyle="link"
               onClick={this.openTemplateModal}
-            >
+              >
               <span className="fa fa-folder-open"/> Configure from template
             </Button>
             <TemplateModal
@@ -232,7 +232,7 @@ export default React.createClass({
               onChange={this.onTemplateChange}
               onSubmit={this.onPrefillFromTemplate}
               onHide={this.closeTemplateModal}
-            />
+              />
           </p>
         </div>
       );
