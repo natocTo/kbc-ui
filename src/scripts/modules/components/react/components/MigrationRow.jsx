@@ -164,21 +164,21 @@ export default React.createClass({
     const body = !this.state.loadingStatus ? (
       <span>
         {this.state.error ?
-         <p className="alert alert-danger">
+          <p className="alert alert-danger">
            Error Loading status: {this.state.error}
-         </p>
-         :
-         <div>
-           <Tabs className="tabs-inside-modal" defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
+          </p>
+          :
+          <div>
+            <Tabs className="tabs-inside-modal" defaultActiveKey="general" animation={false} id="components-migration-row-tabs">
 
-             <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
-               {this.renderConfigStatus()}
-             </Tab>
-             <Tab eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
-               {this.renderOrhcestrationsStatus()}
-             </Tab>
-           </Tabs>
-         </div>
+              <Tab eventKey="general" title={this.renderTabTitle('Affected Configurations', configHelpText)}>
+                {this.renderConfigStatus()}
+              </Tab>
+              <Tab eventKey="datasample" title={this.renderTabTitle('Affected Orchestrations', orchHelpText)}>
+                {this.renderOrhcestrationsStatus()}
+              </Tab>
+            </Tabs>
+          </div>
         }
       </span>
     ) : 'Loading migration status...';
@@ -232,11 +232,11 @@ export default React.createClass({
       <AlertBlock type="warning" title="This component has been deprecated">
         <Row>
           <Col md={9}>
-          <span>
-            <p>
-              {this.getInfo()}
-            </p>
-          </span>
+            <span>
+              <p>
+                {this.getInfo()}
+              </p>
+            </span>
             {this.renderMigrationButton()}
           </Col>
         </Row>
@@ -278,40 +278,40 @@ export default React.createClass({
     return (
       <span>
         {orchestrations.count() > 0 ?
-         <Table responsive className="table table-stripped">
-           <thead>
-             <tr>
-               <th>
+          <Table responsive className="table table-stripped">
+            <thead>
+              <tr>
+                <th>
                  Orchestration
-               </th>
-               <th>
+                </th>
+                <th>
                  Contains Old extractor tasks
-               </th>
-               <th>
+                </th>
+                <th>
                  Contains New extractors tasks
-               </th>
-             </tr>
-           </thead>
-           <tbody>
-             {orchestrations.map((row) =>
-               <tr>
-                 <td>
-                   {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
-                 </td>
-                 <td>
-                   <Check isChecked={row.get('hasOld')} />
-                 </td>
-                 <td>
-                   <Check isChecked={row.get('hasNew')} />
-                 </td>
-               </tr>
-             )}
-           </tbody>
-         </Table>
-         :
-         <ComponentEmptyState>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {orchestrations.map((row) =>
+                <tr>
+                  <td>
+                    {this.renderOrchestrationLink(row.get('id'), row.get('name'))}
+                  </td>
+                  <td>
+                    <Check isChecked={row.get('hasOld')} />
+                  </td>
+                  <td>
+                    <Check isChecked={row.get('hasNew')} />
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+          :
+          <ComponentEmptyState>
            No affected orchestrations found.
-         </ComponentEmptyState>
+          </ComponentEmptyState>
         }
       </span>
     );
@@ -349,9 +349,9 @@ export default React.createClass({
               Configuration
             </th>
             {isReplacementApp ? null :
-             <th>
+              <th>
                Config Table
-             </th>
+              </th>
             }
             <th />
             <th>New Configuration</th>
@@ -367,9 +367,9 @@ export default React.createClass({
                 {this.renderConfigLink(row.get('configId'), this.props.componentId, row.get('configName'))}
               </td>
               {isReplacementApp ? null :
-               <td>
-                 {this.renderTableLink(row.get('tableId'))}
-               </td>
+                <td>
+                  {this.renderTableLink(row.get('tableId'))}
+                </td>
               }
               <td>
                 <i className="kbc-icon-arrow-right" />
