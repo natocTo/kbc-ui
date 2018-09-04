@@ -149,10 +149,10 @@ export default React.createClass({
 
   renderFieldsInput(placeholder) {
     const control = (<textarea
-                       placeholder={placeholder}
-                       value={this.query(['query', 'fields'])}
-                       onChange={(e) => this.updateLocalState(['query', 'query', 'fields'], e.target.value)}
-                       className="form-control" rows="2" required/>);
+      placeholder={placeholder}
+      value={this.query(['query', 'fields'])}
+      onChange={(e) => this.updateLocalState(['query', 'query', 'fields'], e.target.value)}
+      className="form-control" rows="2" required/>);
     return this.renderFormControl('Fields', control, this.enhanceHelp('fields', FIELDS_HELP));
   },
 

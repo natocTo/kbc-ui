@@ -75,7 +75,7 @@ export default React.createClass({
                 <Tab key="direct" eventKey="direct" title="Direct token insert">
                   {this.renderDirectTokenInsert()}
                 </Tab>
-               : null
+                : null
               }
               {CUSTOM_AUTHORIZATION_COMPONENTS.includes(this.props.componentId) ?
                 <Tab key="custom" eventKey="custom" title="Custom authorization">
@@ -110,15 +110,15 @@ export default React.createClass({
   renderExternal() {
     const externalLink = (
       this.state.externalLink ?
-      <pre>
-        <a href={this.state.externalLink} target="_blank">
-          {this.state.externalLink}
-        </a>
-        <div style={{paddingTop: '10px'}}>
-          <Clipboard text={this.state.externalLink} label="Copy link to clipboard" />
-        </div>
-      </pre>
-      : null
+        (<pre>
+          <a href={this.state.externalLink} target="_blank">
+            {this.state.externalLink}
+          </a>
+          <div style={{paddingTop: '10px'}}>
+            <Clipboard text={this.state.externalLink} label="Copy link to clipboard" />
+          </div>
+        </pre>)
+        : null
     );
     return (
       <div>

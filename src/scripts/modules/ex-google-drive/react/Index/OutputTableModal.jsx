@@ -84,8 +84,8 @@ export default React.createClass({
               {
                 err ?
                   <span className="help-block">
-                  {err}
-                </span>
+                    {err}
+                  </span>
                   : null
               }
             </span>
@@ -93,7 +93,7 @@ export default React.createClass({
               sanitized !== value ?
                 <span className="help-block">
                 Table name will be sanitized to {sanitized}
-              </span>
+                </span>
                 : null
             }
           </div>
@@ -112,7 +112,7 @@ export default React.createClass({
                 checked={this.transposeEnabledValue()}
                 type="checkbox"
                 onClick={this.toggleTransposeEnabled}
-                />
+              />
             </Tooltip>
           </div>
         </div>

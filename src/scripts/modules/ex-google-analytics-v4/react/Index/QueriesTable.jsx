@@ -133,7 +133,7 @@ export default React.createClass({
             <div>
               {r.get('startDate')} - {r.get('endDate')}
             </div>
-           )}
+          )}
         </small>
       </span>
     );

@@ -72,8 +72,8 @@ export default React.createClass({
             </div>
           )}
           {(this.hasSheets() > 0)
-           ? this.renderSheetsTable()
-           : this.renderEmptySheets()
+            ? this.renderSheetsTable()
+            : this.renderEmptySheets()
           }
         </div>
         <div className="col-md-3 kbc-main-sidebar">
@@ -99,12 +99,12 @@ export default React.createClass({
                 <i className="fa fa-question-circle fa-fw" /> Documentation
                 </a>
                 </li> */}
-        <li>
-          <DeleteConfigurationButton
-            componentId={COMPONENT_ID}
-            configId={this.state.configId}
-          />
-        </li>
+            <li>
+              <DeleteConfigurationButton
+                componentId={COMPONENT_ID}
+                configId={this.state.configId}
+              />
+            </li>
           </ul>
           <LatestJobs jobs={this.state.latestJobs} limit={3} />
           <LatestVersions
@@ -184,13 +184,13 @@ export default React.createClass({
   renderEmptySheets() {
     return (
       this.isAuthorized() ?
-      <div className="row">
-        <EmptyState>
-          <p>No Sheets Configured</p>
-          {this.renderAddSheetLink()}
-        </EmptyState>
-      </div>
-      : null
+        <div className="row">
+          <EmptyState>
+            <p>No Sheets Configured</p>
+            {this.renderAddSheetLink()}
+          </EmptyState>
+        </div>
+        : null
     );
   },
 

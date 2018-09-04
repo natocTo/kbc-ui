@@ -75,32 +75,32 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="kbc-main-content">
           {this.state.token ?
-           <Tabs id="token-detail-tabs" animation={false}>
-             <Tab title="Overview" eventKey="overview">
-               <div className="form form-horizontal">
-                 <div className="form-group">
-                   <div className="col-sm-12 text-right">
-                     <SaveButtons
-                       isSaving={this.state.isSaving}
-                       disabled={!this.isValid()}
-                       isChanged={!this.state.token.equals(this.state.dirtyToken)}
-                       onSave={this.handleSaveToken}
-                       onReset={this.handleClose}
-                     />
-                   </div>
-                 </div>
-                 {this.renderTokenEditor(true)}
-               </div>
-             </Tab>
-             <Tab title="Events" eventKey="events">
-               <Events
-                 eventsApi={this.state.eventsApi}
-                 autoReload={true}
-                 link={{to: 'tokens-detail', params: {tokenId: this.state.tokenId}}}
-               />
-             </Tab>
-           </Tabs>
-           : this.renderNewToken()
+            <Tabs id="token-detail-tabs" animation={false}>
+              <Tab title="Overview" eventKey="overview">
+                <div className="form form-horizontal">
+                  <div className="form-group">
+                    <div className="col-sm-12 text-right">
+                      <SaveButtons
+                        isSaving={this.state.isSaving}
+                        disabled={!this.isValid()}
+                        isChanged={!this.state.token.equals(this.state.dirtyToken)}
+                        onSave={this.handleSaveToken}
+                        onReset={this.handleClose}
+                      />
+                    </div>
+                  </div>
+                  {this.renderTokenEditor(true)}
+                </div>
+              </Tab>
+              <Tab title="Events" eventKey="events">
+                <Events
+                  eventsApi={this.state.eventsApi}
+                  autoReload={true}
+                  link={{to: 'tokens-detail', params: {tokenId: this.state.tokenId}}}
+                />
+              </Tab>
+            </Tabs>
+            : this.renderNewToken()
           }
         </div>
       </div>
@@ -189,21 +189,21 @@ export default React.createClass({
       <div className="kbc-inner-padding">
         <div className="form form-horizontal">
           {this.state.createdToken
-           ? this.renderTokenCreated()
-           : (
-             <div className="form-group">
-               <div className="col-sm-12 text-right">
-                 <ConfirmButtons
-                   isSaving={this.state.isSaving}
-                   isDisabled={!this.isValid()}
-                   onSave={this.handleSaveToken}
-                   onCancel={this.handleClose}
-                   saveLabel="Create"
-                   showCancel={false}
-                 />
-               </div>
-             </div>
-           )
+            ? this.renderTokenCreated()
+            : (
+              <div className="form-group">
+                <div className="col-sm-12 text-right">
+                  <ConfirmButtons
+                    isSaving={this.state.isSaving}
+                    isDisabled={!this.isValid()}
+                    onSave={this.handleSaveToken}
+                    onCancel={this.handleClose}
+                    saveLabel="Create"
+                    showCancel={false}
+                  />
+                </div>
+              </div>
+            )
           }
           {!this.state.createdToken && this.renderTokenEditor(false)}
         </div>

@@ -20,8 +20,8 @@ function getDatesForThisMonth() {
   return {
     dateFrom: (
       today.format('MM') === yesterday.format('MM')
-      ? today.startOf('month').format('YYYY-MM-DD')
-      : yesterday.startOf('month').format('YYYY-MM-DD')
+        ? today.startOf('month').format('YYYY-MM-DD')
+        : yesterday.startOf('month').format('YYYY-MM-DD')
     ),
     dateTo: yesterday.format('YYYY-MM-DD')
   };
@@ -129,11 +129,11 @@ export default React.createClass({
         <span>
           {'Project consumed '}
           <strong style={{fontSize: '24px'}}>
-          {numericMetricFormatted(limit.get('metricValue'), limit.get('unit'))}
+            {numericMetricFormatted(limit.get('metricValue'), limit.get('unit'))}
           </strong>
           {' of '}
           <strong style={{fontSize: '24px'}}>
-          {numericMetricFormatted(limit.get('limitValue'), limit.get('unit'))}
+            {numericMetricFormatted(limit.get('limitValue'), limit.get('unit'))}
           </strong>
           {' credits this month'}
         </span>
@@ -143,7 +143,7 @@ export default React.createClass({
         <span>
           {'Project consumed '}
           <strong style={{fontSize: '24px'}}>
-          {numericMetricFormatted(limit.get('metricValue'), limit.get('unit'))}
+            {numericMetricFormatted(limit.get('metricValue'), limit.get('unit'))}
           </strong>
           {' credits this month'}
         </span>

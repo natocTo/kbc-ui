@@ -27,31 +27,31 @@ export default React.createClass({
   render() {
     return (
       <Modal
-          onHide={this.props.onHideFn}
-          show={this.props.show}>
+        onHide={this.props.onHideFn}
+        show={this.props.show}>
         <Modal.Header closeButton>
           <Modal.Title> New Table </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <SapiTableSelector
-              allowedBuckets={this.props.allowedBuckets}
-              onSelectTableFn={this.props.onSetTableIdFn}
-              excludeTableFn={ (tableId) => !!this.props.configuredTables.get(tableId)}
-              value={this.props.selectedTableId}
-              autoFocus
+            allowedBuckets={this.props.allowedBuckets}
+            onSelectTableFn={this.props.onSetTableIdFn}
+            excludeTableFn={ (tableId) => !!this.props.configuredTables.get(tableId)}
+            value={this.props.selectedTableId}
+            autoFocus
           />
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
-              isSaving={this.props.isSaving}
-              isDisabled={!this.props.selectedTableId}
-              cancelLabel="Cancel"
-              saveLabel="Create Table"
-              onCancel={this.props.onHideFn}
-              onSave={ () => {
-                this.props.onSaveFn(this.props.selectedTableId).then(() => this.props.onHideFn());
-              }}
-              />
+            isSaving={this.props.isSaving}
+            isDisabled={!this.props.selectedTableId}
+            cancelLabel="Cancel"
+            saveLabel="Create Table"
+            onCancel={this.props.onHideFn}
+            onSave={ () => {
+              this.props.onSaveFn(this.props.selectedTableId).then(() => this.props.onHideFn());
+            }}
+          />
         </Modal.Footer>
       </Modal>
 

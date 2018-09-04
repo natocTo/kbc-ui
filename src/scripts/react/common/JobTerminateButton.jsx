@@ -17,7 +17,7 @@ export default React.createClass({
           text={`Do you really want to terminate the job ${this.props.job.get('id')}?`}
           buttonLabel="Terminate"
           onConfirm={this.props.onTerminate}
-          >
+        >
           <button className="btn btn-link" disabled={this.props.isTerminating}>
             {this.props.isTerminating ? <Loader/> : null}
             <span className="fa fa-fw fa-times"/> Terminate job

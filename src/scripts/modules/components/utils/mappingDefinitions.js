@@ -6,9 +6,9 @@ var mergeValueAndDefinition = function(compareKey, definitions, value) {
     // add output mappings from definition
     definitions.forEach(function(definition) {
       if (result.filter(
-          function(item) {
-            return item.get(compareKey) === definition.get(compareKey);
-          }).size === 0) {
+        function(item) {
+          return item.get(compareKey) === definition.get(compareKey);
+        }).size === 0) {
         var itemToAdd = Immutable.fromJS({
           source: '',
           destination: ''

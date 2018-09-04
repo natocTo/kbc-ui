@@ -22,14 +22,14 @@ module.exports = {
         buckets: buckets
       });
     })
-    .catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_BUCKETS_LOAD_ERROR,
-        status: error.status,
-        response: error.response
+      .catch(function(error) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_BUCKETS_LOAD_ERROR,
+          status: error.status,
+          response: error.response
+        });
+        throw error;
       });
-      throw error;
-    });
   },
 
   loadCredentialsForce: function(bucketId) {
@@ -107,14 +107,14 @@ module.exports = {
         tables: tables
       });
     })
-    .catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_TABLES_LOAD_ERROR,
-        status: error.status,
-        response: error.response
+      .catch(function(error) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLES_LOAD_ERROR,
+          status: error.status,
+          response: error.response
+        });
+        throw error;
       });
-      throw error;
-    });
   },
 
   loadTables: function() {
@@ -138,13 +138,13 @@ module.exports = {
         files: files
       });
     })
-    .catch(function(error) {
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_FILES_LOAD_ERROR,
-        errors: error
+      .catch(function(error) {
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_FILES_LOAD_ERROR,
+          errors: error
+        });
+        throw error;
       });
-      throw error;
-    });
   },
 
   loadFiles: function(params) {
@@ -172,18 +172,18 @@ module.exports = {
         bucket: response
       });
     })
-    .catch(function(error) {
-      var message;
-      message = error;
-      if (error.message) {
-        message = error.message;
-      }
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_BUCKET_CREATE_ERROR,
-        errors: error
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_BUCKET_CREATE_ERROR,
+          errors: error
+        });
+        throw message;
       });
-      throw message;
-    });
   },
 
   createTable: function(bucketId, params) {
@@ -211,19 +211,19 @@ module.exports = {
         return self.loadTablesForce();
       });
     })
-    .catch(function(error) {
-      var message;
-      message = error;
-      if (error.message) {
-        message = error.message;
-      }
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_TABLE_CREATE_ERROR,
-        bucketId: bucketId,
-        errors: error
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_CREATE_ERROR,
+          bucketId: bucketId,
+          errors: error
+        });
+        throw message;
       });
-      throw message;
-    });
   },
 
   loadTable: function(tableId, params) {
@@ -252,19 +252,19 @@ module.exports = {
         return self.loadTablesForce();
       });
     })
-    .catch(function(error) {
-      var message;
-      message = error;
-      if (error.message) {
-        message = error.message;
-      }
-      dispatcher.handleViewAction({
-        type: constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR,
-        tableId: tableId,
-        errors: error
+      .catch(function(error) {
+        var message;
+        message = error;
+        if (error.message) {
+          message = error.message;
+        }
+        dispatcher.handleViewAction({
+          type: constants.ActionTypes.STORAGE_TABLE_LOAD_ERROR,
+          tableId: tableId,
+          errors: error
+        });
+        throw message;
       });
-      throw message;
-    });
   },
 
   loadDataIntoWorkspace: function(workspaceId, configuration) {

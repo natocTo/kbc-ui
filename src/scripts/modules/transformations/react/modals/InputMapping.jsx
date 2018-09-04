@@ -85,7 +85,7 @@ export default React.createClass({
               onCancel={this.handleCancel}
               onSave={this.handleSave}
               isDisabled={!this.isValid()}
-              />
+            />
           </Modal.Footer>
         </Modal>
       </span>

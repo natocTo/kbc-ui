@@ -34,17 +34,17 @@ export default React.createClass({
   render() {
     return (
       <div className="kbc-markdown" ref="container">
-         {this.state.ellipseContent ? (
-        <PanelWithDetails
-          placement="bottom"
-          preview={this.props.size}
-          labelCollapse="Show less"
-          labelOpen="Show more">
+        {this.state.ellipseContent ? (
+          <PanelWithDetails
+            placement="bottom"
+            preview={this.props.size}
+            labelCollapse="Show less"
+            labelOpen="Show more">
+            <Remarkable source={this.props.source}/>
+          </PanelWithDetails>
+        ) : (
           <Remarkable source={this.props.source}/>
-        </PanelWithDetails>
-      ) : (
-        <Remarkable source={this.props.source}/>
-      )}
+        )}
       </div>
     );
   }

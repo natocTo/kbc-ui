@@ -54,13 +54,13 @@ export default React.createClass({
     });
 
     runOrchestration(this.props.orchestration.get('id'), (this.props.tasks) ? this.props.tasks : null, this.props.notify)
-    .finally(() => {
-      if (this.isMounted()) {
-        this.setState({
-          isLoading: false
-        });
-      }
-    });
+      .finally(() => {
+        if (this.isMounted()) {
+          this.setState({
+            isLoading: false
+          });
+        }
+      });
   }
 
 });

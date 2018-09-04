@@ -29,6 +29,10 @@ const formatter = cli.getFormatter('codeframe');
 
 console.log(formatter(report.results));
 
+if (argv.includes('--fix')) {
+  CLIEngine.outputFixes(report);
+}
+
 if (report.errorCount > 0) {
   process.exit(1);
 }

@@ -17,7 +17,7 @@ export default React.createClass({
         <SearchRow
           query={this.props.filter}
           onChange={this.handleFilterChange}
-          />
+        />
         <div className="list-group">
           {this.rows()}
         </div>

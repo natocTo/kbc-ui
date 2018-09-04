@@ -10,7 +10,7 @@ export default React.createClass({
     return (
       <p className="small">
         {'For more information about configuring MongoDB Extractor follow guide at '}
-         <a href={this.props.documentationUrl} target="_blank">https://help.keboola.com</a>.
+        <a href={this.props.documentationUrl} target="_blank">https://help.keboola.com</a>.
       </p>
     );
   }

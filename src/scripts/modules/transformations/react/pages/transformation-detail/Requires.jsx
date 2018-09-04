@@ -51,7 +51,7 @@ export default React.createClass({
             isLoading={this.props.isSaving}
             noResultsText="No transformations found"
             onValueClick={this.onValueClick}
-            />
+          />
           <span className="help-block">
             These transformations are processed before this transformation starts.
           </span>

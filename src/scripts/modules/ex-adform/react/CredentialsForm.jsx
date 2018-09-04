@@ -17,14 +17,14 @@ export default React.createClass({
           onChange={this.handleChange.bind(this, 'username')}
           labelClassName="col-sm-4" wrapperClassName="col-sm-8"
           autoFocus={true}
-          />
+        />
         <Input
           type="password"
           label="Password"
           value={this.props.credentials.get('#password')}
           onChange={this.handleChange.bind(this, '#password')}
           labelClassName="col-sm-4" wrapperClassName="col-sm-8"
-          />
+        />
       </div>
     );
   },

@@ -62,14 +62,14 @@ export default React.createClass({
     const state = this.state;
     const settings = this.state.settings;
     return (
-        <CreateConfigurationRowButton
-          componentType={this.state.component.get('type')}
-          objectName={state.settings.getIn(['row', 'name', 'singular'])}
-          componentId={state.componentId}
-          configId={state.configurationId}
-          emptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
-          onRowCreated={this.onRowCreated}
-        />
+      <CreateConfigurationRowButton
+        componentType={this.state.component.get('type')}
+        objectName={state.settings.getIn(['row', 'name', 'singular'])}
+        componentId={state.componentId}
+        configId={state.configurationId}
+        emptyConfig={sections.makeCreateEmptyFn(settings.getIn(['row', 'sections']))}
+        onRowCreated={this.onRowCreated}
+      />
     );
   },
 

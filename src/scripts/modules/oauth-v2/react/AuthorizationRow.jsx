@@ -58,7 +58,7 @@ export default React.createClass({
   renderAuth() {
     return React.createElement(this.props.innerComponent, null,
       [(<p>No Account authorized</p>),
-       (<button
+        (<button
           onClick={this.showModal}
           className="btn btn-success">
           <i className="fa fa-fw fa-user"/>
@@ -82,27 +82,27 @@ export default React.createClass({
       <div>
         Authorized for <strong>{this.props.credentials.get('authorizedFor')}</strong>
         {!this.props.isResetingCredentials ?  (
-           <Confirm
-             text="Do you really want to reset the authorized account?"
-             title="Reset Authorization"
-             buttonLabel="Reset"
-             onConfirm={this.props.onResetCredentials}>
-             <a className="btn btn-link btn-sm" style={{'paddingTop': 0, 'paddingBottom': 0}}>
-               <Tooltip tooltip="Reset Authorization" placement="top">
-                 <span>  Reset</span>
-               </Tooltip>
-             </a>
-           </Confirm>
-         ) : (
-           <span>
-             {' '}
-             <Loader/>
-           </span>
-         )
+          <Confirm
+            text="Do you really want to reset the authorized account?"
+            title="Reset Authorization"
+            buttonLabel="Reset"
+            onConfirm={this.props.onResetCredentials}>
+            <a className="btn btn-link btn-sm" style={{'paddingTop': 0, 'paddingBottom': 0}}>
+              <Tooltip tooltip="Reset Authorization" placement="top">
+                <span>  Reset</span>
+              </Tooltip>
+            </a>
+          </Confirm>
+        ) : (
+          <span>
+            {' '}
+            <Loader/>
+          </span>
+        )
         }
-           <div className="small">
-             {createdInfo} by {creator}
-           </div>
+        <div className="small">
+          {createdInfo} by {creator}
+        </div>
 
       </div>
     );

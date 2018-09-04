@@ -87,7 +87,7 @@ export default React.createClass({
           isLoading={this.state.isLoading}
           mode={this.props.mode}
           jobMetrics={this.props.jobMetrics}
-          />
+        />
       );
     } else {
       return (

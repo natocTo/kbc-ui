@@ -48,7 +48,7 @@ export default React.createClass({
               }}
               placeholder="myfolder/file.csv"
               disabled={this.props.disabled}
-              />
+            />
             <HelpBlock>
               Destination path including filename, eg. <code>myfolder/file.csv</code>.
             </HelpBlock>

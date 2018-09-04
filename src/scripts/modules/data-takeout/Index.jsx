@@ -77,7 +77,7 @@ export default React.createClass({
               isValid={this.isValid()}
               isSaving={this.state.isSaving}
               savedMessage={this.savedMessage()}
-              />
+            />
           </div>
         </div>
       </div>
@@ -91,8 +91,8 @@ export default React.createClass({
       's3bucket'
     ];
     return this.state.parameters
-        .filter((value, key) => requiredFields.indexOf(key) >= 0)
-        .filter((value) => value === '').count() === 0;
+      .filter((value, key) => requiredFields.indexOf(key) >= 0)
+      .filter((value) => value === '').count() === 0;
   },
 
   handleParametersChange(newParameters) {

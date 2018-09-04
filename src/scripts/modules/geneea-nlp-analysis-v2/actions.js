@@ -191,7 +191,7 @@ export function save(configId) {
   const titleColumn = data.getIn(params.TITLE);
 
   const columns = primaryKey.push(textColumn, leadColumn || List(), titleColumn || List())
-        .filter((c) => (List.isList(c) && c.count() > 0) || (!List.isList(c) && !!c));
+    .filter((c) => (List.isList(c) && c.count() > 0) || (!List.isList(c) && !!c));
 
   const storage = {
     input: {
@@ -210,7 +210,7 @@ export function save(configId) {
     }
     return memo.setIn([].concat(key), valueToSet);
   }, Map())
-        .set('columns', data.get('columns').filter((c) => List.isList(c) && c.count() > 0));
+    .set('columns', data.get('columns').filter((c) => List.isList(c) && c.count() > 0));
 
   let config = fromJS({
     storage: storage,
