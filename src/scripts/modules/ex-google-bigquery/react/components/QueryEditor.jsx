@@ -87,7 +87,7 @@ const QueryEditor = props => {
           </div>
         </div>
         <div className="form-group">
-          <label className="col-md-2 control-label">{''}</label>
+          <label className="col-md-2 control-label" />
           <div className="col-md-10 checkbox">
             <label>
               <input type="checkbox" checked={props.query.get('useLegacySql')} onChange={_handleLegacySqlChange} />
