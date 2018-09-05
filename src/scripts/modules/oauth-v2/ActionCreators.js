@@ -5,7 +5,6 @@ import oauthApi from './Api';
 import Constants from './Constants';
 import Immutable from 'immutable';
 
-/* eslint no-console: 0 */
 export default {
   loadCredentials(componentId, id) {
     if (oauthStore.hasCredentials(componentId, id)) {
@@ -26,8 +25,7 @@ export default {
         });
         return result;
       })
-      .catch(function(err) {
-        console.log('GET CREDENTIALS API ERROR', err);
+      .catch(() => {
         return dispatcher.handleViewAction({
           type: Constants.ActionTypes.OAUTHV2_LOAD_CREDENTIALS_ERROR,
           componentId,
@@ -53,8 +51,7 @@ export default {
           credentials: Immutable.fromJS(result)
         })
       )
-      .catch(function(err) {
-        console.log('POST CREDENTIALS API ERROR', err);
+      .catch(() => {
         return dispatcher.handleViewAction({
           type: Constants.ActionTypes.OAUTHV2_API_ERROR,
           componentId,
@@ -80,8 +77,7 @@ export default {
           credentials: result
         })
       )
-      .catch(function(err) {
-        console.log('DELETE CREDENTIALS API ERROR', err);
+      .catch(() => {
         return dispatcher.handleViewAction({
           type: Constants.ActionTypes.OAUTHV2_API_ERROR,
           componentId,
