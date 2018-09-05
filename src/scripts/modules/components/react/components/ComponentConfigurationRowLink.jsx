@@ -25,6 +25,17 @@ module.exports = React.createClass({
         query={this.props.query}
         onClick={this.props.onClick}
       >{this.props.children}</Link>);
+    } else if (this.props.componentId === 'keboola.ex-db-mysql' || this.props.componentId === 'keboola.ex-teradata') {
+      return (<Link
+        className={this.props.className}
+        to={this.props.componentId}
+        params={{
+          config: this.props.configId,
+          query: this.props.rowId
+        }}
+        query={this.props.query}
+        onClick={this.props.onClick}
+      >{this.props.children}</Link>);
     }
     return (<Link
       className={this.props.className}
