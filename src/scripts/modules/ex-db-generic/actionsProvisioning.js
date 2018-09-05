@@ -507,7 +507,9 @@ export function createActions(componentId) {
       if (store.isConnectionValid()) {
         updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, true);
         let runData = store.configData.setIn(['parameters', 'db'], store.getCredentials());
-        runData = runData.setIn(['parameters', 'tables'], List());
+        if (!store.isRowConfiguration()) {
+          runData = runData.setIn(['parameters', 'tables'], List());
+        }
         const params = {
           configData: runData.toJS()
         };
