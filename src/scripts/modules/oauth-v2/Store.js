@@ -31,8 +31,7 @@ dispatcher.register(function(payload) {
 
   switch (action.type) {
     case Constants.ActionTypes.OAUTHV2_LOAD_CREDENTIALS_SUCCESS:
-      var { credentials } = action;
-      _store = _store.setIn(['credentials', action.componentId, action.id], credentials);
+      _store = _store.setIn(['credentials', action.componentId, action.id], action.credentials);
       return OAuthStore.emitChange();
 
     case Constants.ActionTypes.OAUTHV2_DELETE_CREDENTIALS_START:
@@ -49,9 +48,8 @@ dispatcher.register(function(payload) {
       return OAuthStore.emitChange();
 
     case Constants.ActionTypes.OAUTHV2_POST_CREDENTIALS_SUCCESS:
-      ({ credentials } = action);
       _store = _store.deleteIn(['postingCredentials', action.componentId, action.id]);
-      _store = _store.setIn(['credentials', action.componentId, action.id], credentials);
+      _store = _store.setIn(['credentials', action.componentId, action.id], action.credentials);
       return OAuthStore.emitChange();
 
     case Constants.ActionTypes.OAUTHV2_API_ERROR:
