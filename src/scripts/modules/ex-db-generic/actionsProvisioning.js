@@ -46,7 +46,8 @@ export function componentSupportsSimpleSetup(componentId) {
     'keboola.ex-db-mssql',
     'keboola.ex-db-oracle',
     'keboola.ex-db-db2',
-    'keboola.ex-db-pgsql'
+    'keboola.ex-db-pgsql',
+    'keboola.ex-teradata'
   ];
   return supportedComponents.indexOf(componentId) > -1;
 }
@@ -161,7 +162,7 @@ export function createActions(componentId) {
 
   function rowDataFromQuery(query) {
     const queryState = query.has('state') ? query.get('state').toJS() : {};
-    const paramsQuery = query.delete('state');
+    const paramsQuery = query.delete('state').delete('name').delete('id').delete('enabled');
     return {
       'rowId': query.get('id'),
       'name': query.get('name'),
