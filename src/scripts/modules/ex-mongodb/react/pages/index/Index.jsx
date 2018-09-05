@@ -115,15 +115,16 @@ export default function(componentId) {
 
     renderSidebar() {
       const configurationId = this.state.configId;
+
       return (
         <div className="col-md-3 kbc-main-sidebar">
           <div className="kbc-buttons kbc-text-light">
-            <ComponentMetadata componentId={componentId} configId={this.state.configId} />
+            <ComponentMetadata componentId={componentId} configId={configurationId} />
           </div>
           <ul className="nav nav-stacked">
             {this.state.hasCredentials && (
               <li>
-                <Link to="ex-mongodb-credentials" params={{ config: this.state.configId }}>
+                <Link to="ex-mongodb-credentials" params={{ config: configurationId }}>
                   <i className="fa fa-fw fa-user" /> Database Credentials
                 </Link>
               </li>
@@ -145,7 +146,7 @@ export default function(componentId) {
               </RunExtractionButton>
             </li>
             <li>
-              <DeleteConfigurationButton componentId={componentId} configId={this.state.configId} />
+              <DeleteConfigurationButton componentId={componentId} configId={configurationId} />
             </li>
           </ul>
           <LatestJobs limit={3} jobs={this.state.latestJobs} />
