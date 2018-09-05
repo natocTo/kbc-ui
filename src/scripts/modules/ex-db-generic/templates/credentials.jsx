@@ -186,6 +186,34 @@ const mysqlFields = [
   }
 ];
 
+// same as default without port - should be always 1025
+const teradataFields = [
+  {
+    'label': 'Host Name',
+    'name': 'host',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Username',
+    'name': 'user',
+    'type': 'text',
+    'protected': false,
+    'required': true
+  }, {
+    'label': 'Password',
+    'name': '#password',
+    'type': 'password',
+    'protected': true,
+    'required': true
+  }, {
+    'label': 'Database',
+    'name': 'database',
+    'type': 'text',
+    'protected': false,
+    'required': false
+  }
+];
 
 const COMPONENTS_FIELDS = {
   'keboola.ex-db-mysql': mysqlFields,
@@ -196,7 +224,8 @@ const COMPONENTS_FIELDS = {
   'keboola.ex-db-impala': defaultFields,
   'keboola.ex-db-oracle': oracleFields,
   'keboola.ex-mongodb': defaultFields,
-  'keboola.ex-db-snowflake': snowflakeFields
+  'keboola.ex-db-snowflake': snowflakeFields,
+  'keboola.ex-teradata': teradataFields
 };
 
 
