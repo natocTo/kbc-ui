@@ -89,21 +89,19 @@ export default React.createClass({
       }
     ];
 
-    const additionalActions = (
-      <div className="searchbar-actions">
-        <Select
-          value={this.state.filterType}
-          onChange={(selected) => {
-            const query = selected !== null ? selected.value : '';
-            this.handleFilterChange(query, 'type');
-          }}
-          options={typeFilterOptions}
-          placeholder="All components"
-          className="settings-trash-select"
-        />
-        <TrashHeaderButtons/>
-      </div>
-    );
+    const additionaActions = [
+      <Select
+        value={this.state.filterType}
+        onChange={(selected) => {
+          const query = selected !== null ? selected.value : '';
+          this.handleFilterChange(query, 'type');
+        }}
+        options={typeFilterOptions}
+        placeholder="All components"
+        className="settings-trash-select"
+      />,
+      <TrashHeaderButtons/>
+    ];
 
     return (
       <div className="container-fluid">
@@ -115,7 +113,7 @@ export default React.createClass({
                 <SearchBar
                   query={this.state.filterName}
                   onChange={(query) => this.handleFilterChange(query, 'name')}
-                  additionalActions={additionalActions}
+                  additionalActions={additionaActions}
                 />
               </div>
             </div>
