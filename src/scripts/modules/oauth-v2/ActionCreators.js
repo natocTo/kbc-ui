@@ -2,7 +2,7 @@ import dispatcher from '../../Dispatcher';
 import Promise from 'bluebird';
 import oauthStore from './Store';
 import oauthApi from './Api';
-import Constants from './Constants';
+import * as Constants from './Constants';
 import Immutable from 'immutable';
 
 export default {

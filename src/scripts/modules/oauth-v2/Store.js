@@ -1,7 +1,7 @@
 import StoreUtils from '../../utils/StoreUtils';
 import { Map } from 'immutable';
 import dispatcher from '../../Dispatcher';
-import Constants from './Constants';
+import * as Constants from './Constants';
 
 let _store = Map({
   deletingCredentials: Map(),
