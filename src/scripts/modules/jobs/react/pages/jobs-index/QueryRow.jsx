@@ -13,15 +13,13 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="row">
-        <div className="col-xs-12">
-          <SearchBar
-            query={this.props.query}
-            onSubmit={(query) => this.props.onSearch(query)}
-            placeholder="Search by name or attributes"
-            additionalActions={this.renderAdditionalActions()}
-          />
-        </div>
+      <div className="row-searchbar">
+        <SearchBar
+          query={this.props.query}
+          onSubmit={(query) => this.props.onSearch(query)}
+          placeholder="Search by name or attributes"
+          additionalActions={this.renderAdditionalActions()}
+        />
       </div>
     );
   },

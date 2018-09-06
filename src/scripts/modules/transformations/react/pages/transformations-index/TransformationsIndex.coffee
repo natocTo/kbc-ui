@@ -37,11 +37,10 @@ TransformationsIndex = React.createClass
     div className: 'container-fluid',
       if (@state.buckets && @state.buckets.count() > 0)
         div className: 'kbc-main-content',
-          div className: 'row',
-            div className: 'col-xs-12',
-              React.createElement SearchBar,
-                onChange: @_handleFilterChange
-                query: @state.filter
+          div className: 'row-searchbar',
+            React.createElement SearchBar,
+              onChange: @_handleFilterChange
+              query: @state.filter
           span {},
             if @_getFilteredBuckets().count()
               div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'

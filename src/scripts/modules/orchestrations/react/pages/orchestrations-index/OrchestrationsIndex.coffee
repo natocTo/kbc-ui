@@ -35,9 +35,8 @@ Index = React.createClass
     if @state.totalOrchestrationsCount
       div {className: 'container-fluid'},
         div {className: 'kbc-main-content'},
-          div {className: 'row'},
-            div {className: 'col-xs-12'},
-              SearchBar(onChange: @_handleFilterChange, query: @state.filter)
+          div {className: 'row-searchbar'},
+            SearchBar(onChange: @_handleFilterChange, query: @state.filter)
           if @state.orchestrations.count()
             @_renderTable()
           else

@@ -46,14 +46,12 @@ export default React.createClass({
       return (
         <div className="container-fluid">
           <div className="kbc-main-content kbc-components-list">
-            <div className="row">
-              <div className="col-xs-12">
-                <SearchBar
-                  onChange={this.handleFilterChange}
-                  query={this.state.configurationFilter}
-                />
-                </div>
-              </div>
+            <div className="row-searchbar">
+              <SearchBar
+                onChange={this.handleFilterChange}
+                query={this.state.configurationFilter}
+              />
+            </div>
             {this.state.installedComponentsFiltered.count()
               ? this.state.installedComponentsFiltered.map((component) => {
                 return (

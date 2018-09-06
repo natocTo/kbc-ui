@@ -16,14 +16,12 @@ export default React.createClass({
     return (
       <div className={this.props.className}>
         {this.props.children}
-        <div className="row">
-          <div className="col-xs-12">
-            <SearchBar
-              onChange={this.handleFilterChange}
-              query={this.props.filter}
-            />
-            </div>
-          </div>
+        <div className="row-searchbar">
+          <SearchBar
+            onChange={this.handleFilterChange}
+            query={this.props.filter}
+          />
+        </div>
         <div className="table kbc-table-border-vertical kbc-components-overview kbc-layout-table">
           <div className="tbody">
             {this.renderComponents()}
