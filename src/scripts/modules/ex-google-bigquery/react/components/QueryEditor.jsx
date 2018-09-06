@@ -118,11 +118,6 @@ export default React.createClass({
           </div>
           <div className="form-group">
             <label className="col-md-12 control-label">SQL query</label>
-            {this.props.componentId === 'keboola.ex-db-oracle' ? (
-              <div className="col-md-12">
-                <div className="help-block">Do not leave a semicolon at the end of the query.</div>
-              </div>
-            ) : null}
             <div className="col-md-12">
               <CodeEditor
                 readOnly={false}
