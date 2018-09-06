@@ -3,6 +3,8 @@ fuzzy = require 'fuzzy'
 {List, Map} = require 'immutable'
 Tooltip = require('../../common/Tooltip').default
 SearchBar = require('@keboola/indigo-ui').SearchBar
+ReactDOM = require 'react-dom'
+
 _ = require 'underscore'
 
 NewProjectModal = require('../NewProjectModal').default
@@ -29,12 +31,14 @@ module.exports = React.createClass
     isNewProjectModalOpen: false
 
   componentDidMount: ->
-    if @props.focus &&  @refs.searchInput
-      @refs.searchInput.focus()
+    inputRef = ReactDOM.findDOMNode(this.refs.searchInput).children[0].focus()
+    if @props.focus && inputRef
+      inputRef.focus()
 
   componentDidUpdate: (prevProps) ->
-    if @refs.searchInput && @props.focus && @props.focus != prevProps.focus
-      @refs.searchInput.focus()
+    inputRef = ReactDOM.findDOMNode(this.refs.searchInput).children[0].focus()
+    if inputRef && @props.focus && @props.focus != prevProps.focus
+      inputRef.focus()
 
   render: ->
     if !@props.organizations.count() && !@props.canCreateProject
@@ -43,6 +47,7 @@ module.exports = React.createClass
       ul className: 'list-unstyled',
         li className: 'dropdown-header kb-nav-search',
           React.createElement SearchBar,
+            ref: 'searchInput'
             onChange: @_handleQueryChange
             query: @state.query
             placeholder: 'Search your projects'
