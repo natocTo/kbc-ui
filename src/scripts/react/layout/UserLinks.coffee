@@ -42,4 +42,4 @@ module.exports = React.createClass
           ExternalLink
             href: 'https://portal.productboard.com/ltulbdlwnurf2accjn3ukkww',
             span className: 'fa fa-tasks'
-            ' Keboola Roadmap '
+            ' Keboola Wishlist '
