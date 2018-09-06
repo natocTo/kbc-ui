@@ -28,7 +28,7 @@ module.exports = React.createClass({
     } else if (this.props.componentId === 'keboola.ex-db-mysql' || this.props.componentId === 'keboola.ex-teradata') {
       return (<Link
         className={this.props.className}
-        to={this.props.componentId}
+        to={'ex-db-generic-' + this.props.componentId + '-query'}
         params={{
           config: this.props.configId,
           query: this.props.rowId
