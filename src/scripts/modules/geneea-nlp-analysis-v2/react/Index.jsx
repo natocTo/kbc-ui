@@ -43,7 +43,7 @@ import DeleteConfigurationButton from '../../components/react/components/DeleteC
 import LatestJobs from '../../components/react/components/SidebarJobs';
 import LatestVersions from '../../components/react/components/SidebarVersionsWrapper';
 
-import {analysisTypes, languageOptions} from './templates.js';
+import {analysisTypes, languageOptions} from './templates';
 
 const componentId = 'geneea.nlp-analysis-v2';
 
