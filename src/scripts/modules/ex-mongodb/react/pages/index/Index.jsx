@@ -80,37 +80,41 @@ export default function(componentId) {
             </div>
           )}
 
-          {(() => {
-            if (this.state.queries.count()) {
-              if (this.state.queriesFiltered.count()) {
-                return (
-                  <QueryTable
-                    queries={this.state.queriesFiltered}
-                    configurationId={this.state.configId}
-                    componentId={componentId}
-                    pendingActions={this.state.pendingActions}
-                    actionCreators={actionCreators}
-                  />
-                );
-              } else {
-                return this._renderNotFound();
-              }
-            } else if (this.state.hasCredentials) {
-              return (
-                <div className="row component-empty-state text-center">
-                  <p>No queries configured yet.</p>
-                  <CreateQueryElement
-                    isNav={false}
-                    componentId={componentId}
-                    configurationId={this.state.configId}
-                    actionCreators={actionCreators}
-                  />
-                </div>
-              );
-            }
-          })()}
+          {this.renderQueryTable()}
         </div>
       );
+    },
+
+    renderQueryTable() {
+      if (this.state.queries.count()) {
+        if (this.state.queriesFiltered.count()) {
+          return (
+            <QueryTable
+              queries={this.state.queriesFiltered}
+              configurationId={this.state.configId}
+              componentId={componentId}
+              pendingActions={this.state.pendingActions}
+              actionCreators={actionCreators}
+            />
+          );
+        }
+
+        return this._renderNotFound();
+      }
+
+      if (this.state.hasCredentials) {
+        return (
+          <div className="row component-empty-state text-center">
+            <p>No queries configured yet.</p>
+            <CreateQueryElement
+              isNav={false}
+              componentId={componentId}
+              configurationId={this.state.configId}
+              actionCreators={actionCreators}
+            />
+          </div>
+        );
+      }
     },
 
     renderSidebar() {
