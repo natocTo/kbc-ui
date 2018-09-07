@@ -168,7 +168,7 @@ export default React.createClass({
                     );
                   }}
                 >
-                  {'Send Email '}
+                  Send Email
                 </Button>
                 <span> {this.props.sendingLink && <Loader />}</span>
               </div>
