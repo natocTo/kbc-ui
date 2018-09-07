@@ -1,7 +1,7 @@
 React = require 'react'
 {Modal} = require('react-bootstrap')
 {button, strong, div, h2, span, h4, section, p} = React.DOM
-AuthorizeAccount = React.createFactory(require('../../../../google-utils/react/AuthorizeAccount'))
+AuthorizeAccount = React.createFactory(require('../../../../google-utils/react/AuthorizeAccount').default)
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 {Map} = require 'immutable'
 ModalHeader = React.createFactory(require('react-bootstrap').Modal.Header)
