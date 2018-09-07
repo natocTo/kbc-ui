@@ -2,8 +2,8 @@ React = require('react')
 Immutable = require('immutable')
 
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
-RedshiftSandboxCredentialsStore = require('../../../provisioning/stores/RedshiftSandboxCredentialsStore')
-RedshiftCredentials = React.createFactory(require('../../../provisioning/react/components/RedshiftCredentials'))
+RedshiftCredentials = React.createFactory(require('../../../provisioning/react/components/RedshiftCredentials').default)
+RedshiftCredentials = require('../../../provisioning/react/components/RedshiftCredentials')
 CredentialsActionCreators = require('../../../provisioning/ActionCreators')
 
 {div, span, input, strong, form, button, h3, h4, i, button, small, ul, li, a} = React.DOM

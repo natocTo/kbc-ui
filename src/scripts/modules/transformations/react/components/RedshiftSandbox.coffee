@@ -5,7 +5,7 @@ createStoreMixin = require '../../../../react/mixins/createStoreMixin'
 ComponentsStore = require('../../../components/stores/ComponentsStore')
 RedshiftSandboxCredentialsStore = require('../../../provisioning/stores/RedshiftSandboxCredentialsStore')
 CredentialsActionCreators = require('../../../provisioning/ActionCreators')
-RedshiftCredentials = React.createFactory(require('../../../provisioning/react/components/RedshiftCredentials'))
+RedshiftCredentials = React.createFactory(require('../../../provisioning/react/components/RedshiftCredentials').default)
 ConfigureSandbox = React.createFactory(require '../components/ConfigureSandbox')
 RunComponentButton =
   React.createFactory(require '../../../components/react/components/RunComponentButton')
