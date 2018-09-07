@@ -614,6 +614,8 @@ module.exports =
         configurationId: configurationId
         projectId: projectId
         ssoLink: result.link
+        ssoProvider: result.ssoProvider
+        encryptedClaims: result.encryptedClaims
     .catch (e) ->
       dispatcher.handleViewAction
         type: constants.ActionTypes.GOOD_DATA_WRITER_PROJECT_ACCESS_ERROR
