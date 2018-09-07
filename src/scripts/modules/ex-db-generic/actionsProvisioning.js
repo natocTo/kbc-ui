@@ -46,14 +46,16 @@ export function componentSupportsSimpleSetup(componentId) {
     'keboola.ex-db-mssql',
     'keboola.ex-db-oracle',
     'keboola.ex-db-db2',
-    'keboola.ex-db-pgsql'
+    'keboola.ex-db-pgsql',
+    'keboola.ex-teradata'
   ];
   return supportedComponents.indexOf(componentId) > -1;
 }
 
 export function componentSupportsConfigRows(componentId) {
   const supoortedComponents = [
-    'keboola.ex-db-mysql'
+    'keboola.ex-db-mysql',
+    'keboola.ex-teradata'
   ];
   return supoortedComponents.indexOf(componentId) > -1;
 }
@@ -160,7 +162,7 @@ export function createActions(componentId) {
 
   function rowDataFromQuery(query) {
     const queryState = query.has('state') ? query.get('state').toJS() : {};
-    const paramsQuery = query.delete('state');
+    const paramsQuery = query.delete('state').delete('name').delete('id').delete('enabled');
     return {
       'rowId': query.get('id'),
       'name': query.get('name'),
@@ -247,7 +249,9 @@ export function createActions(componentId) {
       const store = getStore(configId);
       const testingCredentials = updateProtectedProperties(credentials, store.getCredentials());
       let runData = store.configData.setIn(['parameters', 'db'], testingCredentials);
-      runData = runData.setIn(['parameters', 'tables'], List());
+      if (!store.isRowConfiguration()) {
+        runData = runData.setIn(['parameters', 'tables'], List());
+      }
       const params = {
         configData: runData.toJS()
       };
@@ -503,7 +507,9 @@ export function createActions(componentId) {
       if (store.isConnectionValid()) {
         updateLocalState(configId, storeProvisioning.LOADING_SOURCE_TABLES_PATH, true);
         let runData = store.configData.setIn(['parameters', 'db'], store.getCredentials());
-        runData = runData.setIn(['parameters', 'tables'], List());
+        if (!store.isRowConfiguration()) {
+          runData = runData.setIn(['parameters', 'tables'], List());
+        }
         const params = {
           configData: runData.toJS()
         };

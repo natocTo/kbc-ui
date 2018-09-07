@@ -113,6 +113,7 @@ module.exports = {
       createComponentRoute('keboola.ex-db-impala', [exDbGenericRoutes('keboola.ex-db-impala')]),
       createComponentRoute('keboola.ex-mongodb', [exMongoDbRoutes]),
       createComponentRoute('keboola.ex-google-bigquery', [exGoogleBigqueryRoutes]),
+      createComponentRoute('keboola.ex-teradata', [exDbGenericRoutes('keboola.ex-teradata')]),
       createComponentRoute('keboola.csv-import', [csvImportRoutes]),
       createComponentRoute('keboola.ex-s3', [exS3Routes]),
       createComponentRoute('apify.apify', [exApifyRoutes]),
