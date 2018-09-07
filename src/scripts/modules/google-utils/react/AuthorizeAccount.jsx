@@ -185,17 +185,12 @@ export default React.createClass({
 
   _getOAuthUrl() {
     const endpoint = this.state.component.get('uri');
-    const oauthUrl = `${endpoint}/oauth`;
-    return oauthUrl;
+    return `${endpoint}/oauth`;
   },
 
   _getReferrer() {
     return this.props.refererUrl;
   },
-  // {origin, pathname, search} = window.location
-  // basepath = "#{origin}#{pathname}#{search}#/extractors/#{@props.componentName}"
-  // referrer = "#{basepath}/#{@state.configId}/sheets"
-  // return referrer #encodeURIComponent(referrer)
 
   _createHiddenInput(name, value) {
     return <input name={name} type="hidden" value={value} />;
