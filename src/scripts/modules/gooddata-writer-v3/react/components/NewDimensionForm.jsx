@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Form, Col, Checkbox, FormControl, FormGroup, ControlLabel, HelpBlock, Radio} from 'react-bootstrap';
+import {Form, Col, Checkbox, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
 import {RadioGroup} from 'react-radio-group';
+import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 
 export default React.createClass({
   propTypes: {
@@ -82,19 +83,14 @@ export default React.createClass({
     );
   },
 
-  renderRadio(name, value, helpText) {
-    return [
-      <Radio
-        isChecked={this.props.value.template === value}
-        key="radio"
-        type="radio"
+  renderRadio(label, value, helpText) {
+    return (
+      <RadioGroupInput
+        label={label}
         value={value}
-        useRadioGroup={true}
-      >
-        {name}
-      </Radio>,
-      <HelpBlock key="help">{helpText}</HelpBlock>
-    ];
+        help={helpText}
+      />
+    );
   }
 
 

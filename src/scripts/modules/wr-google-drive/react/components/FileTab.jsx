@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Input} from '../../../../react/common/KbcBootstrap';
 import {RadioGroup} from 'react-radio-group';
+import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
 
@@ -43,21 +44,17 @@ export default React.createClass({
             selectedValue={this.props.type}
             onChange={this.props.onSwitchType}
           >
-            <Input
-              type="radio"
+            <RadioGroupInput
               label="No"
               help="Create a new File, that will be updated on each run"
               wrapperClassName="col-sm-8"
               value="new"
-              useRadioGroup={true}
             />
-            <Input
-              type="radio"
+            <RadioGroupInput
               label="Yes"
               help="Use existing File"
               wrapperClassName="col-sm-8"
               value="existing"
-              useRadioGroup={true}
             />
           </RadioGroup>
         </div>

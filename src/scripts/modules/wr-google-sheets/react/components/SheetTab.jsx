@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {RadioGroup} from 'react-radio-group';
+import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import {Input} from '../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
@@ -54,21 +55,17 @@ export default React.createClass({
             onChange={this.props.onChangeAction}
           >
             <div className="form-horizontal">
-              <Input
-                type="radio"
+              <RadioGroupInput
                 label="Update rows"
                 help="Overwrites data in the Sheet"
                 wrapperClassName="col-sm-8"
                 value="update"
-                useRadioGroup={true}
               />
-              <Input
-                type="radio"
+              <RadioGroupInput
                 label="Append rows"
                 help="Add new data to the end of the Sheet"
                 wrapperClassName="col-sm-8"
                 value="append"
-                useRadioGroup={true}
               />
             </div>
           </RadioGroup>

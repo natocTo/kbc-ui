@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
-import {Input} from './../../../../react/common/KbcBootstrap';
 import {Modal} from 'react-bootstrap';
 import {Link} from 'react-router';
 import {RadioGroup} from 'react-radio-group';
+import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import MySqlCredentialsContainer from '../components/MySqlCredentialsContainer';
 import RedshiftCredentialsContainer from '../components/RedshiftCredentialsContainer';
 import SnowflakeCredentialsContainer from '../components/SnowflakeCredentialsContainer';
@@ -55,27 +55,21 @@ export default React.createClass({
                onChange={this.props.onModeChange}
              >
                <div className="form-horizontal">
-                 <Input
-                   type="radio"
+                 <RadioGroupInput
                    label="Load input tables only"
                    wrapperClassName="col-sm-offset-1 col-sm-8"
                    value="input"
-                   useRadioGroup={true}
                  />
-                 <Input
-                   type="radio"
+                 <RadioGroupInput
                    label="Prepare transformation"
                    help="Load input tables AND execute required transformations"
                    wrapperClassName="col-sm-offset-1 col-sm-8"
                    value="prepare"
-                   useRadioGroup={true}
                  />
-                 <Input
-                   type="radio"
+                 <RadioGroupInput
                    label="Execute transformation without writing to Storage"
                    wrapperClassName="col-sm-offset-1 col-sm-8"
                    value="dry-run"
-                   useRadioGroup={true}
                  />
                </div>
                <div className="help-block">

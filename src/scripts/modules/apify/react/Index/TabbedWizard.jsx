@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Tab, Tabs} from 'react-bootstrap';
 import {RadioGroup} from 'react-radio-group';
-import {Input} from '../../../../react/common/KbcBootstrap';
+import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 import SapiTableSelector from '../../../components/react/components/SapiTableSelector';
 import ApifyObjectSelector from './ApifyObjectSelector';
 
@@ -129,33 +129,25 @@ export default React.createClass({
         selectedValue={this.props.action}
         onChange={(value) => this.updateParameter('action', value)}
       >
-        <Input
-          type="radio"
+        <RadioGroupInput
           label="Run Crawler"
           help="Runs a specific Crawler and retrieves its results if it finishes successfully."
           value="crawler"
-          useRadioGroup={true}
         />
-        <Input
-          type="radio"
+        <RadioGroupInput
           label="Run Actor"
           help="Runs a specific Actor and retrieves its results if it finishes successfully."
           value="actor"
-          useRadioGroup={true}
         />
-        <Input
-          type="radio"
+        <RadioGroupInput
           label="Retrieve results from Crawler run"
           help="Retrieves the results from a Crawler run specified by its Execution ID."
           value="executionId"
-          useRadioGroup={true}
         />
-        <Input
-          type="radio"
+        <RadioGroupInput
           label="Retrieve items from Dataset"
           help="Retrieves items from a Dataset specified by its ID or name."
           value="dataset"
-          useRadioGroup={true}
         />
       </RadioGroup>
     );
