@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Input} from '../../../../react/common/KbcBootstrap';
-import RadioGroup from 'react-radio-group';
+import {RadioGroup} from 'react-radio-group';
 import Picker from '../../../google-utils/react/GooglePicker';
 import ViewTemplates from '../../../google-utils/react/PickerViewTemplates';
 
@@ -35,7 +35,7 @@ export default React.createClass({
         <div className="col-md-10">
           <RadioGroup
             name="type"
-            value={this.props.type}
+            selectedValue={this.props.type}
             onChange={this.props.onSwitchType}
           >
             <Input
@@ -44,6 +44,7 @@ export default React.createClass({
               help="Create new Spreadsheet"
               wrapperClassName="col-sm-8"
               value="new"
+              useRadioGroup={true}
             />
             <Input
               type="radio"
@@ -51,6 +52,7 @@ export default React.createClass({
               help="Use existing Spreadsheet"
               wrapperClassName="col-sm-8"
               value="existing"
+              useRadioGroup={true}
             />
           </RadioGroup>
         </div>

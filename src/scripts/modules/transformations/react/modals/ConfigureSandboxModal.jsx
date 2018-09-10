@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {Input} from './../../../../react/common/KbcBootstrap';
 import {Modal} from 'react-bootstrap';
 import {Link} from 'react-router';
-import RadioGroup from 'react-radio-group';
+import {RadioGroup} from 'react-radio-group';
 import MySqlCredentialsContainer from '../components/MySqlCredentialsContainer';
 import RedshiftCredentialsContainer from '../components/RedshiftCredentialsContainer';
 import SnowflakeCredentialsContainer from '../components/SnowflakeCredentialsContainer';
@@ -49,11 +49,34 @@ export default React.createClass({
           {this.props.backend !== 'docker' &&
            <div>
              <h3>Mode</h3>
-             <RadioGroup name="mode" value={this.props.mode} onChange={this.props.onModeChange}>
+             <RadioGroup
+               name="mode"
+               selectedValue={this.props.mode}
+               onChange={this.props.onModeChange}
+             >
                <div className="form-horizontal">
-                 <Input type="radio" label="Load input tables only" wrapperClassName="col-sm-offset-1 col-sm-8" value="input" />
-                 <Input type="radio" label="Prepare transformation" help="Load input tables AND execute required transformations" wrapperClassName="col-sm-offset-1 col-sm-8" value="prepare" />
-                 <Input type="radio" label="Execute transformation without writing to Storage" wrapperClassName="col-sm-offset-1 col-sm-8" value="dry-run" />
+                 <Input
+                   type="radio"
+                   label="Load input tables only"
+                   wrapperClassName="col-sm-offset-1 col-sm-8"
+                   value="input"
+                   useRadioGroup={true}
+                 />
+                 <Input
+                   type="radio"
+                   label="Prepare transformation"
+                   help="Load input tables AND execute required transformations"
+                   wrapperClassName="col-sm-offset-1 col-sm-8"
+                   value="prepare"
+                   useRadioGroup={true}
+                 />
+                 <Input
+                   type="radio"
+                   label="Execute transformation without writing to Storage"
+                   wrapperClassName="col-sm-offset-1 col-sm-8"
+                   value="dry-run"
+                   useRadioGroup={true}
+                 />
                </div>
                <div className="help-block">
                  Note: Disabled transformations will NOT be executed in any of these modes.

@@ -6823,9 +6823,11 @@ react-overlays@^0.7.4:
     prop-types-extra "^1.0.1"
     warning "^3.0.0"
 
-react-radio-group@~1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-radio-group/-/react-radio-group-1.1.0.tgz#fed404a8581a416378fa35e37975b605e5d512cc"
+react-radio-group@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/react-radio-group/-/react-radio-group-3.0.3.tgz#60bb29c7ad05d8b6f67cf443af0767ee2007cf98"
+  dependencies:
+    prop-types "^15.5.8"
 
 react-remarkable@^1.1.1:
   version "1.1.1"

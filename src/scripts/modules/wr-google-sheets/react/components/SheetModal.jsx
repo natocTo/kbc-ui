@@ -67,7 +67,8 @@ export default React.createClass({
             <Tab title="Options" eventKey={3} disabled={step !== 3}>
               <SheetTab
                 onChangeSheetTitle={this.onChangeSheetTitle}
-                onChangeAction={(e) => this.updateLocalState(['sheet', 'action'], e.target.value)}                 valueSheetTitle={this.sheet('sheetTitle')}
+                onChangeAction={(sheet) => this.updateLocalState(['sheet', 'action'], sheet)}
+                valueSheetTitle={this.sheet('sheetTitle')}
                 valueAction={this.sheet('action')}
               />
             </Tab>
@@ -141,7 +142,7 @@ export default React.createClass({
     this.updateLocalState(['sheet', 'sheetId'], '');
   },
 
-  onSwitchType(event) {
+  onSwitchType(type) {
     const sheet = this.sheet();
     this.updateLocalState(
       'sheet',
@@ -150,7 +151,7 @@ export default React.createClass({
         .set('fileId', '')
         .set('sheetTitle', 'Sheet1')
         .set('sheetId', ''));
-    this.updateLocalState(['uploadType'], event.target.value);
+    this.updateLocalState(['uploadType'], type);
   },
 
   updateLocalState(path, newValue) {

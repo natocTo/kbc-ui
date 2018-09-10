@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import RadioGroup from 'react-radio-group';
+import {RadioGroup} from 'react-radio-group';
 import {Input} from '../../../../react/common/KbcBootstrap';
 
 export default React.createClass({
@@ -25,7 +25,7 @@ export default React.createClass({
         <div className="col-md-10">
           <RadioGroup
             name="Action"
-            value={this.props.valueAction}
+            selectedValue={this.props.valueAction}
             onChange={this.props.onChangeAction}
           >
             <div className="form-horizontal">
@@ -35,6 +35,7 @@ export default React.createClass({
                 help="Always rewrite the same file"
                 wrapperClassName="col-sm-8"
                 value="update"
+                useRadioGroup={true}
               />
               <Input
                 type="radio"
@@ -42,6 +43,7 @@ export default React.createClass({
                 help="Every time create a unique file"
                 wrapperClassName="col-sm-8"
                 value="create"
+                useRadioGroup={true}
               />
             </div>
           </RadioGroup>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, Checkbox, Radio } from 'react-bootstrap';
+import {Radio as GroupRadioInput} from 'react-radio-group';
 import classNames from 'classnames';
 
 const inputTypes = {
@@ -20,7 +21,8 @@ export default React.createClass({
     disabled: React.PropTypes.bool,
     labelClassName: React.PropTypes.string,
     bsSize: React.PropTypes.oneOf(['sm', 'small', 'lg', 'large']),
-    wrapperClassName: React.PropTypes.string
+    wrapperClassName: React.PropTypes.string,
+    useRadioGroup: React.PropTypes.bool
   },
 
   render() {
@@ -43,10 +45,19 @@ export default React.createClass({
         return (
           <FormGroup bsSize={this.props.bsSize}>
             <div className={this.props.wrapperClassName} key="wrapper">
-              <Radio {...this.props}>
-                {this.props.children}
-                {this.props.label}
-              </Radio>
+              {this.props.useRadioGroup ? (
+                <div className="radio">
+                  <label title={this.props.label}>
+                    <GroupRadioInput {...this.props} />
+                    <span>{this.props.label}</span>
+                  </label>
+                </div>
+              ) : (
+                <Radio {...this.props}>
+                  {this.props.children}
+                  {this.props.label}
+                </Radio>
+              )}
               {this.props.help && <HelpBlock>{this.props.help}</HelpBlock>}
             </div>
           </FormGroup>
