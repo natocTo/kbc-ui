@@ -94,7 +94,7 @@ snowflake = [
   {'character': defaultSize: '255'}
   {'varchar': defaultSize: '255'}
   {'string': defaultSize: '255'}
-  {'text': defaultSize: '255'}
+  {'text': defaultSize: '16777216'}
   {'binary': defaultSize: '255'}
   'date'
   {'time': defaultSize: '9'}
