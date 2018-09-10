@@ -100,14 +100,12 @@ export default function(componentId) {
 
     renderNewQueryLink() {
       return (
-        <div className="searchbar-actions">
-          <CreateQueryElement
-            isNav={false}
-            configurationId={this.state.configId}
-            componentId={componentId}
-            actionsProvisioning={actionsProvisioning}
-          />
-        </div>
+        <CreateQueryElement
+          isNav={false}
+          configurationId={this.state.configId}
+          componentId={componentId}
+          actionsProvisioning={actionsProvisioning}
+        />
       );
     },
 

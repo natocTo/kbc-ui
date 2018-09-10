@@ -26,17 +26,15 @@ export default React.createClass({
 
   renderAdditionalActions() {
     return (
-      <div className="searchbar-actions">
-        <OverlayTrigger
-          trigger="click"
-          placement="bottom"
-          overlay={this.renderQuickHelp()}
-        >
-          <Button bsStyle="link" title="Show Quick help">
-            <Icon.Help className={'icon-size-20'}/>
-          </Button>
-        </OverlayTrigger>
-      </div>
+      <OverlayTrigger
+        trigger="click"
+        placement="bottom"
+        overlay={this.renderQuickHelp()}
+      >
+        <Button bsStyle="link" title="Show Quick help">
+          <Icon.Help className={'icon-size-20'}/>
+        </Button>
+      </OverlayTrigger>
     );
   },
 

@@ -95,10 +95,9 @@ module.exports = React.createClass
   _renderSearchBar: ->
     state = @state
     additionalActions = (
-      div className: "searchbar-actions",
-        AddComponentConfigurationButton
-          disabled: @_isDeprecated()
-          component: state.component
+      AddComponentConfigurationButton
+        disabled: @_isDeprecated()
+        component: state.component
     )
     if @state.configurations.count()
       div className: "row",
