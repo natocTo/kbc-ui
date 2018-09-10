@@ -97,11 +97,10 @@ module.exports = React.createClass
             ,
               'No GoodData project assigned with this configuration.'
         if @state.tablesByBucket.count()
-          div className: 'row',
-            div className: 'col-xs-12',
-              React.createElement SearchBar,
-                onChange: @_handleFilterChange
-                query: @state.filter
+          div className: 'row-searchbar',
+            React.createElement SearchBar,
+              onChange: @_handleFilterChange
+              query: @state.filter
         if @state.tablesByBucket.count()
           div null,
             div className: 'kbc-inner-padding text-right',

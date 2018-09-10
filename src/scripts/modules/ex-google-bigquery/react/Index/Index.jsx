@@ -275,13 +275,11 @@ export default React.createClass({
   renderSarchForm() {
     if (this.hasQueries() > 0) {
       return (
-        <div className="row">
-          <div className="col-xs-12">
-            <SearchBar
-              onChange={this.handleFilterChange}
-              query={this.state.queriesFilter}
-            />
-          </div>
+        <div className="row-searchbar">
+          <SearchBar
+            onChange={this.handleFilterChange}
+            query={this.state.queriesFilter}
+          />
         </div>
       );
     }
