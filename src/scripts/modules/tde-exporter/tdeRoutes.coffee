@@ -11,8 +11,8 @@ LatestJobsStore = require '../jobs/stores/LatestJobsStore'
 installedComponentsActions = require '../components/InstalledComponentsActionCreators'
 oauthStore = require '../components/stores/OAuthStore'
 oauthActions = require '../components/OAuthActionCreators'
-oauth2Actions = require '../oauth-v2/ActionCreators'
-oauth2Store = require '../oauth-v2/Store'
+oauth2Actions = require('../oauth-v2/ActionCreators').default
+oauth2Store = require('../oauth-v2/Store').default
 {OAUTH_V2_WRITERS} = require './tdeCommon'
 
 InstalledComponentsStore = require '../components/stores/InstalledComponentsStore'
