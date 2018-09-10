@@ -61,8 +61,8 @@
     "remove-markdown": "^0.1.0",
     "sortablejs": "^1.7.0",
     "superagent": "~3.8.3",
-    "underscore": "~1.7.0",
-    "underscore.string": "~3.0.3"
+    "underscore": "^1.9.0",
+    "underscore.string": "^3.3.4"
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack/dev-server.config.js --hot --progress --colors --host 0.0.0.0 --port 3000 --inline --https",
