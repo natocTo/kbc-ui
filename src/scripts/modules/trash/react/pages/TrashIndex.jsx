@@ -108,14 +108,12 @@ export default React.createClass({
         <div className="kbc-main-content kbc-components-list">
           <SettingsTabs active="settings-trash"/>
           <div className="tab-content ">
-            <div className="row">
-              <div className="col-xs-12">
-                <SearchBar
-                  query={this.state.filterName}
-                  onChange={(query) => this.handleFilterChange(query, 'name')}
-                  additionalActions={additionaActions}
-                />
-              </div>
+            <div className="row-searchbar row-searchbar-no-padding">
+              <SearchBar
+                query={this.state.filterName}
+                onChange={(query) => this.handleFilterChange(query, 'name')}
+                additionalActions={additionaActions}
+              />
             </div>
             <div className="tab-pane tab-pane-no-padding active">
               {this.renderRows()}
