@@ -89,7 +89,7 @@ export default React.createClass({
       }
     ];
 
-    const additionaActions = [
+    const additionalActions = [
       <Select
         value={this.state.filterType}
         onChange={(selected) => {
@@ -99,8 +99,11 @@ export default React.createClass({
         options={typeFilterOptions}
         placeholder="All components"
         className="settings-trash-select"
+        key="searchbar-component-filter"
       />,
-      <TrashHeaderButtons/>
+      <TrashHeaderButtons
+        key="searchbar-trash-header-buttons"
+      />
     ];
 
     return (
@@ -112,7 +115,7 @@ export default React.createClass({
               <SearchBar
                 query={this.state.filterName}
                 onChange={(query) => this.handleFilterChange(query, 'name')}
-                additionalActions={additionaActions}
+                additionalActions={additionalActions}
               />
             </div>
             <div className="tab-pane tab-pane-no-padding active">
