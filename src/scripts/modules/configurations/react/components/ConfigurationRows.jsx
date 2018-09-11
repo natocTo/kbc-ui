@@ -146,7 +146,6 @@ export default React.createClass({
               <SearchBar
                 query={this.state.query}
                 onChange={this.onChangeSearch}
-                onSubmit={this.onChangeSearch}
                 additionalActions={this.renderNewConfigRowButton()}
               />
             </div>
