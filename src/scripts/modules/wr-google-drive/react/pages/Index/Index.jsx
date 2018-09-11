@@ -66,10 +66,8 @@ export default function(COMPONENT_ID) {
             <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
               {this.renderAuthorizedInfo()}
             </div>
-            <div className="row">
-              <div className="col-xs-12">
-                {this.renderSearchBar()}
-              </div>
+            <div className="row-searchbar">
+              {this.renderSearchBar()}
             </div>
             {
               this.hasTables() ?

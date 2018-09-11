@@ -75,10 +75,8 @@ export default function(componentId) {
           )}
 
           {this.state.queries.count() > 1 && (
-            <div className="row">
-              <div className="col-xs-12">
-                <SearchBar onChange={this._handleFilterChange} query={this.state.queriesFilter} />
-              </div>
+            <div className="row-searchbar">
+              <SearchBar onChange={this._handleFilterChange} query={this.state.queriesFilter} />
             </div>
           )}
 

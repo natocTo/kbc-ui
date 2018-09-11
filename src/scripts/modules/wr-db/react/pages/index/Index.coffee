@@ -142,11 +142,10 @@ templateFn = (componentId) ->
           configId: @state.configId
 
       if @_hasValidCredentials() and @_hasConfigTables()
-        div className: 'row',
-          div className: 'col-xs-12',
-            React.createElement SearchBar,
-              onChange: @_handleSearchQueryChange
-              query: @state.localState.get('searchQuery') or ''
+        div className: 'row-searchbar',
+          React.createElement SearchBar,
+            onChange: @_handleSearchQueryChange
+            query: @state.localState.get('searchQuery') or ''
 
       if @_hasConfigTables()
         div className: 'kbc-inner-padding text-right',

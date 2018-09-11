@@ -267,14 +267,12 @@ export default function(componentId) {
             {this.renderAsynchError()}
             {
               this.state.queries.count() > 0 ? (
-                <div className="row">
-                  <div className="col-xs-12">
-                    <SearchBar
-                      onChange={this.handleFilterChange}
-                      query={this.state.queriesFilter}
-                      additionalActions={this.renderNewQueryLink()}
-                    />
-                  </div>
+                <div className="row-searchbar">
+                  <SearchBar
+                    onChange={this.handleFilterChange}
+                    query={this.state.queriesFilter}
+                    additionalActions={this.renderNewQueryLink()}
+                  />
                 </div>
               ) : null
             }

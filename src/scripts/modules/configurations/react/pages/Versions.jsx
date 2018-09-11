@@ -118,10 +118,8 @@ export default React.createClass({
       return (
         <div className="container-fluid">
           <div className="kbc-main-content">
-            <div className="row">
-              <div className="col-xs-12">
-                <SearchBar onChange={this.onSearchChange} query={this.state.query}/>
-              </div>
+            <div className="row-searchbar">
+              <SearchBar onChange={this.onSearchChange} query={this.state.query}/>
             </div>
             <p className="row text-center">No results found.</p>
           </div>
@@ -131,10 +129,8 @@ export default React.createClass({
     return (
       <div className="container-fluid">
         <div className="kbc-main-content">
-          <div className="row">
-            <div className="col-xs-12">
-              <SearchBar onChange={this.onSearchChange} query={this.state.query}/>
-            </div>
+          <div className="row-searchbar">
+            <SearchBar onChange={this.onSearchChange} query={this.state.query}/>
           </div>
           <Table striped hover>
             <thead>
