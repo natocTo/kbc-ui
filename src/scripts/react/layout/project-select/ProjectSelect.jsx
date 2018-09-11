@@ -45,7 +45,8 @@ export default React.createClass({
             xsrf={this.props.xsrf}
             canCreateProject={this.props.canCreateProject}
             focus={this.state.open}
-            theme="searchbar-inverse"/>
+            theme="inverse"
+          />
         </Dropdown.Menu>
       </Dropdown>
     );

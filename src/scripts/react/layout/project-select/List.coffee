@@ -49,7 +49,7 @@ module.exports = React.createClass
           query: @state.query
           placeholder: 'Search your projects'
           onKeyDown: @_handleKeyDown
-          className: @props.theme
+          theme: @props.theme
       @_projectsList()
       @_newProject() if @props.canCreateProject
 
