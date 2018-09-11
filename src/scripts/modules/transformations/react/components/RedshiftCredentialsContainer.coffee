@@ -2,7 +2,7 @@ React = require('react')
 Immutable = require('immutable')
 
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
-RedshiftSandboxCredentialsStore = require('../../../provisioning/stores/RedshiftSandboxCredentialsStore')
+RedshiftSandboxCredentialsStore = require('../../../provisioning/stores/RedshiftSandboxCredentialsStore').default
 RedshiftCredentials = React.createFactory(require('../../../provisioning/react/components/RedshiftCredentials').default)
 CredentialsActionCreators = require('../../../provisioning/ActionCreators')
 

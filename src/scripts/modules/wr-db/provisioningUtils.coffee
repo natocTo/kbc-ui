@@ -1,7 +1,7 @@
 StorageService = require('../tokens/actionCreators').default
 SapiStorage = require('../tokens/StorageTokensStore').default
 Promise = require 'bluebird'
-wrDbProvStore = require '../provisioning/stores/WrDbCredentialsStore'
+wrDbProvStore = require('../provisioning/stores/WrDbCredentialsStore').default
 provisioningActions = require '../provisioning/ActionCreators'
 _ = require 'underscore'
 underscoreString = require 'underscore.string'
