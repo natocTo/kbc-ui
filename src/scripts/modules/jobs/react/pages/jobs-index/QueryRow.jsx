@@ -11,12 +11,25 @@ export default React.createClass({
     query: PropTypes.string.isRequired
   },
 
+  getInitialState() {
+    return {
+      query: this.props.query
+    };
+  },
+
   render() {
     return (
       <div className="row-searchbar">
         <SearchBar
-          query={this.props.query}
-          onSubmit={(query) => this.props.onSearch(query)}
+          query={this.state.query}
+          onChange={(query) => {
+            this.setState({
+              query
+            });
+          }}
+          onSubmit={() => {
+            this.props.onSearch(this.state.query);
+          }}
           placeholder="Search by name or attributes"
           additionalActions={this.renderAdditionalActions()}
         />
