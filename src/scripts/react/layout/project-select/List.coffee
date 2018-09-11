@@ -41,16 +41,15 @@ module.exports = React.createClass
     if !@props.organizations.count() && !@props.canCreateProject
       return React.createElement Emptylist
     div null,
-      ul className: 'list-unstyled',
-        li className: 'dropdown-header kb-nav-search',
-          React.createElement SearchBar,
-            inputRef: (element) =>
-              @searchInput = element
-            onChange: @_handleQueryChange
-            query: @state.query
-            placeholder: 'Search your projects'
-            onKeyDown: @_handleKeyDown
-            className: @props.theme
+      div null,
+        React.createElement SearchBar,
+          inputRef: (element) =>
+            @searchInput = element
+          onChange: @_handleQueryChange
+          query: @state.query
+          placeholder: 'Search your projects'
+          onKeyDown: @_handleKeyDown
+          className: @props.theme
       @_projectsList()
       @_newProject() if @props.canCreateProject
 
