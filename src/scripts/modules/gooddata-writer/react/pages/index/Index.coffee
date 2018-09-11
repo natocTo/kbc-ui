@@ -29,7 +29,7 @@ InstalledComponentStore = require '../../../../components/stores/InstalledCompon
 goodDataWriterStore = require '../../../store'
 actionCreators = require '../../../actionCreators'
 installedComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
-{label, small, strong, br, ul, li, div, span, i, a, button, p, form, input} = React.DOM
+{label, small, strong, br, ul, li, div, span, i, a, button, p} = React.DOM
 { Panel, Alert, DropdownButton } = require('react-bootstrap')
 
 module.exports = React.createClass
@@ -161,18 +161,12 @@ module.exports = React.createClass
           ul className: 'nav nav-stacked',
             if writer.getIn(['project', 'ssoAccess']) && !writer.get('toDelete')
               li null,
-                form
-                  target: '_blank noopener noreferrer'
-                  method: 'POST'
-                  action: 'https://secure.gooddata.com/gdc/account/customerlogin'
+                a
+                  href: writer.getIn(['project', 'ssoLink'])
+                  target: '_blank'
                 ,
-                  input type: 'hidden', name: 'encryptedClaims', value: writer.getIn(['project', 'encryptedClaims'])
-                  input type: 'hidden', name: 'ssoProvider', value: writer.getIn(['project', 'ssoProvider'])
-                  input type: 'hidden', name: 'targetUrl', value: "/#s=/gdc/projects/#{@state.pid}|projectDashboardPage"
-                  button type: 'submit', className: 'btn btn-link',
-                    span className: 'fa fa-bar-chart-o fa-fw'
-                    ' GoodData Project'
-
+                  span className: 'fa fa-bar-chart-o fa-fw'
+                  ' GoodData Project'
             li null,
               if writer.getIn(['project', 'ssoAccess']) && !writer.get('toDelete')
                 a

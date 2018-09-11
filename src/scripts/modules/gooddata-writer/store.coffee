@@ -663,20 +663,6 @@ dispatcher.register (payload) ->
         'project'
         'ssoLink'
       ], action.ssoLink
-      _store = _store.setIn [
-        'writers'
-        action.configurationId
-        'config'
-        'project'
-        'encryptedClaims'
-      ], action.encryptedClaims
-      _store = _store.setIn [
-        'writers'
-        action.configurationId
-        'config'
-        'project'
-        'ssoProvider'
-      ], action.ssoProvider
       GoodDataWriterStore.emitChange()
 
     when constants.ActionTypes.GOOD_DATA_WRITER_PROJECT_ACCESS_DISABLE
