@@ -4,11 +4,8 @@ WrGdriveStore = require '../../../wrGdriveStore'
 ComponentsStore = require '../../../../components/stores/ComponentsStore'
 RoutesStore = require '../../../../../stores/RoutesStore'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
-
 ActionCreators = require '../../../wrGdriveActionCreators'
-
-AuthorizeAccount = require '../../../../google-utils/react/AuthorizeAccount'
-AuthorizeAccount = React.createFactory AuthorizeAccount
+AuthorizeAccount = React.createFactory(require('../../../../google-utils/react/AuthorizeAccount').default)
 
 {div, span, form } = React.DOM
 
