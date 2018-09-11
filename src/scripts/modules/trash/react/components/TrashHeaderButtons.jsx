@@ -21,8 +21,12 @@ export default React.createClass({
         title="Empty Trash"
         text={this.deleteConfirmMessage()}
         buttonLabel="Empty Trash"
-        onConfirm={this.handleDelete}>
-        <button className={'btn btn-link ' + (this.state.installedFilteredComponents.count() ? '' : 'btn-hide')}>
+        onConfirm={this.handleDelete}
+      >
+        <button
+          className={'btn btn-link ' + (this.state.installedFilteredComponents.count() ? '' : 'btn-hide')}
+          type="button"
+        >
           <i className="fa fa-times fa-fw" /> Empty Trash
         </button>
       </Confirm>

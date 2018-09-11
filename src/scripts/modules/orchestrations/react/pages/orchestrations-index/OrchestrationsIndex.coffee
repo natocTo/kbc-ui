@@ -7,7 +7,7 @@ OrchestrationsActionCreators = require '../../../ActionCreators'
 OrchestrationStore = require '../../../stores/OrchestrationsStore'
 
 OrchestrationRow = React.createFactory(require './OrchestrationRow')
-SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
+SearchBar = React.createFactory(require('@keboola/indigo-ui').SearchBar)
 RefreshIcon = React.createFactory(require('@keboola/indigo-ui').RefreshIcon)
 ImmutableRendererMixin = require 'react-immutable-render-mixin'
 
@@ -35,7 +35,8 @@ Index = React.createClass
     if @state.totalOrchestrationsCount
       div {className: 'container-fluid'},
         div {className: 'kbc-main-content'},
-          SearchRow(onChange: @_handleFilterChange, query: @state.filter, className: 'row kbc-search-row')
+          div {className: 'row-searchbar'},
+            SearchBar(onChange: @_handleFilterChange, query: @state.filter)
           if @state.orchestrations.count()
             @_renderTable()
           else

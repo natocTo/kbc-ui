@@ -11,7 +11,7 @@ AddNewTableButton = require('../../components/AddNewTableButton').default
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 StorageTablesStore = require '../../../../components/stores/StorageTablesStore'
 
-SearchRow = require('../../../../../react/common/SearchRow').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
 TablesList = require './BucketTablesList'
 TableRow = require './TableRow'
 TablesByBucketsPanel = require '../../../../components/react/components/TablesByBucketsPanel'
@@ -97,8 +97,8 @@ module.exports = React.createClass
             ,
               'No GoodData project assigned with this configuration.'
         if @state.tablesByBucket.count()
-          div className: 'kbc-inner-padding kbc-inner-padding-with-bottom-border',
-            React.createElement SearchRow,
+          div className: 'row-searchbar',
+            React.createElement SearchBar,
               onChange: @_handleFilterChange
               query: @state.filter
         if @state.tablesByBucket.count()

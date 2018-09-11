@@ -10,7 +10,7 @@ createStoreMixin = require '../../../../../react/mixins/createStoreMixin'
 TransformationBucketsStore = require('../../../stores/TransformationBucketsStore')
 TransformationsStore = require('../../../stores/TransformationsStore')
 InstalledComponentsStore = require('../../../../components/stores/InstalledComponentsStore')
-SearchRow = require('../../../../../react/common/SearchRow').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
 EmptyStateIndex = require('../../components/EmptyStateIndex').default
 
 {Panel} = require('react-bootstrap')
@@ -37,10 +37,10 @@ TransformationsIndex = React.createClass
     div className: 'container-fluid',
       if (@state.buckets && @state.buckets.count() > 0)
         div className: 'kbc-main-content',
-          React.createElement SearchRow,
-            className: 'row kbc-search-row'
-            onChange: @_handleFilterChange
-            query: @state.filter
+          div className: 'row-searchbar',
+            React.createElement SearchBar,
+              onChange: @_handleFilterChange
+              query: @state.filter
           span {},
             if @_getFilteredBuckets().count()
               div className: 'kbc-accordion kbc-panel-heading-with-table kbc-panel-heading-with-table'

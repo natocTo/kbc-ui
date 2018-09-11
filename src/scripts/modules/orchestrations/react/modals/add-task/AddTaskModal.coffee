@@ -18,7 +18,7 @@ RoutesStore = require '../../../../../stores/RoutesStore'
 OrchestrationStore = require '../../../stores/OrchestrationsStore'
 ApplicationStore = require '../../../../../stores/ApplicationStore'
 
-SearchRow = React.createFactory(require('../../../../../react/common/SearchRow').default)
+SearchBar = React.createFactory(require('@keboola/indigo-ui').SearchBar)
 fuzzy = require 'fuzzy'
 immutableMixin = require 'react-immutable-render-mixin'
 
@@ -83,7 +83,7 @@ AddTaskModal = React.createClass
         switch @state.currentStep
           when STEP_COMPONENT_SELECT
             div null,
-              SearchRow
+              SearchBar
                 query: @props.searchQuery
                 onChange: @props.onChangeSearchQuery
               div className: 'orchestration-task-modal-body',

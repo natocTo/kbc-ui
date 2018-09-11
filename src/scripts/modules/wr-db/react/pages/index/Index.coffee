@@ -17,7 +17,7 @@ TablesByBucketsPanel = React.createFactory require('../../../../components/react
 ComponentDescription = require '../../../../components/react/components/ComponentDescription'
 ComponentDescription = React.createFactory(ComponentDescription)
 ComponentMetadata = require '../../../../components/react/components/ComponentMetadata'
-SearchRow = require('../../../../../react/common/SearchRow').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
 
 LatestJobsStore = require '../../../../jobs/stores/LatestJobsStore'
 RoutesStore = require '../../../../../stores/RoutesStore'
@@ -142,8 +142,8 @@ templateFn = (componentId) ->
           configId: @state.configId
 
       if @_hasValidCredentials() and @_hasConfigTables()
-        div className: 'kbc-inner-padding kbc-inner-padding-with-bottom-border',
-          React.createElement SearchRow,
+        div className: 'row-searchbar',
+          React.createElement SearchBar,
             onChange: @_handleSearchQueryChange
             query: @state.localState.get('searchQuery') or ''
 

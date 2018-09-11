@@ -2,6 +2,8 @@ React = require 'react'
 fuzzy = require 'fuzzy'
 {List, Map} = require 'immutable'
 Tooltip = require('../../common/Tooltip').default
+SearchBar = require('@keboola/indigo-ui').SearchBar
+
 _ = require 'underscore'
 
 NewProjectModal = require('../NewProjectModal').default
@@ -19,6 +21,7 @@ module.exports = React.createClass
     focus: React.PropTypes.bool.isRequired
     canCreateProject: React.PropTypes.bool.isRequired
     xsrf: React.PropTypes.string.isRequired
+    theme: React.PropTypes.string
 
   getInitialState: ->
     query: ''
@@ -27,30 +30,28 @@ module.exports = React.createClass
     isNewProjectModalOpen: false
 
   componentDidMount: ->
-    if @props.focus &&  @refs.searchInput
-      @refs.searchInput.focus()
+    if @props.focus && @searchInput
+      @searchInput.focus()
 
   componentDidUpdate: (prevProps) ->
-    if @refs.searchInput && @props.focus && @props.focus != prevProps.focus
-      @refs.searchInput.focus()
+    if @searchInput && @props.focus && @props.focus != prevProps.focus
+      @searchInput.focus()
 
   render: ->
     if !@props.organizations.count() && !@props.canCreateProject
       return React.createElement Emptylist
     div null,
-      ul className: 'list-unstyled',
-        li className: 'dropdown-header kb-nav-search kbc-search',
-          span className: 'kbc-icon-search'
-          input
-            className: 'form-control'
-            placeholder: 'Search your projects'
-            value: @state.query
-            ref: 'searchInput'
-            onChange: @_handleQueryChange
-            onKeyDown: @_handleKeyDown
+      div null,
+        React.createElement SearchBar,
+          inputRef: (element) =>
+            @searchInput = element
+          onChange: @_handleQueryChange
+          query: @state.query
+          placeholder: 'Search your projects'
+          onKeyDown: @_handleKeyDown
+          theme: @props.theme
       @_projectsList()
       @_newProject() if @props.canCreateProject
-
 
   _projectsList: ->
     organizations = @_organizationsFiltered()
@@ -118,12 +119,12 @@ module.exports = React.createClass
   _organizationUrl: (id) ->
     _.template(@props.urlTemplates.get('organization'))(organizationId: id)
 
-  _handleQueryChange: (event) ->
+  _handleQueryChange: (changedQuery) ->
     @setState
-      query: event.target.value
+      query: changedQuery
 
-  _handleKeyDown: (event) ->
-    switch event.key
+  _handleKeyDown: (keyDown) ->
+    switch keyDown
       when 'ArrowDown' then @_selectNextProjectOrOrganization()
       when 'ArrowUp' then @_selectPreviousProjectOrOrganization()
       when 'Enter' then @_goToSelectedProjectOrOrganization()

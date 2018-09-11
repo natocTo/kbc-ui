@@ -44,7 +44,9 @@ export default React.createClass({
             projectTemplates={this.props.projectTemplates}
             xsrf={this.props.xsrf}
             canCreateProject={this.props.canCreateProject}
-            focus={this.state.open}/>
+            focus={this.state.open}
+            theme="inverse"
+          />
         </Dropdown.Menu>
       </Dropdown>
     );

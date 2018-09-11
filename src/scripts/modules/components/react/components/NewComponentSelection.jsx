@@ -1,6 +1,6 @@
 import React from 'react';
 import ComponentsActionCreators from '../../ComponentsActionCreators';
-import SearchRow from '../../../../react/common/SearchRow';
+import {SearchBar} from '@keboola/indigo-ui';
 import ComponentBox from '../../../../react/common/ComponentBox';
 
 export default React.createClass({
@@ -16,11 +16,12 @@ export default React.createClass({
     return (
       <div className={this.props.className}>
         {this.props.children}
-        <SearchRow
-          className="row kbc-search-row"
-          onChange={this.handleFilterChange}
-          query={this.props.filter}
-        />
+        <div className="row-searchbar">
+          <SearchBar
+            onChange={this.handleFilterChange}
+            query={this.props.filter}
+          />
+        </div>
         <div className="table kbc-table-border-vertical kbc-components-overview kbc-layout-table">
           <div className="tbody">
             {this.renderComponents()}

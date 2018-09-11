@@ -10,7 +10,7 @@ import ComponentMetadata from '../../../../components/react/components/Component
 import DeleteConfigurationButton from '../../../../components/react/components/DeleteConfigurationButton';
 import LatestJobs from '../../../../components/react/components/SidebarJobs';
 import RunExtractionButton from '../../../../components/react/components/RunComponentButton';
-import SearchRow from '../../../../../react/common/SearchRow';
+import { SearchBar } from '@keboola/indigo-ui';
 import { createActions } from '../../../actionsProvisioning';
 import LatestVersions from '../../../../components/react/components/SidebarVersionsWrapper';
 import CreateQueryElement from '../../components/CreateQueryElement';
@@ -75,8 +75,8 @@ export default function(componentId) {
           )}
 
           {this.state.queries.count() > 1 && (
-            <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
-              <SearchRow onChange={this._handleFilterChange} query={this.state.queriesFilter} />
+            <div className="row-searchbar">
+              <SearchBar onChange={this._handleFilterChange} query={this.state.queriesFilter} />
             </div>
           )}
 
