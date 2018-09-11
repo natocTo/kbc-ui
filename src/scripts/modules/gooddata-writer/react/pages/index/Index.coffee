@@ -29,6 +29,8 @@ InstalledComponentStore = require '../../../../components/stores/InstalledCompon
 goodDataWriterStore = require '../../../store'
 actionCreators = require '../../../actionCreators'
 installedComponentsActions = require '../../../../components/InstalledComponentsActionCreators'
+ComponentsStore = require '../../../../components/stores/ComponentsStore'
+
 {label, small, strong, br, ul, li, div, span, i, a, button, p, form, input} = React.DOM
 { Panel, Alert, DropdownButton } = require('react-bootstrap')
 
@@ -164,7 +166,7 @@ module.exports = React.createClass
                 form
                   target: '_blank noopener noreferrer'
                   method: 'POST'
-                  action: 'https://secure.gooddata.com/gdc/account/customerlogin'
+                  action: @_getGoodDataLoginUrl()
                 ,
                   input type: 'hidden', name: 'encryptedClaims', value: writer.getIn(['project', 'encryptedClaims'])
                   input type: 'hidden', name: 'ssoProvider', value: writer.getIn(['project', 'ssoProvider'])
@@ -261,6 +263,12 @@ module.exports = React.createClass
           componentId: 'gooddata-writer'
           limit: 3
 
+  _getGoodDataLoginUrl: ->
+    loginUrl = 'https://secure.gooddata.com/gdc/account/customerlogin'
+    componentUri = ComponentsStore.getComponent('gooddata-writer').get('uri')
+    if componentUri == 'https://syrup.eu-central-1.keboola.com/gooddata-writer'
+      loginUrl = 'https://keboola.eu.gooddata.com/gdc/account/customerlogin'
+    return loginUrl
 
   _handleBucketSelect: (bucketId, eventKey, e) ->
     actionCreators.toggleBucket(@state.writer.getIn(['config', 'id']), bucketId)
