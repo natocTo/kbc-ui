@@ -141,15 +141,11 @@ export default React.createClass({
     return (
       <div>
         <div className="kbc-inner-padding">
-          <div className="row">
-            <div className="col-xs-12">
-              <SearchBar
-                query={this.state.query}
-                onChange={this.onChangeSearch}
-                additionalActions={this.renderNewConfigRowButton()}
-              />
-            </div>
-          </div>
+          <SearchBar
+            query={this.state.query}
+            onChange={this.onChangeSearch}
+            additionalActions={this.renderNewConfigRowButton()}
+          />
         </div>
         {this.renderTable()}
       </div>
