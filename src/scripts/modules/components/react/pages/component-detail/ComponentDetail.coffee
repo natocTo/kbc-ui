@@ -100,14 +100,13 @@ module.exports = React.createClass
         component: state.component
     )
     if @state.configurations.count()
-      div className: "row",
-        div className: "col-xs-12",
-          h2 null, "Configurations"
-          React.createElement SearchBar,
-            onChange: @_handleFilterChange
-            query: @state.configurationFilter
-            placeholder: 'Search by name, description or id'
-            additionalActions: additionalActions
+      div className: "row-searchbar row-searchbar-no-border-bottom",
+        h2 null, "Configurations"
+        React.createElement SearchBar,
+          onChange: @_handleFilterChange
+          query: @state.configurationFilter
+          placeholder: 'Search by name, description or id'
+          additionalActions: additionalActions
 
   _renderConfigurations: ->
     hasRedshift = ApplicationStore.getSapiToken().getIn ['owner', 'hasRedshift']
