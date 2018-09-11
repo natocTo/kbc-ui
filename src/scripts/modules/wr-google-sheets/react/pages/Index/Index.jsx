@@ -65,9 +65,7 @@ export default function(COMPONENT_ID) {
             <div className="kbc-inner-padding kbc-inner-padding-with-bottom-border">
               {this.renderAuthorizedInfo()}
             </div>
-            <div className="row-searchbar">
-              {this.renderSearchBar()}
-            </div>
+            {this.renderSearchBar()}
             {
               this.hasTables() ?
 
@@ -127,10 +125,12 @@ export default function(COMPONENT_ID) {
     renderSearchBar() {
       if (this.hasTables()) {
         return (
-          <SearchBar
-            onChange={this.handleSearchQueryChange}
-            query={this.state.localState.get('searchQuery', '')}
-          />
+          <div className="row-searchbar">
+            <SearchBar
+              onChange={this.handleSearchQueryChange}
+              query={this.state.localState.get('searchQuery', '')}
+            />
+          </div>
         );
       }
       return null;
