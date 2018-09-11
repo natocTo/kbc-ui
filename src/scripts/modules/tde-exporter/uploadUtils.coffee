@@ -19,19 +19,6 @@ componentGetRunJson =
         query: "id:#{tdeFile.get('id')}"
         targetFolder: account.get('targetFolder')
 
-  'wr-dropbox': (parameters, tdeFile, configId) ->
-    storage = storageInputFileTemplate(tdeFile.get('id'))
-    account = parameters.get 'dropbox'
-    runParameters =
-      credentials: account.get('id')
-      mode: true
-    result =
-      #config: configId
-      configData:
-        storage: storage
-        parameters: runParameters
-    return result
-
   'wr-tableau-server': (parameters, tdeFile, configId) ->
     storage = storageInputFileTemplate(tdeFile.get('id'))
     credentials = parameters.get 'tableauServer'
@@ -71,13 +58,6 @@ getUploadTaskParameters = (uploadComponentId, account, configId) ->
         configData:
           storage: storage
           parameters: account.toJS()
-    when 'wr-dropbox'
-      result =
-        configData:
-          storage: storage
-          parameters:
-            mode: true
-            credentials: account.get('id')
     when 'wr-google-drive'
       gdrive = account.toJS()
       result =

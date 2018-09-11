@@ -32,8 +32,6 @@ module.exports = React.createClass
     showModal: false
 
   getDefaultProps: ->
-    redirectRouterPath: 'wr-dropbox-oauth-redirect'
-    componentId: 'wr-dropbox'
     renderOpenButtonAsLink: false
 
   close: ->
