@@ -6,11 +6,9 @@ import _ from 'underscore';
 import {Link} from 'react-router';
 import {factory as eventsFactory} from '../EventsService';
 import RoutesStore from '../../../stores/RoutesStore';
-import {SearchBar} from '@keboola/indigo-ui';
 import EventsTable from './EventsTable';
 import EventDetail from './EventDetail';
-import {Loader} from '@keboola/indigo-ui';
-
+import {Loader, SearchBar} from '@keboola/indigo-ui';
 
 export default React.createClass({
   mixins: [PureRendererMixin],
@@ -46,6 +44,7 @@ export default React.createClass({
       isLoading: false,
       hasMore: true,
       searchQuery: '',
+      searchQueryLocal: '',
       currentEvent: null,
       currentEventId: null,
       isLoadingCurrentEvent: false
@@ -96,7 +95,12 @@ export default React.createClass({
         <div className="col-xs-12 col-searchbar-events-padded">
           <SearchBar
             query={this.state.searchQuery}
-            onSubmit={this._handleQueryChange}
+            onChange={(query) => {
+              this.setState({
+                searchQueryLocal: query
+              });
+            }}
+            onSubmit={() => this._handleQueryChange(this.state.searchQueryLocal)}
           />
         </div>
         {this.state.currentEventId ? this._renderCurrentEvent() : this._renderEventsList()}
