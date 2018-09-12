@@ -141,6 +141,6 @@ startApp = (appOptions) ->
       ReactDOM.render(React.createElement(Handler, isError: true), appOptions.rootNode)
     )
 
-global.kbcApp =
+module.exports =
   start: startApp
   helpers: require './helpers'
