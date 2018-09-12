@@ -93,8 +93,11 @@ module.exports =
       return underscoreString.include(host,'redshift.amazonaws.com') and
         underscoreString.include(host, 'sapi') && hasPlainPassword
     if driver == 'snowflake'
-      return (underscoreString.include(host,'keboola.snowflakecomputing.com') or
-          underscoreString.include(host,'keboola.eu-central-1.snowflakecomputing.com')) && hasPlainPassword
+      return (
+        underscoreString.include(host,'keboola.ap-southeast-2.snowflakecomputing.com') or
+        underscoreString.include(host,'keboola.snowflakecomputing.com') or
+        underscoreString.include(host,'keboola.eu-central-1.snowflakecomputing.com')
+        ) and hasPlainPassword
     return false
 
   getCredentials: (isReadOnly, driver, componentId, configId) ->
