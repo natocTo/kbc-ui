@@ -1,6 +1,6 @@
 React = require 'react'
 Link = React.createFactory(require('react-router').Link)
-DeleteButton = require '../../../../../react/common/DeleteButton'
+DeleteButton = require('../../../../../react/common/DeleteButton').default
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../../../transformations/react/components/TableSizeLabel')
 TableOutputMappingModal = require('./TableOutputMappingModal').default

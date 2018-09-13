@@ -9,7 +9,7 @@ RedshiftCredentials = React.createFactory(require('../../../provisioning/react/c
 ConfigureSandbox = React.createFactory(require '../components/ConfigureSandbox')
 RunComponentButton =
   React.createFactory(require '../../../components/react/components/RunComponentButton')
-DeleteButton = React.createFactory(require '../../../../react/common/DeleteButton')
+DeleteButton = React.createFactory(require('../../../../react/common/DeleteButton').default)
 Loader = React.createFactory(require('@keboola/indigo-ui').Loader)
 StorageBucketsStore = require '../../../components/stores/StorageBucketsStore'
 StorageTablesStore = require '../../../components/stores/StorageTablesStore'

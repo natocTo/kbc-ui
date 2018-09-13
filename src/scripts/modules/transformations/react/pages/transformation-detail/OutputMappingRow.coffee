@@ -1,7 +1,7 @@
 React = require 'react'
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
-DeleteButton = require '../../../../../react/common/DeleteButton'
+DeleteButton = require('../../../../../react/common/DeleteButton').default
 OutputMappingModal = require('../../modals/OutputMapping').default
 actionCreators = require '../../../ActionCreators'
 Immutable = require 'immutable'

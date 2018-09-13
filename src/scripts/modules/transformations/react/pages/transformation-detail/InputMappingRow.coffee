@@ -1,5 +1,5 @@
 React = require 'react'
-DeleteButton = require '../../../../../react/common/DeleteButton'
+DeleteButton = require('../../../../../react/common/DeleteButton').default
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 TableSizeLabel = React.createFactory(require '../../components/TableSizeLabel')
 TransformationTableTypeLabel = React.createFactory(require '../../components/TransformationTableTypeLabel')
