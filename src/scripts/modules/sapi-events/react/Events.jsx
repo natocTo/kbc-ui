@@ -92,7 +92,7 @@ export default React.createClass({
   render() {
     return (
       <div className="form-group">
-        <div className="col-xs-12 col-searchbar-events-padded">
+        <div className="col-xs-12 col-searchbar-padded">
           <SearchBar
             query={this.state.searchQuery}
             onChange={(query) => {

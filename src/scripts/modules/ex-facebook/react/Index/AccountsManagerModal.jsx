@@ -41,7 +41,7 @@ export default React.createClass({
               <div>
                 <h4 className="text-center">All {getDesc('Pages')} of {this.props.authorizedDescription}</h4>
                 <SearchBar
-                  className="small"
+                  className="col-searchbar-padded"
                   query={this.localState(['filter'])}
                   onChange={(newVal) => this.updateLocalState(['filter'], newVal)}
                 />
