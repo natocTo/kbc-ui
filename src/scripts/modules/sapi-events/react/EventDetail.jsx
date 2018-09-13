@@ -87,7 +87,7 @@ export default React.createClass({
       return this.props.backButton;
     }
     return (
-      <Link className="btn-back" {...this.props.link}>
+      <Link {...this.props.link}>
         <span className="fa fa-chevron-left"/> Back
       </Link>
     );
