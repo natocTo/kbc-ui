@@ -1,6 +1,6 @@
 React = require 'react'
 
-GraphCanvas = require '../../../../../react/common/GraphCanvas'
+GraphCanvas = require('../../../../../react/common/GraphCanvas').default
 Button = React.createFactory(require('react-bootstrap').Button)
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 
