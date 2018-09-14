@@ -20,7 +20,6 @@ import goodDataWriterRoutes from '../gooddata-writer/routes';
 import dropoxExtractorRoutes from '../ex-dropbox/routes';
 import dropoxExtractorRoutesV2 from '../ex-dropbox-v2/routes';
 import emailAttachmentsExtractorRoutes from '../ex-email-attachments/routes';
-import dropoxWriterRoutes from '../wr-dropbox/routes';
 import wrPortalCreateRouteFn from '../wr-portal/Routes';
 import createDbWriterRoutes from '../wr-db-generic/routes';
 import createGenericDetailRoute from './createGenericDetailRoute';
@@ -144,8 +143,6 @@ module.exports = {
         defaultRouteHandler: writer(NewComponent)
       },
       createComponentRoute('gooddata-writer', [goodDataWriterRoutes]),
-      createComponentRoute('wr-dropbox', [dropoxWriterRoutes('wr-dropbox')]),
-      createComponentRoute('keboola.wr-vizable', [dropoxWriterRoutes('keboola.wr-vizable')]),
       createComponentRoute('tde-exporter', [tdeRoutes]),
       createComponentRoute('wr-google-drive', [googleDriveWriterRoutes]),
       createComponentRoute('keboola.wr-google-sheets', [googleSheetsWriterRoutes]),

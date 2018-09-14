@@ -196,40 +196,4 @@ module.exports =
                 type: 'error'
               router.transitionTo(componentId, config: params.config)
     ]
-  ,
-    name: 'tde-exporter-dropbox-redirect'
-    path: 'oauth/dropbox'
-    title: ->
-      return 'Dropbox authorization verifying..'
-    requireData: [
-      (params) ->
-        installedComponentsActions.loadComponentConfigData(componentId, params.config).then ->
-          configuration = InstalledComponentsStore.getConfigData(componentId, params.config)
-          credentialsId = "tde-exporter-#{params.config}"
-          router = RouterStore.getRouter()
-          oauthActions.loadCredentials('wr-dropbox', credentialsId).then ->
-            credentials = oauthStore.getCredentials('wr-dropbox', credentialsId).toJS()
-            description = credentials?.description
-            dropboxAccount =
-              description: description
-              id: credentialsId
-            saveFn = installedComponentsActions.saveComponentConfigData
-            newConfig = configuration.setIn ['parameters', 'dropbox'], fromJS(dropboxAccount)
-            saveFn(componentId, params.config, newConfig).then ->
-
-              notification = "Dropbox account #{description} succesfully authorized."
-              ApplicationActionCreators.sendNotification
-                message: notification
-              router.transitionTo('tde-exporter-destination', config: params.config)
-          .error (err) ->
-            notification = 'Failed to authorize the Dropbox account, please contact us on support@keboola.com'
-            ApplicationActionCreators.sendNotification
-              message: notification
-              type: 'error'
-            router.transitionTo('tde-exporter', config: params.config)
-
-
-
-  ] #requiredata end
-
   ]

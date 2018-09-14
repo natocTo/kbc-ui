@@ -23,7 +23,6 @@ ApplicationActionCreators = require '../../../../../actions/ApplicationActionCre
 RoutesStore = require '../../../../../stores/RoutesStore'
 {List, Map, fromJS} = require 'immutable'
 
-DropboxRow = React.createFactory require './DropboxRow'
 GdriveRow = React.createFactory require './GdriveRow'
 TableauServerRow = React.createFactory require './TableauServerRow'
 OauthV2WriterRow = React.createFactory(require('./OauthV2WriterRow').default)
@@ -65,7 +64,6 @@ module.exports = React.createClass
     switch task
       when "tableauServer" then destinationRow = @_renderTableauServer()
       when "gdrive" then destinationRow = @_renderGoogleDrive()
-      when "dropbox" then destinationRow = @_renderDropbox()
     if task in OAUTH_V2_WRITERS
       destinationRow = @_renderOAuthV2Writer(task)
 
@@ -130,26 +128,6 @@ module.exports = React.createClass
         @_renderEnableUploadCol('gdrive', isAuthorized, name)
       resetUploadTask: =>
         @_resetUploadTask('gdrive')
-
-
-  _renderDropbox: ->
-    parameters = @state.configData.get 'parameters'
-    account = @state.configData.getIn ['parameters', 'dropbox']
-    description = account?.get 'description'
-    isAuthorized = uploadUtils.isDropboxAuthorized(parameters)
-    DropboxRow
-      configId: @state.configId
-      localState: @state.localState
-      updateLocalStateFn: @_updateLocalState
-      account: @state.configData.getIn ['parameters', 'dropbox']
-      setConfigDataFn: @_saveConfigData
-      renderComponent: =>
-        @_renderComponentCol('wr-dropbox')
-      renderEnableUpload: (name) =>
-        @_renderEnableUploadCol('dropbox', isAuthorized, name)
-      resetUploadTask: =>
-        @_resetUploadTask('dropbox')
-
 
   _renderTableauServer: ->
     parameters = @state.configData.get 'parameters'
