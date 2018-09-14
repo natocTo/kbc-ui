@@ -2,8 +2,8 @@ React = require('react')
 Immutable = require('immutable')
 
 createStoreMixin = require '../../../../react/mixins/createStoreMixin'
-MySqlSandboxCredentialsStore = require('../../../provisioning/stores/MySqlSandboxCredentialsStore')
-MySqlCredentials = React.createFactory(require('../../../provisioning/react/components/MySqlCredentials'))
+MySqlSandboxCredentialsStore = require('../../../provisioning/stores/MySqlSandboxCredentialsStore').default
+MySqlCredentials = React.createFactory(require('../../../provisioning/react/components/MySqlCredentials').default)
 CredentialsActionCreators = require('../../../provisioning/ActionCreators')
 
 {div, span, input, strong, form, button, h3, h4, i, button, small, ul, li, a} = React.DOM
