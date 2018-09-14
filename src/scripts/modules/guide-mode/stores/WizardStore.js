@@ -1,5 +1,3 @@
-import objectAssign from 'object-assign';
-
 import Dispatcher from '../../../Dispatcher';
 import StoreUtils from '../../../utils/StoreUtils';
 import { ActionTypes } from './ActionCreators';
@@ -64,37 +62,35 @@ Dispatcher.register((payload) => {
 
     switch (action.type) {
       case ActionTypes.GUIDE_MODE_SET_STEP:
-        setStateToLocalStorage(
-          objectAssign(localStorageState, {
-            step: action.step,
-            achievedStep: getMaxStep(action.step)
-          })
-        );
+        setStateToLocalStorage({
+          ...localStorageState,
+          step: action.step,
+          achievedStep: getMaxStep(action.step)
+        });
         WizardStore.emitChange();
         break;
       case ActionTypes.GUIDE_MODE_SET_DIRECTION:
-        setStateToLocalStorage(
-          objectAssign(localStorageState, {
-            direction: action.direction
-          })
-        );
+        setStateToLocalStorage({
+          ...localStorageState,
+          direction: action.direction
+        });
         WizardStore.emitChange();
         break;
       case ActionTypes.GUIDE_MODE_SET_ACHIEVED_LESSON:
-        setStateToLocalStorage(
-          objectAssign(localStorageState, {
-            achievedLesson: Math.max(action.lessonId, localStorageState.achievedLesson)
-          })
-        );
+        setStateToLocalStorage({
+          ...localStorageState,
+          achievedLesson: Math.max(action.lessonId, localStorageState.achievedLesson)
+        });
         WizardStore.emitChange();
         break;
       case ActionTypes.GUIDE_MODE_UPDATE_MODAL_STATE:
-        setStateToLocalStorage(objectAssign(localStorageState, {
+        setStateToLocalStorage({
+          ...localStorageState,
           showLessonModal: action.showLessonModal,
           lessonNumber: action.lessonNumber,
           step: action.showLessonModal ? action.step : 0,
           achievedStep: action.showLessonModal ? localStorageState.step : 0
-        }));
+        });
         WizardStore.emitChange();
         break;
       default:
@@ -108,12 +104,11 @@ Dispatcher.register((payload) => {
     const localStorageState = getStateFromLocalStorage();
 
     const saveAndEmit = (stepId) => {
-      setStateToLocalStorage(
-        objectAssign(localStorageState, {
-          step: stepId - 1, // step index
-          achievedStep: stepId - 1 // step index
-        })
-      );
+      setStateToLocalStorage({
+        ...localStorageState,
+        step: stepId - 1, // step index
+        achievedStep: stepId - 1 // step index
+      });
       WizardStore.emitChange();
     };
 
