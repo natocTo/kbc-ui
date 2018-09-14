@@ -68,10 +68,8 @@ export default React.createClass({
     });
   },
 
-  handleModeChange(e) {
-    this.setState({
-      mode: e.target.value
-    });
+  handleModeChange(mode) {
+    this.setState({mode});
   },
 
   isPythonTransformation() {

@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Form, Col, Checkbox, FormControl, FormGroup, ControlLabel, HelpBlock, Radio} from 'react-bootstrap';
-import RadioGroup from 'react-radio-group';
+import {Form, Col, Checkbox, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
+import {RadioGroup} from 'react-radio-group';
+import RadioGroupInput from '../../../../react/common/RadioGroupInput';
 
 export default React.createClass({
   propTypes: {
@@ -56,8 +57,8 @@ export default React.createClass({
             <RadioGroup
               disabled={this.props.disabled}
               name="template"
-              value={value.template}
-              onChange={(e) => this.handleChange({template: e.target.value})}
+              selectedValue={value.template}
+              onChange={(template) => this.handleChange({template})}
             >
               {this.renderRadio('GoodData', 'gooddata', 'Default date dimension provided by GoodData')}
               {this.renderRadio('Keboola', 'keboola', 'Default date dimension provided by Keboola. Added all week setups: Mon-Sun, Tue-Mon, Wed-Tue, Thu-Wed, Fri-Thu, Sat0Fri, Sun-Sat + Boolean value whether its weekend or working day')}
@@ -82,17 +83,14 @@ export default React.createClass({
     );
   },
 
-  renderRadio(name, value, helpText) {
-    return [
-      <Radio
-        isChecked={this.props.value.template === value}
-        key="radio"
-        type="radio"
-        value={value}>
-        {name}
-      </Radio>,
-      <HelpBlock key="help">{helpText}</HelpBlock>
-    ];
+  renderRadio(label, value, helpText) {
+    return (
+      <RadioGroupInput
+        label={label}
+        value={value}
+        help={helpText}
+      />
+    );
   }
 
 

@@ -46,7 +46,7 @@ export default React.createClass({
             </Tab>
             <Tab title="Action" eventKey={2} disabled={step !== 3}>
               <ActionTab
-                onChangeAction={(e) => this.onChangeAction(e.target.value)}
+                onChangeAction={(value) => this.onChangeAction(value)}
                 valueAction={this.file('action', 'update')}
               />
             </Tab>
@@ -139,9 +139,9 @@ export default React.createClass({
     }
   },
 
-  onSwitchType(event) {
+  onSwitchType(type) {
     let title = '';
-    if (event.target.value === 'new') {
+    if (type === 'new') {
       const tableId = this.file('tableId');
       title = tableId.substr(tableId.lastIndexOf('.') + 1);
     }
@@ -152,7 +152,7 @@ export default React.createClass({
         .set('title', title)
         .set('fileId', '')
     );
-    this.updateLocalState(['uploadType'], event.target.value);
+    this.updateLocalState(['uploadType'], type);
   },
 
   updateLocalState(path, newValue) {
