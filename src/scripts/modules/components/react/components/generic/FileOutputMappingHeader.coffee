@@ -1,7 +1,7 @@
 React = require 'react'
 Immutable = require 'immutable'
 Link = React.createFactory(require('react-router').Link)
-DeleteButton = require '../../../../../react/common/DeleteButton'
+DeleteButton = require('../../../../../react/common/DeleteButton').default
 ImmutableRenderMixin = require 'react-immutable-render-mixin'
 FileOutputMappingModal = require('./FileOutputMappingModal').default
 
