@@ -27,10 +27,6 @@ const provisioningStore = storeUtils.createStore({
 Dispatcher.register(function(payload) {
   const { action } = payload;
   switch (action.type) {
-    case constants.ActionTypes.WR_DB_PROVISIONING_GET_CREDENTIALS_SUCCESS:
-      _store = _store.setIn(['credentials', action.permission, action.token], fromJS(action.credentials));
-      return provisioningStore.emitChange();
-
     case constants.ActionTypes.CREDENTIALS_WRDB_LOAD:
       _store = _store.setIn(['loadingCredentials', action.permission, action.token], true);
       return provisioningStore.emitChange();
