@@ -36,21 +36,22 @@ export default React.createClass({
   },
 
   hint() {
-    if (this.props.transformation.get('type') === 'r') {
-      return (
-        <span>
-          Learn more about packages installation, usage and a list of pre-installed packages in the
-          {' '}<a href="https://help.keboola.com/manipulation/transformations/r/#packages">documentation</a>.
-        </span>
-      );
+    let documentationLink = '';
+    switch (this.props.transformation.get('type')) {
+      case 'r':
+        documentationLink = 'https://help.keboola.com/manipulation/transformations/r/#packages';
+        break;
+      case 'python':
+        documentationLink = 'https://help.keboola.com/manipulation/transformations/python/#packages';
+        break;
+      default:
+        return null;
     }
-    if (this.props.transformation.get('type') === 'python') {
-      return (
-        <span>
-          Learn more about installation, usage and a list of pre-installed packages in the
-          {' '}<a href="https://help.keboola.com/manipulation/transformations/python/#packages">documentation</a>.
-        </span>
-      );
-    }
+    return (
+      <span>
+        Learn more about installation, usage and a list of pre-installed packages in the
+        {' '}<a href={documentationLink}>documentation</a>.
+      </span>
+    );
   }
 });
