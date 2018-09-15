@@ -38,12 +38,18 @@ export default React.createClass({
   hint() {
     if (this.props.transformation.get('type') === 'r') {
       return (
-        <span>These packages will be installed from CRAN and loaded to the R script environment.</span>
+        <span>
+          Learn more about packages installation, usage and a list of pre-installed packages in the
+          {' '}<a href="https://help.keboola.com/manipulation/transformations/r/#packages">documentation</a>.
+        </span>
       );
     }
     if (this.props.transformation.get('type') === 'python') {
       return (
-        <span>These packages will be installed from PyPI to the Python script environment. Do not forget to load them using <code>import</code>.</span>
+        <span>
+          Learn more about installation, usage and a list of pre-installed packages in the
+          {' '}<a href="https://help.keboola.com/manipulation/transformations/python/#packages">documentation</a>.
+        </span>
       );
     }
   }
