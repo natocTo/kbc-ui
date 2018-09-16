@@ -2,7 +2,6 @@
 // put it here:
 const componentsNotWithSsh = [
   'keboola.ex-db-snowflake',
-  'keboola.ex-db-firebird',
   'keboola.ex-teradata'
 ];
 
