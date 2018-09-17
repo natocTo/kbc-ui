@@ -77,14 +77,14 @@ module.exports = React.createClass
         @_renderConfigurations()
 
   _getFilteredConfigurations: ->
-    filtered = @state.configurations.sortBy (component) -> component.get('name').toLowerCase()
+    filtered = @state.configurations
     if @state.configurationFilter or @state.configurationFilter != ''
       filterQuery = @state.configurationFilter.toLowerCase()
       filtered = @state.configurations.filter (configuration) ->
         configuration.get('name', '').toLowerCase().match(filterQuery) or
           configuration.get('id', '').match(filterQuery) or
           configuration.get('description', '').toLowerCase().match(filterQuery)
-    return filtered
+    return filtered.sortBy (configuration) -> configuration.get('name').toLowerCase()
 
   _isDeprecated: ->
     return @state.component.get('flags').includes('deprecated')
