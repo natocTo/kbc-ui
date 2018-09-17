@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Select from '../../../../../react/common/Select';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -50,7 +51,7 @@ export default React.createClass({
     return (
       <span>
         Learn more about installation, usage and a list of pre-installed packages in the
-        {' '}<a href={documentationLink}>documentation</a>.
+        {' '}<ExternalLink href={documentationLink}>documentation</ExternalLink>.
       </span>
     );
   }
