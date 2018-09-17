@@ -77,7 +77,7 @@ module.exports = React.createClass
         @_renderConfigurations()
 
   _getFilteredConfigurations: ->
-    filtered = @state.configurations
+    filtered = @state.configurations.sortBy (component) -> component.get('name').toLowerCase()
     if @state.configurationFilter or @state.configurationFilter != ''
       filterQuery = @state.configurationFilter.toLowerCase()
       filtered = @state.configurations.filter (configuration) ->
