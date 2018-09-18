@@ -84,7 +84,7 @@ module.exports = React.createClass
         configuration.get('name', '').toLowerCase().match(filterQuery) or
           configuration.get('id', '').match(filterQuery) or
           configuration.get('description', '').toLowerCase().match(filterQuery)
-    return filtered
+    return filtered.sortBy (configuration) -> configuration.get('name').toLowerCase()
 
   _isDeprecated: ->
     return @state.component.get('flags').includes('deprecated')
