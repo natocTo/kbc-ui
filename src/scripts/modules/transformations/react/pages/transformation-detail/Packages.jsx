@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Select from '../../../../../react/common/Select';
+import {ExternalLink} from '@keboola/indigo-ui';
 
 export default React.createClass({
   propTypes: {
@@ -36,15 +37,22 @@ export default React.createClass({
   },
 
   hint() {
-    if (this.props.transformation.get('type') === 'r') {
-      return (
-        <span>These packages will be installed from CRAN and loaded to the R script environment.</span>
-      );
+    let documentationLink = '';
+    switch (this.props.transformation.get('type')) {
+      case 'r':
+        documentationLink = 'https://help.keboola.com/manipulation/transformations/r/#packages';
+        break;
+      case 'python':
+        documentationLink = 'https://help.keboola.com/manipulation/transformations/python/#packages';
+        break;
+      default:
+        return null;
     }
-    if (this.props.transformation.get('type') === 'python') {
-      return (
-        <span>These packages will be installed from PyPI to the Python script environment. Do not forget to load them using <code>import</code>.</span>
-      );
-    }
+    return (
+      <span>
+        Learn more about installation, usage and a list of pre-installed packages in the
+        {' '}<ExternalLink href={documentationLink}>documentation</ExternalLink>.
+      </span>
+    );
   }
 });
