@@ -14,7 +14,7 @@ WizardStore = require('../../modules/guide-mode/stores/WizardStore').default
 DisableGuideMode = require('../../modules/guide-mode/stores/ActionCreators').disableGuideMode
 
 CurrentUser = React.createFactory(require('./CurrentUser').default)
-UserLinks = React.createFactory(require './UserLinks')
+UserLinks = React.createFactory(require('./UserLinks').default)
 classnames = require('classnames')
 
 {div, a, i, p} = React.DOM
