@@ -6,7 +6,7 @@ import Immutable from 'immutable';
 import TableLink from '../../modules/components/react/components/StorageApiTableLinkEx';
 import TableSelectorInput from './TableSelectorInput';
 import StorageTablesStore from '../../modules/components/stores/StorageTablesStore';
-import Tooltip from './Tooltip';
+import {Button} from 'react-bootstrap';
 
 export default React.createClass({
 
@@ -47,18 +47,16 @@ export default React.createClass({
       return null;
     }
     return (
-      <Tooltip tooltip="Edit" placement="top">
-        <span className="kbc-icon-pencil"
-          onClick={this.props.onEdit}
-        />
-      </Tooltip>
+      <Button bsStyle="link" onClick={this.props.onEdit} title="Rename table">
+        <span className="kbc-icon-pencil"/>
+      </Button>
     );
   },
 
   render() {
     if (this.props.editing) {
       return (
-        <span className="kbc-table-selector kbc-table-selector-edit">
+        <span>
           <TableSelectorInput
             options={this.state.tables}
             onChange={this.onChange}
@@ -67,12 +65,11 @@ export default React.createClass({
             help={this.props.help}
             disabled={this.props.disabled}
           />
-
         </span>
       );
     } else {
       return (
-        <span className="kbc-table-selector kbc-table-selector-static">
+        <span>
           <TableLink tableId={this.props.value}>
             {this.props.value}
           </TableLink>
