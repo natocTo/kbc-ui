@@ -27,9 +27,8 @@ module.exports = React.createClass
             ' Support '
 
         li null,
-          a
-            href: 'https://help.keboola.com'
-            target: '_blank',
+          ExternalLink
+            href: 'https://help.keboola.com',
             span className: 'fa fa-question-circle'
             ' Help '
 
