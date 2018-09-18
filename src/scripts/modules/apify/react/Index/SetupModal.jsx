@@ -66,14 +66,7 @@ export default React.createClass({
     const action = this.getAction();
     if (action === 'crawler') {
       const crawlerId = paramsToSave.get('crawlerId');
-      const savedCrawlerList = fromJS([{
-        id: crawlerId,
-        settingsLink: paramsToSave.get('settingsLink'),
-        customId: paramsToSave.get('customId')
-      }]);
-      const crawler = this
-        .localState(['crawlers', 'data'], savedCrawlerList)
-        .find((c) => c.get('id') === crawlerId);
+      const crawler = this.localState(['crawlers', 'data']).find((c) => c.get('id') === crawlerId);
       paramsToSave = Map({
         crawlerId: paramsToSave.get('crawlerId'),
         customId: crawler.get('customId'),
