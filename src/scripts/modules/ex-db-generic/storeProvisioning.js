@@ -29,7 +29,6 @@ export function queryFromRow(row) {
     name: row.get('name'),
     enabled: !row.get('isDisabled'),
     outputTable: rowConfig.get('outputTable'),
-    table: rowConfig.get('table') || null,
     columns: rowConfig.get('columns'),
     primaryKey: rowConfig.get('primaryKey'),
     incremental: rowConfig.get('incremental'),
@@ -39,6 +38,8 @@ export function queryFromRow(row) {
   });
   if (rowConfig.get('query')) {
     query = query.set('query', rowConfig.get('query')).set('advancedMode', true);
+  } else {
+    query = query.set('table', rowConfig.get('table', null));
   }
   return query;
 }
