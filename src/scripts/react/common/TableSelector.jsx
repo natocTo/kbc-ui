@@ -43,11 +43,13 @@ export default React.createClass({
   },
 
   renderPencil() {
-    if (this.props.disabled) {
-      return null;
-    }
     return (
-      <Button bsStyle="link" onClick={this.props.onEdit} title="Rename table">
+      <Button
+        bsStyle="link"
+        onClick={this.props.onEdit}
+        title="Rename table"
+        disabled={this.props.disabled}
+      >
         <span className="kbc-icon-pencil"/>
       </Button>
     );
