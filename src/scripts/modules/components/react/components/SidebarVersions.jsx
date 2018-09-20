@@ -116,7 +116,7 @@ module.exports = React.createClass({
     return (
       <div>
         <h4>Updates
-          {this.renderLatestChangeDiffButton()}
+          {this.props.versions.size > 1 && this.renderLatestChangeDiffButton()}
         </h4>
         <div className="kbc-sidebar-versions">
           {this.renderVersions()}
