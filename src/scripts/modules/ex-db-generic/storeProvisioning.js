@@ -295,8 +295,8 @@ export function createStore(componentId, configId) {
 
     prepareQueries(tables) {
       return tables.map((q) => {
-        let pk = q.get('primaryKey', null);
-        if (_.isEmpty(pk) || _.isString(pk)) {
+        let pk = q.get('primaryKey', List());
+        if (!List.isList(pk)) {
           pk = List();
         }
         return q.set('primaryKey', pk);
