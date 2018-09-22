@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Modal, FormControl, FormGroup, ControlLabel, Form, Col} from 'react-bootstrap';
+import { ExternalLink } from '@keboola/indigo-ui';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
@@ -38,10 +39,10 @@ export default React.createClass({
         <Modal.Body>
           <p>
             Facebook has its own specific platform {' '}
-            <a href="https://developers.facebook.com/docs/apps/versions" target="_blank">versioning</a>.
+            <ExternalLink hree="https://developers.facebook.com/docs/apps/versions">versioning</ExternalLink>.
             If you change the api version some api calls specified in queries may not work resulting in error,
             or no data as well as data with different columns might be retrieved. To review the api changes
-            see <a href="https://developers.facebook.com/docs/apps/changelog" target="_blank">changelog</a>.
+            see <ExternalLink href="https://developers.facebook.com/docs/apps/changelog">changelog</ExternalLink>.
             The most recent api version is {this.props.defaultVersion}.
           </p>
           <Form
