@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {Modal} from 'react-bootstrap';
+import {Modal, FormControl, FormGroup, ControlLabel, Form, Col} from 'react-bootstrap';
+import { ExternalLink } from '@keboola/indigo-ui';
 import ConfirmButtons from '../../../../react/common/ConfirmButtons';
 
 export default React.createClass({
@@ -36,27 +37,38 @@ export default React.createClass({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="form form-horizontal">
-            <div className="form-group">
-              <div className="col-sm-offset-1 col-sm-9">
-                <p>
-                  Facebook has its own specific platform {' '}
-                  <a
-                    href="https://developers.facebook.com/docs/apps/versions"
-                    target="_blank">versioning</a>. If you change the api version some api calls specified in queries may not work resulting in error, or no data as well as data with different columns might be retrieved. To review the api changes see <a href="https://developers.facebook.com/docs/apps/changelog" target="_blank"> changelog </a>. The most recent api version is {this.props.defaultVersion}.
-                </p>
-                <p>
-                Api Version <input
-                    id="version"
-                    type="text"
-                    className="form-control"
-                    value={value}
-                    onChange={this.handleVersionChange}
-                    style={{width: '100px', display: 'inline-block'}}/>
-                </p>
-              </div>
-            </div>
-          </div>
+          <p>
+            Facebook has its own specific platform {' '}
+            <ExternalLink hree="https://developers.facebook.com/docs/apps/versions">versioning</ExternalLink>.
+            If you change the api version some api calls specified in queries may not work resulting in error,
+            or no data as well as data with different columns might be retrieved. To review the api changes
+            see <ExternalLink href="https://developers.facebook.com/docs/apps/changelog">changelog</ExternalLink>.
+            The most recent api version is {this.props.defaultVersion}.
+          </p>
+          <Form
+            horizontal
+            onSubmit={(e) => {
+              e.preventDefault();
+              this.handleSave();
+            }}
+          >
+            <FormGroup
+              controlId="facebook-api-version"
+            >
+              <Col componentClass={ControlLabel} sm={3}>
+                Api Version
+              </Col>
+              <Col sm={3}>
+                <FormControl
+                  type="text"
+                  value={value}
+                  onChange={this.handleVersionChange}
+                  size={8}
+                  autoFocus
+                />
+              </Col>
+            </FormGroup>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <ConfirmButtons
