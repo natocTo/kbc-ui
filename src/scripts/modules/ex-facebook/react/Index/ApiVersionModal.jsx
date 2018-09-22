@@ -63,6 +63,7 @@ export default React.createClass({
                   value={value}
                   onChange={this.handleVersionChange}
                   size={8}
+                  autoFocus
                 />
               </Col>
             </FormGroup>
